@@ -5,20 +5,6 @@
 
 (call term_use_inherited_unallocated_ttys (app_subj_type))
 
-(optional app_optional_irssi
-	(call irssi_use_fd_all_subj (app_subj_type))
-	(call irssi_rw_inherited_fifo_files (app_subj_type))
-	(call irssi_send_sigchld_all_subj (app_subj_type)))
-
-(optional app_optional_sudo
-	(call sudo_rw_inherited_fifo_files (app_subj_type))
-	(call sudo_send_sigchld_all_subj (app_subj_type)))
-
-(optional app_optional_sd_user
-	(call sd_user_rw_unix_stream_sockets_all_subj (app_subj_type))
-	(call sd_user_send_sigchld_all_subj (app_subj_type)))
-
 (optional app_optional_usersubj
 	(call usersubj_search_home_dir (app_subj_type))
-	(call usersubj_rw_inherited_fifo_files_all_common_subj (app_subj_type))
 	(call usersubj_use_inherited_terminals (app_subj_type)))

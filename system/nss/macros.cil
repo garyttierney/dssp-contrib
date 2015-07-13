@@ -7,7 +7,7 @@
 
 (macro nss_manage_config_files ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 nss.file manage_file_perms))
+	(allow ARG1 nss.config_file manage_file_perms))
 
 (macro nss_relabel_config_files ((type ARG1))
 	(call file_search_config (ARG1))

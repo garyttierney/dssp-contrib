@@ -3,8 +3,7 @@
 
 (macro updpwd_auto_subj_type_transition ((type ARG1))
 	(call updpwd_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 updpwd.cmd_file updpwd.subj))
-	(call miscfile_dontaudit_read_shadow (ARG1)))
+	(call auto_subj_type_transition_pattern (ARG1 updpwd.cmd_file updpwd.subj)))
 
 (macro updpwd_send_signal ((type ARG1))
 	(allow ARG1 updpwd.subj (process (signal))))

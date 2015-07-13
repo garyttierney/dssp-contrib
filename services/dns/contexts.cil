@@ -1,0 +1,11 @@
+(context dns_port (sys.id sys.role dns.port (systemlow systemlow)))
+(context resolv_config (sys.id sys.role resolv.config_file (systemlow systemlow)))
+
+(filecon "/etc/\.resolv\.conf.*" file resolv_config)
+(filecon "/etc/\.resolv-secure\.conf.*" file resolv_config)
+(filecon "/etc/resolv\.conf.*" file resolv_config)
+(filecon "/etc/resolv-secure\.conf.*" file resolv_config)
+(filecon "/var/run/dnssec-trigger/resolv\.conf\.backup" file resolv_config)
+
+(portcon "tcp" 53 dns_port)
+(portcon "udp" 53 dns_port)

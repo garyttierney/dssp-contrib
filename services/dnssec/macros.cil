@@ -1,0 +1,8 @@
+(macro dnssec_tcp_connect_dnssec_port ((type ARG1))
+	(allow ARG1 dnssec.port (tcp_socket (name_connect))))
+
+(macro dnssec_tcp_bind_dnssec_port ((type ARG1))
+	(allow ARG1 dnssec.port (tcp_socket (name_bind))))
+
+(macro dnssec_udp_bind_dnssec_port ((type ARG1))
+	(allow ARG1 dnssec.port (udp_socket (name_bind))))

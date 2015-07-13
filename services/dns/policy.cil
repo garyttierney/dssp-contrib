@@ -1,0 +1,32 @@
+(typeattribute dns_resolve_client_subj_type)
+
+(block dns
+	(blockinherit net_reserved_port_obj_blk))
+
+(block resolv
+	(blockinherit file_config_obj_blk)
+
+	(call fs_associate_tmpfs (config_file)))
+
+(allow dns_resolv_client_subj_type self r_netlink_route_socket_perms)
+(allow dns_resolv_client_subj_type self create_tcp_socket_perms)
+(allow dns_resolv_client_subj_type self create_udp_socket_perms)
+
+(call dns_read_resolv_config_files (dns_resolv_client_subj_type))
+(call dns_tcp_connect_dns_port (dns_resolv_client_subj_type))
+
+(call dnssec_tcp_connect_dnssec_port (dns_resolv_client_subj_type))
+
+(call llmnr_tcp_connect_llmnr_port (dns_resolv_client_subj_type))
+
+(call mdns_tcp_connect_mdns_port (dns_resolv_client_subj_type))
+
+(optional dns_resolv_client_subj_type_optional_dbus
+	(call dbus_system_client_subj_type (dns_resolv_client_subj_type)))
+
+(optional dns_resolv_client_subj_type_optional_sd_machine
+	(call sd_machined_dbus_chat (dns_resolve_client_subject_type))
+	(call sd_machined_read_sd_runtime (dns_resolv_client_subj_type)))
+
+(optional dns_resolv_client_subj_type_optional_sd_resolved
+	(call sd_resolved_dbus_chat (dns_resolv_client_subj_type)))

@@ -1,0 +1,8 @@
+(macro mdns_tcp_connect_mdns_port ((type ARG1))
+	(allow ARG1 mdns.port (tcp_socket (name_connect))))
+
+(macro mdns_tcp_bind_mdns_port ((type ARG1))
+	(allow ARG1 mdns.port (tcp_socket (name_bind))))
+
+(macro mdns_udp_bind_mdns_port ((type ARG1))
+	(allow ARG1 mdns.port (udp_socket (name_bind))))

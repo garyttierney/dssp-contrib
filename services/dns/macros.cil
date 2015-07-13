@@ -1,0 +1,42 @@
+(macro dns_resolv_client_subj_type ((type ARG1))
+	(typeattributeset dns_resolv_client_subj_type ARG1))
+
+(macro dns_config_obj_type_transition_config ((type ARG1))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file "resolv.conf"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file "resolv.conf.tmp"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file "resolv.conf.fp-tmp"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file "resolv-secure.conf"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file ".resolv.conf.dnssec-trigger"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file ".resolv-secure.conf.dnssec-trigger"))
+	(call file_config_obj_type_transition (ARG1 resolv.config_file file "resolv.conf.fp-saved")))
+
+(macro dns_manage_resolv_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 resolv.config_file manage_file_perms))
+
+(macro dns_relabelto_resolv_config_files ((type ARG1))
+	(call file_read_config_lnk_files (ARG1))
+	(allow ARG1 resolv.config_file relabelto_file_perms))
+
+(macro dns_relabel_resolv_config_files ((type ARG1))
+	(call file_read_config_lnk_files (ARG1))
+	(allow ARG1 resolv.config_file relabel_file_perms))
+
+(macro dns_read_resolv_config_files ((type ARG1))
+	(call file_read_config_lnk_files (ARG1))
+	(allow ARG1 resolv.config_file read_file_perms)
+	(optional dns_read_resolv_config_files_optional_sd_resolved
+		(call sd_resolved_read_sd_runtime_files (ARG1)))
+	(optional dns_read_resolv_config_files_optional_nm
+		(call nm_read_runtime_files (ARG1))))
+
+(macro dns_tcp_connect_dns_port ((type ARG1))
+	(allow ARG1 dns.port (tcp_socket (name_connect))))
+
+(macro dns_tcp_bind_dns_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 dns.port (tcp_socket (name_bind))))
+
+(macro dns_udp_bind_dns_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 dns.port (udp_socket (name_bind))))

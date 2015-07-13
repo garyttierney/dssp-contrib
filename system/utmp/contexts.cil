@@ -1,0 +1,5 @@
+(context utmp_runtime (sys.id sys.role utmp.runtime_file (systemlow systemlow)))
+(context wtmp_var_log (sys.id sys.role wtmp.var_log_file (systemlow systemlow)))
+
+(filecon "/var/log/wtmp.*" file wtmp_var_log)
+(filecon "/var/run/utmp" file utmp_runtime)

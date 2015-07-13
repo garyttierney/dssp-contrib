@@ -81,7 +81,7 @@
 ;(call seutil_read_selinux_config_files (pam_login_prog_subj_type))
 ;(call seutil_read_default_context_files (pam_login_prog_subj_type))
 
-;(call utmp_rw_runtime_files (pam_login_prog_subj_type))
+(call utmp_rw_runtime_files (pam_login_prog_subj_type))
 
 (optional pam_login_prog_subj_type_optional_sd_logind
 	(call sd_logind_client_subj_type (pam_login_prog_subj_type)))
@@ -111,9 +111,9 @@
 
 (call nss_client_subj_type (pam_client_subj_type))
 
-;(call utmp_append_wtmp_var_log_files (pam_client_subj_type))
-;(call utmp_read_wtmp_var_log_files (pam_client_subj_type))
-;(call utmp_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
+(call utmp_append_wtmp_var_log_files (pam_client_subj_type))
+(call utmp_read_wtmp_var_log_files (pam_client_subj_type))
+(call utmp_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
 
 (optional pam_client_subj_type_optional_sd_journal
 	(call sd_journal_client_subj_type (pam_client_subj_type)))

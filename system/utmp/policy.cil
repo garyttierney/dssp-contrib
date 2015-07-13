@@ -1,0 +1,8 @@
+(block utmp
+	(blockinherit file_runtime_obj_blk))
+
+(block wtmp
+	(blockinherit file_var_log_obj_blk)
+
+	(optional wtmp_optional_logrotate
+		(logrotate_log_obj_type (var_log_file))))

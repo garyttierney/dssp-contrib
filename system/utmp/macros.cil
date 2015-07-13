@@ -1,0 +1,45 @@
+(macro utmp_append_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file append_file_perms))
+
+(macro utmp_read_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file read_file_perms))
+
+(macro utmp_write_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file write_file_perms))
+
+(macro utmp_dontaudit_write_wtmp_var_log_files ((type ARG1))
+	(dontaudit ARG1 wtmp.var_log_file write_file_perms))
+
+(macro utmp_manage_wtmp_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 wtmp.var_log_file manage_file_perms))
+
+(macro utmp_relabel_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file relabel_file_perms))
+
+(macro utmp_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file read_file_perms))
+
+(macro utmp_write_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file write_file_perms))
+
+(macro utmp_rw_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file rw_file_perms))
+
+(macro utmp_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 utmp.runtime_file manage_file_perms))
+
+(macro utmp_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file relabel_file_perms))
+
+(macro utmp_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 utmp.runtime_file file "utmp")))

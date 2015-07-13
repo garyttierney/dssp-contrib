@@ -1,0 +1,4 @@
+(context nss_config (sys.id sys.role nss.config_file (systemlow systemlow)))
+
+(filecon "/etc/nsswitch\.conf.*" file nss_config)
+(filecon "/etc/host\.conf" file nss_config)

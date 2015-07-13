@@ -1,0 +1,15 @@
+(typeattribute nss_client_subj_type)
+
+(block nss
+	(blockinherit file_config_obj_blk))
+
+(allow nss_client_subj_type self create_unix_stream_socket_perms)
+
+(call file_list_runtime (nss_client_subj_type))
+
+;(call dns_resolve_client_subj_type (nss_client_subj_type))
+
+(call miscfile_read_network (nss_client_subj_type))
+(call miscfile_read_passwords (nss_client_subj_type))
+
+(call nss_read_config_files (nss_client_subj_type))

@@ -1,0 +1,10 @@
+(context authconfig_cmd (sys.id sys.role authconfig.cmd_file (systemlow systemlow)))
+(context authconfig_config (sys.id sys.role authconfig.config_file (systemlow systemlow)))
+(context authconfig_data (sys.id sys.role authconfig.data_file (systemlow systemlow)))
+(context authconfig_var_lib (sys.id sys.role authconfig.var_lib_file (systemlow systemlow)))
+
+(filecon "/etc/sysconfig/authconfig" file authconfig_config)
+(filecon "/usr/sbin/authconfig" file authconfig_cmd)
+(filecon "/usr/share/authconfig(/.*)?" any authconfig_data)
+(filecon "/usr/share/authconfig/authconfig\.py" file authconfig_cmd)
+(filecon "/var/lib/authconfig(/.*)?" any authconfig_var_lib)

@@ -1,0 +1,156 @@
+(macro pam_client_subj_type ((type ARG1))
+	(typeattributeset pam_client_subj_type ARG1))
+
+(macro pam_login_prog_subj_type ((type ARG1))
+	(typeattributeset pam_login_prog_subj_type ARG1))
+
+(macro pam_exec_pam ((type ARG1))
+	(call can_exec (ARG1 pam.cmd_file)))
+
+(macro pam_auto_subj_type_transition_pam ((type ARG1))
+	(call pam_send_signal_pam (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 pam.cmd_file pam.subj)))
+
+(macro pam_send_signal_pam ((type ARG1))
+	(allow ARG1 pam.subj (process (signal))))
+
+(macro pam_exec_pam_console ((type ARG1))
+	(call can_exec (ARG1 pam_console.cmd_file)))
+
+(macro pam_auto_subj_type_transition_pam_console ((type ARG1))
+	(call pam_send_signal_pam_console (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 pam_console.cmd_file pam_console.subj)))
+
+(macro pam_send_signal_pam_console ((type ARG1))
+	(allow ARG1 pam_console.subj (process (signal))))
+
+(macro pam_use_login_prog_fd ((type ARG1))
+	(allow ARG1 pam_login_prog_subj_type (fd (use))))
+
+(macro pam_link_login_prog_keyring ((type ARG1))
+	(allow ARG1 pam_login_prog_subj_type (key (search link))))
+
+(macro pam_read_state_all_login_prog_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 pam_login_prog_subj_type read_file_perms)
+	(allow ARG1 pam_login_prog_subj_type list_dir_perms)
+	(allow ARG1 pam_login_prog_subj_type read_lnk_file_perms))
+
+(macro pam_change_passwd ((type ARG1))
+	(allow ARG1 self (passwd (passwd))))
+
+(macro pam_change_finger ((type ARG1))
+	(allow ARG1 self (passwd (chfn))))
+
+(macro pam_change_shell ((type ARG1))
+	(allow ARG1 self (passwd (chsh))))
+
+(macro pam_change_crontab ((type ARG1))
+	(allow ARG1 self (passwd (crontab))))
+
+(macro pam_rootok ((type ARG1))
+	(allow ARG1 self (passwd (rootok))))
+
+(macro pam_read_faillog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 faillog.var_log_file read_file_perms))
+
+(macro pam_create_faillog_var_log_files ((type ARG1))
+	(call file_add_entry_var_log (ARG1))
+	(allow ARG1 faillog.var_log_file create_file_perms))
+
+(macro pam_manage_faillog_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 faillog.var_log_file manage_file_perms))
+
+(macro pam_rw_faillog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 faillog.var_log_file rw_file_perms))
+
+(macro pam_relabel_faillog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 faillog.var_log_file relabel_file_perms))
+
+(macro pam_var_log_obj_type_transition_faillog_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 faillog.var_log_file file "btmp"))
+	(call file_var_log_obj_type_transition (ARG1 faillog.var_log_file file "faillog"))
+	(call file_var_log_obj_type_transition (ARG1 faillog.var_log_file file "tallylog")))
+
+(macro pam_read_lastlog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 lastlog.var_log_file read_file_perms))
+
+(macro pam_create_lastlog_var_log_files ((type ARG1))
+	(call file_add_entry_var_log (ARG1))
+	(allow ARG1 lastlog.var_log_file create_file_perms))
+
+(macro pam_manage_lastlog_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 lastlog.var_log_file manage_file_perms))
+
+(macro pam_rw_lastlog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 lastlog.var_log_file rw_file_perms))
+
+(macro pam_relabel_lastlog_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 lastlog.var_log_file relabel_file_perms))
+
+(macro pam_var_log_obj_type_transition_lastlog_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 lastlog.var_log_file file "lastlog")))
+
+(macro pam_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pam.config_file search_dir_perms))
+
+(macro pam_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pam.config_file list_dir_perms))
+
+(macro pam_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 pam.config_file pam.config_file)))
+
+(macro pam_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pam.config_file read_file_perms)
+	(allow ARG1 pam.config_file list_dir_perms)
+	(allow ARG1 pam.config_file read_lnk_file_perms))
+
+(macro pam_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 pam.config_file manage_file_perms)
+	(allow ARG1 pam.config_file manage_dir_perms)
+	(allow ARG1 pam.config_file manage_lnk_file_perms))
+
+(macro pam_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pam.config_file relabel_file_perms)
+	(allow ARG1 pam.config_file relabel_dir_perms)
+	(allow ARG1 pam.config_file relabel_lnk_file_perms))
+
+(macro pam_search_pam_console_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pam_console.runtime_file search_dir_perms))
+
+(macro pam_list_pam_console_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pam_console.runtime_file list_dir_perms))
+
+(macro pam_read_pam_console_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 pam_console.runtime_file pam_console.runtime_file)))
+
+(macro pam_manage_pam_console_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 pam_console.runtime_file pam_console.runtime_file)))
+
+(macro pam_relabel_pam_console_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call relabel_files_pattern (ARG1 pam_console.runtime_file pam_console.runtime_file)))
+
+(macro pam_admin ((type ARG1))
+	(typeattributeset pam_adm_subj_type ARG1))
+
+(macro pam_unconfined_subj_type ((type ARG1))
+	(typeattributeset pam_unconfined_subj_type ARG1))

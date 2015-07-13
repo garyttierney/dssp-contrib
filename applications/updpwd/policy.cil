@@ -1,0 +1,10 @@
+(roleattribute updpwd_role)
+
+(block updpwd
+	(blockinherit app_blk)
+
+        (call subj_entry (subj cmd_file))
+
+	(roleattributeset updpwd_role sys.role)
+
+        (roletype updpwd_role subj))

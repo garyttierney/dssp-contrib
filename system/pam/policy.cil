@@ -1,0 +1,135 @@
+(class passwd (passwd chfn chsh rootok crontab))
+(classorder (netlink_crypto_socket passwd))
+
+(typeattribute pam_obj_type)
+
+(typeattribute pam_adm_subj_type)
+(typeattribute pam_client_subj_type)
+(typeattribute pam_login_prog_subj_type)
+(typeattribute pam_subj_type)
+(typeattribute pam_unconfined_subj_type)
+
+(block faillog
+	(blockinherit file_var_log_obj_blk)
+
+	(typeattributeset pam_obj_type var_log_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset pam_obj_type runtime_file)
+
+	(optional faillog_optional_logrotate
+		(call logrotate_log_obj_type (var_log_file))))
+
+(block lastlog
+	(blockinherit file_var_log_obj_blk)
+
+	(typeattributeset pam_obj_type var_log_file))
+
+(block pam
+	(blockinherit subj_blk)
+
+	(typeattributeset pam_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset pam_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset pam_obj_type runtime_file))
+
+(block pam_console
+	(blockinherit subj_blk)
+
+	(typeattributeset pam_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset pam_obj_type runtime_file))
+
+(allow pam_login_prog_subj_type self (capability (setuid setgid chown)))
+(allow pam_login_prog_subj_type self (process (setexec setsched)))
+
+(call sec_compute_user_contexts (pam_login_prog_subj_type))
+(call sec_compute_relabel_context (pam_login_prog_subj_type))
+(call sec_validate_context (pam_login_prog_subj_type))
+
+(call subj_id_change_exemption_type (pam_login_prog_subj_type))
+(call subj_interactive_fd_type (pam_login_prog_subj_type))
+(call subj_role_change_exemption_type (pam_login_prog_subj_type))
+(call subj_obj_id_change_exemption_type (pam_login_prog_subj_type))
+
+(call app_send_signal_all_subj (pam_login_prog_subj_type))
+
+(call pam_client_subj_type (pam_login_prog_subj_type))
+
+(call miscfile_read_locale (pam_login_prog_subj_type))
+
+;(call seutil_read_selinux_config_files (pam_login_prog_subj_type))
+;(call seutil_read_default_context_files (pam_login_prog_subj_type))
+
+;(call utmp_rw_runtime_files (pam_login_prog_subj_type))
+
+(optional pam_login_prog_subj_type_optional_sd_logind
+	(call sd_logind_client_subj_type (pam_login_prog_subj_type)))
+
+(optional pam_login_prog_subj_type_optional_sd_user
+	(call sd_user_link_keyring_all_subj (pam_login_prog_subj_type)))
+
+(optional pam_login_prog_subj_type_optional_usersubj
+	(call usersubj_create_keyring_all_common_login_subj (pam_login_prog_subj_type))
+	(call usersubj_send_signal_all_common_login_subjects (pam_login_prog_subj_type)))
+
+(call sys_audit_client_subj_type (pam_client_subj_type))
+
+(call chkpwd_auto_subj_type_transition (pam_client_subj_type))
+(call updpwd_auto_subj_type_transition (pam_client_subj_type))
+
+(call pam_exec_pam (pam_client_subj_type))
+(call pam_read_config (pam_client_subj_type))
+
+(call pam_create_faillog_var_log_files (pam_client_subj_type))
+(call pam_rw_faillog_var_log_files (pam_client_subj_type))
+(call pam_var_log_obj_type_transition_faillog_var_log (pam_client_subj_type))
+
+(call pam_create_lastlog_var_log_files (pam_client_subj_type))
+(call pam_rw_lastlog_var_log_files (pam_client_subj_type))
+(call pam_var_log_obj_type_transition_lastlog_var_log (pam_client_subj_type))
+
+;(call ns_client_subj_type (pam_client_subj_type))
+
+;(call utmp_append_wtmp_var_log_files (pam_client_subj_type))
+;(call utmp_read_wtmp_var_log_files (pam_client_subj_type))
+;(call utmp_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
+
+(optional pam_client_subj_type_optional_sd_journal
+	(call sd_journal_client_subj_type (pam_client_subj_type)))
+
+(allow pam_adm_subj_type self (passwd (all)))
+
+(call pam_manage_config (pam_adm_subj_type))
+(call pam_relabel_config (pam_adm_subj_type))
+
+(call pam_manage_faillog_var_log_files (pam_adm_subj_type))
+(call pam_relabel_faillog_var_log_files (pam_adm_subj_type))
+
+(call pam_manage_lastlog_var_log_files (pam_adm_subj_type))
+(call pam_relabel_lastlog_var_log_files (pam_adm_subj_type))
+
+(call pam_manage_pam_console_runtime_files (pam_adm_subj_type))
+(call pam_relabel_pam_console_runtime_files (pam_adm_subj_type))
+
+(allow pam_unconfined_subj_type self (passwd (all)))

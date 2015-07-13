@@ -1,0 +1,24 @@
+(roleattribute utempter_role)
+
+(block utempter
+	(blockinherit app_blk)
+
+	(roleattributeset utempter_role sys.role)
+
+	(roletype utempter_role subj)
+
+	(call dev_rw_inherited_ptmx (subj))
+
+	(call fs_search_devpts (subj))
+
+	;(call ns_client_subj_type (subj))
+
+	;(call utmp_rw_runtime_files (subj))
+	;(call utmp_write_wtmp_var_log_files (subj))
+
+	(optional utempter_optional_myqemu
+		(call myqemu_use_all_inherited_virt_ptys (subj)))
+
+	(optional utempter_optional_screen
+		(call screen_rw_unix_stream_sockets_all_subj (subj))
+		(call screen_read_inherited_home_files (subj))))

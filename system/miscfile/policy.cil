@@ -1,0 +1,77 @@
+(typeattribute miscfile_cert_obj_type)
+
+(typeattribute miscfile_terminfo_data_obj_type)
+
+(typeattribute miscfile_fonts_cache_obj_type)
+(typeattribute miscfile_fonts_config_obj_type)
+(typeattribute miscfile_fonts_data_obj_type)
+
+(block cert
+	(blockinherit file_obj_blk)
+
+	(call miscfile_cert_obj_type (file)))
+
+(block factory
+	(blockinherit file_data_obj_blk))
+
+(block fonts
+	(blockinherit file_config_obj_blk)
+
+	(call miscfile_fonts_config_obj_type (config_file))
+
+	(blockinherit file_data_obj_blk)
+
+	(call miscfile_fonts_data_obj_type (data_file))
+
+	(blockinherit file_var_cache_obj_blk)
+
+	(call miscfile_fonts_cache_obj_type (var_cache_file)))
+
+(block hwdata
+	(blockinherit file_data_obj_blk))
+
+(block locale
+	(blockinherit file_obj_blk))
+
+(block man
+	(blockinherit file_data_obj_blk))
+
+(block modules
+	(blockinherit file_obj_blk))
+
+(block network
+	(blockinherit file_config_obj_blk))
+
+(block passwords
+	(blockinherit file_obj_blk))
+
+(block shadow
+	(blockinherit file_auth_obj_blk))
+
+(block terminfo
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_data_obj_blk)
+
+	(call miscfile_terminfo_data_obj_type (data_file)))
+
+(typeattribute miscfile_read_shadow_subj_type)
+(typeattribute miscfile_not_read_shadow_subj_type)
+
+(typeattributeset miscfile_not_read_shadow_subj_type (not (miscfile_read_shadow_subj_type)))
+
+(neverallow miscfile_not_read_shadow_subj_type shadow.auth_file (file (read)))
+
+(typeattribute miscfile_write_shadow_subj_type)
+(typeattribute miscfile_not_write_shadow_subj_type)
+
+(typeattributeset miscfile_not_write_shadow_subj_type (not (miscfile_write_shadow_subj_type)))
+
+(neverallow miscfile_not_write_shadow_subj_type shadow.auth_file (file (create write)))
+
+(typeattribute miscfile_relabelto_shadow_subj_type)
+(typeattribute miscfile_not_relabelto_shadow_subj_type)
+
+(typeattributeset miscfile_not_relabelto_shadow_subj_type (not (miscfile_relabelto_shadow_subj_type)))
+
+(neverallow miscfile_not_relabelto_shadow_subj_type shadow.auth_file (file (relabelto)))

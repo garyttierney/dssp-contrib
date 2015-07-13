@@ -1,0 +1,7 @@
+(context tetex_var_lib (sys.id sys.role tetex.var_lib_file (systemlow systemlow)))
+(context tetex_var_spool (sys.id sys.role tetex.var_spool_file (systemlow systemlow)))
+
+(filecon "/var/lib/texmf(/.*)?" any tetex_var_lib)
+(filecon "/var/spool/texmf(/.*)?" any tetex_var_spool)
+
+(filecon "/usr/share/texlive/texmf-dist/scripts(/.*)?" file cmd)

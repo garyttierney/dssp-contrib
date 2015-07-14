@@ -120,16 +120,12 @@
 
 (allow pam_adm_subj_type self (passwd (all)))
 
-(call pam_manage_config (pam_adm_subj_type))
-(call pam_relabel_config (pam_adm_subj_type))
+(allow pam_adm_subj_type pam_obj_type manage_file_perms)
+(allow pam_adm_subj_type pam_obj_type manage_dir_perms)
+(allow pam_adm_subj_type pam_obj_type manage_lnk_file_perms)
 
-(call pam_manage_faillog_var_log_files (pam_adm_subj_type))
-(call pam_relabel_faillog_var_log_files (pam_adm_subj_type))
-
-(call pam_manage_lastlog_var_log_files (pam_adm_subj_type))
-(call pam_relabel_lastlog_var_log_files (pam_adm_subj_type))
-
-(call pam_manage_pam_console_runtime_files (pam_adm_subj_type))
-(call pam_relabel_pam_console_runtime_files (pam_adm_subj_type))
+(allow pam_adm_subj_type pam_obj_type relabel_file_perms)
+(allow pam_adm_subj_type pam_obj_type relabel_dir_perms)
+(allow pam_adm_subj_type pam_obj_type relabel_lnk_file_perms)
 
 (allow pam_unconfined_subj_type self (passwd (all)))

@@ -25,7 +25,7 @@
 	(call usersubj_common_login_type (subj))
 
 	(call sys_roleallow_role (role))
-	(call sys_userrole (id))
+	(call sys_userrole_user (id))
 	(userrole id role))
 
 (block usersubj_login_blk
@@ -110,13 +110,13 @@
 (macro usersubj_base_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base (ARG2 ARG3))
 	(call sys_roleallow_role (ARG2))
-	(call sys_userrole (ARG1))
+	(call sys_userrole_user (ARG1))
 	(userrole ARG1 ARG2))
 
 (macro usersubj_base_common_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base_common (ARG2 ARG3))
 	(call sys_roleallow_role (ARG2))
-	(call sys_userrole (ARG1))
+	(call sys_userrole_user (ARG1))
 	(userrole ARG1 ARG2))
 
 (macro usersubj_mls ((user ARG1)(level ARG2)(levelrange ARG3))

@@ -91,7 +91,7 @@
 
 (optional pam_login_prog_subj_type_optional_usersubj
 	(call usersubj_create_keyring_all_common_login_subj (pam_login_prog_subj_type))
-	(call usersubj_send_signal_all_common_login_subjects (pam_login_prog_subj_type)))
+	(call usersubj_send_signal_all_common_login_subj (pam_login_prog_subj_type)))
 
 (call sys_audit_client_subj_type (pam_client_subj_type))
 
@@ -115,8 +115,8 @@
 (call utmp_read_wtmp_var_log_files (pam_client_subj_type))
 (call utmp_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
 
-(optional pam_client_subj_type_optional_sd_journal
-	(call sd_journal_client_subj_type (pam_client_subj_type)))
+(optional pam_client_subj_type_optional_sd_journald
+	(call sd_journald_client_subj_type (pam_client_subj_type)))
 
 (allow pam_adm_subj_type self (passwd (all)))
 

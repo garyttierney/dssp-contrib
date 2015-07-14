@@ -1,0 +1,54 @@
+(macro lvmpolld_exec ((type ARG1))
+	(call can_exec (ARG1 lvmpolld.cmd_file)))
+
+(macro lvmpolld_auto_subj_type_transition ((type ARG1))
+	(call lvmpolld_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 lvmpolld.cmd_file lvmpolld.subj)))
+
+(macro lvmpolld_send_signal ((type ARG1))
+	(allow ARG1 lvmpolld.subj (process (signal))))
+
+(macro lvmpolld_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvmpolld.runtime_file read_file_perms))
+
+(macro lvmpolld_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 lvmpolld.runtime_file manage_file_perms))
+
+(macro lvmpolld_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvmpolld.runtime_file relabel_file_perms))
+
+(macro lvmpolld_runtime_obj_type_transition_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call file_runtime_obj_type_transition (ARG1 lvmpolld.runtime_file ARG2 ARG3)))
+
+(macro lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call lvm_runtime_obj_object_type_transition (ARG1 lvmpolld.runtime_file ARG2 ARG3)))
+
+(macro lvmpolld_read_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmpolld.runtime_file read_sock_file_perms))
+
+(macro lvmpolld_manage_runtime_sock_files ((type ARG1))
+	(call lvm_rw_runtime_dirs (ARG1))
+	(allow ARG1 lvmpolld.runtime_file manage_sock_file_perms))
+
+(macro lvmpolld_relabel_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmpolld.runtime_file relabel_sock_file_perms))
+
+(macro lvmpolld_write_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmpolld.runtime_file write_sock_file_perms))
+
+(macro lvmpolld_stream_connect ((type ARG1))
+	(call lvmpolld_write_runtime_sock_files (ARG1))
+	(allow ARG1 lvmpolld.subj (unix_stream_socket (connectto))))
+
+(macro lvmpolld_admin ((type ARG1)(role ARG2))
+	(typeattributeset lvmpolld_adm_subj_type ARG1)
+	(optional lvmpolld_adm_optional_sd
+		(call sd_sys_svc_adm_subj_type (ARG1)))
+	(optional lvmpolld_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

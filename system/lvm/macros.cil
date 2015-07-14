@@ -1,0 +1,223 @@
+(macro lvm_client_subj_type ((type ARG1))
+	(typeattributeset lvm_client_subj_type ARG1))
+
+(macro lvm_exec ((type ARG1))
+	(call can_exec (ARG1 lvm.cmd_file)))
+
+(macro lvm_audit_access_cmd_files ((type ARG1))
+	(allow ARG1 lvm.cmd_file (file (execute))))
+
+(macro lvm_auto_subj_type_transition ((type ARG1))
+	(call lvm_client_subj_type (ARG1))
+	(call lvm_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 lvm.cmd_file lvm.subj)))
+
+(macro lvm_send_signal ((type ARG1))
+	(allow ARG1 lvm.subj (process (signal))))
+
+(macro lvm_run ((type ARG1)(role ARG2))
+	(call lvm_auto_subj_type_transition (ARG1))
+	(roleattributeset lvm_role ARG2))
+
+(macro lvm_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lvm.config_file search_dir_perms))
+
+(macro lvm_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lvm.config_file list_dir_perms))
+
+(macro lvm_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 lvm.config_file lvm.config_file)))
+
+(macro lvm_manage_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call manage_files_pattern (ARG1 lvm.config_file lvm.config_file)))
+
+(macro lvm_rw_config_dirs ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lvm.config_file rw_dir_perms))
+
+(macro lvm_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 lvm.config_file lvm.config_file)))
+
+(macro lvm_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lvm.config_file read_file_perms)
+	(allow ARG1 lvm.config_file list_dir_perms)
+	(allow ARG1 lvm.config_file read_lnk_file_perms))
+
+(macro lvm_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 lvm.config_file manage_file_perms)
+	(allow ARG1 lvm.config_file manage_dir_perms)
+	(allow ARG1 lvm.config_file manage_lnk_file_perms))
+
+(macro lvm_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lvm.config_file relabel_file_perms)
+	(allow ARG1 lvm.config_file relabel_dir_perms)
+	(allow ARG1 lvm.config_file relabel_lnk_file_perms))
+
+(macro lvm_search_metadata ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(allow ARG1 lvm_metadata.config_file search_dir_perms))
+
+(macro lvm_list_metadata ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(allow ARG1 lvm_metadata.config_file list_dir_perms))
+
+(macro lvm_read_metadata_files ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(call read_files_pattern (ARG1 lvm_metadata.config_file lvm_metadata.config_file)))
+
+(macro lvm_manage_metadata_files ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(call manage_files_pattern (ARG1 lvm_metadata.config_file lvm_metadata.config_file)))
+
+(macro lvm_read_metadata_lnk_files ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 lvm_metadata.config_file lvm_metadata.config_file)))
+
+(macro lvm_read_metadata ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(allow ARG1 lvm_metadata.config_file read_file_perms)
+	(allow ARG1 lvm_metadata.config_file list_dir_perms)
+	(allow ARG1 lvm_metadata.config_file read_lnk_file_perms))
+
+(macro lvm_manage_metadata ((type ARG1))
+	(call lvm_rw_config_dirs (ARG1))
+	(allow ARG1 lvm_metadata.config_file manage_file_perms)
+	(allow ARG1 lvm_metadata.config_file manage_dir_perms)
+	(allow ARG1 lvm_metadata.config_file manage_lnk_file_perms))
+
+(macro lvm_relabel_metadata ((type ARG1))
+	(call lvm_search_config (ARG1))
+	(allow ARG1 lvm_metadata.config_file relabel_file_perms)
+	(allow ARG1 lvm_metadata.config_file relabel_dir_perms)
+	(allow ARG1 lvm_metadata.config_file relabel_lnk_file_perms))
+
+(macro lvm_search_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 lvm.runtime_lock_file search_dir_perms))
+
+(macro lvm_list_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 lvm.runtime_lock_file list_dir_perms))
+
+(macro lvm_read_runtime_lock_files ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(call read_files_pattern (ARG1 lvm.runtime_lock_file lvm.runtime_lock_file)))
+
+(macro lvm_manage_runtime_lock_files ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(call manage_files_pattern (ARG1 lvm.runtime_lock_file lvm.runtime_lock_file)))
+
+(macro lvm_read_runtime_lock_lnk_files ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(call read_lnk_files_pattern (ARG1 lvm.runtime_lock_file lvm.runtime_lock_file)))
+
+(macro lvm_read_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 lvm.runtime_lock_file read_file_perms)
+	(allow ARG1 lvm.runtime_lock_file list_dir_perms)
+	(allow ARG1 lvm.runtime_lock_file read_lnk_file_perms))
+
+(macro lvm_manage_runtime_lock ((type ARG1))
+	(call file_rw_runtime_lock_dirs (ARG1))
+	(allow ARG1 lvm.runtime_lock_file manage_file_perms)
+	(allow ARG1 lvm.runtime_lock_file manage_dir_perms)
+	(allow ARG1 lvm.runtime_lock_file manage_lnk_file_perms))
+
+(macro lvm_relabel_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 lvm.runtime_lock_file relabel_file_perms)
+	(allow ARG1 lvm.runtime_lock_file relabel_dir_perms)
+	(allow ARG1 lvm.runtime_lock_file relabel_lnk_file_perms))
+
+(macro lvm_runtime_lock_obj_type_transition_runtime_lock ((type ARG1)(class ARG2)(name ARG3))
+	(call file_runtime_lock_obj_type_transition (ARG1 lvm.runtime_lock_file ARG2 ARG3)))
+
+(macro lvm_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file search_dir_perms))
+
+(macro lvm_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file list_dir_perms))
+
+(macro lvm_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 lvm.runtime_file lvm.runtime_file)))
+
+(macro lvm_manage_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 lvm.runtime_file lvm.runtime_file)))
+
+(macro lvm_read_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_sock_files_pattern (ARG1 lvm.runtime_file lvm.runtime_file)))
+
+(macro lvm_manage_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_sock_files_pattern (ARG1 lvm.runtime_file lvm.runtime_file)))
+
+(macro lvm_manage_runtime_dirs ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 lvm.runtime_file lvm.runtime_file)))
+
+(macro lvm_add_entry_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file add_entry_dir_perms))
+
+(macro lvm_del_entry_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file del_entry_dir_perms))
+
+(macro lvm_rw_runtime_dirs ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file rw_dir_perms))
+
+(macro lvm_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 lvmetad.runtime_file lvm.runtime_file)))
+
+(macro lvm_runtime_obj_object_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_runtime (ARG1))
+	(call obj_type_transition_pattern (ARG1 lvm.runtime_file ARG2 ARG3 ARG4)))
+
+(macro lvm_runtime_obj_type_transition_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call file_runtime_obj_type_transition (ARG1 lvm.runtime_file ARG2 ARG3)))
+
+(macro lvm_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file read_file_perms)
+	(allow ARG1 lvm.runtime_file list_dir_perms)
+	(allow ARG1 lvm.runtime_file read_lnk_file_perms)
+	(allow ARG1 lvm.runtime_file read_sock_file_perms))
+
+(macro lvm_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 lvm.runtime_file manage_file_perms)
+	(allow ARG1 lvm.runtime_file manage_dir_perms)
+	(allow ARG1 lvm.runtime_file manage_lnk_file_perms)
+	(allow ARG1 lvm.runtime_file manage_sock_file_perms))
+
+(macro lvm_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvm.runtime_file relabel_file_perms)
+	(allow ARG1 lvm.runtime_file relabel_dir_perms)
+	(allow ARG1 lvm.runtime_file relabel_lnk_file_perms)
+	(allow ARG1 lvm.runtime_file relabel_sock_file_perms))
+
+(macro lvm_rw_sem ((type ARG1))
+	(allow ARG1 lvm.subj rw_sem_perms))
+
+(macro lvm_adm ((type ARG1)(role ARG2))
+	(typeattributeset lvm_adm_subj_type ARG1)
+	(optional lvm_adm_optional_sd
+		(call sd_sys_svc_adm_subj_type (ARG1)))
+	(optional lvm_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

@@ -1,0 +1,23 @@
+(context lvm_cmd (sys.id sys.role lvm.cmd_file (systemlow systemlow)))
+(context lvm_config (sys.id sys.role lvm.config_file (systemlow systemlow)))
+(context lvm_metadata_config (sys.id sys.role lvm_metadata.config_file (systemlow systemlow)))
+(context lvm_runtime_lock (sys.id sys.role lvm.runtime_lock_file (systemlow systemlow)))
+(context lvm_runtime (sys.id sys.role lvm.runtime_file (systemlow systemlow)))
+
+(filecon "/etc/lvm(/.*)?" any lvm_config)
+(filecon "/etc/lvm/archive(/.*)?" any lvm_metadata_config)
+(filecon "/etc/lvm/backup(/.*)?" any lvm_metadata_config)
+(filecon "/etc/lvm/cache(/.*)?" any lvm_metadata_config)
+(filecon "/etc/lvm/profile(/.*)?" any lvm_metadata_config)
+(filecon "/usr/lib/systemd/system-generators/lvm2-activation-generator" file lvm_cmd)
+(filecon "/usr/sbin/lvmconf" file lvm_cmd)
+(filecon "/usr/sbin/lvmdump" file lvm_cmd)
+(filecon "/usr/sbin/lvm" file lvm_cmd)
+(filecon "/usr/sbin/vgimportclone" file lvm_cmd)
+(filecon "/var/run/lock/lvm(/.*)?" any lvm_runtime_lock)
+(filecon "/var/run/lvm(/.*)?" any lvm_runtime)
+
+(optional lvm_unit_optional_sd
+	(context lvm_unit (sys.id sys.role lvm.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/blk-availability.*" file lvm_unit)
+	(filecon "/usr/lib/systemd/system/lvm2-.*" file lvm_unit))

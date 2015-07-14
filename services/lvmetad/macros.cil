@@ -1,0 +1,54 @@
+(macro lvmetad_exec ((type ARG1))
+	(call can_exec (ARG1 lvmetad.cmd_file)))
+
+(macro lvmetad_auto_subj_type_transition ((type ARG1))
+	(call lvmetad_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 lvmetad.cmd_file lvmetad.subj)))
+
+(macro lvmetad_send_signal ((type ARG1))
+	(allow ARG1 lvmetad.subj (process (signal))))
+
+(macro lvmetad_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvmetad.runtime_file read_file_perms))
+
+(macro lvmetad_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 lvmetad.runtime_file manage_file_perms))
+
+(macro lvmetad_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lvmetad.runtime_file relabel_file_perms))
+
+(macro lvmetad_runtime_obj_type_transition_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call file_runtime_obj_type_transition (ARG1 lvmetad.runtime_file ARG2 ARG3)))
+
+(macro lvmetad_lvm_runtime_obj_type_transition_lvmetad_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call lvm_runtime_obj_object_type_transition (ARG1 lvmetad.runtime_file ARG2 ARG3)))
+
+(macro lvmetad_read_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmetad.runtime_file read_sock_file_perms))
+
+(macro lvmetad_manage_runtime_sock_files ((type ARG1))
+	(call lvm_rw_runtime_dirs (ARG1))
+	(allow ARG1 lvmetad.runtime_file manage_sock_file_perms))
+
+(macro lvmetad_relabel_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmetad.runtime_file relabel_sock_file_perms))
+
+(macro lvmetad_write_runtime_sock_files ((type ARG1))
+	(call lvm_search_runtime (ARG1))
+	(allow ARG1 lvmetad.runtime_file write_sock_file_perms))
+
+(macro lvmetad_stream_connect ((type ARG1))
+	(call lvmetad_write_runtime_sock_files (ARG1))
+	(allow ARG1 lvmetad.subj (unix_stream_socket (connectto))))
+
+(macro lvmetad_admin ((type ARG1)(role ARG2))
+	(typeattributeset lvmetad_adm_subj_type ARG1)
+	(optional lvmetad_adm_optional_sd
+		(call sd_sys_svc_adm_subj_type (ARG1)))
+	(optional lvmetad_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

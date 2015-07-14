@@ -1,0 +1,57 @@
+(typeattribute lvmpolld_adm_subj_type)
+
+(typeattribute lvmpolld_obj_type)
+
+(block lvmpolld
+        (blockinherit subj_blk)
+
+        (blockinherit cmd_obj_blk)
+
+        (call subj_entry (subj cmd_file))
+
+        (roletype sys.role subj)
+
+        (blockinherit file_runtime_obj_blk)
+
+	(typeattributeset lvmpolld_obj_type runtime_file)
+
+	(allow subj self (process (setfscreate)))
+	(allow subj self create_unix_stream_stream_socket_perms)
+
+	(call sec_get_enforce_mode (subj))
+
+	(call lvm_audit_access_cmd_files (subj))
+
+	(call lvm_manage_runtime_dirs (subj))
+	(call lvm_runtime_obj_type_transition_runtime (subj dir "lvm"))
+
+	(call lvmpolld_manage_runtime_files (subj))
+	(call lvmpolld_runtime_obj_type_transition_runtime (subj file "*"))
+
+	(call lvmpolld_manage_runtime_sock_files (subj))
+	(call lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime (subj sock_file "lvmpolld.socket"))
+
+	(call miscfile_read_locale (subj))
+
+	;(call seutil_read_selinux_config_files (subj))
+	;(call seutil_read_file_context_files (subj))
+	;(call seutil_read_default_context_files (subj))
+
+	(optional lvmpolld_optional_sd
+		(call sd_daemon (subj cmd_file))
+		(call sd_unix_stream_socket_activated (subj runtime_file))
+		(call sd_pid_obj_type (runtime_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset lvmpolld_obj_type unit_file)
+
+		(allow lvmpolld_adm_subj_type unit_file (service (all)))))
+
+(call lvm_rw_runtime_dirs (lvmpolld_adm_subj_type))
+
+(allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_file_perms)
+(allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_sock_file_perms)
+
+(allow lvmpolld_adm_subj_type lvmpolld_obj_type relabel_file_perms)
+(allow lvmpolld_adm_subj_type lvmpolld_obj_type relabel_sock_file_perms)

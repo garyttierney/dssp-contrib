@@ -1,0 +1,53 @@
+(typeattribute lvmetad_adm_subj_type)
+
+(typeattribute lvmetad_obj_type)
+
+(block lvmetad
+        (blockinherit subj_blk)
+
+        (blockinherit cmd_obj_blk)
+
+        (call subj_entry (subj cmd_file))
+
+        (roletype sys.role subj)
+
+        (blockinherit file_runtime_obj_blk)
+
+	(typeattributeset lvmetad_obj_type runtime_file)
+
+	(allow subj self (process (setfscreate)))
+	(allow subj self create_unix_stream_stream_socket_perms)
+
+	(call sec_get_enforce_mode (subj))
+
+	(call lvmetad_manage_runtime_files (subj))
+	(call lvmetad_runtime_obj_type_transition_runtime (subj file "*"))
+
+	(call lvmetad_manage_runtime_sock_files (subj))
+	(call lvmetad_lvm_runtime_obj_type_transition_lvmetad_runtime (subj sock_file "lvmetad.socket"))
+
+	(call lvm_manage_runtime_dirs (subj))
+	(call lvm_runtime_obj_type_transition_runtime (subj dir "lvm"))
+
+	;(call seutil_read_selinux_config_files (subj))
+	;(call seutil_read_file_context_files (subj))
+	;(call seutil_read_default_context_files (subj))
+
+	(optional lvmetad_optional_sd
+		(call sd_daemon (subj cmd_file))
+		(call sd_unix_stream_socket_activated (subj runtime_file))
+		(call sd_pid_obj_type (runtime_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset lvmetad_obj_type unit_file)
+
+		(allow lvmetad_adm_subj_type unit_file (service (all)))))
+
+(call lvm_rw_runtime_dirs (lvmetad_adm_subj_type))
+
+(allow lvmetad_adm_subj_type lvmetad_obj_type manage_file_perms)
+(allow lvmetad_adm_subj_type lvmetad_obj_type manage_sock_file_perms)
+
+(allow lvmetad_adm_subj_type lvmetad_obj_type relabel_file_perms)
+(allow lvmetad_adm_subj_type lvmetad_obj_type relabel_sock_file_perms)

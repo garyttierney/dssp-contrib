@@ -21,7 +21,9 @@
 
 		(blockabstract sd_unit_obj_blk)
 
-		(typeattributeset dmeventd_obj_type unit_file)))
+		(typeattributeset dmeventd_obj_type unit_file))
+
+		(allow dmeventd_adm_subj_type dmeventd.unit_file (service (all))))
 
 (call file_rw_runtime_dirs (dmeventd_adm_subj_type))
 

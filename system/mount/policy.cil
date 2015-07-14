@@ -1,0 +1,51 @@
+(boolean mount_any_file false)
+
+(roleattribute mount_role)
+
+(block mount
+	(blockinherit app_blk)
+
+	(roleattributeset mount_role sys.role)
+
+	(roletype mount_role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(allow subj self (capability (dac_override sys_admin fowner)))
+
+	(call sys_mounton_mountpoint_dirs (subj))
+	(call sys_request_load_module (subj))
+	(call sys_setsched (subj))
+
+	(call dev_rw_loop_control (subj))
+
+	(call file_read_config_files (subj))
+
+	(call fs_getattr_all_fs (subj))
+	(call fs_mount_all_fs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_remount_all_fs (subj))
+	(call fs_unmount_all_fs (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call mount_manage_runtime (subj))
+	(call mount_runtime_obj_type_transition_runtime (subj "*"))
+
+	(booleanif (mount_any_file) (true
+		(call file_rw_all_files_except (subj))
+		(call file_mounton_all_except (subj))))
+
+	(optional mount_optional_sd_machined
+		(call sd_machined_rw_var_lib_files (subj)))
+
+	(optional mount_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional mount_optional_storage
+		(call storage_rw_all (subj))))
+
+(block mount_any_file
+	(blockinherit sec_bool_obj_blk))

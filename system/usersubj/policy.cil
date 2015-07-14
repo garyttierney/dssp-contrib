@@ -1,0 +1,138 @@
+(typeattribute usersubj_type)
+(typeattribute usersubj_common_type)
+
+(typeattribute usersubj_common_login_type)
+
+(typeattribute usersubj_priv_login_type)
+(typeattribute usersubj_unpriv_login_type)
+
+(typeattribute usersubj_home_user_obj_type)
+
+(typeattribute usersubj_home_cache_obj_type)
+(typeattribute usersubj_home_config_obj_type)
+(typeattribute usersubj_home_data_obj_type)
+
+(typeattribute usersubj_var_spool_user_obj_type)
+(typeattribute usersubj_var_tmp_user_obj_type)
+(typeattribute usersubj_tmpfs_user_obj_type)
+
+(typeattribute usersubj_pty_user_obj_type)
+(typeattribute usersubj_tty_user_obj_type)
+
+(block home_cache
+	(blockinherit usersubj_home_cache_obj_blk))
+
+(block home_cert
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(call miscfile_cert_obj_type (home_user_file)))
+
+(block home_config
+	(blockinherit usersubj_home_config_obj_blk))
+
+(block home_data
+	(blockinherit usersubj_home_data_obj_blk))
+
+(block home_dir
+	(blockinherit file_obj_blk)
+
+	(call sys_mountpoint_obj_type (file)))
+
+(block home_cmd
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(call cmd_obj_type (home_user_file)))
+
+(block home_fonts
+	(blockinherit usersubj_home_cache_obj_blk)
+
+	(call miscfile_fonts_cache_obj_type (home_cache_file))
+
+	(blockinherit usersubj_home_config_obj_blk)
+
+	(call miscfile_fonts_config_obj_type (home_config_file))
+
+	(blockinherit usersubj_home_data_obj_blk)
+
+	(call miscfile_fonts_data_obj_type (home_data_file)))
+
+(block home_terminfo
+	(blockinherit usersubj_home_data_obj_blk)
+
+	(call miscfile_terminfo_data_obj_type (home_data_file)))
+
+(block home_user
+	(blockinherit usersubj_home_user_obj_blk))
+
+(block var_tmp_user
+	(blockinherit usersubj_var_tmp_user_obj_blk))
+
+(block tmpfs_user
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block tty_user
+	(blockinherit term_tty_obj_blk)
+
+	(typeattributeset usersubj_tty_user_obj_type tty_dev))
+
+(block pty_user
+	(blockinherit term_pty_obj_blk)
+
+	(typeattributeset usersubj_pty_user_obj_type pty_dev))
+
+(block var_spool_user
+	(blockinherit file_var_spool_obj_blk)
+
+	(typeattributeset usersubj_var_spool_user_obj_type var_spool_file))
+
+(allow usersubj_common_type self (process (setpgid getattr getsched setsched setfscreate)))
+(allow usersubj_common_type self create_unix_stream_socket_perms)
+
+(call cmd_obj_entry_subj (usersubj_common_type))
+(call cmd_shell_obj_entry_subj (usersubj_common_type))
+
+(call cmd_exec_cmd (usersubj_common_type))
+(call cmd_exec_shell (usersubj_common_type))
+
+(call fs_getattr_fs (usersubj_common_type))
+
+(call subj_interactive_fd_type (usersubj_common_type))
+(call subj_user_exemption_target_type (usersubj_common_type))
+
+(call miscfile_read_all_terminfo (usersubj_common_type))
+
+(call usersubj_use_inherited_term (usersubj_common_type))
+
+(allow usersubj_common_login_type self create_unix_dgram_socket_perms)
+
+(call sys_read_net_proc_files (usersubj_common_login_type))
+
+(call dev_rw_inherited_ptmx (usersubj_common_login_type))
+
+(call file_list_mnt (usersubj_common_login_type))
+(call file_read_config (usersubj_common_login_type))
+(call file_read_data (usersubj_common_login_type))
+
+(call fs_getattr_sysfs_fs (usersubj_common_login_type))
+(call fs_list_tmpfs (usersubj_common_login_type))
+
+(call sec_get_enforce_mode (usersubj_common_login_type))
+
+;(call login_send_signull (usersubj_common_login_type))
+
+(call miscfile_read_fonts (usersubj_common_login_type))
+(call miscfile_read_passwords (usersubj_common_login_type))
+(call miscfile_read_man (usersubj_common_login_type))
+
+;(call seutil_read_default_context_files (usersubj_common_login_type))
+;(call seutil_read_file_context_files (usersubj_common_login_type))
+;(call seutil_read_selinux_config_files (usersubj_common_login_type))
+
+(optional usersubj_optional_sd_tmpfiles
+	(call sd_tmpfiles_obj_exception_type (usersubj_home_user_obj_type)))
+
+(typeattribute usersubj_common_type_except_type)
+(typeattribute usersubj_common_type_exception_type)
+
+(typeattributeset usersubj_unpriv_login_type (and (usersubj_common_login_type) (not (usersubj_priv_login_type))))
+(typeattributeset usersubj_common_type_except_type (and (usersubj_common_type) (not (usersubj_common_type_exception_type))))

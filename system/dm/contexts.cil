@@ -1,0 +1,5 @@
+(context dmcrypt_cmd (sys.id sys.role dmcrypt.cmd_file (systemlow systemlow)))
+(context dmsetup_cmd (sys.id sys.role dmsetup.cmd_file (systemlow systemlow)))
+
+(filecon "/usr/sbin/cryptsetup" file dmcrypt_cmd)
+(filecon "/usr/sbin/dmsetup" file dmsetup_cmd)

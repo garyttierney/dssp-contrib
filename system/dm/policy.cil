@@ -1,0 +1,67 @@
+(roleattribute dmcrypt_role)
+(roleattribute dmsetup_role)
+
+(block dmcrypt
+	(blockinherit app_blk)
+
+	(roleattributeset dmcrypt_role sys.role)
+
+	(roletype dmcrypt_role subj)
+
+	(allow subj self (capability (ipc_lock sys_admin sys_nice)))
+	(allow subj self (process (setsched)))
+	(allow subj self create_socket_perms)
+	(allow subj self (socket (accept)))
+	(allow subj self create_sem_perms)
+
+	(call sys_get_sysvipc_info (subj))
+	(call sys_read_crypto_sysctl_files (subj))
+	(call sys_request_load_module (subj))
+
+	(call fs_getattr_debugfs_fs (subj))
+	(call fs_getattr_devtmpfs_fs (subj))
+	(call fs_list_devtmpfs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_read_tracefs (subj))
+	(call fs_mount_tracefs_fs (subj))
+
+	(call dev_read_random (subj))
+	(call dev_read_urandom (subj))
+	(call dev_rw_lvm_control (subj))
+
+	(call storage_rw_all (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(optional dmcrypt_optional_sd_udevd
+		(call sd_udevd_client_subj_type (subj))))
+
+(block dmsetup
+	(blockinherit app_blk)
+
+	(roleattributeset dmsetup_role sys.role)
+
+	(roletype dmsetup_role subj)
+
+	(allow subj self (capability (sys_admin)))
+
+	(call sys_get_sysvipc_info (subj))
+
+	(call dev_rw_lvm_control (subj))
+
+	(call dm_rw_dmcrypt_sem (subj))
+
+	(optional dmsetup_optional_lvm
+		(call lvm_rw_sem (subj)))
+
+	(optional dmsetup_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional dmsetup_optional_sd_udevd
+		(call sd_udevd_client_subj_type (subj))
+		(call sd_udevd_rw_inherited_udp_sockets (subj)))
+
+	(optional dmsetup_optional_unconfined
+		(call unconfined_rw_sem_all_subj (subj))))

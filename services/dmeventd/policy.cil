@@ -1,0 +1,32 @@
+(typeattribute dmeventd_adm_subj_type)
+
+(typeattribute dmeventd_obj_type)
+
+(block dmeventd
+        (blockinherit subj_blk)
+
+        (blockinherit cmd_obj_blk)
+
+        (call subj_entry (subj cmd_file))
+
+        (roletype sys.role subj)
+
+        (blockinherit file_runtime_obj_blk)
+
+        (typeattributeset dmeventd_obj_type runtime_file)
+
+	(optional dmeventd_optional_sd
+		(call sd_daemon (subj cmd_file))
+		(call sd_fifo_file_socket_activated_obj_type (runtime_file))
+
+		(blockabstract sd_unit_obj_blk)
+
+		(typeattributeset dmeventd_obj_type unit_file)))
+
+(call file_rw_runtime_dirs (dmeventd_adm_subj_type))
+
+(allow dmeventd_adm_subj_type dmeventd_obj_type manage_file_perms)
+(allow dmeventd_adm_subj_type dmeventd_obj_type manage_fifo_file_perms)
+
+(allow dmeventd_adm_subj_type dmeventd_obj_type relabel_file_perms)
+(allow dmeventd_adm_subj_type dmeventd_obj_type relabel_fifo_file_perms)

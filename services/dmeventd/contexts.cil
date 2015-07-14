@@ -1,0 +1,11 @@
+(context dmeventd_cmd (sys.id sys.role dmeventd.cmd_file (systemlow systemlow)))
+(context dmeventd_runtime (sys.id sys.role dmeventd.runtime_file (systemlow systemlow)))
+
+(filecon "/usr/sbin/dmeventd" file dmeventd_cmd)
+(filecon "/var/run/dmeventd-client" pipe dmeventd_runtime)
+(filecon "/var/run/dmeventd-server" pipe dmeventd_runtime)
+(filecon "/var/run/dmeventd\.pid" file dmeventd_runtime)
+
+(optional dmeventd_unit_optional_sd
+	(context dmeventd_unit (sys.id sys.role dmeventd.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/dm-event.*" file dmeventd_unit))

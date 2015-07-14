@@ -1,0 +1,40 @@
+(macro dmeventd_exec ((type ARG1))
+	(call can_exec (ARG1 dmeventd.cmd_file)))
+
+(macro dmeventd_auto_subj_type_transition ((type ARG1))
+	(call dmeventd_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 dmeventd.cmd_file dmeventd.subj)))
+
+(macro dmeventd_send_signal ((type ARG1))
+	(allow ARG1 dmeventd.subj (process (signal))))
+
+(macro dmeventd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dmeventd.runtime_file read_file_perms))
+
+(macro dmeventd_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 dmeventd.runtime_file manage_file_perms))
+
+(macro dmeventd_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dmeventd.runtime_file relabel_file_perms))
+
+(macro dmeventd_read_runtime_fifo_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dmeventd.runtime_file read_fifo_file_perms))
+
+(macro dmeventd_manage_runtime_fifo_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 dmeventd.runtime_file manage_fifo_file_perms))
+
+(macro dmeventd_relabel_runtime_fifo_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dmeventd.runtime_file relabel_fifo_file_perms))
+
+(macro dmeventd_adm ((type ARG1)(role ARG2))
+	(typeattributeset dmeventd_adm_subj_type ARG1)
+	(optional dmeventd_adm_optional_sd
+		(call sd_sys_svc_adm_subj_type (ARG1)))
+	(optional dmeventd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

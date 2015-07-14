@@ -33,9 +33,16 @@
 
 	(blockinherit usersubj_base_login_blk)
 
-	(call usersubj_mls_template (id systemlow (systemlow systemhigh)))
+	(call usersubj_mls_template (id systemlow (systemlow systemhigh))))
 
-	(call usersubj_obj_template (subj)))
+(block usersubj_priv_login_blk
+	(blockabstract usersubj_priv_login_blk)
+
+	(blockinherit usersubj_login_blk)
+
+	(call usersubj_priv_login_type (subj))
+
+	(call usersubj_mls_template (id systemlow (systemlow systemhigh))))
 
 (block usersubj_home_cache_obj_blk
 	(blockabstract usersubj_home_cache_obj_blk)
@@ -137,7 +144,7 @@
 	(call usersubj_home_data_template (ARG1))
 	(call usersubj_tmpfs_user_template (ARG1))
 	(call usersubj_rw_var_spool_user_files (ARG1))
-	(call usersubj_term_template (ARG1))
+	(call usersubj_term (ARG1))
 	(call usersubj_var_tmp_user_template (ARG1)))
 
 (macro usersubj_dynamic_subj_type_transition_common_login_subj ((type ARG1))
@@ -1260,9 +1267,8 @@
 	(call fs_search_devpts (ARG1))
 	(allow ARG1 pty_user.pty_dev relabelfrom_chr_file_perms))
 
-(macro usersubj_pty_user_template ((type ARG1))
-	(call term_user_pty (ARG1 pty_user.pty_dev))
-	(call usersubj_use_inherited_ptys (ARG1)))
+(macro usersubj_pty ((type ARG1))
+	(call term_user_pty (ARG1 pty_user.pty_dev)))
 
 (macro usersubj_getattr_ttys ((type ARG1))
 	(call fs_search_devtmpfs (ARG1))
@@ -1298,9 +1304,8 @@
 	(call fs_search_devtmpfs (ARG1))
 	(allow ARG1 tty_user.tty_dev relabelfrom_chr_file_perms))
 
-(macro usersubj_tty_user_template ((type ARG1))
-	(call term_user_tty (ARG1 tty_user.tty_dev))
-	(call usersubj_use_inherited_ttys (ARG1)))
+(macro usersubj_tty ((type ARG1))
+	(call term_user_tty (ARG1 tty_user.tty_dev)))
 
 (macro usersubj_getattr_term ((type ARG1))
 	(call fs_search_devpts (ARG1))
@@ -1345,6 +1350,6 @@
 	(allow ARG1 pty_user.pty_dev relabelfrom_chr_file_perms)
 	(allow ARG1 tty_user.tty_dev relabelfrom_chr_file_perms))
 
-(macro usersubj_term_template ((type ARG1))
-	(call usersubj_pty_user_template (ARG1))
-	(call usersubj_tty_user_template (ARG1)))
+(macro usersubj_term ((type ARG1))
+	(call usersubj_pty (ARG1))
+	(call usersubj_tty (ARG1)))

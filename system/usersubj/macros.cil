@@ -1056,7 +1056,7 @@
 	(allow ARG1 var_spool_user.var_spool_file relabel_file_perms))
 
 (macro usersubj_var_spool_obj_type_transition_var_spool_user ((type ARG1)(name ARG2))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_terminfo.home_data_file file ARG3)))
+	(call file_var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG3)))
 
 (macro usersubj_search_home_fonts_cache ((type ARG1))
 	(call usersubj_search_home_cache (ARG1))

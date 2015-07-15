@@ -33,9 +33,9 @@
 
 	(call miscfile_read_locale (subj))
 
-	;(call seutil_read_selinux_config_files (subj))
-	;(call seutil_read_file_context_files (subj))
-	;(call seutil_read_default_context_files (subj))
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+	(call seutil_read_default_context_files (subj))
 
 	(optional lvmpolld_optional_sd
 		(call sd_daemon (subj cmd_file))

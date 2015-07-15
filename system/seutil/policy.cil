@@ -1,0 +1,167 @@
+(roleattribute seutil_load_policy_role)
+(roleattribute seutil_matchpathcon_role)
+(roleattribute seutil_setfiles_role)
+(roleattribute seutil_setenforce_role)
+(roleattribute seutil_setsebool_role)
+
+(typeattribute seutil_libselinux_linked_client_subj_type)
+(typeattribute seutil_setsebool_client_subj_type)
+
+(block load_policy
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_load_policy_role sys.role)
+
+	(roletype seutil_load_policy_role subj)
+
+	(call sec_load_policy_subj_type (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_policy_config_files (subj))
+
+	(call miscfile_read_locale (subj)))
+
+(block setfiles
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_setfiles_role sys.role)
+
+	(roletype seutil_setfiles_role subj)
+
+	(allow subj self (capability (dac_override fowner)))
+
+	(call sys_audit_client_subj_type (subj))
+	(call sys_list_invalid (subj))
+	(call sys_list_unlabeled (subj))
+	(call sys_read_invalid_lnk_files (subj))
+	(call sys_read_unlabeled_lnk_files (subj))
+	(call sys_relabelfrom_invalid (subj))
+	(call sys_relabelfrom_unlabeled (subj))
+
+	(call dev_relabel_all (subj))
+
+	(call file_list_all (subj))
+	(call file_read_all_lnk_files (subj))
+	(call file_relabel_all_except (subj))
+
+	(call fs_getattr_all_fs (subj))
+	(call fs_list_all (subj))
+	(call fs_mount_tracefs_fs (subj))
+	(call fs_read_all_lnk_files (subj))
+	(call fs_read_cgroup_files (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_tracefs (subj))
+	(call fs_relabel_all (subj))
+
+	(call sec_get_enforce_mode (subj))
+	(call sec_validate_context (subj))
+
+	(call subj_obj_id_change_exemption_type (subj))
+
+	(call term_use_inherited_console (subj))
+
+	(call miscfile_relabel_shadow (subj))
+
+	(call seutil_read_default_context_files (subj))
+	(call seutil_read_file_context_files (subj))
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_relabel_policy_config (subj))
+
+	(optional setfiles_optional_auditd
+		(call auditd_relabel_config (subj))
+		(call auditd_relabel_var_log (subj)))
+
+	(optional setfiles_optional_audispd
+		(call audispd_relabel_config (subj)))
+
+	(optional setfiles_optional_sd
+		(call sd_daemon_forked_subj_type (subj))))
+
+(block setsebool
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_setsebool_role sys.role)
+
+	(roletype seutil_setsebool_role subj)
+
+	(call sec_set_all_booleans (subj))
+
+	(call seutil_setsebool_client_subj_type (subj)))
+
+(block setenforce
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_setenforce_role sys.role)
+
+	(roletype seutil_setenforce_role subj)
+
+	(call sec_set_enforce_mode (subj))
+
+	(call seutil_read_selinux_config_files (subj)))
+
+(block matchpathcon
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_matchpathcon_role sys.role)
+
+	(roletype seutil_matchpathcon_role subj)
+
+	(call sys_getattr_all_sysctl_files (subj))
+	(call sys_getattr_all_sysctl_lnk_files (subj))
+
+	(call dev_getattr_all (subj))
+
+	(call file_getattr_all (subj))
+	(call file_read_all_lnk_files (subj))
+
+	(call fs_getattr_all (subj))
+	(call fs_read_all_lnk_files (subj))
+
+	(call sec_validate_context (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj)))
+
+(block default_context
+	(blockinherit file_config_obj_blk))
+
+(block file_context
+	(blockinherit file_config_obj_blk))
+
+(block policy_config
+	(blockinherit file_sec_obj_blk))
+
+(block policy_src
+	(blockinherit file_config_obj_blk))
+
+(block selinux_config
+	(blockinherit file_config_obj_blk))
+
+(typeattribute seutil_relabelto_binary_policy_subj_type)
+(typeattribute seutil_not_relabelto_binary_policy_subj_type)
+
+(typeattributeset seutil_not_relabelto_binary_policy_subj_type (not (seutil_relabelto_binary_policy_subj_type)))
+
+(neverallow seutil_not_relabelto_binary_policy_subj_type policy_config.sec_file (file (relabelto)))
+
+(typeattribute seutil_write_binary_policy_subj_type)
+(typeattribute seutil_not_write_binary_policy_subj_type)
+
+(typeattributeset seutil_not_write_binary_policy_subj_type (not (seutil_write_binary_policy_subj_type)))
+
+(neverallow seutil_not_write_binary_policy_subj_type policy_config.sec_file (file (create write)))
+
+(call sec_list_fs (seutil_setsebool_client_subj_type))
+
+(call seutil_read_selinux_config_files (seutil_setsebool_client_subj_type))
+
+(call miscfile_read_locale (seutil_setsebool_client_subj_type))
+
+(call nss_client_subj_type (seutil_setsebool_client_subj_type))
+
+(optional setsebool_optional_sd_journald
+	(call sd_journald_client_subj_type (seutil_setsebool_client_subj_type)))
+
+(call sec_getattr_fs (seutil_libselinux_linked_client_subj_type))
+
+(call seutil_search_selinux_config (seutil_libselinux_linked_client_subj_type))

@@ -49,8 +49,9 @@
 
 	(call mount_read_runtime_files (subj))
 
-	;(call seutil_read_selinux_config_files (subj))
-	;(call seutil_read_file_context_files (subj))
+	(call seutil_read_default_context_files (subj))
+	(call seutil_read_file_context_files (subj))
+	(call seutil_read_selinux_config_files (subj))
 
 	(optional fstools_optional_mount
 		(booleanif (mount_any_file) (true

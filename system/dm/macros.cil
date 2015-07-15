@@ -10,7 +10,7 @@
 
 (macro dm_run_dmcrypt ((type ARG1)(role ARG2))
 	(call dm_auto_subj_type_transition_dmcrypt (ARG1))
-	(roleattributeset dmcrypt_role ARG2))
+	(roleattributeset dm_dmcrypt_role ARG2))
 
 (macro dm_rw_dmcrypt_sem ((type ARG1))
 	(allow ARG1 dmcrypt.subj rw_sem_perms))
@@ -27,4 +27,4 @@
 
 (macro dm_run_dmsetup ((type ARG1)(role ARG2))
 	(call dm_auto_subj_type_transition_dmsetup (ARG1))
-	(roleattributeset dmsetup_role ARG2))
+	(roleattributeset dm_dmsetup_role ARG2))

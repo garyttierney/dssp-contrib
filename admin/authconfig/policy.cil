@@ -28,6 +28,8 @@
 
 	(call file_read_data (subj))
 
+	(call sec_get_enforce_mode (subj))
+
 	(call miscfile_getattr_shadow (subj))
 
 	(call nss_manage_config_files (subj))
@@ -35,8 +37,7 @@
 
 	(call pam_manage_config (subj))
 
-	;(call seutil_run_setfiles (subj authconfig_role))
-	;(call seutil_run_getsebool (subj authconfig_role))
+	(call seutil_run_setfiles (subj authconfig_role))
 
 	(optional authconfig_optional_sd_systemctl
 		(call sd_systemctl_run (subj authconfig_role))))

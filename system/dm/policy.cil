@@ -1,12 +1,12 @@
-(roleattribute dmcrypt_role)
-(roleattribute dmsetup_role)
+(roleattribute dm_dmcrypt_role)
+(roleattribute dm_dmsetup_role)
 
 (block dmcrypt
 	(blockinherit app_blk)
 
-	(roleattributeset dmcrypt_role sys.role)
+	(roleattributeset dm_dmcrypt_role sys.role)
 
-	(roletype dmcrypt_role subj)
+	(roletype dm_dmcrypt_role subj)
 
 	(allow subj self (capability (ipc_lock sys_admin sys_nice)))
 	(allow subj self (process (setsched)))
@@ -41,9 +41,9 @@
 (block dmsetup
 	(blockinherit app_blk)
 
-	(roleattributeset dmsetup_role sys.role)
+	(roleattributeset dm_dmsetup_role sys.role)
 
-	(roletype dmsetup_role subj)
+	(roletype dm_dmsetup_role subj)
 
 	(allow subj self (capability (sys_admin)))
 

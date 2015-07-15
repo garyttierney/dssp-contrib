@@ -29,9 +29,9 @@
 	(call lvm_manage_runtime_dirs (subj))
 	(call lvm_runtime_obj_type_transition_runtime (subj dir "lvm"))
 
-	;(call seutil_read_selinux_config_files (subj))
-	;(call seutil_read_file_context_files (subj))
-	;(call seutil_read_default_context_files (subj))
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+	(call seutil_read_default_context_files (subj))
 
 	(optional lvmetad_optional_sd
 		(call sd_daemon (subj cmd_file))

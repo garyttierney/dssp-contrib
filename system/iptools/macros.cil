@@ -1,0 +1,47 @@
+(macro iptools_exec ((type ARG1))
+	(call can_exec (ARG1 iptools.cmd_file)))
+
+(macro iptools_auto_subj_type_transition ((type ARG1))
+	(call iptools_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 iptools.cmd_file iptools.subj)))
+
+(macro iptools_send_signal ((type ARG1))
+	(allow ARG1 iptools.subj (process (signal))))
+
+(macro iptools_run ((type ARG1)(role ARG2))
+	(call iptools_auto_subj_type_transition (ARG1))
+	(roleattributeset iptools_role (ARG2)))
+
+(macro iptools_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 iptools.config_file search_dir_perms))
+
+(macro iptools_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 iptools.config_file list_dir_perms))
+
+(macro iptools_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 iptools.config_file iptools.config_file)))
+
+(macro iptools_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 iptools.config_file iptools.config_file)))
+
+(macro iptools_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 iptools.config_file read_file_perms)
+	(allow ARG1 iptools.config_file list_dir_perms)
+	(allow ARG1 iptools.config_file read_lnk_file_perms))
+
+(macro iptools_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 iptools.config_file manage_file_perms)
+	(allow ARG1 iptools.config_file manage_dir_perms)
+	(allow ARG1 iptools.config_file manage_lnk_file_perms))
+
+(macro iptools_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 iptools.config_file relabel_file_perms)
+	(allow ARG1 iptools.config_file relabel_dir_perms)
+	(allow ARG1 iptools.config_file relabel_lnk_file_perms))

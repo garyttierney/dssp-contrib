@@ -1,0 +1,66 @@
+(roleattribute kmod_role)
+
+(typeattribute kmod_obj_type)
+
+(typeattribute kmod_adm_subj_type)
+
+(block kmod
+	(blockinherit app_blk)
+
+	(roleattributeset kmod_role sys.role)
+
+	(roletype kmod_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset kmod_obj_type config_file)
+
+	(allow subj self (capability (dac_override)))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call sys_link_keyring (subj))
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_request_load_module (subj))
+
+	(call fs_getattr_debugfs_fs (subj))
+	(call fs_mount_tracefs_fs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_read_tracefs (subj))
+
+	(call kmod_read_config (subj))
+
+	(call miscfile_read_modules (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional kmod_optional_iptables
+		(call iptables_dontaudit_rw_rawip_sockets (subj))
+		(call iptables_dontaudit_rw_stream_sockets (subj)))
+
+	(optional kmod_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset kmod_obj_type unit_file)
+
+		(allow kmod_adm_subj_type unit_file (service (all))))
+
+	(optional kmod_optional_sd_tmpfiles
+		(call sd_tmpfiles_manage_runtime_files (subj))))
+
+(allow kmod_adm_subj_type kmod.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (kmod_adm_subj_type kmod.subj))
+
+(call file_search_config (kmod_adm_subj_type))
+
+(allow kmod_adm_subj_type kmod_obj_type manage_file_perms)
+(allow kmod_adm_subj_type kmod_obj_type manage_dir_perms)
+(allow kmod_adm_subj_type kmod_obj_type manage_lnk_file_perms)
+
+(allow kmod_adm_subj_type kmod_obj_type relabel_file_perms)
+(allow kmod_adm_subj_type kmod_obj_type relabel_dir_perms)
+(allow kmod_adm_subj_type kmod_obj_type relabel_lnk_file_perms)

@@ -1,0 +1,75 @@
+(macro md_exec_mdadm ((type ARG1))
+	(call can_exec (ARG1 mdadm.cmd_file)))
+
+(macro md_auto_subj_type_transition_mdadm ((type ARG1))
+	(call md_send_signal_mdadm (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 mdadm.cmd_file mdadm.subj)))
+
+(macro md_send_signal_mdadm ((type ARG1))
+	(allow ARG1 mdadm.subj (process (signal))))
+
+(macro md_run_mdadm ((type ARG1)(role ARG2))
+	(call md_auto_subj_type_transition_mdadm (ARG1))
+	(roleattributeset md_mdadm_role ARG2))
+
+(macro md_exec_mdmon ((type ARG1))
+	(call can_exec (ARG1 mdmon.cmd_file)))
+
+(macro md_auto_subj_type_transition_mdmon ((type ARG1))
+	(call md_send_signal_mdmon (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 mdmon.cmd_file mdmon.subj)))
+
+(macro md_send_signal_mdmon ((type ARG1))
+	(allow ARG1 mdmon.subj (process (signal))))
+
+(macro md_search_mdadm_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mdadm.runtime_file search_dir_perms))
+
+(macro md_list_mdadm_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mdadm.runtime_file list_dir_perms))
+
+(macro md_read_mdadm_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 mdadm.runtime_file mdadm.runtime_file)))
+
+(macro md_rw_mdadm_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call rw_files_pattern (ARG1 mdadm.runtime_file mdadm.runtime_file)))
+
+(macro md_manage_mdadm_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(call manage_files_pattern (ARG1 mdadm.runtime_file mdadm.runtime_file)))
+
+(macro md_read_mdadm_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 mdadm.runtime_file mdadm.runtime_file)))
+
+(macro md_read_mdadm_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mdadm.runtime_file read_file_perms)
+	(allow ARG1 mdadm.runtime_file list_dir_perms)
+	(allow ARG1 mdadm.runtime_file read_lnk_file_perms))
+
+(macro md_manage_mdadm_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 mdadm.runtime_file manage_file_perms)
+	(allow ARG1 mdadm.runtime_file manage_dir_perms)
+	(allow ARG1 mdadm.runtime_file manage_lnk_file_perms))
+
+(macro md_relabel_mdadm_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mdadm.runtime_file relabel_file_perms)
+	(allow ARG1 mdadm.runtime_file relabel_dir_perms)
+	(allow ARG1 mdadm.runtime_file relabel_lnk_file_perms))
+
+(macro md_runtime_obj_type_transition_mdadm_runtime ((type ARG1)(class ARG2)(name ARG3))
+	(call file_runtime_obj_type_transition (ARG1 mdadm.runtime_file ARG2 ARG3)))
+
+(macro md_adm ((type ARG1)(role ARG2))
+	(typeattributeset md_adm_subj_type ARG1)
+	(optional md_adm_optional_sd
+		(call sd_sys_svc_adm_subj_type (ARG1)))
+	(optional md_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

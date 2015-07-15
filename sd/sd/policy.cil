@@ -321,9 +321,7 @@
 	(typeattributeset sd_runtime_obj_type runtime_file))
 
 (allow sd_notify_subj_type self (unix_dgram_socket (sendto)))
-(allow sd_notify_subj_type sd.subj (unix_dgram_socket (sendto)))
-
-(call sd_write_runtime_sock_files (sd_notify_subj_type))
+(call sd_dgram_send_notify (sd_notify_subj_type))
 
 (call sd_rw_inherited_unix_stream_sockets (sd_forked_subj_type))
 

@@ -772,9 +772,9 @@
 	(call file_search_runtime (ARG1))
 	(call dgram_send_pattern (ARG1 sd.runtime_file sd_private.runtime_file sd.subj)))
 
-(macro sd_write_runtime_sock_files ((type ARG1))
+(macro sd_dgram_send_notify ((type ARG1))
 	(call file_search_runtime (ARG1))
-	(call write_sock_files_pattern (ARG1 sd.runtime_file sd.runtime_file)))
+	(call dgram_send_pattern (ARG1 sd.runtime_file sd.runtime_file sd.subj)))
 
 (macro sd_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_adm_subj_type ARG1)

@@ -73,5 +73,4 @@
 	(allow sduser_dbus_chat_all_client_subj_type sduser_subj_type (dbus (send_msg))))
 
 (allow sduser_notify_all_subj_type self (unix_dgram_socket (sendto)))
-(allow sduser_notify_all_subj_type sduser_subj_type (unix_dgram_socket (sendto)))
-(call sduser_write_tmpfs_sock_files (sduser_notify_all_subj_type))
+(call sduser_dgram_send_notify_all_subj (sduser_notify_all_subj_type))

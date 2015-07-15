@@ -64,8 +64,7 @@
 
 (macro sduser_notify_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 self (unix_dgram_socket (sendto)))
-	(allow ARG1 ARG2 (unix_dgram_socket (sendto)))
-	(call sduser_write_tmpfs_sock_files (ARG1)))
+	(call sduser_dgram_send_notify_pattern (ARG1 ARG2)))
 
 (macro sduser_notify_all_subj_type ((type ARG1))
 	(typeattributeset sduser_notify_all_subj_type ARG1))
@@ -428,6 +427,14 @@
 (macro sduser_stream_connect_all_subj ((type ARG1))
 	(call sduser_search_tmpfs (ARG1))
 	(call stream_connect_pattern (ARG1 sduser_private.tmpfs_user_file sduser_private.tmpfs_user_file sduser_subj_type)))
+
+(macro sduser_dgram_send_notify_pattern ((type ARG1)(type ARG2))
+	(call sduser_search_tmpfs (ARG1))
+	(call dgram_send_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file ARG2)))
+
+(macro sduser_dgram_send_notify_all_subj ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(call dgram_send_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file sduser_subj_type)))
 
 (macro sduser_relabel_private_tmpfs_sock_files ((type ARG1))
 	(call sduser_search_tmpfs (ARG1))

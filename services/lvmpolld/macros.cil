@@ -46,7 +46,7 @@
 	(call lvmpolld_write_runtime_sock_files (ARG1))
 	(allow ARG1 lvmpolld.subj (unix_stream_socket (connectto))))
 
-(macro lvmpolld_admin ((type ARG1)(role ARG2))
+(macro lvmpolld_adm ((type ARG1)(role ARG2))
 	(typeattributeset lvmpolld_adm_subj_type ARG1)
 	(optional lvmpolld_adm_optional_sd
 		(call sd_sys_svc_adm_subj_type (ARG1)))

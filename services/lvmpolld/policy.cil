@@ -48,7 +48,10 @@
 
 		(allow lvmpolld_adm_subj_type unit_file (service (all)))))
 
-(call lvm_rw_runtime_dirs (lvmpolld_adm_subj_type))
+(allow lvmpolld_adm_subj_type lvmpolld.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (lvmpolld_adm_subj_type lvmpolld.subj))
+
+(call lvm_search_runtime (lvmpolld_adm_subj_type))
 
 (allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_file_perms)
 (allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_sock_file_perms)

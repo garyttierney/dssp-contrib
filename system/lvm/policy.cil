@@ -92,9 +92,12 @@
 
 	(typeattributeset lvm_obj_type config_file))
 
-(call file_rw_config_dirs (lvm_adm_subj_type))
-(call file_rw_runtime_dirs (lvm_adm_subj_type))
-(call file_rw_runtime_lock_dirs (lvm_adm_subj_type))
+(allow lvm_adm_subj_type lvm.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (lvm_adm_subj_type lvm.subj))
+
+(call file_search_config (lvm_adm_subj_type))
+(call file_search_runtime (lvm_adm_subj_type))
+(call file_search_runtime_lock (lvm_adm_subj_type))
 
 (allow lvm_adm_subj_type lvm_obj_type manage_file_perms)
 (allow lvm_adm_subj_type lvm_obj_type manage_dir_perms)

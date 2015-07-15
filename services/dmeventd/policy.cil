@@ -25,7 +25,10 @@
 
 		(allow dmeventd_adm_subj_type unit_file (service (all)))))
 
-(call file_rw_runtime_dirs (dmeventd_adm_subj_type))
+(allow dmeventd_adm_subj_type dmeventd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (dmeventd_adm_subj_type dmeventd.subj))
+
+(call file_search_runtime (dmeventd_adm_subj_type))
 
 (allow dmeventd_adm_subj_type dmeventd_obj_type manage_file_perms)
 (allow dmeventd_adm_subj_type dmeventd_obj_type manage_fifo_file_perms)

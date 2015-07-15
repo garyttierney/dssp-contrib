@@ -120,6 +120,10 @@
 
 (allow pam_adm_subj_type self (passwd (all)))
 
+(call file_search_config (pam_adm_subj_type))
+(call file_search_runtime (pam_adm_subj_type))
+(call file_search_var_log (pam_adm_subj_type))
+
 (allow pam_adm_subj_type pam_obj_type manage_file_perms)
 (allow pam_adm_subj_type pam_obj_type manage_dir_perms)
 (allow pam_adm_subj_type pam_obj_type manage_lnk_file_perms)

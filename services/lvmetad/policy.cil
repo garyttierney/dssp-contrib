@@ -44,7 +44,10 @@
 
 		(allow lvmetad_adm_subj_type unit_file (service (all)))))
 
-(call lvm_rw_runtime_dirs (lvmetad_adm_subj_type))
+(allow lvmetad_adm_subj_type lvmetad.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (lvmetad_adm_subj_type lvmetad.subj))
+
+(call lvm_search_runtime (lvmetad_adm_subj_type))
 
 (allow lvmetad_adm_subj_type lvmetad_obj_type manage_file_perms)
 (allow lvmetad_adm_subj_type lvmetad_obj_type manage_sock_file_perms)

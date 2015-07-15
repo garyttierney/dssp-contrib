@@ -1,0 +1,77 @@
+(typeattribute sduser_subj_type)
+
+(typeattribute sduser_unit_obj_type)
+
+(typeattribute sduser_notify_all_subj_type)
+
+(typeattribute sduser_dbus_all_chat_client_subj_type)
+
+(block sduser
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(blockinherit usersubj_home_config_obj_blk)
+
+	(blockinherit usersubj_home_data_obj_blk))
+
+(block sduser_private
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block sduser_unit
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sduser_unit_obj_type unit_file))
+
+(block sduser_unit_runtime
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block sduser_unit_user
+	(blockinherit sd_unit_obj_blk)
+
+	(call sd_obj_type (unit_file)))
+
+(call dev_getattr_all (sduser_subj_type))
+
+(call file_read_data (sduser_subj_type))
+
+(call fs_dontaudit_audit_access_sysfs_dirs (sduser_subj_type))
+(call fs_getattr_sysfs_fs (sduser_subj_type))
+
+(call subj_interactive_fd_type (sduser_subj_type))
+(call subj_user_exemption_target_type (sduser_subj_type))
+
+(call sd_cmd_obj_entry_subj (sduser_subj_type))
+(call sd_forked_subj_type (sduser_subj_type))
+(call sd_notify_subj_type (sduser_subj_type))
+(call sd_obj_type (sduser_unit_obj_type))
+(call sd_read_all_unit (sduser_subj_type))
+(call sd_read_config_files (sduser_subj_type))
+(call sd_read_state (sduser_subj_type))
+(call sd_send_signal (sduser_subj_type))
+(call sd_subj_type (sduser_subj_type))
+
+(call sduser_home_config_obj_type_transition_home_config (sduser_subj_type))
+(call sduser_manage_home_config_dirs (sduser_subj_type))
+(call sduser_manage_home_config_lnk_files (sduser_subj_type))
+(call sduser_manage_tmpfs (sduser_subj_type))
+(call sduser_manage_private_tmpfs_sock_files (sduser_subj_type))
+(call sduser_tmpfs_obj_type_transition_private_tmpfs (sduser_subj_type))
+(call sduser_tmpfs_obj_type_transition_tmpfs (sduser_subj_type))
+(call sduser_manage_unit_runtime (sduser_subj_type))
+(call sduser_tmpfs_obj_type_transition_unit_runtime (sduser_subj_type))
+(call sduser_read_home_config_files (sduser_subj_type))
+(call sduser_manage_home_data_files (sduser_subj_type))
+(call sduser_home_data_obj_type_transition_home_data (sduser_subj_type))
+
+(call usersubj_read_home_cmd_lnk_files (sduser_subj_type))
+(call usersubj_create_home_config_dirs (sduser_subj_type))
+(call usersubj_home_dir_add_obj_type_transition_home_config (sduser_subj_type))
+(call usersubj_create_home_data_dirs (sduser_subj_type))
+(call usersubj_home_dir_add_obj_type_transition_home_data (sduser_subj_type))
+
+(optional sduser_subj_type_optional_dbus
+	(allow sduser_subj_type sduser_dbus_chat_all_client_subj_type (dbus (send_msg)))
+	(allow sduser_dbus_chat_all_client_subj_type sduser_subj_type (dbus (send_msg))))
+
+(allow sduser_notify_all_subj_type self (unix_dgram_socket (sendto)))
+(allow sduser_notify_all_subj_type sduser_subj_type (unix_dgram_socket (sendto)))
+(call sduser_write_tmpfs_sock_files (sduser_notify_all_subj_type))

@@ -45,8 +45,8 @@
 (macro sd_cmd_obj_entry_subj ((type ARG1))
 	(call subj_entry (ARG1 sd.cmd_file)))
 
-(macro sd_daemon_forked_subj_type ((type ARG1))
-	(typeattributeset sd_daemon_forked_subj_type ARG1))
+(macro sd_forked_subj_type ((type ARG1))
+	(typeattributeset sd_forked_subj_type ARG1))
 
 (macro sd_daemon_rwdir_obj_type ((type ARG1))
 	(typeattributeset sd_daemon_rwdir_obj_type ARG1))
@@ -69,6 +69,12 @@
 	(call subj_entry (ARG1 ARG2))
 	(roletype sys.role ARG1)
 	(call auto_subj_type_transition_pattern (sd.subj ARG2 ARG1)))
+
+(macro sd_subj_type ((type ARG1))
+	(typeattributeset sd_subj_type ARG1))
+
+(macro sd_obj_type ((type ARG1))
+	(typeattributeset sd_obj_type ARG1))
 
 (macro sd_unit_obj_type ((type ARG1))
 	(call file_obj_type (ARG1))

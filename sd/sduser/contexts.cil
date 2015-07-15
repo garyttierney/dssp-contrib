@@ -1,0 +1,7 @@
+(context sduser_unit (sys.id sys.role sduser_unit.unit_file (systemlow systemlow)))
+(context sduser_unit_user (sys.id sys.role sduser_unit_user.unit_file (systemlow systemlow)))
+
+(filecon "HOME_DIR/\.config/systemd(/.*)?" any (sys.id sys.role sduser.home_config_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.local/share/systemd(/.*)?" any (sys.id sys.role sduser.home_data_file (systemlow systemlow)))
+(filecon "/usr/lib/systemd/system/[^/]*user@.*" file sduser_unit_user)
+(filecon "/usr/lib/systemd/user(/.*)?" any sduser_unit)

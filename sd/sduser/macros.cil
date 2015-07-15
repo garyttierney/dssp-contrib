@@ -1,0 +1,656 @@
+(block sduser_subj_blk
+        (blockinherit subj_common_blk)
+
+        (typeattributeset sduser_subj_type subj))
+
+(macro sduser_subj_type ((type ARG1))
+	(call subj_common_type (ARG1))
+	(typeattributeset sduser_subj_type ARG1))
+
+(macro sduser_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(call sduser_control_pattern (ARG2 ARG3))
+	(call sduser_forked_pattern (ARG2 ARG3))
+	(call sduser_stream_connect_pattern (ARG2 ARG3))
+
+	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
+	(allow ARG3 ARG2 (unix_stream_socket (read write)))
+
+	(call ps_subj_pattern (ARG3 ARG2))
+
+	(call cmd_auto_subj_type_transition (ARG3 ARG2)))
+
+(macro sduser_forked_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (fd (use)))
+	(allow ARG1 ARG2 (unix_stream_socket (getattr ioctl read write))))
+
+(macro sduser_forked_all_subj ((type ARG1)(type ARG2))
+	(allow ARG1 sduser_subj_type (fd (use)))
+	(allow ARG1 sduser_subj_type (unix_stream_socket (getattr ioctl read write))))
+
+(macro sduser_unit_obj_type ((type ARG1))
+	(call sd_unit_obj_type (ARG1))
+	(typeattributeset sduser_unit_obj_type ARG1))
+
+(macro sduser_tcp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(allow ARG1 ARG2 create_tcp_stream_socket_perms)
+	(allow ARG1 ARG3 (tcp_socket (name_bind))))
+
+(macro sduser_udp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(allow ARG1 ARG2 create_udp_socket_perms)
+	(allow ARG1 ARG3 (udp_socket (name_bind))))
+
+(macro sduser_dccp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(allow ARG1 ARG2 create_dccp_stream_socket_perms)
+	(allow ARG1 ARG3 (dccp_socket (name_bind))))
+
+(macro sduser_fifo_file_activated_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 manage_dir_perms)
+	(allow ARG1 ARG2 manage_fifo_file_perms))
+
+(macro sduser_unix_stream_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(allow ARG1 ARG2 create_unix_stream_stream_socket_perms)
+	(allow ARG1 ARG3 manage_dir_perms)
+	(allow ARG1 ARG3 manage_sock_file_perms))
+
+(macro sduser_unix_dgram_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(allow ARG1 ARG2 create_unix_dgram_stream_socket_perms)
+	(allow ARG1 ARG3 manage_dir_perms)
+	(allow ARG1 ARG3 manage_sock_file_perms))
+
+(macro sduser_notify_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 self (unix_dgram_socket (sendto)))
+	(allow ARG1 ARG2 (unix_dgram_socket (sendto)))
+	(call sduser_write_tmpfs_sock_files (ARG1)))
+
+(macro sduser_notify_all_subj_type ((type ARG1))
+	(typeattributeset sduser_notify_all_subj_type ARG1))
+
+(macro sduser_search_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file list_dir_perms))
+
+(macro sduser_list_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file list_dir_perms))
+
+(macro sduser_read_unit_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
+
+(macro sduser_read_unit_lnk_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
+
+(macro sduser_manage_unit_dirs ((type ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
+
+(macro sduser_manage_unit_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call manage_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
+
+(macro sduser_getattr_unit_dirs ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file (dir (getattr))))
+
+(macro sduser_relabelto_unit_dirs ((type ARG1))
+	(call sduser_search_unit (ARG1))
+	(allow ARG1 sduser_unit.unit_file relabelto_dir_perms))
+
+(macro sduser_rw_unit_dirs ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file rw_dir_perms))
+
+(macro sduser_read_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file read_file_perms)
+	(allow ARG1 sduser_unit.unit_file list_dir_perms)
+	(allow ARG1 sduser_unit.unit_file read_lnk_file_perms))
+
+(macro sduser_manage_unit ((type ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sduser_unit.unit_file manage_file_perms)
+	(allow ARG1 sduser_unit.unit_file manage_dir_perms)
+	(allow ARG1 sduser_unit.unit_file manage_lnk_file_perms))
+
+(macro sduser_relabel_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sduser_unit.unit_file relabel_file_perms)
+	(allow ARG1 sduser_unit.unit_file relabel_dir_perms)
+	(allow ARG1 sduser_unit.unit_file relabel_lnk_file_perms))
+
+(macro sduser_search_unit_runtime ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file search_dir_perms))
+
+(macro sduser_list_unit_runtime ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file list_dir_perms))
+
+(macro sduser_read_unit_runtime_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 sduser_unit_runtime.tmpfs_user_file sduser_unit_runtime.tmpfs_user_file)))
+
+(macro sduser_read_unit_runtime_lnk_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(call read_lnk_files_pattern (ARG1 sduser_unit_runtime.tmpfs_user_file sduser_unit_runtime.tmpfs_user_file)))
+
+(macro sduser_manage_unit_runtime_dirs ((type ARG1))
+	(call sduser_rw_tmpfs_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sduser_unit_runtime.tmpfs_user_file sduser_unit_runtime.tmpfs_user_file)))
+
+(macro sduser_manage_unit_runtime_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(call manage_files_pattern (ARG1 sduser_unit_runtime.tmpfs_user_file sduser_unit_runtime.tmpfs_user_file)))
+
+(macro sduser_getattr_unit_runtime_dirs ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (dir (getattr))))
+
+(macro sduser_relabelto_unit_runtime_dirs ((type ARG1))
+	(call sduser_search_unit_runtime (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file relabelto_dir_perms))
+
+(macro sduser_rw_unit_runtime_dirs ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file rw_dir_perms))
+
+(macro sduser_read_unit_runtime ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file read_file_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file list_dir_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file read_lnk_file_perms))
+
+(macro sduser_manage_unit_runtime ((type ARG1))
+	(call sduser_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file manage_file_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file manage_dir_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file manage_lnk_file_perms))
+
+(macro sduser_relabel_unit_runtime ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file relabel_file_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file relabel_dir_perms)
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file relabel_lnk_file_perms))
+
+(macro sduser_tmpfs_obj_type_transition_unit_runtime ((type ARG1))
+	(call sduser_tmpfs_obj_type_transition (ARG1 sduser_unit_runtime.tmpfs_user_file dir "user")))
+
+(macro sduser_read_all_unit_files ((type ARG1))
+	(call sduser_search_unit (ARG1))
+	(allow ARG1 sduser_unit_obj_type read_file_perms))
+
+(macro sduser_manage_all_unit_files ((type ARG1))
+	(call sduser_rw_unit_dirs (ARG1))
+	(allow ARG1 sduser_unit_obj_type manage_file_perms))
+
+(macro sduser_relabel_all_unit_files ((type ARG1))
+	(call sduser_search_unit (ARG1))
+	(allow ARG1 sduser_unit_obj_type relabel_file_perms))
+
+(macro sduser_search_home_config ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(allow ARG1 sduser.home_config_file search_dir_perms))
+
+(macro sduser_list_home_config ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(allow ARG1 sduser.home_config_file list_dir_perms))
+
+(macro sduser_read_home_config_files ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(call read_files_pattern (ARG1 sduser.home_config_file sduser.home_config_file)))
+
+(macro sduser_manage_home_config_files ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(call manage_files_pattern (ARG1 sduser.home_config_file sduser.home_config_file)))
+
+(macro sduser_rw_home_config_dirs ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(allow ARG1 sduser.home_config_file rw_dir_perms))
+
+(macro sduser_manage_home_config_dirs ((type ARG1))
+	(call usersubj_rw_home_config_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sduser.home_config_file sduser.home_config_file)))
+
+(macro sduser_read_home_config_lnk_files ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sduser.home_config_file sduser.home_config_file)))
+
+(macro sduser_manage_home_config_lnk_files ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(call manage_lnk_files_pattern (ARG1 sduser.home_config_file sduser.home_config_file)))
+
+(macro sduser_read_home_config ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(allow ARG1 sduser.home_config_file read_file_perms)
+	(allow ARG1 sduser.home_config_file list_dir_perms)
+	(allow ARG1 sduser.home_config_file read_lnk_file_perms))
+
+(macro sduser_manage_home_config ((type ARG1))
+	(call usersubj_rw_home_config_dirs (ARG1))
+	(allow ARG1 sduser.home_config_file manage_file_perms)
+	(allow ARG1 sduser.home_config_file manage_dir_perms)
+	(allow ARG1 sduser.home_config_file manage_lnk_file_perms))
+
+(macro sduser_relabel_home_config ((type ARG1))
+	(call usersubj_search_home_config (ARG1))
+	(allow ARG1 sduser.home_config_file relabel_file_perms)
+	(allow ARG1 sduser.home_config_file relabel_dir_perms)
+	(allow ARG1 sduser.home_config_file relabel_lnk_file_perms))
+
+(macro sduser_home_config_obj_type_transition_home_config ((type ARG1))
+	(call usersubj_home_config_obj_type_transition (ARG1 sduser.home_config_file dir "systemd")))
+
+(macro sduser_search_home_data ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(allow ARG1 sduser.home_data_file search_dir_perms))
+
+(macro sduser_list_home_data ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(allow ARG1 sduser.home_data_file list_dir_perms))
+
+(macro sduser_read_home_data_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call read_files_pattern (ARG1 sduser.home_data_file sduser.home_data_file)))
+
+(macro sduser_manage_home_data_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call manage_files_pattern (ARG1 sduser.home_data_file sduser.home_data_file)))
+
+(macro sduser_rw_home_data_dirs ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(allow ARG1 sduser.home_data_file rw_dir_perms))
+
+(macro sduser_manage_home_data_dirs ((type ARG1))
+	(call usersubj_rw_home_data_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sduser.home_data_file sduser_home_data_file)))
+
+(macro sduser_read_home_data_lnk_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call read_lnk_files_pattern (ARG1 sduser.home_data_file sduser.home_data_file)))
+
+(macro sduser_manage_home_data_lnk_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call manage_lnk_files_pattern (ARG1 sduser.home_data_file sduser.home_data_file)))
+
+(macro sduser_read_home_data ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(allow ARG1 sduser.home_data_file read_file_perms)
+	(allow ARG1 sduser.home_data_file list_dir_perms)
+	(allow ARG1 sduser.home_data_file read_lnk_file_perms))
+
+(macro sduser_manage_home_data ((type ARG1))
+	(call usersubj_rw_home_data_dirs (ARG1))
+	(allow ARG1 sduser.home_data_file manage_file_perms)
+	(allow ARG1 sduser.home_data_file manage_dir_perms)
+	(allow ARG1 sduser.home_data_file manage_lnk_file_perms))
+
+(macro sduser_relabel_home_data ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(allow ARG1 sduser.home_data_file relabel_file_perms)
+	(allow ARG1 sduser.home_data_file relabel_dir_perms)
+	(allow ARG1 sduser.home_data_file relabel_lnk_file_perms))
+
+(macro sduser_home_data_obj_type_transition_home_data ((type ARG1))
+	(call usersubj_home_data_obj_type_transition (ARG1 sduser.home_data_file dir "systemd")))
+
+(macro sduser_search_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file search_dir_perms))
+
+(macro sduser_list_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file list_dir_perms))
+
+(macro sduser_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(call manage_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_delete_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_del_entry_tmpfs (ARG1))
+	(call delete_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_read_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_sock_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_write_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call write_sock_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_manage_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call manage_sock_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_delete_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call delete_sock_files_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_rw_tmpfs_dirs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file rw_dir_perms))
+
+(macro sduser_manage_tmpfs_dirs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_delete_tmpfs_dirs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_del_entry_tmpfs (ARG1))
+	(call delete_dirs_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_relabel_tmpfs_dirs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call relabel_dirs_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file)))
+
+(macro sduser_read_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file list_dir_perms)
+	(allow ARG1 sduser.tmpfs_user_file read_file_perms)
+	(allow ARG1 sduser.tmpfs_user_file read_sock_file_perms))
+
+(macro sduser_manage_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file manage_dir_perms)
+	(allow ARG1 sduser.tmpfs_user_file manage_file_perms)
+	(allow ARG1 sduser.tmpfs_user_file manage_sock_file_perms))
+
+(macro sduser_relabel_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sduser.tmpfs_user_file relabel_dir_perms)
+	(allow ARG1 sduser.tmpfs_user_file relabel_file_perms)
+	(allow ARG1 sduser.tmpfs_user_file relabel_sock_file_perms))
+
+(macro sduser_tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call obj_type_transition_pattern (ARG1 sduser.tmpfs_user_file ARG2 ARG3 ARG4)))
+
+(macro sduser_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 sduser.tmpfs_user_file dir "systemd")))
+
+(macro sduser_read_private_tmpfs_sock_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_private.tmpfs_user_file read_sock_file_perms))
+
+(macro sduser_write_private_tmpfs_sock_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_private.tmpfs_user_file write_sock_file_perms))
+
+(macro sduser_rw_private_tmpfs_sock_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_private.tmpfs_user_file rw_sock_file_perms))
+
+(macro sduser_manage_private_tmpfs_sock_files ((type ARG1))
+	(call sduser_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 sduser_private.tmpfs_user_file manage_sock_file_perms))
+
+(macro sduser_stream_connect_pattern ((type ARG1)(type ARG2))
+	(call sduser_search_tmpfs (ARG1))
+	(call stream_connect_pattern (ARG1 sduser_private.tmpfs_user_file sduser_private.tmpfs_user_file ARG2)))
+
+(macro sduser_stream_connect_all_subj ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(call stream_connect_pattern (ARG1 sduser_private.tmpfs_user_file sduser_private.tmpfs_user_file sduser_subj_type)))
+
+(macro sduser_relabel_private_tmpfs_sock_files ((type ARG1))
+	(call sduser_search_tmpfs (ARG1))
+	(allow ARG1 sduser_private.tmpfs_user_file relabel_sock_file_perms))
+
+(macro sduser_tmpfs_obj_type_transition_private_tmpfs ((type ARG1))
+	(call sduser_tmpfs_obj_type_transition (ARG1 sduser_private.tmpfs_user_file sock_file "private")))
+
+(macro sduser_halt_pattern ((type ARG1)(type AR2))
+	(allow ARG1 ARG2 (system (halt))))
+
+(macro sduser_reboot_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (reboot))))
+
+(macro sduser_reload_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (reload))))
+
+(macro sduser_enable_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (enable))))
+
+(macro sduser_disable_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (disable))))
+
+(macro sduser_status_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (status))))
+
+(macro sduser_start_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (start))))
+
+(macro sduser_stop_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (system (stop))))
+
+(macro sduser_control_pattern ((type ARG1)(type ARG2))
+	(call sduser_halt_pattern (ARG1 ARG2))
+	(call sduser_reboot_pattern (ARG1 ARG2))
+	(call sduser_reload_pattern (ARG1 ARG2))
+	(call sduser_status_pattern (ARG1 ARG2))
+	(call sduser_disable_pattern (ARG1 ARG2))
+	(call sduser_enable_pattern (ARG1 ARG2))
+	(call sduser_start_pattern (ARG1 ARG2))
+	(call sduser_stop_pattern (ARG1 ARG2)))
+
+(macro sduser_halt_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (halt))))
+
+(macro sduser_reboot_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (reboot))))
+
+(macro sduser_reload_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (reload))))
+
+(macro sduser_enable_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (enable))))
+
+(macro sduser_disable_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (disable))))
+
+(macro sduser_status_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (status))))
+
+(macro sduser_start_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (start))))
+
+(macro sduser_stop_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (system (stop))))
+
+(macro sd_control_all ((type ARG1))
+	(call sduser_halt_all_subj (ARG1))
+	(call sduser_reboot_all_subj (ARG1))
+	(call sduser_reload_all_subj (ARG1))
+	(call sduser_status_all_subj (ARG1))
+	(call sduser_disable_all_subj (ARG1))
+	(call sduser_enable_all_subj (ARG1))
+	(call sduser_start_all_subj (ARG1))
+	(call sduser_stop_all_subj (ARG1)))
+
+(macro sduser_stop_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (stop))))
+
+(macro sduser_status_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (status))))
+
+(macro sduser_disable_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (disable))))
+
+(macro sduser_enable_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (enable))))
+
+(macro sduser_reload_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (reload))))
+
+(macro sduser_start_unit ((type ARG1))
+	(allow ARG1 sduser_unit.unit_file (service (start))))
+
+(macro sduser_unit_control ((type ARG1))
+	(call sduser_stop_unit (ARG1))
+	(call sduser_status_unit (ARG1))
+	(call sduser_disable_unit (ARG1))
+	(call sduser_enable_unit (ARG1))
+	(call sduser_reload_unit (ARG1))
+	(call sduser_start_unit (ARG1)))
+
+(macro sduser_stop_unit_user ((type ARG1))
+	(allow ARG1 sduser_unit_user.unit_file (service (stop))))
+
+(macro sduser_status_unit_user ((type ARG1))
+	(allow ARG1 sduser_unit_user.unit_file (service (status))))
+
+(macro sduser_disable_unit_user ((type ARG1))
+	(allow ARG1 sduser_unit_user.unit_file (service (disable))))
+
+(macro sduser_enable_unit_user ((type ARG1))
+	(allow ARG1 sduser_unit_user.unit_file (service (enable))))
+
+(macro sduser_reload_unit_user ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (reload))))
+
+(macro sduser_start_unit_user ((type ARG1))
+	(allow ARG1 sduser_unit_user.unit_file (service (start))))
+
+(macro sduser_unit_user_control ((type ARG1))
+	(call sduser_stop_unit_user (ARG1))
+	(call sduser_status_unit_user (ARG1))
+	(call sduser_disable_unit_user (ARG1))
+	(call sduser_enable_unit_user (ARG1))
+	(call sduser_reload_unit_user (ARG1))
+	(call sduser_start_unit_user (ARG1)))
+
+(macro sduser_stop_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (stop))))
+
+(macro sduser_status_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (status))))
+
+(macro sduser_disable_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (disable))))
+
+(macro sduser_enable_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (enable))))
+
+(macro sduser_reload_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (reload))))
+
+(macro sduser_start_unit_runtime ((type ARG1))
+	(allow ARG1 sduser_unit_runtime.tmpfs_user_file (service (start))))
+
+(macro sduser_unit_runtime_control ((type ARG1))
+	(call sduser_stop_unit_runtime (ARG1))
+	(call sduser_status_unit_runtime (ARG1))
+	(call sduser_disable_unit_runtime (ARG1))
+	(call sduser_enable_unit_runtime (ARG1))
+	(call sduser_reload_unit_runtime (ARG1))
+	(call sduser_start_unit_runtime (ARG1)))
+
+(macro sduser_stop_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (stop))))
+
+(macro sduser_status_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (status))))
+
+(macro sduser_disable_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (disable))))
+
+(macro sduser_enable_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (enable))))
+
+(macro sduser_reload_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (reload))))
+
+(macro sduser_start_home_config ((type ARG1))
+	(allow ARG1 sduser.home_config_file (service (start))))
+
+(macro sduser_home_config_control ((type ARG1))
+	(call sduser_stop_home_config (ARG1))
+	(call sduser_status_home_config (ARG1))
+	(call sduser_disable_home_config (ARG1))
+	(call sduser_enable_home_config (ARG1))
+	(call sduser_reload_home_config (ARG1))
+	(call sduser_start_home_config (ARG1)))
+
+(macro sduser_stop_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (stop))))
+
+(macro sduser_status_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (status))))
+
+(macro sduser_disable_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (disable))))
+
+(macro sduser_enable_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (enable))))
+
+(macro sduser_reload_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (reload))))
+
+(macro sduser_start_all_unit ((type ARG1))
+	(allow ARG1 sduser_unit_obj_type (service (start))))
+
+(macro sduser_all_unit_control ((type ARG1))
+	(call sduser_stop_all_unit (ARG1))
+	(call sduser_status_all_unit (ARG1))
+	(call sduser_disable_all_unit (ARG1))
+	(call sduser_enable_all_unit (ARG1))
+	(call sduser_reload_all_unit (ARG1))
+	(call sduser_start_all_unit (ARG1)))
+
+(macro sduser_dbus_chat_all_client_subj_type ((type ARG1))
+	(typeattributeset sduser_dbus_chat_all_client_subj_type ARG1))
+
+(macro sduser_shell_manual_subj_type_transition_all_subj ((type ARG1))
+	(call cmd_shell_manual_subj_type_transition (ARG1 sduser_subj_type)))
+
+(macro sduser_noatsecure_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (process (noatsecure))))
+
+(macro sduser_send_sigchld_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (process (sigchld))))
+
+(macro sduser_dontaudit_link_keyring_all_subj ((type ARG1))
+	(dontaudit ARG1 sduser_subj_type (key (search link))))
+
+(macro sduser_link_keyring_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (key (search link))))
+
+(macro sduser_manage_keyring_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (key (create search link write))))

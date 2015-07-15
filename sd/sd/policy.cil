@@ -1,6 +1,8 @@
 (typeattribute sd_adm_subj_type)
 (typeattribute sd_subj_type)
 
+(typeattribute sd_forked_subj_type)
+
 (typeattribute sd_obj_type)
 (typeattribute sd_unit_obj_type)
 
@@ -22,7 +24,6 @@
 (typeattribute sd_unix_dgram_socket_activated_subj_type)
 
 (typeattribute sd_daemon_subj_type)
-(typeattribute sd_daemon_forked_subj_type)
 (typeattribute sd_daemon_adm_subj_type)
 
 (typeattribute sd_daemon_pid_obj_type)
@@ -94,7 +95,7 @@
 	(allow subj sd_dccp_socket_activated_obj_type (dccp_socket (name_bind)))
 
 	(allow subj sd_fifo_file_activated_obj_type manage_dir_perms)
-	(allow subj sd_fifo_file_activated_obj_type manage_sock_file_perms)
+	(allow subj sd_fifo_file_activated_obj_type manage_fifo_file_perms)
 
 	(allow subj sd_unix_stream_socket_activated_subj_type create_unix_stream_stream_socket_perms)
 	(allow subj sd_unix_dgram_socket_activated_subj_type create_unix_dgram_stream_socket_perms)
@@ -216,10 +217,10 @@
 
 	;(call sd_updatedone_getattr_update_flags (subj)))
 
-	;(call sduser_manage_keyring_subj (subj))
-	;(call sduser_noatsecure_subj (subj))
-	;(call sduser_send_sigchld_subj (subj))
-	;(call sduser_shell_manual_subj_type_transition_subj (subj)))
+	(call sduser_manage_keyring_all_subj (subj))
+	(call sduser_noatsecure_all_subj (subj))
+	(call sduser_send_sigchld_all_subj (subj))
+	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
 
 	(call utmp_rw_runtime_files (subj))
 	(call utmp_write_wtmp_var_log_files (subj))
@@ -327,9 +328,9 @@
 
 (call sd_write_runtime_sock_files (sd_notify_subj_type))
 
-(call sd_rw_inherited_unix_stream_sockets (sd_daemon_forked_subj_type))
+(call sd_rw_inherited_unix_stream_sockets (sd_forked_subj_type))
 
-(call sd_daemon_forked_subj_type (sd_daemon_subj_type))
+(call sd_forked_subj_type (sd_daemon_subj_type))
 (call sd_read_state (sd_daemon_subj_type))
 
 (allow sd_subj_type self (process (getsched setsched setrlimit setfscreate setsockcreate)))
@@ -394,6 +395,6 @@
 
 (call sd_all_unit_control (sd_unconfined_subj_type))
 
-;(call sduser_all_unit_control (sd_unconfined_subj_type))
-;(call sduser_unit_runtime_control (sd_unconfined_subj_type)) ; should this not be part of "all_unit"?
-;(call sduser_home_config_control (sd_unconfined_subj_type))
+(call sduser_all_unit_control (sd_unconfined_subj_type))
+(call sduser_unit_runtime_control (sd_unconfined_subj_type))
+(call sduser_home_config_control (sd_unconfined_subj_type))

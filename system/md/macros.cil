@@ -70,6 +70,6 @@
 (macro md_adm ((type ARG1)(role ARG2))
 	(typeattributeset md_adm_subj_type ARG1)
 	(optional md_adm_optional_sd
-		(call sd_sys_svc_adm_subj_type (ARG1)))
+		(call sd_daemon_adm_subj_type (ARG1)))
 	(optional md_adm_optional_sd_askpwd
 		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

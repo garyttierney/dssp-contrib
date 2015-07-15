@@ -40,7 +40,7 @@
 	(optional lvmpolld_optional_sd
 		(call sd_daemon (subj cmd_file))
 		(call sd_unix_stream_socket_activated (subj runtime_file))
-		(call sd_pid_obj_type (runtime_file))
+		(call sd_daemon_pid_obj_type (runtime_file))
 
 		(blockinherit sd_unit_obj_blk)
 

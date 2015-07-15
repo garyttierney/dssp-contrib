@@ -1,0 +1,400 @@
+(typeattribute sd_adm_subj_type)
+(typeattribute sd_subj_type)
+
+(typeattribute sd_obj_type)
+(typeattribute sd_unit_obj_type)
+
+(typeattribute sd_dbus_chat_client_subj_type)
+(typeattribute sd_notify_subj_type)
+
+(typeattribute sd_fifo_file_activated_obj_type)
+(typeattribute sd_socket_activated_obj_type)
+
+(typeattribute sd_dccp_socket_activated_subj_type)
+(typeattribute sd_tcp_socket_activated_subj_type)
+(typeattribute sd_udp_socket_activated_subj_type)
+
+(typeattribute sd_dccp_socket_activated_obj_type)
+(typeattribute sd_tcp_socket_activated_obj_type)
+(typeattribute sd_udp_socket_activated_obj_type)
+
+(typeattribute sd_unix_stream_socket_activated_subj_type)
+(typeattribute sd_unix_dgram_socket_activated_subj_type)
+
+(typeattribute sd_daemon_subj_type)
+(typeattribute sd_daemon_forked_subj_type)
+(typeattribute sd_daemon_adm_subj_type)
+
+(typeattribute sd_daemon_pid_obj_type)
+(typeattribute sd_daemon_rwdir_obj_type)
+
+(typeattribute sd_config_obj_type)
+(typeattribute sd_runtime_obj_type)
+(typeattribute sd_var_lib_obj_type)
+
+(typeattribute sd_unconfined_subj_type)
+
+(block sd
+	(blockinherit subj_common_blk)
+
+	(typeattributeset sd_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_obj_type config_file)
+	(typeattributeset sd_config_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_obj_type runtime_file)
+	(typeattributeset sd_runtime_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset sd_obj_type var_lib_file)
+	(typeattributeset sd_var_lib_obj_type var_lib_file)
+
+	(allow subj self (process (getcap setcap setkeycreate)))
+	(allow subj self (capability (dac_override net_admin sys_time kill sys_tty_config sys_boot chown setgid setuid
+		setpcap sys_resource sys_admin fsetid fowner)))
+	(allow subj self (capability2 (block_suspend audit_read)))
+	(allow subj self (unix_dgram_socket (lock)))
+	(allow subj self (netlink_route_socket (nlmsg_write)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self (key (search link write)))
+
+	(call sd_manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_runtime_obj_type_transition (subj sd_unit.unit_file dir "generator"))
+	(call sd_runtime_obj_type_transition (subj sd_unit.unit_file dir "generator.early"))
+	(call sd_runtime_obj_type_transition (subj sd_unit.unit_file dir "generator.late"))
+
+	(call sd_runtime_obj_type_transition (subj sd_unit_runtime.unit_file dir "system"))
+
+	(call sd_manage_private_runtime_sock_files (subj))
+	(call sd_runtime_obj_type_transition (subj sd_private.runtime_file sock_file "private"))
+
+	(call sd_manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj sd_tcp_socket_activated_subj_type create_tcp_stream_socket_perms)
+	(allow subj sd_tcp_socket_activated_obj_type (tcp_socket (name_bind)))
+
+	(allow subj sd_udp_socket_activated_subj_type create_udp_socket_perms)
+	(allow subj sd_udp_socket_activated_obj_type (udp_socket (name_bind)))
+
+	(allow subj sd_dccp_socket_activated_subj_type create_dccp_stream_socket_perms)
+	(allow subj sd_dccp_socket_activated_obj_type (dccp_socket (name_bind)))
+
+	(allow subj sd_fifo_file_activated_obj_type manage_dir_perms)
+	(allow subj sd_fifo_file_activated_obj_type manage_sock_file_perms)
+
+	(allow subj sd_unix_stream_socket_activated_subj_type create_unix_stream_stream_socket_perms)
+	(allow subj sd_unix_dgram_socket_activated_subj_type create_unix_dgram_stream_socket_perms)
+
+	(allow subj sd_socket_activated_obj_type manage_dir_perms)
+	(allow subj sd_socket_activated_obj_type manage_sock_file_perms)
+
+	(allow subj sd_daemon_pid_obj_type read_file_perms)
+	(allow subj sd_daemon_pid_obj_type delete_file_perms)
+
+	(allow subj sd_daemon_rwdir_obj_type (dir (mounton)))
+
+	(call cmd_auto_subj_type_transition (subj sd_unknown.subj))
+	(call cmd_shell_auto_subj_type_transition (subj sd_unknown.subj))
+
+	(call sys_link_keyring (subj))
+	(call sys_mounton_mountpoint_dirs (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_read_net_sysctl_files (subj))
+	(call sys_read_state_invalid (subj))
+	(call sys_rw_unix_stream_sockets (subj))
+	(call sys_use_fd (subj))
+
+	(call dev_create_devtty (subj))
+	(call dev_tmpfs_obj_type_transition_devtty (subj))
+	(call dev_create_null (subj))
+	(call dev_tmpfs_obj_type_transition_null (subj))
+	(call dev_create_random (subj))
+	(call dev_tmpfs_obj_type_transition_random (subj))
+	(call dev_create_urandom (subj))
+	(call dev_tmpfs_obj_type_transition_urandom (subj))
+	(call dev_create_zero (subj))
+	(call dev_tmpfs_obj_type_transition_zero (subj))
+
+	(call dev_read_autofs (subj))
+	(call dev_read_memory (subj))
+	(call dev_relabel_all (subj))
+	(call dev_write_kmsg (subj))
+	(call dev_write_watchdog (subj))
+
+	(call file_read_all_config (subj))
+	(call file_read_all_runtime_lock_files (subj))
+	(call file_relabel_all_runtime (subj))
+	(call file_relabelto_runtime_lock_dirs (subj))
+
+	(call file_manage_runtime_config (subj))
+	(call file_runtime_obj_type_transition_runtime_config (subj))
+
+	(call fs_getattr_all_fs (subj))
+	(call fs_list_binfmt_misc (subj))
+	(call fs_list_efivarfs (subj))
+	(call fs_list_pstore (subj))
+	(call fs_list_devpts (subj))
+	(call fs_manage_devtmpfs_dirs (subj))
+	(call fs_manage_devtmpfs_lnk_files (subj))
+	(call fs_manage_devtmpfs_chr_files (subj))
+	(call fs_manage_sysfs_dirs (subj))
+	(call fs_mount_autofs_fs (subj))
+	(call fs_mount_tmpfs_fs (subj))
+	(call fs_read_tmpfs_files (subj))
+	(call fs_relabel_devtmpfs_dirs (subj))
+	(call fs_relabel_sysfs_dirs (subj))
+	(call fs_relabelfrom_devtmpfs_chr_files (subj))
+	(call fs_relabelfrom_devtmpfs_blk_files (subj))
+	(call fs_relabelfrom_tmpfs (subj))
+	(call fs_remount_all_fs (subj))
+	(call fs_setattr_cgroup_files (subj))
+	(call fs_unmount_all_fs (subj))
+	(call fs_write_inherited_devpts_chr_files (subj))
+
+	(call sec_validate_context (subj))
+	(call sec_compute_user_contexts (subj))
+
+	(call storage_read_all (subj))
+
+	(call subj_id_change_exemption_type (subj))
+	(call subj_role_change_exemption_type (subj))
+	(call subj_getattr_common_subj (subj))
+	(call subj_read_common_subj_state (subj))
+	(call subj_send_sigkill_common_subj (subj))
+	(call subj_send_signal_common_subj (subj))
+	(call subj_send_signull_common_subj (subj))
+
+	(call term_use_console (subj))
+	(call term_use_unallocated_ttys (subj))
+
+	(call miscfile_read_modules (subj))
+
+	(call mount_manage_runtime_dirs (subj))
+
+	(call seutil_read_default_context_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(call sd_exec_sd (subj))
+	(call sd_auto_subj_type_transition (subj))
+	(call sd_relabelto_unit_runtime_dirs (subj))
+	(call sd_manage_all_unit (subj))
+
+	;(call sd_askpwd_read_runtime (subj))
+
+	;(call sd_fsck_read_runtime (subj))
+
+	;(call sd_importd_cmd_obj_entry_subj (subj))
+	;(call sd_importd_manage_runtime (subj)))
+
+	;(call sd_journald_list_var_log (subj))
+	;(call sd_journald_read_runtime (subj))
+	;(call sd_journald_relabelto_var_log_dirs (subj))
+	;(call sd_journald_relabelto_var_log_files (subj))
+	;(call sd_journald_use_fd (subj))
+
+	;(call sd_logind_read_runtime (subj)))
+
+	;(call sd_machined_manage_var_lib (subj)))
+
+	;(call sd_shutdown_share_state (subj))
+
+	;(call sd_tmpfiles_read_runtime (subj)))
+
+	;(call sd_updatedone_getattr_update_flags (subj)))
+
+	;(call sduser_manage_keyring_subj (subj))
+	;(call sduser_noatsecure_subj (subj))
+	;(call sduser_send_sigchld_subj (subj))
+	;(call sduser_shell_manual_subj_type_transition_subj (subj)))
+
+	(call utmp_rw_runtime_files (subj))
+	(call utmp_write_wtmp_var_log_files (subj))
+
+	(optional sd_dbus_chat_client_subj_type_optional_dbus
+		(allow subj sd_dbus_chat_client_subj_type (dbus (send_msg)))
+		(allow sd_dbus_chat_client_subj_type subj (dbus (send_msg))))
+
+	(optional sd_optional_auth
+		(call auth_link_login_prog_keyring (subj)))
+
+	(optional sd_optional_dbus
+		(call dbus_acquire_svc (subj)))
+
+	(optional sd_optional_dhcp
+		(call dhcp_read_dhclient_var_lib (subj)))
+
+	(optional sd_optional_dracut
+		(call dracut_read_runtime (subj)))
+
+	(optional sd_optional_fstools
+		(call fstools_read_runtime (subj)))
+
+	(optional sd_optional_http
+		(call http_tcp_connect_http_port (subj)))
+
+	(optional sd_optional_numactl
+		(call numactl_exec (subj)))
+
+	(optional sd_optional_plymouth
+		(call plymouth_exec_plymouth (subj))
+		(call plymouth_read_plymouthd_runtime (subj))
+		(call plymouth_use_fd_plymouthd (subj)))
+
+	(optional sd_optional_polkitd
+		(call polkitd_dbus_chat_client_subj_type (subj)))
+
+	(optional sd_optional_sduser
+		(call sduser_dbus_chat_subj_client_subj_type (subj)))
+
+	(optional systemd_optional_usersubject
+		(call usersubj_link_keyring_common_login_subj (subj))
+		(call usersubj_mounton_home_dir (subj))
+		(call usersubj_use_term (subj)))
+
+	(optional sd_optional_unconfinedusersubj
+		(call unconfinedusersubj_noatsecure (subj))
+		(call unconfinedusersubj_send_sigchld (subj))
+		(call unconfinedusersubj_create_keyring (subj))
+		(call unconfinedusersubj_shell_manual_subj_type_transition (subj))))
+
+(block sd_unit
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_obj_type unit_file))
+
+(block sd_unit_kexec
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_obj_type unit_file))
+
+(block sd_unit_power
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_obj_type unit_file))
+
+(block sd_unit_runtime
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_obj_type unit_file)
+
+	(call fs_associate_tmpfs (unit_file)))
+
+(block sd_unknown
+	(blockinherit subj_common_blk)
+
+	(roletype sys.role subj)
+
+	(typeattributeset sd_daemon_subj_type subj)
+
+	(call cmd_obj_entry_subj (subj))
+	(call cmd_shell_obj_entry_subj (subj))
+
+	(call cmd_exec_cmd (subj))
+
+	(call term_use_inherited_console (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_send_signal (subj))
+	(call sd_send_signal_daemon_subj (subj)))
+
+(block sd_helper
+	(blockinherit cmd_obj_blk))
+
+(block sd_private
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_obj_type runtime_file)
+	(typeattributeset sd_runtime_obj_type runtime_file))
+
+(allow sd_notify_subj_type self (unix_dgram_socket (sendto)))
+(allow sd_notify_subj_type sd.subj (unix_dgram_socket (sendto)))
+
+(call sd_write_runtime_sock_files (sd_notify_subj_type))
+
+(call sd_rw_inherited_unix_stream_sockets (sd_daemon_forked_subj_type))
+
+(call sd_daemon_forked_subj_type (sd_daemon_subj_type))
+(call sd_read_state (sd_daemon_subj_type))
+
+(allow sd_subj_type self (process (getsched setsched setrlimit setfscreate setsockcreate)))
+(allow sd_subj_type self (unix_stream_socket (listen accept)))
+(allow sd_subj_type self create_netlink_selinux_socket_perms)
+(allow sd_subj_type self (unix_dgram_socket (sendto)))
+
+(call sys_audit_client_subj_type (sd_subj_type))
+(call sys_read_kernel_sysctl_files (sd_subj_type))
+
+(call dev_read_urandom (sd_subj_type))
+
+(call file_manage_var_tmp_dirs (sd_subj_type))
+(call file_manage_var_tmp_lnk_files (sd_subj_type))
+
+(call fs_manage_tmpfs_dirs (sd_subj_type))
+(call fs_manage_tmpfs_lnk_files (sd_subj_type))
+(call fs_manage_cgroup_dirs (sd_subj_type))
+(call fs_read_sysfs (sd_subj_type))
+(call fs_rw_cgroup_files (sd_subj_type))
+
+(call sec_compute_access_vector (sd_subj_type))
+(call sec_compute_create_context (sd_subj_type))
+(call sec_list_fs (sd_subj_type))
+
+(call miscfile_read_locale (sd_subj_type))
+
+(call mount_read_runtime (sd_subj_type))
+
+(call nss_client_subj_type (sd_subj_type))
+
+(call sd_exec_sd_helper (sd_subj_type))
+
+;(call sd_journald_client_subj_type (sd_subj_type))
+;(call sd_journald_stream_connect (sd_subj_type))
+
+;(call sd_udevd_client_subj_type (sd_subj_type))
+
+(call sd_control (sd_adm_subj_type))
+(call sd_unit_control (sd_adm_subj_type))
+(call sd_unit_runtime_control (sd_adm_subj_type))
+
+(allow sd_adm_subj_type sd_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_adm_subj_type sd_subj_type))
+
+(call file_search_config (sd_adm_subj_type))
+(call file_search_runtime (sd_adm_subj_type))
+(call file_search_var_lib (sd_adm_subj_type))
+
+(allow sd_adm_subj_type sd_obj_type manage_file_perms)
+(allow sd_adm_subj_type sd_obj_type manage_dir_perms)
+(allow sd_adm_subj_type sd_obj_type manage_lnk_file_perms)
+(allow sd_adm_subj_type sd_obj_type manage_sock_file_perms)
+
+(allow sd_adm_subj_type sd_obj_type relabel_file_perms)
+(allow sd_adm_subj_type sd_obj_type relabel_dir_perms)
+(allow sd_adm_subj_type sd_obj_type relabel_lnk_file_perms)
+(allow sd_adm_subj_type sd_obj_type relabel_sock_file_perms)
+
+(allow sd_unconfined_subj_type self (system (halt reboot status start stop undefined enable disable reload)))
+(allow sd_unconfined_subj_type sd_subj_type (system (halt reboot status start stop undefined enable disable reload)))
+
+(call sd_all_unit_control (sd_unconfined_subj_type))
+
+;(call sduser_all_unit_control (sd_unconfined_subj_type))
+;(call sduser_unit_runtime_control (sd_unconfined_subj_type)) ; should this not be part of "all_unit"?
+;(call sduser_home_config_control (sd_unconfined_subj_type))

@@ -1,0 +1,779 @@
+(block sd_daemon_blk
+	(blockabstract sd_daemon_blk)
+
+	(blockinherit subj_common_blk)
+
+	(typeattributeset sd_daemon_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(call auto_subj_type_transition_pattern (sd.subj cmd_file subj)))
+
+(block sd_unit_obj_blk
+	(blockabstract sd_unit_obj_blk)
+
+	(type unit_file)
+	(call sd_unit_obj_type (unit_file)))
+
+(macro sd_exec_sd ((type ARG1))
+	(call can_exec (ARG1 sd.cmd_file)))
+
+(macro sd_getattr_cmd_files ((type ARG1))
+	(allow ARG1 sd.cmd_file (file (getattr))))
+
+(macro sd_mmap_cmd_files ((type ARG1))
+	(allow ARG1 sd.cmd_file mmap_file_perms))
+
+(macro sd_exec_sd_helper ((type ARG1))
+	(call can_exec (ARG1 sd_helper.cmd_file)))
+
+(macro sd_auto_subj_type_transition ((type ARG1))
+	(call sd_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd.cmd_file sd.subj)))
+
+(macro sd_send_signal ((type ARG1))
+	(allow ARG1 sd.subj (process (signal))))
+
+(macro sd_dynamic_subj_type_transition ((type ARG1))
+	(call dynamic_subj_type_transition_pattern (ARG1 sd.subj))
+	(typetransition ARG1 sd.cmd_file process "*" sd.subj))
+
+(macro sd_cmd_obj_entry_subj ((type ARG1))
+	(call subj_entry (ARG1 sd.cmd_file)))
+
+(macro sd_daemon_forked_subj_type ((type ARG1))
+	(typeattributeset sd_daemon_forked_subj_type ARG1))
+
+(macro sd_daemon_rwdir_obj_type ((type ARG1))
+	(typeattributeset sd_daemon_rwdir_obj_type ARG1))
+
+(macro sd_daemon_adm_subj_type ((type ARG1))
+	(typeattributeset sd_daemon_adm_subj_type ARG1))
+
+(macro sd_notify_subj_type ((type ARG1))
+	(typeattributeset sd_notify_subj_type ARG1))
+
+(macro sd_dbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_dbus_chat_client_subj_type ARG1))
+
+(macro sd_bounded ((type ARG1))
+	(typebounds sd.subj ARG1))
+
+(macro sd_daemon ((type ARG1)(type ARG2))
+	(call subj_common_type (ARG1))
+	(typeattributeset sd_daemon_subj_type ARG1)
+	(call subj_entry (ARG1 ARG2))
+	(roletype sys.role ARG1)
+	(call auto_subj_type_transition_pattern (sd.subj ARG2 ARG1)))
+
+(macro sd_unit_obj_type ((type ARG1))
+	(call file_obj_type (ARG1))
+	(typeattributeset sd_unit_obj_type ARG1))
+
+(macro sd_daemon_pid_obj_type ((type ARG1))
+	(typeattributeset sd_daemon_pid_obj_type ARG1))
+
+(macro sd_config_obj_type ((type ARG1))
+	(call file_config_obj_type (ARG1))
+	(typeattributeset sd_config_obj_type ARG1))
+
+(macro sd_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd.config_file search_dir_perms))
+
+(macro sd_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd.config_file list_dir_perms))
+
+(macro sd_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd.config_file sd.config_file)))
+
+(macro sd_rw_config_dirs ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd.config_file rw_dir_perms))
+
+(macro sd_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd.config_file sd.config_file)))
+
+(macro sd_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd.config_file read_file_perms)
+	(allow ARG1 sd.config_file list_dir_perms)
+	(allow ARG1 sd.config_file read_lnk_file_perms))
+
+(macro sd_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd.config_file manage_file_perms)
+	(allow ARG1 sd.config_file manage_dir_perms)
+	(allow ARG1 sd.config_file manage_lnk_file_perms))
+
+(macro sd_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd.config_file relabel_file_perms)
+	(allow ARG1 sd.config_file relabel_dir_perms)
+	(allow ARG1 sd.config_file relabel_lnk_file_perms))
+
+(macro sd_search_all_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_config_obj_type search_dir_perms))
+
+(macro sd_list_all_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_config_obj_type list_dir_perms))
+
+(macro sd_read_all_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_config_obj_type sd_config_obj_type)))
+
+(macro sd_rw_all_config_dirs ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_config_obj_type rw_dir_perms))
+
+(macro sd_read_all_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_config_obj_type sd_config_obj_type)))
+
+(macro sd_read_all_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_config_obj_type read_file_perms)
+	(allow ARG1 sd_config_obj_type list_dir_perms)
+	(allow ARG1 sd_config_obj_type read_lnk_file_perms))
+
+(macro sd_manage_all_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd_config_obj_type manage_file_perms)
+	(allow ARG1 sd_config_obj_type manage_dir_perms)
+	(allow ARG1 sd_config_obj_type manage_lnk_file_perms))
+
+(macro sd_relabel_all_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_config_obj_type relabel_file_perms)
+	(allow ARG1 sd_config_obj_type relabel_dir_perms)
+	(allow ARG1 sd_config_obj_type relabel_lnk_file_perms))
+
+(macro sd_config_object_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_config (ARG1))
+	(call obj_type_transition_pattern (ARG1 sd.config_file ARG2 ARG3 ARG4)))
+
+(macro sd_runtime_obj_type ((type ARG1))
+	(call file_runtime_obj_type (ARG1))
+	(typeattributeset sd_runtime_obj_type ARG1))
+
+(macro sd_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd.runtime_file search_dir_perms))
+
+(macro sd_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd.runtime_file list_dir_perms))
+
+(macro sd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd.runtime_file sd.runtime_file)))
+
+(macro sd_rw_runtime_dirs ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd.runtime_file rw_dir_perms))
+
+(macro sd_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd.runtime_file sd.runtime_file)))
+
+(macro sd_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd.runtime_file read_file_perms)
+	(allow ARG1 sd.runtime_file list_dir_perms)
+	(allow ARG1 sd.runtime_file read_sock_file_perms)
+	(allow ARG1 sd.runtime_file read_lnk_file_perms))
+
+(macro sd_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd.runtime_file manage_file_perms)
+	(allow ARG1 sd.runtime_file manage_dir_perms)
+	(allow ARG1 sd.runtime_file manage_sock_file_perms)
+	(allow ARG1 sd.runtime_file manage_lnk_file_perms))
+
+(macro sd_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd.runtime_file relabel_file_perms)
+	(allow ARG1 sd.runtime_file relabel_dir_perms)
+	(allow ARG1 sd.runtime_file relabel_sock_file_perms)
+	(allow ARG1 sd.runtime_file relabel_lnk_file_perms))
+
+(macro sd_search_all_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_runtime_obj_type search_dir_perms))
+
+(macro sd_list_all_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_runtime_obj_type list_dir_perms))
+
+(macro sd_read_all_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_runtime_obj_type sd_runtime_obj_type)))
+
+(macro sd_rw_all_runtime_dirs ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_runtime_obj_type rw_dir_perms))
+
+(macro sd_read_all_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_runtime_obj_type sd_runtime_obj_type)))
+
+(macro sd_read_all_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_runtime_obj_type read_file_perms)
+	(allow ARG1 sd_runtime_obj_type list_dir_perms)
+	(allow ARG1 sd_runtime_obj_type read_sock_file_perms)
+	(allow ARG1 sd_runtime_obj_type read_lnk_file_perms))
+
+(macro sd_manage_all_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_runtime_obj_type manage_file_perms)
+	(allow ARG1 sd_runtime_obj_type manage_dir_perms)
+	(allow ARG1 sd_runtime_obj_type manage_sock_file_perms)
+	(allow ARG1 sd_runtime_obj_type manage_lnk_file_perms))
+
+(macro sd_relabel_all_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_runtime_obj_type relabel_file_perms)
+	(allow ARG1 sd_runtime_obj_type relabel_dir_perms)
+	(allow ARG1 sd_runtime_obj_type relabel_sock_file_perms)
+	(allow ARG1 sd_runtime_obj_type relabel_lnk_file_perms))
+
+(macro sd_runtime_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_runtime (ARG1))
+	(call obj_type_transition_pattern (ARG1 sd.runtime_file ARG2 ARG3 ARG4)))
+
+(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 sd.runtime_file dir "systemd")))
+
+(macro sd_read_private_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_private.runtime_file read_sock_file_perms))
+
+(macro sd_write_private_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_private.runtime_file write_sock_file_perms))
+
+(macro sd_rw_private_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_private.runtime_file rw_sock_file_perms))
+
+(macro sd_manage_private_runtime_sock_files ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_private.runtime_file manage_sock_file_perms))
+
+(macro sd_relabel_private_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_private.runtime_file relabel_sock_file_perms))
+
+(macro sd_var_lib_obj_type ((type ARG1))
+	(call file_var_lib_obj_type (ARG1))
+	(typeattributeset sd_var_lib_obj_type ARG1))
+
+(macro sd_search_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd.var_lib_file search_dir_perms))
+
+(macro sd_list_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd.var_lib_file list_dir_perms))
+
+(macro sd_read_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd.var_lib_file sd.var_lib_file)))
+
+(macro sd_rw_var_lib_dirs ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd.var_lib_file rw_dir_perms))
+
+(macro sd_read_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd.var_lib_file sd.var_lib_file)))
+
+(macro sd_read_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd.var_lib_file read_file_perms)
+	(allow ARG1 sd.var_lib_file list_dir_perms)
+	(allow ARG1 sd.var_lib_file read_sock_file_perms)
+	(allow ARG1 sd.var_lib_file read_lnk_file_perms))
+
+(macro sd_manage_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd.var_lib_file manage_file_perms)
+	(allow ARG1 sd.var_lib_file manage_dir_perms)
+	(allow ARG1 sd.var_lib_file manage_sock_file_perms)
+	(allow ARG1 sd.var_lib_file manage_lnk_file_perms))
+
+(macro sd_relabel_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd.var_lib_file relabel_file_perms)
+	(allow ARG1 sd.var_lib_file relabel_dir_perms)
+	(allow ARG1 sd.var_lib_file relabel_sock_file_perms)
+	(allow ARG1 sd.var_lib_file relabel_lnk_file_perms))
+
+(macro sd_search_all_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd_var_lib_obj_type search_dir_perms))
+
+(macro sd_list_all_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd_var_lib_obj_type list_dir_perms))
+
+(macro sd_read_all_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_var_lib_obj_type sd_var_lib_obj_type)))
+
+(macro sd_rw_all_var_lib_dirs ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd_var_lib_obj_type rw_dir_perms))
+
+(macro sd_read_all_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_var_lib_obj_type sd_var_lib_obj_type)))
+
+(macro sd_read_all_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd_var_lib_obj_type read_file_perms)
+	(allow ARG1 sd_var_lib_obj_type list_dir_perms)
+	(allow ARG1 sd_var_lib_obj_type read_sock_file_perms)
+	(allow ARG1 sd_var_lib_obj_type read_lnk_file_perms))
+
+(macro sd_manage_all_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_var_lib_obj_type manage_file_perms)
+	(allow ARG1 sd_var_lib_obj_type manage_dir_perms)
+	(allow ARG1 sd_var_lib_obj_type manage_sock_file_perms)
+	(allow ARG1 sd_var_lib_obj_type manage_lnk_file_perms))
+
+(macro sd_relabel_all_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 sd_var_lib_obj_type relabel_file_perms)
+	(allow ARG1 sd_var_lib_obj_type relabel_dir_perms)
+	(allow ARG1 sd_var_lib_obj_type relabel_sock_file_perms)
+	(allow ARG1 sd_var_lib_obj_type relabel_lnk_file_perms))
+
+(macro sd_var_lib_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_var_lib (ARG1))
+	(call obj_type_transition_pattern (ARG1 sd.var_lib_file ARG2 ARG3 ARG4)))
+
+(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 sd.var_lib_file dir "systemd")))
+
+(macro sd_search_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file search_dir_perms))
+
+(macro sd_list_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file list_dir_perms))
+
+(macro sd_read_unit_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
+
+(macro sd_read_unit_lnk_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
+
+(macro sd_manage_unit_dirs ((type ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
+
+(macro sd_manage_unit_files ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(call manage_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
+
+(macro sd_getattr_unit_dirs ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file (dir (getattr))))
+
+(macro sd_relabelto_unit_dirs ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_unit.unit_file relabelto_dir_perms))
+
+(macro sd_rw_unit_dirs ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file rw_dir_perms))
+
+(macro sd_read_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file read_file_perms)
+	(allow ARG1 sd_unit.unit_file list_dir_perms)
+	(allow ARG1 sd_unit.unit_file read_lnk_file_perms))
+
+(macro sd_manage_unit ((type ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_unit.unit_file manage_file_perms)
+	(allow ARG1 sd_unit.unit_file manage_dir_perms)
+	(allow ARG1 sd_unit.unit_file manage_lnk_file_perms))
+
+(macro sd_relabel_unit ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_unit.unit_file relabel_file_perms)
+	(allow ARG1 sd_unit.unit_file relabel_dir_perms)
+	(allow ARG1 sd_unit.unit_file relabel_lnk_file_perms))
+
+(macro sd_search_unit_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file search_dir_perms))
+
+(macro sd_list_unit_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file list_dir_perms))
+
+(macro sd_read_unit_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_unit_runtime.unit_file sd_unit_runtime.unit_file)))
+
+(macro sd_read_unit_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_unit_runtime.unit_file sd_unit_runtime.unit_file)))
+
+(macro sd_manage_unit_runtime_dirs ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(call manage_dirs_pattern (ARG1 sd_unit_runtime.unit_file sd_unit_runtime.unit_file)))
+
+(macro sd_manage_unit_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 sd_unit_runtime.unit_file sd_unit_runtime.unit_file)))
+
+(macro sd_getattr_unit_runtime_dirs ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (dir (getattr))))
+
+(macro sd_relabelto_unit_runtime_dirs ((type ARG1))
+	(call sd_search_unit_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file relabelto_dir_perms))
+
+(macro sd_rw_unit_runtime_dirs ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file rw_dir_perms))
+
+(macro sd_read_unit_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file read_file_perms)
+	(allow ARG1 sd_unit_runtime.unit_file list_dir_perms)
+	(allow ARG1 sd_unit_runtime.unit_file read_lnk_file_perms))
+
+(macro sd_manage_unit_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file manage_file_perms)
+	(allow ARG1 sd_unit_runtime.unit_file manage_dir_perms)
+	(allow ARG1 sd_unit_runtime.unit_file manage_lnk_file_perms))
+
+(macro sd_relabel_unit_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file relabel_file_perms)
+	(allow ARG1 sd_unit_runtime.unit_file relabel_dir_perms)
+	(allow ARG1 sd_unit_runtime.unit_file relabel_lnk_file_perms))
+
+(macro sd_search_all_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(call sd_search_unit_runtime (ARG1)))
+
+(macro sd_list_all_unit ((type ARG1))
+	(call sd_list_unit (ARG1))
+	(call sd_list_unit_runtime (ARG1)))
+
+(macro sd_read_all_unit_files ((type ARG1))
+	(call sd_search_all_unit (ARG1))
+	(call read_files_pattern (ARG1 sd_unit_obj_type sd_unit_obj_type)))
+
+(macro sd_read_all_unit_lnk_files ((type ARG1))
+	(call sd_read_unit_lnk_files (ARG1))
+	(call sd_read_unit_runtime_lnk_files (ARG1)))
+
+(macro sd_manage_all_unit_dirs ((type ARG1))
+	(call sd_manage_unit_dirs (ARG1))
+	(call sd_manage_unit_runtime_dirs (ARG1)))
+
+(macro sd_manage_all_unit_files ((type ARG1))
+	(call sd_rw_all_unit_dirs (ARG1))
+	(call manage_files_pattern (ARG1 sd_unit_obj_type sd_unit_obj_type)))
+
+(macro sd_getattr_all_unit_dirs ((type ARG1))
+	(call sd_getattr_unit_dirs (ARG1))
+	(call sd_getattr_unit_runtime_dirs (ARG1)))
+
+(macro sd_relabelto_all_unit_dirs ((type ARG1))
+	(call sd_relabelto_unit_dirs (ARG1))
+	(call sd_relabelto_unit_runtime_dirs (ARG1)))
+
+(macro sd_rw_all_unit_dirs ((type ARG1))
+	(call sd_rw_unit_dirs (ARG1))
+	(call sd_rw_unit_runtime_dirs (ARG1)))
+
+(macro sd_read_all_unit ((type ARG1))
+	(call sd_search_all_unit (ARG1))
+	(allow ARG1 sd_unit_obj_type read_file_perms)
+	(allow ARG1 sd_unit_obj_type list_dir_perms)
+	(allow ARG1 sd_unit_obj_type read_lnk_file_perms))
+
+(macro sd_manage_all_unit ((type ARG1))
+	(call sd_rw_all_unit_dirs (ARG1))
+	(allow ARG1 sd_unit_obj_type manage_file_perms)
+	(allow ARG1 sd_unit_obj_type manage_dir_perms)
+	(allow ARG1 sd_unit_obj_type manage_lnk_file_perms))
+
+(macro sd_relabel_all_unit ((type ARG1))
+	(call sd_search_all_unit (ARG1))
+	(allow ARG1 sd_unit_obj_type relabel_file_perms)
+	(allow ARG1 sd_unit_obj_type relabel_dir_perms)
+	(allow ARG1 sd_unit_obj_type relabel_lnk_file_perms))
+
+(macro sd_read_state_lnk_files ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd.subj sd.subj)))
+
+(macro sd_dontaudit_read_state ((type ARG1))
+	(dontaudit ARG1 sd.subj read_file_perms)
+	(dontaudit ARG1 sd.subj list_dir_perms)
+	(dontaudit ARG1 sd.subj read_lnk_file_perms))
+
+(macro sd_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd.subj read_file_perms)
+	(allow ARG1 sd.subj list_dir_perms)
+	(allow ARG1 sd.subj read_lnk_file_perms))
+
+(macro sd_use_fd ((type ARG1))
+	(allow ARG1 sd.subj (fd (use))))
+
+(macro sd_rw_unix_stream_sockets ((type ARG1))
+	(allow ARG1 sd.subj rw_unix_stream_socket_perms))
+
+(macro sd_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call sd_use_fd (ARG1))
+	(allow ARG1 sd.subj (unix_stream_socket (getattr ioctl read write))))
+
+(macro sd_getpgid ((type ARG1))
+	(allow ARG1 sd.subj (process (getpgid))))
+
+(macro sd_send_sigchld ((type ARG1))
+	(allow ARG1 sd.subj (process (sigchld))))
+
+(macro sd_link_keyring ((type ARG1))
+	(allow ARG1 sd.subj (key (search link))))
+
+(macro sd_read_state_daemon_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_daemon_subj_type read_file_perms)
+	(allow ARG1 sd_daemon_subj_type list_dir_perms)
+	(allow ARG1 sd_daemon_subj_type read_lnk_file_perms))
+
+(macro sd_getattr_daemon_subj ((type ARG1))
+	(allow ARG1 sd_daemon_subj_type (process (getattr))))
+
+(macro sd_send_signal_daemon_subj ((type ARG1))
+	(allow ARG1 sd_daemon_subj_type (process (signal))))
+
+(macro sd_socket_activated_obj_type ((type ARG1))
+	(typeattributeset sd_socket_activated_obj_type ARG1))
+
+(macro sd_tcp_socket_activated_subj_type ((type ARG1))
+	(typeattributeset sd_tcp_socket_activated_subj_type ARG1))
+
+(macro sd_tcp_socket_activated_obj_type ((type ARG1))
+	(typeattributeset sd_tcp_socket_activated_obj_type ARG1))
+
+(macro sd_tcp_socket_activated ((type ARG1)(type ARG2))
+	(call sd_tcp_socket_activated_subj_type (ARG1))
+	(call sd_tcp_socket_activated_obj_type (ARG2)))
+
+(macro sd_udp_socket_activated_subj_type ((type ARG1))
+	(typeattributeset sd_udp_socket_activated_subj_type ARG1))
+
+(macro sd_udp_socket_activated_obj_type ((type ARG1))
+	(typeattributeset sd_udp_socket_activated_obj_type ARG1))
+
+(macro sd_udp_socket_activated ((type ARG1)(type ARG2))
+	(call sd_udp_socket_activated_subj_type (ARG1))
+	(call sd_udp_socket_activated_obj_type (ARG2)))
+
+(macro sd_dccp_socket_activated_subj_type ((type ARG1))
+	(typeattributeset sd_dccp_socket_activated_subj_type ARG1))
+
+(macro sd_dccp_socket_activated_obj_type ((type ARG1))
+	(typeattributeset sd_dccp_socket_activated_obj_type ARG1))
+
+(macro sd_dccp_socket_activated ((type ARG1)(type ARG2))
+	(call sd_dccp_socket_activated_subj_type (ARG1))
+	(call sd_dccp_socket_activated_obj_type (ARG2)))
+
+(macro sd_fifo_file_activated_obj_type ((type ARG1))
+	(call sd_socket_activated_obj_type (ARG1))
+	(typeattributeset sd_fifo_file_activated_obj_type ARG1))
+
+(macro sd_unix_stream_socket_activated_subj_type ((type ARG1))
+	(typeattributeset sd_unix_stream_socket_activated_subj_type ARG1))
+
+(macro sd_unix_stream_socket_activated ((type ARG1)(type ARG2))
+	(call sd_unix_stream_socket_activated_subj_type (ARG1))
+	(call sd_socket_activated_obj_type (ARG2)))
+
+(macro sd_unix_dgram_socket_activated_subj_type ((type ARG1))
+	(typeattributeset sd_unix_dgram_socket_activated_subj_type ARG1))
+
+(macro sd_unix_dgram_socket_activated ((type ARG1)(type ARG2))
+	(call sd_unix_dgram_socket_activated_subj_type (ARG1))
+	(call sd_socket_activated_obj_type (ARG2)))
+
+(macro sd_netlink_socket_activated ((type ARG1)(class ARG2))
+	(allow sd.subj ARG1 (ARG2 (create ioctl read getattr write setattr append bind connect getopt setopt shutdown))))
+
+(macro sd_halt ((type ARG1))
+	(allow ARG1 sd.subj (system (halt))))
+
+(macro sd_reboot ((type ARG1))
+	(allow ARG1 sd.subj (system (reboot))))
+
+(macro sd_reload ((type ARG1))
+	(allow ARG1 sd.subj (system (reload))))
+
+(macro sd_enable ((type ARG1))
+	(allow ARG1 sd.subj (system (enable))))
+
+(macro sd_disable ((type ARG1))
+	(allow ARG1 sd.subj (system (disable))))
+
+(macro sd_status ((type ARG1))
+	(allow ARG1 sd.subj (system (status))))
+
+(macro sd_start ((type ARG1))
+	(allow ARG1 sd.subj (system (start))))
+
+(macro sd_stop ((type ARG1))
+	(allow ARG1 sd.subj (system (stop))))
+
+(macro sd_control ((type ARG1))
+	(call sd_halt (ARG1))
+	(call sd_reboot (ARG1))
+	(call sd_reload (ARG1))
+	(call sd_status (ARG1))
+	(call sd_disable (ARG1))
+	(call sd_enable (ARG1))
+	(call sd_start (ARG1))
+	(call sd_stop (ARG1)))
+
+(macro sd_stop_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (stop))))
+
+(macro sd_status_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (status))))
+
+(macro sd_disable_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (disable))))
+
+(macro sd_enable_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (enable))))
+
+(macro sd_reload_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (reload))))
+
+(macro sd_start_unit ((type ARG1))
+	(allow ARG1 sd_unit.unit_file (service (start))))
+
+(macro sd_unit_control ((type ARG1))
+	(call sd_stop_unit (ARG1))
+	(call sd_status_unit (ARG1))
+	(call sd_disable_unit (ARG1))
+	(call sd_enable_unit (ARG1))
+	(call sd_reload_unit (ARG1))
+	(call sd_start_unit (ARG1)))
+
+(macro sd_stop_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (stop))))
+
+(macro sd_status_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (status))))
+
+(macro sd_disable_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (disable))))
+
+(macro sd_enable_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (enable))))
+
+(macro sd_reload_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (reload))))
+
+(macro sd_start_unit_runtime ((type ARG1))
+	(allow ARG1 sd_unit_runtime.unit_file (service (start))))
+
+(macro sd_unit_runtime_control ((type ARG1))
+	(call sd_stop_unit_runtime (ARG1))
+	(call sd_status_unit_runtime (ARG1))
+	(call sd_disable_unit_runtime (ARG1))
+	(call sd_enable_unit_runtime (ARG1))
+	(call sd_reload_unit_runtime (ARG1))
+	(call sd_start_unit_runtime (ARG1)))
+
+(macro sd_stop_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (stop))))
+
+(macro sd_status_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (status))))
+
+(macro sd_disable_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (disable))))
+
+(macro sd_enable_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (enable))))
+
+(macro sd_reload_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (reload))))
+
+(macro sd_start_all_unit ((type ARG1))
+	(allow ARG1 sd_unit_obj_type (service (start))))
+
+(macro sd_all_unit_control ((type ARG1))
+	(call sd_stop_all_unit (ARG1))
+	(call sd_status_all_unit (ARG1))
+	(call sd_disable_all_unit (ARG1))
+	(call sd_enable_all_unit (ARG1))
+	(call sd_reload_all_unit (ARG1))
+	(call sd_start_all_unit (ARG1)))
+
+(macro sd_status_unit_power ((type ARG1))
+	(allow ARG1 sd_unit_power.unit_file (service (status))))
+
+(macro sd_start_unit_power ((type ARG1))
+	(allow ARG1 sd_unit_power.unit_file (service (start))))
+
+(macro sd_stream_connect ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 sd.runtime_file sd_private.runtime_file sd.subj)))
+
+(macro sd_dgram_send ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call dgram_send_pattern (ARG1 sd.runtime_file sd_private.runtime_file sd.subj)))
+
+(macro sd_write_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call write_sock_files_pattern (ARG1 sd.runtime_file sd.runtime_file)))
+
+(macro sd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_adm_subj_type ARG1)
+	(optional sd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))
+
+(macro sd_unconfined_subj_type ((type ARG1))
+	(typeattributeset sd_unconfined_subj_type ARG1))

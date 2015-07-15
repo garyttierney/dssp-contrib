@@ -1,0 +1,10 @@
+(roleattribute setools_role)
+
+(block setools
+	(blockinherit app_blk)
+
+	(roletype setools_role subj)
+
+	(call sec_read_policy (subj))
+
+	(call seutil_read_selinux_config_files (subj)))

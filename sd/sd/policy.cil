@@ -186,9 +186,6 @@
 
 	(call mount_manage_runtime_dirs (subj))
 
-	(call seutil_read_default_context_files (subj))
-	(call seutil_read_file_context_files (subj))
-
 	(call sd_exec_sd (subj))
 	(call sd_auto_subj_type_transition (subj))
 	(call sd_relabelto_unit_runtime_dirs (subj))

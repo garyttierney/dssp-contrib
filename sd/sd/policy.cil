@@ -254,15 +254,14 @@
 		(call plymouth_read_plymouthd_runtime (subj))
 		(call plymouth_use_fd_plymouthd (subj)))
 
-	(optional sd_optional_polkitd
-		(call polkitd_dbus_chat_client_subj_type (subj)))
+	(optional sd_optional_polkit
+		(call polkit_dbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_sduser
-		(call sduser_dbus_chat_subj_client_subj_type (subj)))
+		(call sduser_dbus_chat_client_subj_type (subj)))
 
-	(optional systemd_optional_usersubject
+	(optional sd_optional_usersubj
 		(call usersubj_link_keyring_common_login_subj (subj))
-		(call usersubj_mounton_home_dir (subj))
 		(call usersubj_use_term (subj)))
 
 	(optional sd_optional_unconfinedusersubj

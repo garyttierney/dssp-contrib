@@ -1,0 +1,58 @@
+(roleattribute ldconfig_role)
+
+(typeattribute ldconfig_obj_type)
+
+(typeattribute ldconfig_adm_subj_type)
+
+(block ldconfig
+	(blockinherit app_blk)
+
+	(roleattributeset ldconfig_role sys.role)
+
+	(roletype ldconfig_role subj)
+
+	(blockinherit file_var_cache_obj_blk)
+
+	(typeattributeset ldconfig_obj_type var_cache_file)
+
+	(allow subj self (capability (dac_override sys_chroot)))
+
+	(call file_read_config (subj))
+
+	(call lib_manage_lib (subj))
+	(call lib_manage_ld_so_cache_files (subj))
+	(call lib_config_obj_type_transition_ld_so_cache_files (subj))
+
+	(call ldconfig_manage_var_cache (subj))
+	(call ldconfig_var_cache_obj_type_transition_var_cache (subj dir "*"))
+
+	(call miscfile_read_locale (subj))
+
+	(optional ldconfig_optional_rpm
+		(call rpm_manage_var_tmp_files (subj))
+		(call rpm_read_var_tmp_lnk_files (subj))
+		(call rpm_rw_inherited_fifo_files (subj))
+		(call rpm_rw_inherited_tmpfs_files (subj))
+		(call rpm_rw_inherited_var_tmp_fifo_files (subj)))
+
+	(optional ldconfig_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset ldconfig_obj_type unit_file)
+
+		(allow ldconfig_adm_subj_type unit_file (service (all)))))
+
+(allow ldconfig_adm_subj_type ldconfig.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (ldconfig_adm_subj_type ldconfig.subj))
+
+(call file_search_var_cache (ldconfig_adm_subj_type))
+
+(allow ldconfig_adm_subj_type ldconfig_obj_type manage_file_perms)
+(allow ldconfig_adm_subj_type ldconfig_obj_type manage_dir_perms)
+(allow ldconfig_adm_subj_type ldconfig_obj_type manage_lnk_file_perms)
+
+(allow ldconfig_adm_subj_type ldconfig_obj_type relabel_file_perms)
+(allow ldconfig_adm_subj_type ldconfig_obj_type relabel_dir_perms)
+(allow ldconfig_adm_subj_type ldconfig_obj_type relabel_lnk_file_perms)

@@ -1,0 +1,9 @@
+(context ldconfig_cmd (sys.id sys.role ldconfig.cmd_file (systemlow systemlow)))
+(context ldconfig_var_cache (sys.id sys.role ldconfig.var_cache_file (systemlow systemlow)))
+
+(filecon "/usr/sbin/ldconfig" file ldconfig_cmd)
+(filecon "/var/cache/ldconfig(/.*)?" any ldconfig_var_cache)
+
+(optional ldconfig_unit_optional_sd
+	(context ldconfig_unit (sys.id sys.role ldconfig.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*ldconfig.*" file ldconfig_unit))

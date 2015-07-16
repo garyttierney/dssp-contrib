@@ -23,13 +23,13 @@
 	(call lvm_audit_access_cmd_files (subj))
 
 	(call lvm_manage_runtime_dirs (subj))
-	(call lvm_runtime_obj_type_transition_runtime (subj dir "lvm"))
+	(call lvm_runtime_obj_type_transition_runtime (subj))
 
 	(call lvmpolld_manage_runtime_files (subj))
-	(call lvmpolld_runtime_obj_type_transition_runtime (subj file "*"))
+	(call lvmpolld_runtime_obj_type_transition_runtime (subj))
 
 	(call lvmpolld_manage_runtime_sock_files (subj))
-	(call lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime (subj sock_file "lvmpolld.socket"))
+	(call lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime (subj))
 
 	(call miscfile_read_locale (subj))
 

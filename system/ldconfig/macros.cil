@@ -46,8 +46,8 @@
 	(allow ARG1 ldconfig.var_cache_file relabel_dir_perms)
 	(allow ARG1 ldconfig.var_cache_file relabel_lnk_file_perms))
 
-(macro ldconfig_var_cache_obj_type_transition_var_cache ((type ARG1)(class ARG2)(name ARG3))
-	(call file_var_cache_obj_type_transition (ARG1 ldconfig.var_cache_file ARG2 ARG3)))
+(macro ldconfig_var_cache_obj_type_transition_var_cache ((type ARG1))
+	(call file_var_cache_obj_type_transition (ARG1 ldconfig.var_cache_file dir "ldconfig")))
 
 (macro ldconfig_adm ((type ARG1)(role ARG2))
     (typeattributeset lconfig_adm_subj_type ARG1)

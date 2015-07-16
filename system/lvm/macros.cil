@@ -137,8 +137,8 @@
 	(allow ARG1 lvm.runtime_lock_file relabel_dir_perms)
 	(allow ARG1 lvm.runtime_lock_file relabel_lnk_file_perms))
 
-(macro lvm_runtime_lock_obj_type_transition_runtime_lock ((type ARG1)(class ARG2)(name ARG3))
-	(call file_runtime_lock_obj_type_transition (ARG1 lvm.runtime_lock_file ARG2 ARG3)))
+(macro lvm_runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
+	(call file_runtime_lock_obj_type_transition (ARG1 lvm.runtime_lock_file dir "lvm")))
 
 (macro lvm_search_runtime ((type ARG1))
 	(call file_search_runtime (ARG1))
@@ -188,8 +188,8 @@
 	(call file_search_runtime (ARG1))
 	(call obj_type_transition_pattern (ARG1 lvm.runtime_file ARG2 ARG3 ARG4)))
 
-(macro lvm_runtime_obj_type_transition_runtime ((type ARG1)(class ARG2)(name ARG3))
-	(call file_runtime_obj_type_transition (ARG1 lvm.runtime_file ARG2 ARG3)))
+(macro lvm_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 lvm.runtime_file dir "lvm")))
 
 (macro lvm_read_runtime ((type ARG1))
 	(call file_search_runtime (ARG1))

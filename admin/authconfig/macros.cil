@@ -76,5 +76,5 @@
         (allow ARG1 authconfig.var_lib_file manage_dir_perms)
         (allow ARG1 authconfig.var_lib_file manage_lnk_file_perms))
 
-(macro authconfig_var_lib_obj_type_transition_var_lib ((type ARG1)(class ARG2)(name ARG3))
-	(call file_var_lib_obj_type_transition (ARG1 authconfig.var_lib_file ARG2 ARG3)))
+(macro authconfig_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 authconfig.var_lib_file dir "authconfig")))

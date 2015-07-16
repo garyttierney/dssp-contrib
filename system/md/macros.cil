@@ -64,8 +64,8 @@
 	(allow ARG1 mdadm.runtime_file relabel_dir_perms)
 	(allow ARG1 mdadm.runtime_file relabel_lnk_file_perms))
 
-(macro md_runtime_obj_type_transition_mdadm_runtime ((type ARG1)(class ARG2)(name ARG3))
-	(call file_runtime_obj_type_transition (ARG1 mdadm.runtime_file ARG2 ARG3)))
+(macro md_runtime_obj_type_transition_mdadm_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 mdadm.runtime_file dir "mdadm")))
 
 (macro md_adm ((type ARG1)(role ARG2))
 	(typeattributeset md_adm_subj_type ARG1)

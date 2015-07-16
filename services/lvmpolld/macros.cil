@@ -20,11 +20,11 @@
 	(call file_search_runtime (ARG1))
 	(allow ARG1 lvmpolld.runtime_file relabel_file_perms))
 
-(macro lvmpolld_runtime_obj_type_transition_runtime ((type ARG1)(class ARG2)(name ARG3))
-	(call file_runtime_obj_type_transition (ARG1 lvmpolld.runtime_file ARG2 ARG3)))
+(macro lvmpolld_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 lvmpolld.runtime_file file "lvmpolld.pid")))
 
-(macro lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime ((type ARG1)(class ARG2)(name ARG3))
-	(call lvm_runtime_obj_object_type_transition (ARG1 lvmpolld.runtime_file ARG2 ARG3)))
+(macro lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime ((type ARG1))
+	(call lvm_runtime_obj_object_type_transition (ARG1 lvmpolld.runtime_file sock_file "lvmpolld.socket")))
 
 (macro lvmpolld_read_runtime_sock_files ((type ARG1))
 	(call lvm_search_runtime (ARG1))

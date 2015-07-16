@@ -70,6 +70,12 @@
 	(roletype sys.role ARG1)
 	(call auto_subj_type_transition_pattern (sd.subj ARG2 ARG1)))
 
+(macro sd_ranged_daemon ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
+	(call sd_daemon (ARG1 ARG2))
+	(tunableif enable_mcs (true (rangetransition sd.subj ARG2 process (ARG3 ARG4))))
+	(tunableif enable_mls (true (rangetransition sd.subj ARG2 process (ARG3 ARG4))
+		(call mls_range_trans_target_type (ARG1)))))
+
 (macro sd_subj_type ((type ARG1))
 	(typeattributeset sd_subj_type ARG1))
 

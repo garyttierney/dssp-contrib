@@ -150,11 +150,17 @@
 (macro usersubj_dynamic_subj_type_transition_unpriv_login_subj ((type ARG1))
 	(call dynamic_subj_type_transition_pattern (ARG1 usersubj_unpriv_login_type)))
 
-(macro usersubj_shell_exec_manual_subj_type_transition_common_login_subj ((type ARG1))
+(macro usersubj_shell_manual_subj_type_transition_common_login_subj ((type ARG1))
 	(call cmd_shell_manual_subj_type_transition (ARG1 usersubj_common_login_type)))
 
-(macro usersubj_shell_exec_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
+(macro usersubj_shell_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
 	(call cmd_shell_manual_subj_type_transition (ARG1 usersubj_unpriv_login_type)))
+
+(macro usersubj_dontaudit_dynamic_subj_type_transition_common_subj ((type ARG1))
+	(dontaudit ARG1 usersubj_common_type (process (dyntransition))))
+
+(macro usersubj_dontaudit_manual_subj_type_transition_common_subj ((type ARG1))
+	(dontaudit ARG1 usersubj_common_type (process (transition))))
 
 (macro usersubj_dontaudit_create_keyring_common_subj ((type ARG1))
 	(dontaudit ARG1 usersubj_common_type (key (create))))

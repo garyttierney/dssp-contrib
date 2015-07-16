@@ -1,5 +1,5 @@
 (context getty_cmd (sys.id sys.role getty.cmd_file (systemlow systemlow)))
-(context getty_runtime (system_u object_r getty.runtime_file (systemlow systemlow)))
+(context getty_runtime (sys.id sys.role getty.runtime_file (systemlow systemlow)))
 
 (filecon "/usr/sbin/agetty" file getty_cmd)
 (filecon "/var/run/agetty\.reload" file getty_runtime)

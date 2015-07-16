@@ -1,0 +1,35 @@
+(macro login_exec_login ((type ARG1))
+	(call can_exec (ARG1 login.cmd_file)))
+
+(macro login_auto_subj_type_transition_login ((type ARG1))
+	(call login_send_signal_login (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 login.cmd_file login.subj)))
+
+(macro login_send_signal_login ((type ARG1))
+	(allow ARG1 login.subj (process (signal))))
+
+(macro login_send_signull_login ((type ARG1))
+	(allow ARG1 login.subj (process (signull))))
+
+(macro login_entry_subj ((type ARG1))
+	(call subj_entry (ARG1 login.cmd_file)))
+
+(macro login_exec_sulogin ((type ARG1))
+	(call can_exec (ARG1 sulogin.cmd_file)))
+
+(macro login_auto_subj_type_transition_sulogin ((type ARG1))
+	(call login_send_signal_sulogin (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sulogin.cmd_file sulogin.subj)))
+
+(macro login_send_signal_sulogin ((type ARG1))
+	(allow ARG1 sulogin.subj (process (signal))))
+
+(macro login_use_fd_sulogin ((type ARG1))
+	(allow ARG1 sulogin.subj (fd (use))))
+
+(macro login_adm ((type ARG1)(role ARG2))
+	(typeattributeset login_adm_subj_type ARG1)
+	(optional login_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional login_adm_optional_sd_askpwd
+		(call sd_askpwd_run_askpwdagent (ARG1 ARG2))))

@@ -355,8 +355,8 @@
 (macro usersubj_home_dir_add_obj_type_transition_home_cache ((type ARG1))
 	(call obj_type_transition_add_pattern (ARG1 home_dir.file home_cache.home_cache_file dir ".cache")))
 
-(macro usersubj_home_dir_obj_type_transition_home_cache ((type ARG1)(class ARG2)(name ARG3))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_cache.home_cache_file ARG2 ARG3)))
+(macro usersubj_home_dir_obj_type_transition_home_cache ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_cache.home_cache_file dir ".cache")))
 
 (macro usersubj_home_cache_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))
@@ -365,7 +365,7 @@
 (macro usersubj_home_cache ((type ARG1))
 	(call usersubj_manage_home_cache (ARG1))
 	(call usersubj_relabel_home_cache (ARG1))
-	(call usersubj_home_dir_obj_type_transition_home_cache (ARG1 dir ".cache")))
+	(call usersubj_home_dir_obj_type_transition_home_cache (ARG1)))
 
 (macro usersubj_search_home_config ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -466,8 +466,8 @@
 (macro usersubj_home_dir_add_obj_type_transition_home_config ((type ARG1))
 	(call obj_type_transition_add_pattern (ARG1 home_dir.file home_config.home_config_file dir ".config")))
 
-(macro usersubj_home_dir_obj_type_transition_home_config ((type ARG1)(class ARG2)(name ARG3))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_config.home_config_file ARG2 ARG3)))
+(macro usersubj_home_dir_obj_type_transition_home_config ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_config.home_config_file dir ".config")))
 
 (macro usersubj_home_config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))
@@ -476,7 +476,7 @@
 (macro usersubj_home_config ((type ARG1))
 	(call usersubj_manage_home_config (ARG1))
 	(call usersubj_relabel_home_config (ARG1))
-	(call usersubj_home_dir_obj_type_transition_home_config (ARG1 dir ".config")))
+	(call usersubj_home_dir_obj_type_transition_home_config (ARG1)))
 
 (macro usersubj_search_home_data ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -577,8 +577,8 @@
 (macro usersubj_home_dir_add_obj_type_transition_home_data ((type ARG1))
 	(call obj_type_transition_add_pattern (ARG1 home_dir.file home_data.home_data_file dir ".local")))
 
-(macro usersubj_home_dir_obj_type_transition_home_data ((type ARG1)(class ARG2)(name ARG3))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_data.home_data_file ARG2 ARG3)))
+(macro usersubj_home_dir_obj_type_transition_home_data ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_data.home_data_file dir ".local")))
 
 (macro usersubj_home_data_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))
@@ -587,7 +587,7 @@
 (macro usersubj_home_data ((type ARG1))
 	(call usersubj_manage_home_data (ARG1))
 	(call usersubj_relabel_home_data (ARG1))
-	(call usersubj_home_dir_obj_type_transition_home_data (ARG1 dir ".local")))
+	(call usersubj_home_dir_obj_type_transition_home_data (ARG1)))
 
 (macro usersubj_search_home_user ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -960,11 +960,13 @@
 	(call usersubj_search_home_cmd (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 home_cmd.home_user_file ARG2)))
 
-(macro usersubj_home_data_obj_type_transition_home_cmd ((type ARG1)(class ARG2)(name ARG3))
-        (call usersubj_home_data_obj_type_transition (ARG1 home_cmd.home_user_file ARG2 ARG3)))
+(macro usersubj_home_data_obj_type_transition_home_cmd ((type ARG1))
+        (call usersubj_home_data_obj_type_transition (ARG1 home_cmd.home_user_file dir "bin")))
 
-(macro usersubj_home_dir_obj_type_transition_home_cmd ((type ARG1)(class ARG2)(name ARG3))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_cmd.home_user_file ARG2 ARG3)))
+(macro usersubj_home_dir_obj_type_transition_home_cmd ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_cmd.home_user_file file ".xinitrc"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_cmd.home_user_file lnk_file "bin"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_cmd.home_user_file dir "bin")))
 
 (macro usersubj_home_cmd_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_data (ARG1))
@@ -973,10 +975,10 @@
 (macro usersubj_home_cmd ((type ARG1))
 	(call usersubj_manage_home_cmd (ARG1))
 	(call usersubj_relabel_home_cmd (ARG1))
-	(call usersubj_home_data_obj_type_transition_home_cmd (ARG1 dir "bin"))
-	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1 file ".xinitrc"))
-	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1 lnk_file "bin"))
-	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1 dir "bin")))
+	(call usersubj_home_data_obj_type_transition_home_cmd (ARG1))
+	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1))
+	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1))
+	(call usersubj_home_dir_obj_type_transition_home_cmd (ARG1)))
 
 (macro usersubj_search_home_cert ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -1018,8 +1020,8 @@
 	(allow ARG1 home_cert.home_user_file relabel_lnk_file_perms)
 	(allow ARG1 home_cert.home_user_file relabel_sock_file_perms))
 
-(macro usersubj_home_dir_obj_type_transition_home_cert ((type ARG1)(class ARG2)(name ARG3))
-	(call usersubj_home_dir_obj_type_transition (ARG1 home_cert.home_user_file ARG2 ARG3)))
+(macro usersubj_home_dir_obj_type_transition_home_cert ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 home_cert.home_user_file dir ".pki")))
 
 (macro usersubj_home_cert_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))
@@ -1028,7 +1030,7 @@
 (macro usersubj_home_cert ((type ARG1))
 	(call usersubj_manage_home_cert (ARG1))
 	(call usersubj_relabel_home_cert (ARG1))
-	(call usersubj_home_dir_obj_type_transition_home_cert (ARG1 dir ".pki")))
+	(call usersubj_home_dir_obj_type_transition_home_cert (ARG1)))
 
 (macro usersubj_read_home_terminfo_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))

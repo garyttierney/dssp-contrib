@@ -56,9 +56,7 @@
 
 		(typeattributeset getty_obj_type unit_file)
 
-		(allow getty_adm_subj_type unit_file (service (stop status disable enable reload start))))
-
-		(call sd_ranged_daemon (subj cmd_file systemlow systemhigh)))
+		(allow getty_adm_subj_type unit_file (service (stop status disable enable reload start)))))
 
 (allow getty_adm_subj_type getty.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (getty_adm_subj_type getty.subj))

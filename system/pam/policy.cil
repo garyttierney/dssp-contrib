@@ -115,7 +115,7 @@
 (optional pam_client_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (pam_client_subj_type)))
 
-(allow pam_adm_subj_type self (passwd (all)))
+(allow pam_adm_subj_type self (passwd (passwd chfn chsh rootok crontab)))
 
 (call file_search_config (pam_adm_subj_type))
 (call file_search_runtime (pam_adm_subj_type))
@@ -129,4 +129,4 @@
 (allow pam_adm_subj_type pam_obj_type relabel_dir_perms)
 (allow pam_adm_subj_type pam_obj_type relabel_lnk_file_perms)
 
-(allow pam_unconfined_subj_type self (passwd (all)))
+(allow pam_unconfined_subj_type self (passwd (passwd chfn chsh rootok crontab)))

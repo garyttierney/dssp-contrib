@@ -23,7 +23,7 @@
 
 		(typeattributeset dmeventd_obj_type unit_file)
 
-		(allow dmeventd_adm_subj_type unit_file (service (all)))))
+		(allow dmeventd_adm_subj_type unit_file (service (stop status disable enable reload start)))))
 
 (allow dmeventd_adm_subj_type dmeventd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (dmeventd_adm_subj_type dmeventd.subj))

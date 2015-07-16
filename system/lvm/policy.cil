@@ -76,7 +76,7 @@
 
 		(typeattributeset lvm_obj_type unit_file)
 
-		(allow lvm_adm_subj_type unit_file (service (all))))
+		(allow lvm_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional lvm_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))

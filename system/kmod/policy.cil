@@ -47,7 +47,7 @@
 
 		(typeattributeset kmod_obj_type unit_file)
 
-		(allow kmod_adm_subj_type unit_file (service (all))))
+		(allow kmod_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional kmod_optional_sd_tmpfiles
 		(call sd_tmpfiles_manage_runtime_files (subj))))

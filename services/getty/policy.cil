@@ -1,0 +1,72 @@
+(typeattribute getty_adm_subj_type)
+(typeattribute getty_start_sd_unit_subj_type)
+
+(typeattribute getty_obj_type)
+
+(block getty
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset getty_obj_type runtime_file)
+
+	(allow subj self (capability (chown fsetid sys_tty_config sys_admin)))
+	(allow subj self create_unix_stream_socket_perms)
+
+	(call term_setattr_unallocated_ttys (subj))
+	(call term_use_unallocated_ttys (subj))
+
+	(call file_read_config_files (subj))
+
+	(call getty_manage_runtime_files (subj))
+	(call getty_runtime_obj_type_transition_runtime (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subject_type (subj))
+
+	(call login_auto_subj_type_transition (subj))
+
+	(call utmp_rw_runtime_files (subj))
+	(call utmp_write_wtmp_var_log_files (subj))
+
+	(booleanif term_console_login
+		(true
+			(call term_setattr_console (subj))
+			(call term_use_console (subj)))
+		(false
+			(call term_dontaudit_use_console (subj))))
+
+	(optional getty_optional_plymouth
+		(call plymouth_exec_plymouth (subj)))
+
+	(optional getty_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional getty_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset getty_obj_type unit_file)
+
+		(allow getty_adm_subj_type unit_file (service (all)))))
+
+(allow getty_adm_subj_type getty.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (getty_adm_subj_type getty.subj))
+
+(call file_search_runtime (getty_adm_subj_type))
+
+(allow getty_adm_subj_type getty_obj_type manage_file_perms)
+
+(allow getty_adm_subj_type getty_obj_type relabel_file_perms)
+
+(optional getty_start_sd_unit_subj_type_optional_sd
+	(allow getty_start_sd_unit_subj_type getty.unit_file (service (start)))
+        (call systemd_search_unit (getty_start_sd_unit_subj_type)))

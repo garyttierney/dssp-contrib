@@ -1,0 +1,317 @@
+(boolean ssh_priv_login false)
+
+(roleattribute ssh_sftpserver_role)
+(roleattribute ssh_keygen_role)
+
+(typeattribute ssh_sshd_subj_type)
+(typeattribute ssh_sshd_keygen_subj_type)
+(typeattribute ssh_sshd_net_subj_type)
+
+(typeattribute ssh_sshd_obj_type)
+(typeattribute ssh_sshd_config_obj_type)
+(typeattribute ssh_sshd_key_obj_type)
+(typeattribute ssh_sshd_port_obj_type)
+(typeattribute ssh_sshd_runtime_obj_type)
+
+(typeattribute ssh_adm_subj_type)
+(typeattribute ssh_agent_subj_type)
+(typeattribute ssh_client_subj_type)
+
+(block ssh_sshd_blk
+	(blockabstract ssh_sshd_blk)
+
+	(blockinherit subj_common_blk)
+
+	(typeattributeset ssh_sshd_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit net_reserved_port_obj_blk)
+
+	(typeattributeset ssh_sshd_port_obj_type port)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset ssh_sshd_obj_type config_file)
+	(typeattributeset ssh_sshd_config_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset ssh_sshd_obj_type runtime_file)
+	(typeattributeset ssh_sshd_runtime_obj_type runtime_file)
+
+	(blockinherit term_login_pty_obj_blk)
+
+	(allow subj runtime_file manage_file_perms)
+	(call file_runtime_obj_type_transition (subj runtime_file file "*"))
+
+	(allow subj login_pty_dev rw_term_perms)
+	(allow subj login_pty_dev (chr_file (setattr)))
+	(allow subj login_pty_dev relabelfrom_chr_file_perms)
+	(call term_create_pty (subj login_pty_dev))
+
+	(call read_files_pattern (subj config_file config_file))
+
+	(allow subj port (tcp_socket (name_bind)))
+
+	(optional ssh_sshd_blk_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset ssh_sshd_obj_type unit_file)
+
+		(allow ssh_admin_subj_type sshd_unit_t (service (stop status disable enable reload start)))))
+
+(block ssh_sshd_key_blk
+	(blockabstract ssh_sshd_key_blk)
+
+	(blockinherit file_obj_blk)
+
+	(typeattributeset ssh_sshd_key_obj_type file))
+
+(block ssh_sshd_keygen_blk
+	(blockabstract ssh_sshd_keygen_blk)
+
+	(blockinherit subj_common_blk)
+
+	(typeattributeset ssh_sshd_keygen_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(optional ssh_sshd_keygen_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset ssh_sshd_obj_type unit_file)
+
+		(allow ssh_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(block ssh_sshd_net_blk
+	(blockabstract ssh_sshd_net_blk)
+
+	(blockinherit subj_common_blk)
+
+	(typeattributeset ssh_sshd_net_subj_type subj)
+
+	(roletype sys.role subj))
+
+(block ssh_client_subj_blk
+	(blockabstract ssh_client_subj_blk)
+
+        (blockinherit app_subj_blk)
+
+        (typeattributeset ssh_client_subj_type subj))
+
+(block ssh_agent_subj_blk
+	(blockabstract ssh_agent_subj_blk)
+
+        (blockinherit app_subj_blk)
+
+        (typeattributeset ssh_agent_subj_type subj))
+
+(block ssh_priv_login
+	(blockinherit sec_bool_obj_blk))
+
+(block sshd
+	(blockinherit ssh_sshd_blk)
+
+	(allow subj sshd_net.subj (process (signal sigkill)))
+
+	(call dynamic_subj_type_transition_pattern (subj sshd_net.subj))
+
+	(allow subj sshd_key.file read_file_perms))
+
+(block sshd_key
+	(blockinherit ssh_sshd_key_blk))
+
+(block sshd_keygen
+	(blockinherit ssh_sshd_keygen_blk)
+
+	(call file_search_config (subj))
+
+	(allow subj sshd_key.file manage_file_perms)
+	(call obj_type_transition_pattern (subj sshd.config_file sshd_key.file file "*")))
+
+(block sshd_net
+	(blockinherit ssh_sshd_net_blk)
+
+	(allow subj sshd.subj (fifo_file (read write)))
+	(allow subj sshd.subj (tcp_socket (read write)))
+	(allow subj sshd.subj (unix_dgram_socket (read write)))
+	(allow subj sshd.subj (unix_stream_socket (read write))))
+
+(block ssh_agent
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (ssh_agent_subj_type cmd_file))
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block ssh_client
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (ssh_agent_subj_type cmd_file))
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(block ssh_helper
+	(blockinherit cmd_obj_blk))
+
+(block ssh_keygen
+	(blockinherit app_blk)
+
+	(roletype ssh_keygen_role subj)
+
+	(call ssh_manage_client_home (subj))
+	(call ssh_home_dir_obj_type_transition_client_home (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call miscfile_read_all_cert (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(block ssh_sftpserver
+	(blockinherit app_blk)
+
+	(roletype ssh_sftpserver_role subj)
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call usersubj_manage_home_user (subj))
+	(call usersubj_home_dir_obj_type_transition_home_user (subj)))
+
+(allow ssh_client_subj_type self (process (setfscreate signal)))
+(allow ssh_client_subj_type self (key (view read search write link)))
+(allow ssh_client_subj_type self create_unix_dgram_socket_perms)
+(allow ssh_client_subj_type self rw_fifo_file_perms)
+
+(call ssh_manage_client_home (ssh_client_subj_type))
+(call ssh_home_dir_obj_type_transition_client_home (ssh_client_subj_type))
+
+(call sys_read_net_proc_files (ssh_client_subj_type))
+
+(call dev_read_urandom (ssh_client_subj_type))
+
+(call file_read_config (ssh_client_subj_type))
+
+(call miscfile_read_all_terminfo (ssh_client_subj_type))
+(call miscfile_read_all_cert (ssh_client_subj_type))
+(call miscfile_read_locale (ssh_client_subj_type))
+
+(call nss_client_subj_type (ssh_client_subj_type))
+
+(call ssh_exec_ssh_client (ssh_client_subj_type))
+(call ssh_read_all_sshd_config_files (ssh_client_subj_type))
+(call ssh_tcp_connect_sshd_port (ssh_client_subj_type))
+
+(call usersubj_manage_home_user_files (ssh_client_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (ssh_client_subj_type))
+
+(call usersubj_manage_tmpfs_user_files (ssh_client_subj_type))
+(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (ssh_client_subj_type))
+
+(optional ssh_client_subj_type_optional_gpg
+	(call gpg_search_home (ssh_client_subj_type)))
+
+(allow ssh_agent_subj_type self (process (setrlimit)))
+(allow ssh_agent_subj_type self (unix_stream_socket (listen accept connectto)))
+
+(call ssh_manage_ssh_agent_tmpfs (ssh_agent_subj_type))
+(call ssh_tmpfs_obj_type_transition_agent_tmpfs (ssh_agent_subj_type))
+
+(call dev_read_urandom (ssh_agent_subj_type))
+
+(call miscfile_read_all_cert (ssh_agent_subj_type))
+
+(call nss_client_subj_type (ssh_agent_subj_type))
+
+(call ssh_read_client_home (ssh_agent_subj_type))
+
+(allow ssh_sshd_subj_type self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service)))
+(allow ssh_sshd_subj_type self rw_fifo_file_perms)
+(allow ssh_sshd_subj_type self (key (search link write)))
+(allow ssh_sshd_subj_type self (tcp_socket (listen accept)))
+
+(call sys_link_keyring (ssh_sshd_subj_type))
+(call sys_read_kernel_sysctl_files (ssh_sshd_subj_type))
+(call sys_read_net_proc_files (ssh_sshd_subj_type))
+
+(call cmd_getattr_shell_files (ssh_sshd_subj_type))
+
+(call dev_read_urandom (ssh_sshd_subj_type))
+
+(call file_read_config (ssh_sshd_subj_type))
+
+(call net_tcp_bind_generic_node (ssh_sshd_subj_type))
+
+(call subj_dynamic_subj_type_transition_type (ssh_sshd_subj_type))
+
+(call miscfile_read_cert (ssh_sshd_subj_type))
+
+(call pam_login_prog_subj_type (ssh_sshd_subj_type))
+(call pam_read_config_files (ssh_sshd_subj_type))
+
+(call ssh_exec_sshd (ssh_sshd_subj_type))
+(call ssh_read_client_home_files (ssh_sshd_subj_type))
+
+(call usersubj_dontaudit_create_keyring_common_subj (ssh_sshd_subj_type))
+(call usersubj_dontaudit_dynamic_subj_type_transition_common_subj (ssh_sshd_subj_type))
+(call usersubj_dontaudit_manual_subj_type_transition_common_subj (ssh_sshd_subj_type))
+(call usersubj_relabel_ptys (ssh_sshd_subj_type))
+(call usersubj_setattr_ptys (ssh_sshd_subj_type))
+(call usersubj_use_ptys (ssh_sshd_subj_type))
+
+(booleanif ssh_priv_login
+	(true
+		(call usersubj_dynamic_subj_type_transition_common_login_subj (ssh_sshd_subj_type))
+		(call usersubj_shell_manual_subj_type_transition_common_login_subj (ssh_sshd_subj_type)))
+	(false
+		(call usersubj_dynamic_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))
+		(call usersubj_shell_manual_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))))
+
+(allow ssh_sshd_net_subj_type self (capability (sys_chroot setuid setgid)))
+(allow ssh_sshd_net_subj_type self (process (setrlimit)))
+(allow ssh_sshd_net_subj_type self create_unix_dgram_socket_perms)
+
+(call file_search_var (ssh_sshd_net_subj_type))
+
+(call miscfile_read_locale (ssh_sshd_net_subj_type))
+
+(allow ssh_adm_subj_type ssh_sshd_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (ssh_adm_subj_type ssh_sshd_subj_type))
+
+(call file_search_config (ssh_adm_subj_type))
+(call file_search_runtime (ssh_adm_subj_type))
+
+(allow ssh_adm_subj_type ssh_sshd_obj_type manage_dir_perms)
+(allow ssh_adm_subj_type ssh_sshd_obj_type manage_file_perms)
+(allow ssh_adm_subj_type ssh_sshd_obj_type manage_lnk_file_perms)
+
+(allow ssh_adm_subj_type ssh_sshd_obj_type relabel_dir_perms)
+(allow ssh_adm_subj_type ssh_sshd_obj_type relabel_file_perms)
+(allow ssh_adm_subj_type ssh_sshd_obj_type relabel_lnk_file_perms)
+
+(allow ssh_adm_subj_type ssh_sshd_keygen_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (ssh_adm_subj_type ssh_sshd_keygen_subj_type))
+
+(call ssh_search_all_sshd_config (ssh_adm_subj_type))
+
+(allow ssh_adm_subj_type ssh_sshd_key_obj_type manage_file_perms)
+
+(allow ssh_adm_subj_type ssh_sshd_key_obj_type relabel_file_perms)
+
+(allow ssh_adm_subj_type ssh_sshd_net_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (ssh_adm_subj_type ssh_sshd_net_subj_type))

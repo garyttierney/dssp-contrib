@@ -7,13 +7,13 @@
 
 	(call file_search_config (subj))
 
-	(call terminals_use_console (subj))
+	(call term_use_console (subj))
 
 	;(call sd_journald_client_subj_type (subj))
 
-	;(call sd_status_system_units (subj))
-	;(call sd_status_system (subj))
-	;(call sd_stream_connect (subj))
+	(call sd_status_unit (subj))
+	(call sd_status (subj))
+	(call sd_stream_connect (subj))
 
 	(call utmp_manage_runtime_files (subj))
 	(call utmp_runtime_obj_type_transition_runtime (subj))

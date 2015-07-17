@@ -1,0 +1,118 @@
+(macro sd_udevd_client_subj_type ((type ARG1))
+	(typeattributeset sd_udevd_client_subj_type ARG1))
+
+(macro sd_udevd_exec_sd_udevd ((type ARG1))
+	(call can_exec (ARG1 sd_udevd.cmd_file)))
+
+(macro sd_udevd_auto_subj_type_transition_sd_udevd ((type ARG1))
+	(call sd_udevd_send_signal_sd_udevd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_udevd.cmd_file sd_udevd.subj)))
+
+(macro sd_udevd_send_signal_sd_udevd ((type ARG1))
+	(allow ARG1 sd_udevd.subj (process (signal))))
+
+(macro sd_udevd_exec_sd_udevd_helper ((type ARG1))
+	(call can_exec (ARG1 sd_udevd_helper.cmd_file)))
+
+(macro sd_udevd_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_udevd.config_file search_dir_perms))
+
+(macro sd_udevd_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_udevd.config_file list_dir_perms))
+
+(macro sd_udevd_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_udevd.config_file sd_udevd.config_file)))
+
+(macro sd_udevd_manage_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call manage_files_pattern (ARG1 sd_udevd.config_file sd_udevd.config_file)))
+
+(macro sd_udevd_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_udevd.config_file sd_udevd.config_file)))
+
+(macro sd_udevd_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_udevd.config_file read_file_perms)
+	(allow ARG1 sd_udevd.config_file list_dir_perms)
+	(allow ARG1 sd_udevd.config_file read_lnk_file_perms))
+
+(macro sd_udevd_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd_udevd.config_file manage_file_perms)
+	(allow ARG1 sd_udevd.config_file manage_dir_perms)
+	(allow ARG1 sd_udevd.config_file manage_lnk_file_perms))
+
+(macro sd_udevd_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_udevd.config_file relabel_file_perms)
+	(allow ARG1 sd_udevd.config_file relabel_dir_perms)
+	(allow ARG1 sd_udevd.config_file relabel_lnk_file_perms))
+
+(macro sd_udevd_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_udevd.runtime_file search_dir_perms))
+
+(macro sd_udevd_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_udevd.runtime_file list_dir_perms))
+
+(macro sd_udevd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_udevd.runtime_file sd_udevd.runtime_file)))
+
+(macro sd_udevd_manage_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 sd_udevd.runtime_file sd_udevd.runtime_file)))
+
+(macro sd_udevd_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_udevd.runtime_file sd_udevd.runtime_file)))
+
+(macro sd_udevd_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_udevd.runtime_file read_file_perms)
+	(allow ARG1 sd_udevd.runtime_file list_dir_perms)
+	(allow ARG1 sd_udevd.runtime_file read_sock_file_perms)
+	(allow ARG1 sd_udevd.runtime_file read_lnk_file_perms))
+
+(macro sd_udevd_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_udevd.runtime_file manage_file_perms)
+	(allow ARG1 sd_udevd.runtime_file manage_dir_perms)
+	(allow ARG1 sd_udevd.runtime_file manage_sock_file_perms)
+	(allow ARG1 sd_udevd.runtime_file manage_lnk_file_perms))
+
+(macro sd_udevd_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sd_udevd.runtime_file relabel_file_perms)
+	(allow ARG1 sd_udevd.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_udevd.runtime_file relabel_sock_file_perms)
+	(allow ARG1 sd_udevd.runtime_file relabel_lnk_file_perms))
+
+(macro sd_udevd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 sd_udevd.runtime_file dir "udev")))
+
+(macro sd_udevd_rw_inherited_udp_sockets ((type ARG1))
+	(allow ARG1 sd_udevd.subj (udp_socket (read write))))
+
+(macro sd_udevd_use_fd ((type ARG1))
+	(allow ARG1 sd_udevd.subj (fd (use))))
+
+(macro sd_udevd_write_inherited_fifo_files ((type ARG1))
+	(call sd_udevd_use_fd (ARG1))
+	(allow ARG1 sd_udevd.subj (fifo_file (write))))
+
+(macro sd_udevd_stream_connect ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 sd_udevd.runtime_file sd_udevd.runtime_file sd_udevd.subj)))
+
+(macro sd_udevd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_udevd_adm_subj_type ARG1)
+	(optional sd_udevd_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional sd_udevd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

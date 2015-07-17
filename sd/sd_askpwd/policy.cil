@@ -1,0 +1,85 @@
+(roleattribute sd_askpwd_role)
+(roleattribute sd_askpwd_agent_role)
+
+(typeattribute sd_askpwd_adm_subj_type)
+
+(typeattribute sd_askpwd_obj_type)
+
+(block sd_askpwd
+	(blockinherit app_blk)
+
+	(call sd_daemon (subj cmd_file))
+
+	(roletype sd_askpwd_role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_askpwd_obj_type runtime_file)
+
+	(call sd_askpwd_manage_runtime (subj))
+	(call sd_askpwd_sd_runtime_obj_type_transition_runtime (subj)))
+
+(block sd_askpwd_agent
+	(blockinherit app_blk)
+
+	(call sd_daemon (subj cmd_file))
+
+	(roletype sd_askpwd_agent_role subj)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_askpwd_obj_type unit_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_askpwd_obj_type runtime_file)
+
+	(allow subj self (capability (net_admin)))
+	(allow subj self (process (setfscreate)))
+
+	(call sd_askpwd_manage_agent_runtime (subj))
+	(call sd_askpwd_agent_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_askpwd_manage_runtime (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call file_search_config (subj))
+
+	(call subj_use_interactive_fd_type (subj))
+
+	(call term_use_console (subj))
+	(call term_use_inherited_unallocated_ttys (subj))
+
+	(call sd_use_fd (subj))
+
+	(call sd_cryptsetup_dgram_send (subj))
+	(call sd_cryptsetup_read_state (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call usersubj_use_inherited_term (subj))
+
+	(optional sd_askpwd_agent_optional_plymouth
+		(call plymouth_stream_connect_plymouthd (subj))))
+
+
+(allow sd_askpwd_adm_subj_type sd_askpwd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_askpwd_adm_subj_type sd_askpwd.subj))
+
+(allow sd_askpwd_adm_subj_type sd_askpwd_agent.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_askpwd_adm_subj_type sd_askpwd_agent.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_askpwd_adm_subj_type sd_askpwd_agent.subj))
+
+(call sd_search_runtime (sd_askpwd_adm_subj_type))
+
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_dir_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_file_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_fifo_file_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_sock_file_perms)
+
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_dir_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_file_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_fifo_file_perms)
+(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_sock_file_perms)

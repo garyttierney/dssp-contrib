@@ -1,0 +1,22 @@
+(macro sd_cryptsetup_exec ((type ARG1))
+	(call can_exec (ARG1 sd_cryptsetup.cmd_file)))
+
+(macro sd_cryptsetup_auto_subj_type_transition ((type ARG1))
+	(call sd_cryptsetup_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_cryptsetup.cmd_file sd_cryptsetup.subj)))
+
+(macro sd_cryptsetup_send_signal ((type ARG1))
+	(allow ARG1 sd_cryptsetup.subj (process (signal))))
+
+(macro sd_cryptsetup_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_cryptsetup.subj read_file_perms)
+	(allow ARG1 sd_cryptsetup.subj list_dir_perms)
+	(allow ARG1 sd_cryptsetup.subj read_lnk_file_perms))
+
+(macro sd_cryptsetup_rw_sem ((type ARG1))
+	(allow ARG1 sd_cryptsetup.subj rw_sem_perms))
+
+(macro sd_cryptsetup_dgram_send ((type ARG1))
+	(allow ARG1 sd_cryptsetup.subj (unix_dgram_socket (sendto)))
+	(call sd_askpwd_write_runtime_sock_files (ARG1)))

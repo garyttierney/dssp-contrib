@@ -1,0 +1,137 @@
+(macro sd_askpwd_exec_askpwd ((type ARG1))
+	(call can_exec (ARG1 sd_askpwd.cmd_file)))
+
+(macro sd_askpwd_auto_subj_type_transition_sd_askpwd ((type ARG1))
+	(call sd_askpwd_send_signal_sd_askpwd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_askpwd.cmd_file sd_askpwd.subj)))
+
+(macro sd_askpwd_send_signal_sd_askpwd ((type ARG1))
+    (allow ARG1 sd_askpwd.subj (process (signal))))
+
+(macro sd_askpwd_run_sd_askpwd ((type ARG1)(role ARG2))
+	(call sd_askpwd_auto_subj_type_transition_sd_askpwd (ARG1))
+	(roleattributeset sd_askpwd_role ARG2))
+
+(macro sd_askpwd_exec_askpwd_agent ((type ARG1))
+	(call can_exec (ARG1 sd_askpwd_agent.cmd_file)))
+
+(macro sd_askpwd_dontaudit_exec_sd_askpwd_agent ((type ARG1))
+	(dontaudit ARG1 sd_askpwd_agent.cmd_file exec_file_perms))
+
+(macro sd_askpwd_auto_subj_type_transition_sd_askpwd_agent ((type ARG1))
+	(call sd_askpwd_send_signal_sd_askpwd_agent (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_askpwd_agent.cmd_file sd_askpwd_agent.subj)))
+
+(macro sd_askpwd_send_signal_sd_askpwd_agent ((type ARG1))
+	(allow ARG1 sd_askpwd_agent.subj (process (signal))))
+
+(macro sd_askpwd_run_sd_askpwd_agent ((type ARG1)(role ARG2))
+	(call sd_askpwd_auto_subj_type_transition_sd_askpwd_agent (ARG1))
+	(roleattributeset sd_askpwd_agent_role ARG2)
+	(optional sd_askpwd_run_sd_askpwd_agent_optional_polkit
+		(call polkit_run_pkttyagent (ARG1 ARG2))))
+
+(macro sd_askpwd_search_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd.runtime_file search_dir_perms))
+
+(macro sd_askpwd_list_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd.runtime_file list_dir_perms))
+
+(macro sd_askpwd_read_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_rw_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call rw_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_manage_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call manage_sock_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_write_runtime_sock_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call write_sock_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_manage_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_read_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_askpwd.runtime_file sd_askpwd.runtime_file)))
+
+(macro sd_askpwd_read_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd.runtime_file read_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file list_dir_perms)
+	(allow ARG1 sd_askpwd.runtime_file read_sock_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file read_lnk_file_perms))
+
+(macro sd_askpwd_manage_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_askpwd.runtime_file manage_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file manage_dir_perms)
+	(allow ARG1 sd_askpwd.runtime_file manage_sock_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file manage_lnk_file_perms))
+
+(macro sd_askpwd_relabel_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd.runtime_file relabel_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_askpwd.runtime_file relabel_sock_file_perms)
+	(allow ARG1 sd_askpwd.runtime_file relabel_lnk_file_perms))
+
+(macro sd_askpwd_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_askpwd.runtime_file dir "ask-password")))
+
+(macro sd_askpwd_search_agent_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd_agent.runtime_file search_dir_perms))
+
+(macro sd_askpwd_list_agent_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd_agent.runtime_file list_dir_perms))
+
+(macro sd_askpwd_read_agent_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))
+
+(macro sd_askpwd_read_agent_runtime_fifo_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_fifo_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))
+
+(macro sd_askpwd_read_agent_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))
+
+(macro sd_askpwd_read_agent_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd_agent.runtime_file read_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file list_dir_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file read_fifo_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file read_lnk_file_perms))
+
+(macro sd_askpwd_manage_agent_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_askpwd_agent.runtime_file manage_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file manage_dir_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file manage_fifo_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file manage_lnk_file_perms))
+
+(macro sd_askpwd_relabel_agent_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_askpwd_agent.runtime_file relabel_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file relabel_fifo_file_perms)
+	(allow ARG1 sd_askpwd_agent.runtime_file relabel_lnk_file_perms))
+
+(macro sd_askpwd_agent_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_askpwd_agent.runtime_file dir "ask-password-block")))
+
+(macro sd_askpwd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_askpwd_adm_subject_type ARG1)
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))
+	(call sd_daemon_adm_subj_type (ARG1)))

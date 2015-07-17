@@ -1,0 +1,134 @@
+(typeattribute sd_udevd_adm_subj_type)
+(typeattribute sd_udevd_client_subj_type)
+
+(typeattribute sd_udevd_obj_type)
+
+(block sd_udevd
+	(blockinherit sd_daemon_blk)
+
+	(call sd_netlink_socket_activated (subj netlink_kobject_uevent_socket))
+	(call sd_unix_stream_socket_activated (subj runtime_file))
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_udevd_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_udevd_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_udevd_obj_type runtime_file)
+
+	(allow subj self (capability (dac_override chown sys_admin net_admin sys_rawio fsetid fowner)))
+	(allow subj self (capability2 (block_suspend)))
+	(allow subj self (process (setfscreate getsched)))
+	(allow subj self create_netlink_kobject_uevent_socket_perms)
+	(allow subj self (netlink_route_socket (nlmsg_write)))
+	(allow subj self create_netlink_socket_perms)
+	(allow subj self (unix_stream_socket (listen accept)))
+
+	(call sd_udevd_manage_runtime (subj))
+	(call sd_udevd_runtime_obj_type_transition_runtime (subj))
+
+	(call sys_link_keyring (subj))
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_request_load_module (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_rw_all (subj))
+	(call dev_relabel_all (subj))
+	(call dev_setattr_all (subj))
+
+	(call file_list_config (subj))
+
+	(call fs_getattr_debugfs_fs (subj))
+	(call fs_getattr_fs (subj))
+	(call fs_list_efivarfs (subj))
+	(call fs_list_sysfs (subj))
+	(call fs_manage_devtmpfs_dirs (subj))
+	(call fs_manage_devtmpfs_files (subj))
+	(call fs_manage_devtmpfs_lnk_files (subj))
+	(call fs_manage_devtmpfs_blk_files (subj))
+	(call fs_manage_devtmpfs_chr_files (subj))
+	(call fs_mount_tracefs_fs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+	(call fs_read_tracefs (subj))
+	(call fs_rw_sysfs_files (subj))
+	(call fs_relabelfrom_devtmpfs_blk_files (subj))
+	(call fs_relabelfrom_devtmpfs_chr_files (subj))
+	(call fs_write_inherited_rootfs_dirs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call iptools_exec (subj))
+
+	(call kmod_read_config (subj))
+	(call kmod_auto_subj_type_transition (subj))
+
+	(call miscfile_read_modules (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_notify_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	;(call sd_logind_read_runtime (subj))
+
+	(call sd_udevd_exec_sd_udevd_helper (subj))
+	(call sd_udevd_read_config (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	;(call sysctl_auto_subj_type_transition (subj))
+
+	;(call systemctl_exec (subj))
+
+	(optional sd_udevd_optional_alsa
+		(call alsa_auto_subj_type_transition_alsactl (subj))
+		(call alsa_read_config (subj)))
+
+	(optional sd_udevd_optional_dm
+		(call dm_auto_subj_type_transition_dmsetup (subj)))
+
+	(optional sd_udevd_optional_lvm
+		(call lvm_auto_subj_type_transition (subj)))
+
+	(optional sd_udevd_optional_sd_networkd
+		(call sd_networkd_list_config (subj)))
+
+	(optional sd_udevd_optional_sd_vconsole
+		(call sd_vconsole_auto_subj_type_transition (subj))))
+
+(block sd_udevd_helper
+	(blockinherit cmd_obj_blk))
+
+(allow sd_udevd_client_subj_type self create_netlink_kobject_uevent_socket_perms)
+
+(call sd_udevd_read_config (sd_udevd_client_subj_type))
+(call sd_udevd_read_runtime (sd_udevd_client_subj_type))
+
+(allow sd_udevd_adm_subj_type sd_udevd.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_udevd_adm_subj_type sd_udevd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_udevd_adm_subj_type sd_udevd.subj))
+
+(call file_search_config (sd_udevd_adm_subj_type))
+(call file_search_runtime (sd_udevd_adm_subj_type))
+
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_dir_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_lnk_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_sock_file_perms)
+
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_dir_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_lnk_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_sock_file_perms)

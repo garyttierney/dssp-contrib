@@ -52,14 +52,13 @@
 	(call sd_journald_manage_var_lib (subj))
 	(call sd_journald_sd_var_lib_obj_type_transition_var_lib (subj))
 
-	(call sys_dgram_sendto (subj))
+	(call sys_unix_dgram_sendto (subj))
 	(call sys_read_ring_buffer (subj))
 	(call sys_read_crypto_sysctl_files (subj))
 	(call sys_read_kernel_sysctl_files (subj))
 	(call sys_rw_unix_dgram_sockets (subj))
 	(call sys_rw_unix_stream_sockets (subj))
-	(call sys_rw_netlink_audit_sockets (subj))
-	(call sys_use_fd (subj))
+	(call sys_rw_inherited_netlink_audit_sockets (subj))
 
 	(call dev_rw_kmsg (subj))
 	(call dev_read_urandom (subj))
@@ -77,7 +76,7 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call sd_machined_read_config_files (subj))
+	;(call sd_machined_read_config_files (subj))
 
 	(call sd_notify_subj_type (subj))
 
@@ -94,7 +93,7 @@
 
 (allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))
 
-(allow sd_journald_adm_subj_type sd.journald.subj (process (ptrace signal signull sigkill sigstop)))
+(allow sd_journald_adm_subj_type sd_journald.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_journald_adm_subj_type sd_journald.subj))
 
 (call file_search_var_log (sd_journald_adm_subj_type))

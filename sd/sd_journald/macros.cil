@@ -98,7 +98,7 @@
 	(allow ARG1 sd_journald.runtime_file read_sock_file_perms)
 	(allow ARG1 sd_journald.runtime_file read_lnk_file_perms))
 
-(macro sd_journal_manage_runtime ((type ARG1))
+(macro sd_journald_manage_runtime ((type ARG1))
 	(call sd_rw_runtime_dirs (ARG1))
 	(allow ARG1 sd_journald.runtime_file manage_file_perms)
 	(allow ARG1 sd_journald.runtime_file manage_dir_perms)
@@ -171,5 +171,5 @@
 
 (macro sd_journald_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_journald_adm_subj_type ARG1)
-        (call sd_askpwd_run_agent (ARG1 ARG2))
+        (call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))
 	(call sd_daemon_adm_subj_type (ARG1)))

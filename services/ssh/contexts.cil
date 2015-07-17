@@ -31,7 +31,7 @@
 (filecon "/usr/sbin/sshd-keygen" file sshd_keygen_cmd)
 (filecon "/var/run/sshd\.pid" file sshd_runtime)
 
-(genfscon "selinuxfs" "/booleans/ssh_priv_user_login" ssh_priv_login)
+(genfscon "selinuxfs" "/booleans/ssh_priv_login" ssh_priv_login)
 
 (portcon "tcp" 22 sshd_port)
 (portcon "udp" 22 sshd_port)

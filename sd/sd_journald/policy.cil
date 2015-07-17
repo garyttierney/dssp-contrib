@@ -1,0 +1,114 @@
+(typeattribute sd_journald_adm_subj_type)
+(typeattribute sd_journald_client_subj_type)
+
+(typeattribute sd_journald_obj_type)
+
+(block sd_journald
+	(blockinherit sd_daemon_blk)
+
+	(call sd_netlink_socket_activated (subj netlink_audit_socket))
+	(call sd_unix_dgram_socket_activated (subj runtime_file))
+	(call sd_unix_stream_socket_activated (subj runtime_file))
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_journald_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_journald_obj_type config_file)
+
+	(blockinherit file_var_log_obj_blk)
+
+	(typeattributeset sd_journald_obj_type var_log_file)
+
+	(call sys_mountpoint_obj_type (var_log_file))
+	(call fs_associate_tmpfs (var_log_file))
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_journald_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset sd_journald_obj_type var_lib_file)
+
+	(allow subj self (capability (audit_control setgid setuid sys_admin sys_ptrace)))
+	(allow subj self (capability2 (audit_read)))
+	(allow subj self (process (getcap)))
+	(allow subj self create_netlink_audit_socket_perms)
+	(allow subj self create_unix_dgram_stream_socket_perms)
+	(allow subj self create_unix_stream_stream_socket_perms)
+
+	(call sd_journald_read_config_files (subj))
+
+	(call sd_journald_manage_var_log (subj))
+	(call sd_journald_var_log_obj_type_transition_var_log (subj))
+	(call sd_journald_runtime_obj_type_transition_var_log (subj))
+
+	(call sd_journald_manage_runtime (subj))
+	(call sd_journald_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_journald_manage_var_lib (subj))
+	(call sd_journald_sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_dgram_sendto (subj))
+	(call sys_read_ring_buffer (subj))
+	(call sys_read_crypto_sysctl_files (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+	(call sys_rw_unix_dgram_sockets (subj))
+	(call sys_rw_unix_stream_sockets (subj))
+	(call sys_rw_netlink_audit_sockets (subj))
+	(call sys_use_fd (subj))
+
+	(call dev_rw_kmsg (subj))
+	(call dev_read_urandom (subj))
+
+	(call fs_getattr_fs (subj))
+	(call fs_getattr_tmpfs_fs (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_write_inherited_devpts_chr_files (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call subj_read_common_subj_state (subj))
+
+	(call term_write_console (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call sd_machined_read_config_files (subj))
+
+	(call sd_notify_subj_type (subj))
+
+	(call sd_udevd_client_subj_type (subj))
+
+	(call utmp_read_runtime_files (subj))
+
+	(optional sd_journald_optional_plymouth
+		(call plymouth_use_fd_plymouthd (subj)))
+
+	(optional sd_journald_optional_usersubj
+		(call usersubj_write_term (subj))))
+
+
+(allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_journald_adm_subj_type sd.journald.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_journald_adm_subj_type sd_journald.subj))
+
+(call file_search_var_log (sd_journald_adm_subj_type))
+
+(call sd_search_config (sd_journald_adm_subj_type))
+(call sd_search_runtime (sd_journald_adm_subj_type))
+(call sd_search_var_lib (sd_journald_adm_subj_type))
+
+(allow sd_journald_adm_subj_type sd_journald_obj_type manage_file_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type manage_dir_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type manage_lnk_file_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type manage_sock_file_perms)
+
+(allow sd_journald_adm_subj_type sd_journald_obj_type relabel_file_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type relabel_dir_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type relabel_lnk_file_perms)
+(allow sd_journald_adm_subj_type sd_journald_obj_type relabel_sock_file_perms)

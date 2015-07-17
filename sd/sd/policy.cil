@@ -198,11 +198,11 @@
 	;(call sd_importd_cmd_obj_entry_subj (subj))
 	;(call sd_importd_manage_runtime (subj)))
 
-	;(call sd_journald_list_var_log (subj))
-	;(call sd_journald_read_runtime (subj))
-	;(call sd_journald_relabelto_var_log_dirs (subj))
-	;(call sd_journald_relabelto_var_log_files (subj))
-	;(call sd_journald_use_fd (subj))
+	(call sd_journald_list_var_log (subj))
+	(call sd_journald_read_runtime (subj))
+	(call sd_journald_relabelto_var_log_dirs (subj))
+	(call sd_journald_relabelto_var_log_files (subj))
+	(call sd_journald_use_fd (subj))
 
 	;(call sd_logind_read_runtime (subj)))
 
@@ -359,10 +359,10 @@
 
 (call sd_exec_sd_helper (sd_subj_type))
 
-;(call sd_journald_client_subj_type (sd_subj_type))
-;(call sd_journald_stream_connect (sd_subj_type))
+(call sd_journald_client_subj_type (sd_subj_type))
+(call sd_journald_stream_connect (sd_subj_type))
 
-;(call sd_udevd_client_subj_type (sd_subj_type))
+(call sd_udevd_client_subj_type (sd_subj_type))
 
 (call sd_control (sd_adm_subj_type))
 (call sd_unit_control (sd_adm_subj_type))

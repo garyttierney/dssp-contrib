@@ -65,7 +65,7 @@
 
 		(typeattributeset ssh_sshd_obj_type unit_file)
 
-		(allow ssh_admin_subj_type sshd_unit_t (service (stop status disable enable reload start)))))
+		(allow ssh_adm_subj_type sshd.unit_file (service (stop status disable enable reload start)))))
 
 (block ssh_sshd_key_blk
 	(blockabstract ssh_sshd_key_blk)

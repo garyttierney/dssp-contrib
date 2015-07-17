@@ -1,11 +1,11 @@
-(boolean login_priv_user false)
+(boolean login_priv false)
 
 (typeattribute login_adm_subj_type)
 (typeattribute login_subj_type)
 
 (typeattribute login_obj_type)
 
-(block login_priv_user
+(block login_priv
         (blockinherit sec_bool_obj_blk))
 
 (block login
@@ -44,7 +44,7 @@
 
 	(call usersubj_dontaudit_manual_subj_type_transition_common_subj (subj))
 
-	(booleanif login_priv_user
+	(booleanif login_priv
 		(true
 			(call usersubj_shell_manual_subj_type_transition_common_login_subj (subj)))
 		(false

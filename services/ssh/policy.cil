@@ -145,10 +145,12 @@
 (block sshd_net
 	(blockinherit ssh_sshd_net_blk)
 
-	(call ssh_rw_sshd_inherited_fifo_files (subj))
-	(call ssh_rw_sshd_inherited_tcp_sockets (subj))
-	(call ssh_rw_sshd_inherited_unix_dgram_sockets (subj))
-	(call ssh_rw_sshd_inherited_unix_stream_sockets (subj)))
+	(allow subj sshd.subj (fd (use)))
+
+	(allow subj sshd.subj (fifo_file (read write)))
+	(allow subj sshd.subj (tcp_socket (read write getopt setopt getattr)))
+	(allow subj sshd.subj (unix_dgram_socket (read write)))
+	(allow subj sshd.subj (unix_stream_socket (read write))))
 
 (block ssh_agent
 	(blockinherit app_cmd_obj_blk)

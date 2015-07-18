@@ -3,13 +3,13 @@
 
 	(blockinherit subj_common_blk)
 
-	(typeattributeset sd_daemon_subj_type subj)
-
 	(blockinherit cmd_obj_blk)
 
 	(call subj_entry (subj cmd_file))
 
 	(roletype sys.role subj)
+
+	(call sd_daemon_subj_type (subj))
 
 	(call auto_subj_type_transition_pattern (sd.subj cmd_file subj)))
 
@@ -51,6 +51,9 @@
 (macro sd_daemon_rwdir_obj_type ((type ARG1))
 	(typeattributeset sd_daemon_rwdir_obj_type ARG1))
 
+(macro sd_daemon_subj_type ((type ARG1))
+	(typeattributeset sd_daemon_subj_type ARG1))
+
 (macro sd_daemon_adm_subj_type ((type ARG1))
 	(typeattributeset sd_daemon_adm_subj_type ARG1))
 
@@ -65,9 +68,9 @@
 
 (macro sd_daemon ((type ARG1)(type ARG2))
 	(call subj_common_type (ARG1))
-	(typeattributeset sd_daemon_subj_type ARG1)
 	(call subj_entry (ARG1 ARG2))
 	(roletype sys.role ARG1)
+	(call sd_daemon_subj_type (ARG1))
 	(call auto_subj_type_transition_pattern (sd.subj ARG2 ARG1)))
 
 (macro sd_subj_type ((type ARG1))

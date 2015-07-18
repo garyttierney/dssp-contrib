@@ -1,0 +1,13 @@
+(context sysbus_cmd (sys.id sys.role sysbus.cmd_file (systemlow systemlow)))
+(context sysbus_config (sys.id sys.role sysbus.config_file (systemlow systemlow)))
+(context sysbus_runtime (sys.id sys.role sysbus.runtime_file (systemlow systemlow)))
+(context sysbus_var_lib (sys.id sys.role sysbus.var_lib_file (systemlow systemlow)))
+
+(filecon "/etc/dbus-1(/.*)?" any sysbus_config)
+(filecon "/usr/bin/dbus-daemon" file sysbus_cmd)
+(filecon "/var/lib/dbus(/.*)?" any sysbus_var_lib)
+(filecon "/var/run/dbus(/.*)?" any sysbus_runtime)
+
+(optional sysbus_unit_optional_sd
+	(context sysbus_unit (sys.id sys.role sysbus.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*dbus.*" file sysbus_unit))

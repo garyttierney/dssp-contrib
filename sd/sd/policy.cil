@@ -6,7 +6,7 @@
 (typeattribute sd_obj_type)
 (typeattribute sd_unit_obj_type)
 
-(typeattribute sd_dbus_chat_client_subj_type)
+(typeattribute sd_sysbus_chat_client_subj_type)
 (typeattribute sd_notify_subj_type)
 
 (typeattribute sd_fifo_file_activated_obj_type)
@@ -222,15 +222,15 @@
 	(call utmp_rw_runtime_files (subj))
 	(call utmp_write_wtmp_var_log_files (subj))
 
-	(optional sd_dbus_chat_client_subj_type_optional_dbus
-		(allow subj sd_dbus_chat_client_subj_type (dbus (send_msg)))
-		(allow sd_dbus_chat_client_subj_type subj (dbus (send_msg))))
+	(optional sd_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))
+		(allow sd_sysbus_chat_client_subj_type subj (dbus (send_msg))))
 
 	(optional sd_optional_auth
 		(call auth_link_login_prog_keyring (subj)))
 
-	(optional sd_optional_dbus
-		(call dbus_acquire_svc (subj)))
+	(optional sd_optional_sysbus
+		(call sysbus_acquire_service (subj)))
 
 	(optional sd_optional_dhcp
 		(call dhcp_read_dhclient_var_lib (subj)))
@@ -253,10 +253,10 @@
 		(call plymouth_use_fd_plymouthd (subj)))
 
 	(optional sd_optional_polkit
-		(call polkit_dbus_chat_client_subj_type (subj)))
+		(call polkit_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_sduser
-		(call sduser_dbus_chat_client_subj_type (subj)))
+		(call sduser_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_usersubj
 		(call usersubj_link_keyring_common_login_subj (subj))
@@ -295,8 +295,6 @@
 
 	(roletype sys.role subj)
 
-	(typeattributeset sd_daemon_subj_type subj)
-
 	(call cmd_obj_entry_subj (subj))
 	(call cmd_shell_obj_entry_subj (subj))
 
@@ -308,6 +306,7 @@
 
 	(call nss_client_subj_type (subj))
 
+	(call sd_daemon_subj_type (subj))
 	(call sd_send_signal (subj))
 	(call sd_send_signal_daemon_subj (subj)))
 

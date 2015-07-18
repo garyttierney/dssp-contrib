@@ -18,7 +18,7 @@
 	(blockinherit cmd_obj_blk)
 	(typeattributeset app_cmd_obj_type cmd_file))
 
-(macro app_subj_common_type ((type ARG1))
+(macro app_subj_type ((type ARG1))
 	(call subj_common_type (ARG1))
 	(typeattributeset app_subj_type ARG1))
 
@@ -54,7 +54,7 @@
 	(allow ARG1 app_subj_type read_lnk_file_perms))
 
 (macro app ((type ARG1)(type ARG2))
-	(call app_subj_common_type (ARG1))
+	(call app_subj_type (ARG1))
 	(call app_cmd_obj_type (ARG2))
 	(call subj_entry (ARG1 ARG2)))
 

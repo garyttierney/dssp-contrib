@@ -1,0 +1,138 @@
+(typeattribute sysbus_adm_subj_type)
+(typeattribute sysbus_client_subj_type)
+(typeattribute sysbus_daemon_subj_type)
+(typeattribute sysbus_dbus_subj_type)
+(typeattribute sysbus_unconfined_subj_type)
+
+(typeattribute sysbus_obj_type)
+
+(block sysbus
+	(blockinherit subj_common_blk)
+
+	(typeattributeset sysbus_dbus_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(roletype sys.role subj)
+
+	(call subj_entry (subj cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sysbus_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sysbus_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset sysbus_obj_type var_lib_file)
+
+	(allow subj self (process (getcap setcap setrlimit)))
+	(allow subj self (capability (setgid setuid sys_resource)))
+
+	(call sysbus_read_config (subj))
+
+	(call sysbus_manage_runtime (subj))
+	(call sysbus_runtime_obj_type_transition_runtime (subj))
+
+	(call sysbus_manage_var_lib (subj))
+	(call sysbus_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_audit_client_subj_type (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_rw_inherited_dri (subj))
+	(call dev_rw_inherited_event (subj))
+
+	(call pam_read_pam_console_runtime_files (subj))
+
+	(call sysbus_chat_client_subj (subj))
+	(call sysbus_chat_unconfined_subj (subj))
+	(call sysbus_read_state_client_subj (subj))
+	(call sysbus_read_state_unconfined_subj (subj))
+
+	(optional sysbus_optional_sd_logind
+		(call sd_logind_use_fd (subj))
+		(call sd_logind_write_inherited_runtime_fifo_files (subj)))
+
+	(optional sysbus_optional_sd_machined
+		(call sd_machined_use_fd (subj)))
+
+	(optional sysbus_optional_nspawn
+		(call nspawn_rw_all_inherited_common_container_obj_chr_files (subj)))
+
+	(optional sysbus_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(call sd_unix_stream_socket_activated (subj runtime_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset sysbus_obj_type unit_file)
+
+		(allow sysbus_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+	(optional sysbus_optional_unconfined
+		(call unconfined_use_fd_subj (subj)))
+
+(allow sysbus_dbus_subj_type self create_netlink_selinux_socket_perms)
+(allow sysbus_dbus_subj_type self (unix_stream_socket (listen accept)))
+
+(call dev_read_urandom (sysbus_dbus_subj_type))
+
+(call file_read_data (sysbus_dbus_subj_type))
+
+(call sec_compute_access_vector (sysbus_dbus_subj_type))
+(call sec_list_fs (sysbus_dbus_subj_type))
+
+(call miscfile_read_locale (sysbus_dbus_subj_type))
+
+(call nss_client_subj_type (sysbus_dbus_subj_type))
+
+(call seutil_read_selinux_config_files (sysbus_dbus_subj_type))
+(call seutil_read_default_context_files (sysbus_dbus_subj_type))
+
+(optional sysbus_dbus_subj_type_optional_sd
+	(call sd_getattr_unit_runtime_dirs (sysbus_dbus_subj_type)))
+
+(optional sysbus_dbus_subj_type_optional_sd_journald
+	(call sd_journald_client_subj_type (sysbus_dbus_subj_type)))
+
+(optional sysbus_dbus_subj_type_optional_sd_logind
+	(call sd_logind_read_runtime (sysbus_dbus_subj_type)))
+
+(call sysbus_acquire_service (sysbus_daemon_subj_type))
+(call sysbus_client_subj_type (sysbus_daemon_subj_type))
+
+(allow sysbus_client_subj_type self (dbus (send_msg)))
+(allow sysbus_client_subj_type sysbus.subj (dbus (send_msg)))
+
+(call sysbus_read_config_files (sysbus_client_subj_type))
+(call sysbus_read_var_lib_files (sysbus_client_subj_type))
+
+(call sysbus_stream_connect (sysbus_client_subj_type))
+
+(allow sysbus_adm_subj_type sysbus.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sysbus_adm_subj_type sysbus.subj))
+
+(call file_search_config (sysbus_adm_subj_type))
+(call file_search_runtime (sysbus_adm_subj_type))
+(call file_search_var_lib (sysbus_adm_subj_type))
+
+(allow sysbus_adm_subj_type sysbus_obj_type manage_file_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type manage_dir_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type manage_lnk_file_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type manage_sock_file_perms)
+
+(allow sysbus_adm_subj_type sysbus_obj_type relabel_file_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type relabel_dir_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type relabel_lnk_file_perms)
+(allow sysbus_adm_subj_type sysbus_obj_type relabel_sock_file_perms)
+
+(allow sysbus_unconfined_subj_type self (dbus (acquire_svc)))
+
+(call sysbus_acquire_service (sysbus_unconfined_subj_type))
+(call sysbus_chat_client_subj (sysbus_unconfined_subj_type))
+(call sysbus_chat_unconfined_subj (sysbus_unconfined_subj_type))

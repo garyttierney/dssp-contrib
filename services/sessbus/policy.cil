@@ -1,0 +1,18 @@
+(typeattribute sessbus_subj_type)
+(typeattribute sessbus_client_subj_type)
+(typeattribute sessbus_daemon_subj_type)
+
+(block sessbus
+        (blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow sessbus_subj_type self rw_fifo_file_perms)
+
+(call sessbus_manage_tmpfs (sessbus_subj_type))
+(call sessbus_tmpfs_obj_type_transition_tmpfs (sessbus_subj_type))
+
+(call sysbus_read_config (sessbus_subj_type))
+(call sysbus_dbus_subj_type (sessbus_subj_type))
+
+(allow sessbus_client_subj_type self (dbus (send_msg)))
+
+(call sysbus_read_var_lib_files (sessbus_client_subj_type))

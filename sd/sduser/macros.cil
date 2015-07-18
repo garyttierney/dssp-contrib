@@ -12,6 +12,16 @@
 (macro sduser_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(roletype ARG1 ARG3)
 
+	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
+	(allow ARG3 ARG2 (unix_stream_socket (read write)))
+
+	(call ps_subj_pattern (ARG3 ARG2))
+
+	(call cmd_auto_subj_type_transition (ARG3 ARG2))
+	(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
+
+	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2))
+
 	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (ARG2 ARG3))
 
@@ -19,12 +29,34 @@
 	(call sduser_forked_pattern (ARG2 ARG3))
 	(call sduser_stream_connect_pattern (ARG2 ARG3))
 
-	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
-	(allow ARG3 ARG2 (unix_stream_socket (read write)))
+	(call sduser_home_config_control (ARG2))
 
-	(call ps_subj_pattern (ARG3 ARG2))
+	(call sduser_manage_home_config (ARG2))
+	(call sduser_relabel_home_config (ARG2))
 
-	(call cmd_auto_subj_type_transition (ARG3 ARG2)))
+	(call sduser_home_config_obj_type_transition_home_config (ARG2))
+
+	(call sduser_manage_home_data (ARG2))
+	(call sduser_relabel_home_data (ARG2))
+
+	(call sduser_home_data_obj_type_transition_home_data (ARG2))
+
+	(call sduser_unit_runtime_control (ARG2))
+
+	(call sduser_manage_tmpfs (ARG2))
+	(call sduser_relabel_tmpfs (ARG2))
+
+	(call sduser_tmpfs_obj_type_transition_tmpfs (ARG2))
+
+	(call sduser_manage_private_tmpfs_sock_files (ARG2))
+	(call sduser_manage_private_tmpfs_sock_files (ARG2))
+
+	(call sduser_tmpfs_obj_type_transition_private_tmpfs (ARG2))
+
+	(call sduser_manage_unit_runtime (ARG2))
+	(call sduser_relabel_unit_runtime (ARG2))
+
+	(call sduser_tmpfs_obj_type_transition_unit_runtime (ARG2)))
 
 (macro sduser_forked_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (fd (use)))

@@ -57,13 +57,11 @@
 	(roletype ARG1 ARG3)
 
 	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
+	(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
 	(call ps_subj_pattern (ARG3 ARG2))
 
 	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (ARG2 ARG3))
-
-	(allow ARG2 ARG3 (fd (use)))
-	(allow ARG2 ARG3 rw_inherited_unix_stream_socket_perms)
 
 	(call sessbus_manage_tmpfs (ARG2))
 	(call sessbus_relabel_tmpfs (ARG2))

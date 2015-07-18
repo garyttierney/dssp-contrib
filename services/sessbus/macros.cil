@@ -65,6 +65,11 @@
 
 	(call auto_subj_type_transition_pattern (ARG2 ARG3 ARG1)))
 
+(macro sessbus_stream_connect_all_subj ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call stream_connect_pattern (ARG1 sessbus.tmpfs_user_file sessbus.tmpfs_user_file sessbus_subj_type)))
+
 (macro sessbus_stream_connect_pattern ((type ARG1)(type ARG2))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
@@ -140,11 +145,6 @@
 
 (macro sessbus_send_signal_all_subj ((type ARG1))
 	(allow ARG1 sessbus_subj_type (process (signal))))
-
-(macro sessbus_stream_connect_all_subj ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(call stream_connect_pattern (ARG1 sessbus.tmpfs_user_file sessbus.tmpfs_user_file sessbus_subj_type)))
 
 (macro sessbus_dbus_send_all_subj ((type ARG1))
 	(allow ARG1 sessbus_subj_type (dbus (send_msg))))

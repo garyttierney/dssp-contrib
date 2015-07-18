@@ -30,7 +30,7 @@
 (macro pam_link_login_prog_keyring ((type ARG1))
 	(allow ARG1 pam_login_prog_subj_type (key (search link))))
 
-(macro pam_read_state_all_login_prog_subj ((type ARG1))
+(macro pam_read_state_login_prog_subj ((type ARG1))
 	(call fs_search_proc (ARG1))
 	(allow ARG1 pam_login_prog_subj_type read_file_perms)
 	(allow ARG1 pam_login_prog_subj_type list_dir_perms)

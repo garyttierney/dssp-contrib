@@ -54,7 +54,6 @@
 	(call sysbus_read_state_unconfined_subj (subj))
 
 	(optional sysbus_optional_sd_logind
-		(call sd_logind_use_fd (subj))
 		(call sd_logind_write_inherited_runtime_fifo_files (subj)))
 
 	(optional sysbus_optional_sd_machined

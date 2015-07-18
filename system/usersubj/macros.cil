@@ -888,8 +888,18 @@
 	(call fs_search_tmpfs (ARG1))
 	(call read_lnk_files_pattern (ARG1 usersubj_tmpfs_user_obj_type usersubj_tmpfs_user_obj_type)))
 
+(macro usersubj_delete_all_tmpfs_user ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_del_entry_tmpfs (ARG1))
+	(allow ARG1 usersubj_tmpfs_user_obj_type delete_file_perms)
+	(allow ARG1 usersubj_tmpfs_user_obj_type delete_dir_perms)
+	(allow ARG1 usersubj_tmpfs_user_obj_type delete_fifo_file_perms)
+	(allow ARG1 usersubj_tmpfs_user_obj_type delete_lnk_file_perms)
+	(allow ARG1 usersubj_tmpfs_user_obj_type delete_sock_file_perms))
+
 (macro usersubj_read_all_tmpfs_user ((type ARG1))
 	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
 	(allow ARG1 usersubj_tmpfs_user_obj_type read_file_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type list_dir_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type read_fifo_file_perms)

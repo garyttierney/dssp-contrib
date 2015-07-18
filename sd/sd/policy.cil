@@ -218,6 +218,7 @@
 	(call sduser_noatsecure_all_subj (subj))
 	(call sduser_send_sigchld_all_subj (subj))
 	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
+	(call sduser_sysbus_chat_client_all_subj_type (subj))
 
 	(call utmp_rw_runtime_files (subj))
 	(call utmp_write_wtmp_var_log_files (subj))
@@ -254,9 +255,6 @@
 
 	(optional sd_optional_polkit
 		(call polkit_sysbus_chat_client_subj_type (subj)))
-
-	(optional sd_optional_sduser
-		(call sduser_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_usersubj
 		(call usersubj_link_keyring_common_login_subj (subj))

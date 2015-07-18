@@ -1,0 +1,114 @@
+(macro sd_logind_client_subj_type ((type ARG1))
+	(typeattributeset sd_logind_client_subj_type ARG1))
+
+(macro sd_logind_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_logind_sysbus_chat_client_subj_type ARG1))
+
+(macro sd_logind_exec ((type ARG1))
+	(call can_exec (ARG1 sd_logind.cmd_file)))
+
+(macro sd_logind_auto_subj_type_transition ((type ARG1))
+	(call sd_logind_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_logind.cmd_file sd_logind.subj)))
+
+(macro sd_logind_send_signal ((type ARG1))
+	(allow ARG1 sd_logind.subj (process (signal))))
+
+(macro sd_logind_read_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_logind.config_file read_file_perms))
+
+(macro sd_logind_manage_config_files ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_logind.config_file manage_file_perms))
+
+(macro sd_logind_relabel_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_logind.config_file relabel_file_perms))
+
+(macro sd_logind_search_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_logind.runtime_file search_dir_perms))
+
+(macro sd_logind_list_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_logind.runtime_file list_dir_perms))
+
+(macro sd_logind_read_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_logind.runtime_file sd_logind.runtime_file)))
+
+(macro sd_logind_use_fd ((type ARG1))
+	(allow ARG1 sd_logind.subj (fd (use))))
+
+(macro sd_logind_write_inherited_runtime_fifo_files ((type ARG1))
+	(call sd_logind_use_fd (ARG1))
+	(allow ARG1 sd_logind.runtime_file write_inherited_fifo_file_perms))
+
+(macro sd_logind_read_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_logind.runtime_file sd_logind.runtime_file)))
+
+(macro sd_logind_read_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_logind.runtime_file read_file_perms)
+	(allow ARG1 sd_logind.runtime_file list_dir_perms)
+	(allow ARG1 sd_logind.runtime_file read_fifo_file_perms)
+	(allow ARG1 sd_logind.runtime_file read_lnk_file_perms))
+
+(macro sd_logind_manage_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_logind.runtime_file manage_file_perms)
+	(allow ARG1 sd_logind.runtime_file manage_dir_perms)
+	(allow ARG1 sd_logind.runtime_file manage_fifo_file_perms)
+	(allow ARG1 sd_logind.runtime_file manage_lnk_file_perms))
+
+(macro sd_logind_relabel_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_logind.runtime_file relabel_file_perms)
+	(allow ARG1 sd_logind.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_logind.runtime_file relabel_fifo_file_perms)
+	(allow ARG1 sd_logind.runtime_file relabel_lnk_file_perms))
+
+(macro sd_logind_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_logind.runtime_file dir "inhibit"))
+	(call sd_runtime_obj_type_transition (ARG1 sd_logind.runtime_file dir "seats"))
+	(call sd_runtime_obj_type_transition (ARG1 sd_logind.runtime_file dir "sessions"))
+	(call sd_runtime_obj_type_transition (ARG1 sd_logind.runtime_file dir "shutdown"))
+	(call sd_runtime_obj_type_transition (ARG1 sd_logind.runtime_file dir "users")))
+
+(macro sd_logind_search_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_logind.var_lib_file search_dir_perms))
+
+(macro sd_logind_list_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_logind.var_lib_file list_dir_perms))
+
+(macro sd_logind_read_var_lib_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_logind.var_lib_file sd_logind.var_lib_file)))
+
+(macro sd_logind_read_var_lib_lnk_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_logind.var_lib_file sd_logind.var_lib_file)))
+
+(macro sd_logind_read_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_logind.var_lib_file read_file_perms)
+	(allow ARG1 sd_logind.var_lib_file list_dir_perms)
+	(allow ARG1 sd_logind.var_lib_file read_lnk_file_perms))
+
+(macro sd_logind_manage_var_lib ((type ARG1))
+	(call sd_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_logind.var_lib_file manage_file_perms)
+	(allow ARG1 sd_logind.var_lib_file manage_dir_perms)
+	(allow ARG1 sd_logind.var_lib_file manage_lnk_file_perms))
+
+(macro sd_logind_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call sd_var_lib_obj_type_transition (ARG1 sd_logind.var_lib_file dir "linger")))
+
+(macro sd_logind_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_logind_adm_subject_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

@@ -1,0 +1,156 @@
+(typeattribute sd_logind_adm_subj_type)
+(typeattribute sd_logind_client_subj_type)
+(typeattribute sd_logind_sysbus_chat_client_subj_type)
+
+(typeattribute sd_logind_obj_type)
+
+(block sd_logind
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_logind_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_logind_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_logind_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset sd_logind_obj_type var_lib_file)
+
+	(allow subj self (capability (chown fowner sys_tty_config sys_admin dac_override)))
+	(allow subj self (process (getcap setfscreate)))
+
+	(call sd_logind_read_config_files (subj))
+
+	(call sd_logind_manage_runtime (subj))
+	(call sd_logind_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_logind_manage_var_lib (subj))
+	(call sd_logind_sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj sd_logind_client_subj_type read_file_perms)
+	(allow subj sd_logind_client_subj_type list_dir_perms)
+	(allow subj sd_logind_client_subj_type read_lnk_file_perms)
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_getattr_dri (subj))
+	(call dev_getattr_kvm (subj))
+	(call dev_getattr_sound (subj))
+	(call dev_getattr_v4l (subj))
+	(call dev_getattr_wireless (subj))
+	(call dev_read_urandom (subj))
+	(call dev_rw_event (subj))
+	(call dev_rw_dri (subj))
+	(call dev_setattr_dri (subj))
+	(call dev_setattr_kvm (subj))
+	(call dev_setattr_sound (subj))
+	(call dev_setattr_v4l (subj))
+	(call dev_setattr_wireless (subj))
+	(call dev_write_kmsg (subj))
+
+	(call fs_getattr_tmpfs_fs (subj))
+	(call fs_list_sysfs (subj))
+	(call fs_list_tmpfs (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+	(call fs_rw_sysfs_files (subj))
+	(call fs_mount_tmpfs_fs (subj))
+	(call fs_unmount_tmpfs_fs (subj))
+
+	(call file_search_home (subj))
+	(call file_manage_runtime_user_dirs (subj))
+	(call file_mounton_runtime_user_dirs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call storage_getattr_all (subj))
+	(call storage_setattr_all (subj))
+
+	(call term_use_console (subj))
+	(call term_setattr_console (subj))
+	(call term_use_unallocated_ttys (subj))
+	(call term_setattr_unallocated_ttys (subj))
+
+	(call pam_read_state_login_prog_subj (subj))
+
+	(call getty_start_sd_unit_subj_type (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(call sd_notify_subj_type (subj))
+	(call sd_start (subj))
+	(call sd_start_unit_power (subj))
+	(call sd_start_unit_runtime (subj))
+	(call sd_status (subj))
+	(call sd_status_unit_runtime (subj))
+	(call sd_stop (subj))
+	(call sd_stop_unit_runtime (subj))
+	(call sd_sysbus_chat_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	;(call sd_networkd_sysbus_chat_client_subj_type (subj))
+
+	;(call sd_sessions_manage_runtime_files (subj))
+	;(call sd_sessions_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_udevd_client_subj_type (subj))
+
+	(call sduser_start_unit_user (subj))
+	(call sduser_status_unit_user (subj))
+	(call sduser_stop_unit_user (subj))
+
+	(call usersubj_delete_all_tmpfs_user (subj))
+	(call usersubj_setattr_term (subj))
+	(call usersubj_use_term (subj))
+
+	(call utmp_read_runtime_files (subj))
+
+	(optional sd_logind_optional_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_logind_optional_sysbus
+		(call sysbus_acquire_service (subj)))
+
+	(optional sd_logind_optional_unconfinedusersubj
+		(call unconfinedusersubj_read_state (subj))))
+
+(optional sd_logind_sysbus_chat_client_subj_type_optional_sysbus
+	(allow sd_logind.subj sd_logind_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow sd_logind_sysbus_chat_client_subj_type sd_logind.subj (dbus (send_msg))))
+
+(optional sd_logind_client_subj_type_optional_sysbus
+	(call sysbus_client_subj_type (sd_logind_client_subj_type)))
+
+(call sd_logind_sysbus_chat_client_subj_type (sd_logind_client_subj_type))
+(call sd_logind_write_inherited_runtime_fifo_files (sd_logind_client_subj_type))
+
+(allow sd_logind_adm_subj_type sd_logind.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_logind_adm_subj_type sd_logind.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_logind_adm_subj_type sd_logind.subj))
+
+(call sd_search_config (sd_logind_adm_subj_type))
+(call sd_search_runtime (sd_logind_adm_subj_type))
+(call sd_search_var_lib (sd_logind_adm_subj_type))
+
+(allow sd_logind_adm_subj_type sd_logind_obj_type manage_file_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type manage_dir_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type manage_lnk_file_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type manage_fifo_file_perms)
+
+(allow sd_logind_adm_subj_type sd_logind_obj_type relabel_file_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type relabel_dir_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type relabel_lnk_file_perms)
+(allow sd_logind_adm_subj_type sd_logind_obj_type relabel_fifo_file_perms)

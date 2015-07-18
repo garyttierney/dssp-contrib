@@ -9,19 +9,26 @@
 	(call app_subj_type (ARG1))
 	(typeattributeset sessbus_subj_type ARG1))
 
+(macro sessbus_client_subj_type ((type ARG1))
+	(typeattributeset sessbus_client_subj_type ARG1))
+
 (macro sessbus_daemon_subj_type ((type ARG1))
 	(typeattributeset sessbus_daemon_subj_type ARG1))
+
+(macro sessbus_acquire_service_all_subj ((type ARG1))
+	(allow ARG1 sessbus_subj_type (dbus (acquire_svc))))
 
 (macro sessbus_acquire_service_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (dbus (acquire_svc))))
 
+(macro sessbus_client_all_subj ((type ARG1))
+	(call sessbus_client_subj_type (ARG1))
+	(call sessbus_dbus_send_all_subj (ARG1))
+	(call sessbus_rw_inherited_unix_stream_sockets_all_subj (ARG1))
+	(call sessbus_send_signal_all_subj (ARG1))
+	(call sessbus_stream_connect_all_subj (ARG1)))
+
 (macro sessbus_client_pattern ((type ARG1)(type ARG2))
-	(allow ARG2 ARG1 (process (signal signull sigkill sigstop)))
-
-	(allow ARG2 ARG1 read_file_perms)
-	(allow ARG2 ARG1 list_dir_perms)
-	(allow ARG2 ARG1 read_lnk_file_perms)
-
 	(allow ARG1 ARG2 (process (signal)))
 
 	(allow ARG1 ARG2 (fd (use)))
@@ -29,14 +36,28 @@
 
 	(allow ARG1 ARG2 (dbus (send_msg)))
 
+	(call sessbus_client_subj_type (ARG1))
 	(call sessbus_stream_connect_pattern (ARG1 ARG2)))
+
+(macro sessbus_daemon_all_subj ((type ARG1)(type ARG2)(role ARG3))
+	(call app_subj_type (ARG1))
+
+	(call subj_entry (ARG1 ARG2))
+
+	(roletype ARG3 ARG1)
+
+	(call sessbus_acquire_service_all_subj (ARG1))
+	(call sessbus_client_all_subj (ARG1))
+	(call sessbus_daemon_subj_type (ARG1))
+
+	(call auto_subj_type_transition_pattern (sessbus_subj_type ARG2 ARG1)))
 
 (macro sessbus_daemon_pattern ((type ARG1)(type ARG2)(type ARG3)(role ARG4))
 	(call app_subj_type (ARG1))
 
 	(call subj_entry (ARG1 ARG3))
 
-	(roletype ARG4 ARG2)
+	(roletype ARG4 ARG1)
 
 	(call sessbus_acquire_service_pattern (ARG1 ARG2))
 	(call sessbus_client_pattern (ARG1 ARG2))
@@ -109,3 +130,39 @@
 
 (macro sessbus_tmpfs_obj_type_transition_tmpfs ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 sessbus.tmpfs_user_file dir "dbus")))
+
+(macro sessbus_read_state_client_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sessbus_client_subj_type read_file_perms)
+	(allow ARG1 sessbus_client_subj_type list_dir_perms)
+	(allow ARG1 sessbus_client_subj_type read_lnk_file_perms))
+
+(macro sessbus_send_signal_client_subj ((type ARG1))
+	(allow ARG1 sessbus_client_subj_type (process (signal))))
+
+(macro sessbus_send_signull_client_subj ((type ARG1))
+	(allow ARG1 sessbus_client_subj_type (process (signull))))
+
+(macro sessbus_send_sigkill_client_subj ((type ARG1))
+	(allow ARG1 sessbus_client_subj_type (process (sigkill))))
+
+(macro sessbus_send_sigstop_client_subj ((type ARG1))
+	(allow ARG1 sessbus_client_subj_type (process (sigstop))))
+
+(macro sessbus_use_fd_all_subj ((type ARG1))
+	(allow ARG1 sessbus_subj_type (fd (use))))
+
+(macro sessbus_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call sessbus_use_fd_all_subj (ARG1))
+	(allow ARG1 sessbus_subj_type rw_inherited_unix_stream_socket_perms))
+
+(macro sessbus_send_signal_all_subj ((type ARG1))
+	(allow ARG1 sessbus_subj_type (process (signal))))
+
+(macro sessbus_stream_connect_all_subj ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call stream_connect_pattern (ARG1 sessbus.tmpfs_user_file sessbus.tmpfs_user_file sessbus_subj_type)))
+
+(macro sessbus_dbus_send_all_subj ((type ARG1))
+	(allow ARG1 sessbus_subj_type (dbus (send_msg))))

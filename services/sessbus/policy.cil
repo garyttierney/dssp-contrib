@@ -10,6 +10,12 @@
 (call sessbus_manage_tmpfs (sessbus_subj_type))
 (call sessbus_tmpfs_obj_type_transition_tmpfs (sessbus_subj_type))
 
+(call sessbus_read_state_client_subj (sessbus_subj_type))
+(call sessbus_send_signal_client_subj (sessbus_subj_type))
+(call sessbus_send_signull_client_subj (sessbus_subj_type))
+(call sessbus_send_sigkill_client_subj (sessbus_subj_type))
+(call sessbus_send_sigstop_client_subj (sessbus_subj_type))
+
 (call sysbus_read_config (sessbus_subj_type))
 (call sysbus_dbus_subj_type (sessbus_subj_type))
 

@@ -46,6 +46,7 @@
 
 	(call file_list_config (subj))
 
+	(call fs_audit_access_rootfs_dirs (subj))
 	(call fs_getattr_debugfs_fs (subj))
 	(call fs_getattr_fs (subj))
 	(call fs_list_efivarfs (subj))
@@ -62,7 +63,6 @@
 	(call fs_rw_sysfs_files (subj))
 	(call fs_relabelfrom_devtmpfs_blk_files (subj))
 	(call fs_relabelfrom_devtmpfs_chr_files (subj))
-	(call fs_write_inherited_rootfs_dirs (subj))
 
 	(call sec_get_enforce_mode (subj))
 

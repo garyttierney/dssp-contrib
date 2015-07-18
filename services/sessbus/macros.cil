@@ -131,24 +131,6 @@
 (macro sessbus_tmpfs_obj_type_transition_tmpfs ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 sessbus.tmpfs_user_file dir "dbus")))
 
-(macro sessbus_read_state_client_subj ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 sessbus_client_subj_type read_file_perms)
-	(allow ARG1 sessbus_client_subj_type list_dir_perms)
-	(allow ARG1 sessbus_client_subj_type read_lnk_file_perms))
-
-(macro sessbus_send_signal_client_subj ((type ARG1))
-	(allow ARG1 sessbus_client_subj_type (process (signal))))
-
-(macro sessbus_send_signull_client_subj ((type ARG1))
-	(allow ARG1 sessbus_client_subj_type (process (signull))))
-
-(macro sessbus_send_sigkill_client_subj ((type ARG1))
-	(allow ARG1 sessbus_client_subj_type (process (sigkill))))
-
-(macro sessbus_send_sigstop_client_subj ((type ARG1))
-	(allow ARG1 sessbus_client_subj_type (process (sigstop))))
-
 (macro sessbus_use_fd_all_subj ((type ARG1))
 	(allow ARG1 sessbus_subj_type (fd (use))))
 

@@ -1,0 +1,163 @@
+(block polkit_exec_subj_blk
+	(blockabstract polkit_exec_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset polkit_exec_subj_type subj))
+
+(macro polkit_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset polkit_sysbus_chat_client_subj_type ARG1))
+
+(macro polkit_exec_client_subj_type ((type ARG1))
+	(typeattributeset polkit_exec_client_subj_type ARG1))
+
+(macro polkit_tty_agent_client_subj_type ((type ARG1))
+	(typeattributeset polkit_tty_agent_client_subj_type ARG1))
+
+(macro polkit_exec_polkit ((type ARG1))
+	(call can_exec (ARG1 polkitd.cmd_file)))
+
+(macro polkit_auto_subj_type_transition_polkit ((type ARG1))
+	(call polkit_send_signal_polkit (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 polkit.cmd_file polkit.subj)))
+
+(macro polkit_send_signal_polkit ((type ARG1))
+	(allow ARG1 polkit.subj (process (signal))))
+
+(macro polkit_exec_polkit_agent ((type ARG1))
+	(call can_exec (ARG1 polkit_agent.cmd_file)))
+
+(macro polkit_auto_subj_type_transition_polkit_agent ((type ARG1))
+	(call polkit_send_signal_polkit_agent (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 polkit_agent.cmd_file polkit_agent.subj)))
+
+(macro polkit_send_signal_polkit_agent ((type ARG1))
+	(allow ARG1 polkit_agent.subj (process (signal))))
+
+(macro polkit_run_polkit_agent ((type ARG1)(role ARG2))
+	(call polkit_auto_subj_type_transition_polkit_agent (ARG1))
+	(roleattributeset polkit_agent_role ARG2))
+
+(macro polkit_exec_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset polkit_exec_subj_type ARG1))
+
+(macro polkit_exec_polkit_exec ((type ARG1))
+	(call polkit_exec_client_subj_type (ARG1))
+	(call can_exec (ARG1 polkit_exec.cmd_file)))
+
+(macro polkit_role_pattern_polkit_exec ((role ARG1)(type ARG2)(type ARG3))
+	(call polkit_exec_subj_type (ARG3))
+
+	(call auto_subj_type_transition_pattern (ARG2 polkit_exec.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG3 ARG2 (process (signal)))
+	(allow ARG3 ARG2 (key (search link)))
+	(call ps_subj_pattern (ARG3 ARG2))
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(call polkit_run_polkit_agent (ARG3 ARG1)))
+
+(macro polkit_exec_polkit_helper ((type ARG1))
+	(call can_exec (ARG1 polkit_helper.cmd_file)))
+
+(macro polkit_exec_polkit_tty_agent ((type ARG1))
+	(call polkit_tty_agent_client_subj_type (ARG1))
+	(call can_exec (ARG1 polkit_tty_agent.cmd_file)))
+
+(macro polkit_dontaudit_exec_polkit_tty_agent ((type ARG1))
+	(dontaudit ARG1 polkit_tty_agent.cmd_file exec_file_perms))
+
+(macro polkit_auto_subj_type_transition_polkit_tty_agent ((type ARG1))
+	(call polkit_tty_agent_client_subj_type (ARG1))
+	(call polkit_send_signal_polkit_tty_agent (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 polkit_tty_agent.cmd_file polkit_tty_agent.subj)))
+
+(macro polkit_send_signal_polkit_tty_agent ((type ARG1))
+	(allow ARG1 polkit_tty_agent.subj (process (signal))))
+
+(macro polkit_run_polkit_tty_agent ((type ARG1)(role ARG2))
+	(call polkit_auto_subj_type_transition_polkit_tty_agent (ARG1))
+	(roleattributeset polkit_tty_agent_role ARG2))
+
+(macro polkit_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 polkit.config_file search_dir_perms))
+
+(macro polkit_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 polkit.config_file list_dir_perms))
+
+(macro polkit_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 polkit.config_file polkit.config_file)))
+
+(macro polkit_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 polkit.config_file polkit.config_file)))
+
+(macro polkit_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 polkit.config_file read_file_perms)
+	(allow ARG1 polkit.config_file list_dir_perms)
+	(allow ARG1 polkit.config_file read_lnk_file_perms))
+
+(macro polkit_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 polkit.config_file manage_file_perms)
+	(allow ARG1 polkit.config_file manage_dir_perms)
+	(allow ARG1 polkit.config_file manage_lnk_file_perms))
+
+(macro polkit_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 polkit.config_file relabel_file_perms)
+	(allow ARG1 polkit.config_file relabel_dir_perms)
+	(allow ARG1 polkit.config_file relabel_lnk_file_perms))
+
+(macro polkit_search_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 polkit.var_lib_file search_dir_perms))
+
+(macro polkit_list_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 polkit.var_lib_file list_dir_perms))
+
+(macro polkit_read_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 polkit.var_lib_file polkit.var_lib_file)))
+
+(macro polkit_read_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 polkit.var_lib_file polkit.var_lib_file)))
+
+(macro polkit_read_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 polkit.var_lib_file read_file_perms)
+	(allow ARG1 polkit.var_lib_file list_dir_perms)
+	(allow ARG1 polkit.var_lib_file read_lnk_file_perms))
+
+(macro polkit_manage_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 polkit.var_lib_file manage_file_perms)
+	(allow ARG1 polkit.var_lib_file manage_dir_perms)
+	(allow ARG1 polkit.var_lib_file manage_lnk_file_perms))
+
+(macro polkit_relabel_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 polkit.var_lib_file relabel_file_perms)
+	(allow ARG1 polkit.var_lib_file relabel_dir_perms)
+	(allow ARG1 polkit.var_lib_file relabel_lnk_file_perms))
+
+(macro polkit_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 polkit.var_lib_file dir "polkit-1")))
+
+(macro polkit_adm ((type ARG1)(role ARG2))
+	(typeattributeset polkit_adm_subj_type ARG1)
+	(optional polkit_adm_optional_sd
+		(call sd_daemon_admin_subj_type (ARG1)))
+	(optional polkit_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

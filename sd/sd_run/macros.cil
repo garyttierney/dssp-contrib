@@ -28,7 +28,7 @@
 	(allow ARG2 ARG3 (process (ptrace noatsecure signal signull sigkill sigstop)))
 	(call ps_subj_pattern (ARG2 ARG3))
 
-        (call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
 (macro sd_run_rw_unix_stream_sockets_all_subj ((type ARG1))
 	(allow ARG1 sd_run_subj_type (unix_stream_socket (read write ioctl))))

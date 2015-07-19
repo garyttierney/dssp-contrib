@@ -1,0 +1,7 @@
+(context sd_rfkill_cmd (sys.id sys.role sd_rfkill.cmd_file (systemlow systemlow)))
+(context sd_rfkill_unit (sys.id sys.role sd_rfkill.unit_file (systemlow systemlow)))
+(context sd_rfkill_var_lib (sys.id sys.role sd_rfkill.var_lib_file (systemlow systemlow)))
+
+(filecon "/var/lib/systemd/rfkill(/.*)?" any sd_rfkill_var_lib)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-rfkill.*" file sd_rfkill_unit)
+(filecon "/usr/lib/systemd/systemd-rfkill" file sd_rfkill_cmd)

@@ -11,17 +11,39 @@
 (macro sd_journald_send_signal ((type ARG1))
 	(allow ARG1 journald.subj (process (signal))))
 
+(macro sd_journald_search_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_journald.config_file search_dir_perms))
+
+(macro sd_journald_list_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_journald.config_file list_dir_perms))
+
 (macro sd_journald_read_config_files ((type ARG1))
 	(call sd_search_config (ARG1))
-	(allow ARG1 sd_journald.config_file read_file_perms))
+	(call read_files_pattern (ARG1 sd_journald.config_file sd_journald.config_file)))
 
 (macro sd_journald_manage_config_files ((type ARG1))
-	(call sd_rw_config_dirs (ARG1))
-	(allow ARG1 sd_journald.config_file manage_file_perms))
+        (call sd_rw_config_dirs (ARG1))
+        (call manage_files_pattern (ARG1 sd_journald.config_file sd_journald.config_file)))
 
-(macro sd_journald_relabel_config_files ((type ARG1))
-	(call sd_search_config (ARG1))
-	(allow ARG1 sd_journald.config_file relabel_file_perms))
+(macro sd_journald_read_config ((type ARG1))
+        (call sd_search_config (ARG1))
+        (allow ARG1 sd_journald.config_file read_file_perms)
+        (allow ARG1 sd_journald.config_file list_dir_perms)
+        (allow ARG1 sd_journald.config_file read_lnk_file_perms))
+
+(macro sd_journald_manage_config ((type ARG1))
+        (call sd_rw_config_dirs (ARG1))
+        (allow ARG1 sd_journald.config_file manage_file_perms)
+        (allow ARG1 sd_journald.config_file manage_dir_perms)
+        (allow ARG1 sd_journald.config_file manage_lnk_file_perms))
+
+(macro sd_journald_relabel_config ((type ARG1))
+        (call sd_search_config (ARG1))
+        (allow ARG1 sd_journald.config_file relabel_file_perms)
+        (allow ARG1 sd_journald.config_file relabel_dir_perms)
+        (allow ARG1 sd_journald.config_file relabel_lnk_file_perms))
 
 (macro sd_journald_search_var_log ((type ARG1))
 	(call file_search_var_log (ARG1))

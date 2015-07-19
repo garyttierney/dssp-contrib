@@ -6,6 +6,7 @@
 (context sd_journald_var_log (sys.id sys.role sd_journald.var_log_file (systemlow systemhigh)))
 
 (filecon "/etc/systemd/journald\.conf" file sd_journald_config)
+(filecon "/etc/systemd/journald\.conf\.d(/.*)?" any sd_journald_config)
 (filecon "/usr/lib/systemd/systemd-journald" file sd_journald_cmd)
 (filecon "/usr/lib/systemd/systemd-kmsg-syslogd" file sd_journald_cmd)
 (filecon "/usr/lib/systemd/system/[^/]*syslog.*" file sd_journald_unit)

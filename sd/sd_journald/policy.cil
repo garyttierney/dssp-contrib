@@ -40,7 +40,7 @@
 	(allow subj self create_unix_dgram_stream_socket_perms)
 	(allow subj self create_unix_stream_stream_socket_perms)
 
-	(call sd_journald_read_config_files (subj))
+	(call sd_journald_read_config (subj))
 
 	(call sd_journald_manage_var_log (subj))
 	(call sd_journald_var_log_obj_type_transition_var_log (subj))
@@ -90,6 +90,22 @@
 	(optional sd_journald_optional_usersubj
 		(call usersubj_write_term (subj))))
 
+(dontaudit sd_journald_client_subj_type self (capability (net_admin)))
+(allow sd_journald_client_subj_type self create_unix_stream_socket_perms)
+(allow sd_journald_client_subj_type self create_unix_dgram_socket_perms)
+
+(call dgram_send_pattern (sd_journald_client_subj_type sd_journald.runtime_file sd_journald.runtime_file sd_journald.subj))
+
+(call sys_unix_stream_connectto (sd_journald_client_subj_type))
+(call sys_unix_dgram_sendto (sd_journald_client_subj_type))
+
+(call dev_dontaudit_write_kmsg (sd_journald_client_subj_type))
+
+(call fs_read_devtmpfs_lnk_files (sd_journald_client_subj_type))
+
+(call term_dontaudit_use_console (sd_journald_client_subj_type))
+
+(call sd_search_runtime (sd_journald_client_subj_type))
 
 (allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))
 

@@ -1,0 +1,10 @@
+(context sd_sleep_cmd (sys.id sys.role sd_sleep.cmd_file (systemlow systemlow)))
+(context sd_sleep_config (sys.id sys.role sd_sleep.config_file (systemlow systemlow)))
+(context sd_sleep_unit (sys.id sys.role sd_sleep.unit_file (systemlow systemlow)))
+
+(filecon "/etc/systemd/sleep\.conf\.d(/.*)?" any sd_sleep_config)
+(filecon "/etc/systemd/sleep\.conf" file sd_sleep_config)
+(filecon "/usr/lib/systemd/system/[^/]*hybrid-sleep.*" file sd_sleep_unit)
+(filecon "/usr/lib/systemd/system/[^/]*sleep.*" file sd_sleep_unit)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-hybrid-sleep.*" file sd_sleep_unit)
+(filecon "/usr/lib/systemd/systemd-sleep" file sd_sleep_cmd)

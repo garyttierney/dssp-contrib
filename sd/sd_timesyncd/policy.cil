@@ -48,7 +48,6 @@
 (allow sd_timesyncd_adm_subj_type sd_timesyncd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_timesyncd_adm_subj_type sd_timesyncd.subj))
 
-(call sd_search_config (sd_timesyncd_adm_subj_type))
 (call sd_search_runtime (sd_timesyncd_adm_subj_type))
 
 (allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_file_perms)

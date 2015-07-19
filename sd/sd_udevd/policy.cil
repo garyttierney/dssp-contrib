@@ -120,7 +120,6 @@
 (allow sd_udevd_adm_subj_type sd_udevd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_udevd_adm_subj_type sd_udevd.subj))
 
-(call file_search_config (sd_udevd_adm_subj_type))
 (call file_search_runtime (sd_udevd_adm_subj_type))
 
 (allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_file_perms)

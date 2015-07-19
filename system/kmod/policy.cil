@@ -55,8 +55,6 @@
 (allow kmod_adm_subj_type kmod.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (kmod_adm_subj_type kmod.subj))
 
-(call file_search_config (kmod_adm_subj_type))
-
 (allow kmod_adm_subj_type kmod_obj_type manage_file_perms)
 (allow kmod_adm_subj_type kmod_obj_type manage_dir_perms)
 (allow kmod_adm_subj_type kmod_obj_type manage_lnk_file_perms)

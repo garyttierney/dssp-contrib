@@ -5,6 +5,7 @@
 (context sd_logind_var_lib (sys.id sys.role sd_logind.var_lib_file (systemlow systemlow)))
 
 (filecon "/etc/systemd/logind\.conf" file sd_logind_config)
+(filecon "/etc/systemd/logind\.conf\.d(/.*)?" any sd_logind_config)
 (filecon "/usr/lib/systemd/systemd-logind" file sd_logind_cmd)
 (filecon "/usr/lib/systemd/system/[^/]*systemd-logind.*" file sd_logind_unit)
 (filecon "/var/lib/systemd/linger(/.*)?" any sd_logind_var_lib)

@@ -26,7 +26,7 @@
 	(allow subj self (capability (chown fowner sys_tty_config sys_admin dac_override)))
 	(allow subj self (process (getcap setfscreate)))
 
-	(call sd_logind_read_config_files (subj))
+	(call sd_logind_read_config (subj))
 
 	(call sd_logind_manage_runtime (subj))
 	(call sd_logind_sd_runtime_obj_type_transition_runtime (subj))

@@ -7,3 +7,8 @@
 
 (macro sd_utmp_send_signal ((type ARG1))
 	(allow ARG1 sd_utmp.subj (process (signal))))
+
+(macro sd_utmp_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_utmp_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

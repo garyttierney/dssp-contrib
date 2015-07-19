@@ -1,0 +1,39 @@
+(typeattribute sd_updated_adm_subj_type)
+
+(typeattribute sd_updated_obj_type)
+
+(block sd_updated
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_updated_obj_type unit_file)
+
+	(blockinherit file_obj_blk)
+
+	(typeattributeset sd_updated_obj_type file)
+
+	(call sd_updated_manage_flag_files (subj))
+	(call sd_updated_config_obj_type_transition_config (subj))
+	(call sd_updated_var_obj_type_transition_var (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call term_use_console (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj)))
+
+(allow sd_updated_adm_subj_type sd_updated.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_updated_adm_subj_type sd_updated.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_updated_adm_subj_type sd_updated.subj))
+
+(call file_search_config (sd_updated_adm_subj_type))
+(call file_search_var (sd_updated_adm_subj_type))
+
+(allow sd_updated_adm_subj_type sd_updated_obj_type manage_file_perms)
+
+(allow sd_updated_adm_subj_type sd_updated_obj_type relabel_file_perms)

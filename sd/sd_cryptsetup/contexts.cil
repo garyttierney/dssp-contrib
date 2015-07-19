@@ -1,3 +1,5 @@
 (context sd_cryptsetup_cmd (sys.id sys.role sd_cryptsetup.cmd_file (systemlow systemlow)))
+(context sd_cryptsetup_unit (sys.id sys.role sd_cryptsetup.unit_file (systemlow systemlow)))
 
+(filecon "/usr/lib/systemd/system/[^/]*cryptsetup.*" file sd_cryptsetup_unit)
 (filecon "/usr/lib/systemd/systemd-cryptsetup" file sd_cryptsetup_cmd)

@@ -1,0 +1,55 @@
+(typeattribute sd_vconsole_adm_subj_type)
+
+(typeattribute sd_vconsole_obj_type)
+
+(block sd_vconsole
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_vconsole_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_vconsole_obj_type config_file)
+
+	(allow subj self (capability (sys_tty_config sys_admin)))
+
+	(call sd_vconsole_read_config_files (subj))
+
+	(call sys_use_fd (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call fs_list_rootfs (subj))
+	(call fs_write_inherited_devpts_chr_files (subj))
+	(call fs_rw_sysfs_files (subj))
+
+	(call term_use_console (subj))
+	(call term_use_unallocated_ttys (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_udevd_rw_inherited_udp_sockets (subj))
+
+	(optional sd_vconsole_optional_loadkeys
+	    (call loadkeys_auto_subj_type_transition (subj)))
+
+	(optional sd_vconsole_optional_plymouth
+	    (call plymouth_use_fd_plymouthd (subj))))
+
+(allow sd_vconsole_adm_subj_type sd_vconsole.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_vconsole_adm_subj_type sd_vconsole.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_vconsole_adm_subj_type sd_vconsole.subj))
+
+(call file_search_config (sd_vconsole_adm_subj_type))
+
+(allow sd_vconsole_adm_subj_type sd_vconsole_obj_type manage_file_perms)
+
+(allow sd_vconsole_adm_subj_type sd_vconsole_obj_type relabel_file_perms)

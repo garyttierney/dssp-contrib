@@ -20,3 +20,8 @@
 (macro sd_cryptsetup_dgram_send ((type ARG1))
 	(allow ARG1 sd_cryptsetup.subj (unix_dgram_socket (sendto)))
 	(call sd_askpwd_write_runtime_sock_files (ARG1)))
+
+(macro sd_cryptsetup_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_cryptsetup_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

@@ -1,5 +1,9 @@
+(typeattribute sd_cryptsetup_adm_subj_type)
+
 (block sd_cryptsetup
 	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
 
 	(allow subj self (capability (net_admin sys_admin ipc_lock)))
 	(allow subj self (process (setfscreate)))
@@ -37,3 +41,12 @@
 	(call sd_udevd_client_subj_type (subj))
 
 	(call seutil_search_selinux_config (subj)))
+
+(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_cryptsetup_adm_subj_type sd_cryptsetup.subj))
+
+(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file manage_file_perms)
+
+(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file relabel_file_perms)

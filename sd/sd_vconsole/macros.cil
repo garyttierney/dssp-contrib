@@ -1,0 +1,26 @@
+(macro sd_vconsole_exec ((type ARG1))
+	(call can_exec (ARG1 sd_vconsole.cmd_file)))
+
+(macro sd_vconsole_auto_subj_type_transition ((type ARG1))
+	(call sd_vconsole_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_vconsole.cmd_file sd_vconsole.subj)))
+
+(macro sd_vconsole_send_signal ((type ARG1))
+	(allow ARG1 sd_vconsole.subj (process (signal))))
+
+(macro sd_vconsole_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_vconsole.config_file read_file_perms))
+
+(macro sdvconsole_manage_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd_vconsole.config_file manage_file_perms))
+
+(macro sd_vconsole_relabel_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_vconsole.config_file relabel_file_perms))
+
+(macro sd_vconsole_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_vconsole_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

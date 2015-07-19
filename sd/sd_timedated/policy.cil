@@ -1,0 +1,41 @@
+(typeattribute sd_timedated_sysbus_chat_client_subj_type)
+(typeattribute sd_timedated_adm_subj_type)
+
+(block sd_timedated
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_read_clock (subj))
+	(call dev_rw_kmsg (subj))
+
+	(call term_use_console (subj))
+
+	;(call hwclock_read_config_files (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call sd_notify_subj_type (subj))
+	(call sd_status (subj))
+	(call sd_sysbus_chat_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(optional sd_timedated_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbusclient_subject_type (subj))))
+
+(optional sd_sysbus_chat_client_subj_type_optiona_sysbus
+	(allow sd_timedated.subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow sd_sysbus_chat_client_subj_type sd_timedated.subj (dbus (send_msg))))
+
+(allow sd_timedated_adm_subj_type sd_timedated.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_timedated_adm_subj_type sd_timedated.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_timedated_adm_subj_type sd_timedated.subj))
+
+(allow sd_timedated_adm_subj_type sd_timedated.unit_file manage_file_perms)
+
+(allow sd_timedated_adm_subj_type sd_timedated.unit_file relabel_file_perms)

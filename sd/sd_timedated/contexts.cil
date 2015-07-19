@@ -1,0 +1,5 @@
+(context sd_timedated_cmd (sys.id sys.role sd_timedated.cmd_file (systemlow systemlow)))
+(context sd_timedated_unit (sys.id sys.role sd_timedated.unit_file (systemlow systemlow)))
+
+(filecon "/usr/lib/systemd/system/[^/]*systemd-timedated.*" file sd_timedated_unit)
+(filecon "/usr/lib/systemd/systemd-timedated" file sd_timedated_cmd)

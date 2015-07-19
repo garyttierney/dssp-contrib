@@ -1,0 +1,60 @@
+(typeattribute sd_timesyncd_adm_subj_type)
+
+(typeattribute sd_timesyncd_obj_type)
+
+(block sd_timesyncd
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_timesyncd_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_timesyncd_obj_type config_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset sd_timesyncd_obj_type var_lib_file)
+
+	(allow subj self (capability (chown fowner setuid setgid setpcap dac_override sys_time)))
+	(allow subj self (process (getcap setcap setrlimit)))
+
+	(call sd_timesyncd_read_config (subj))
+
+	(call sd_timesyncd_manage_var_lib_files (subj))
+	(call sd_timesyncd_sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call net_udp_bind_generic_node (subj))
+
+	(call term_use_console (subj))
+
+	;(call hwclock_read_config_files (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_notify_subj_type (subj))
+
+	;(call sd_networkd_read_runtime (subj))
+
+	(call sd_journald_client_subj_type (subj)))
+
+(allow sd_timesyncd_adm_subj_type sd_timesyncd.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_timesyncd_adm_subj_type sd_timesyncd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_timesyncd_adm_subj_type sd_timesyncd.subj))
+
+(call sd_search_config (sd_timesyncd_adm_subj_type))
+(call sd_search_runtime (sd_timesyncd_adm_subj_type))
+
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_file_perms)
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_dir_perms)
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_lnk_file_perms)
+
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_file_perms)
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_dir_perms)
+(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_lnk_file_perms)

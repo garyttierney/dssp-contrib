@@ -1,0 +1,15 @@
+(macro sd_shutdown_exec ((type ARG1))
+	(call can_exec (ARG1 sd_shutdown.cmd_file)))
+
+(macro sd_shutdown_auto_subj_type_transition ((type ARG1))
+	(call sd_shutdown_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_shutdown.cmd_file sd_shutdown.subj)))
+
+(macro sd_shutdown_send_signal ((type ARG1))
+	(allow ARG1 sd_shutdown.subj (process (signal))))
+
+(macro sd_shutdown_share_state ((type ARG1))
+	(allow ARG1 sd_shutdown.subj (process (share))))
+
+(macro sd_shutdown_send_sigchld ((type ARG1))
+	(allow ARG1 sd_shutdown.subj (process (sigchld))))

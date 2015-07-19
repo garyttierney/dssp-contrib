@@ -1,0 +1,13 @@
+(macro sd_stdio_exec ((type ARG1))
+	(call can_exec (ARG1 sd_stdio.cmd_file)))
+
+(macro sd_stdio_auto_subj_type_transition ((type ARG1))
+	(call sd_stdio_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_stdio.cmd_file sd_stdio.subj)))
+
+(macro sd_stdio_send_signal ((type ARG1))
+	(allow ARG1 sd_stdio.subj (process (signal))))
+
+(macro sd_stdio_run ((type ARG1)(role ARG2))
+	(call sd_stdio_auto_subj_type_transition (ARG1))
+	(roleattributeset sd_stdio_role ARG2))

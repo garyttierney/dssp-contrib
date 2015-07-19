@@ -1,0 +1,29 @@
+(roleattribute sd_stdio_role)
+
+(block sd_stdio
+	(blockinherit app_blk)
+
+	(roletype sd_stdio_role subj)
+
+	;(call sd_hostnamed_sysbus_chat_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	;(call sd_localed_sysbus_chat_client_subj_type (subj))
+
+	(call sd_logind_sysbus_chat_client_subj_type (subj))
+
+	;(call sd_machined_sysbus_chat_client_subj_type (subj))
+
+	(call sd_sysbus_chat_client_subj_type (subj))
+	(call sd_read_state (subj))
+	(call sd_all_unit_control (subj))
+	(call sd_control (subj))
+
+	(call sd_timedated_sysbus_chat_client_subj_type (subj))
+
+	(optional sd_stdio_optional_sysbus
+		(call sysbus_client_subj_type (subj)))
+
+	(optional sd_stdio_optional_timedatex
+		(call timedatex_sysbus_chat_client_subj_type (subj))))

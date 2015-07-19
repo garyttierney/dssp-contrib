@@ -136,15 +136,7 @@
 	(call sd_udevd_read_config_files (subj))
 
 	(optional sd_nspawn_optional_sysbus
-		(call sysbus_client_subj_type (subj)))
-
-	(optional sd_nspawn_optional_sudo
-		(call sudo_send_sigchld_all_subj (subj))
-		(call sudo_rw_inherited_fifo_files_all_subj (subj)))
-
-	(optional sd_nspawn_optional_usersubj
-		(call usersubj_use_inherited_term (subj))
-		(call usersubj_search_home_dir (subj))))
+		(call sysbus_client_subj_type (subj))))
 
 (block sd_nspawn_container
 	(blockinherit sd_nspawn_container_blk))

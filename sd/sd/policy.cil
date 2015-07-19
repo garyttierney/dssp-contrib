@@ -222,10 +222,6 @@
 	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
 	(call sduser_sysbus_chat_client_all_subj_type (subj))
 
-	(optional sd_sysbus_chat_client_subj_type_optional_sysbus
-		(allow subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))
-		(allow sd_sysbus_chat_client_subj_type subj (dbus (send_msg))))
-
 	(optional sd_optional_auth
 		(call auth_link_login_prog_keyring (subj)))
 
@@ -315,6 +311,10 @@
 
 	(typeattributeset sd_obj_type runtime_file)
 	(typeattributeset sd_runtime_obj_type runtime_file))
+
+(optional sd_sysbus_chat_client_subj_type_optional_sysbus
+	(allow sd.subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow sd_sysbus_chat_client_subj_type sd.subj (dbus (send_msg))))
 
 (allow sd_notify_subj_type self (unix_dgram_socket (sendto)))
 (call sd_dgram_send_notify (sd_notify_subj_type))

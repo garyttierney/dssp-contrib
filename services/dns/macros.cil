@@ -26,7 +26,7 @@
 	(call file_read_config_lnk_files (ARG1))
 	(allow ARG1 resolv.config_file read_file_perms)
 	(optional dns_read_resolv_config_files_optional_sd_resolved
-		(call sd_resolved_read_sd_runtime_files (ARG1)))
+		(call sd_resolved_read_runtime_files (ARG1)))
 	(optional dns_read_resolv_config_files_optional_nm
 		(call nm_read_runtime_files (ARG1))))
 

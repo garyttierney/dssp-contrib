@@ -1,0 +1,292 @@
+(roleattribute sd_nspawn_role)
+
+(typeattribute sd_nspawn_adm_subj_type)
+(typeattribute sd_nspawn_obj_type)
+
+(typeattribute sd_nspawn_container_subj_type)
+(typeattribute sd_nspawn_container_obj_type)
+
+(typeattribute sd_nspawn_unit_obj_type)
+
+(block sd_nspawn
+	(blockinherit app_blk)
+
+	(typeattributeset sd_nspawn_subj_type subj)
+
+	(call sd_daemon (subj cmd_file))
+
+	(roletype sd_nspawn_role subj)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_nspawn_obj_type unit_file)
+	(typeattributeset sd_nspawn_unit_obj_type unit_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_nspawn_obj_type runtime_file)
+
+	(blockinherit file_tmpfs_obj_blk)
+
+	(typeattributeset sd_nspawn_obj_type tmpfs_file)
+
+	(blockinherit term_pty_obj_blk)
+
+	(allow subj self (capability (dac_override sys_chroot setpcap setgid setuid mknod fsetid sys_admin chown kill
+		fowner net_admin)))
+	(allow subj self (process (getcap setcap setexec setfscreate)))
+	(allow subj self create_netlink_route_socket_perms)
+	(allow subj self rw_fifo_file_perms)
+
+	(allow subj sd_nspawn_container_subj_type (process (sigkill signal)))
+
+	(allow subj nspawn_container_obj_type (dir (mounton relabelfrom relabelto create open getattr setattr
+		read write link unlink rename search add_name remove_name reparent rmdir lock ioctl)))
+	(allow subj nspawn_container_obj_type manage_file_perms)
+	(allow subj nspawn_container_obj_type (file (mounton execute execute_no_trans)))
+	(allow subj nspawn_container_obj_type manage_lnk_file_perms)
+	(allow subj nspawn_container_obj_type manage_fifo_file_perms)
+	(allow subj nspawn_container_obj_type (chr_file (mounton)))
+	(allow subj nspawn_container_obj_type manage_chr_file_perms)
+	(allow subj nspawn_container_obj_type (filesystem (mount remount relabelto relabelfrom)))
+
+	(call sd_nspawn_manage_runtime (subj))
+	(call sd_nspawn_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_nspawn_manage_tmpfs (subj))
+	(call sd_nspawn_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call sd_nspawn_setattr_ptys (subj))
+	(call sd_nspawn_use_ptys (subj))
+
+	(call sys_audit_set_loginuid (subj))
+	(call sys_mounton_kernel_sysctl_files (subj))
+	(call sys_mounton_kmsg_proc_files (subj))
+	(call sys_mounton_sysctl_dirs (subj))
+	(call sys_read_kernel_message_subj_type (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_request_load_module (subj))
+	(call sys_setsched (subj))
+
+	(call dev_getattr_random (subj))
+	(call dev_getattr_tun_tap (subj))
+	(call dev_read_urandom (subj))
+	(call dev_rw_loop_control (subj))
+	(call dev_write_kmsg (subj))
+
+	(call file_getattr_all_except (subj))
+
+	(call fs_getattr_debugfs_fs (subj))
+	(call fs_getattr_fs (subj))
+	(call fs_getattr_tmpfs_fs (subj))
+	(call fs_manage_cgroup_dirs (subj))
+	(call fs_mount_cgroup_fs (subj))
+	(call fs_mount_devpts_fs (subj))
+	(call fs_mount_fs (subj))
+	(call fs_mount_proc_fs (subj))
+	(call fs_mount_sysfs_fs (subj))
+	(call fs_mount_tmpfs_fs (subj))
+	(call fs_mount_tracefs_fs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_read_tracefs (subj))
+	(call fs_relabelfrom_devpts_fs (subj))
+	(call fs_relabelfrom_tmpfs_fs (subj))
+	(call fs_remount_cgroup_fs (subj))
+	(call fs_remount_fs (subj))
+	(call fs_remount_proc_fs (subj))
+	(call fs_remount_sysfs_fs (subj))
+	(call fs_remount_tmpfs_fs (subj))
+	(call fs_mounton_cgroup_dirs (subj))
+	(call fs_mounton_rootfs_dirs (subj))
+	(call fs_mounton_sysfs_dirs (subj))
+
+	(call sec_remount_fs (subj))
+	(call sec_validate_context (subj))
+
+	(call storage_rw_fixed_disk (subj))
+
+	(call subj_sys_id_change_exemption_type (subj))
+	(call subj_sys_role_change_exemption_type (subj))
+	(call subj_change_exemption_type (subj))
+	(call subj_obj_id_change_exemption_type (subj))
+	(call subj_use_interactive_fd_type (subj))
+
+	(call term_create_pty (subj pty_dev))
+	(call term_use_console (subj))
+	(call term_use_inherited_unallocated_ttys (subj))
+
+	(call dns_read_resolv_config_files (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call sd_mmap_cmd_files (subj))
+	(call sd_notify_subj_type (subj))
+	(call sd_search_runtime_unit (subj))
+	(call sd_stop (nspawn_t))
+	(call sd_status_runtime_unit (subj))
+
+	(call sd_journald_manage_var_log_lnk_files (subj))
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_machined_manage_var_lib_files (subj))
+	(call sd_machined_read_config_files (subj))
+	(call sd_machined_sysbus_chat_client_subj_type (subj))
+
+	(call sd_udevd_read_config_files (subj))
+
+	(optional sd_nspawn_optional_sysbus
+		(call sysbus_client_subj_type (subj)))
+
+	(optional sd_nspawn_optional_sudo
+		(call sudo_send_sigchld_all_subj (subj))
+		(call sudo_rw_inherited_fifo_files_all_subj (subj)))
+
+	(optional sd_nspawn_optional_usersubj
+		(call usersubj_use_inherited_term (subj))
+		(call usersubj_search_home_dir (subj))))
+
+(block sd_nspawn_container
+	(blockinherit sd_nspawn_container_blk))
+
+(roletype sd_nspawn_role sd_nspawn_container_subj_type)
+
+(call fs_associate_tmpfs (sd_nspawn_container_obj_type))
+
+(call subj_entry_obj_type (sd_nspawn_container_obj_type))
+
+(allow sd_nspawn_container_subj_type self
+	all_process_perms_except_transition_ptrace_setsched_dyntransition_setcurrent_execmem_execstack_and_execheap)
+(allow sd_nspawn_container_subj_type self rw_file_perms)
+(allow sd_nspawn_container_subj_type self list_dir_perms)
+(allow sd_nspawn_container_subj_type self read_lnk_file_perms)
+(allow sd_nspawn_container_subj_type self (fd (use)))
+(allow sd_nspawn_container_subj_type self (socket (ioctl read write create getattr setattr lock relabelfrom relabelto append
+        bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self create_tcp_stream_socket_perms)
+(allow sd_nspawn_container_subj_type self create_udp_socket_perms)
+(allow sd_nspawn_container_subj_type self create_rawip_socket_perms)
+(allow sd_nspawn_container_subj_type self (netlink_socket (ioctl read write create getattr setattr lock relabelfrom
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self (packet_socket (ioctl read write create getattr setattr lock relabelfrom
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self (unix_stream_socket (ioctl read write create getattr setattr lock relabelfrom
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self (unix_dgram_socket (ioctl read write create getattr setattr lock relabelfrom
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self (sem (create destroy getattr setattr read write associate unix_read unix_write)))
+(allow sd_nspawn_container_subj_type self (msg (send receive)))
+(allow sd_nspawn_container_subj_type self (msgq (create destroy getattr setattr read write associate unix_read unix_write
+	enqueue)))
+(allow sd_nspawn_container_subj_type self (shm (create destroy getattr setattr read write associate unix_read unix_write
+	lock)))
+(allow sd_nspawn_container_subj_type self (ipc (create destroy getattr setattr read write associate unix_read unix_write)))
+(allow sd_nspawn_container_subj_type self (netlink_route_socket (ioctl read write create getattr setattr lock
+	relabelfrom relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind
+	nlmsg_read nlmsg_write)))
+(allow sd_nspawn_container_subj_type self (netlink_kobject_uevent_socket (ioctl read write create getattr setattr lock
+	relabelfrom relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+(allow sd_nspawn_container_subj_type self (key (view read write search link setattr create)))
+
+(allow sd_nspawn_container_subj_type self (capability (chown dac_override fowner
+	ipc_owner fsetid kill linux_immutable net_admin net_broadcast net_raw setgid setfcap setpcap setuid
+	sys_admin sys_chroot sys_nice sys_ptrace sys_tty_config sys_resource sys_boot audit_write audit_control)))
+(allow sd_nspawn_container_subj_type self (process (setsched)))
+(allow sd_nspawn_container_subj_type self all_fifo_file_perms_except_mounton_and_execmod)
+
+(call sys_dontaudit_link_keyring (sd_nspawn_container_subj_type))
+(call sys_dontaudit_manage_all_proc_files (sd_nspawn_container_subj_type))
+(call sys_dontaudit_manage_all_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_list_net_sysctl (sd_nspawn_container_subj_type))
+(call sys_read_all_proc_files (sd_nspawn_container_subj_type))
+(call sys_read_crypto_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_dev_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_fs_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_irq_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_kernel_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_net_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_vm_sysctl_files (sd_nspawn_container_subj_type))
+
+(call fs_dontaudit_audit_access_hugetlbfs_dirs (sd_nspawn_container_subj_type))
+(call fs_dontaudit_setattr_proc_dirs (sd_nspawn_container_subj_type))
+(call fs_getattr_cgroup_fs (sd_nspawn_container_subj_type))
+(call fs_getattr_fs (sd_nspawn_container_subj_type))
+(call fs_getattr_hugetlbfs_fs (sd_nspawn_container_subj_type))
+(call fs_getattr_proc_fs (sd_nspawn_container_subj_type))
+(call fs_getattr_sysfs_fs (sd_nspawn_container_subj_type))
+(call fs_getattr_tmpfs_fs (sd_nspawn_container_subj_type))
+(call fs_list_hugetlbfs (sd_nspawn_container_subj_type))
+(call fs_list_proc (sd_nspawn_container_subj_type))
+(call fs_manage_cgroup_dirs (sd_nspawn_container_subj_type))
+(call fs_mount_hugetlbfs_fs (sd_nspawn_container_subj_type))
+(call fs_mount_tmpfs_fs (sd_nspawn_container_subj_type))
+(call fs_read_sysfs (sd_nspawn_container_subj_type))
+(call fs_remount_fs (sd_nspawn_container_subj_type))
+(call fs_remount_hugetlbfs_fs (sd_nspawn_container_subj_type))
+(call fs_remount_tmpfs_fs (sd_nspawn_container_subj_type))
+(call fs_rw_cgroup_files (sd_nspawn_container_subj_type))
+(call fs_setattr_cgroup_files (sd_nspawn_container_subj_type))
+(call fs_setattr_hugetlbfs_dirs (sd_nspawn_container_subj_type))
+(call fs_unmount_tmpfs_fs (sd_nspawn_container_subj_type))
+
+(call net_tcp_bind_generic_node (sd_nspawn_container_subj_type))
+(call net_udp_bind_generic_node (sd_nspawn_container_subj_type))
+
+(call sec_dontaudit_list_securityfs (sd_nspawn_container_subj_type))
+
+(call subj_execheap (sd_nspawn_container_subj_type))
+(call subj_execmem (sd_nspawn_container_subj_type))
+(call subj_execstack (sd_nspawn_container_subj_type))
+(call subj_mmap_low (sd_nspawn_container_subj_type))
+
+(call sd_nspawn_dontaudit_audit_access_tmpfs_dirs (sd_nspawn_container_subj_type))
+(call sd_nspawn_list_tmpfs (sd_nspawn_container_subj_type))
+(call sd_nspawn_read_tmpfs_lnk_files (sd_nspawn_container_subj_type))
+(call sd_nspawn_search_runtime (sd_nspawn_container_subj_type))
+(call sd_nspawn_setattr_ptys (sd_nspawn_container_subj_type))
+(call sd_nspawn_setattr_tmpfs_dirs (sd_nspawn_container_subj_type))
+(call sd_nspawn_use_ptys (sd_nspawn_container_subj_type))
+
+(optional sd_nspawn_container_subj_type_optional_sduser
+	(call sduser_dontaudit_link_keyring_all_subj (sd_nspawn_container_subj_type)))
+
+(optional sd_nspawn_container_subj_type_optional_usersubj
+	(call usersubj_dontaudit_link_keyring_common_login_subj (sd_nspawn_container_subj_type)))
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_unit_obj_type (service (stop status disable enable reload start)))
+
+(allow sd_nspawn_adm_subj_type sd_nspawn.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_nspawn_adm_subj_type sd_nspawn.subj))
+
+(call system_search_runtime (sd_nspawn_adm_subj_type))
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_dir_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_lnk_file_perms)
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type relabel_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type relabel_dir_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_obj_type relabel_lnk_file_perms)
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_nspawn_adm_subj_type sd_nspawn_container_subj_type))
+
+(call sd_machined_search_var_lib (sd_nspawn_adm_subj_type))
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_dir_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_fifo_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_lnk_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_sock_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_blk_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_chr_file_perms)
+
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_dir_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_fifo_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_lnk_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_sock_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_blk_file_perms)
+(allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type relabel_chr_file_perms)

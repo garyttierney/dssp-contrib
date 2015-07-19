@@ -1,0 +1,376 @@
+(block sd_nspawn_container_blk
+	(blockabstract sd_nspawn_container_blk)
+
+	(blockinherit sd_nspawn_container_subj_blk)
+
+	(blockinherit sd_nspawn_container_obj_blk)
+
+	(blockinherit sd_nspawn_unit_obj_blk)
+
+	(call sd_nspawn_container_pattern (subj file)))
+
+(block sd_nspawn_container_subj_blk
+        (blockabstract sd_nspawn_container_subj_blk)
+
+        (blockinherit app_subj_blk)
+
+        (typeattributeset sd_spawn_container_subj_type subj))
+
+(block sd_nspawn_container_obj_blk
+        (blockabstract sd_nspawn_container_obj_blk)
+
+        (blockinherit file_obj_blk)
+
+        (typeattributeset sd_spawn_container_obj_type subj))
+
+(block sd_nspawn_unit_obj_blk
+	(blockabstract sd_nspawn_unit_obj_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_nspawn_unit_obj_type unit_file))
+
+(macro sd_nspawn_unit_obj_type ((type ARG1))
+	(call sd_unit_obj_type (ARG1))
+	(typeattributeset sd_nspawn_unit_obj_type ARG1))
+
+(macro sd_nspawn_container_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset sd_nspawn_container_subj_type ARG1))
+
+(macro sd_nspawn_container_obj_type ((type ARG1))
+	(call file_obj_type (ARG1))
+	(typeattributeset sd_nspawn_container_obj_type ARG1))
+
+(macro sd_nspawn_container_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (file (entrypoint)))
+
+	(call manual_subj_type_transition_pattern (sd_nspawn.subj ARG2 ARG1))
+
+	(allow ARG1 ARG2 (filesystem (getattr unmount remount)))
+	(allow ARG1 ARG2 (dir (mounton)))
+	(allow ARG1 ARG2 exec_file_perms)
+
+	(allow ARG1 ARG2 manage_file_perms)
+	(allow ARG1 ARG2 manage_dir_perms)
+	(allow ARG1 ARG2 manage_fifo_file_perms)
+	(allow ARG1 ARG2 manage_lnk_file_perms)
+	(allow ARG1 ARG2 manage_sock_file_perms)
+	(allow ARG1 ARG2 manage_blk_file_perms)
+	(allow ARG1 ARG2 manage_chr_file_perms)
+
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 fifo_file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 lnk_file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 sock_file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 blk_file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 chr_file "*"))
+
+	(allow ARG2 ARG2 (filesystem (associate))))
+
+(macro sd_nspawn_exec ((type ARG1))
+	(call can_exec (ARG1 nspawn.cmd_file)))
+
+(macro sd_nspawn_auto_subj_type_transition ((type ARG1))
+	(call sd_nspawn_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_nspawn.cmd_file sd_nspawn.subj)))
+
+(macro sd_nspawn_send_signal ((type ARG1))
+	(allow ARG1 sd_nspawn.subj (process (signal))))
+
+(macro sd_nspawn_run ((type ARG1)(role ARG2))
+	(call sd_nspawn_auto_subj_type_transition (ARG1))
+	(roleattributeset sd_nspawn_role ARG2))
+
+(macro sd_nspawn_search_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_nspawn.runtime_file search_dir_perms))
+
+(macro sd_nspawn_list_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_nspawn.runtime_file list_dir_perms))
+
+(macro sd_nspawn_read_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_nspawn.runtime_file sd_nspawn.runtime_file)))
+
+(macro sd_nspawn_read_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_nspawn.runtime_file sd_nspawn.runtime_file)))
+
+(macro sd_nspawn_read_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_nspawn.runtime_file read_file_perms)
+	(allow ARG1 sd_nspawn.runtime_file list_dir_perms)
+	(allow ARG1 sd_nspawn.runtime_file read_lnk_file_perms))
+
+(macro sd_nspawn_manage_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_nspawn.runtime_file manage_file_perms)
+	(allow ARG1 sd_nspawn.runtime_file manage_dir_perms)
+	(allow ARG1 sd_nspawn.runtime_file manage_lnk_file_perms))
+
+(macro sd_nspawn_relabel_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_nspawn.runtime_file relabel_file_perms)
+	(allow ARG1 sd_nspawn.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_nspawn.runtime_file relabel_lnk_file_perms))
+
+(macro sd_nspawn_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_nspawn.runtime_file dir "nspawn")))
+
+(macro sd_nspawn_relabel_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 sd_nspawn.pty_dev relabel_chr_file_perms))
+
+(macro sd_nspawn_setattr_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 sd_nspawn.pty_dev (chr_file (setattr))))
+
+(macro sd_nspawn_getattr_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 sd_nspawn.pty_dev (chr_file (getattr))))
+
+(macro sd_nspawn_use_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 sd_nspawn.pty_dev rw_term_perms))
+
+(macro sd_nspawn_use_inherited_ptys ((type ARG1))
+	(allow ARG1 sd_nspawn.pty_dev rw_inherited_term_perms))
+
+(macro sd_nspawn_search_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container.file search_dir_perms))
+
+(macro sd_nspawn_dontaudit_list_container ((type ARG1))
+	(dontaudit ARG1 sd_nspawn_container.file list_dir_perms))
+
+(macro sd_nspawn_list_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container.file list_dir_perms))
+
+(macro sd_nspawn_delete_container_dirs ((type ARG1))
+	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call delete_dirs_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
+
+(macro sd_nspawn_rw_container_chr_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call rw_chr_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
+
+(macro sd_nspawn_rw_inherited_container_chr_files ((type ARG1))
+	(allow ARG1 sd_nspawn_container.file rw_inherited_chr_file_perms))
+
+(macro sd_nspawn_read_container_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
+
+(macro sd_nspawn_read_container_lnk_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
+
+(macro sd_nspawn_read_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container.file read_file_perms)
+	(allow ARG1 sd_nspawn_container.file list_dir_perms)
+	(allow ARG1 sd_nspawn_container.file read_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container.file read_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container.file read_sock_file_perms)
+	(allow ARG1 sd_nspawn_container.file read_blk_file_perms)
+	(allow ARG1 sd_nspawn_container.file read_chr_file_perms))
+
+(macro sd_nspawn_relabelto_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container.file relabelto_file_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_dir_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_sock_file_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_blk_file_perms)
+	(allow ARG1 sd_nspawn_container.file relabelto_chr_file_perms))
+
+(macro sd_nspawn_manage_container ((type ARG1))
+	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_nspawn_container.file manage_file_perms)
+	(allow ARG1 sd_nspawn_container.file manage_dir_perms)
+	(allow ARG1 sd_nspawn_container.file manage_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container.file manage_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container.file manage_sock_file_perms)
+	(allow ARG1 sd_nspawn_container.file manage_blk_file_perms)
+	(allow ARG1 sd_nspawn_container.file manage_chr_file_perms))
+
+(macro sd_nspawn_search_all_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type search_dir_perms))
+
+(macro sd_nspawn_dontaudit_list_all_container ((type ARG1))
+	(dontaudit ARG1 sd_nspawn_container_obj_type list_dir_perms))
+
+(macro sd_nspawn_list_all_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type list_dir_perms))
+
+(macro sd_nspawn_delete_all_container_dirs ((type ARG1))
+	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call delete_dirs_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
+
+(macro sd_nspawn_rw_all_container_chr_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call rw_chr_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
+
+(macro sd_nspawn_rw_all_inherited_container_chr_files ((type ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type rw_inherited_chr_file_perms))
+
+(macro sd_nspawn_read_all_container_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
+
+(macro sd_nspawn_read_all_container_lnk_files ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
+
+(macro sd_nspawn_read_all_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type read_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type list_dir_perms)
+	(allow ARG1 sd_nspawn_container_obj_type read_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type read_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type read_sock_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type read_blk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type read_chr_file_perms))
+
+(macro sd_nspawn_relabelto_all_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_dir_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_sock_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_blk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type relabelto_chr_file_perms))
+
+(macro sd_nspawn_manage_all_container ((type ARG1))
+	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type manage_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_dir_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_fifo_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_lnk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_sock_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_blk_file_perms)
+	(allow ARG1 sd_nspawn_container_obj_type manage_chr_file_perms))
+
+(macro sd_nspawn_send_signal_container_subj ((type ARG1))
+	(allow ARG1 sd_nspawn_container.subj (process (signal))))
+
+(macro sd_nspawn_read_state_container_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_nspawn_container.subj read_file_perms)
+	(allow ARG1 sd_nspawn_container.subj list_dir_perms)
+	(allow ARG1 sd_nspawn_container.subj read_lnk_file_perms))
+
+(macro sd_nspawn_getattr_container_filesystems ((type ARG1))
+	(allow ARG1 sd_nspawn_container.obj (filesystem (getattr))))
+
+(macro sd_nspawn_stream_connect_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call stream_connect_pattern (ARG1 sd_nspawn_container.obj sd_nspawn_container.obj sd_nspawn_container.subj)))
+
+(macro sd_nspawn_send_signal_all_container_subj ((type ARG1))
+	(allow ARG1 sd_nspawn_container_subj_type (process (signal))))
+
+(macro sd_nspawn_read_state_all_container_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_nspawn_container_subj_type read_file_perms)
+	(allow ARG1 sd_nspawn_container_subj_type list_dir_perms)
+	(allow ARG1 sd_nspawn_container_subj_type read_lnk_file_perms))
+
+(macro sd_nspawn_getattr_all_container_filesystems ((type ARG1))
+	(allow ARG1 sd_nspawn_container_obj_type (filesystem (getattr))))
+
+(macro sd_nspawn_stream_connect_all_container ((type ARG1))
+	(call sd_machined_search_var_lib (ARG1))
+	(call stream_connect_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type
+		sd_nspawn_container_subj_type)))
+
+(macro sd_nspawn_stream_connect_container_pattern ((type ARG1)(type ARG2)(type ARG3))
+	(call sd_machined_search_var_lib (ARG1))
+	(call stream_connect_pattern (ARG1 ARG2 ARG2 ARG3)))
+
+(macro sd_nspawn_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_nspawn.subj read_file_perms)
+	(allow ARG1 sd_nspawn.subj list_dir_perms)
+	(allow ARG1 sd_nspawn.subj read_lnk_file_perms))
+
+(macro sd_nspawn_use_fd ((type ARG1))
+	(allow ARG1 sd_nspawn.subj (fd (use))))
+
+(macro sd_nspawn_start_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn.unit_file (service (start))))
+
+(macro sd_nspawn_status_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn.unit_file (service (status))))
+
+(macro sd_nspawn_stop_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn.unit_file (service (stop))))
+
+(macro sd_nspawn_start_all_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn_unit_obj_type (service (start))))
+
+(macro sd_nspawn_status_all_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn_unit_obj_type (service (status))))
+
+(macro sd_nspawn_stop_all_unit ((type ARG1))
+	(call sd_search_unit (ARG1))
+	(allow ARG1 sd_nspawn_unit_obj_type (service (stop))))
+
+(macro sd_nspawn_search_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sd_nspawn.tmpf_file search_dir_perms))
+
+(macro sd_nspawn_list_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sd_nspawn.tmpfs_file list_dir_perms))
+
+(macro sd_nspawn_read_tmpfs_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 sd_nspawn.tmpfs_file sd_nspawn.tmpfs_file)))
+
+(macro sd_nspawn_read_tmpfs_lnk_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_nspawn.tmpfs_file sd_nspawn.tmpfs_file)))
+
+(macro sd_nspawn_dontaudit_audit_access_tmpfs_dirs ((type ARG1))
+	(dontaudit ARG1 sd_nspawn.tmpfs_file (dir (audit_access))))
+
+(macro sd_nspawn_setattr_tmpfs_dirs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call setattr_dirs_pattern (ARG1 sd_nspawn.tmpfs_file sd_nspawn.tmpfs_file)))
+
+(macro sd_nspawn_read_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sd_nspawn.tmpfs_file read_file_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file list_dir_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file read_lnk_file_perms))
+
+(macro sd_nspawn_manage_tmpfs ((type ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 sd_nspawn.tmpfs_file manage_file_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file manage_dir_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file manage_lnk_file_perms))
+
+(macro sd_nspawn_relabel_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sd_nspawn.tmpfs_file relabel_file_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file relabel_dir_perms)
+	(allow ARG1 sd_nspawn.tmpfs_file relabel_lnk_file_perms))
+
+(macro sd_nspawn_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_nspawn_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

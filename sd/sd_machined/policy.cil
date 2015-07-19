@@ -1,0 +1,114 @@
+(typeattribute sd_machined_adm_subj_type)
+(typeattribute sd_machined_sysbus_chat_client_subj_type)
+
+(typeattribute sd_machined_obj_type)
+
+(block sd_machined
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_machined_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_machined_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_machined_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(call sys_mountpoint_obj_type (var_lib_file))
+
+	(typeattributeset sd_machined_obj_type var_lib_file)
+
+	(allow subj self (capability (sys_ptrace sys_chroot setgid sys_admin dac_override)))
+	(allow subj self r_netlink_route_socket_perms)
+	(allow subj self (process (setfscreate)))
+
+	(call sd_machined_read_config_files (subj))
+
+	(call sd_machined_manage_runtime (subj))
+	(call sd_machined_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_machined_manage_var_lib (subj))
+	(call sd_machined_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_write_kmsg (subj))
+	(call dev_read_urandom (subj))
+
+	(call fs_search_tmpfs (subj))
+	(call fs_list_rootfs (subj))
+
+	(call term_use_console (subj))
+
+	(call sd_notify_subj_type (subj))
+	(call sd_start (subj))
+	(call sd_start_unit_runtime (subj))
+	(call sd_status (subj))
+	(call sd_status_unit_runtime (subj))
+	(call sd_stop (subj))
+	(call sd_stop_unit_runtime (subj))
+	(call sd_sysbus_chat_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_nspawn_getattr_all_container_fs (subj))
+	(call sd_nspawn_getattr_ptys (subj))
+	(call sd_nspawn_list_all_container (subj))
+	(call sd_nspawn_read_all_container_lnk_files (subj))
+	(call sd_nspawn_read_all_container_files (subj))
+	(call sd_nspawn_read_state (subj))
+	(call sd_nspawn_read_state_all_container_subj (subj))
+	(call sd_nspawn_rw_all_container_chr_files (subj))
+	(call sd_nspawn_send_signal_all_container_subj (subj))
+	(call sd_nspawn_start_all_unit (subj))
+	(call sd_nspawn_status_all_unit (subj))
+	(call sd_nspawn_stop_all_unit (subj))
+	(call sd_nspawn_stream_connect_all_container_subj (subj))
+
+	(optional sd_machined_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_client_subj_type (subj)))
+
+	(optional sd_machined_optional_myqemu
+		(call myqemu_getattr_installer_ptys (subj))
+		(call myqemu_getattr_all_virt_ptys (subj)))
+
+	(optional sd_machined_optional_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_machined_optional_usersubj
+		(call usersubj_getattr_ptys (subj))))
+
+(optional sd_machined_sysbus_chat_client_subj_type_optional_sysbus
+        (allow sd_machined.subj sd_machined_sysbus_chat_client_subj_type (dbus (send_msg)))
+        (allow sd_machined_sysbus_chat_client_subj_type sd_machined.subj (dbus (send_msg))))
+
+(allow sd_machined_adm_subj_type sd_machined.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_machined_adm_subj_type sd_machined.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_machined_adm_subj_type sd_machined.subj))
+
+(call sd_search_runtime (sd_machined_adm_subj_type))
+(call file_search_var_lib (sd_machined_adm_subj_type))
+
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_dir_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_fifo_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_lnk_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_sock_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_blk_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type manage_chr_file_perms)
+
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_dir_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_fifo_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_lnk_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_sock_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_blk_file_perms)
+(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_chr_file_perms)

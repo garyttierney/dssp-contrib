@@ -11,8 +11,6 @@
 (block sd_nspawn
 	(blockinherit app_blk)
 
-	(typeattributeset sd_nspawn_subj_type subj)
-
 	(call sd_daemon (subj cmd_file))
 
 	(roletype sd_nspawn_role subj)
@@ -40,15 +38,15 @@
 
 	(allow subj sd_nspawn_container_subj_type (process (sigkill signal)))
 
-	(allow subj nspawn_container_obj_type (dir (mounton relabelfrom relabelto create open getattr setattr
+	(allow subj sd_nspawn_container_obj_type (dir (mounton relabelfrom relabelto create open getattr setattr
 		read write link unlink rename search add_name remove_name reparent rmdir lock ioctl)))
-	(allow subj nspawn_container_obj_type manage_file_perms)
-	(allow subj nspawn_container_obj_type (file (mounton execute execute_no_trans)))
-	(allow subj nspawn_container_obj_type manage_lnk_file_perms)
-	(allow subj nspawn_container_obj_type manage_fifo_file_perms)
-	(allow subj nspawn_container_obj_type (chr_file (mounton)))
-	(allow subj nspawn_container_obj_type manage_chr_file_perms)
-	(allow subj nspawn_container_obj_type (filesystem (mount remount relabelto relabelfrom)))
+	(allow subj sd_nspawn_container_obj_type manage_file_perms)
+	(allow subj sd_nspawn_container_obj_type (file (mounton execute execute_no_trans)))
+	(allow subj sd_nspawn_container_obj_type manage_lnk_file_perms)
+	(allow subj sd_nspawn_container_obj_type manage_fifo_file_perms)
+	(allow subj sd_nspawn_container_obj_type (chr_file (mounton)))
+	(allow subj sd_nspawn_container_obj_type manage_chr_file_perms)
+	(allow subj sd_nspawn_container_obj_type (filesystem (mount remount relabelto relabelfrom)))
 
 	(call sd_nspawn_manage_runtime (subj))
 	(call sd_nspawn_sd_runtime_obj_type_transition_runtime (subj))
@@ -123,9 +121,9 @@
 
 	(call sd_mmap_cmd_files (subj))
 	(call sd_notify_subj_type (subj))
-	(call sd_search_runtime_unit (subj))
-	(call sd_stop (nspawn_t))
-	(call sd_status_runtime_unit (subj))
+	(call sd_search_unit_runtime (subj))
+	(call sd_stop (subj))
+	(call sd_status_unit_runtime (subj))
 
 	(call sd_journald_manage_var_log_lnk_files (subj))
 	(call sd_journald_client_subj_type (subj))
@@ -157,7 +155,7 @@
 (call subj_entry_obj_type (sd_nspawn_container_obj_type))
 
 (allow sd_nspawn_container_subj_type self
-	all_process_perms_except_transition_ptrace_setsched_dyntransition_setcurrent_execmem_execstack_and_execheap)
+	all_process_perms_except_ptrace_setsched_transition_dyntransition_setcurrent_execmem_execstack_and_execheap)
 (allow sd_nspawn_container_subj_type self rw_file_perms)
 (allow sd_nspawn_container_subj_type self list_dir_perms)
 (allow sd_nspawn_container_subj_type self read_lnk_file_perms)
@@ -234,12 +232,12 @@
 (call net_tcp_bind_generic_node (sd_nspawn_container_subj_type))
 (call net_udp_bind_generic_node (sd_nspawn_container_subj_type))
 
-(call sec_dontaudit_list_securityfs (sd_nspawn_container_subj_type))
+(call sec_dontaudit_list_fs (sd_nspawn_container_subj_type))
 
-(call subj_execheap (sd_nspawn_container_subj_type))
-(call subj_execmem (sd_nspawn_container_subj_type))
-(call subj_execstack (sd_nspawn_container_subj_type))
-(call subj_mmap_low (sd_nspawn_container_subj_type))
+(call subj_execheap_type (sd_nspawn_container_subj_type))
+(call subj_execmem_type (sd_nspawn_container_subj_type))
+(call subj_execstack_type (sd_nspawn_container_subj_type))
+(call subj_mmap_low_type (sd_nspawn_container_subj_type))
 
 (call sd_nspawn_dontaudit_audit_access_tmpfs_dirs (sd_nspawn_container_subj_type))
 (call sd_nspawn_list_tmpfs (sd_nspawn_container_subj_type))
@@ -260,7 +258,7 @@
 (allow sd_nspawn_adm_subj_type sd_nspawn.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_nspawn_adm_subj_type sd_nspawn.subj))
 
-(call system_search_runtime (sd_nspawn_adm_subj_type))
+(call sd_search_runtime (sd_nspawn_adm_subj_type))
 
 (allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_file_perms)
 (allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_dir_perms)

@@ -1,0 +1,18 @@
+(context sd_machined_cmd (sys.id sys.role sd_machined.cmd_file (systemlow systemlow)))
+(context sd_machined_config (sys.id sys.role sd_machined.config_file (systemlow systemlow)))
+(context sd_machined_runtime (sys.id sys.role sd_machined.runtime_file (systemlow systemlow)))
+(context sd_machined_unit (sys.id sys.role sd_machined.unit_file (systemlow systemlow)))
+(context sd_machined_var_lib (sys.id sys.role sd_machined.var_lib_file (systemlow systemlow)))
+
+(filecon "/etc/machine-id" file sd_machined_config)
+(filecon "/etc/machine-info" file sd_machined_config)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-machine-id-commit.*" file sd_machined_unit)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-machined.*" file sd_machined_unit)
+(filecon "/usr/lib/systemd/systemd-machined" file sd_machined_cmd)
+(filecon "/var/lib/machines" dir sd_machined_var_lib)
+(filecon "/var/lib/machines(/.*)?" any ())
+(filecon "/var/run/systemd/machines(/.*)?" any sd_machined_runtime)
+
+(filecon "/var/lib/machines/\.journal" any ())
+(filecon "/var/lib/machines/lost\+found/.*" any ())
+(filecon "/var/lib/machines/lost\+found" dir lost_found)

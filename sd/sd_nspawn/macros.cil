@@ -14,14 +14,14 @@
 
         (blockinherit app_subj_blk)
 
-        (typeattributeset sd_spawn_container_subj_type subj))
+        (typeattributeset sd_nspawn_container_subj_type subj))
 
 (block sd_nspawn_container_obj_blk
         (blockabstract sd_nspawn_container_obj_blk)
 
         (blockinherit file_obj_blk)
 
-        (typeattributeset sd_spawn_container_obj_type subj))
+        (typeattributeset sd_nspawn_container_obj_type subj))
 
 (block sd_nspawn_unit_obj_blk
 	(blockabstract sd_nspawn_unit_obj_blk)
@@ -43,13 +43,13 @@
 	(typeattributeset sd_nspawn_container_obj_type ARG1))
 
 (macro sd_nspawn_container_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (file (entrypoint)))
+	(call subj_entry (ARG1 ARG2))
 
 	(call manual_subj_type_transition_pattern (sd_nspawn.subj ARG2 ARG1))
 
 	(allow ARG1 ARG2 (filesystem (getattr unmount remount)))
 	(allow ARG1 ARG2 (dir (mounton)))
-	(allow ARG1 ARG2 exec_file_perms)
+	(allow ARG1 ARG2 (file (execute_no_trans)))
 
 	(allow ARG1 ARG2 manage_file_perms)
 	(allow ARG1 ARG2 manage_dir_perms)
@@ -268,7 +268,7 @@
 	(allow ARG1 sd_nspawn_container.subj list_dir_perms)
 	(allow ARG1 sd_nspawn_container.subj read_lnk_file_perms))
 
-(macro sd_nspawn_getattr_container_filesystems ((type ARG1))
+(macro sd_nspawn_getattr_container_fs ((type ARG1))
 	(allow ARG1 sd_nspawn_container.obj (filesystem (getattr))))
 
 (macro sd_nspawn_stream_connect_container ((type ARG1))
@@ -284,10 +284,10 @@
 	(allow ARG1 sd_nspawn_container_subj_type list_dir_perms)
 	(allow ARG1 sd_nspawn_container_subj_type read_lnk_file_perms))
 
-(macro sd_nspawn_getattr_all_container_filesystems ((type ARG1))
+(macro sd_nspawn_getattr_all_container_fs ((type ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type (filesystem (getattr))))
 
-(macro sd_nspawn_stream_connect_all_container ((type ARG1))
+(macro sd_nspawn_stream_connect_all_container_subj ((type ARG1))
 	(call sd_machined_search_var_lib (ARG1))
 	(call stream_connect_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type
 		sd_nspawn_container_subj_type)))
@@ -369,6 +369,9 @@
 	(allow ARG1 sd_nspawn.tmpfs_file relabel_file_perms)
 	(allow ARG1 sd_nspawn.tmpfs_file relabel_dir_perms)
 	(allow ARG1 sd_nspawn.tmpfs_file relabel_lnk_file_perms))
+
+(macro sd_nspawn_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 sd_nspawn.tmpfs_file dir "*")))
 
 (macro sd_nspawn_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_nspawn_adm_subj_type ARG1)

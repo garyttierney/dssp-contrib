@@ -1,0 +1,13 @@
+(block sd_remountfs
+	(blockinherit sd_daemon_blk)
+
+	(call dev_write_kmsg (subj))
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+
+	(call term_use_console (subj))
+
+	(call mount_auto_subj_type_transition (subj))
+
+	(call sd_journald_client_subj_type (subj)))

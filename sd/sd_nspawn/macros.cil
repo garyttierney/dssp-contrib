@@ -21,7 +21,7 @@
 
         (blockinherit file_obj_blk)
 
-        (typeattributeset sd_nspawn_container_obj_type subj))
+        (typeattributeset sd_nspawn_container_obj_type file))
 
 (block sd_nspawn_unit_obj_blk
 	(blockabstract sd_nspawn_unit_obj_blk)
@@ -44,13 +44,13 @@
 	(typeattributeset sd_nspawn_container_obj_type ARG1))
 
 (macro sd_nspawn_container_pattern ((type ARG1)(type ARG2))
-	(call subj_entry (ARG1 ARG2))
-
 	(call manual_subj_type_transition_pattern (sd_nspawn.subj ARG2 ARG1))
 
-	(allow ARG1 ARG2 (filesystem (getattr unmount remount)))
 	(allow ARG1 ARG2 (dir (mounton)))
-	(allow ARG1 ARG2 (file (execute_no_trans)))
+	(allow ARG1 ARG2 (file (entrypoint)))
+	(allow ARG1 ARG2 (filesystem (getattr unmount remount)))
+
+	(allow ARG1 ARG2 exec_file_perms)
 
 	(allow ARG1 ARG2 manage_file_perms)
 	(allow ARG1 ARG2 manage_dir_perms)
@@ -66,9 +66,7 @@
 	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 lnk_file "*"))
 	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 sock_file "*"))
 	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 blk_file "*"))
-	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 chr_file "*"))
-
-	(allow ARG2 ARG2 (filesystem (associate))))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 chr_file "*")))
 
 (macro sd_nspawn_exec ((type ARG1))
 	(call can_exec (ARG1 nspawn.cmd_file)))

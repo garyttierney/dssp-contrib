@@ -14,6 +14,7 @@
 	(call sd_daemon (subj cmd_file))
 
 	(roletype sd_nspawn_role subj)
+	(roletype sd_nspawn_role sd_nspawn_container_subj_type)
 
 	(blockinherit sd_unit_obj_blk)
 
@@ -148,7 +149,7 @@
 (block sd_nspawn_container
 	(blockinherit sd_nspawn_container_blk))
 
-(roletype sd_nspawn_role sd_nspawn_container_subj_type)
+(allow sd_nspawn_container_obj_type self (filesystem (associate)))
 
 (call fs_associate_tmpfs (sd_nspawn_container_obj_type))
 

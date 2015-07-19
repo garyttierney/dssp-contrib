@@ -1,0 +1,32 @@
+(typeattribute sd_readonly_adm_subj_type)
+
+(block sd_readonly
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call file_read_config (subj))
+
+	(call fs_read_devtmpfs_lnk_files (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(allow sd_readonly_adm_subj_type sd_readonly.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_readonly_adm_subj_type sd_readonly.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_readonly_adm_subj_type sd_readonly.subj))
+
+(call file_search_runtime (sd_readonly_adm_subj_type))
+
+(allow sd_readonly_adm_subj_type sd_readonly.unit_file manage_file_perms)
+
+(allow sd_readonly_adm_subj_type sd_readonly.unit_file relabel_file_perms)

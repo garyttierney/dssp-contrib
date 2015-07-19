@@ -41,6 +41,12 @@
 	(allow ARG1 cert.file manage_dir_perms)
 	(allow ARG1 cert.file manage_lnk_file_perms))
 
+(macro miscfile_relabel_cert ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 cert.file relabel_file_perms)
+	(allow ARG1 cert.file relabel_dir_perms)
+	(allow ARG1 cert.file relabel_lnk_file_perms))
+
 (macro miscfile_search_all_cert ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 miscfile_cert_obj_type search_dir_perms)
@@ -102,6 +108,18 @@
 	(allow ARG1 factory.data_file read_file_perms)
 	(allow ARG1 factory.data_file list_dir_perms)
 	(allow ARG1 factory.data_file read_lnk_file_perms))
+
+(macro miscfile_manage_factory ((type ARG1))
+	(call file_rw_data_dirs (ARG1))
+	(allow ARG1 factory.data_file manage_file_perms)
+	(allow ARG1 factory.data_file manage_dir_perms)
+	(allow ARG1 factory.data_file manage_lnk_file_perms))
+
+(macro miscfile_relabel_factory ((type ARG1))
+	(call file_search_data (ARG1))
+	(allow ARG1 factory.data_file relabel_file_perms)
+	(allow ARG1 factory.data_file relabel_dir_perms)
+	(allow ARG1 factory.data_file relabel_lnk_file_perms))
 
 (macro miscfile_search_fonts_var_cache ((type ARG1))
 	(call file_search_var_cache (ARG1))
@@ -349,6 +367,18 @@
 	(allow ARG1 hwdata.data_file list_dir_perms)
 	(allow ARG1 hwdata.data_file read_lnk_file_perms))
 
+(macro miscfile_manage_hwdata ((type ARG1))
+	(call file_rw_data_dirs (ARG1))
+	(allow ARG1 hwdata.data_file manage_file_perms)
+	(allow ARG1 hwdata.data_file manage_dir_perms)
+	(allow ARG1 hwdata.data_file manage_lnk_file_perms))
+
+(macro miscfile_relabel_hwdata ((type ARG1))
+	(call file_search_data (ARG1))
+	(allow ARG1 hwdata.data_file relabel_file_perms)
+	(allow ARG1 hwdata.data_file relabel_dir_perms)
+	(allow ARG1 hwdata.data_file relabel_lnk_file_perms))
+
 (macro miscfile_search_locale ((type ARG1))
 	(call file_read_config_lnk_files (ARG1))
 	(call lib_search_lib (ARG1))
@@ -373,6 +403,20 @@
 	(allow ARG1 locale.file read_file_perms)
 	(allow ARG1 locale.file list_dir_perms)
 	(allow ARG1 locale.file read_lnk_file_perms))
+
+(macro miscfile_manage_locale ((type ARG1))
+	(call file_read_config_lnk_files (ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(allow ARG1 locale.file manage_file_perms)
+	(allow ARG1 locale.file manage_dir_perms)
+	(allow ARG1 locale.file manage_lnk_file_perms))
+
+(macro miscfile_relabel_locale ((type ARG1))
+	(call file_read_config_lnk_files (ARG1))
+	(call lib_search_lib (ARG1))
+	(allow ARG1 locale.file relabel_file_perms)
+	(allow ARG1 locale.file relabel_dir_perms)
+	(allow ARG1 locale.file relabel_lnk_file_perms))
 
 (macro miscfile_search_man ((type ARG1))
 	(call file_search_data (ARG1))
@@ -399,6 +443,24 @@
 		(call mandb_read_config_files (ARG1))
 		(call mandb_read_cache (ARG1))))
 
+(macro miscfile_manage_man ((type ARG1))
+	(call file_rw_data_dirs (ARG1))
+	(allow ARG1 man.data_file manage_file_perms)
+	(allow ARG1 man.data_file manage_dir_perms)
+	(allow ARG1 man.data_file manage_lnk_file_perms)
+	(optional miscfile_manage_man_optional_mandb
+		(call mandb_manage_config_files (ARG1))
+		(call mandb_manage_cache (ARG1))))
+
+(macro miscfile_relabel_man ((type ARG1))
+	(call file_search_data (ARG1))
+	(allow ARG1 man.data_file relabel_file_perms)
+	(allow ARG1 man.data_file relabel_dir_perms)
+	(allow ARG1 man.data_file relabel_lnk_file_perms)
+	(optional miscfile_relabel_man_optional_mandb
+		(call mandb_relabel_config_files (ARG1))
+		(call mandb_relabel_cache (ARG1))))
+
 (macro miscfile_search_modules ((type ARG1))
 	(call lib_search_lib (ARG1))
 	(allow ARG1 modules.file search_dir_perms))
@@ -420,6 +482,18 @@
 	(allow ARG1 modules.file read_file_perms)
 	(allow ARG1 modules.file list_dir_perms)
 	(allow ARG1 modules.file read_lnk_file_perms))
+
+(macro miscfile_manage_modules ((type ARG1))
+	(call lib_rw_lib_dirs (ARG1))
+	(allow ARG1 modules.file manage_file_perms)
+	(allow ARG1 modules.file manage_dir_perms)
+	(allow ARG1 modules.file manage_lnk_file_perms))
+
+(macro miscfile_relabel_modules ((type ARG1))
+	(call lib_search_lib (ARG1))
+	(allow ARG1 modules.file relabel_file_perms)
+	(allow ARG1 modules.file relabel_dir_perms)
+	(allow ARG1 modules.file relabel_lnk_file_perms))
 
 (macro miscfile_search_network ((type ARG1))
 	(call file_search_config (ARG1))
@@ -447,6 +521,18 @@
 	(allow ARG1 network.config_file list_dir_perms)
 	(allow ARG1 network.config_file read_lnk_file_perms))
 
+(macro miscfile_manage_network ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 network.config_file manage_file_perms)
+	(allow ARG1 network.config_file manage_dir_perms)
+	(allow ARG1 network.config_file manage_lnk_file_perms))
+
+(macro miscfile_relabel_network ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 network.config_file relabel_file_perms)
+	(allow ARG1 network.config_file relabel_dir_perms)
+	(allow ARG1 network.config_file relabel_lnk_file_perms))
+
 (macro miscfile_setattr_network ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 network.config_file (file (setattr)))
@@ -454,7 +540,22 @@
 	(allow ARG1 network.config_file (lnk_file (setattr))))
 
 (macro miscfile_config_obj_type_transition_network ((type ARG1)(class ARG2)(name ARG3))
-	(call file_config_obj_type_transition (ARG1 net_config_t ARG2 ARG3)))
+	(call file_config_obj_type_transition (ARG1 network.config_file ARG2 ARG3)))
+
+(macro miscfile_read_nologin_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 nologin.runtime_file read_file_perms))
+
+(macro miscfile_manage_nologin_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 nologin.runtime_file manage_file_perms))
+
+(macro miscfile_relabel_nologin_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 nologin.runtime_file relabel_file_perms))
+
+(macro miscfile_runtime_obj_type_transition_nologin_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 nologin.runtime_file file "*")))
 
 (macro miscfile_read_passwords ((type ARG1))
 	(call file_search_config (ARG1))
@@ -463,6 +564,10 @@
 (macro miscfile_manage_passwords ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
 	(allow ARG1 passwords.file manage_file_perms))
+
+(macro miscfile_relabel_passwords ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 passwords.file relabel_file_perms))
 
 (macro miscfile_config_obj_type_transition_passwords ((type ARG1)(name ARG2))
 	(call file_config_obj_type_transition (ARG1 passwords.file file ARG2)))
@@ -521,6 +626,18 @@
 	(allow ARG1 terminfo.config_file list_dir_perms)
 	(allow ARG1 terminfo.config_file read_lnk_file_perms))
 
+(macro miscfile_manage_terminfo_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 terminfo.config_file manage_file_perms)
+	(allow ARG1 terminfo.config_file manage_dir_perms)
+	(allow ARG1 terminfo.config_file manage_lnk_file_perms))
+
+(macro miscfile_relabel_terminfo_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 terminfo.config_file relabel_file_perms)
+	(allow ARG1 terminfo.config_file relabel_dir_perms)
+	(allow ARG1 terminfo.config_file relabel_lnk_file_perms))
+
 (macro miscfile_search_terminfo_data ((type ARG1))
 	(call file_search_data (ARG1))
 	(allow ARG1 terminfo.data_file search_dir_perms))
@@ -542,6 +659,18 @@
 	(allow ARG1 terminfo.data_file read_file_perms)
 	(allow ARG1 terminfo.data_file list_dir_perms)
 	(allow ARG1 terminfo.data_file read_lnk_file_perms))
+
+(macro miscfile_manage_terminfo_data ((type ARG1))
+	(call file_rw_data_dirs (ARG1))
+	(allow ARG1 terminfo.data_file manage_file_perms)
+	(allow ARG1 terminfo.data_file manage_dir_perms)
+	(allow ARG1 terminfo.data_file manage_lnk_file_perms))
+
+(macro miscfile_relabel_terminfo_data ((type ARG1))
+	(call file_search_data (ARG1))
+	(allow ARG1 terminfo.data_file relabel_file_perms)
+	(allow ARG1 terminfo.data_file relabel_dir_perms)
+	(allow ARG1 terminfo.data_file relabel_lnk_file_perms))
 
 (macro miscfile_search_all_terminfo_data ((type ARG1))
 	(call file_search_data (ARG1))
@@ -579,6 +708,60 @@
 	(call miscfile_read_terminfo_config (ARG1))
 	(call miscfile_read_terminfo_data (ARG1)))
 
+(macro miscfile_manage_terminfo ((type ARG1))
+	(call miscfile_manage_terminfo_config (ARG1))
+	(call miscfile_manage_terminfo_data (ARG1)))
+
+(macro miscfile_relabel_terminfo ((type ARG1))
+	(call miscfile_relabel_terminfo_config (ARG1))
+	(call miscfile_relabel_terminfo_data (ARG1)))
+
 (macro miscfile_read_all_terminfo ((type ARG1))
 	(call miscfile_read_all_terminfo_data (ARG1))
 	(call miscfile_read_terminfo_config (ARG1)))
+
+(macro miscfile_read_utmp_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file read_file_perms))
+
+(macro miscfile_write_utmp_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file write_file_perms))
+
+(macro miscfile_rw_utmp_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file rw_file_perms))
+
+(macro miscfile_manage_utmp_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 utmp.runtime_file manage_file_perms))
+
+(macro miscfile_relabel_utmp_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 utmp.runtime_file relabel_file_perms))
+
+(macro miscfile_runtime_obj_type_transition_utmp_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 utmp.runtime_file file "utmp")))
+
+(macro miscfile_append_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file append_file_perms))
+
+(macro miscfile_read_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file read_file_perms))
+
+(macro miscfile_write_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file write_file_perms))
+
+(macro miscfile_dontaudit_write_wtmp_var_log_files ((type ARG1))
+	(dontaudit ARG1 wtmp.var_log_file write_file_perms))
+
+(macro miscfile_manage_wtmp_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 wtmp.var_log_file manage_file_perms))
+
+(macro miscfile_relabel_wtmp_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wtmp.var_log_file relabel_file_perms))

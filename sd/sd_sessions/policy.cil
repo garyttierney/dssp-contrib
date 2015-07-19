@@ -1,0 +1,26 @@
+(typeattribute sd_sessions_adm_subj_type)
+
+(block sd_sessions
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(call dev_write_kmsg (subj))
+
+	(call file_search_config (subj))
+
+	(call term_use_console (subj))
+
+	(call miscfile_manage_nologin_runtime_files (subj))
+	(call miscfile_runtime_obj_type_transition_nologin_runtime (subj))
+
+	(call sd_journald_client_subj_type (subj)))
+
+(allow sd_sessions_adm_subj_type sd_sessions.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_sessions_adm_subj_type sd_sessions.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_sessions_adm_subj_type sd_sessions.subj))
+
+(allow sd_sessions_adm_subj_type sd_sessions.unit_file manage_file_perms)
+
+(allow sd_sessions_adm_subj_type sd_sessions.unit_file relabel_file_perms)

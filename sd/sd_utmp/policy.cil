@@ -13,15 +13,15 @@
 
 	(call term_use_console (subj))
 
+	(call miscfile_manage_utmp_runtime_files (subj))
+	(call miscfile_runtime_obj_type_transition_utmp_runtime (subj))
+	(call miscfile_write_wtmp_var_log_files (subj))
+
 	(call sd_journald_client_subj_type (subj))
 
 	(call sd_status_unit (subj))
 	(call sd_status (subj))
-	(call sd_stream_connect (subj))
-
-	(call utmp_manage_runtime_files (subj))
-	(call utmp_runtime_obj_type_transition_runtime (subj))
-	(call utmp_write_wtmp_var_log_files (subj)))
+	(call sd_stream_connect (subj)))
 
 (allow sd_utmp_adm_subj_type sd_utmp.unit_file (service (stop status disable enable reload start)))
 

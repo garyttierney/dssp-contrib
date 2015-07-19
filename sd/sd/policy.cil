@@ -183,6 +183,8 @@
 	(call term_use_unallocated_ttys (subj))
 
 	(call miscfile_read_modules (subj))
+	(call miscfile_rw_utmp_runtime_files (subj))
+	(call miscfile_write_wtmp_var_log_files (subj))
 
 	(call mount_manage_runtime_dirs (subj))
 
@@ -219,9 +221,6 @@
 	(call sduser_send_sigchld_all_subj (subj))
 	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
 	(call sduser_sysbus_chat_client_all_subj_type (subj))
-
-	(call utmp_rw_runtime_files (subj))
-	(call utmp_write_wtmp_var_log_files (subj))
 
 	(optional sd_sysbus_chat_client_subj_type_optional_sysbus
 		(allow subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))

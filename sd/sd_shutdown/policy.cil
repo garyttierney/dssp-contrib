@@ -58,14 +58,14 @@
 
 	(call fstools_exec (subj))
 
+	(call miscfile_read_utmp_runtime_files (subj))
+
 	(call mount_exec (subj))
 	(call mount_manage_runtime_files (subj))
 
 	(call sd_getattr_unit_dirs (subj))
 
 	(call sd_udevd_client_subj_type (subj))
-
-	(call utmp_read_runtime_files (subj))
 
 	(optional sd_shutdown_optiona_dracut
     		(call dracut_exec_runtime (subj))

@@ -1,0 +1,14 @@
+(macro sd_sessions_exec ((type ARG1))
+	(call can_exec (ARG1 sd_sessions.cmd_file)))
+
+(macro sd_sessions_auto_subj_type_transition ((type ARG1))
+	(call sd_sessions_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_sessions.cmd_file sd_sessions.subj)))
+
+(macro sd_sessions_send_signal ((type ARG1))
+	(allow ARG1 sd_sessions.subj (process (signal))))
+
+(macro sd_sessions_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_sessions_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

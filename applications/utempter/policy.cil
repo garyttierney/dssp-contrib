@@ -11,10 +11,10 @@
 
 	(call fs_search_devpts (subj))
 
-	(call nss_client_subj_type (subj))
+	(call miscfile_rw_utmp_runtime_files (subj))
+	(call miscfile_write_wtmp_var_log_files (subj))
 
-	(call utmp_rw_runtime_files (subj))
-	(call utmp_write_wtmp_var_log_files (subj))
+	(call nss_client_subj_type (subj))
 
 	(optional utempter_optional_myqemu
 		(call myqemu_use_all_inherited_virt_ptys (subj)))

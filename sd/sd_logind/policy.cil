@@ -81,7 +81,10 @@
 
 	(call getty_start_sd_unit_subj_type (subj))
 
+	(call miscfile_manage_nologin_runtime_files (subj))
 	(call miscfile_read_locale (subj))
+	(call miscfile_read_utmp_runtime_files (subj))
+	(call miscfile_runtime_obj_type_transition_nologin_runtime (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -102,9 +105,6 @@
 
 	;(call sd_networkd_sysbus_chat_client_subj_type (subj))
 
-	;(call sd_sessions_manage_runtime_files (subj))
-	;(call sd_sessions_runtime_obj_type_transition_runtime (subj))
-
 	(call sd_udevd_client_subj_type (subj))
 
 	(call sduser_start_unit_user (subj))
@@ -114,8 +114,6 @@
 	(call usersubj_delete_all_tmpfs_user (subj))
 	(call usersubj_setattr_term (subj))
 	(call usersubj_use_term (subj))
-
-	(call utmp_read_runtime_files (subj))
 
 	(optional sd_logind_optional_polkit
 		(call polkit_sysbus_chat_client_subj_type (subj)))

@@ -16,7 +16,7 @@
 	(typeattributeset pam_obj_type runtime_file)
 
 	(optional faillog_optional_logrotate
-		(call logrotate_log_obj_type (var_log_file))))
+		(call logrotate_var_log_obj_type (var_log_file))))
 
 (block lastlog
 	(blockinherit file_var_log_obj_blk)
@@ -74,11 +74,10 @@
 (call pam_client_subj_type (pam_login_prog_subj_type))
 
 (call miscfile_read_locale (pam_login_prog_subj_type))
+(call miscfile_rw_utmp_runtime_files (pam_login_prog_subj_type))
 
 (call seutil_read_selinux_config_files (pam_login_prog_subj_type))
 (call seutil_read_default_context_files (pam_login_prog_subj_type))
-
-(call utmp_rw_runtime_files (pam_login_prog_subj_type))
 
 (optional pam_login_prog_subj_type_optional_sd_logind
 	(call sd_logind_client_subj_type (pam_login_prog_subj_type)))
@@ -106,11 +105,11 @@
 (call pam_rw_lastlog_var_log_files (pam_client_subj_type))
 (call pam_var_log_obj_type_transition_lastlog_var_log (pam_client_subj_type))
 
-(call nss_client_subj_type (pam_client_subj_type))
+(call miscfile_append_wtmp_var_log_files (pam_client_subj_type))
+(call miscfile_read_wtmp_var_log_files (pam_client_subj_type))
+(call miscfile_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
 
-(call utmp_append_wtmp_var_log_files (pam_client_subj_type))
-(call utmp_read_wtmp_var_log_files (pam_client_subj_type))
-(call utmp_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
+(call nss_client_subj_type (pam_client_subj_type))
 
 (optional pam_client_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (pam_client_subj_type)))

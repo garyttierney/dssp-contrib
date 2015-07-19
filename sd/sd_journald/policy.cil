@@ -75,14 +75,13 @@
 	(call term_write_console (subj))
 
 	(call miscfile_read_locale (subj))
+	(call miscfile_read_utmp_runtime_files (subj))
 
 	;(call sd_machined_read_config_files (subj))
 
 	(call sd_notify_subj_type (subj))
 
 	(call sd_udevd_client_subj_type (subj))
-
-	(call utmp_read_runtime_files (subj))
 
 	(optional sd_journald_optional_plymouth
 		(call plymouth_use_fd_plymouthd (subj)))

@@ -142,17 +142,16 @@
 (call sys_link_keyring (polkit_exec_client_subj_type))
 (call sys_read_kernel_sysctl_files (polkit_exec_client_subj_type))
 
-(call miscfile_read_locale (polkit_exec_client_subj_type))
-
 (call file_read_config_files (polkit_exec_client_subj_type))
+
+(call miscfile_read_locale (polkit_exec_client_subj_type))
+(call miscfile_read_utmp_runtime_files (polkit_exec_client_subj_type))
 
 (call nss_client_subj_type (polkit_exec_client_subj_type))
 
 (call pam_read_config (polkit_exec_client_subj_type))
 
 (call polkit_sysbus_chat_client_subj_type (polkit_exec_client_subj_type))
-
-(call utmp_read_runtime_files (polkit_exec_client_subj_type))
 
 (optional polkit_exec_client_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (polkit_exec_client_subj_type)))

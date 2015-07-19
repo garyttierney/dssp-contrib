@@ -60,7 +60,7 @@
 		(call sd_daemon (subj cmd_file)))
 
 	(optional dmsetup_optional_sd_cryptsetup
-		(call sd_cryptsetup_rw_sem (dmsetup_t)))
+		(call sd_cryptsetup_rw_sem (subj)))
 
 	(optional dmsetup_optional_sd_udevd
 		(call sd_udevd_client_subj_type (subj))

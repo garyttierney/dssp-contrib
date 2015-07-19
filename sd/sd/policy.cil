@@ -204,15 +204,15 @@
 	(call sd_journald_relabelto_var_log_files (subj))
 	(call sd_journald_use_fd (subj))
 
-	;(call sd_logind_read_runtime (subj)))
+	(call sd_logind_read_runtime (subj))
 
-	;(call sd_machined_manage_var_lib (subj)))
+	;(call sd_machined_manage_var_lib (subj))
 
 	;(call sd_shutdown_share_state (subj))
 
-	;(call sd_tmpfiles_read_runtime (subj)))
+	(call sd_tmpfiles_read_runtime (subj))
 
-	;(call sd_updatedone_getattr_update_flags (subj)))
+	(call sd_updated_getattr_flag_files (subj))
 
 	(call sduser_manage_keyring_all_subj (subj))
 	(call sduser_noatsecure_all_subj (subj))

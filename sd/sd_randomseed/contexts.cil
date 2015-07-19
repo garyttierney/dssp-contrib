@@ -1,0 +1,7 @@
+(context sd_randomseed_cmd (sys.id sys.role sd_randomseed.cmd_file (systemlow systemlow)))
+(context sd_randomseed_unit (sys.id sys.role sd_randomseed.unit_file (systemlow systemlow)))
+(context sd_randomseed_var_lib (sys.id sys.role sd_randomseed.var_lib_file (systemhigh systemhigh)))
+
+(filecon "/usr/lib/systemd/system/[^/]*systemd-random-seed.*" file sd_randomseed_unit)
+(filecon "/usr/lib/systemd/systemd-random-seed" file sd_randomseed_cmd)
+(filecon "/var/lib/systemd/random-seed" file sd_randomseed_var_lib)

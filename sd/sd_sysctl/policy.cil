@@ -12,6 +12,8 @@
 
 	(call miscfile_read_locale (subj))
 
+	(call sctl_read_config (subj))
+
 	(call sd_journald_client_subj_type (subj)))
 
 (allow sd_sysctl_adm_subj_type sd_sysctl.unit_file (service (stop status disable enable reload start)))

@@ -1,0 +1,14 @@
+(macro sd_importstate_exec ((type ARG1))
+	(call can_exec (ARG1 sd_importstate.cmd_file)))
+
+(macro sd_importstate_auto_subj_type_transition ((type ARG1))
+	(call sd_importstate_send_signal (ARG1))
+	(call auto_subject_type_transition_pattern (ARG1 sd_importstate.cmd_file sd_importstate.cmd_file)))
+
+(macro sd_importstate_send_signal ((type ARG1))
+	(allow ARG1 sd_importstate.subj (process (signal))))
+
+(macro sd_importstate_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_importstate_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

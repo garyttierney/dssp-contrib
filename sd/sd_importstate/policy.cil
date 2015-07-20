@@ -1,0 +1,44 @@
+(typeattribute sd_importstate_adm_subj_type)
+
+(block sd_importstate
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(allow subj self (capability (sys_admin)))
+	(allow subj self (process (setfscreate)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call file_dontaudit_relabel_all (subj))
+	(call file_setattr_config_dirs (subj))
+	(call file_setattr_var_dirs (subj))
+	(call file_setattr_lib_dirs (subj))
+
+	(call fs_list_tmpfs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	;(call dracut_search_runtime (subj))
+
+	(call miscfile_read_locale (subj))
+	(call miscfile_setattr_network (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call seutil_auto_subj_type_transition_setfiles (subj))
+
+	(optional sd_importstate_optional_dhclient
+		(call dhclient_read_var_lib (subj))
+		(call dhclient_setattr_var_lib (subj))))
+
+(allow sd_importstate_adm_subj_type sd_importstate.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_importstate_adm_subj_type sd_importstate.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_importstate_adm_subj_type sd_importstate.subj))
+
+(allow sd_importstate_adm_subj_type sd_importstate_obj_type manage_file_perms)
+
+(allow sd_importstate_adm_subj_type sd_importstate_obj_type relabel_file_perms)

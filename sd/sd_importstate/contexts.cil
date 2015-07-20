@@ -1,0 +1,5 @@
+(context sd_importstate_cmd (sys.id sys.role sd_importstate.cmd_file (systemlow systemlow)))
+(context sd_importstate_unit (sys.id sys.role sd_importstate.unit_file (systemlow systemlow)))
+
+(filecon "/usr/lib/systemd/fedora-import-state" file sd_importstate_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*fedora-import-state.*" file sd_importstate_unit)

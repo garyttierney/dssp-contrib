@@ -63,7 +63,7 @@
 
 	(allow subj self (process (getcap setcap setkeycreate)))
 	(allow subj self (capability (dac_override net_admin sys_time kill sys_tty_config sys_boot chown setgid setuid
-		setpcap sys_resource sys_admin fsetid fowner)))
+		setpcap sys_resource sys_admin sys_ptrace fsetid fowner)))
 	(allow subj self (capability2 (block_suspend audit_read)))
 	(allow subj self (unix_dgram_socket (lock)))
 	(allow subj self (netlink_route_socket (nlmsg_write)))

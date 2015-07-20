@@ -4,6 +4,8 @@
 (block sd_hostnamed
 	(blockinherit sd_daemon_blk)
 
+	(blockinherit sd_unit_obj_blk)
+
 	(allow subj self (capability (sys_admin)))
 	(allow subj self (process (setfscreate)))
 

@@ -39,6 +39,6 @@
 (allow sd_importstate_adm_subj_type sd_importstate.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_importstate_adm_subj_type sd_importstate.subj))
 
-(allow sd_importstate_adm_subj_type sd_importstate_obj_type manage_file_perms)
+(allow sd_importstate_adm_subj_type sd_importstate.unit_file manage_file_perms)
 
-(allow sd_importstate_adm_subj_type sd_importstate_obj_type relabel_file_perms)
+(allow sd_importstate_adm_subj_type sd_importstate.unit_file relabel_file_perms)

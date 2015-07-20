@@ -1,0 +1,27 @@
+(macro sd_autorelabel_exec ((type ARG1))
+	(call can_exec (ARG1 sd_autorelabel.cmd_file)))
+
+(macro sd_autorelabel_auto_subj_type_transition ((type ARG1))
+	(call sd_autorelabel_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_autorelabel.cmd_file sd_autorelabel.cmd_file)))
+
+(macro sd_autorelabel_send_signal ((type ARG1))
+	(allow ARG1 sd_autorelabel.subj (process (signal))))
+
+(macro sd_autorelabel_read_boot_flag_files ((type ARG1))
+	(allow ARG1 sd_autorelabel.file read_file_perms))
+
+(macro sd_autorelabel_manage_boot_flag_files ((type ARG1))
+	(call fs_rw_rootfs_dirs (ARG1))
+	(allow ARG1 sd_autorelabel.file manage_file_perms))
+
+(macro sd_autorelabel_relabel_boot_flag_files ((type ARG1))
+	(allow ARG1 sd_autorelabel.file relabel_file_perms))
+
+(macro sd_autorelabel_rootfs_obj_type_transition_boot_flag ((type ARG1))
+	(call fs_rootfs_obj_type_transition (ARG1 sd_autorelabel.file file ".autorelabel")))
+
+(macro sd_autorelabel_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_autorelabel_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+        (call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

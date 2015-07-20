@@ -1,0 +1,62 @@
+(typeattribute sd_autorelabel_adm_subj_type)
+
+(typeattribute sd_autorelabel_obj_type)
+
+(block sd_autorelabel
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_autorelabel_obj_type unit_file)
+
+	(blockinherit file_boot_flag_obj_blk)
+
+	(typeattributeset sd_autorelabel_obj_type file)
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self (process (getsched)))
+
+	(call sd_autorelabel_manage_boot_flag_files (subj))
+	(call sd_autorelabel_rootfs_obj_type_transition_boot_flag (subj))
+
+	(call cmd_exec_cmd (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call file_getattr_all_tmpfs_files (subj))
+	(call file_list_all_tmpfs (subj))
+	(call file_read_config_files (subj))
+	(call file_search_var_lib (subj))
+
+	(call fs_list_rootfs (subj))
+	(call fs_write_inherited_devpts_chr_files (subj))
+
+	(call sec_set_enforce_mode (subj))
+
+	(call term_use_console (subj))
+
+	(call login_auto_subj_type_transition_sulogin (subj))
+
+	(call nss_client_subject_type (subj))
+
+	(call seutil_dontaudit_audit_access_load_policy_cmd_files (subj))
+	(call seutil_auto_subj_type_transition_setfiles (subj))
+	(call seutil_read_selinux_config_files (subj))
+
+	(call sd_reboot (subj))
+
+	(call systemctl_exec (subj))
+
+	(optional sd_autorelabel_optional_plymouth
+		(call plymouth_exec_plymouth (subj))))
+
+(allow sd_autorelabel_adm_subj_type sd_autorelabel.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_autorelabel_adm_subj_type sd_autorelabel.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_autorelabel_adm_subj_type sd_autorelabel.subj))
+
+(call file_search_runtime (sd_autorelabel_adm_subj_type))
+
+(allow sd_autorelabel_adm_subj_type sd_autorelabel_obj_type manage_file_perms)
+
+(allow sd_autorelabel_adm_subj_type sd_autorelabel_obj_type relabel_file_perms)

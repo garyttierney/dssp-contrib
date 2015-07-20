@@ -1,0 +1,17 @@
+(roleattribute sctl_role)
+
+(block sctl
+	(blockinherit app_blk)
+
+	(roleattributeset sctl_role sys.role)
+
+	(roletype sctl_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(allow subj self (capability (net_admin)))
+
+	(call sctl_read_config (subj))
+
+	(call sys_list_all_sysctl (subj))
+	(call sys_rw_all_sysctl_files (subj)))

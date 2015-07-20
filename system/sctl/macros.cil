@@ -1,0 +1,47 @@
+(macro sctl_exec ((type ARG1))
+	(call can_exec (ARG1 sctl.cmd_file)))
+
+(macro sctl_auto_subj_type_transition ((type ARG1))
+	(call sctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sctl.cmd_file sctl.subj)))
+
+(macro sctl_send_signal ((type ARG1))
+	(allow ARG1 sctl.subj (process (signal))))
+
+(macro sctl_run ((type ARG1)(role ARG2))
+	(call sctl_auto_subj_type_transition (ARG1))
+	(roleattributeset sctl_role ARG2))
+
+(macro sctl_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sctl.config_file search_dir_perms))
+
+(macro sctl_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sctl.config_file list_dir_perms))
+
+(macro sctl_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sctl.config_file sctl.config_file)))
+
+(macro sctl_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sctl.config_file sctl.config_file)))
+
+(macro sctl_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sctl.config_file read_file_perms)
+	(allow ARG1 sctl.config_file list_dir_perms)
+	(allow ARG1 sctl.config_file read_lnk_file_perms))
+
+(macro sctl_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sctl.config_file manage_file_perms)
+	(allow ARG1 sctl.config_file manage_dir_perms)
+	(allow ARG1 sctl.config_file manage_lnk_file_perms))
+
+(macro sctl_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sctl.config_file relabel_file_perms)
+	(allow ARG1 sctl.config_file relabel_dir_perms)
+	(allow ARG1 sctl.config_file relabel_lnk_file_perms))

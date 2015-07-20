@@ -84,10 +84,10 @@
 	(call sd_udevd_exec_sd_udevd_helper (subj))
 	(call sd_udevd_read_config (subj))
 
+	(call sctl_auto_subj_type_transition (subj))
+
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
-
-	;(call sysctl_auto_subj_type_transition (subj))
 
 	(call systemctl_exec (subj))
 

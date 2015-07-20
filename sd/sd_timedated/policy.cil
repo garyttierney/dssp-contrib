@@ -13,7 +13,7 @@
 
 	(call term_use_console (subj))
 
-	;(call hwclock_read_config_files (subj))
+	(call hwclock_read_config_files (subj))
 
 	(call miscfile_read_locale (subj))
 
@@ -25,7 +25,8 @@
 
 	(optional sd_timedated_optional_sysbus
 		(call sysbus_acquire_service (subj))
-		(call sysbus_client_subject_type (subj))))
+		(call sysbus_client_subject_type (subj))
+		(call sysbus_read_config_files (subj))))
 
 (optional sd_sysbus_chat_client_subj_type_optiona_sysbus
 	(allow sd_timedated.subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))

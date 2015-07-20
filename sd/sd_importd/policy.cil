@@ -38,11 +38,12 @@
 
 	(call sd_machined_manage_var_lib_files (subj))
 
-(optional sd_importd_optional_sysbus
-	(call sysbus_acquire_service (subj)))
+	(optional sd_importd_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
 
-(optional sd_importd_optional_http
-	(call http_tcp_connect_http_port (subj))))
+	(optional sd_importd_optional_http
+		(call http_tcp_connect_http_port (subj))))
 
 (optional sd_importd_sysbus_chat_client_subj_type_optional_sysbus
 	(allow sd_importd.subj sd_importd_sysbus_chat_client_subj_type (dbus (send_msg)))

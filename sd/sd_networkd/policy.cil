@@ -67,7 +67,8 @@
 	(call sd_udevd_client_subj_type (subj))
 
 	(optional sd_networkd_optional_sysbus
-		(call sysbus_acquire_service (subj)))
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
 
 	(optional sd_networkd_optional_myqemu
 		(call myqemu_relabelfrom_all_virt_subjects_tun_socket (subj))))

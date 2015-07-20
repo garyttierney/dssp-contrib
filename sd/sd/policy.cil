@@ -195,10 +195,10 @@
 
 	(call sd_askpwd_read_runtime (subj))
 
-	;(call sd_fsck_read_runtime (subj))
+	(call sd_fsck_read_runtime (subj))
 
-	;(call sd_importd_cmd_obj_entry_subj (subj))
-	;(call sd_importd_manage_runtime (subj)))
+	(call sd_importd_cmd_obj_entry_subj (subj))
+	(call sd_importd_manage_runtime (subj))
 
 	(call sd_journald_list_var_log (subj))
 	(call sd_journald_read_runtime (subj))
@@ -226,7 +226,8 @@
 		(call auth_link_login_prog_keyring (subj)))
 
 	(optional sd_optional_sysbus
-		(call sysbus_acquire_service (subj)))
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
 
 	(optional sd_optional_dhcp
 		(call dhcp_read_dhclient_var_lib (subj)))

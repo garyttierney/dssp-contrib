@@ -37,7 +37,8 @@
 
 (optional sd_localed_optional_sysbus
 	(call sysbus_acquire_service (subj))
-	(call sysbus_client_subj_type (subj)))
+	(call sysbus_client_subj_type (subj))
+	(call sysbus_read_config_files (subj)))
 
 (optional sd_localed_optional_xserver
 	(call xserver_read_config_files (subj))))

@@ -103,7 +103,7 @@
 
 	(call sd_journald_client_subj_type (subj))
 
-	;(call sd_networkd_sysbus_chat_client_subj_type (subj))
+	(call sd_networkd_sysbus_chat_client_subj_type (subj))
 
 	(call sd_udevd_client_subj_type (subj))
 
@@ -119,7 +119,8 @@
 		(call polkit_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_logind_optional_sysbus
-		(call sysbus_acquire_service (subj)))
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
 
 	(optional sd_logind_optional_unconfinedusersubj
 		(call unconfinedusersubj_read_state (subj))))

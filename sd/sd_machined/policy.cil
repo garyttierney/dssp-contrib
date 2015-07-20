@@ -73,7 +73,8 @@
 
 	(optional sd_machined_optional_sysbus
 		(call sysbus_acquire_service (subj))
-		(call sysbus_client_subj_type (subj)))
+		(call sysbus_client_subj_type (subj))
+		(call sysbus_read_config_files (subj)))
 
 	(optional sd_machined_optional_myqemu
 		(call myqemu_getattr_installer_ptys (subj))

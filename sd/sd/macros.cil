@@ -583,6 +583,15 @@
 (macro sd_link_keyring ((type ARG1))
 	(allow ARG1 sd.subj (key (search link))))
 
+(macro sd_read_state_forked_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sd_forked_subj_type read_file_perms)
+	(allow ARG1 sd_forked_subj_type list_dir_perms)
+	(allow ARG1 sd_forked_subj_type read_lnk_file_perms))
+
+(macro sd_getattr_forked_subj ((type ARG1))
+	(allow ARG1 sd_forked_subj_type (process (getattr))))
+
 (macro sd_read_state_daemon_subj ((type ARG1))
 	(call fs_search_proc (ARG1))
 	(allow ARG1 sd_daemon_subj_type read_file_perms)

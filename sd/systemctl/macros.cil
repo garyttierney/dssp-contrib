@@ -1,0 +1,36 @@
+(block systemctl_subj_blk
+        (blockabstract systemctl_subj_blk)
+
+        (blockinherit app_subj_blk)
+
+        (typeattributeset systemctl_subj_type subj))
+
+(macro systemctl_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset systemctl_subj_type ARG1))
+
+(macro systemctl_client_subj_type ((type ARG1))
+	(typeattributeset systemctl_client_subj_type ARG1))
+
+(macro systemctl_exec ((type ARG1))
+	(call systemctl_client_subj_type (ARG1))
+	(call can_exec (ARG1 systemctl.cmd_file)))
+
+(macro systemctl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+        (call auto_subj_type_transition_pattern (ARG2 systemctl.cmd_file ARG3))
+
+        (roletype ARG1 ARG3)
+
+        (allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+        (call ps_subj_pattern (ARG2 ARG3))
+
+        (allow ARG3 ARG2 (process (signal)))
+
+	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+
+(macro systemctl_auto_subj_type_transition ((type ARG1))
+	(call systemctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file systemctl.subj)))
+
+(macro systemctl_send_signal ((type ARG1))
+	(allow ARG1 systemctl.subj (process (signal))))

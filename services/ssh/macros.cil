@@ -158,6 +158,7 @@
 	(allow ARG1 sshd_keygen.subj (process (signal))))
 
 (macro ssh_client_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset ssh_client_subj_type ARG1))
 
 (macro ssh_role_pattern_ssh_client ((role ARG1)(type ARG2)(type ARG3))
@@ -171,8 +172,6 @@
 	(allow ARG3 ARG2 (process (signal)))
 	(allow ARG3 self (key (view read search write link)))
 
-	(call ssh_client_subj_type (ARG3))
-
 	(call ssh_rw_all_sshd_inherited_tcp_sockets (ARG2))
 	(call ssh_rw_all_sshd_inherited_unix_stream_sockets (ARG2))
 	(call ssh_rw_all_sshd_inherited_unix_dgram_sockets (ARG2))
@@ -183,6 +182,7 @@
 	(call ssh_home_dir_obj_type_transition_client_home (ARG2)))
 
 (macro ssh_agent_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset ssh_agent_subj_type ARG1))
 
 (macro ssh_role_pattern_ssh_agent ((role ARG1)(type ARG2)(type ARG3))
@@ -193,9 +193,7 @@
 	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (ARG2 ARG3))
 
-	(allow ARG3 ARG2 (process (signal)))
-
-	(call ssh_agent_subj_type (ARG3)))
+	(allow ARG3 ARG2 (process (signal))))
 
 (macro ssh_search_sshd_config ((type ARG1))
 	(call file_search_config (ARG1))

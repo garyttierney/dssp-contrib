@@ -188,6 +188,8 @@
 
 	(call mount_manage_runtime_dirs (subj))
 
+	(call pam_link_login_prog_keyring (subj))
+
 	(call sd_exec_sd (subj))
 	(call sd_auto_subj_type_transition (subj))
 	(call sd_relabelto_unit_runtime_dirs (subj))
@@ -221,9 +223,6 @@
 	(call sduser_send_sigchld_all_subj (subj))
 	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
 	(call sduser_sysbus_chat_client_all_subj_type (subj))
-
-	(optional sd_optional_auth
-		(call auth_link_login_prog_keyring (subj)))
 
 	(optional sd_optional_sysbus
 		(call sysbus_acquire_service (subj))

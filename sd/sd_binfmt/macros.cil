@@ -3,7 +3,7 @@
 
 (macro sd_binfmt_auto_subj_type_transition ((type ARG1))
 	(call sd_binfmt_send_signal (ARG1))
-	(call auto_subject_type_transition_pattern (ARG1 sd_binfmt.cmd_file sd_binfmt.subj)))
+	(call auto_subj_type_transition_pattern (ARG1 sd_binfmt.cmd_file sd_binfmt.subj)))
 
 (macro sd_binfmt_send_signal ((type ARG1))
 	(allow ARG1 sd_binfmt.subj (process (signal))))

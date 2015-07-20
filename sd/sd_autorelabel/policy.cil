@@ -11,7 +11,7 @@
 
 	(blockinherit file_boot_flag_obj_blk)
 
-	(typeattributeset sd_autorelabel_obj_type file)
+	(typeattributeset sd_autorelabel_obj_type boot_flag_file)
 
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
@@ -37,7 +37,7 @@
 
 	(call login_auto_subj_type_transition_sulogin (subj))
 
-	(call nss_client_subject_type (subj))
+	(call nss_client_subj_type (subj))
 
 	(call seutil_dontaudit_audit_access_load_policy_cmd_files (subj))
 	(call seutil_auto_subj_type_transition_setfiles (subj))
@@ -45,7 +45,7 @@
 
 	(call sd_reboot (subj))
 
-	(call systemctl_exec (subj))
+	;(call systemctl_exec (subj))
 
 	(optional sd_autorelabel_optional_plymouth
 		(call plymouth_exec_plymouth (subj))))

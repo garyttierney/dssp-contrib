@@ -1,0 +1,5 @@
+(context sd_sysctl_cmd (sys.id sys.role sd_sysctl.cmd_file (systemlow systemlow)))
+(context sd_sysctl_unit (sys.id sys.role sd_sysctl.unit_file (systemlow systemlow)))
+
+(filecon "/usr/lib/systemd/systemd-sysctl" file sd_sysctl_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-sysctl.*" file sd_sysctl_unit)

@@ -1,0 +1,14 @@
+(macro sd_sysctl_exec ((type ARG1))
+	(call can_exec (ARG1 sd_sysctl.cmd_file)))
+
+(macro sd_sysctl_auto_subj_type_transition ((type ARG1))
+	(call sd_sysctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_sysctl.cmd_file sd_sysctl.subj)))
+
+(macro sd_sysctl_send_signal ((type ARG1))
+	(allow ARG1 sd_sysctl.subj (process (signal))))
+
+(macro sd_sysctl_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_sysctl_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

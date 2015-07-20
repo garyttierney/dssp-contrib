@@ -1,0 +1,13 @@
+(macro loadkeys_exec ((type ARG1))
+	(call can_exec (ARG1 loadkeys.cmd_file)))
+
+(macro loadkeys_auto_subj_type_transition ((type ARG1))
+	(call loadkeys_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 loadkeys.cmd_file loadkeys.subj)))
+
+(macro loadkeys_send_signal ((type ARG1))
+	(allow ARG1 loadkeys.subj (process (signal))))
+
+(macro loadkeys_run ((type ARG1)(role ARG2))
+	(call loadkeys_auto_subj_type_transition (ARG1))
+	(roleattributeset loadkeys_role ARG2))

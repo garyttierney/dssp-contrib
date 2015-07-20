@@ -13,7 +13,7 @@
 	(roletype ARG1 ARG3)
 
 	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
-	(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
+	(allow ARG3 ARG2 (unix_stream_socket (getattr ioctl read write)))
 	(call ps_subj_pattern (ARG3 ARG2))
 
 	(call cmd_auto_subj_type_transition (ARG3 ARG2))

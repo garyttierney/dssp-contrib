@@ -44,8 +44,11 @@
 (macro app_send_sigstop ((type ARG1))
 	(allow ARG1 app_subj_type (process (sigstop))))
 
+(macro app_use_fd ((type ARG1))
+	(allow ARG1 app_subj_type (fd (use))))
+
 (macro app_rw_inherited_unix_stream_sockets ((type ARG1))
-	(allow ARG1 app_subj_type (unix_stream_socket (read write))))
+	(allow ARG1 app_subj_type (unix_stream_socket (getattr ioctl read write))))
 
 (macro app_read_state ((type ARG1))
 	(call fs_search_proc (ARG1))

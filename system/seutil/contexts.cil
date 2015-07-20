@@ -12,9 +12,9 @@
 (filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any default_context)
 (filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any file_context)
 (filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
-(filecon "/etc/selinux/([^/]*/)?seusers" file (sys.id sys.role selinux_config.config_file (systemhigh systemhigh)))
+(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config_seusers)
 (filecon "/etc/selinux/([^/]*/)?source(/.*)?" any policy_src)
-(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file (sys.id sys.role selinux_config.config_file (systemhigh systemhigh)))
+(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config_users)
 (filecon "/usr/sbin/load_policy" file load_policy_cmd)
 (filecon "/usr/sbin/matchpathcon" file matchpathcon_cmd)
 (filecon "/usr/sbin/setenforce" file setenforce_cmd)
@@ -23,6 +23,10 @@
 
 (tunableif enable_mls
 	(true
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh)))
+		(context selinux_config_seusers (sys.id sys.role selinux_config.config_file (systemhigh systemhigh)))
+		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemhigh systemhigh))))
 	(false
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))))
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))
+		(context selinux_config_seusers (sys.id sys.role selinux_config.config_file (systemlow systemlow)))
+		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemlow systemlow)))))

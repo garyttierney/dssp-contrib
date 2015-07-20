@@ -1,0 +1,23 @@
+(roleattribute sd_hwdb_role)
+
+(typeattribute sd_hwdb_admin_subj_type)
+
+(block sd_hwdb
+	(blockinherit app_blk)
+
+	(call sd_daemon (subj cmd_file))
+
+	(roletype sd_hwdb_role subj)
+
+	(call sd_search_runtime (subj))
+
+	(call sd_udevd_manage_config_files (subj)))
+
+(allow sd_hwdb_adm_subj_type sd_hwdb.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_hwdb_adm_subj_type sd_hwdb.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_hwdb_adm_subj_type sd_hwdb.subj))
+
+(allow sd_hwdb_adm_subj_type sd_hwdd.unit_file manage_file_perms)
+
+(allow sd_hwdb_adm_subj_type sd_hwdb.unit_file relabel_file_perms)

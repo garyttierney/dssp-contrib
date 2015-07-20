@@ -1,0 +1,52 @@
+(typeattribute sd_hostnamed_adm_subj_type)
+(typeattribute sd_hostnamed_chat_client_subj_type)
+
+(block sd_hostnamed
+	(blockinherit sd_daemon_blk)
+
+	(allow subj self (capability (sys_admin)))
+	(allow subj self (process (setfscreate)))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_read_urandom (subj))
+	(call dev_write_kmsg (subj))
+
+	(call file_read_config (subj))
+
+	(call fs_read_sysfs (subj))
+	(call fs_search_tmpfs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call hostname_manage_config_files (subj))
+
+	(call sd_notify_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_machined_manage_config_files (subj))
+	(call sd_machined_config_obj_type_transition_config (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(optional sd_hostnamed_optional_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_hostnamed_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_client_subj_type (subj))))
+
+(optional sd_hostnamed_chat_client_subj_type_optional_sysbus
+        (allow sd_hostnamed.subj sd_hostnamed_sysbus_chat_client_subj_type (dbus (send_msg)))
+        (allow sd_hostnamed_sysbus_chat_client_subj_type sd_hostnamed.subj (dbus (send_msg))))
+
+(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_hostnamed_adm_subj_type sd_hostnamed.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_hostnamed_adm_subj_type sd_hostnamed.subj))
+
+(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file manage_file_perms)
+
+(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file relabel_file_perms)

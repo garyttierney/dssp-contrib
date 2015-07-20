@@ -1,0 +1,17 @@
+(macro sd_hostnamed_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_hostnamed_chat_client_subj_type ARG1))
+
+(macro sd_hostnamed_exec ((type ARG1))
+	(call can_exec (ARG1 sd_hostnamed.cmd_file)))
+
+(macro sd_hostnamed_auto_subj_type_transition ((type ARG1))
+	(call sd_hostnamed_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_hostnamed.cmd_file sd_hostnamed.subj)))
+
+(macro sd_hostnamed_send_signal ((type ARG1))
+	(allow ARG1 sd_hostnamed.subj (process (signal))))
+
+(macro sd_hostnamed_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_hostnamed_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

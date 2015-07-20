@@ -13,6 +13,9 @@
 
 	(allow subj self (capability (dac_override sys_admin fowner)))
 
+	(call mount_manage_runtime (subj))
+	(call mount_runtime_obj_type_transition_runtime (subj "*"))
+
 	(call sys_dontaudit_audit_access_mountpoint_dirs (subj))
 	(call sys_list_mountpoints (subj))
 	(call sys_mounton_mountpoint_dirs (subj))
@@ -32,9 +35,6 @@
 	(call fs_unmount_all_fs (subj))
 
 	(call miscfile_read_locale (subj))
-
-	(call mount_manage_runtime (subj))
-	(call mount_runtime_obj_type_transition_runtime (subj "*"))
 
 	(booleanif (mount_any_file) (true
 		(call file_rw_all_files_except (subj))

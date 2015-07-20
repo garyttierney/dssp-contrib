@@ -1,0 +1,35 @@
+(typeattribute sd_load_modules_adm_subj_type)
+
+(typeattribute sd_load_modules_obj_type)
+
+(block sd_loadmodules
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_loadmodules_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_loadmodules_obj_type config_file)
+
+	(call sd_loadmodules_read_config (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call term_use_console (subj))
+
+	(call sd_journal_client_subj_type (subj)))
+
+(allow sd_loadmodules_adm_subj_type sd_loadmodules.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_loadmodules_adm_subj_type sd_loadmodules.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_loadmodules_adm_subj_type sd_loadmodules.subj))
+
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type manage_file_perms)
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type manage_dir_perms)
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type manage_lnk_file_perms)
+
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type relabel_file_perms)
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type relabel_dir_perms)
+(allow sd_loadmodules_adm_subj_type sd_loadmodules_obj_type relabel_lnk_file_perms)

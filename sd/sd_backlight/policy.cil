@@ -1,0 +1,44 @@
+(typeattribute sd_backlight_adm_subj_type)
+
+(typeattribute sd_backlight_obj_type)
+
+(block sd_backlight
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattribute sd_backlight_obj_type unit_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattribute sd_backlight_obj_type var_lib_file)
+
+	(call sd_backlight_manage_var_lib (subj))
+	(call sd_backlight_sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call dev_write_kmsg (subj))
+
+	(call fs_list_sysfs (subj))
+	(call fs_rw_sysfs_files (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+
+	(call term_use_console (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_udevd_client_subj_type (subj)))
+
+(allow sd_backlight_adm_subj_type sd_backlight.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_backlight_adm_subj_type sd_backlight.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_backlight_adm_subj_type sd_backlight.subj))
+
+(call file_search_runtime (sd_backlight_adm_subj_type))
+
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_file_perms)
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_dir_perms)
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_lnk_file_perms)
+
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_file_perms)
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_dir_perms)
+(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_lnk_file_perms)

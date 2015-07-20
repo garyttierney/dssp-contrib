@@ -1,0 +1,51 @@
+(macro sd_backlight_exec ((type ARG1))
+	(call can_exec (ARG1 backlight.cmd_file)))
+
+(macro sd_backlight_auto_subj_type_transition ((type ARG1))
+	(call sd_backlight_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_backlight.cmd_file sd_backlight.subj)))
+
+(macro sd_backlight_send_signal ((type ARG1))
+	(allow ARG1 sd_backlight.subj (process (signal))))
+
+(macro sd_backlight_search_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_backlight.var_lib_file search_dir_perms))
+
+(macro sd_backlight_list_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_backlight.var_lib_file list_dir_perms))
+
+(macro sd_backlight_read_var_lib_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_backlight.var_lib_file sd_backlight.var_lib_file)))
+
+(macro sd_backlight_read_var_lib_lnk_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_backlight.var_lib_file sd_backlight.var_lib_file)))
+
+(macro sd_backlight_read_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_backlight.var_lib_file read_file_perms)
+	(allow ARG1 sd_backlight.var_lib_file list_dir_perms)
+	(allow ARG1 sd_backlight.var_lib_file read_lnk_file_perms))
+
+(macro sd_backlight_manage_var_lib ((type ARG1))
+	(call sd_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_backlight.var_lib_file manage_file_perms)
+	(allow ARG1 sd_backlight.var_lib_file manage_dir_perms)
+	(allow ARG1 sd_backlight.var_lib_file manage_lnk_file_perms))
+
+(macro sd_backlight_relabel_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_backlight.var_lib_file relabel_file_perms)
+	(allow ARG1 sd_backlight.var_lib_file relabel_dir_perms)
+	(allow ARG1 sd_backlight.var_lib_file relabel_lnk_file_perms))
+
+(macro sd_backlight_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call sd_var_lib_obj_type_transition (ARG1 sd_backlight.var_lib_file dir "backlight")))
+
+(macro sd_backlight_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_backight_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

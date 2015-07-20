@@ -17,14 +17,14 @@
 	(call can_exec (ARG1 systemctl.cmd_file)))
 
 (macro systemctl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-        (call auto_subj_type_transition_pattern (ARG2 systemctl.cmd_file ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 systemctl.cmd_file ARG3))
 
-        (roletype ARG1 ARG3)
+	(roletype ARG1 ARG3)
 
-        (allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-        (call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
 
-        (allow ARG3 ARG2 (process (signal)))
+	(allow ARG3 ARG2 (process (signal)))
 
 	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 

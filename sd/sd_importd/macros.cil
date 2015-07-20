@@ -1,0 +1,61 @@
+(macro sd_importd_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_importd_sysbus_chat_client_subj_type ARG1))
+
+(macro sd_importd_exec ((type ARG1))
+	(call can_exec (ARG1 sd_importd.cmd_file)))
+
+(macro sd_importd_auto_subj_type_transition ((type ARG1))
+	(call sd_import_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_importd.cmd_file sd_importd.subj)))
+
+(macro sd_importd_send_signal ((type ARG1))
+	(allow ARG1 sd_importd.subj (process (signal))))
+
+(macro sd_importd_cmd_obj_entry_subj ((type ARG1))
+	(call subj_entry (ARG1 sd_importd.cmd_file)))
+
+(macro sd_importd_search_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_importd.runtime_file search_dir_perms))
+
+(macro sd_importd_list_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_importd.runtime_file list_dir_perms))
+
+(macro sd_importd_read_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_importd.runtime_file sd_importd.runtime_file)))
+
+(macro sd_importd_read_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_importd.runtime_file sd_importd.runtime_file)))
+
+(macro sd_importd_read_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_importd.runtime_file read_file_perms)
+	(allow ARG1 sd_importd.runtime_file list_dir_perms)
+	(allow ARG1 sd_importd.runtime_file read_lnk_file_perms)
+	(allow ARG1 sd_importd.runtime_file read_sock_file_perms))
+
+(macro sd_importd_manage_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_importd.runtime_file manage_file_perms)
+	(allow ARG1 sd_importd.runtime_file manage_dir_perms)
+	(allow ARG1 sd_importd.runtime_file manage_lnk_file_perms)
+	(allow ARG1 sd_importd.runtime_file manage_sock_file_perms))
+
+(macro sd_importd_relabel_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_importd.runtime_file relabel_file_perms)
+	(allow ARG1 sd_importd.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_importd.runtime_file relabel_lnk_file_perms)
+	(allow ARG1 sd_importd.runtime_file relabel_sock_file_perms))
+
+(macro sd_importd_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_importd.runtime_file dir "import")))
+
+(macro sd_importd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_importd_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))
+

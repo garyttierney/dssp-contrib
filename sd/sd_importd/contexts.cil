@@ -1,0 +1,7 @@
+(context sd_importd_cmd (sys.id sys.role sd_importd.cmd_file (systemlow systemlow)))
+(context sd_importd_runtime (sys.id sys.role sd_importd.runtime_file (systemlow systemlow)))
+(context sd_importd_unit (sys.id sys.role sd_importd.unit_file (systemlow systemlow)))
+
+(filecon "/var/run/systemd/import(/.*)?" any sd_importd_runtime)
+(filecon "/usr/lib/systemd/systemd-importd" file sd_importd_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-importd.*" file sd_importd_unit)

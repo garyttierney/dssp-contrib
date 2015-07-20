@@ -14,6 +14,7 @@
 	(allow subj self (capability (dac_override sys_admin fowner)))
 
 	(call sys_dontaudit_audit_access_mountpoint_dirs (subj))
+	(call sys_list_mountpoints (subj))
 	(call sys_mounton_mountpoint_dirs (subj))
 	(call sys_request_load_module (subj))
 	(call sys_setsched (subj))

@@ -391,7 +391,9 @@
 
 (macro miscfiles_read_locale_files ((type ARG1))
 	(call miscfile_search_locale (ARG1))
-	(allow ARG1 locale.file read_file_perms))
+	(allow ARG1 locale.file read_file_perms)
+	(optional miscfile_read_locale_files_optional_sd_localed
+		(call sd_localed_read_config_files (ARG1))))
 
 (macro miscfile_read_locale_lnk_files ((type ARG1))
 	(call miscfile_search_locale (ARG1))
@@ -402,14 +404,18 @@
 	(call lib_search_lib (ARG1))
 	(allow ARG1 locale.file read_file_perms)
 	(allow ARG1 locale.file list_dir_perms)
-	(allow ARG1 locale.file read_lnk_file_perms))
+	(allow ARG1 locale.file read_lnk_file_perms)
+	(optional miscfile_read_locale_optional_sd_localed
+		(call sd_localed_read_config_files (ARG1))))
 
 (macro miscfile_manage_locale ((type ARG1))
 	(call file_read_config_lnk_files (ARG1))
 	(call lib_rw_lib_dirs (ARG1))
 	(allow ARG1 locale.file manage_file_perms)
 	(allow ARG1 locale.file manage_dir_perms)
-	(allow ARG1 locale.file manage_lnk_file_perms))
+	(allow ARG1 locale.file manage_lnk_file_perms)
+        (optional miscfile_manage_locale_optional_sd_localed
+		(call sd_localed_manage_config_files (ARG1))))
 
 (macro miscfile_relabel_locale ((type ARG1))
 	(call file_read_config_lnk_files (ARG1))

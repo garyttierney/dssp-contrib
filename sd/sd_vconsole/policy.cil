@@ -14,6 +14,7 @@
 	(typeattributeset sd_vconsole_obj_type config_file)
 
 	(allow subj self (capability (sys_tty_config sys_admin)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sd_vconsole_read_config_files (subj))
 

@@ -137,6 +137,7 @@
 	(call dev_write_kmsg (subj))
 	(call dev_write_watchdog (subj))
 
+	(call file_audit_access_config_dirs (subj))
 	(call file_read_all_config (subj))
 	(call file_read_all_runtime_lock_files (subj))
 	(call file_relabel_all_runtime (subj))

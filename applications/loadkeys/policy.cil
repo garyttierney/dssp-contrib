@@ -8,6 +8,7 @@
 	(roletype loadkeys_role subj)
 
 	(allow subj self (capability (sys_tty_config)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sys_rw_inherited_unix_stream_sockets (subj))
 

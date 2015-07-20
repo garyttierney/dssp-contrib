@@ -8,11 +8,19 @@
 (context setfiles_cmd (sys.id sys.role setfiles.cmd_file (systemlow systemlow)))
 (context setsebool_cmd (sys.id sys.role setsebool.cmd_file (systemlow systemlow)))
 
+(tunableif enable_mls
+	(true
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh)))
+		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemhigh systemhigh))))
+	(false
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))
+		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemlow systemlow)))))
+
 (filecon "/etc/selinux(/.*)?" any selinux_config)
 (filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any default_context)
 (filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any file_context)
 (filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
-(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config_seusers)
+(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config_users)
 (filecon "/etc/selinux/([^/]*/)?source(/.*)?" any policy_src)
 (filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config_users)
 (filecon "/usr/sbin/load_policy" file load_policy_cmd)
@@ -20,13 +28,3 @@
 (filecon "/usr/sbin/setenforce" file setenforce_cmd)
 (filecon "/usr/sbin/setfiles" file setfiles_cmd)
 (filecon "/usr/sbin/setsebool" file setsebool_cmd)
-
-(tunableif enable_mls
-	(true
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh)))
-		(context selinux_config_seusers (sys.id sys.role selinux_config.config_file (systemhigh systemhigh)))
-		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemhigh systemhigh))))
-	(false
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))
-		(context selinux_config_seusers (sys.id sys.role selinux_config.config_file (systemlow systemlow)))
-		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemlow systemlow)))))

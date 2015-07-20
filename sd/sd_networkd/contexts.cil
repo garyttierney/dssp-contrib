@@ -1,0 +1,10 @@
+(context sd_networkd_cmd (sys.id sys.role sd_networkd.cmd_file (systemlow systemlow)))
+(context sd_networkd_config (sys.id sys.role sd_networkd.config_file (systemlow systemlow)))
+(context sd_networkd_runtime (sys.id sys.role sd_networkd.runtime_file (systemlow systemlow)))
+(context sd_networkd_unit (sys.id sys.role sd_networkd.unit_file (systemlow systemlow)))
+
+(filecon "/etc/systemd/network(/.*)?" any sd_networkd_config)
+(filecon "/usr/lib/systemd/systemd-networkd" file sdnetworkd_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-networkd.*" file sd_networkd_unit)
+(filecon "/usr/lib/systemd/systemd-networkd-wait-online" file sd_networkd_cmd)
+(filecon "/var/run/systemd/netif(/.*)?" any sd_networkd_runtime)

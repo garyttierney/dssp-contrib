@@ -1,0 +1,91 @@
+(macro sd_networkd_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_networkd_sysbus_chat_client_subj_type ARG1))
+
+(macro sd_networkd_exec ((type ARG1))
+	(call can_exec (ARG1 sd_networkd.cmd_file)))
+
+(macro sd_networkd_auto_subj_type_transition ((type ARG1))
+	(call sd_networkd_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_networkd.cmd_file sd_networkd.subj)))
+
+(macro sd_networkd_send_signal ((type ARG1))
+	(allow ARG1 sd_networkd.subj (process (signal))))
+
+(macro sd_networkd_search_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_networkd.config_file search_dir_perms))
+
+(macro sd_networkd_list_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_networkd.config_file list_dir_perms))
+
+(macro sd_networkd_read_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_networkd.config_file sd_networkd.config_file)))
+
+(macro sd_networkd_manage_config_files ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(call manage_files_pattern (ARG1 sd_networkd.config_file sd_networkd.config_file)))
+
+(macro sd_networkd_read_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_networkd.config_file read_file_perms)
+	(allow ARG1 sd_networkd.config_file list_dir_perms)
+	(allow ARG1 sd_networkd.config_file read_lnk_file_perms))
+
+(macro sd_networkd_manage_config ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_networkd.config_file manage_file_perms)
+	(allow ARG1 sd_networkd.config_file manage_dir_perms)
+	(allow ARG1 sd_networkd.config_file manage_lnk_file_perms))
+
+(macro sd_networkd_relabel_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_networkd.config_file relabel_file_perms)
+	(allow ARG1 sd_networkd.config_file relabel_dir_perms)
+	(allow ARG1 sd_networkd.config_file relabel_lnk_file_perms))
+
+(macro sd_networkd_search_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_networkd.runtime_file search_dir_perms))
+
+(macro sd_networkd_list_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_networkd.runtime_file list_dir_perms))
+
+(macro sd_networkd_read_runtime_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sd_networkd.runtime_file sd_networkd.runtime_file)))
+
+(macro sd_networkd_read_runtime_lnk_files ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_networkd.runtime_file sd_networkd.runtime_file)))
+
+(macro sd_networkd_read_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_networkd.runtime_file read_file_perms)
+	(allow ARG1 sd_networkd.runtime_file list_dir_perms)
+	(allow ARG1 sd_networkd.runtime_file read_lnk_file_perms))
+
+(macro sd_networkd_manage_runtime ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(allow ARG1 sd_networkd.runtime_file manage_file_perms)
+	(allow ARG1 sd_networkd.runtime_file manage_dir_perms)
+	(allow ARG1 sd_networkd.runtime_file manage_lnk_file_perms))
+
+(macro sd_networkd_relabel_runtime ((type ARG1))
+	(call sd_search_runtime (ARG1))
+	(allow ARG1 sd_networkd.runtime_file relabel_file_perms)
+	(allow ARG1 sd_networkd.runtime_file relabel_dir_perms)
+	(allow ARG1 sd_networkd.runtime_file relabel_lnk_file_perms))
+
+(macro sd_networkd_sd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call sd_runtime_obj_type_transition (ARG1 sd_networkd.runtime_file dir "netif")))
+
+(macro sd_networkd_relabelfrom_tun_socket ((type ARG1))
+	(allow ARG1 sd_networkd.subj (tun_socket (relabelfrom))))
+
+(macro sd_networkd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_networkd_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

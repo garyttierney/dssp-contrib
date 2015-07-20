@@ -1,0 +1,6 @@
+(macro http_tcp_bind_http_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 http.port (tcp_socket (name_bind))))
+
+(macro http_tcp_connect_http_port ((type ARG1))
+	(allow ARG1 http.port (tcp_socket (name_connect))))

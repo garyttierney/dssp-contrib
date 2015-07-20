@@ -1,0 +1,29 @@
+(macro sd_localed_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset sd_localed_sysbus_chat_client_subj_type ARG1))
+
+(macro sd_localed_exec ((type ARG1))
+	(call can_exec (ARG1 sd_localed.cmd_file)))
+
+(macro sd_localed_auto_subj_type_transition ((type ARG1))
+	(call sd_localed_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_localed.cmd_file sd_localed.subj)))
+
+(macro sd_localed_send_signal ((type ARG1))
+	(allow ARG1 sd_localed.subj (process (signal))))
+
+(macro sd_localed_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_localed.config_file read_file_perms))
+
+(macro sd_localed_manage_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd_localed.config_file manage_file_perms))
+
+(macro sd_localed_relabel_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_localed.config_file relabel_file_perms))
+
+(macro sd_localed_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_localed_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

@@ -1,0 +1,7 @@
+(context sd_localed_cmd (sys.id sys.role sd_localed.cmd_file (systemlow systemlow)))
+(context sd_locale_config (sys.id sys.role sd_localed.config_file (systemlow systemlow)))
+(context sd_localed_unit (sys.id sys.role sd_localed.unit_file (systemlow systemlow)))
+
+(filecon "/etc/locale\.conf" file sd_localed_config)
+(filecon "/usr/lib/systemd/systemd-localed" file sd_localed_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-localed.*" file sd_localed_unit)

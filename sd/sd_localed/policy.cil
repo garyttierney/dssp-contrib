@@ -1,0 +1,55 @@
+(typeattribute sd_localed_adm_subj_type)
+(typeattribute sd_localed_sysbus_chat_client_subj_type)
+
+(typeattribute sd_localed_obj_type)
+
+(block sd_localed
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_localed_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_localed_obj_type config_file)
+
+	(call sd_localed_read_config_files (subj))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call dev_read_urandom (subj))
+	(call dev_write_kmsg (subj))
+
+	(call fs_search_tmpfs (subj))
+
+	(call term_use_console (subj))
+
+	(call polkit_sysbus_chat_client_subj_type (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(call sd_vconsole_read_config_files (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+(optional sd_localed_optional_sysbus
+	(call sysbus_acquire_service (subj))
+	(call sysbus_client_subj_type (subj)))
+
+(optional sd_localed_optional_xserver
+	(call xserver_read_config_files (subj)))
+
+(optional sd_localed_sysbus_chat_client_subj_type_optional_sysbus
+	(allow sd_localed.subj sd_localed_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow sd_localed_sysbus_chat_client_subj_type sd_localed.subj (dbus (send_msg))))
+
+(allow sd_localed_adm_subj_type sd_localed.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_localed_adm_subj_type sd_localed.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_localed_adm_subj_type sd_localed.subj))
+
+(allow sd_localed_adm_subj_type sd_localed_obj_type manage_file_perms)
+
+(allow sd_localed_adm_subj_type sd_localed_obj_type relabel_file_perms)

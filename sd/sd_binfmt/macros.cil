@@ -1,0 +1,48 @@
+(macro sd_binfmt_exec ((type ARG1))
+	(call can_exec (ARG1 binfmt.cmd_file)))
+
+(macro sd_binfmt_auto_subj_type_transition ((type ARG1))
+	(call sd_binfmt_send_signal (ARG1))
+	(call auto_subject_type_transition_pattern (ARG1 sd_binfmt.cmd_file sd_binfmt.subj)))
+
+(macro sd_binfmt_send_signal ((type ARG1))
+	(allow ARG1 sd_binfmt.subj (process (signal))))
+
+(macro sd_binfmt_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_binfmt.config_file search_dir_perms))
+
+(macro sd_binfmt_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_binfmt.config_file list_dir_perms))
+
+(macro sd_binfmt_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_binfmt.config_file sd_binfmt.config_file)))
+
+(macro sd_binfmt_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_binfmt.config_file sd_binfmt.config_file)))
+
+(macro sd_binfmt_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_binfmt.config_file read_file_perms)
+	(allow ARG1 sd_binfmt.config_file list_dir_perms)
+	(allow ARG1 sd_binfmt.config_file read_lnk_file_perms))
+
+(macro sd_binfmt_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sd_binfmt.config_file manage_file_perms)
+	(allow ARG1 sd_binfmt.config_file manage_dir_perms)
+	(allow ARG1 sd_binfmt.config_file manage_lnk_file_perms))
+
+(macro sd_binfmt_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sd_binfmt.config_file relabel_file_perms)
+	(allow ARG1 sd_binfmt.config_file relabel_dir_perms)
+	(allow ARG1 sd_binfmt.config_file relabel_lnk_file_perms))
+
+(macro sd_binfmt_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_binfmt_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

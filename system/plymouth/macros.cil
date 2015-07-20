@@ -1,0 +1,200 @@
+(macro plymouth_client_subj_type ((type ARG1))
+	(typeattributeset plymouth_client_subj_type ARG1))
+
+(macro plymouth_exec_plymouth ((type ARG1))
+	(call plymouth_client_subj_type (ARG1))
+	(call can_exec (ARG1 plymouth.cmd_file)))
+
+(macro plymouth_auto_subj_type_transition_plymouth ((type ARG1))
+	(call plymouth_send_signal_plymouth (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 plymouth.cmd_file plymouth.subj)))
+
+(macro plymouth_send_signal_plymouth ((type ARG1))
+	(allow ARG1 plymouth.subj (process (signal))))
+
+(macro plymouth_run_plymouth ((type ARG1)(role ARG2))
+	(call plymouth_auto_subj_type_transition_plymouth (ARG1))
+	(roleattributeset plymouth_role ARG2))
+
+(macro plymouth_exec_plymouthd ((type ARG1))
+	(call can_exec (ARG1 plymouthd.cmd_file)))
+
+(macro plymouth_auto_subject_type_transition_plymouthd ((type ARG1))
+	(call plymouth_send_signal_plymouthd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 plymouthd.cmd_file plymouthd.subj)))
+
+(macro plymouth_send_signal_plymouthd ((type ARG1))
+	(allow ARG1 plymouthd.subj (process (signal))))
+
+(macro plymouth_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 plymouth.config_file search_dir_perms))
+
+(macro plymouth_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 plymouth.config_file list_dir_perms))
+
+(macro plymouth_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 plymouth.config_file plymouth.config_file)))
+
+(macro plymouth_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 plymouth.config_file plymouth.config_file)))
+
+(macro plymouth_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 plymouth.config_file read_file_perms)
+	(allow ARG1 plymouth.config_file list_dir_perms)
+	(allow ARG1 plymouth.config_file read_lnk_file_perms))
+
+(macro plymouth_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 plymouth.config_file manage_file_perms)
+	(allow ARG1 plymouth.config_file manage_dir_perms)
+	(allow ARG1 plymouth.config_file manage_lnk_file_perms))
+
+(macro plymouth_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 plymouth.config_file relabel_file_perms)
+	(allow ARG1 plymouth.config_file relabel_dir_perms)
+	(allow ARG1 plymouth.config_file relabel_lnk_file_perms))
+
+(macro plymouth_search_plymouthd_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 plymouthd.runtime_file search_dir_perms))
+
+(macro plymouth_list_plymouthd_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 plymouthd.runtime_file list_dir_perms))
+
+(macro plymouth_read_plymouthd_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 plymouthd.runtime_file plymouthd.runtime_file)))
+
+(macro plymouth_manage_plymouthd_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 plymouthd.runtime_file plymouthd.runtime_file)))
+
+(macro plymouth_read_plymouthd_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 plymouthd.runtime_file plymouthd.runtime_file)))
+
+(macro plymouth_read_plymouthd_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 plymouthd.runtime_file read_file_perms)
+	(allow ARG1 plymouthd.runtime_file list_dir_perms)
+	(allow ARG1 plymouthd.runtime_file read_lnk_file_perms)
+	(allow ARG1 plymouthd.runtime_file read_sock_file_perms))
+
+(macro plymouth_manage_plymouthd_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 plymouthd.runtime_file manage_file_perms)
+	(allow ARG1 plymouthd.runtime_file manage_dir_perms)
+	(allow ARG1 plymouthd.runtime_file manage_lnk_file_perms)
+	(allow ARG1 plymouthd.runtime_file manage_sock_file_perms))
+
+(macro plymouth_relabel_plymouthd_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 plymouthd.runtime_file relabel_file_perms)
+	(allow ARG1 plymouthd.runtime_file relabel_dir_perms)
+	(allow ARG1 plymouthd.runtime_file relabel_lnk_file_perms)
+	(allow ARG1 plymouthd.runtime_file relabel_sock_file_perms))
+
+(macro plymouth_runtime_obj_type_transition_plymouthd_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 plymouthd.runtime_file dir "plymouth")))
+
+(macro plymouth_search_plymouthd_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 plymouthd.var_lib_file search_dir_perms))
+
+(macro plymouth_list_plymouthd_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 plymouthd.var_lib_file list_dir_perms))
+
+(macro plymouth_read_plymouthd_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 plymouthd.var_lib_file plymouthd.var_lib_file)))
+
+(macro plymouth_manage_plymouthd_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call manage_files_pattern (ARG1 plymouthd.var_lib_file plymouthd.var_lib_file)))
+
+(macro plymouth_read_plymouthd_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 plymouthd.var_lib_file plymouthd.var_lib_file)))
+
+(macro plymouth_read_plymouthd_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 plymouthd.var_lib_file read_file_perms)
+	(allow ARG1 plymouthd.var_lib_file list_dir_perms)
+	(allow ARG1 plymouthd.var_lib_file read_lnk_file_perms))
+
+(macro plymouth_manage_plymouthd_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 plymouthd.var_lib_file manage_file_perms)
+	(allow ARG1 plymouthd.var_lib_file manage_dir_perms)
+	(allow ARG1 plymouthd.var_lib_file manage_lnk_file_perms))
+
+(macro plymouth_relabel_plymouthd_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 plymouthd.var_lib_file relabel_file_perms)
+	(allow ARG1 plymouthd.var_lib_file relabel_dir_perms)
+	(allow ARG1 plymouthd.var_lib_file relabel_lnk_file_perms))
+
+(macro plymouth_var_lib_obj_type_transition_plymouthd_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 plymouthd.var_lib_file dir "plymouth")))
+
+(macro plymouth_search_plymouthd_var_spool ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(allow ARG1 plymouthd.var_spool_file search_dir_perms))
+
+(macro plymouth_list_plymouthd_var_spool ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(allow ARG1 plymouthd.var_spool_file list_dir_perms))
+
+(macro plymouth_read_plymouthd_var_spool_files ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(call read_files_pattern (ARG1 plymouthd.var_spool_file plymouthd.var_spool_file)))
+
+(macro plymouth_read_plymouthd_var_spool_lnk_files ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(call read_lnk_files_pattern (ARG1 plymouthd.var_spool_file plymouthd.var_spool_file)))
+
+(macro plymouth_read_plymouthd_var_spool ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(allow ARG1 plymouthd.var_spool_file read_file_perms)
+	(allow ARG1 plymouthd.var_spool_file list_dir_perms)
+	(allow ARG1 plymouthd.var_spool_file read_lnk_file_perms))
+
+(macro plymouth_manage_plymouthd_var_spool ((type ARG1))
+	(call file_rw_var_spool_dirs (ARG1))
+	(allow ARG1 plymouthd.var_spool_file manage_file_perms)
+	(allow ARG1 plymouthd.var_spool_file manage_dir_perms)
+	(allow ARG1 plymouthd.var_spool_file manage_lnk_file_perms))
+
+(macro plymouth_relabel_plymouthd_var_spool ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(allow ARG1 plymouthd.var_spool_file relabel_file_perms)
+	(allow ARG1 plymouthd.var_spool_file relabel_dir_perms)
+	(allow ARG1 plymouthd.var_spool_file relabel_lnk_file_perms))
+
+(macro plymouth_var_spool_obj_type_transition_plymouthd_var_spool ((type ARG1))
+	(call file_var_spool_obj_type_transition (ARG1 plymouthd.var_spool_file dir "plymouth")))
+
+(macro plymouth_use_fd ((type ARG1))
+	(allow ARG1 plymouth.subj (fd (use))))
+
+(macro plymouth_use_fd_plymouthd ((type ARG1))
+	(allow ARG1 plymouthd.subj (fd (use))))
+
+(macro plymouth_stream_connect_plymouthd ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 plymouthd.runtime_file plymouthd.runtime_file plymouthd.subj)))
+
+(macro plymouth_adm ((type ARG1)(role ARG2))
+	(typeattributeset plymouth_adm_subj_type ARG1)
+	(optional plymouth_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional plymouth_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

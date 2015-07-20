@@ -35,6 +35,7 @@
 	(call sys_link_keyring (subj))
 	(call sys_load_kernel_module_subj_type (subj))
 	(call sys_read_net_proc_files (subj))
+	(call sys_read_cpu_sysfs_files (subj))
 	(call sys_request_load_module (subj))
 
 	(call cmd_exec_cmd (subj))
@@ -84,9 +85,6 @@
 	(call sd_udevd_exec_sd_udevd_helper (subj))
 	(call sd_udevd_read_config (subj))
 
-	(call sctl_auto_subj_type_transition (subj))
-	(call sctl_read_config (subj))
-
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 
@@ -104,6 +102,9 @@
 
 	(optional sd_udevd_optional_sd_networkd
 		(call sd_networkd_list_config (subj)))
+
+	(optional sd_udevd_optional_sd_sysctl
+		(call sd_sysctl_auto_subj_type_transition (subj)))
 
 	(optional sd_udevd_optional_sd_vconsole
 		(call sd_vconsole_auto_subj_type_transition (subj))))

@@ -1,0 +1,32 @@
+(typeattribute sd_initctl_adm_subj_type)
+
+(typeattribute sd_initctl_obj_type)
+
+(block sd_initctl
+	(blockinherit sd_daemon_blk)
+
+	(call sd_fifo_file_activated_obj_type (runtime_file))
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_initctl_obj_type unit_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_initctl_obj_type runtime_file)
+
+	(call sd_initctl_manage_runtime (subj))
+	(call sd_initctl_sd_runtime_obj_type_transition_runtime (subj)))
+
+(allow sd_initctl_adm_subj_type sd_initctl.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_initctl_adm_subj_type sd_initctl.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_initctl_adm_subj_type sd_initctl.subj))
+
+(call sd_search_runtime (sd_initctl_adm_subj_type))
+
+(allow sd_initctl_adm_subj_type sd_initctl.unit_file manage_dir_perms)
+(allow sd_initctl_adm_subj_type sd_initctl.unit_file manage_fifo_file_perms)
+
+(allow sd_initctl_adm_subj_type sd_initctl.unit_file relabel_dir_perms)
+(allow sd_initctl_adm_subj_type sd_initctl.unit_file relabel_fifo_file_perms)

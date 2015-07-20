@@ -21,8 +21,6 @@
 (allow sd_sysctl_adm_subj_type sd_sysctl.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_sysctl_adm_subj_type sd_sysctl.subj))
 
-(call file_search_runtime (sd_sysctl_adm_subj_type))
-
 (allow sd_sysctl_adm_subj_type sd_sysctl.unit_file manage_file_perms)
 
 (allow sd_sysctl_adm_subj_type sd_sysctl.unit_file relabel_file_perms)

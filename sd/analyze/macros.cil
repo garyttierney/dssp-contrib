@@ -31,13 +31,6 @@
 (macro analyze_use_fd_all_subj ((type ARG1))
 	(allow ARG1 analyze_subj_type (fd (use))))
 
-(macro analyze_use_fd_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (fd (use))))
-
 (macro analyze_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
 	(call analyze_use_fd_all_subj (ARG1))
 	(allow ARG1 analyze_subj_type (unix_stream_socket (getattr ioctl read write))))
-
-(macro analyze_rw_inherited_unix_stream_sockets_pattern ((type ARG1)(type ARG2))
-	(call analyze_use_fd_pattern (ARG1 ARG2))
-	(allow ARG1 ARG2 (unix_stream_socket (getattr ioctl read write))))

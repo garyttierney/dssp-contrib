@@ -1,0 +1,19 @@
+(block sd_cgagent
+	(blockinherit sd_daemon_blk)
+
+	(allow subj self (capability (net_admin)))
+
+	(call dev_write_kmsg (subj))
+
+	(call file_search_config (subj))
+
+	(call term_use_console (subj))
+
+	(call sd_read_state (subj))
+	(call sd_stream_connect (subj))
+
+	(call sd_journald_client_subj_type (subj))
+
+	(optional sd_cgagent_optional_sysbus
+		(call sysbus_client_subj_type (subj))))
+

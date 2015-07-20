@@ -1,0 +1,9 @@
+(macro sd_cgagent_exec ((type ARG1))
+	(call can_exec (ARG1 sd_cgagent.cmd_file)))
+
+(macro sd_cgagent_auto_subj_type_transition ((type ARG1))
+	(call sd_cgagent_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_cgagent.cmd_file sd_cgagent.subj)))
+
+(macro sd_cgagent_send_signal ((type ARG1))
+	(allow ARG1 sd_cgagent.subj (process (signal))))

@@ -1,0 +1,33 @@
+(typeattribute sd_bootchart_adm_subj_type)
+
+(typeattribute sd_bootchart_obj_type)
+
+(block sd_bootchart
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_bootchart_obj_type unit_file)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_bootchart_obj_type config_file)
+
+	(call sd_bootchart_read_config (subj))
+
+	(call sd_auto_subj_type_transition (subj)))
+
+(allow sd_bootchart_adm_subj_type sd_bootchart.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_bootchart_adm_subj_type sd_bootchart.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_bootchart_adm_subj_type sd_bootchart.subj))
+
+(call file_search_runtime (sd_bootchart_adm_subj_type))
+
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type manage_file_perms)
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type manage_dir_perms)
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type manage_lnk_file_perms)
+
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type relabel_file_perms)
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type relabel_dir_perms)
+(allow sd_bootchart_adm_subj_type sd_bootchart_obj_type relabel_lnk_file_perms)

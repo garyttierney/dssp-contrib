@@ -1,0 +1,48 @@
+(macro sd_bootchart_exec ((type ARG1))
+	(call can_exec (ARG1 sd_bootchart.cmd_file)))
+
+(macro sd_bootchart_auto_subj_type_transition ((type ARG1))
+	(call sd_bootchart_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_bootchart.cmd_file sd_bootchart.subj)))
+
+(macro sd_bootchart_send_signal ((type ARG1))
+	(allow ARG1 sd_bootchart.subj (process (signal))))
+
+(macro sd_bootchart_search_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_bootchart.config_file search_dir_perms))
+
+(macro sd_bootchart_list_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_bootchart.config_file list_dir_perms))
+
+(macro sd_bootchart_read_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_bootchart.config_file sd_bootchart.config_file)))
+
+(macro sd_bootchart_manage_config_files ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(call manage_files_pattern (ARG1 sd_bootchart.config_file sd_bootchart.config_file)))
+
+(macro sd_bootchart_read_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_bootchart.config_file read_file_perms)
+	(allow ARG1 sd_bootchart.config_file list_dir_perms)
+	(allow ARG1 sd_bootchart.config_file read_lnk_file_perms))
+
+(macro sd_bootchart_manage_config ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_bootchart.config_file read_file_perms)
+	(allow ARG1 sd_bootchart.config_file list_dir_perms)
+	(allow ARG1 sd_bootchart.config_file read_lnk_file_perms))
+
+(macro sd_bootchart_relabel_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_bootchart.config_file relabel_file_perms)
+	(allow ARG1 sd_bootchart.config_file relabel_dir_perms)
+	(allow ARG1 sd_bootchart.config_file relabel_lnk_file_perms))
+
+(macro sd_bootchart_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_udevd_adm_subj_type ARG1)
+	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

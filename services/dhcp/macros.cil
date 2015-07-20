@@ -1,0 +1,7 @@
+(macro dhcp_udp_bind_dhcp_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 dhcp.port (udp_socket (name_bind))))
+
+(macro dhcp_udp_bind_dhcpv6_client_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 dhcpv6_client.port (udp_socket (name_bind))))

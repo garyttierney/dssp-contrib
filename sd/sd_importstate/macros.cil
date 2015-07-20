@@ -3,7 +3,7 @@
 
 (macro sd_importstate_auto_subj_type_transition ((type ARG1))
 	(call sd_importstate_send_signal (ARG1))
-	(call auto_subject_type_transition_pattern (ARG1 sd_importstate.cmd_file sd_importstate.cmd_file)))
+	(call auto_subj_type_transition_pattern (ARG1 sd_importstate.cmd_file sd_importstate.subj)))
 
 (macro sd_importstate_send_signal ((type ARG1))
 	(allow ARG1 sd_importstate.subj (process (signal))))

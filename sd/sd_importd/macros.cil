@@ -5,7 +5,7 @@
 	(call can_exec (ARG1 sd_importd.cmd_file)))
 
 (macro sd_importd_auto_subj_type_transition ((type ARG1))
-	(call sd_import_send_signal (ARG1))
+	(call sd_importd_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 sd_importd.cmd_file sd_importd.subj)))
 
 (macro sd_importd_send_signal ((type ARG1))

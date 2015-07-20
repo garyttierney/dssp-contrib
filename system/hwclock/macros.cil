@@ -1,0 +1,25 @@
+(macro hwclock_exec ((type ARG1))
+	(call can_exec (ARG1 hwclock.cmd_file)))
+
+(macro hwclock_auto_subj_type_transition ((type ARG1))
+	(call hwclock_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 hwclock.cmd_file hwclock.subj)))
+
+(macro hwclock_send_signal ((type ARG1))
+	(allow ARG1 hwclock.subj (process (signal))))
+
+(macro hwclock_run ((type ARG1)(role ARG2))
+	(call hwclock_auto_subj_type_transition (ARG1))
+	(roleattributeset hwclock_role (ARG2)))
+
+(macro hwclock_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 hwclock.config_file read_file_perms))
+
+(macro hwclock_manage_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 hwclock.config_file manage_file_perms))
+
+(macro hwclock_relabel_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 hwclock.config_file relabel_file_perms))

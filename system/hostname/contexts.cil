@@ -1,0 +1,5 @@
+(context hostname_cmd (sys.id sys.role hostname.cmd_file (systemlow systemlow)))
+(context hostname_config (sys.id sys.role hostname.config_file (systemlow systemlow)))
+
+(filecon "/etc/hostname" file hostname_config)
+(filecon "/usr/bin/hostname" file hostname_cmd)

@@ -1,0 +1,21 @@
+(roleattribute hostname_role)
+
+(block hostname
+	(blockinherit app_blk)
+
+	(roleattributeset hostname_role sys.role)
+
+	(roletype hostname_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call hostname_read_config_files (subj))
+
+	(call sys_read_net_proc_files (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional hostname_optional_sd
+		(call sd_daemon (subj cmd_file))))

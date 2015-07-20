@@ -112,6 +112,7 @@
 	(call cmd_shell_auto_subj_type_transition (subj sd_unknown.subj))
 
 	(call sys_link_keyring (subj))
+	(call sys_list_mountpoints (subj))
 	(call sys_mounton_mountpoint_dirs (subj))
 	(call sys_read_net_proc_files (subj))
 	(call sys_read_net_sysctl_files (subj))
@@ -145,10 +146,6 @@
 	(call file_runtime_obj_type_transition_runtime_config (subj))
 
 	(call fs_getattr_all_fs (subj))
-	(call fs_list_binfmt_misc (subj))
-	(call fs_list_efivarfs (subj))
-	(call fs_list_pstore (subj))
-	(call fs_list_devpts (subj))
 	(call fs_manage_devtmpfs_dirs (subj))
 	(call fs_manage_devtmpfs_lnk_files (subj))
 	(call fs_manage_devtmpfs_chr_files (subj))

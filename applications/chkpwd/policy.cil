@@ -12,12 +12,17 @@
 	(call sys_audit_client_subj_type (subj))
 	(call sys_read_crypto_sysctl_files (subj))
 
+	(call fs_search_sysfs (subj))
+
 	(call term_dontaudit_use_console (subj))
 
 	(call miscfile_read_locale (subj))
 	(call miscfile_read_shadow (subj))
 
 	(call nss_client_subj_type (subj))
+
+	(optional chkpwd_optional_sd
+		(call sd_daemon (subj cmd_file)))
 
 	(optional chkpwd_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))))

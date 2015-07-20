@@ -1,0 +1,45 @@
+(typeattribute analyze_subj_type)
+
+(block analyze
+	(blockinherit app_subj_blk)
+
+	(typeattributeset analyze_subj_type subj)
+
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (analyze_subj_type cmd_file))
+
+	(call sd_daemon (subj cmd_file)))
+
+(allow analyze_subj_type self (capability (net_admin dac_override sys_chroot setgid setuid sys_admin)))
+(allow analyze_subj_type self rw_fifo_file_perms)
+
+(call cmd_exec_cmd (analyze_subj_type))
+
+(call miscfile_read_all_terminfo (analyze_subj_type))
+(call miscfile_read_locale (analyze_subj_type))
+
+(call sd_status_all_unit (analyze_subj_type))
+(call sd_read_state (analyze_subj_type))
+(call sd_status (analyze_subj_type))
+(call sd_stream_connect (analyze_subj_type))
+(call sd_sysbus_chat_client_subj_type (analyze_subj_type))
+
+(call sd_hostnamed_sysbus_chat_client_subj_type (analyze_subj_type))
+
+(call sd_machined_read_config_files (analyze_subj_type))
+(call sd_machined_read_runtime (analyze_subj_type))
+
+(call sd_nspawn_read_state_all_container_subj (analyze_subj_type))
+(call sd_nspawn_stream_connect_all_container_subj (analyze_subj_type))
+(call sd_nspawn_list_all_container (analyze_subj_type))
+(call sd_nspawn_read_all_container_lnk_files (analyze_subj_type))
+(call sd_nspawn_read_all_container_files (analyze_subj_type))
+
+(call usersubj_search_home_cmd (analyze_subj_type))
+(call usersubj_read_home_cmd_lnk_files (analyze_subj_type))
+(call usersubj_manage_home_user_files (analyze_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (analyze_subj_type))
+
+(optional analyze_subj_type_optional_sysbus
+	(call sysbus_client_subj_type (analyze_subj_type)))

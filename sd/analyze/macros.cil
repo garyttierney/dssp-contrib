@@ -1,0 +1,43 @@
+(block analyze_subj_blk
+	(blockabstract analyze_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset analyze_subj_type subj))
+
+(macro analyze_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset analyze_subj_type ARG1))
+
+(macro analyze_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 analyze.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+
+(macro analyze_auto_subj_type_transition ((type ARG1))
+	(call analyze_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 analyze.cmd_file analyze.subj)))
+
+(macro analyze_send_signal ((type ARG1))
+	(allow ARG1 analyze.subj (process (signal))))
+
+(macro analyze_use_fd_all_subj ((type ARG1))
+	(allow ARG1 analyze_subj_type (fd (use))))
+
+(macro analyze_use_fd_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (fd (use))))
+
+(macro analyze_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call analyze_use_fd_all_subj (ARG1))
+	(allow ARG1 analyze_subj_type (unix_stream_socket (getattr ioctl read write))))
+
+(macro analyze_rw_inherited_unix_stream_sockets_pattern ((type ARG1)(type ARG2))
+	(call analyze_use_fd_pattern (ARG1 ARG2))
+	(allow ARG1 ARG2 (unix_stream_socket (getattr ioctl read write))))

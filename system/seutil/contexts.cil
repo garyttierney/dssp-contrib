@@ -2,7 +2,6 @@
 (context file_context (sys.id sys.role file_context.config_file (systemlow systemlow)))
 (context load_policy_cmd (sys.id sys.role load_policy.cmd_file (systemlow systemlow)))
 (context matchpathcon_cmd (sys.id sys.role matchpathcon.cmd_file (systemlow systemlow)))
-(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh)))
 (context policy_src (sys.id sys.role policy_src.config_file (systemlow systemlow)))
 (context selinux_config (sys.id sys.role selinux_config.config_file (systemlow systemlow)))
 (context setenforce_cmd (sys.id sys.role setenforce.cmd_file (systemlow systemlow)))
@@ -21,3 +20,9 @@
 (filecon "/usr/sbin/setenforce" file setenforce_cmd)
 (filecon "/usr/sbin/setfiles" file setfiles_cmd)
 (filecon "/usr/sbin/setsebool" file setsebool_cmd)
+
+(tunableif enable_mls
+	(true
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))
+	(false
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))))

@@ -1,0 +1,8 @@
+(context sd_coredump_cmd (sys.id sys.role sd_coredump.cmd_file (systemlow systemlow)))
+(context sd_coredump_config (sys.id sys.role sd_coredump.config_file (systemlow systemlow)))
+(context sd_coredump_var_lib (sys.id sys.role sd_coredump.var_lib_file (systemlow systemlow)))
+
+(filecon "/etc/systemd/coredump\.conf" file sd_coredump_config)
+(filecon "/etc/systemd/coredump\.conf\.d(/.*)?" any sd_coredump_config)
+(filecon "/usr/lib/systemd/systemd-coredump" file sd_coredump_cmd)
+(filecon "/var/lib/systemd/coredump(/.*)?" any sd_coredump_var_lib)

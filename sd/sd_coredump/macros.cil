@@ -1,0 +1,80 @@
+(macro sd_coredump_exec ((type ARG1))
+	(call can_exec (ARG1 sd_coredump.cmd_file)))
+
+(macro sd_coredump_auto_subj_type_transition ((type ARG1))
+	(call sd_coredump_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sd_coredump.cmd_file sd_coredump.subj)))
+
+(macro sd_coredump_send_signal ((type ARG1))
+	(allow ARG1 sd_coredump.subj (process (signal))))
+
+(macro sd_coredump_search_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_coredump.config_file search_dir_perms))
+
+(macro sd_coredump_list_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_coredump.config_file list_dir_perms))
+
+(macro sd_coredump_read_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_coredump.config_file sd_coredump.config_file)))
+
+(macro sd_coredump_read_config_lnk_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_coredump.config_file sd_coredump.config_file)))
+
+(macro sd_coredump_read_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_coredump.config_file read_file_perms)
+	(allow ARG1 sd_coredump.config_file list_dir_perms)
+	(allow ARG1 sd_coredump.config_file read_lnk_file_perms))
+
+(macro sd_coredump_manage_config ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_coredump.config_file manage_file_perms)
+	(allow ARG1 sd_coredump.config_file manage_dir_perms)
+	(allow ARG1 sd_coredump.config_file manage_lnk_file_perms))
+
+(macro sd_coredump_relabel_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_coredump.config_file relabel_file_perms)
+	(allow ARG1 sd_coredump.config_file relabel_dir_perms)
+	(allow ARG1 sd_coredump.config_file relabel_lnk_file_perms))
+
+(macro sd_coredump_search_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_coredump.var_lib_file search_dir_perms))
+
+(macro sd_coredump_list_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_coredump.var_lib_file list_dir_perms))
+
+(macro sd_coredump_read_var_lib_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 sd_coredump.var_lib_file sd_coredump.var_lib_file)))
+
+(macro sd_coredump_read_var_lib_lnk_files ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 sd_coredump.var_lib_file sd_coredump.var_lib_file)))
+
+(macro sd_coredump_read_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_coredump.var_lib_file read_file_perms)
+	(allow ARG1 sd_coredump.var_lib_file list_dir_perms)
+	(allow ARG1 sd_coredump.var_lib_file read_lnk_file_perms))
+
+(macro sd_coredump_manage_var_lib ((type ARG1))
+	(call sd_rw_var_lib_dirs (ARG1))
+	(allow ARG1 sd_coredump.var_lib_file manage_file_perms)
+	(allow ARG1 sd_coredump.var_lib_file manage_dir_perms)
+	(allow ARG1 sd_coredump.var_lib_file manage_lnk_file_perms))
+
+(macro sd_coredump_relabel_var_lib ((type ARG1))
+	(call sd_search_var_lib (ARG1))
+	(allow ARG1 sd_coredump.var_lib_file relabel_file_perms)
+	(allow ARG1 sd_coredump.var_lib_file relabel_dir_perms)
+	(allow ARG1 sd_coredump.var_lib_file relabel_lnk_file_perms))
+
+(macro sd_coredump_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call sd_var_lib_obj_type_transition (ARG1 sd_coredump.var_lib_file dir "coredump")))

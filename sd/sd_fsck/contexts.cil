@@ -1,0 +1,8 @@
+(context sd_fsck_cmd (sys.id sys.role sd_fsck.cmd_file (systemlow systemlow)))
+(context sd_fsck_runtime (sys.id sys.role sd_fsck.runtime_file (systemlow systemlow)))
+(context sd_fsck_unit (sys.id sys.role sd_fsck.unit_file (systemlow systemlow)))
+
+(filecon "/usr/lib/systemd/systemd-fsck" file sd_fsck_cmd)
+(filecon "/usr/lib/systemd/system/[^/]*systemd-fsck.*" file sd_fsck_unit)
+(filecon "/var/run/fsck(/.*)?" any sd_fsck_runtime)
+

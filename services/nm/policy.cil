@@ -1,0 +1,235 @@
+(typeattribute nm_adm_subj_type)
+(typeattribute nm_client_subj_type)
+(typeattribute nm_subj_type)
+(typeattribute nm_sysbus_chat_client_subj_type)
+
+(typeattribute nm_obj_type)
+
+(block nm
+	(blockinherit subj_common_blk)
+
+	(typeattributeset nm_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset nm_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset nm_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset nm_obj_type var_lib_file)
+
+	(allow subj self (capability (net_admin net_raw sys_admin dac_override)))
+	(allow subj self (process (setpgid)))
+	(allow subj self create_netlink_socket_perms)
+	(allow subj self (netlink_route_socket (nlmsg_write)))
+	(allow subj self (unix_stream_socket (listen accept)))
+	(allow subj self create_rawip_socket_perms)
+	(allow subj self rw_fifo_file_perms)
+
+	(call nm_read_config (subj))
+
+	(call nm_manage_runtime (subj))
+	(call nm_runtime_obj_type_transition_runtime (subj))
+
+	(call nm_manage_var_lib (subj))
+	(call nm_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_request_load_module (subj))
+	(call sys_rw_net_sysctl_files (subj))
+
+	(call cmd_mmap_shell (subj))
+	(call cmd_read_cmd_files (subj))
+
+	(call dev_read_urandom (subj))
+	(call dev_rw_wireless (subj))
+
+	(call file_list_var_tmp (subj))
+	(call file_manage_config_lnk_files (subj))
+	(call file_read_config_files (subj))
+	(call file_read_data (subj))
+
+	(call fs_getattr_fs (subj))
+	(call fs_list_tmpfs (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_read_cgroup_files (subj))
+
+	(call dns_manage_resolv_config_files (subj))
+	(call dns_config_obj_type_transition_config (subj))
+
+	(call hostname_read_config_files (subj))
+
+	(call http_tcp_connect_http_port (subj))
+
+	(call iptools_auto_subj_type_transition (subj))
+
+	(call miscfile_manage_network (subj))
+	(call miscfile_config_obj_type_transition_network (subj file "*"))
+	(call miscfile_read_locale (subj))
+
+	(call mount_exec (subj))
+
+	(call nettools_auto_subj_type_transition (subj))
+
+	(call nm_exec_nm_helper (subj))
+	(call nm_getattr_client_subj (subj))
+	(call nm_read_state_client_subj (subj))
+	(call nm_read_state_nm_online (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sctl_read_config (subj))
+
+	(optional nm_optional_dhclient
+		(call dhclient_delete_runtime_files (subj))
+		(call dhclient_read_config_files (subj))
+		(call dhclient_read_var_lib_files (subj))
+		(call dhclient_send_sigkill (subj))
+		(call dhclient_auto_subj_type_transition (subj)))
+
+	(optional nm_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset nm_obj_type unit_file)
+
+		(allow nm_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional nm_optinal_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
+
+	(optional nm_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional nm_optional_sd_logind
+		(call sd_logind_client_subj_type (subj))
+		(call sd_logind_read_runtime (subj)))
+
+	(optional nm_optional_sd_resolved
+		(call sd_resolved_manage_runtime_files (subj)))
+
+	(optional nm_optional_sd_udevd
+		(call sd_udevd_client_subj_type (subj)))
+
+	(optional nm_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
+
+	(optional nm_optional_unconfined
+		(call unconfined_read_state_subj (subj))))
+
+(block nm_disp
+	(blockinherit subj_common_blk)
+
+	(typeattributeset nm_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(dontaudit subj self (capability (sys_tty_config)))
+	(allow subj self (process (setpgid)))
+
+	(call sys_read_net_proc_files (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call file_read_config (subj))
+
+	(call iptools_exec (subj))
+	(call iptools_read_config_files (subj))
+
+	(call nm_client_subj_type (subj))
+	(call nm_exec_nm_helper (subj))
+	(call nm_read_config (subj))
+	(call nm_read_runtime (subj))
+
+	(call mount_exec (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional nm_disp_optional_dhclient
+		(call dhclient_auto_subj_type_transition (subj)))
+
+	(optional nm_disp_optional_ntp
+		(call ntp_auto_subj_type_transition (subj)))
+
+	(optional nmdisp_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional nm_disp_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional nm_disp_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj))
+		(call sysbus_client_subj_type (subj)))
+
+	(optional nm_disp_optional_systemctl
+		(call systemctl_exec (subj))))
+
+(block nm_helper
+	(blockinherit cmd_obj_blk))
+
+(block nm_online
+	(blockinherit subj_common_blk)
+
+	(typeattributeset nm_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(call dev_read_urandom (subj))
+
+	(call file_list_var_tmp (subj))
+
+	(call fs_list_tmpfs (subj))
+
+	(call miscfile_read_locale (subj))
+	(call miscfile_read_passwords (subj))
+
+	(call nm_client_subj_type (subj))
+
+	(optional nm_online_optional_sd
+		(call sd_daemon (subj cmd_file))))
+
+(optional nm_sysbus_chat_client_subj_type_optional_sysbus
+	(allow nm.subj nm_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow nm_sysbus_chat_client_subj_type nm.subj (dbus (send_msg))))
+
+(call nm_stream_connect (nm_client_subj_type))
+(call nm_sysbus_chat_client_subj_type (nm_client_subj_type))
+
+(allow nm_adm_subj_type nm_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (nm_adm_subj_type nm_subj_type))
+
+(call file_search_runtime (nm_adm_subj_type))
+(call file_search_var_lib (nm_adm_subj_type))
+
+(allow nm_adm_subj_type nm_obj_type manage_file_perms)
+(allow nm_adm_subj_type nm_obj_type manage_dir_perms)
+(allow nm_adm_subj_type nm_obj_type manage_lnk_file_perms)
+(allow nm_adm_subj_type nm_obj_type manage_sock_file_perms)
+
+(allow nm_adm_subj_type nm_obj_type relabel_file_perms)
+(allow nm_adm_subj_type nm_obj_type relabel_dir_perms)
+(allow nm_adm_subj_type nm_obj_type relabel_lnk_file_perms)
+(allow nm_adm_subj_type nm_obj_type relabel_sock_file_perms)

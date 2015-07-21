@@ -1,0 +1,22 @@
+(context nm_cmd (sys.id sys.role nm.cmd_file (systemlow systemlow)))
+(context nm_config (sys.id sys.role nm.config_file (systemlow systemlow)))
+(context nm_disp_cmd (sys.id sys.role nm_disp.cmd_file (systemlow systemlow)))
+(context nm_helper_cmd (sys.id sys.role nm_helper.cmd_file (systemlow systemlow)))
+(context nm_online_cmd (sys.id sys.role nm_online.cmd_file (systemlow systemlow)))
+(context nm_runtime (sys.id sys.role nm.runtime_file (systemlow systemlow)))
+(context nm_var_lib (sys.id sys.role nm.var_lib_file (systemlow systemlow)))
+
+(filecon "/etc/NetworkManager(/.*)?" any nm_config)
+(filecon "/etc/NetworkManager/dispatcher\.d/.*" file nm_helper_cmd)
+(filecon "/usr/bin/nm-online" file nm_online_cmd)
+(filecon "/usr/libexec/nm-dhcp-helper" file nm_helper_cmd)
+(filecon "/usr/libexec/nm-dispatcher\.action" file nm_cmd)
+(filecon "/usr/libexec/nm-dispatcher" file nm_disp_cmd)
+(filecon "/usr/sbin/NetworkManager" file nm_cmd)
+(filecon "/var/lib/NetworkManager(/.*)?" any nm_var_lib)
+(filecon "/var/run/netreport(/.*)?" any nm_runtime)
+(filecon "/var/run/NetworkManager(/.*)?" any nm_runtime)
+
+(optional nm_unit_optional_sd
+	(context nm_unit (sys.id sys.role nm.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*NetworkManager.*" file nm_unit))

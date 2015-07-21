@@ -1,0 +1,63 @@
+(macro nettools_exec_nettools ((type ARG1))
+	(call can_exec (ARG1 nettools.cmd_file)))
+
+(macro nettools_auto_subj_type_transition_nettools ((type ARG1))
+	(call nettools_send_signal_nettools (ARG1))
+	(call ps_subj_pattern (nettools.subj ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 nettools.cmd_file nettools.subj)))
+
+(macro nettools_send_signal_nettools ((type ARG1))
+	(allow ARG1 nettools.subj (process (signal))))
+
+(macro nettools_run_nettools ((type ARG1)(role ARG2))
+	(call nettools_auto_subj_type_transition_nettools (ARG1))
+	(roleattributeset nettools_role ARG2))
+
+(macro nettools_exec_ping ((type ARG1))
+	(call can_exec (ARG1 ping.cmd_file)))
+
+(macro nettools_auto_subj_type_transition_ping ((type ARG1))
+	(call nettools_send_signal_ping (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 ping.cmd_file ping.subj)))
+
+(macro nettools_send_signal_ping ((type ARG1))
+	(allow ARG1 ping.subj (process (signal))))
+
+(macro nettools_run_ping ((type ARG1)(role ARG2))
+	(call nettools_auto_subj_type_transition_ping (ARG1))
+	(roleattributeset nettools_ping_role ARG2))
+
+(macro nettools_exec_traceroute ((type ARG1))
+	(call can_exec (ARG1 traceroute.cmd_file)))
+
+(macro nettools_auto_subj_type_transition_traceroute ((type ARG1))
+	(call nettools_send_signal_traceroute (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 traceroute.cmd_file traceroute.subj)))
+
+(macro nettools_send_signal_traceroute ((type ARG1))
+	(allow ARG1 traceroute.subj (process (signal))))
+
+(macro nettools_run_traceroute ((type ARG1)(role ARG2))
+	(call nettools_auto_subj_type_transition_traceroute (ARG1))
+	(roleattributeset nettools_traceroute_role ARG2))
+
+(macro nettools_exec_arp ((type ARG1))
+	(call can_exec (ARG1 arp.cmd_file)))
+
+(macro nettools_auto_subj_type_transition_arp ((type ARG1))
+	(call nettools_send_signal_arp (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 arp.cmd_file arp.subj)))
+
+(macro nettools_send_signal_arp ((type ARG1))
+	(allow ARG1 arp.subj (process (signal))))
+
+(macro nettools_run_arp ((type ARG1)(role ARG2))
+	(call nettools_auto_subj_type_transition_arp (ARG1))
+	(roleattributeset nettools_arp_role ARG2))
+
+(macro nettools_adm ((type ARG1)(role ARG2))
+	(typeattributeset nettools_adm_subj_type ARG1)
+	(optional nettools_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional nettools_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

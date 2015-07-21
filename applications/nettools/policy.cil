@@ -1,0 +1,105 @@
+(roleattribute nettools_arp_role)
+(roleattribute nettools_role)
+(roleattribute nettools_ping_role)
+(roleattribute nettools_traceroute_role)
+
+(typeattribute nettools_adm_subj_type)
+
+(block nettools
+	(blockinherit app_blk)
+
+	(roleattributeset nettools_role sys.role)
+
+	(roletype nettools_role subj)
+
+	(allow subj self (capability (sys_ptrace dac_override net_raw net_admin setgid setuid)))
+	(allow subj self (process (getcap setcap)))
+	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_packet_socket_perms)
+	(allow subj self create_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys_read_kernel_sysctl_files (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_request_load_module (subj))
+
+	(call fs_list_devtmpfs (subj))
+	(call fs_list_proc (subj))
+	(call fs_read_sysfs (subj))
+
+	(call dev_read_usbmon (subj))
+	(call dev_rw_usb (subj))
+
+	(call net_udp_bind_generic_node (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call subj_getattr_common_subj (subj))
+	(call subj_read_common_subj_state (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(block ping
+	(blockinherit app_blk)
+
+	(roleattributeset nettools_ping_role sys.role)
+
+	(roletype nettools_ping_role subj)
+
+	(allow subj self (capability (net_raw)))
+	(allow subj self (process (getcap setcap)))
+	(allow subj self create_rawip_socket_perms)
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(block traceroute
+	(blockinherit app_blk)
+
+	(roleattributeset nettools_traceroute_role sys.role)
+
+	(roletype nettools_traceroute_role subj)
+
+	(allow subj self (capability (dac_override net_raw net_admin)))
+	(allow subj self (capability2 (block_suspend)))
+	(allow subj self create_packet_socket_perms)
+	(allow subj self create_rawip_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys_read_net_proc_files (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+	(call file_read_data_files (subj))
+
+	(call fs_read_sysfs (subj))
+
+	(call net_udp_bind_generic_node (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(block arp
+	(blockinherit app_blk)
+
+	(roleattributeset nettools_arp_role sys.role)
+
+	(roletype nettools_arp_role subj)
+
+	(optional arp_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(allow nettools_adm_subj_type unit_file (service (stop status disable enable reload start)))
+
+		(allow nettools_adm_subj_type unit_file manage_file_perms)
+		(allow nettools_adm_subj_type unit_file relabel_file_perms)))
+
+(allow nettools_adm_subj_type arp.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (nettools_adm_subj_type arp.subj))

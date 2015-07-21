@@ -21,6 +21,10 @@
 (filecon "/var/run/auditd\.pid" file auditd_runtime)
 (filecon "/var/run/auditd_sock" socket auditd_runtime)
 
+(filecon "/var/log/audit/\.journal" any ())
+(filecon "/var/log/audit/lost\+found/.*" any ())
+(filecon "/var/log/audit/lost\+found" dir lost_found)
+
 (optional auditd_unit_optional_sd
 	(context auditd_unit (sys.id sys.role auditd.unit_file (systemlow systemlow)))
 	(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file auditd_unit))

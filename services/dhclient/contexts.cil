@@ -9,3 +9,5 @@
 (filecon "/var/lib/dhclient(/.*)?" any dhclient_var_lib)
 (filecon "/var/run/dhclient.*" file dhclient_runtime)
 
+(filecon "/etc/dhcp/dhclient\.d/chrony\.sh" file cmd)
+(filecon "/etc/dhcp/dhclient\.d/ntp\.sh" file cmd)

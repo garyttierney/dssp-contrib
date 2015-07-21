@@ -76,8 +76,10 @@
 		(call lvm_read_config (subj))
 		(call lvm_read_metadata (subj))
 		(call lvm_read_runtime (subj))
-		(call lvm_stream_connect_lvmetad (subj))
 		(call lvm_exec (subj)))
+
+	(optional dracut_optional_lvmetad
+		(call lvmetad_stream_connect (subj)))
 
 	(optional dracut_optional_plymouth
 		(call plymouth_read_config_files (subj))
@@ -91,7 +93,7 @@
 		(call sctl_read_config (subj)))
 
 	(optional dracut_optional_sd
-		(call sd_exec (subj))
+		(call sd_exec_sd (subj))
 		(call sd_read_config_files (subj))
 		(call sd_read_all_unit (subj))
 		(call sd_read_state (subj))

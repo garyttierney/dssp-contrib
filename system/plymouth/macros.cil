@@ -19,7 +19,7 @@
 (macro plymouth_exec_plymouthd ((type ARG1))
 	(call can_exec (ARG1 plymouthd.cmd_file)))
 
-(macro plymouth_auto_subject_type_transition_plymouthd ((type ARG1))
+(macro plymouth_auto_subj_type_transition_plymouthd ((type ARG1))
 	(call plymouth_send_signal_plymouthd (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 plymouthd.cmd_file plymouthd.subj)))
 

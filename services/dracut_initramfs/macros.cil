@@ -26,7 +26,7 @@
 
 (macro dracut_initramfs_exec_runtime_files ((type ARG1))
 	(call file_search_runtime (ARG1))
-	(call exec_files_pattern (ARG1 dracut.initramfs.runtime_file dracut_initramfs.runtime_file)))
+	(call exec_files_pattern (ARG1 dracut_initramfs.runtime_file dracut_initramfs.runtime_file)))
 
 (macro dracut_initramfs_manage_runtime_chr_files ((type ARG1))
 	(allow ARG1 self (capability (mknod)))
@@ -111,6 +111,6 @@
 (macro dracut_initramfs_adm ((type ARG1)(role ARG2))
 	(typeattributeset dracut_initramfs_adm_subj_type ARG1)
 	(optional dracut_initramfs_adm_optional_sd
-		(call sd_daemon_admin_subj_type (ARG1)))
+		(call sd_daemon_adm_subj_type (ARG1)))
 	(optional dracut_initramfs_adm_optional_sd_askpwd
 		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

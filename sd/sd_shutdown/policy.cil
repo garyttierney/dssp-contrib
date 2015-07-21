@@ -67,9 +67,9 @@
 
 	(call sd_udevd_client_subj_type (subj))
 
-	(optional sd_shutdown_optional_dracut
-    		(call dracut_exec_runtime (subj))
-    		(call dracut_manage_runtime (subj)))
+	(optional sd_shutdown_optional_dracut_initramfs
+		(call dracut_initramfs_exec_runtime_files (subj))
+		(call dracut_initramfs_manage_runtime (subj)))
 
 	(optional sd_shutdown_optional_lvm
 		(call lvm_exec (subj)))

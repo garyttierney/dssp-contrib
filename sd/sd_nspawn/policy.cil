@@ -148,7 +148,7 @@
 (call subj_entry_obj_type (sd_nspawn_container_obj_type))
 
 (allow sd_nspawn_container_subj_type self
-	all_process_perms_except_ptrace_setsched_transition_dyntransition_setcurrent_execmem_execstack_and_execheap)
+	all_process_perms_except_transition_dyntransition_setcurrent_execmem_execstack_and_execheap)
 (allow sd_nspawn_container_subj_type self rw_file_perms)
 (allow sd_nspawn_container_subj_type self list_dir_perms)
 (allow sd_nspawn_container_subj_type self read_lnk_file_perms)
@@ -183,7 +183,6 @@
 (allow sd_nspawn_container_subj_type self (capability (chown dac_override fowner
 	ipc_owner fsetid kill linux_immutable net_admin net_broadcast net_raw setgid setfcap setpcap setuid
 	sys_admin sys_chroot sys_nice sys_ptrace sys_tty_config sys_resource sys_boot audit_write audit_control)))
-(allow sd_nspawn_container_subj_type self (process (setsched)))
 (allow sd_nspawn_container_subj_type self all_fifo_file_perms_except_mounton_and_execmod)
 
 (call sys_dontaudit_link_keyring (sd_nspawn_container_subj_type))

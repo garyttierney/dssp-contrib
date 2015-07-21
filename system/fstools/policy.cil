@@ -68,9 +68,9 @@
 		(call myqemu_rw_all_virt_obj_files (subj)))
 
 	(optional fstools_optional_rpm
-		(call rpm_rw_inherited_fifo_files (fstools_t))
-		(call rpm_rw_inherited_tmp_fifo_files (fstools_t))
-		(call rpm_rw_inherited_tmpfs_files (fstools_t)))
+		(call rpm_rw_inherited_fifo_files (subj))
+		(call rpm_rw_inherited_var_tmp_fifo_files (subj))
+		(call rpm_rw_inherited_tmpfs_files (subj)))
 
 	(optional fstools_optional_sd
 		(call sd_daemon (subj cmd_file)))

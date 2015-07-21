@@ -36,8 +36,8 @@
 	(call file_search_runtime (ARG1))
 	(call read_lnk_files_pattern (ARG1 fstools.runtime_file fstools.runtime_file)))
 
-(macro fstools_runtime_obj_type_transition_runtime ((type ARG1)(name ARG2))
-	(call file_runtime_obj_type_transition (ARG1 fstools.runtime_file dir ARG2)))
+(macro fstools_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 fstools.runtime_file dir "blkid")))
 
 (macro fstools_use_fd ((type ARG1))
 	(allow ARG1 fstools.subj (fd (use))))

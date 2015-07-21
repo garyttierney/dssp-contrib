@@ -1,0 +1,124 @@
+(roleattribute dracut_role)
+
+(block dracut
+	(blockinherit app_blk)
+
+	(roleattributeset dracut_role sys.role)
+
+	(roletype dracut_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_var_tmp_obj_blk)
+
+	(allow subj self (capability (dac_override mknod sys_chroot sys_resource)))
+	(allow subj self (process (getsched setfscreate)))
+
+	(call dracut_exec (subj))
+	(call dracut_read_config (subj))
+
+	(call dracut_manage_var_tmp (subj))
+	(call dracut_var_tmp_obj_type_transition_var_tmp (subj))
+
+	(call sys_list_mountpoints (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+	(call cmd_mmap_all_cmd (subj))
+
+	(call dev_read_urandom (subj))
+	(call dev_rw_lvm_control (subj))
+
+	(call file_manage_boot_files (subj))
+	(call file_read_config (subj))
+	(call file_read_data (subj))
+
+	(call fs_list_devtmpfs (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
+	(call fs_search_tmpfs (subj))
+
+	(call lib_exec_ld_so_files (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call storage_read_all (subj))
+
+	(call subj_obj_id_change_exemption_type (subj))
+
+	(call fstools_exec (subj))
+	(call fstools_manage_runtime (subj))
+	(call fstools_runtime_obj_type_transition_runtime (subj))
+
+	(call hostname_read_config_files (subj))
+
+	(call kmod_read_config (subj))
+	(call kmod_exec (subj))
+
+	(call ldconfig_exec (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_modules (subj))
+	(call miscfile_read_passwords (subj))
+
+	(call mount_exec (subj))
+
+	(call nss_read_config_files (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context (subj))
+
+	(optional dracut_optional_dm
+		(call dm_exec_dmsetup (subj)))
+
+	(optional dracut_optional_lvm
+		(call lvm_manage_runtime_lock_files (subj))
+		(call lvm_read_config (subj))
+		(call lvm_read_metadata (subj))
+		(call lvm_read_runtime (subj))
+		(call lvm_stream_connect_lvmetad (subj))
+		(call lvm_exec (subj)))
+
+	(optional dracut_optional_plymouth
+		(call plymouth_read_config_files (subj))
+		(call plymouth_exec_plymouth (subj)))
+
+	(optional dracut_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj))
+		(call rpm_rw_inherited_tmpfs_files (subj)))
+
+	(optional dracut_optional_sctl
+		(call sctl_read_config (subj)))
+
+	(optional dracut_optional_sd
+		(call sd_exec (subj))
+		(call sd_read_config_files (subj))
+		(call sd_read_all_unit (subj))
+		(call sd_read_state (subj))
+		(call sd_stream_connect (subj)))
+
+	(optional dracut_optional_sd_journald
+		(call sd_journald_read_config_files (subj))
+		(call sd_journald_status_unit (subj))
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional dracut_optional_sd_loadmodules
+		(call sd_loadmodules_read_config (subj)))
+
+	(optional dracut_optional_sd_machined
+		(call sd_machined_read_config_files (subj)))
+
+	(optional dracut_optional_sd_networkd
+		(call sd_networkd_read_config (subj)))
+
+	(optional dracut_optional_sd_udevd
+		(call sd_udevd_read_config_files (subj)))
+
+	(optional dracut_optional_sd_vconsole
+		(call sd_vconsole_read_config_files (subj)))
+
+	(optional dracut_optional_systemctl
+		(call systemctl_exec (subj)))
+
+	(optional dracut_optional_udevadm
+		(call udevadm_exec (subj))))

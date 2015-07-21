@@ -1,0 +1,14 @@
+(context dracut_initramfs_cmd (sys.id sys.role dracut_initramfs.cmd_file (systemlow systemlow)))
+(context dracut_initramfs_runtime (sys.id sys.role dracut_initramfs.runtime_file (systemlow systemlow)))
+(context dracut_initramfs_var_lib (sys.id sys.role dracut_initramfs.var_lib_file (systemlow systemlow)))
+
+(filecon "/usr/lib/dracut/dracut-initramfs-restore" file dracut_initramfs_cmd)
+(filecon "/var/lib/initramfs(/.*)?" any dracut_initramfs_var_lib)
+(filecon "/var/run/initramfs" dir dracut_initramfs_runtime)
+(filecon "/var/run/initramfs/.*" any ())
+
+(filecon "/var/run/initramfs/\.need_shutdown" file ())
+
+(optional dracut_initramfs_unit_optional_sd
+	(context dracut_initramfs_unit (sys.id sys.role dracut_initramfs.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/dracut/modules\.d/.*/dracut-shutdown\.service" file dracut_initramfs_unit))

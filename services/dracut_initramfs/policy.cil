@@ -1,0 +1,73 @@
+(typeattribute dracut_initramfs_adm_subj_type)
+
+(typeattribute dracut_initramfs_obj_type)
+
+(block dracut_initramfs
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset dracut_initramfs_obj_type var_lib_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset dracut_initramfs_obj_type runtime_file)
+
+	(call dracut_initramfs_manage_var_lib (subj))
+	(call dracut_initramfs_var_lib_obj_type_transition_var_lib (subj))
+
+	(call dracut_initramfs_manage_runtime (subj))
+	(call dracut_initramfs_runtime_obj_type_transition_runtime (subj))
+
+	(call sys_read_invalid_files (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call file_read_boot (subj))
+
+	(call fs_manage_tmpfs_files (subj))
+
+	(call mount_auto_subj_type_transition (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional dracut_initramfs_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset dracut_initramfs_obj_type unit_file))
+
+	(optional dracut_initramfs_optional_sd_machined
+		(call sd_machined_read_config_files (subj))))
+
+(allow dracut_initramfs_adm_subj_type dracut_initramfs.unit_file (service (stop status disable enable reload start)))
+
+(allow dracut_initramfs_adm_subj_type dracut_initramfs.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (dracut_initramfs_adm_subj_type dracut_initramfs.subj))
+
+(call file_search_runtime (dracut_initramfs_adm_subj_type))
+(call file_search_var_lib (dracut_initramfs_adm_subj_type))
+
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_dir_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_fifo_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_lnk_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_sock_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_blk_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_chr_file_perms)
+
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_dir_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_fifo_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_lnk_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_sock_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_blk_file_perms)
+(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_chr_file_perms)

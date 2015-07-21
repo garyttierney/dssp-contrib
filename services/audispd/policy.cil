@@ -23,11 +23,15 @@
 
 	(call auditd_rw_inherited_unix_stream_sockets (subj))
 
+	(call miscfile_read_locale (subj))
+
 	(optional audispd_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))))
 
 (block audispd_config
-	(blockinherit file_sec_obj_blk))
+	(blockinherit file_sec_obj_blk)
+
+	(call fs_associate_tmpfs (sec_file)))
 
 (block audispd_runtime
 	(blockinherit file_sec_obj_blk))

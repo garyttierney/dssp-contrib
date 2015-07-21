@@ -34,6 +34,7 @@
 	(call auditd_runtime_obj_type_transition_runtime (subj))
 
 	(call fs_getattr_fs (subj))
+	(call fs_search_sysfs (subj))
 
 	(call miscfile_read_locale (subj))
 
@@ -68,7 +69,9 @@
 (block auditd_runtime
 	(blockinherit file_sec_obj_blk)
 
-	(typeattributeset auditd_obj_type sec_file))
+	(typeattributeset auditd_obj_type sec_file)
+
+	(call fs_associate_tmpfs (sec_file)))
 
 (block augenrules
 	(blockinherit app_blk)

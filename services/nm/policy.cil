@@ -60,6 +60,7 @@
 	(call file_read_config_files (subj))
 	(call file_read_data (subj))
 
+	(call fs_dontaudit_audit_access_sysfs_dirs (subj))
 	(call fs_getattr_fs (subj))
 	(call fs_list_tmpfs (subj))
 	(call fs_read_sysfs (subj))

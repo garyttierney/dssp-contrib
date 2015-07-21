@@ -45,9 +45,17 @@
 (call usersubj_read_home_cmd_lnk_files (journalctl_subj_type))
 (call usersubj_read_home_user_files (journalctl_subj_type))
 
+(allow journalctl_client_subj_type self (process (setrlimit)))
+(allow journalctl_client_subj_type self rw_fifo_file_perms)
+
+(call sys_read_kernel_sysctl_files (journalctl_client_subj_type))
+
 (call cmd_exec_cmd (journalctl_client_subj_type))
 
 (call file_read_config_files (journalctl_client_subj_type))
+
+(call fs_getattr_fs (journalctl_client_subj_type))
+(call fs_search_sysfs (journalctl_client_subj_type))
 
 (call miscfile_read_all_terminfo (journalctl_client_subj_type))
 (call miscfile_read_locale (journalctl_client_subj_type))

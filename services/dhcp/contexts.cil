@@ -1,6 +1,8 @@
+(context dhcp_config (sys.id sys.role dhcp.config_file (systemlow systemlow)))
 (context dhcp_port (sys.id sys.role dhcp.port (systemlow systemlow)))
 (context dhcpv6_client_port (sys.id sys.role dhcpv6_client.port (systemlow systemlow)))
 
+(filecon "/etc/dhcp(/.*)?" any dhcp_config)
 (portcon "tcp" 67 dhcp_port)
 (portcon "tcp" 68 dhcp_port)
 (portcon "tcp" 546 dhcpv6_client_port)

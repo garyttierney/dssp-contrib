@@ -1,0 +1,114 @@
+(macro dhclient_exec ((type ARG1))
+	(call can_exec (ARG1 dhclient.cmd_file)))
+
+(macro dhclient_auto_subj_type_transition ((type ARG1))
+	(call dhclient_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 dhclient.cmd_file dhclient.subj)))
+
+(macro dhclient_send_signal ((type ARG1))
+	(allow ARG1 dhclient.subj (process (signal))))
+
+(macro dhclient_send_sigkill ((type ARG1))
+	(allow ARG1 dhclient.subj (process (sigkill))))
+
+(macro dhclient_search_config ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(allow ARG1 dhclient.config_file search_dir_perms))
+
+(macro dhclient_list_config ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(allow ARG1 dhclient.config_file list_dir_perms))
+
+(macro dhclient_read_config_files ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(call read_files_pattern (ARG1 dhclient.config_file dhclient.config_file)))
+
+(macro dhclient_read_config_lnk_files ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 dhclient.config_file dhclient.config_file)))
+
+(macro dhclient_read_config ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(allow ARG1 dhclient.config_file read_file_perms)
+	(allow ARG1 dhclient.config_file list_dir_perms)
+	(allow ARG1 dhclient.config_file read_lnk_file_perms))
+
+(macro dhclient_manage_config ((type ARG1))
+	(call dhcp_rw_config_dirs (ARG1))
+	(allow ARG1 dhclient.config_file manage_file_perms)
+	(allow ARG1 dhclient.config_file manage_dir_perms)
+	(allow ARG1 dhclient.config_file manage_lnk_file_perms))
+
+(macro dhclient_relabel_config ((type ARG1))
+	(call dhcp_search_config (ARG1))
+	(allow ARG1 dhclient.config_file relabel_file_perms)
+	(allow ARG1 dhclient.config_file relabel_dir_perms)
+	(allow ARG1 dhclient.config_file relabel_lnk_file_perms))
+
+(macro dhclient_search_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 dhclient.var_lib_file search_dir_perms))
+
+(macro dhclient_list_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 dhclient.var_lib_file list_dir_perms))
+
+(macro dhclient_read_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 dhclient.var_lib_file dhclient.var_lib_file)))
+
+(macro dhclient_setattr_var_lib_dirs ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call setattr_dirs_pattern (ARG1 dhclient.var_lib_file dhclient.var_lib_file)))
+
+(macro dhclient_setattr_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call setattr_files_pattern (ARG1 dhclient.var_lib_file dhclient.var_lib_file)))
+
+(macro dhclient_setattr_var_lib ((type ARG1))
+	(call dhclient_setattr_var_lib_dirs (ARG1))
+	(call dhclient_setattr_var_lib_files (ARG1)))
+
+(macro dhclient_read_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 dhclient.var_lib_file dhclient.var_lib_file)))
+
+(macro dhclient_read_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 dhclient.var_lib_file read_file_perms)
+	(allow ARG1 dhclient.var_lib_file list_dir_perms)
+	(allow ARG1 dhclient.var_lib_file read_lnk_file_perms))
+
+(macro dhclient_manage_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 dhclient.var_lib_file manage_file_perms)
+	(allow ARG1 dhclient.var_lib_file manage_dir_perms)
+	(allow ARG1 dhclient.var_lib_file manage_lnk_file_perms))
+
+(macro dhclient_relabel_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 dhclient.var_lib_file relabel_file_perms)
+	(allow ARG1 dhclient.var_lib_file relabel_dir_perms)
+	(allow ARG1 dhclient.var_lib_file relabel_lnk_file_perms))
+
+(macro dhclient_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 dhclient.var_lib_file dir "dhclient")))
+
+(macro dhclient_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dhclient.runtime_file read_file_perms))
+
+(macro dhclient_delete_runtime_files ((type ARG1))
+	(call file_del_entry_runtime (ARG1))
+	(allow ARG1 dhclient.runtime_file delete_file_perms))
+
+(macro dhclient_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 dhclient.runtime_file manage_file_perms))
+
+(macro dhclient_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 dhclient.runtime_file relabel_file_perms))
+
+(macro dhclient_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 dhclient.runtime_file file "*")))

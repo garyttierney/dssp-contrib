@@ -1,0 +1,13 @@
+(macro coredumpctl_exec ((type ARG1))
+	(call can_exec (ARG1 coredumpctl.cmd_file)))
+
+(macro coredumpctl_auto_subj_type_transition ((type ARG1))
+	(call coredumpctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 coredumpctl.cmd_file coredumpctl.subj)))
+
+(macro coredumpctl_send_signal ((type ARG1))
+	(allow ARG1 coredumpctl.subj (process (signal))))
+
+(macro coredumpctl_run ((type ARG1)(role ARG2))
+	(call coredumpctl_auto_subj_type_transition (ARG1))
+	(roleattributeset coredumpctl_role ARG2))

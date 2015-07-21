@@ -148,3 +148,13 @@
 
 (macro sessbus_dbus_send_all_subj ((type ARG1))
 	(allow ARG1 sessbus_subj_type (dbus (send_msg))))
+
+(macro sessbus_chat_all_client_subj ((type ARG1))
+	(allow ARG1 sessbus_client_subj_type (dbus (send_msg)))
+	(allow sessbus_client_subj_type ARG1 (dbus (send_msg))))
+
+(macro sessbus_read_state_all_client_subj ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 sessbus_client_subj_type list_dir_perms)
+	(allow ARG1 sessbus_client_subj_type read_file_perms)
+	(allow ARG1 sessbus_client_subj_type read_lnk_file_perms))

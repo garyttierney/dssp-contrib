@@ -1,0 +1,31 @@
+(typeattribute localectl_subj_type)
+(typeattribute localectl_client_subj_type)
+
+(block localectl
+	(blockinherit app_subj_blk)
+
+	(typeattributeset localectl_subj_type subj)
+
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (localectl_subj_type cmd_file))
+
+	(call sd_daemon (subj cmd_file)))
+
+(call nss_client_subj_type (localectl_subj_type))
+
+(call sd_machined_read_runtime (localectl_subj_type))
+
+(call sd_nspawn_list_all_container (localectl_subj_type))
+(call sd_nspawn_read_all_container_lnk_files (localectl_subj_type))
+(call sd_nspawn_stream_connect_all_container_subj (localectl_subj_type))
+(call sd_nspawn_read_state_all_container_subj (localectl_subj_type))
+
+(call localectl_client_subj_type (localectl_subj_type))
+
+(allow localectl_client_subj_type self rw_fifo_file_perms)
+
+(call miscfile_read_all_terminfo (localectl_client_subj_type))
+(call miscfile_read_locale (localectl_client_subj_type))
+
+(call sd_machined_read_config_files (localectl_client_subj_type))

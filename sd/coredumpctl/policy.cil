@@ -1,0 +1,34 @@
+(roleattribute coredumpctl_role)
+
+(block coredumpctl
+	(blockinherit app_blk)
+
+	(roletype networkctl_role subj)
+
+	(call sd_daemon (subj cmd_file))
+
+	(allow subj self (capability (dac_override net_admin ipc_lock)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys_read_crypto_sysctl_files (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call cmd_exec_cmd (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call fs_getattr_fs (subj))
+	(call fs_getattr_tmpfs_fs (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_coredump_read_var_lib_files (subj))
+
+	(call sd_journald_read_var_log (subj))
+
+	(call sd_machined_read_config_files (subj))
+
+	(call usersubj_read_home_user_files (subj)))

@@ -1,0 +1,25 @@
+(roleattribute networkctl_role)
+
+(block networkctl
+	(blockinherit app_blk)
+
+	(roletype networkctl_role subj)
+
+	(call sd_daemon (subj cmd_file))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd_exec_cmd (subj))
+
+	(call fs_read_sysfs_files (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call sd_networkd_read_config (subj))
+	(call sd_networkd_read_runtime (subj))
+
+	(call sd_udevd_client_subj_type (subj)))

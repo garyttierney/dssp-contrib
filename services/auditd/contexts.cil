@@ -22,5 +22,5 @@
 (filecon "/var/run/auditd_sock" socket auditd_runtime)
 
 (optional auditd_unit_optional_sd
-	(context auditd_unit (sys.id sys.role auditd.unit (systemlow systemlow)))
+	(context auditd_unit (sys.id sys.role auditd.unit_file (systemlow systemlow)))
 	(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file auditd_unit))

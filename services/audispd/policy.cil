@@ -1,0 +1,33 @@
+(typeattribute audispd_plugin_subj_type)
+
+(block audispd
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(allow subj self (process (setsched)))
+	(allow subj self (capability (sys_nice)))
+
+	(allow subj audispd_plugin_subj_type (process (signal signull sigkill sigstop)))
+
+	(call audispd_read_config (subj))
+
+	(call audispd_manage_runtime_sock_files (subj))
+	(call audispd_runtime_obj_type_transition_runtime (subj))
+
+	(call cmd_exec_shell (subj))
+
+	(call auditd_rw_inherited_unix_stream_sockets (subj))
+
+	(optional audispd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))
+
+(block audispd_config
+	(blockinherit file_sec_obj_blk))
+
+(block audispd_runtime
+	(blockinherit file_sec_obj_blk))

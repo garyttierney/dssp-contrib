@@ -20,12 +20,12 @@
 
 	(call auditd_read_config (subj))
 
-	(allow subj auditd_log.sec_file manage_dir_perms)
-	(allow subj auditd_log.sec_file (file (rename setattr)))
-	(allow subj auditd_log.sec_file append_file_perms)
-	(allow subj auditd_log.sec_file create_file_perms)
-	(allow subj auditd_log.sec_file delete_file_perms)
-	(allow subj auditd_log.sec_file read_file_perms)
+	(allow subj auditd_var_log.sec_file manage_dir_perms)
+	(allow subj auditd_var_log.sec_file (file (rename setattr)))
+	(allow subj auditd_var_log.sec_file append_file_perms)
+	(allow subj auditd_var_log.sec_file create_file_perms)
+	(allow subj auditd_var_log.sec_file delete_file_perms)
+	(allow subj auditd_var_log.sec_file read_file_perms)
 
 	(call auditd_var_log_obj_type_transition_var_log (subj))
 
@@ -39,7 +39,7 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call audispd_auto_subject_type_transition (subj))
+	(call audispd_auto_subj_type_transition (subj))
 
 	(optional auditd_optional_sd
 		(call sd_daemon (subj cmd_file))
@@ -61,7 +61,7 @@
 (block auditd_var_log
 	(blockinherit file_sec_obj_blk)
 
-	(call sys_mountpoint_obj_blk (sec_file))
+	(call sys_mountpoint_obj_type (sec_file))
 
 	(typeattributeset auditd_obj_type sec_file))
 

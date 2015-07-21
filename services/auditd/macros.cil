@@ -144,8 +144,9 @@
 	(call file_runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "auditd_sock"))
 	(call file_runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "audit_event")))
 
-(macro auditd_rw_unix_stream_sockets ((type ARG1))
-	(allow ARG1 auditd.subj rw_unix_stream_socket_perms))
+(macro auditd_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call auditd_use_fd (ARG1))
+	(allow ARG1 auditd.subj (unix_stream_socket (getattr ioctl read write))))
 
 (macro auditd_use_fd ((type ARG1))
 	(allow ARG1 auditd.subj (fd (use))))

@@ -1,0 +1,158 @@
+(macro auditd_exec_auditd ((type ARG1))
+	(call can_exec (ARG1 auditd.cmd_file)))
+
+(macro auditd_auto_subj_type_transition_auditd ((type ARG1))
+	(call auditd_send_signal_auditd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 auditd.cmd_file auditd.subj)))
+
+(macro auditd_send_signal_auditd ((type ARG1))
+	(allow ARG1 auditd.subj (process (signal))))
+
+(macro auditd_exec_augenrules ((type ARG1))
+	(call can_exec (ARG1 augenrules.cmd_file)))
+
+(macro auditd_auto_subj_type_transition_augenrules ((type ARG1))
+	(call auditd_send_signal_augenrules (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 augenrules.cmd_file augenrules.subj)))
+
+(macro auditd_send_signal_augenrules ((type ARG1))
+	(allow ARG1 augenrules.subj (process (signal))))
+
+(macro auditd_run_augenrules ((type ARG1)(role ARG2))
+	(call auditd_auto_subj_type_transition_augenrules (ARG1))
+	(roleattributeset auditd_augenrules_role (ARG2)))
+
+(macro auditd_exec_ausearch ((type ARG1))
+	(call can_exec (ARG1 ausearch.cmd_file)))
+
+(macro auditd_auto_subj_type_transition_ausearch ((type ARG1))
+	(call auditd_send_signal_ausearch (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 ausearch.cmd_file ausearch.subj)))
+
+(macro auditd_send_signal_ausearch ((type ARG1))
+	(allow ARG1 ausearch.subj (process (signal))))
+
+(macro auditd_run_ausearch ((type ARG1)(role ARG2))
+	(call auditd_auto_subj_type_transition_ausearch (ARG1))
+	(roleattributeset auditd_ausearch_role (ARG2)))
+
+(macro auditd_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 auditd_config.sec_file search_dir_perms))
+
+(macro auditd_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 auditd_config.sec_file list_dir_perms))
+
+(macro auditd_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 auditd_config.sec_file auditd_config.sec_file)))
+
+(macro auditd_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 auditd_config.sec_file auditd_config.sec_file)))
+
+(macro auditd_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 auditd_config.sec_file read_file_perms)
+	(allow ARG1 auditd_config.sec_file list_dir_perms)
+	(allow ARG1 auditd_config.sec_file read_lnk_file_perms))
+
+(macro auditd_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 auditd_config.sec_file manage_file_perms)
+	(allow ARG1 auditd_config.sec_file manage_dir_perms)
+	(allow ARG1 auditd_config.sec_file manage_lnk_file_perms))
+
+(macro auditd_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 auditd_config.sec_file relabel_file_perms)
+	(allow ARG1 auditd_config.sec_file relabel_dir_perms)
+	(allow ARG1 auditd_config.sec_file relabel_lnk_file_perms))
+
+(macro auditd_search_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file search_dir_perms))
+
+(macro auditd_list_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file list_dir_perms))
+
+(macro auditd_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_files_pattern (ARG1 auditd_var_log.sec_file auditd_var_log.sec_file)))
+
+(macro auditd_read_var_log_lnk_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_lnk_files_pattern (ARG1 auditd_var_log.sec_file auditd_var_log.sec_file)))
+
+(macro auditd_rw_auditd_var_log_dirs ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file rw_dir_perms))
+
+(macro auditd_read_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file read_file_perms)
+	(allow ARG1 auditd_var_log.sec_file list_dir_perms)
+	(allow ARG1 auditd_var_log.sec_file read_lnk_file_perms))
+
+(macro auditd_manage_var_log ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 auditd_var_log.sec_file manage_file_perms)
+	(allow ARG1 auditd_var_log.sec_file manage_dir_perms)
+	(allow ARG1 auditd_var_log.sec_file manage_lnk_file_perms))
+
+(macro auditd_relabelfrom_var_log_dirs ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file relabelfrom_dir_perms))
+
+(macro auditd_relabel_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 auditd_var_log.sec_file relabel_file_perms)
+	(allow ARG1 auditd_var_log.sec_file relabel_dir_perms)
+	(allow ARG1 auditd_var_log.sec_file relabel_lnk_file_perms))
+
+(macro auditd_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 auditd_var_log.sec_file dir "audit")))
+
+(macro auditd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 auditd_runtime.sec_file read_file_perms))
+
+(macro auditd_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 auditd_runtime.sec_file manage_file_perms))
+
+(macro auditd_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 auditd_runtime.sec_file relabel_file_perms))
+
+(macro auditd_read_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 auditd_runtime.sec_file read_sock_file_perms))
+
+(macro auditd_manage_runtime_sock_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 auditd_runtime.sec_file manage_sock_file_perms))
+
+(macro auditd_relabel_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 auditd_runtime.sec_file relabel_sock_file_perms))
+
+(macro auditd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 auditd_runtime.sec_file file "auditd.pid"))
+	(call file_runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "auditd_sock"))
+	(call file_runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "audit_event")))
+
+(macro auditd_rw_unix_stream_sockets ((type ARG1))
+	(allow ARG1 auditd.subj rw_unix_stream_socket_perms))
+
+(macro auditd_use_fd ((type ARG1))
+	(allow ARG1 auditd.subj (fd (use))))
+
+(macro auditd_adm ((type ARG1)(role ARG2))
+	(typeattributeset auditd_adm_subj_type ARG1)
+	(optional auditd_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional auditd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

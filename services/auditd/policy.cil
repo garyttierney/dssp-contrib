@@ -1,0 +1,112 @@
+(roleattribute auditd_augenrules_role)
+(roleattribute auditd_ausearch_role)
+
+(typeattribute auditd_adm_subj_type)
+
+(typeattribute auditd_obj_type)
+
+(block auditd
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(allow subj self (process (setsched)))
+	(allow subj self (capability (audit_control sys_nice sys_resource)))
+	(allow subj self create_netlink_audit_socket_perms)
+
+	(call auditd_read_config (subj))
+
+	(allow subj auditd_log.sec_file manage_dir_perms)
+	(allow subj auditd_log.sec_file (file (rename setattr)))
+	(allow subj auditd_log.sec_file append_file_perms)
+	(allow subj auditd_log.sec_file create_file_perms)
+	(allow subj auditd_log.sec_file delete_file_perms)
+	(allow subj auditd_log.sec_file read_file_perms)
+
+	(call auditd_var_log_obj_type_transition_var_log (subj))
+
+	(call auditd_manage_runtime_files (subj))
+	(call auditd_manage_runtime_sock_files (subj))
+	(call auditd_runtime_obj_type_transition_runtime (subj))
+
+	(call fs_getattr_fs (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call audispd_auto_subject_type_transition (subj))
+
+	(optional auditd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset auditd_obj_type unit_file)
+
+		(allow auditd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional auditd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))
+
+(block auditd_config
+	(blockinherit file_sec_obj_blk)
+
+	(typeattributeset auditd_obj_type sec_file))
+
+(block auditd_var_log
+	(blockinherit file_sec_obj_blk)
+
+	(call sys_mountpoint_obj_blk (sec_file))
+
+	(typeattributeset auditd_obj_type sec_file))
+
+(block auditd_runtime
+	(blockinherit file_sec_obj_blk)
+
+	(typeattributeset auditd_obj_type sec_file))
+
+(block augenrules
+	(blockinherit app_blk)
+
+	(roleattributeset auditd_augenrules_role sys.role)
+
+	(roletype auditd_augenrules_role subj)
+
+	(optional augenrules_optional_sd
+		(call sd_daemon (subj cmd_file))))
+
+(block ausearch
+	(blockinherit app_blk)
+
+	(roletype auditd_ausearch_role subj)
+
+	(call file_read_config_files (subj))
+
+	(call auditd_read_config (subj))
+	(call auditd_read_var_log (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj)))
+
+(allow auditd_adm_subj_type auditd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (auditd_adm_subj_type auditd.subj))
+
+(call file_search_config (auditd_adm_subj_type))
+(call file_search_runtime (auditd_adm_subj_type))
+(call file_search_var_log (auditd_adm_subj_type))
+
+(allow auditd_adm_subj_type auditd_obj_type manage_file_perms)
+(allow auditd_adm_subj_type auditd_obj_type manage_dir_perms)
+(allow auditd_adm_subj_type auditd_obj_type manage_lnk_file_perms)
+(allow auditd_adm_subj_type auditd_obj_type manage_sock_file_perms)
+
+(allow auditd_adm_subj_type auditd_obj_type relabel_file_perms)
+(allow auditd_adm_subj_type auditd_obj_type relabel_dir_perms)
+(allow auditd_adm_subj_type auditd_obj_type relabel_lnk_file_perms)
+(allow auditd_adm_subj_type auditd_obj_type relabel_sock_file_perms)

@@ -1,0 +1,26 @@
+(context auditd_cmd (sys.id sys.role auditd.cmd_file (systemlow systemlow)))
+(context augenrules_cmd (sys.id sys.role augenrules.cmd_file (systemlow systemlow)))
+(context ausearch_cmd (sys.id sys.role ausearch.cmd_file (systemlow systemlow)))
+
+(tunableif enable_mls
+	(true
+		(context auditd_config (sys.id sys.role auditd_config.sec_file (systemhigh systemhigh)))
+		(context auditd_runtime (sys.id sys.role auditd_runtime.sec_file (systemhigh systemhigh)))
+		(context auditd_var_log (sys.id sys.role auditd_var_log.sec_file (systemhigh systemhigh))))
+	(false
+		(context auditd_config (sys.id sys.role auditd_config.sec_file (systemlow systemlow)))
+		(context auditd_runtime (sys.id sys.role auditd_runtime.sec_file (systemlow systemlow)))
+		(context auditd_var_log (sys.id sys.role auditd_var_log.sec_file (systemlow systemlow)))))
+
+(filecon "/etc/audit(/.*)?" any auditd_config)
+(filecon "/usr/sbin/auditd" file auditd_cmd)
+(filecon "/usr/sbin/augenrules" file augenrules_cmd)
+(filecon "/usr/sbin/ausearch" file ausearch_cmd)
+(filecon "/var/log/audit(/.*)?" any auditd_var_log)
+(filecon "/var/run/audit_events" socket auditd_runtime)
+(filecon "/var/run/auditd\.pid" file auditd_runtime)
+(filecon "/var/run/auditd_sock" socket auditd_runtime)
+
+(optional auditd_unit_optional_sd
+	(context auditd_unit (sys.id sys.role auditd.unit (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file auditd_unit))

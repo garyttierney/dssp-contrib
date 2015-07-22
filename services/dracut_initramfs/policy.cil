@@ -19,6 +19,8 @@
 
 	(typeattributeset dracut_initramfs_obj_type runtime_file)
 
+	(allow subj self rw_fifo_file_perms)
+
 	(call dracut_initramfs_manage_var_lib (subj))
 	(call dracut_initramfs_var_lib_obj_type_transition_var_lib (subj))
 
@@ -33,6 +35,8 @@
 	(call file_read_boot (subj))
 
 	(call fs_manage_tmpfs_files (subj))
+
+	(call miscfile_read_locale (subj))
 
 	(call mount_auto_subj_type_transition (subj))
 

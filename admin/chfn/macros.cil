@@ -1,0 +1,25 @@
+(block chfn_subj_blk
+	(blockabstract chfn_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset chfn_subj_type subj))
+
+(macro chfn_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset chfn_subj_type ARG1))
+
+(macro chfn_exec ((type ARG1))
+	(call can_exec (ARG1 chfn.cmd_file)))
+
+(macro chfn_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 chfn.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call chkpwd_run (ARG3 ARG1)))

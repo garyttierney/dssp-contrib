@@ -1,0 +1,27 @@
+(macro useradd_exec_useradd ((type ARG1))
+	(call can_exec (ARG1 useradd.cmd_file)))
+
+(macro useradd_auto_subj_type_transition_useradd ((type ARG1))
+	(call useradd_send_signal_useradd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 useradd.cmd_file useradd.subj)))
+
+(macro useradd_send_signal_useradd ((type ARG1))
+	(allow ARG1 useradd.subj (process (signal))))
+
+(macro useradd_run_useradd ((type ARG1)(role ARG2))
+	(call useradd_auto_subj_type_transition_useradd (ARG1))
+	(roleattributeset useradd_role ARG2))
+
+(macro useradd_exec_groupadd ((type ARG1))
+	(call can_exec (ARG1 groupadd.cmd_file)))
+
+(macro useradd_auto_subj_type_transition_groupadd ((type ARG1))
+	(call useradd_send_signal_groupadd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 groupadd.cmd_file groupadd.subj)))
+
+(macro useradd_send_signal_groupadd ((type ARG1))
+	(allow ARG1 groupadd.subj (process (signal))))
+
+(macro useradd_run_groupadd ((type ARG1)(role ARG2))
+	(call useradd_auto_subj_type_transition_groupadd (ARG1))
+	(roleattributeset useradd_role ARG2))

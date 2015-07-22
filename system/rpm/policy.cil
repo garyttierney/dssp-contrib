@@ -117,8 +117,8 @@
 	(call sysbus_unconfined_subj_type (rpm_subj_type)))
 
 (optional rpm_script_optional_usermanage
-	(call usermanage_run_groupadd (rpm_script_t rpm_role))
-	(call usermanage_run_useradd (rpm_script_t rpm_role)))
+	(call useradd_run_groupadd (rpm_script_t rpm_role))
+	(call useradd_run_useradd (rpm_script_t rpm_role)))
 
 (allow rpm_adm_subj_type rpm_subj_type (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (rpm_adm_subj_type rpm_subj_type))

@@ -249,6 +249,10 @@
 	(call file_search_home (ARG1))
 	(allow ARG1 home_dir.file rw_dir_perms))
 
+(macro usersubj_manage_home_dir ((type ARG1))
+	(call file_rw_home_dirs (ARG1))
+	(allow ARG1 home_dir.file manage_dir_perms))
+
 (macro usersubj_home_dir_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call file_search_home (ARG1))
 	(call obj_type_transition_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
@@ -685,6 +689,14 @@
 	(allow ARG1 usersubj_home_user_obj_type read_lnk_file_perms)
 	(allow ARG1 usersubj_home_user_obj_type read_sock_file_perms))
 
+(macro usersubj_delete_all_home_user ((type ARG1))
+	(call usersubj_del_entry_home_dir (ARG1))
+	(allow ARG1 usersubj_home_user_obj_type delete_file_perms)
+	(allow ARG1 usersubj_home_user_obj_type delete_dir_perms)
+	(allow ARG1 usersubj_home_user_obj_type delete_fifo_file_perms)
+	(allow ARG1 usersubj_home_user_obj_type delete_lnk_file_perms)
+	(allow ARG1 usersubj_home_user_obj_type delete_sock_file_perms))
+
 (macro usersubj_manage_all_home_user ((type ARG1))
 	(call usersubj_rw_home_dir (ARG1))
 	(allow ARG1 usersubj_home_user_obj_type manage_file_perms)
@@ -1111,7 +1123,7 @@
 	(allow ARG1 var_spool_user.var_spool_file relabel_file_perms))
 
 (macro usersubj_var_spool_obj_type_transition_var_spool_user ((type ARG1)(name ARG2))
-	(call file_var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG3)))
+	(call file_var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG2)))
 
 (macro usersubj_search_home_fonts_cache ((type ARG1))
 	(call usersubj_search_home_cache (ARG1))

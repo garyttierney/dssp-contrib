@@ -1,0 +1,13 @@
+(roleattribute cracklib_role)
+
+(block cracklib
+	(blockinherit app_blk)
+
+	(roleattributeset cracklib_role sys.role)
+
+	(roletype cracklib_role subj)
+
+	(blockinherit file_var_cache_obj_blk)
+
+	(call cracklib_manage_var_cache (subj))
+	(call cracklib_var_cache_obj_type_transition_var_cache (subj)))

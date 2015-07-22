@@ -1,0 +1,86 @@
+(roleattribute useradd_role)
+
+(block groupadd
+	(blockinherit app_blk)
+
+	(roleattributeset useradd_role sys.role)
+
+	(roletype useradd_role subj)
+
+	(allow subj self (capability (dac_override setuid)))
+	(allow subj self (process (setfscreate setrlimit)))
+
+	(call sys_audit_client_subj_type (subj))
+
+	(call file_read_config_files (subj))
+
+	(call sec_validate_context (subj))
+
+	(call subj_obj_id_change_exemption_type (subj))
+
+	(call miscfile_config_obj_type_transition_passwords (subj "*"))
+	(call miscfile_manage_passwords (subj))
+	(call miscfile_manage_shadow (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(optional groupadd_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj))
+		(call rpm_rw_inherited_tmpfs_files (subj)))
+
+	(optional groupadd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))
+
+(block useradd
+	(blockinherit app_blk)
+
+	(roleattributeset useradd_role sys.role)
+
+	(roletype useradd_role subj)
+
+	(allow subj self (capability (chown fsetid fowner sys_ptrace dac_override)))
+	(allow subj self (process (setfscreate)))
+
+	(call sys_audit_client_subj_type (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call fs_list_proc (subj))
+	(call fs_list_devtmpfs (subj))
+	(call fs_search_devpts (subj))
+
+	(call file_read_config_files (subj))
+
+	(call sec_validate_context (subj))
+
+	(call subj_obj_id_change_exemption_type (subj))
+	(call subj_read_common_subj_state (subj))
+
+	(call miscfile_config_obj_type_transition_passwords (subj "*"))
+	(call miscfile_manage_passwords (subj))
+	(call miscfile_manage_shadow (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call pam_rw_lastlog_var_log_files (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(call usersubj_delete_all_home_user (subj))
+	(call usersubj_list_all_home_user (subj))
+	(call usersubj_manage_home_dir (subj))
+	(call usersubj_manage_home_user_files (subj))
+	(call usersubj_manage_var_spool_user_files (subj))
+	(call usersubj_var_spool_obj_type_transition_var_spool_user (subj "*"))
+
+	(optional useradd_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj))
+		(call rpm_rw_inherited_tmpfs_files (subj)))
+
+	(optional useradd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))

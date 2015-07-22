@@ -1,0 +1,9 @@
+(context cracklib_cmd (sys.id sys.role cracklib.cmd_file (systemlow systemlow)))
+(context cracklib_var_cache (sys.id sys.role cracklib.var_cache_file (systemlow systemlow)))
+
+(filecon "/usr/sbin/cracklib-check" file cracklib_cmd)
+(filecon "/usr/sbin/cracklib-format" file cracklib_cmd)
+(filecon "/usr/sbin/cracklib-packer" file cracklib_cmd)
+(filecon "/usr/sbin/cracklib-unpacker" file cracklib_cmd)
+(filecon "/usr/sbin/create-cracklib-dict" file cracklib_cmd)
+(filecon "/var/cache/cracklib(/.*)?" any cracklib_var_cache)

@@ -1,0 +1,16 @@
+(typeattribute chfn_subj_type)
+
+(block chfn
+	(blockinherit app_subj_blk)
+
+	(typeattributeset chfn_subj_type subj)
+
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (chfn_subj_type cmd_file)))
+
+(call file_read_config_files (chfn_subj_type))
+
+(call miscfile_read_locale (chfn_subj_type))
+
+(call pam_read_config_files (chfn_subj_type))

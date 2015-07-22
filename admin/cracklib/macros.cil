@@ -1,0 +1,50 @@
+(macro cracklib_exec ((type ARG1))
+	(call can_exec (ARG1 cracklib.cmd_file)))
+
+(macro cracklib_auto_subj_type_transition ((type ARG1))
+	(call cracklib_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 cracklib.cmd_file cracklib.subj)))
+
+(macro cracklib_send_signal ((type ARG1))
+	(allow ARG1 cracklib.subj (process (signal))))
+
+(macro cracklib_run ((type ARG1)(role ARG2))
+	(call cracklib_auto_subj_type_transition (ARG1))
+	(roleattributeset cracklib_role ARG2))
+
+(macro cracklib_search_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 cracklib.var_cache_file search_dir_perms))
+
+(macro cracklib_list_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 cracklib.var_cache_file list_dir_perms))
+
+(macro cracklib_read_var_cache_files ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(call read_files_pattern (ARG1 cracklib.var_cache_file cracklib.var_cache_file)))
+
+(macro cracklib_read_var_cache_lnk_files ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(call read_lnk_files_pattern (ARG1 cracklib.var_cache_file cracklib.var_cache_file)))
+
+(macro cracklib_read_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 cracklib.var_cache_file read_file_perms)
+	(allow ARG1 cracklib.var_cache_file list_dir_perms)
+	(allow ARG1 cracklib.var_cache_file read_lnk_file_perms))
+
+(macro cracklib_manage_var_cache ((type ARG1))
+	(call file_rw_var_cache_dirs (ARG1))
+	(allow ARG1 cracklib.var_cache_file manage_file_perms)
+	(allow ARG1 cracklib.var_cache_file manage_dir_perms)
+	(allow ARG1 cracklib.var_cache_file manage_lnk_file_perms))
+
+(macro cracklib_relabel_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 cracklib.var_cache_file relabel_file_perms)
+	(allow ARG1 cracklib.var_cache_file relabel_dir_perms)
+	(allow ARG1 cracklib.var_cache_file relabel_lnk_file_perms))
+
+(macro cracklib_var_cache_obj_type_transition_var_cache ((type ARG1))
+	(call file_var_cache_obj_type_transition (ARG1 cracklib.var_cache_file dir "cracklib")))

@@ -1,0 +1,12 @@
+(context mandb_cmd (sys.id sys.role mandb.cmd_file (systemlow systemlow)))
+(context mandb_config (sys.id sys.role mandb.config_file (systemlow systemlow)))
+(context mandb_var_cache (sys.id sys.role mandb.var_cache_file (systemlow systemlow)))
+
+(filecon "/etc/man_db\.conf" file mandb_config)
+(filecon "/etc/sysconfig/man-db" file mandb_config)
+(filecon "/usr/bin/mandb" file mandb_cmd)
+(filecon "/var/cache/man(/.*)?" any mandb_var_cache)
+
+(optional mandb_unit_optional_sd
+	(context mandb_unit (sys.id sys.role mandb.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*man-db.*" file mandb_unit))

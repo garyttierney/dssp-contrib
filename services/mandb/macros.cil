@@ -1,0 +1,69 @@
+(macro mandb_exec ((type ARG1))
+	(call can_exec (ARG1 mandb.cmd_file)))
+
+(macro mandb_auto_subj_type_transition ((type ARG1))
+	(call mandb_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 mandb.cmd_file mandb.subj)))
+
+(macro mandb_send_signal ((type ARG1))
+	(allow ARG1 mandb.subj (process (signal))))
+
+(macro mandb_run ((type ARG1)(role ARG2))
+	(call mandb_auto_subj_type_transition (ARG1))
+	(roleattributeset mandb_role ARG2))
+
+(macro mandb_search_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 mandb.var_cache_file search_dir_perms))
+
+(macro mandb_list_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 mandb.var_cache_file list_dir_perms))
+
+(macro mandb_read_var_cache_files ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(call read_files_pattern (ARG1 mandb.var_cache_file mandb.var_cache_file)))
+
+(macro mandb_read_var_cache_lnk_files ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(call read_lnk_files_pattern (ARG1 mandb.var_cache_file mandb.var_cache_file)))
+
+(macro mandb_read_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 mandb.var_cache_file read_file_perms)
+	(allow ARG1 mandb.var_cache_file list_dir_perms)
+	(allow ARG1 mandb.var_cache_file read_lnk_file_perms))
+
+(macro mandb_manage_var_cache ((type ARG1))
+	(call file_rw_var_cache_dirs (ARG1))
+	(allow ARG1 mandb.var_cache_file manage_file_perms)
+	(allow ARG1 mandb.var_cache_file manage_dir_perms)
+	(allow ARG1 mandb.var_cache_file manage_lnk_file_perms))
+
+(macro mandb_relabel_var_cache ((type ARG1))
+	(call file_search_var_cache (ARG1))
+	(allow ARG1 mandb.var_cache_file relabel_file_perms)
+	(allow ARG1 mandb.var_cache_file relabel_dir_perms)
+	(allow ARG1 mandb.var_cache_file relabel_lnk_file_perms))
+
+(macro mandb_var_cache_obj_type_transition_var_cache ((type ARG1))
+	(call file_var_cache_obj_type_transition (ARG1 mandb.var_cache_file dir "man")))
+
+(macro mandb_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 mandb.config_file read_file_perms))
+
+(macro mandb_manage_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 mandb.config_file manage_file_perms))
+
+(macro mandb_relabel_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 mandb.config_file relabel_file_perms))
+
+(macro mandb_adm ((type ARG1)(role ARG2))
+	(typeattributeset mandb_adm_subj_type ARG1)
+	(optional mandb_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional mandb_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

@@ -1,0 +1,57 @@
+(roleattribute mandb_role)
+
+(typeattribute mandb_adm_subj_type)
+
+(typeattribute mandb_obj_type)
+
+(block mandb
+	(blockinherit app_blk)
+
+	(roleattributeset mandb_role sys.role)
+
+	(roletype mandb_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset mandb_obj_type config_file)
+
+	(blockinherit file_var_cache_obj_blk)
+
+	(typeattributeset mandb_obj_type var_cache_file)
+
+	(allow subj self (capability (fsetid)))
+	(allow subj  self rw_fifo_file_perms)
+
+	(call mandb_read_config_files (subj))
+
+	(call mandb_manage_var_cache (subj))
+	(call mandb_var_cache_obj_type_transition_var_cache (subj))
+
+	(call file_read_config (subj))
+
+	(call fs_getattr_fs (subj))
+
+	(call miscfile_read_man (subj))
+	(call miscfile_read_locale (subj))
+
+	(optional mandb_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset mandb_obj_type unit_file)
+
+		(allow mandb_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow mandb_adm_subj_type mandb.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (mandb_adm_subj_type mandb.subj))
+
+(call file_search_var_cache (mandb_adm_subj_type))
+
+(allow mandb_adm_subj_type mandb_obj_type manage_file_perms)
+(allow mandb_adm_subj_type mandb_obj_type manage_dir_perms)
+(allow mandb_adm_subj_type mandb_obj_type manage_lnk_file_perms)
+
+(allow mandb_adm_subj_type mandb_obj_type relabel_file_perms)
+(allow mandb_adm_subj_type mandb_obj_type relabel_dir_perms)
+(allow mandb_adm_subj_type mandb_obj_type relabel_lnk_file_perms)

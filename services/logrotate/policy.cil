@@ -1,0 +1,70 @@
+(roleattribute logrotate_role)
+
+(typeattribute logrotate_adm_subj_type)
+
+(typeattribute logrotate_obj_type)
+(typeattribute logrotate_var_log_obj_type)
+
+(block logrotate
+	(blockinherit app_blk)
+
+	(roleattributeset logrotate_role sys.role)
+
+	(roletype logrotate_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset logrotate_obj_type config_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset logrotate_obj_type var_lib_file)
+
+	(allow subj self (process (setfscreate)))
+	(allow subj self (capability (chown fsetid dac_override)))
+
+	(call logrotate_read_config (subj))
+
+	(call logrotate_manage_var_lib (subj))
+	(call logrotate_var_lib_obj_type_transition_var_lib (subj))
+
+	(call file_read_config (subj))
+	(call file_rw_var_log_dirs (subj))
+
+	(call fs_list_rootfs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call subj_obj_id_change_exemption_type (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional logrotate_optional_chronyd
+		(call chronyd_auto_subj_type_transition_chronyc (subj)))
+
+	(optional logrotate_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset logrotate_obj_type unit_file)
+
+		(allow logrotate_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow logrotate.subj logrotate_var_log_obj_type rw_dir_perms)
+(allow logrotate.subj logrotate_var_log_obj_type manage_file_perms)
+
+(allow logrotate_adm_subj_type logrotate.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (logrotate_adm_subj_type logrotate.subj))
+
+(call file_search_var_lib (logrotate_adm_subj_type))
+
+(allow logrotate_adm_subj_type logrotate_obj_type manage_file_perms)
+(allow logrotate_adm_subj_type logrotate_obj_type manage_dir_perms)
+(allow logrotate_adm_subj_type logrotate_obj_type manage_lnk_file_perms)
+
+(allow logrotate_adm_subj_type logrotate_obj_type relabel_file_perms)
+(allow logrotate_adm_subj_type logrotate_obj_type relabel_dir_perms)
+(allow logrotate_adm_subj_type logrotate_obj_type relabel_lnk_file_perms)

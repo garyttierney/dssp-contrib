@@ -87,6 +87,7 @@
 
 (allow usersubj_common_type self (process (setpgid getattr getsched setsched setfscreate)))
 (allow usersubj_common_type self create_unix_stream_socket_perms)
+(allow usersubj_common_type self rw_fifo_file_perms)
 
 (call cmd_obj_entry_subj (usersubj_common_type))
 (call cmd_shell_obj_entry_subj (usersubj_common_type))
@@ -100,6 +101,9 @@
 (call subj_user_exemption_target_type (usersubj_common_type))
 
 (call miscfile_read_all_terminfo (usersubj_common_type))
+(call miscfile_read_locale (usersubj_common_type))
+
+(call nss_read_config_files (usersubj_common_type))
 
 (call usersubj_use_inherited_term (usersubj_common_type))
 

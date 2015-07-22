@@ -13,20 +13,22 @@
 
 	(call udevadm_client_subj_type (subj))
 
+	(call sys_rw_cpu_sysfs_files (subj))
+
 	(call dev_rw_all (subj))
 	(call dev_relabel_all (subj))
 	(call dev_setattr_all (subj))
 
-	(call fs_list_sysfs (subj))
+	;(call fs_list_sysfs (subj))
 	(call fs_manage_devtmpfs_dirs (subj))
 	(call fs_manage_devtmpfs_files (subj))
 	(call fs_manage_devtmpfs_lnk_files (subj))
 	(call fs_manage_devtmpfs_blk_files (subj))
 	(call fs_manage_devtmpfs_chr_files (subj))
-	(call fs_read_sysfs_lnk_files (subj))
+	;(call fs_read_sysfs_lnk_files (subj))
 	(call fs_relabelfrom_devtmpfs_blk_files (subj))
 	(call fs_relabelfrom_devtmpfs_chr_files (subj))
-	(call fs_rw_sysfs_files (subj))
+	;(call fs_rw_sysfs_files (subj))
 
 	(call sec_get_enforce_mode (subj))
 

@@ -105,7 +105,7 @@
 
 (call nss_read_config_files (usersubj_common_type))
 
-(call usersubj_use_inherited_term (usersubj_common_type))
+(call usersubj_use_term (usersubj_common_type))
 
 (allow usersubj_common_login_type self create_unix_dgram_socket_perms)
 
@@ -121,6 +121,8 @@
 (call fs_list_tmpfs (usersubj_common_login_type))
 
 (call sec_get_enforce_mode (usersubj_common_login_type))
+
+(call hostname_exec (usersubj_common_login_type))
 
 (call login_send_signull_login (usersubj_common_login_type))
 

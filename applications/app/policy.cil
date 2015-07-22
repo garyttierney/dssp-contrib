@@ -5,6 +5,10 @@
 
 (call term_use_inherited_unallocated_ttys (app_subj_type))
 
+(optional app_optional_sduser
+	(call sduser_rw_inherited_unix_stream_sockets_all_subj (app_subj_type))
+	(call sduser_send_sigchld_all_subj (app_subj_type)))
+
 (optional app_optional_usersubj
 	(call usersubj_search_home_dir (app_subj_type))
 	(call usersubj_use_inherited_term (app_subj_type)))

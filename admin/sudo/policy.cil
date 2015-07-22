@@ -1,0 +1,98 @@
+(typeattribute sudo_subj_type)
+(typeattribute sudo_visudo_subj_type)
+
+(block sudo
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (sudo_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_var_db_obj_blk)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block visudo
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (sudo_visudo_subj_type cmd_file)))
+
+(allow sudo_subj_type self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
+(allow sudo_subj_type self (process (setsched setkeycreate setrlimit setexec)))
+(allow sudo_subj_type self rw_fifo_file_perms)
+(allow sudo_subj_type self (key (search link)))
+
+(call sudo_read_config (sudo_subj_type))
+
+(call sudo_manage_var_db (sudo_subj_type))
+(call sudo_var_db_obj_type_transition_var_db (sudo_subj_type))
+
+(call sudo_manage_runtime (sudo_subj_type))
+(call sudo_runtime_obj_type_transition_runtime (sudo_subj_type))
+
+(call sudo_manage_tmpfs_files (sudo_subj_type))
+(call sudo_tmpfs_obj_type_transition_tmpfs (sudo_subj_type "*"))
+
+(call sys_audit_client_subj_type (sudo_subj_type))
+(call sys_getattr_core_if (sudo_subj_type))
+(call sys_read_kernel_sysctl_files (sudo_subj_type))
+(call sys_link_keyring (sudo_subj_type))
+
+(call cmd_getattr_all_cmd_files (sudo_subj_type))
+
+(call dev_getattr_all (sudo_subj_type))
+(call dev_read_urandom (sudo_subj_type))
+
+(call file_read_config_files (sudo_subj_type))
+
+(call fs_list_devtmpfs (sudo_subj_type))
+(call fs_dontaudit_getattr_devtmpfs_chr_files (sudo_subj_type))
+(call fs_dontaudit_getattr_devtmpfs_blk_files (sudo_subj_type))
+
+(call sec_compute_relabel_context (sudo_subj_type))
+(call sec_validate_context (sudo_subj_type))
+
+(call subj_interactive_fd_type (sudo_subj_type))
+(call subj_role_change_exemption_type (sudo_subj_type))
+
+(call app_send_signal (sudo_subj_type))
+
+(call pam_read_config (sudo_subj_type))
+
+(call miscfile_read_locale (sudo_subj_type))
+(call miscfile_read_utmp_runtime_files (sudo_subj_type))
+
+(call nss_client_subj_type (sudo_subj_type))
+
+(call seutil_read_selinux_config_files (sudo_subj_type))
+(call seutil_read_default_context_files (sudo_subj_type))
+
+(call usersubj_read_home_cmd_lnk_files (sudo_subj_type))
+
+(call usersubj_relabel_term (sudo_subj_type))
+(call usersubj_setattr_term (sudo_subj_type))
+(call usersubj_use_term (sudo_subj_type))
+
+(optional sudo_subj_type_optional_sd
+	(call sd_getpgid (sudo_subj_type))
+	(call sd_link_keyring (sudo_subj_type)))
+
+(optional sudo_subj_type_optional_sd_initctl
+	(call sd_initctl_getattr_runtime_fifo_files (sudo_subj_type)))
+
+(optional sudo_subj_type_optional_sd_journald
+	(call sd_journald_client_subj_type (sudo_subj_type)))
+
+(optional sudo_subj_type_optional_sd_logind
+	(call sd_logind_client_subj_type (sudo_subj_type)))
+
+(allow sudo_visudo_subj_type self (capability (dac_override)))
+
+(call sudo_manage_config (sudo_visudo_subj_type))
+(call sudo_config_obj_type_transition_config (sudo_visudo_subj_type "*"))
+
+(call miscfile_read_locale (sudo_visudo_subj_type))
+
+(call nss_client_subj_type (sudo_visudo_subj_type))

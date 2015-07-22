@@ -1,0 +1,192 @@
+(block sudo_subj_blk
+	(blockabstract sudo_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset sudo_subj_type subj))
+
+(block sudo_visudo_subj_blk
+	(blockabstract sudo_visudo_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset sudo_visudo_subj_type subj))
+
+(macro sudo_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset sudo_subj_type ARG1))
+
+(macro sudo_visudo_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset sudo_visudo_subj_type ARG1))
+
+(macro sudo_exec_sudo ((type ARG1))
+	(call can_exec (ARG1 sudo.cmd_file)))
+
+(macro sudo_exec_visudo ((type ARG1))
+	(call can_exec (ARG1 visudo.cmd_file)))
+
+(macro sudo_role_pattern_sudo ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 sudo.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call chkpwd_run (ARG3 ARG1)))
+
+(macro sudo_role_pattern_visudo ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 visudo.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (ARG2 ARG3))
+
+	(allow ARG3 ARG2 (process (signal))))
+
+(macro sudo_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sudo.config_file search_dir_perms))
+
+(macro sudo_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sudo.config_file list_dir_perms))
+
+(macro sudo_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 sudo.config_file sudo.config_file)))
+
+(macro sudo_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 sudo.config_file sudo.config_file)))
+
+(macro sudo_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sudo.config_file read_file_perms)
+	(allow ARG1 sudo.config_file list_dir_perms)
+	(allow ARG1 sudo.config_file read_lnk_file_perms))
+
+(macro sudo_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 sudo.config_file manage_file_perms)
+	(allow ARG1 sudo.config_file manage_dir_perms)
+	(allow ARG1 sudo.config_file manage_lnk_file_perms))
+
+(macro sudo_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 sudo.config_file relabel_file_perms)
+	(allow ARG1 sudo.config_file relabel_dir_perms)
+	(allow ARG1 sudo.config_file relabel_lnk_file_perms))
+
+(macro sudo_config_obj_type_transition_config ((type ARG1)(name ARG2))
+	(call file_config_obj_type_transition (ARG1 sudo.config_file dir "sudoers.d"))
+	(call file_config_obj_type_transition (ARG1 sudo.config_file file "*")))
+
+(macro sudo_search_var_db ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(allow ARG1 sudo.var_db_file search_dir_perms))
+
+(macro sudo_list_var_db ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(allow ARG1 sudo.var_db_file list_dir_perms))
+
+(macro sudo_read_var_db_files ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(call read_files_pattern (ARG1 sudo.var_db_file sudo.var_db_file)))
+
+(macro sudo_read_var_db_lnk_files ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(call read_lnk_files_pattern (ARG1 sudo.var_db_file sudo.var_db_file)))
+
+(macro sudo_read_var_db ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(allow ARG1 sudo.var_db_file read_file_perms)
+	(allow ARG1 sudo.var_db_file list_dir_perms)
+	(allow ARG1 sudo.var_db_file read_lnk_file_perms))
+
+(macro sudo_manage_var_db ((type ARG1))
+	(call file_rw_var_db_dirs (ARG1))
+	(allow ARG1 sudo.var_db_file manage_file_perms)
+	(allow ARG1 sudo.var_db_file manage_dir_perms)
+	(allow ARG1 sudo.var_db_file manage_lnk_file_perms))
+
+(macro sudo_relabel_var_db ((type ARG1))
+	(call file_search_var_db (ARG1))
+	(allow ARG1 sudo.var_db_file relabel_file_perms)
+	(allow ARG1 sudo.var_db_file relabel_dir_perms)
+	(allow ARG1 sudo.var_db_file relabel_lnk_file_perms))
+
+(macro sudo_var_db_obj_type_transition_var_db ((type ARG1))
+	(call file_var_db_obj_type_transition (ARG1 sudo.var_db_file dir "sudo")))
+
+(macro sudo_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sudo.runtime_file search_dir_perms))
+
+(macro sudo_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sudo.runtime_file list_dir_perms))
+
+(macro sudo_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 sudo.runtime_file sudo.runtime_file)))
+
+(macro sudo_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 sudo.runtime_file sudo.runtime_file)))
+
+(macro sudo_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sudo.runtime_file read_file_perms)
+	(allow ARG1 sudo.runtime_file list_dir_perms)
+	(allow ARG1 sudo.runtime_file read_lnk_file_perms))
+
+(macro sudo_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 sudo.runtime_file manage_file_perms)
+	(allow ARG1 sudo.runtime_file manage_dir_perms)
+	(allow ARG1 sudo.runtime_file manage_lnk_file_perms))
+
+(macro sudo_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 sudo.runtime_file relabel_file_perms)
+	(allow ARG1 sudo.runtime_file relabel_dir_perms)
+	(allow ARG1 sudo.runtime_file relabel_lnk_file_perms))
+
+(macro sudo_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 sudo.runtime_file dir "sudo")))
+
+(macro sudo_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sudo.tmpfs_user_file read_file_perms))
+
+(macro sudo_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 sudo.tmpfs_user_file manage_file_perms))
+
+(macro sudo_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 sudo.tmpfs_user_file relabel_file_perms))
+
+(macro sudo_tmpfs_obj_type_transition_tmpfs ((type ARG1)(name ARG2))
+	(call fs_tmpfs_obj_type_transition (ARG1 sudo.tmpfs_user_file file ARG2)))
+
+(macro sudo_send_signal_all_subj ((type ARG1))
+	(allow ARG1 sudo_subj_type (process (signal))))
+
+(macro sudo_send_sigchld_all_subj ((type ARG1))
+	(allow ARG1 sudo_subj_type (process (sigchld))))
+
+(macro sudo_use_fd_all_subj ((type ARG1))
+	(allow ARG1 sudo_subj_type (fd (use))))
+
+(macro sudo_rw_inherited_fifo_files_all_subj ((type ARG1))
+	(call sudo_use_fd_all_subj (ARG1))
+	(allow ARG1 sudo_subj_type rw_inherited_fifo_file_perms))

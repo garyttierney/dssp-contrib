@@ -1,15 +1,9 @@
 (typeattribute passwd_subj_type)
 
 (block passwd
-	(blockinherit app_subj_blk)
-
-	(typeattributeset passwd_subj_type subj)
-
 	(blockinherit app_cmd_obj_blk)
 
-	(call subj_entry (passwd_subj_type cmd_file))
-
-	(call sd_daemon (subj cmd_file)))
+	(call subj_entry (passwd_subj_type cmd_file)))
 
 (allow passwd_subj_type self (capability (setuid dac_override chown fsetid)))
 (allow passwd_subj_type self (process (setfscreate)))

@@ -1,0 +1,15 @@
+(context sudo_cmd (sys.id sys.role sudo.cmd_file (systemlow systemlow)))
+(context sudo_config (sys.id sys.role sudo.config_file (systemlow systemlow)))
+(context sudo_runtime (sys.id sys.role sudo.runtime_file (systemlow systemlow)))
+(context sudo_var_db (sys.id sys.role sudo.var_db_file (systemlow systemlow)))
+(context visudo_cmd (sys.id sys.role visudo.cmd_file (systemlow systemlow)))
+
+(filecon "/etc/sudoers" file sudo_config)
+(filecon "/etc/sudoers\.tmp" file sudo_config)
+(filecon "/etc/sudoers\.d(/.*)?" any sudo_config)
+(filecon "/usr/bin/sudo" file sudo_cmd)
+(filecon "/var/db/sudo(/.*)?" any sudo_var_db)
+(filecon "/var/run/sudo(/.*)?" any sudo_runtime)
+(filecon "/usr/sbin/visudo" file visudo_cmd)
+
+(filecon "/usr/libexec/sudo/sesh" file shell)

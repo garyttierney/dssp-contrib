@@ -688,6 +688,7 @@
 
 (macro usersubj_delete_all_home_user ((type ARG1))
 	(call usersubj_del_entry_home_dir (ARG1))
+	(allow ARG1 usersubj_home_user_obj_type del_entry_dir_perms)
 	(allow ARG1 usersubj_home_user_obj_type delete_file_perms)
 	(allow ARG1 usersubj_home_user_obj_type delete_dir_perms)
 	(allow ARG1 usersubj_home_user_obj_type delete_fifo_file_perms)
@@ -900,6 +901,7 @@
 (macro usersubj_delete_all_tmpfs_user ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_del_entry_tmpfs (ARG1))
+	(allow ARG1 usersubj_tmpfs_user_obj_type del_entry_dir_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type delete_file_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type delete_dir_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type delete_fifo_file_perms)

@@ -15,6 +15,17 @@
 
 	(call sys_role (role)))
 
+(block usersubj_base_priv_user_blk
+	(blockabstract usersubj_base_priv_user_blk)
+
+	(blockinherit usersubj_blk)
+
+	(role role)
+	(roletype role subj)
+
+	(call sys_role (role))
+	(call rbacsep_exemption_role (role)))
+
 (block usersubj_base_login_blk
 	(blockabstract usersubj_base_login_blk)
 
@@ -22,6 +33,18 @@
 	(userrole id role)
 
 	(blockinherit usersubj_base_user_blk)
+
+	(call usersubj_common_login_type (subj))
+
+	(call sys_roleallow_role (role)))
+
+(block usersubj_base_priv_login_blk
+	(blockabstract usersubj_base_priv_login_blk)
+
+	(user id)
+	(userrole id role)
+
+	(blockinherit usersubj_base_priv_user_blk)
 
 	(call usersubj_common_login_type (subj))
 
@@ -37,7 +60,7 @@
 (block usersubj_priv_login_blk
 	(blockabstract usersubj_priv_login_blk)
 
-	(blockinherit usersubj_login_blk)
+	(blockinherit usersubj_base_priv_login_blk)
 
 	(call usersubj_priv_login_type (subj))
 
@@ -103,6 +126,13 @@
 	(call sys_role (ARG1))
 	(roletype ARG1 ARG2))
 
+(macro usersubj_base_priv_common ((role ARG1)(type ARG2))
+	(call subj_common_type (ARG2))
+	(call usersubj_common_type (ARG2))
+	(call sys_role (ARG1))
+	(call rbacsep_exemption_role (ARG1))
+	(roletype ARG1 ARG2))
+
 (macro usersubj_base_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base (ARG2 ARG3))
 	(call sys_roleallow_role (ARG2))
@@ -110,6 +140,11 @@
 
 (macro usersubj_base_common_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base_common (ARG2 ARG3))
+	(call sys_roleallow_role (ARG2))
+	(userrole ARG1 ARG2))
+
+(macro usersubj_base_priv_common_login ((user ARG1)(role ARG2)(type ARG3))
+	(call usersubj_base_priv_common (ARG2 ARG3))
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2))
 
@@ -122,9 +157,11 @@
 	(call usersubj_common_login_type (ARG3))
 	(call usersubj_mls (ARG1 ARG4 ARG5)))
 
-(macro usersubj_priv_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
-	(call usersubj_common_login (ARG1 ARG2 ARG3 ARG4 ARG5))
-	(call usersubj_priv_login_type (ARG3)))
+(macro usersubj_priv_common_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
+	(call usersubj_base_priv_common_login (ARG1 ARG2 ARG3))
+	(call usersubj_common_login_type (ARG3))
+	(call usersubj_priv_login_type (ARG3))
+	(call usersubj_mls (ARG1 ARG4 ARG5)))
 
 (macro usersubj_obj ((type ARG1))
 	(call usersubj_exec_home_cmd_files (ARG1))

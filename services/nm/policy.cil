@@ -164,11 +164,11 @@
 
 	(call nss_client_subj_type (subj))
 
+	(optional nm_disp_optional_chronyd
+		(call chronyd_auto_subj_type_transition_chronyc (subj)))
+
 	(optional nm_disp_optional_dhclient
 		(call dhclient_auto_subj_type_transition (subj)))
-
-	(optional nm_disp_optional_ntp
-		(call ntp_auto_subj_type_transition (subj)))
 
 	(optional nmdisp_optional_sd
 		(call sd_daemon (subj cmd_file)))

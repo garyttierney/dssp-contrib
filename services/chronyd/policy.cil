@@ -1,0 +1,144 @@
+(roleattribute chronyd_chronyc_role)
+
+(typeattribute chronyd_adm_subj_type)
+(typeattribute chronyd_subj_type)
+(typeattribute chronyd_enable_status_start_sd_unit_subj_type)
+
+(typeattribute chronyd_obj_type)
+
+(block chronyc
+	(blockinherit app_blk)
+
+	(typeattributeset chronyd_subj_type subj)
+
+	(roleattributeset chronyd_chronyc_role sys.role)
+
+	(roletype chronyd_chronyc_role subj)
+
+	(call chronyd_read_config_files (subj))
+
+	(call sys_read_crypto_sysctl_files (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional chronyc_optional_dhclient
+		(call dhclient_read_var_lib (subj)))
+
+	(optional chronyc_optional_sd
+		(call sd_daemon (subj cmd_file))))
+
+(block chronyd
+	(blockinherit subj_common_blk)
+
+	(typeattributeset chronyd_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset chronyd_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset chronyd_obj_type runtime_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset chronyd_obj_type var_lib_file)
+
+	(blockinherit file_var_log_obj_blk)
+
+	(typeattributeset chronyd_obj_type var_log_file)
+
+	(optional chronyd_optional_logrotate
+		(call logrotate_var_log_obj_type (var_log_file)))
+
+	(allow subj self (capability (sys_time setuid setgid fsetid)))
+	(allow subj self (process (setcap)))
+	(allow subj self rw_fifo_file_perms)
+
+	(allow subj config_file (file (setattr)))
+	(allow subj config_file append_file_perms)
+	(allow subj config_file read_file_perms)
+
+	(call chronyd_manage_runtime_files (subj))
+	(call chronyd_runtime_obj_type_transition_runtime (subj))
+
+	(call chronyd_manage_var_lib (subj))
+	(call chronyd_var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj var_log_file manage_dir_perms)
+	(allow subj var_log_file (file (setattr)))
+	(allow subj var_log_file append_file_perms)
+	(allow subj var_log_file create_file_perms)
+	(allow subj var_log_file read_file_perms)
+
+	(call chronyd_var_log_obj_type_transition_var_log (subj))
+
+	(call chronyd_udp_bind_chrony_cmdmon_port (subj))
+
+	(call sys_read_crypto_sysctl_files (subj))
+
+	(call cmd_exec_shell (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call net_udp_bind_generic_node (subj))
+
+	(call term_use_inherited_unallocated_ttys (subj))
+
+	(call miscfile_read_locale (subj))
+	(call miscfile_read_network (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call ntp_udp_bind_ntp_port (subj))
+
+	(optional chronyd_optional_dhclient
+		(call dhclient_read_var_lib (subj)))
+
+	(optional chronyd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(call sd_daemon_pid_obj_type (runtime_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset chronyd_obj_type unit_file)
+
+		(allow chronyd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional chronyd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))
+
+(block chrony_cmdmon
+	(blockinherit net_reserved_port_obj_blk))
+
+(block chronyd_helper
+	(blockinherit cmd_obj_blk)
+
+	(optional chronyd_helper_optional_sd
+		(call sd_daemon (chronyd.subj cmd_file))))
+
+(optional chronyd_enable_status_start_sd_unit_subj_type_optional_sd
+	(allow chronyd_enable_status_start_sd_unit_subj_type chronyd.unit_file (service (enable status start))))
+
+(allow chronyd_adm_subj_type chronyd_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (chronyd_adm_subj_type chronyd_subj_type))
+
+(call file_search_runtime (chronyd_adm_subj_type))
+
+(allow chronyd_adm_subj_type chronyd_obj_type manage_file_perms)
+(allow chronyd_adm_subj_type chronyd_obj_type manage_dir_perms)
+(allow chronyd_adm_subj_type chronyd_obj_type manage_lnk_file_perms)
+
+(allow chronyd_adm_subj_type chronyd_obj_type relabel_file_perms)
+(allow chronyd_adm_subj_type chronyd_obj_type relabel_dir_perms)
+(allow chronyd_adm_subj_type chronyd_obj_type relabel_lnk_file_perms)

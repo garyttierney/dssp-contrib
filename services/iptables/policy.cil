@@ -1,0 +1,91 @@
+(roleattribute iptables_role)
+
+(typeattribute iptables_adm_subj_type)
+
+(typeattribute iptables_obj_type)
+
+(block iptables
+	(blockinherit app_blk)
+
+	(roleattributeset iptables_role sys.role)
+
+	(roletype iptables_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset iptables_obj_type config_file)
+
+	(blockinherit file_runtime_lock_obj_blk)
+
+	(typeattributeset iptables_obj_type runtime_lock_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset iptables_obj_type var_lib_file)
+
+	(allow subj self (capability (net_raw net_admin dac_override)))
+	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_rawip_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+	(allow subj self rw_fifo_file_perms)
+
+	(call iptables_exec (subj))
+
+	(call iptables_manage_config (subj))
+	(call iptables_config_obj_type_transition_config (subj))
+
+	(call iptables_manage_runtime_lock_files (subj))
+	(call iptables_runtime_lock_obj_type_transition_runtime_lock (subj))
+
+	(call iptables_manage_var_lib (subj))
+	(call iptables_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_read_kernel_sysctl_files (subj))
+	(call sys_read_usermodehelper_sysctl_files (subj))
+	(call sys_request_load_module (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call file_read_config_files (subj))
+
+	(call fs_getattr_proc_fs (subj))
+
+	(call kmod_read_config (subj))
+	(call kmod_run (subj iptables_role))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional iptables_optional_iptools
+		(call iptools_read_config_files (subj)))
+
+	(optional iptables_optional_plymouth
+		(call plymouth_exec_plymouth (subj)))
+
+	(optional iptables_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset iptables_obj_type unit_file)
+
+		(allow iptables_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow iptables_adm_subj_type iptables.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (iptables_adm_subj_type iptables.subj))
+
+(call file_search_runtime_lock (iptables_adm_subj_type))
+(call file_search_var_lib (iptables_adm_subj_type))
+
+(allow iptables_adm_subj_type iptables_obj_type manage_file_perms)
+(allow iptables_adm_subj_type iptables_obj_type manage_dir_perms)
+(allow iptables_adm_subj_type iptables_obj_type manage_lnk_file_perms)
+
+(allow iptables_adm_subj_type iptables_obj_type relabel_file_perms)
+(allow iptables_adm_subj_type iptables_obj_type relabel_dir_perms)
+(allow iptables_adm_subj_type iptables_obj_type relabel_lnk_file_perms)

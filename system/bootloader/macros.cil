@@ -1,0 +1,126 @@
+(macro bootloader_exec ((type ARG1))
+	(call can_exec (ARG1 bootloader.cmd_file)))
+
+(macro bootloader_auto_subj_type_transition ((type ARG1))
+	(call bootloader_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 bootloader.cmd_file bootloader.subj)))
+
+(macro bootloader_send_signal ((type ARG1))
+	(allow ARG1 bootloader.subj (process (signal))))
+
+(macro bootloader_run ((type ARG1)(role ARG2))
+	(call bootloader_auto_subj_type_transition (ARG1))
+	(roleattributeset bootloader_role ARG2))
+
+(macro bootloader_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 bootloader.config_file search_dir_perms))
+
+(macro bootloader_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 bootloader.config_file list_dir_perms))
+
+(macro bootloader_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 bootloader.config_file bootloader.config_file)))
+
+(macro bootloader_manage_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call manage_files_pattern (ARG1 bootloader.config_file bootloader.config_file)))
+
+(macro bootloader_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 bootloader.config_file bootloader.config_file)))
+
+(macro bootloader_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 bootloader.config_file read_file_perms)
+	(allow ARG1 bootloader.config_file list_dir_perms)
+	(allow ARG1 bootloader.config_file read_lnk_file_perms))
+
+(macro bootloader_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 bootloader.config_file manage_file_perms)
+	(allow ARG1 bootloader.config_file manage_dir_perms)
+	(allow ARG1 bootloader.config_file manage_lnk_file_perms))
+
+(macro bootloader_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 bootloader.config_file relabel_file_perms)
+	(allow ARG1 bootloader.config_file relabel_dir_perms)
+	(allow ARG1 bootloader.config_file relabel_lnk_file_perms))
+
+(macro bootloader_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 bootloader.var_log_file read_file_perms))
+
+(macro bootloader_manage_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 bootloader.var_log_file manage_file_perms))
+
+(macro bootloader_relabel_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 bootloader.var_log_file relabel_file_perms))
+
+(macro bootloader_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 bootloader.var_log_file file "grubby")))
+
+(macro bootloader_search_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 bootloader.tmpfs_file search_dir_perms))
+
+(macro bootloader_list_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 bootloader.tmpfs_file list_dir_perms))
+
+(macro bootloader_read_tmpfs_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 bootloader.tmpfs_file bootloader.tmpfs_file)))
+
+(macro bootloader_manage_tmpfs_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call manage_files_pattern (ARG1 bootloader.tmpfs_file bootloader.tmpfs_file)))
+
+(macro bootloader_read_tmpfs_lnk_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_lnk_files_pattern (ARG1 bootloader.tmpfs_file bootloader.tmpfs_file)))
+
+(macro bootloader_read_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 bootloader.tmpfs_file read_file_perms)
+	(allow ARG1 bootloader.tmpfs_file list_dir_perms)
+	(allow ARG1 bootloader.tmpfs_file read_lnk_file_perms))
+
+(macro bootloader_manage_tmpfs ((type ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 bootloader.tmpfs_file manage_file_perms)
+	(allow ARG1 bootloader.tmpfs_file manage_dir_perms)
+	(allow ARG1 bootloader.tmpfs_file manage_lnk_file_perms))
+
+(macro bootloader_relabel_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 bootloader.tmpfs_file relabel_file_perms)
+	(allow ARG1 bootloader.tmpfs_file relabel_dir_perms)
+	(allow ARG1 bootloader.tmpfs_file relabel_lnk_file_perms))
+
+(macro bootloader_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 bootloader.tmpfs_file dir "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 bootloader.tmpfs_file file "*")))
+
+(macro bootloader_read_boot_files ((type ARG1))
+	(call file_search_boot (ARG1))
+	(allow ARG1 bootloader.boot_file read_file_perms))
+
+(macro bootloader_manage_boot_files ((type ARG1))
+	(call file_rw_boot_dirs (ARG1))
+	(allow ARG1 bootloader.boot_file manage_file_perms))
+
+(macro bootloader_relabel_boot_files ((type ARG1))
+	(call file_search_boot (ARG1))
+	(allow ARG1 bootloader.boot_file relabel_file_perms))
+
+(macro bootloader_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 bootloader.subj read_file_perms)
+	(allow ARG1 bootloader.subj list_dir_perms)
+	(allow ARG1 bootloader.subj read_lnk_file_perms))

@@ -1,0 +1,84 @@
+(roleattribute bootloader_role)
+
+(block bootloader
+	(blockinherit app_blk)
+
+	(roleattributeset bootloader_role sys.role)
+
+	(roletype bootloader_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_var_log_obj_blk)
+
+	(blockinherit file_tmpfs_obj_blk)
+
+	(blockinherit file_boot_obj_blk)
+
+	(allow subj self (capability (dac_override sys_admin)))
+	(allow subj self (process (getsched)))
+
+	(call bootloader_read_config (subj))
+
+	(allow subj var_log_file (file (setattr)))
+	(allow subj var_log_file append_file_perms)
+	(allow subj var_log_file create_file_perms)
+	(allow subj var_log_file delete_file_perms)
+	(allow subj var_log_file read_file_perms)
+
+	(call bootloader_var_log_obj_type_transition_var_log (subj))
+
+	(call bootloader_manage_tmpfs (subj))
+	(call bootloader_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call bootloader_exec (subj))
+
+	(call sys_read_mdstat_proc_files (subj))
+	(call sys_list_mountpoints (subj))
+
+	(call cmd_list_cmd (subj))
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_getattr_all (subj))
+	(call dev_read_urandom (subj))
+	(call dev_rw_lvm_control (subj))
+
+	(call file_manage_boot_files (subj))
+	(call file_read_config (subj))
+	(call file_read_data (subj))
+	(call file_read_boot_lnk_files (subj))
+
+	(call fs_getattr_devpts_chr_files (subj))
+	(call fs_getattr_tmpfs_fs (subj))
+	(call fs_manage_dosfs_files (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
+
+	(call storage_read_all (subj))
+
+	(call fstools_manage_runtime (sub))
+	(call fstools_run (subj bootloader_role))
+	(call fstools_runtime_obj_type_transition_runtime (subj))
+
+	(call kmod_run (subj bootloader_role))
+
+	(call lvm_run (subj bootloader_role))
+
+	(call miscfile_read_modules (subj))
+
+	(call mount_exec (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call udevadm_run (subj bootloader_role))
+
+	(optional bootloader_optional_rpm
+		(call rpm_rw_inherited_tmpfs_files (subj))
+		(call rpm_rw_inherited_fifo_files (subj)))
+
+	(optional bootloader_optional_sd
+		(call sd_search_unit_runtime (subj)))
+
+	(optional bootloader_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))

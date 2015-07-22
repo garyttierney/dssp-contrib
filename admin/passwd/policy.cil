@@ -29,10 +29,11 @@
 (call miscfile_manage_passwords (passwd_subj_type))
 (call miscfile_manage_shadow (passwd_subj_type))
 (call miscfile_read_locale (passwd_subj_type))
+(call miscfile_read_utmp_runtime_files (passwd_subj_type))
 
 (call nss_client_subj_type (passwd_subj_type))
 
-(call pam_read_config_files (passwd_subj_type))
+(call pam_read_config (passwd_subj_type))
 
 (optional passwd_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (passwd_subj_type)))

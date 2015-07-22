@@ -19,17 +19,9 @@
 
 	(allow ARG3 ARG2 (process (signal)))
 
-	(allow ARG2 ARG3 (process (ptrace noatsecure signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (noatsecure signal)))
 
 	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
 (macro run_use_fd_all_subj ((type ARG1))
 	(allow ARG1 run_subj_type (fd (use))))
-
-(macro run_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call run_use_fd_all_subj (ARG1))
-	(allow ARG1 run_subj_type (unix_stream_socket (getattr ioctl read write))))
-
-(macro run_getattr_all_subj ((type ARG1))
-	(allow ARG1 run_subj_type (process (getattr))))

@@ -32,6 +32,19 @@
 (macro app_getattr ((type ARG1))
 	(allow ARG1 app_subj_type (process (getattr))))
 
+(macro app_ptrace ((type ARG1))
+	(allow ARG1 app_subj_type (process (ptrace))))
+
+(macro app_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 app_subj_type read_file_perms)
+	(allow ARG1 app_subj_type list_dir_perms)
+	(allow ARG1 app_subj_type read_lnk_file_perms))
+
+(macro app_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call app_use_fd (ARG1))
+	(allow ARG1 app_subj_type (unix_stream_socket (getattr ioctl read write))))
+
 (macro app_send_signal ((type ARG1))
 	(allow ARG1 app_subj_type (process (signal))))
 
@@ -46,15 +59,6 @@
 
 (macro app_use_fd ((type ARG1))
 	(allow ARG1 app_subj_type (fd (use))))
-
-(macro app_rw_inherited_unix_stream_sockets ((type ARG1))
-	(allow ARG1 app_subj_type (unix_stream_socket (getattr ioctl read write))))
-
-(macro app_read_state ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 app_subj_type read_file_perms)
-	(allow ARG1 app_subj_type list_dir_perms)
-	(allow ARG1 app_subj_type read_lnk_file_perms))
 
 (macro app ((type ARG1)(type ARG2))
 	(call app_subj_type (ARG1))

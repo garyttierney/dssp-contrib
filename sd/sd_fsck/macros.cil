@@ -6,7 +6,7 @@
 	(call auto_subj_type_transition_pattern (ARG1 sd_fsck.cmd_file sd_fsck.subj)))
 
 (macro sd_fsck_send_signal ((type ARG1))
-    (allow ARG1 sd_fsck.subj (process (signal))))
+	(allow ARG1 sd_fsck.subj (process (signal))))
 
 (macro sd_fsck_search_runtime ((type ARG1))
 	(call file_search_runtime (ARG1))

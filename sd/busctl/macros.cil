@@ -21,8 +21,7 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
 
@@ -34,10 +33,3 @@
 
 (macro busctl_send_signal ((type ARG1))
 	(allow ARG1 busctl.subj (process (signal))))
-
-(macro busctl_use_fd_all_subj ((type ARG1))
-	(allow ARG1 busctl_subj_type (fd (use))))
-
-(macro busctl_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call busctl_use_fd_all_subj (ARG1))
-	(allow ARG1 busctl_subj_type (unix_stream_socket (getattr ioctl read write))))

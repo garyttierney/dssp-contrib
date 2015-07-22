@@ -166,14 +166,12 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
 	(allow ARG3 self (key (view read search write link)))
 
 	(call ssh_rw_all_sshd_inherited_tcp_sockets (ARG2))
-	(call ssh_rw_all_sshd_inherited_unix_stream_sockets (ARG2))
 	(call ssh_rw_all_sshd_inherited_unix_dgram_sockets (ARG2))
 
 	(call ssh_manage_client_home (ARG2))
@@ -190,8 +188,7 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal))))
 

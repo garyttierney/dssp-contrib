@@ -86,8 +86,7 @@
 	(allow ARG3 ARG2 (unix_stream_socket (getattr ioctl read write)))
 	(call ps_subj_pattern (ARG3 ARG2))
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(call sessbus_manage_tmpfs (ARG2))
 	(call sessbus_relabel_tmpfs (ARG2))

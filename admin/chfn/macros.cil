@@ -17,8 +17,7 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
 

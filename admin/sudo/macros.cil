@@ -31,11 +31,10 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
-	(allow ARG3 ARG2 (key (search create link write)))
+	(allow ARG3 ARG2 (key (view read search write link)))
 
 	(call chkpwd_run (ARG3 ARG1)))
 
@@ -44,8 +43,7 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (ARG2 ARG3))
+	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal))))
 
@@ -178,9 +176,6 @@
 
 (macro sudo_tmpfs_obj_type_transition_tmpfs ((type ARG1)(name ARG2))
 	(call fs_tmpfs_obj_type_transition (ARG1 sudo.tmpfs_user_file file ARG2)))
-
-(macro sudo_send_signal_all_subj ((type ARG1))
-	(allow ARG1 sudo_subj_type (process (signal))))
 
 (macro sudo_send_sigchld_all_subj ((type ARG1))
 	(allow ARG1 sudo_subj_type (process (sigchld))))

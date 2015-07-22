@@ -35,8 +35,7 @@
 
 	(call miscfile_read_locale (subj))
 
-	(optional dmcrypt_optional_sd_udevd
-		(call sd_udevd_client_subj_type (subj))))
+	(call udev_client_subj_type (subj)))
 
 (block dmsetup
 	(blockinherit app_blk)
@@ -55,6 +54,8 @@
 
 	(call dm_rw_dmcrypt_sem (subj))
 
+	(call udev_client_subj_type (subj))
+
 	(optional dmsetup_optional_lvm
 		(call lvm_rw_sem (subj)))
 
@@ -65,7 +66,6 @@
 		(call sd_cryptsetup_rw_sem (subj)))
 
 	(optional dmsetup_optional_sd_udevd
-		(call sd_udevd_client_subj_type (subj))
 		(call sd_udevd_rw_inherited_udp_sockets (subj)))
 
 	(optional dmsetup_optional_unconfined

@@ -1,0 +1,62 @@
+(roleattribute udevadm_role)
+
+(typeattribute udevadm_client_subj_type)
+
+(block udevadm
+	(blockinherit app_blk)
+
+	(roleattributeset udevadm_role sys.role)
+
+	(roletype udevadm_role subj)
+
+	(allow subj self (capability (dac_override net_admin)))
+
+	(call udevadm_client_subj_type (subj))
+
+	(call dev_rw_all (subj))
+	(call dev_relabel_all (subj))
+	(call dev_setattr_all (subj))
+
+	(call fs_list_sysfs (subj))
+	(call fs_manage_devtmpfs_dirs (subj))
+	(call fs_manage_devtmpfs_files (subj))
+	(call fs_manage_devtmpfs_lnk_files (subj))
+	(call fs_manage_devtmpfs_blk_files (subj))
+	(call fs_manage_devtmpfs_chr_files (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+	(call fs_relabelfrom_devtmpfs_blk_files (subj))
+	(call fs_relabelfrom_devtmpfs_chr_files (subj))
+	(call fs_rw_sysfs_files (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call storage_read_all (subj))
+
+	(call kmod_read_config (subj))
+
+	(call miscfile_read_modules (subj))
+	(call miscfile_read_passwords (subj))
+
+	(call nss_read_config_files (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
+
+	(call udev_manage_config (subj))
+	(call udev_manage_runtime (subj))
+
+	(optional udevadm_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional udevadm_optional_sd_networkd
+		(call sd_networkd_read_config (subj))))
+
+(call dev_read_urandom (udevadm_client_subj_type))
+
+(call udev_client_subj_type (udevadm_client_subj_type))
+
+(optional udevadm_client_subj_type_optional_sd
+	(call sd_search_runtime (udevadm_client_subj_type)))
+
+(optional udevadm_client_subj_type_optional_sd_udevd
+	(call sd_udevd_stream_connect (udevadm_client_subj_type)))

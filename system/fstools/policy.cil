@@ -53,6 +53,8 @@
 	(call seutil_read_file_context_files (subj))
 	(call seutil_read_selinux_config_files (subj))
 
+	(call udev_client_subj_type (subj))
+
 	(optional fstools_optional_mount
 		(booleanif (mount_any_file) (true
 			(call file_rw_all_files_except (subj)))))
@@ -73,7 +75,4 @@
 		(call rpm_rw_inherited_tmpfs_files (subj)))
 
 	(optional fstools_optional_sd
-		(call sd_daemon (subj cmd_file)))
-
-	(optional fstools_optional_sd_udevd
-		(call sd_udevd_client_subj_type (subj))))
+		(call sd_daemon (subj cmd_file))))

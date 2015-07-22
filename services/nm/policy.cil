@@ -92,6 +92,8 @@
 
 	(call sctl_read_config (subj))
 
+	(call udev_client_subj_type (subj))
+
 	(optional nm_optional_dhclient
 		(call dhclient_delete_runtime_files (subj))
 		(call dhclient_read_config_files (subj))
@@ -120,9 +122,6 @@
 
 	(optional nm_optional_sd_resolved
 		(call sd_resolved_manage_runtime_files (subj)))
-
-	(optional nm_optional_sd_udevd
-		(call sd_udevd_client_subj_type (subj)))
 
 	(optional nm_optional_sysbus
 		(call sysbus_acquire_service (subj))

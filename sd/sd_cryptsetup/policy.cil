@@ -38,9 +38,9 @@
 
 	(call sd_journald_client_subj_type (subj))
 
-	(call sd_udevd_client_subj_type (subj))
+	(call seutil_search_selinux_config (subj))
 
-	(call seutil_search_selinux_config (subj)))
+	(call udev_client_subj_type (subj)))
 
 (allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file (service (stop status disable enable reload start)))
 

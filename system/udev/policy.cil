@@ -1,0 +1,17 @@
+(typeattribute udev_client_subj_type)
+
+(block udev
+        (blockinherit file_config_obj_blk)
+
+        (blockinherit file_runtime_obj_blk)
+
+	(optional udev_optional_sd
+		(call sd_socket_activated_obj_type (runtime_file))))
+
+(block udev_helper
+        (blockinherit cmd_obj_blk))
+
+(allow udev_client_subj_type self create_netlink_kobject_uevent_socket_perms)
+
+(call udev_read_config (udev_client_subj_type))
+(call udev_read_runtime (udev_client_subj_type))

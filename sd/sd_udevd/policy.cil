@@ -1,25 +1,12 @@
 (typeattribute sd_udevd_adm_subj_type)
-(typeattribute sd_udevd_client_subj_type)
-
-(typeattribute sd_udevd_obj_type)
 
 (block sd_udevd
 	(blockinherit sd_daemon_blk)
 
 	(call sd_netlink_socket_activated (subj netlink_kobject_uevent_socket))
-	(call sd_unix_stream_socket_activated (subj runtime_file))
+	(call sd_unix_stream_socket_activated_subj_type (subj))
 
 	(blockinherit sd_unit_obj_blk)
-
-	(typeattributeset sd_udevd_obj_type unit_file)
-
-	(blockinherit file_config_obj_blk)
-
-	(typeattributeset sd_udevd_obj_type config_file)
-
-	(blockinherit file_runtime_obj_blk)
-
-	(typeattributeset sd_udevd_obj_type runtime_file)
 
 	(allow subj self (capability (dac_override chown sys_admin net_admin sys_rawio fsetid fowner)))
 	(allow subj self (capability2 (block_suspend)))
@@ -28,9 +15,6 @@
 	(allow subj self (netlink_route_socket (nlmsg_write)))
 	(allow subj self create_netlink_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept)))
-
-	(call sd_udevd_manage_runtime (subj))
-	(call sd_udevd_runtime_obj_type_transition_runtime (subj))
 
 	(call sys_link_keyring (subj))
 	(call sys_load_kernel_module_subj_type (subj))
@@ -82,13 +66,15 @@
 
 	(call sd_logind_read_runtime (subj))
 
-	(call sd_udevd_exec_sd_udevd_helper (subj))
-	(call sd_udevd_read_config (subj))
-
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 
 	(call systemctl_exec (subj))
+
+	(call udev_exec_udev_helper (subj))
+	(call udev_read_config (subj))
+	(call udev_manage_runtime (subj))
+	(call udev_runtime_obj_type_transition_runtime (subj))
 
 	(optional sd_udevd_optional_alsa
 		(call alsa_auto_subj_type_transition_alsactl (subj))
@@ -109,27 +95,16 @@
 	(optional sd_udevd_optional_sd_vconsole
 		(call sd_vconsole_auto_subj_type_transition (subj))))
 
-(block sd_udevd_helper
-	(blockinherit cmd_obj_blk))
-
-(allow sd_udevd_client_subj_type self create_netlink_kobject_uevent_socket_perms)
-
-(call sd_udevd_read_config (sd_udevd_client_subj_type))
-(call sd_udevd_read_runtime (sd_udevd_client_subj_type))
-
 (allow sd_udevd_adm_subj_type sd_udevd.unit_file (service (stop status disable enable reload start)))
 
 (allow sd_udevd_adm_subj_type sd_udevd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_udevd_adm_subj_type sd_udevd.subj))
 
-(call file_search_runtime (sd_udevd_adm_subj_type))
+(call udev_manage_config (sd_udevd_adm_subj_type))
+(call udev_relabel_config (sd_udevd_adm_subj_type))
+(call udev_manage_runtime (sd_udevd_adm_subj_type))
+(call udev_relabel_runtime (sd_udevd_adm_subj_type))
 
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_file_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_dir_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_lnk_file_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type manage_sock_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd.unit_file manage_file_perms)
 
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_file_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_dir_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_lnk_file_perms)
-(allow sd_udevd_adm_subj_type sd_udevd_obj_type relabel_sock_file_perms)
+(allow sd_udevd_adm_subj_type sd_udevd.unit_file relabel_file_perms)

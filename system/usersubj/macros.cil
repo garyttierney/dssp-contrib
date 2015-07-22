@@ -24,7 +24,7 @@
 	(roletype role subj)
 
 	(call sys_role (role))
-	(call rbacsep_exemption_role (role)))
+	(call rbacsep_exempt_role (role)))
 
 (block usersubj_base_login_blk
 	(blockabstract usersubj_base_login_blk)
@@ -130,7 +130,7 @@
 	(call subj_common_type (ARG2))
 	(call usersubj_common_type (ARG2))
 	(call sys_role (ARG1))
-	(call rbacsep_exemption_role (ARG1))
+	(call rbacsep_exempt_role (ARG1))
 	(roletype ARG1 ARG2))
 
 (macro usersubj_base_login ((user ARG1)(role ARG2)(type ARG3))

@@ -36,7 +36,11 @@
 	(block user_sessbus
 		(blockinherit sessbus_subj_blk)
 
-		(call sessbus_role_pattern (user.role user_subj_type subj))))
+		(call sessbus_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_ssh_agent_optional_ssh
 	(block user_ssh_agent

@@ -1,0 +1,10 @@
+(macro wheel_rw_inherited_fifo_files ((type ARG1))
+	(call wheel_use_fd (ARG1))
+	(allow ARG1 wheel.subj rw_inherited_fifo_file_perms))
+
+(macro wheel_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call wheel_use_fd (ARG1))
+	(allow ARG1 wheel.subj (unix_stream_socket (getattr ioctl read write))))
+
+(macro wheel_use_fd ((type ARG1))
+	(allow ARG1 wheel.subj (fd (use))))

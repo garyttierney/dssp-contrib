@@ -1,0 +1,170 @@
+(typeattribute wheel_subj_type)
+
+(block wheel
+	(blockinherit usersubj_base_login_blk)
+
+	(call usersubj_mls (id systemlow (systemlow systemhigh)))
+
+        (typeattributeset wheel_subj_type subj)
+
+	(optional wheel_optional_coredumpctl
+		(call coredumpctl_run (subj role)))
+
+	(optional wheel_optional_networkctl
+		(call networkctl_run (subj role)))
+
+	(optional wheel_optional_run
+		(call run_exec (subj)))
+
+	(optional wheel_optional_ssh
+		(call ssh_login_subj_type (subj))))
+
+(optional wheel_analyze_optional_analyze
+	(block wheel_analyze
+		(blockinherit analyze_subj_blk)
+
+		(call analyze_role_pattern (wheel.role wheel_subj_type wheel_analyze.subj))))
+
+(optional wheel_analyze_optional_ssh
+		(allow wheel_ssh_client.subj wheel_analyze.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_analyze.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_analyze.subj wheel_ssh_client.subj)))
+
+(optional wheel_busctl_optional_busctl
+	(block wheel_busctl
+		(blockinherit busctl_subj_blk)
+
+		(call busctl_role_pattern (wheel.role busctl_subj_type wheel_busctl.subj))))
+
+(optional wheel_busctl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_busctl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_busctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))
+
+(optional wheel_hostnamectl_optional_hostnamectl
+	(block wheel_hostnamectl
+		(blockinherit hostnamectl_subj_blk)
+
+		(call hostnamectl_role_pattern (wheel.role wheel_subj_type wheel_hostnamectl.subj))))
+
+(optional wheel_hostnamectl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_hostnamectl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_hostnamectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_hostnamectl.subj wheel_ssh_client.subj)))
+
+(optional wheel_journalctl_optional_journalctl
+	(block wheel_journalctl
+		(blockinherit wheel_subj_blk)
+
+		(call journalctl_role_pattern (wheel.role wheel_subj_type wheel_journalctl.subj))))
+
+(optional wheel_localectl_optional_localectl
+	(block wheel_localectl
+		(blockinherit localectl_subj_blk)
+
+		(call localectl_role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
+
+(optional wheel_localectl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_localectl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_localectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_localectl.subj wheel_ssh_client.subj)))
+
+(optional wheel_loginctl_optional_loginctl
+	(block wheel_loginctl
+		(blockinherit loginctl_subj_blk)
+
+		(call loginctl_role_pattern (wheel.role wheel_subj_type wheel_loginctl.subj))))
+
+(optional wheel_loginctl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_loginctl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_loginctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_loginctl.subj wheel_ssh_client.subj)))
+
+(optional wheel_machinectl_optional_machinectl
+	(block wheel_machinectl
+		(blockinherit machinectl_subj_blk)
+
+		(call machinectl_role_pattern (wheel.role wheel_subj_type wheel_machinectl.subj))))
+
+(optional wheel_machinectl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_machinectl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_machinectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_machinectl.subj wheel_ssh_client.subj)))
+
+(optional wheel_passwd_optional_passwd
+	(block wheel_passwd
+		(blockinherit wheel_subj_blk)
+
+		(call passwd_role_pattern (wheel.role wheel_subj_type subj))))
+
+(block wheel_sduser
+	(blockinherit sduser_subj_blk)
+
+	(call sduser_role_pattern (wheel.role wheel.subj subj))
+
+	(typeattributeset wheel_subj_type subj))
+
+(optional wheel_sessbus_optional_sessbus
+	(block wheel_sessbus
+		(blockinherit sessbus_subj_blk)
+
+		(call sessbus_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_ssh_agent_optional_ssh
+	(block wheel_ssh_agent
+		(blockinherit ssh_agent_subj_blk)
+
+		(call ssh_role_pattern_ssh_agent (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_ssh_client_optional_ssh
+	(block wheel_ssh_client
+		(blockinherit ssh_client_subj_blk)
+
+		(call ssh_role_pattern_ssh_client (wheel.role wheel_subj_type subj))
+
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_sudo_optional_sudo
+	(block wheel_sudo
+		(blockinherit sudo_subj_blk)
+
+		(call sudo_role_pattern_sudo (wheel.role wheel_subj_type wheel_sudo.subj))))
+
+(optional wheel_systemctl_optional_systemctl
+	(block wheel_systemctl
+		(blockinherit systemctl_subj_blk)
+
+		(call systemctl_role_pattern (wheel.role wheel_subj_type wheel_systemctl.subj))))
+
+(optional wheel_systemctl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_systemctl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_systemctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_systemctl.subj wheel_ssh_client.subj)))
+
+(optional wheel_timedatectl_optional_timedatectl
+	(block wheel_timedatectl
+		(blockinherit timedatectl_subj_blk)
+
+		(call timedatectl_role_pattern (wheel.role wheel_subj_type wheel_timedatectl.subj))))
+
+(optional wheel_timedatectl_optional_ssh
+		(allow wheel_ssh_client.subj wheel_timedatectl.subj (fd (use)))
+		(allow wheel_ssh_client.subj wheel_timedatectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_timedatectl.subj wheel_ssh_client.subj)))

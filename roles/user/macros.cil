@@ -1,0 +1,10 @@
+(macro user_rw_inherited_fifo_files ((type ARG1))
+	(call user_use_fd (ARG1))
+	(allow ARG1 user.subj rw_inherited_fifo_file_perms))
+
+(macro user_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call user_use_fd (ARG1))
+	(allow ARG1 user.subj (unix_stream_socket (getattr ioctl read write))))
+
+(macro user_use_fd ((type ARG1))
+	(allow ARG1 user.subj (fd (use))))

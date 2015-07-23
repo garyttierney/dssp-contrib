@@ -127,8 +127,8 @@
 		(call sysbus_acquire_service (subj))
 		(call sysbus_read_config_files (subj)))
 
-	(optional nm_optional_unconfined
-		(call unconfined_read_state_subj (subj))))
+	(optional nm_optional_unconfinedsubj
+		(call unconfinedsubj_read_state (subj))))
 
 (block nm_disp
 	(blockinherit subj_common_blk)

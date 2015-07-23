@@ -253,11 +253,11 @@
 		(call usersubj_link_keyring_common_login_subj (subj))
 		(call usersubj_use_term (subj)))
 
-	(optional sd_optional_unconfinedusersubj
-		(call unconfinedusersubj_noatsecure (subj))
-		(call unconfinedusersubj_send_sigchld (subj))
-		(call unconfinedusersubj_create_keyring (subj))
-		(call unconfinedusersubj_shell_manual_subj_type_transition (subj))))
+	(optional sd_optional_exempt
+		(call exempt_noatsecure (subj))
+		(call exempt_send_sigchld (subj))
+		(call exempt_create_keyring (subj))
+		(call exempt_shell_manual_subj_type_transition (subj))))
 
 (block sd_unit
 	(blockinherit sd_unit_obj_blk)

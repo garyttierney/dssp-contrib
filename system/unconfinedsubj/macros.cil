@@ -1,0 +1,32 @@
+(macro unconfinedsubj_type ((type ARG1))
+	(typeattributeset unconfinedsubj_type ARG1))
+
+(macro unconfinedsubj_getsched ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (process (getsched))))
+
+(macro unconfinedsubj_getsession ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (process (getsession))))
+
+(macro unconfinedsubj_read_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 unconfinedsubj_type read_file_perms)
+	(allow ARG1 unconfinedsubj_type list_dir_perms)
+	(allow ARG1 unconfinedsubj_type read_lnk_file_perms))
+
+(macro unconfinedsubj_send_signal ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (process (signal))))
+
+(macro unconfinedsubj_send_signull ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (process (signull))))
+
+(macro unconfinedsubj_setsched ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (process (setsched))))
+
+(macro unconfinedsubj_rw_sem ((type ARG1))
+	(allow ARG1 unconfinedsubj_type rw_sem_perms))
+
+(macro unconfinedsub_rw_shm ((type ARG1))
+	(allow ARG1 unconfinedsubj_type rw_shm_perms))
+
+(macro unconfinedsubj_use_fd ((type ARG1))
+	(allow ARG1 unconfinedsubj_type (fd (use))))

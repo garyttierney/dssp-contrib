@@ -71,10 +71,10 @@
 
 		(typeattributeset sysbus_obj_type unit_file)
 
-		(allow sysbus_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow sysbus_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
-	(optional sysbus_optional_unconfined
-		(call unconfined_use_fd_subj (subj)))
+	(optional sysbus_optional_unconfinedsubj
+		(call unconfinedsubj_use_fd (subj))))
 
 (allow sysbus_dbus_subj_type self create_netlink_selinux_socket_perms)
 (allow sysbus_dbus_subj_type self (unix_stream_socket (listen accept)))

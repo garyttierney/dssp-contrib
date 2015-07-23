@@ -1,0 +1,38 @@
+(typeattribute unconfinedsubj_type)
+
+(call dev_unconfined_subj_type (unconfinedsubj_type))
+(call file_unconfined_subj_type (unconfinedsubj_type))
+(call fs_unconfined_subj_type (unconfinedsubj_type))
+(call net_unconfined_subj_type (unconfinedsubj_type))
+(call sec_unconfined_subj_type (unconfinedsubj_type))
+(call storage_unconfined_subj_type (unconfinedsubj_type))
+(call subj_unconfined_type (unconfinedsubj_type))
+(call sys_unconfined_subj_type (unconfinedsubj_type))
+
+(call miscfile_manage_shadow (unconfinedsubj_type))
+(call miscfile_relabel_shadow (unconfinedsubj_type))
+
+(call seutil_manage_policy_config (unconfinedsubj_type))
+(call seutil_relabel_policy_config (unconfinedsubj_type))
+
+(optional unconfinedsubj_type_optional_audispd
+	(call audispd_manage_config (unconfinedsubj_type))
+	(call audispd_relabel_config (unconfinedsubj_type)))
+
+(optional unconfinedsubj_type_optional_auditd
+	(call auditd_manage_config (unconfinedsubj_type))
+	(call auditd_relabel_config (unconfinedsubj_type))
+	(call auditd_manage_var_log (unconfinedsubj_type))
+	(call auditd_relabel_var_log (unconfinedsubj_type)))
+
+(optional unconfinedsubj_type_optional_pam
+	(call pam_unconfined_subj_type (unconfinedsubj_type)))
+
+(optional unconfinedsubj_type_optional_rpm
+	(call rpm_shell_manual_subj_type_transition_rpm_script (unconfinedsubj_type)))
+
+(optional unconfinedsubj_type_optional_sd
+	(call sd_unconfined_subj_type (unconfinedsubj_type)))
+
+(optional unconfinedsubj_type_optional_sysbus
+	(call sysbus_unconfined_subj_type (unconfinedsubj_type)))

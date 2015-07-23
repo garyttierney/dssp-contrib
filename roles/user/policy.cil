@@ -1,0 +1,58 @@
+(typeattribute user_subj_type)
+
+(block user
+	(blockinherit usersubj_base_login_blk)
+
+	(call usersubj_mls (id systemlow (systemlow systemlow)))
+
+        (typeattributeset user_subj_type subj)
+
+	(optional user_optional_journalctl
+		(call journalctl_exec (subj)))
+
+	(optional user_optional_run
+		(call run_exec (subj)))
+
+	(optional user_optional_ssh
+		(call ssh_login_subj_type (subj)))
+
+	(optional user_optional_systemctl
+		(call systemctl_exec (subj))))
+
+(optional user_passwd_optional_passwd
+	(block user_passwd
+		(blockinherit passwd_subj_blk)
+
+		(call passwd_role_pattern (user.role user_subj_type subj))))
+
+(block user_sduser
+	(blockinherit sduser_subj_blk)
+
+	(call sduser_role_pattern (user.role user.subj subj))
+
+	(typeattributeset user_subj_type subj))
+
+(optional user_sessbus_optional_sessbus
+	(block user_sessbus
+		(blockinherit sessbus_subj_blk)
+
+		(call sessbus_role_pattern (user.role user_subj_type subj))))
+
+(optional user_ssh_agent_optional_ssh
+	(block user_ssh_agent
+		(blockinherit ssh_agent_subj_blk)
+
+		(call ssh_role_pattern_ssh_agent (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_ssh_client_optional_ssh
+	(block user_ssh_client
+		(blockinherit ssh_client_subj_blk)
+
+		(call ssh_role_pattern_ssh_client (user.role user_subj_type subj))
+
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))))

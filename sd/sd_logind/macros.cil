@@ -131,6 +131,6 @@
 	(call sd_var_lib_obj_type_transition (ARG1 sd_logind.var_lib_file dir "linger")))
 
 (macro sd_logind_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_logind_adm_subject_type ARG1)
+	(typeattributeset sd_logind_adm_subj_type ARG1)
 	(call sd_daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

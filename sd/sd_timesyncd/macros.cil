@@ -57,7 +57,7 @@
 (macro sd_timesyncd_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
 	(call sd_var_lib_obj_type_transition (ARG1 sd_timesyncd.var_lib_file file "clock")))
 
-(macro sd_timesyncd_admin ((type ARG1)(role ARG2))
-	(typeattributeset timesyncd_adm_subj_type ARG1)
+(macro sd_timesyncd_adm ((type ARG1)(role ARG2))
+	(typeattributeset sd_timesyncd_adm_subj_type ARG1)
 	(call sd_daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

@@ -1,0 +1,499 @@
+(typeattribute sysadm_subj_type)
+
+(block sysadm
+	(blockinherit usersubj_base_priv_login_blk)
+
+	(call usersubj_mls (id systemlow (systemlow systemhigh)))
+
+        (typeattributeset sysadm_subj_type subj)
+
+	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
+	(allow subj self (process (getcap setcap setfscreate)))
+
+	(call sys_manage_var_log_files (subj))
+	(call sys_read_all_proc_files (subj))
+	(call sys_read_all_sysctl_files (subj))
+
+	(call cmd_list_cmd (subj))
+
+	(call dev_getattr_all (subj))
+
+	(call file_manage_boot (subj))
+	(call file_manage_config (subj))
+	(call file_manage_unknown (subj))
+
+	(call fs_getattr_all_fs (subj))
+	(call fs_list_devpts (subj))
+	(call fs_list_devtmpfs (subj))
+	(call fs_read_cgroup_files (subj))
+	(call fs_read_sysfs (subj))
+
+	(call sec_get_all_booleans (subj))
+
+	(call subj_getattr_common_subj (subj))
+	(call subj_read_common_subj_state (subj))
+	(call subj_obj_id_change_exemption_type (subj))
+
+	(call term_use_inherited_unallocated_ttys (subj))
+
+	(call miscfile_manage_cert (subj))
+	(call miscfile_manage_factory (subj))
+	(call miscfile_manage_fonts (subj))
+	(call miscfile_manage_hwdata (subj))
+	(call miscfile_manage_locale (subj))
+	(call miscfile_manage_man (subj))
+	(call miscfile_manage_modules (subj))
+	(call miscfile_manage_network (subj))
+	(call miscfile_manage_passwords (subj))
+	(call miscfile_manage_shadow (subj))
+	(call miscfile_manage_terminfo (subj))
+	(call miscfile_manage_utmp_runtime_files (subj))
+	(call miscfile_manage_wtmp_var_log_files (subj))
+
+	(call seutil_default_context_obj_type_transition_file_context (subj))
+	(call seutil_selinux_config_obj_type_transition_policy_config (subj))
+	(call seutil_selinux_config_obj_type_transition_default_context (subj))
+	(call seutil_selinux_config_obj_type_transition_policy_src (subj))
+	(call seutil_config_obj_type_transition_selinux_config (subj))
+	(call seutil_manage_default_context (subj))
+	(call seutil_manage_file_context (subj))
+	(call seutil_manage_policy_config (subj))
+	(call seutil_manage_policy_src (subj))
+	(call seutil_manage_selinux_config (subj))
+	(call seutil_run_load_policy (sysadm_subj_type role))
+	(call seutil_run_matchpathcon (sysadm_subj_type role))
+	(call seutil_run_setenforce (sysadm_subj_type role))
+	(call seutil_run_setfiles (sysadm_subj_type role))
+	(call seutil_run_setsebool (sysadm_subj_type role))
+
+	(optional sysadm_optional_auditctl
+		(call auditctl_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_auditd
+		(call auditd_adm (subj role))
+		(call auditd_run_augenrules (sysadm_subj_type role))
+		(call auditd_run_ausearch (sysadm_subj_type role)))
+
+	(optional sysadm_optional_authconfig
+		(call authconfig_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_bootloader
+		(call bootloader_manage_config (subj))
+		(call bootloader_manage_boot_files (subj))
+		(call bootloader_manage_var_log_files (subj))
+		(call bootloader_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_chkpwd
+		(call chkpwd_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_chronyd
+		(call chronyd_adm (subj role))
+		(call chronyd_run_chronyc (sysadm_subj_type role)))
+
+	(optional sysadm_optional_coredumpctl
+		(call coredumpctl_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_dhclient
+		(call dhclient_manage_config (subj))
+		(call dhclient_manage_runtime_files (subj))
+		(call dhclient_manage_var_lib (subj)))
+
+	(optional sysadm_optional_dm
+		(call dm_run_dmcrypt (sysadm_subj_type role))
+		(call dm_run_dmsetup (sysadm_subj_type role)))
+
+	(optional sysadm_optional_dns
+		(call dns_manage_resolv_config_files (subj)))
+
+	(optional sysadm_optional_dracut
+		(call dracut_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_dracut_initramfs
+		(call dracut_initramfs_adm (subj role)))
+
+	(optional sysadm_optional_fstools
+		(call fstools_manage_runtime (subj))
+		(call fstools_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_getty
+		(call getty_adm (subj role)))
+
+	(optional sysadm_optional_hostname
+		(call hostname_manage_config_files (subj)))
+
+	(optional sysadm_optional_hwclock
+		(call hwclock_manage_config_files (subj))
+		(call hwclock_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_iptables
+		(call iptables_adm (subj role))
+		(call iptables_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_iptools
+		(call iptools_manage_config (subj))
+		(call iptools_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_networkctl
+		(call networkctl_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_kmod
+		(call kmod_adm (subj role))
+		(call kmod_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_ldconfig
+		(call ldconfig_adm (subj role))
+		(call ldconfig_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_loadkeys
+		(call loadkeys_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_login
+		(call login_adm (subj role)))
+
+	(optional sysadm_optional_logrotate
+		(call logrotate_adm (subj role))
+		(call logrotate_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_lvm
+		(call lvm_adm (subj role))
+		(call lvm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_lvmetad
+		(call lvmetad_adm (subj role)))
+
+	(optional sysadm_optional_lvmpolld
+		(call lvmpolld_adm (subj role)))
+
+	(optional sysadm_optional_mandb
+		(call mandb_adm (subj role))
+		(call mandb_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_md
+		(call md_adm (subj role))
+		(call md_run_mdadm (sysadm_subj_type role)))
+
+	(optional sysadm_optional_mount
+		(call mount_manage_runtime (subj))
+		(call mount_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_nettools
+		(call nettools_adm (subj role))
+		(call nettools_run_arp (sysadm_subj_type role))
+		(call nettools_run_nettools (sysadm_subj_type role))
+		(call nettools_run_ping (sysadm_subj_type role))
+		(call nettools_run_traceroute (sysadm_subj_type role)))
+
+	(optional sysadm_optional_nm
+		(call nm_adm (subj role))
+
+	(optional sysadm_optional_nss
+		(call nss_manage_config_files (subj)))
+
+	(optional sysadm_optional_pam
+		(call pam_adm_subj_type (subj)))
+
+	(optional sysadm_optional_plymouth
+		(call plymouth_adm (subj role))
+		(call plymouth_run_plymouth (sysadm_subj_type role)))
+
+	(optional sysadm_optional_polkit
+		(call polkit_adm (subj role))
+		(call polkit_run_polkit_agent (sysadm_subj_type role))
+		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
+
+	(optional sysadm_optional_rpm
+		(call rpm_adm (subj role))
+		(call rpm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_sctl
+		(call sctl_manage_config (subj))
+		(call sctl_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_sd
+		(call sd_adm (subj role)))
+
+	(optional sysadm_optional_sd_askpwd
+		(call sd_askpwd_adm (subj role)))
+
+	(optional sysadm_optional_sd_autorelabel
+		(call sd_autorelabel_adm (subj role)))
+
+	(optional sysadm_optional_sd_backlight
+		(call sd_backlight_adm (subj role)))
+
+	(optional sysadm_optional_sd_binfmt
+		(call sd_binfmt_adm (subj role)))
+
+	(optional sysadm_optional_sd_crypsetup
+		(call sd_cryptsetup_adm (subj role)))
+
+	(optional sysadm_optional_sd_fsck
+		(call sd_fsck_adm (subj role)))
+
+	(optional sysadm_optional_sd_hostnamed
+		(call sd_hostnamed_adm (subj role)))
+
+	(optional sysadm_optional_sd_hwdb
+		(call sd_hwdb_adm (subj role)))
+
+	(optional sysadm_optional_importd
+		(call sd_importd_adm (subj role)))
+
+	(optional sysadm_optional_sd_importstate
+		(call sd_importstate_adm (subj role)))
+
+	(optional sysadm_optional_sd_initctl
+		(call sd_initctl_adm (subj role)))
+
+	(optional sysadm_optional_sd_journald
+		(call sd_journald_adm (subj role)))
+
+	(optional sysadm_optional_sd_loadmodules
+		(call sd_loadmodules_adm (subj role)))
+
+	(optional sysadm_optional_sd_localed
+		(call sd_localed_adm (subj role)))
+
+	(optional sysadm_optional_sd_logind
+		(call sd_logind_adm (subj role)))
+
+	(optional sysadm_optional_sd_machined
+		(call sd_machined_adm (subj role)))
+
+	(optional sysadm_optional_sd_networkd
+		(call sd_networkd_adm (subj role)))
+
+	(optional sysadm_optional_sd_nspawn
+		(call sd_nspawn_adm (subj role)))
+
+	(optional sysadm_optional_sd_randomseed
+		(call sd_randomseed_adm (subj role)))
+
+	(optional sysadm_optional_sd_resolved
+		(call sd_resolved_adm (subj role)))
+
+	(optional sysadm_optional_sd_rfkill
+		(call sd_rfkill_adm (subj role)))
+
+	(optional sysadm_optional_sd_sessions
+		(call sd_sessions_adm (subj role)))
+
+	(optional sysadm_optional_sd_sleep
+		(call sd_sleep_adm (subj role)))
+
+	(optional sysadm_optional_sd_stdio
+		(call sd_stdio_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_sd_sysctl
+		(call sd_sysctl_adm (subj role)))
+
+	(optional sysadm_optional_sd_sysusers
+		(call sd_sysusers_adm (subj role)))
+
+	(optional sysadm_optional_sd_timedated
+		(call sd_timedated_adm (subj role)))
+
+	(optional sysadm_optional_sd_timesyncd
+		(call sd_timesyncd_adm (subj role)))
+
+	(optional sysadm_optional_sd_tmpfiles
+		(call sd_tmpfiles_adm (subj role)))
+		(call sd_tmpfiles_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_sd_udevd
+		(call sd_udevd_adm (subj role)))
+
+	(optional sysadm_optional_sd_updated
+		(call sd_updated_adm (subj role)))
+
+	(optional sysadm_optional_sd_utmp
+		(call sd_utmp_adm (subj role)))
+
+	(optional sysadm_optional_sd_vconsole
+		(call sd_vconsole_adm (subj role)))
+
+	(optional sysadm_optional_setools
+		(call setools_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_ssh
+		(call ssh_priv_login_subj_type (subj)))
+
+	(optional sysadm_optional_sysbus
+		(call sysbus_adm (subj role)))
+
+	(optional sysadm_optional_udevadm
+		(call udevadm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_useradd
+		(call useradd_run_groupadd (sysadm_subj_type role))
+		(call useradd_run_useradd (sysadm_subj_type role)))
+
+	(optional sysadm_optional_utempter
+		(call utempter_run (sysadm_subj_type role))))
+
+(optional sysadm_analyze_optional_analyze
+	(block sysadm_analyze
+		(blockinherit analyze_subj_blk)
+
+		(call analyze_role_pattern (sysadm.role sysadm_subj_type sysadm_analyze.subj))))
+
+(optional sysadm_analyze_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_analyze.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_analyze.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_analyze.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_busctl_optional_busctl
+	(block sysadm_busctl
+		(blockinherit busctl_subj_blk)
+
+		(call busctl_role_pattern (sysadm.role busctl_subj_type sysadm_busctl.subj))))
+
+(optional sysadm_busctl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_busctl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_busctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_hostnamectl_optional_hostnamectl
+	(block sysadm_hostnamectl
+		(blockinherit hostnamectl_subj_blk)
+
+		(call hostnamectl_role_pattern (sysadm.role sysadm_subj_type sysadm_hostnamectl.subj))))
+
+(optional sysadm_hostnamectl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_journalctl_optional_journalctl
+	(block sysadm_journalctl
+		(blockinherit sysadm_subj_blk)
+
+		(call journalctl_role_pattern (sysadm.role sysadm_subj_type sysadm_journalctl.subj))))
+
+(optional sysadm_localectl_optional_localectl
+	(block sysadm_localectl
+		(blockinherit localectl_subj_blk)
+
+		(call localectl_role_pattern (sysadm.role sysadm_subj_type sysadm_localectl.subj))))
+
+(optional sysadm_localectl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_localectl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_localectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_localectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_loginctl_optional_loginctl
+	(block sysadm_loginctl
+		(blockinherit loginctl_subj_blk)
+
+		(call loginctl_role_pattern (sysadm.role sysadm_subj_type sysadm_loginctl.subj))))
+
+(optional sysadm_loginctl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_machinectl_optional_machinectl
+	(block sysadm_machinectl
+		(blockinherit machinectl_subj_blk)
+
+		(call machinectl_role_pattern (sysadm.role sysadm_subj_type sysadm_machinectl.subj))))
+
+(optional sysadm_machinectl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_passwd_optional_passwd
+	(block sysadm_passwd
+		(blockinherit passwd_subj_blk)
+
+		(call passwd_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_polkit_exec_optional_polkit
+	(block sysadm_polkit_exec
+		(blockinherit polkit_exec_subj_blk)
+
+		(call polkit_role_pattern_polkit_exec (sysadm.role sysadm_subj_type subj))
+
+                (call cmd_auto_subj_type_transition (subj sysadm.subj))
+                (call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+                (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_run_optional_run
+	(block sysadm_run
+		(blockinherit run_subj_blk)
+
+		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(block sysadm_sduser
+	(blockinherit sduser_subj_blk)
+
+	(call sduser_role_pattern (sysadm.role sysadm.subj subj))
+
+	(typeattributeset sysadm_subj_type subj))
+
+(optional sysadm_sessbus_optional_sessbus
+	(block sysadm_sessbus
+		(blockinherit sessbus_subj_blk)
+
+		(call sessbus_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_ssh_agent_optional_ssh
+	(block sysadm_ssh_agent
+		(blockinherit ssh_agent_subj_blk)
+
+		(call ssh_role_pattern_ssh_agent (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_ssh_client_optional_ssh
+	(block sysadm_ssh_client
+		(blockinherit ssh_client_subj_blk)
+
+		(call ssh_role_pattern_ssh_client (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_sudo_optional_sudo
+	(block sysadm_sudo
+		(blockinherit sudo_subj_blk)
+
+		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type sysadm_sudo.subj))))
+
+(optional sysadm_systemctl_optional_systemctl
+	(block sysadm_systemctl
+		(blockinherit systemctl_subj_blk)
+
+		(call systemctl_role_pattern (sysadm.role sysadm_subj_type sysadm_systemctl.subj))))
+
+(optional sysadm_systemctl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_systemctl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_timedatectl_optional_timedatectl
+	(block sysadm_timedatectl
+		(blockinherit timedatectl_subj_blk)
+
+		(call timedatectl_role_pattern (sysadm.role sysadm_subj_type sysadm_timedatectl.subj))))
+
+(optional sysadm_timedatectl_optional_ssh
+		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (fd (use)))
+		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (unix_stream_socket (getattr ioctl read write)))
+
+		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))

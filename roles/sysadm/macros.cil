@@ -1,0 +1,22 @@
+(macro sysadm_shell_manual_subj_type_transition ((type ARG1))
+	(call cmd_shell_manual_subj_type_transition (ARG1 sysadm.subj)))
+
+(macro sysadm_userrole ((user ARG1))
+	(userrole ARG1 sysadm.role))
+
+(macro sysadm_roleallow ((role ARG1))
+	(roleallow ARG1 sysadm.role))
+
+(macro sysadm_send_signal ((type ARG1))
+	(allow ARG1 sysadm.subj (process (signal))))
+
+(macro sysadm_rw_inherited_fifo_files ((type ARG1))
+	(call sysadm_use_fd (ARG1))
+	(allow ARG1 sysadm.subj rw_inherited_fifo_file_perms))
+
+(macro sysadm_rw_inherited_unix_stream_sockets ((type ARG1))
+	(call sysadm_use_fd (ARG1))
+	(allow ARG1 sysadm.subj (unix_stream_socket (getattr ioctl read write))))
+
+(macro sysadm_use_fd ((type ARG1))
+	(allow ARG1 sysadm.subj (fd (use))))

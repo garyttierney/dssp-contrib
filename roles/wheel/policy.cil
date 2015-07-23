@@ -8,16 +8,24 @@
         (typeattributeset wheel_subj_type subj)
 
 	(optional wheel_optional_coredumpctl
-		(call coredumpctl_run (subj role)))
+		(call coredumpctl_run (wheel_subj_type role)))
 
 	(optional wheel_optional_networkctl
-		(call networkctl_run (subj role)))
+		(call networkctl_run (wheel_subj_type role)))
 
 	(optional wheel_optional_run
 		(call run_exec (subj)))
 
+	(optional wheel_optional_sd_stdio
+		(call sd_stdio_run (wheel_subj_type role)))
+
 	(optional wheel_optional_ssh
-		(call ssh_login_subj_type (subj))))
+		(call ssh_login_subj_type (subj)))
+
+	(optional wheel_optional_sysadm
+		(call sysadm_roleallow (role))
+		(call sysadm_send_signal (subj))
+		(call sysadm_userrole (id))))
 
 (optional wheel_analyze_optional_analyze
 	(block wheel_analyze
@@ -99,9 +107,20 @@
 
 (optional wheel_passwd_optional_passwd
 	(block wheel_passwd
-		(blockinherit wheel_subj_blk)
+		(blockinherit passwd_subj_blk)
 
 		(call passwd_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_polkit_exec_optional_polkit
+	(block wheel_polkit_exec
+		(blockinherit polkit_exec_subj_blk)
+
+		(call polkit_role_pattern_polkit_exec (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (block wheel_sduser
 	(blockinherit sduser_subj_blk)
@@ -144,6 +163,9 @@
 		(blockinherit sudo_subj_blk)
 
 		(call sudo_role_pattern_sudo (wheel.role wheel_subj_type wheel_sudo.subj))))
+
+(optional wheel_sudo_optional_sysadm
+	(call sysadm_shell_manual_subj_type_transition (wheel_sudo.subj)))
 
 (optional wheel_systemctl_optional_systemctl
 	(block wheel_systemctl

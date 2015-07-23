@@ -296,3 +296,7 @@
 	(allow ARG1 policy_src.config_file relabel_file_perms)
 	(allow ARG1 policy_src.config_file relabel_dir_perms)
 	(allow ARG1 policy_src.config_file relabel_lnk_file_perms))
+
+(macro seutil_selinux_config_obj_type_transition_policy_src ((type ARG1))
+	(call file_search_config (ARG1))
+	(call obj_type_transition_pattern (ARG1 selinux_config.config_file policy_src.config_file dir "sources")))

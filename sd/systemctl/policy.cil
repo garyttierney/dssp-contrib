@@ -17,6 +17,8 @@
 
 (call sys_read_state_files (systemctl_subj_type))
 
+(call rbacsep_exempt_subj_type (systemctl_subj_type))
+
 (call fs_getattr_tmpfs_fs (systemctl_subj_type))
 (call fs_write_inherited_devpts_chr_files (systemctl_subj_type))
 

@@ -100,6 +100,12 @@
 
 	(typeattributeset ssh_agent_subj_type subj))
 
+(macro ssh_login_subj_type ((type ARG1))
+	(typeattributeset ssh_login_subj_type ARG1))
+
+(macro ssh_priv_login_subj_type ((type ARG1))
+	(typeattributeset ssh_priv_login_subj_type ARG1))
+
 (macro ssh_exec_ssh_client ((type ARG1))
 	(call can_exec (ARG1 ssh_client.cmd_file)))
 

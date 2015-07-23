@@ -17,6 +17,9 @@
 (typeattribute ssh_agent_subj_type)
 (typeattribute ssh_client_subj_type)
 
+(typeattribute ssh_login_subj_type)
+(typeattribute ssh_priv_login_subj_type)
+
 (block ssh_priv_login
 	(blockinherit sec_bool_obj_blk))
 
@@ -176,11 +179,40 @@
 
 (booleanif ssh_priv_login
 	(true
+		(allow ssh_priv_login_subj_type self (capability (setuid setgid sys_tty_config)))
+		(allow ssh_priv_login_subj_type self (process (setexec dyntransition setcurrent)))
+		(allow ssh_priv_login_subj_type self (key (search link setattr write)))
+
+		(call sys_audit_set_params (ssh_priv_login_subj_type))
+
+		(call sec_compute_relabel_context (ssh_priv_login_subj_type))
+		(call sec_compute_user_contexts (ssh_priv_login_subj_type))
+		(call sec_validate_context (ssh_priv_login_subj_type))
+
+		(call usersubj_relabel_ptys (ssh_priv_login_subj_type))
+		(call usersubj_create_ptys (ssh_priv_login_subj_type))
+		(call usersubj_use_ptys (ssh_priv_login_subj_type))
+		(call usersubj_setattr_ptys (ssh_priv_login_subj_type))
+
 		(call usersubj_dynamic_subj_type_transition_common_login_subj (ssh_sshd_subj_type))
 		(call usersubj_shell_manual_subj_type_transition_common_login_subj (ssh_sshd_subj_type)))
 	(false
 		(call usersubj_dynamic_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))
 		(call usersubj_shell_manual_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))))
+
+(call ssh_rw_all_sshd_inherited_tcp_sockets (ssh_login_subj_type))
+(call ssh_rw_all_sshd_inherited_unix_stream_sockets (ssh_login_subj_type))
+(call ssh_rw_all_sshd_inherited_unix_dgram_sockets (ssh_login_subj_type))
+
+(call subj_dynamic_subj_type_transition_type (ssh_priv_login_subj_type))
+
+(call ssh_login_subj_type (ssh_priv_login_subj_type))
+
+(optional ssh_priv_login_subj_optional_sd_journald
+	(call sd_journald_client_subj_type (ssh_priv_login_subj_type)))
+
+(optional ssh_priv_login_subj_optional_sd_logind
+	(call sd_logind_client_subj_type (ssh_priv_login_subj_type)))
 
 (allow ssh_sshd_net_subj_type self (capability (sys_chroot setuid setgid)))
 (allow ssh_sshd_net_subj_type self (process (setrlimit)))

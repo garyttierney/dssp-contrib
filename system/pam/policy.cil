@@ -59,6 +59,7 @@
 
 (allow pam_login_prog_subj_type self (capability (setuid setgid chown)))
 (allow pam_login_prog_subj_type self (process (setexec setsched)))
+(allow pam_login_prog_subj_type self write_key_perms)
 
 (call sec_compute_user_contexts (pam_login_prog_subj_type))
 (call sec_compute_relabel_context (pam_login_prog_subj_type))

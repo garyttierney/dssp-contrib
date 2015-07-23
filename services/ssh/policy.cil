@@ -97,7 +97,7 @@
 	(call usersubj_home_dir_obj_type_transition_home_user (subj)))
 
 (allow ssh_client_subj_type self (process (setfscreate signal)))
-(allow ssh_client_subj_type self (key (view read search write link)))
+(allow ssh_client_subj_type self rw_key_perms)
 (allow ssh_client_subj_type self create_unix_dgram_socket_perms)
 (allow ssh_client_subj_type self rw_fifo_file_perms)
 
@@ -145,7 +145,6 @@
 
 (allow ssh_sshd_subj_type self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service)))
 (allow ssh_sshd_subj_type self rw_fifo_file_perms)
-(allow ssh_sshd_subj_type self write_key_perms)
 (allow ssh_sshd_subj_type self (tcp_socket (listen accept)))
 
 (call sys_link_keyring (ssh_sshd_subj_type))

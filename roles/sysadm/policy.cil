@@ -347,7 +347,7 @@
 	(block sysadm_busctl
 		(blockinherit busctl_subj_blk)
 
-		(call busctl_role_pattern (sysadm.role busctl_subj_type sysadm_busctl.subj))))
+		(call busctl_role_pattern (sysadm.role sysadm_subj_type sysadm_busctl.subj))))
 
 (optional sysadm_busctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_busctl.subj (fd (use)))
@@ -369,7 +369,7 @@
 
 (optional sysadm_journalctl_optional_journalctl
 	(block sysadm_journalctl
-		(blockinherit sysadm_subj_blk)
+		(blockinherit journalctl_subj_blk)
 
 		(call journalctl_role_pattern (sysadm.role sysadm_subj_type sysadm_journalctl.subj))))
 
@@ -421,10 +421,10 @@
 
 		(call polkit_role_pattern_polkit_exec (sysadm.role sysadm_subj_type subj))
 
-                (call cmd_auto_subj_type_transition (subj sysadm.subj))
-                (call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-                (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_run_optional_run
 	(block sysadm_run

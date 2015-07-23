@@ -43,7 +43,7 @@
 	(block wheel_busctl
 		(blockinherit busctl_subj_blk)
 
-		(call busctl_role_pattern (wheel.role busctl_subj_type wheel_busctl.subj))))
+		(call busctl_role_pattern (wheel.role wheel_subj_type wheel_busctl.subj))))
 
 (optional wheel_busctl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_busctl.subj (fd (use)))
@@ -65,7 +65,7 @@
 
 (optional wheel_journalctl_optional_journalctl
 	(block wheel_journalctl
-		(blockinherit wheel_subj_blk)
+		(blockinherit journalctl_subj_blk)
 
 		(call journalctl_role_pattern (wheel.role wheel_subj_type wheel_journalctl.subj))))
 

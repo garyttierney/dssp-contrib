@@ -34,9 +34,11 @@
 	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
-	(allow ARG3 ARG2 (key (view read search write link)))
+	(allow ARG3 ARG2 rw_key_perms)
 
-	(call chkpwd_run (ARG3 ARG1)))
+	(call chkpwd_run (ARG3 ARG1))
+
+	(call usersubj_send_signal_priv_subj (ARG2)))
 
 (macro sudo_role_pattern_visudo ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 visudo.cmd_file ARG3))
@@ -45,7 +47,10 @@
 
 	(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal))))
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call cmd_auto_subj_type_transition (ARG3 ARG2))
+	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2)))
 
 (macro sudo_search_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -179,6 +184,9 @@
 
 (macro sudo_send_sigchld_all_subj ((type ARG1))
 	(allow ARG1 sudo_subj_type (process (sigchld))))
+
+(macro sudo_send_signal_all_subj ((type ARG1))
+	(allow ARG1 sudo_subj_type (process (signal))))
 
 (macro sudo_use_fd_all_subj ((type ARG1))
 	(allow ARG1 sudo_subj_type (fd (use))))

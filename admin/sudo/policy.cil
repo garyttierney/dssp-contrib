@@ -20,9 +20,9 @@
 	(call subj_entry (sudo_visudo_subj_type cmd_file)))
 
 (allow sudo_subj_type self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
-(allow sudo_subj_type self (process (setsched setkeycreate setrlimit setexec)))
+(allow sudo_subj_type self (process (setsched setrlimit setexec)))
 (allow sudo_subj_type self rw_fifo_file_perms)
-(allow sudo_subj_type self (key (search link)))
+(allow sudo_subj_type self link_key_perms)
 
 (call sudo_read_config (sudo_subj_type))
 
@@ -71,8 +71,13 @@
 
 (call usersubj_read_home_cmd_lnk_files (sudo_subj_type))
 
+(call usersubj_cmd_manual_subj_type_transition_priv_subj (sudo_subj_type))
+(call usersubj_create_keyring_priv_subj (sudo_subj_type))
+(call usersubj_home_cmd_manual_subj_type_transition_priv_subj (sudo_subj_type))
 (call usersubj_relabel_term (sudo_subj_type))
+(call usersubj_send_signal_priv_subj (sudo_subj_type))
 (call usersubj_setattr_term (sudo_subj_type))
+(call usersubj_shell_manual_subj_type_transition_priv_subj (sudo_subj_type))
 (call usersubj_use_term (sudo_subj_type))
 
 (optional sudo_subj_type_optional_sd

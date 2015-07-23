@@ -24,7 +24,9 @@
 	(roletype role subj)
 
 	(call sys_role (role))
-	(call rbacsep_exempt_role (role)))
+	(call rbacsep_exempt_role (role))
+
+	(call usersubj_priv_type (subj)))
 
 (block usersubj_base_login_blk
 	(blockabstract usersubj_base_login_blk)
@@ -108,6 +110,9 @@
 (macro usersubj_common_type ((type ARG1))
 	(typeattributeset usersubj_common_type ARG1))
 
+(macro usersubj_priv_type ((type ARG1))
+	(typeattributeset usersubj_priv_type ARG1))
+
 (macro usersubj_common_login_type ((type ARG1))
 	(typeattributeset usersubj_common_login_type ARG1))
 
@@ -126,9 +131,10 @@
 	(call sys_role (ARG1))
 	(roletype ARG1 ARG2))
 
-(macro usersubj_base_priv_common ((role ARG1)(type ARG2))
+(macro usersubj_base_priv ((role ARG1)(type ARG2))
 	(call subj_common_type (ARG2))
 	(call usersubj_common_type (ARG2))
+	(call usersubj_priv_type (ARG2))
 	(call sys_role (ARG1))
 	(call rbacsep_exempt_role (ARG1))
 	(roletype ARG1 ARG2))
@@ -143,8 +149,8 @@
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2))
 
-(macro usersubj_base_priv_common_login ((user ARG1)(role ARG2)(type ARG3))
-	(call usersubj_base_priv_common (ARG2 ARG3))
+(macro usersubj_base_priv_login ((user ARG1)(role ARG2)(type ARG3))
+	(call usersubj_base_priv (ARG2 ARG3))
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2))
 
@@ -157,8 +163,8 @@
 	(call usersubj_common_login_type (ARG3))
 	(call usersubj_mls (ARG1 ARG4 ARG5)))
 
-(macro usersubj_priv_common_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
-	(call usersubj_base_priv_common_login (ARG1 ARG2 ARG3))
+(macro usersubj_priv_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
+	(call usersubj_base_priv_login (ARG1 ARG2 ARG3))
 	(call usersubj_common_login_type (ARG3))
 	(call usersubj_priv_login_type (ARG3))
 	(call usersubj_mls (ARG1 ARG4 ARG5)))
@@ -190,6 +196,12 @@
 (macro usersubj_shell_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
 	(call cmd_shell_manual_subj_type_transition (ARG1 usersubj_unpriv_login_type)))
 
+(macro usersubj_shell_manual_subj_type_transition_priv_subj ((type ARG1))
+	(call cmd_shell_manual_subj_type_transition (ARG1 usersubj_priv_type)))
+
+(macro usersubj_cmd_manual_subj_type_transition_priv_subj ((type ARG1))
+	(call cmd_manual_subj_type_transition (ARG1 usersubj_priv_type)))
+
 (macro usersubj_dontaudit_dynamic_subj_type_transition_common_subj ((type ARG1))
 	(dontaudit ARG1 usersubj_common_type (process (dyntransition))))
 
@@ -197,19 +209,24 @@
 	(dontaudit ARG1 usersubj_common_type (process (transition))))
 
 (macro usersubj_dontaudit_create_keyring_common_subj ((type ARG1))
-	(dontaudit ARG1 usersubj_common_type (key (create))))
+	(dontaudit ARG1 usersubj_common_type create_key_perms))
 
 (macro usersubj_create_keyring_common_login_subj ((type ARG1))
 	(allow ARG1 self (process (setkeycreate)))
-	(allow ARG1 usersubj_common_login_type (key (create search link write))))
+	(allow ARG1 usersubj_common_login_type create_key_perms))
+
+(macro usersubj_create_keyring_priv_subj ((type ARG1))
+	(allow ARG1 self (process (setkeycreate)))
+	(allow ARG1 usersubj_priv_type create_key_perms))
 
 (macro usersubj_dontaudit_link_keyring_common_login_subj ((type ARG1))
-	(dontaudit ARG1 usersubj_common_login_type (key (search link))))
+	(dontaudit ARG1 usersubj_common_login_type link_key_perms))
 
 (macro usersubj_link_keyring_common_login_subj ((type ARG1))
-	(allow ARG1 usersubj_common_login_type (key (search link))))
+	(allow ARG1 usersubj_common_login_type link_key_perms))
 
 (macro usersubj_rw_inherited_fifo_files_common_subj ((type ARG1))
+	(call usersubj_use_fd_common_subj (ARG1))
 	(allow ARG1 usersubj_common_type rw_inherited_fifo_file_perms))
 
 (macro usersubj_use_fd_common_subj ((type ARG1))
@@ -226,6 +243,20 @@
 
 (macro usersubj_send_signal_common_login_subj ((type ARG1))
 	(allow ARG1 usersubj_common_login_type (process (signal))))
+
+(macro usersubj_send_signal_priv_subj ((type ARG1))
+	(allow ARG1 usersubj_priv_type (process (signal))))
+
+(macro usersubj_use_fd_unpriv_subj ((type ARG1))
+	(allow ARG1 usersubj_unpriv_type (fd (use))))
+
+(macro usersubj_rw_inherited_fifo_files_unpriv_subj ((type ARG1))
+	(call usersubj_use_fd_unpriv_subj (ARG1))
+	(allow ARG1 usersubj_unpriv_type rw_inherited_fifo_file_perms))
+
+(macro usersubj_rw_inherited_unix_stream_sockets_unpriv_subj ((type ARG1))
+	(call usersubj_use_fd_unpriv_subj (ARG1))
+	(allow ARG1 usersubj_unpriv_type (unix_stream_socket (getattr ioctl read write))))
 
 (macro usersubj_home_user_obj_type ((type ARG1))
 	(call file_obj_type (ARG1))
@@ -1062,7 +1093,12 @@
 	(call usersubj_search_home_data (ARG1))
 	(call obj_type_transition_pattern (ARG1 home_cmd.home_user_file ARG2 ARG3 ARG4)))
 
+(macro usersubj_home_cmd_manual_subj_type_transition_priv_subj ((type ARG1))
+	(call manual_subj_type_transition_pattern (ARG1 home_cmd.home_user_file usersubj_priv_type)))
+
 (macro usersubj_home_cmd ((type ARG1))
+	(call usersubj_exec_home_cmd_files (ARG1))
+	(call usersubj_home_cmd_obj_entry_subj (ARG1))
 	(call usersubj_manage_home_cmd (ARG1))
 	(call usersubj_relabel_home_cmd (ARG1))
 	(call usersubj_home_data_obj_type_transition_home_cmd (ARG1))

@@ -1,8 +1,10 @@
 (typeattribute usersubj_type)
+
 (typeattribute usersubj_common_type)
+(typeattribute usersubj_priv_type)
+(typeattribute usersubj_unpriv_type)
 
 (typeattribute usersubj_common_login_type)
-
 (typeattribute usersubj_priv_login_type)
 (typeattribute usersubj_unpriv_login_type)
 
@@ -107,6 +109,11 @@
 
 (call usersubj_use_term (usersubj_common_type))
 
+(optional usersubj_priv_type_optional_sudo
+	(call usersubj_rw_inherited_fifo_files_unpriv_subj (usersubj_priv_type))
+	(call usersubj_rw_inherited_unix_stream_sockets_unpriv_subj (usersubj_priv_type))
+	(call sudo_send_signal_all_subj (usersubj_priv_type)))
+
 (allow usersubj_common_login_type self create_unix_dgram_socket_perms)
 
 (call sys_read_cpu_sysfs_files (usersubj_common_login_type))
@@ -149,4 +156,5 @@
 (optional usersubj_optional_sd_tmpfiles
 	(call sd_tmpfiles_obj_exception_type (usersubj_home_user_obj_type)))
 
+(typeattributeset usersubj_unpriv_type (and (usersubj_common_type) (not (usersubj_priv_type))))
 (typeattributeset usersubj_unpriv_login_type (and (usersubj_common_login_type) (not (usersubj_priv_login_type))))

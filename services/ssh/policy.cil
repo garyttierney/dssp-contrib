@@ -145,7 +145,7 @@
 
 (allow ssh_sshd_subj_type self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service)))
 (allow ssh_sshd_subj_type self rw_fifo_file_perms)
-(allow ssh_sshd_subj_type self (key (search link write)))
+(allow ssh_sshd_subj_type self write_key_perms)
 (allow ssh_sshd_subj_type self (tcp_socket (listen accept)))
 
 (call sys_link_keyring (ssh_sshd_subj_type))
@@ -181,7 +181,7 @@
 	(true
 		(allow ssh_priv_login_subj_type self (capability (setuid setgid sys_tty_config)))
 		(allow ssh_priv_login_subj_type self (process (setexec dyntransition setcurrent)))
-		(allow ssh_priv_login_subj_type self (key (search link setattr write)))
+		(allow ssh_priv_login_subj_type self setattr_key_perms)
 
 		(call sys_audit_set_params (ssh_priv_login_subj_type))
 

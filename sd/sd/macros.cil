@@ -581,7 +581,7 @@
 	(allow ARG1 sd.subj (process (sigchld))))
 
 (macro sd_link_keyring ((type ARG1))
-	(allow ARG1 sd.subj (key (search link))))
+	(allow ARG1 sd.subj link_key_perms))
 
 (macro sd_read_state_forked_subj ((type ARG1))
 	(call fs_search_proc (ARG1))

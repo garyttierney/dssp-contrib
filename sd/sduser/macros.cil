@@ -16,12 +16,10 @@
 	(allow ARG3 ARG2 (unix_stream_socket (getattr ioctl read write)))
 	(call ps_subj_pattern (ARG3 ARG2))
 
+	(allow ARG2 ARG3 (process (signal)))
+
 	(call cmd_auto_subj_type_transition (ARG3 ARG2))
 	(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
-
-	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2))
-
-	(allow ARG2 ARG3 (process (signal)))
 
 	(call sduser_control_pattern (ARG2 ARG3))
 	(call sduser_forked_pattern (ARG2 ARG3))
@@ -54,7 +52,9 @@
 	(call sduser_manage_unit_runtime (ARG2))
 	(call sduser_relabel_unit_runtime (ARG2))
 
-	(call sduser_tmpfs_obj_type_transition_unit_runtime (ARG2)))
+	(call sduser_tmpfs_obj_type_transition_unit_runtime (ARG2))
+
+	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2)))
 
 (macro sduser_forked_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (fd (use)))
@@ -716,10 +716,10 @@
 	(allow ARG1 sduser_subj_type (process (sigchld))))
 
 (macro sduser_dontaudit_link_keyring_all_subj ((type ARG1))
-	(dontaudit ARG1 sduser_subj_type (key (search link))))
+	(dontaudit ARG1 sduser_subj_type link_key_perms))
 
 (macro sduser_link_keyring_all_subj ((type ARG1))
-	(allow ARG1 sduser_subj_type (key (search link))))
+	(allow ARG1 sduser_subj_type link_key_perms))
 
 (macro sduser_use_fd_all_subj ((type ARG1))
 	(allow ARG1 sduser_subj_type (fd (use))))
@@ -728,5 +728,6 @@
 	(call sduser_use_fd_all_subj (ARG1))
 	(allow ARG1 sduser_subj_type (unix_stream_socket (getattr ioctl read write))))
 
-(macro sduser_manage_keyring_all_subj ((type ARG1))
-	(allow ARG1 sduser_subj_type (key (create search link write))))
+(macro sduser_create_keyring_all_subj ((type ARG1))
+	(allow ARG1 self (process (setkeycreate)))
+	(allow ARG1 sduser_subj_type create_key_perms))

@@ -175,7 +175,9 @@
 	(allow ARG2 ARG3 (process (signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
-	(allow ARG3 self (key (view read search write link)))
+	(allow ARG3 self rw_key_perms)
+
+	(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
 
 	(call ssh_manage_client_home (ARG2))
 	(call ssh_relabel_client_home (ARG2))
@@ -193,7 +195,12 @@
 
 	(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal))))
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call cmd_auto_subj_type_transition (ARG3 ARG2))
+	(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
+
+	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2)))
 
 (macro ssh_search_sshd_config ((type ARG1))
 	(call file_search_config (ARG1))

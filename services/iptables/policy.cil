@@ -24,7 +24,7 @@
 	(typeattributeset iptables_obj_type var_lib_file)
 
 	(allow subj self (capability (net_raw net_admin dac_override)))
-	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_netlink_netfilter_socket_perms)
 	(allow subj self create_rawip_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 	(allow subj self rw_fifo_file_perms)

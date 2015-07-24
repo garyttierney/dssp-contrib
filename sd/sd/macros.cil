@@ -572,7 +572,7 @@
 
 (macro sd_rw_inherited_unix_stream_sockets ((type ARG1))
 	(call sd_use_fd (ARG1))
-	(allow ARG1 sd.subj (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 sd.subj rw_inherited_unix_stream_socket_perms))
 
 (macro sd_getpgid ((type ARG1))
 	(allow ARG1 sd.subj (process (getpgid))))

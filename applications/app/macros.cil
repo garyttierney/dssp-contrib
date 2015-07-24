@@ -43,7 +43,7 @@
 
 (macro app_rw_inherited_unix_stream_sockets ((type ARG1))
 	(call app_use_fd (ARG1))
-	(allow ARG1 app_subj_type (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 app_subj_type rw_inherited_unix_stream_socket_perms))
 
 (macro app_send_signal ((type ARG1))
 	(allow ARG1 app_subj_type (process (signal))))

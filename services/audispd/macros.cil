@@ -11,7 +11,7 @@
 	(call auto_subj_type_transition_pattern (audispd.subj ARG2 ARG1))
 
 	(allow ARG1 audispd.subj (fd (use)))
-	(allow ARG1 audispd.subj (unix_stream_socket (getattr ioctl read write)))
+	(allow ARG1 audispd.subj rw_inherited_unix_stream_socket_perms)
 
 	(typeattributeset audispd_plugin_subj_type ARG1)
 

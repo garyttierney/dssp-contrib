@@ -13,7 +13,7 @@
 	(roletype ARG1 ARG3)
 
 	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
-	(allow ARG3 ARG2 (unix_stream_socket (getattr ioctl read write)))
+	(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
 	(call ps_subj_pattern (ARG3 ARG2))
 
 	(allow ARG2 ARG3 (process (signal)))
@@ -58,11 +58,11 @@
 
 (macro sduser_forked_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (fd (use)))
-	(allow ARG1 ARG2 (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 ARG2 rw_inherited_unix_stream_socket_perms))
 
 (macro sduser_forked_all_subj ((type ARG1)(type ARG2))
 	(allow ARG1 sduser_subj_type (fd (use)))
-	(allow ARG1 sduser_subj_type (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 sduser_subj_type rw_inherited_unix_stream_socket_perms))
 
 (macro sduser_unit_obj_type ((type ARG1))
 	(call sd_unit_obj_type (ARG1))
@@ -726,7 +726,7 @@
 
 (macro sduser_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
 	(call sduser_use_fd_all_subj (ARG1))
-	(allow ARG1 sduser_subj_type (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 sduser_subj_type rw_inherited_unix_stream_socket_perms))
 
 (macro sduser_create_keyring_all_subj ((type ARG1))
 	(allow ARG1 self (process (setkeycreate)))

@@ -32,7 +32,7 @@
 	(allow ARG1 ARG2 (process (signal)))
 
 	(allow ARG1 ARG2 (fd (use)))
-	(allow ARG1 ARG2 (unix_stream_socket (getattr ioctl read write)))
+	(allow ARG1 ARG2 rw_inherited_unix_stream_socket_perms)
 
 	(allow ARG1 ARG2 (dbus (send_msg)))
 
@@ -83,7 +83,7 @@
 	(roletype ARG1 ARG3)
 
 	(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
-	(allow ARG3 ARG2 (unix_stream_socket (getattr ioctl read write)))
+	(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
 	(call ps_subj_pattern (ARG3 ARG2))
 
 	(allow ARG2 ARG3 (process (signal)))
@@ -140,7 +140,7 @@
 
 (macro sessbus_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
 	(call sessbus_use_fd_all_subj (ARG1))
-	(allow ARG1 sessbus_subj_type (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 sessbus_subj_type rw_inherited_unix_stream_socket_perms))
 
 (macro sessbus_send_signal_all_subj ((type ARG1))
 	(allow ARG1 sessbus_subj_type (process (signal))))

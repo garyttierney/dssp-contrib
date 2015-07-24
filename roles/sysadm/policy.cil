@@ -339,7 +339,7 @@
 
 (optional sysadm_analyze_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_analyze.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_analyze.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_analyze.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_analyze.subj sysadm_ssh_client.subj)))
 
@@ -351,7 +351,7 @@
 
 (optional sysadm_busctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_busctl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_busctl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_busctl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
 
@@ -363,7 +363,7 @@
 
 (optional sysadm_hostnamectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
 
@@ -381,7 +381,7 @@
 
 (optional sysadm_localectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_localectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_localectl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_localectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_localectl.subj sysadm_ssh_client.subj)))
 
@@ -393,7 +393,7 @@
 
 (optional sysadm_loginctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_loginctl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))
 
@@ -405,7 +405,7 @@
 
 (optional sysadm_machinectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_machinectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
 
@@ -482,7 +482,7 @@
 
 (optional sysadm_systemctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_systemctl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_systemctl.subj sysadm_ssh_client.subj)))
 
@@ -494,6 +494,6 @@
 
 (optional sysadm_timedatectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (unix_stream_socket (getattr ioctl read write)))
+		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))

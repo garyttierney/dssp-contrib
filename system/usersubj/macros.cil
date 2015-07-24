@@ -256,7 +256,7 @@
 
 (macro usersubj_rw_inherited_unix_stream_sockets_unpriv_subj ((type ARG1))
 	(call usersubj_use_fd_unpriv_subj (ARG1))
-	(allow ARG1 usersubj_unpriv_type (unix_stream_socket (getattr ioctl read write))))
+	(allow ARG1 usersubj_unpriv_type rw_inherited_unix_stream_socket_perms))
 
 (macro usersubj_home_user_obj_type ((type ARG1))
 	(call file_obj_type (ARG1))

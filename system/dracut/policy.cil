@@ -11,7 +11,7 @@
 
 	(blockinherit file_var_tmp_obj_blk)
 
-	(allow subj self (capability (dac_override mknod sys_chroot sys_resource)))
+	(allow subj self (capability (dac_override mknod sys_chroot sys_admin sys_resource)))
 	(allow subj self (process (getsched setfscreate)))
 
 	(call dracut_exec (subj))

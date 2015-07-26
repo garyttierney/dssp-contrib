@@ -20,6 +20,8 @@
 	(call dev_read_urandom (subj))
 	(call dev_write_kmsg (subj))
 
+	(call fs_getattr_fs (subj))
+
 	(call subj_read_common_subj_state (subj))
 
 	(call sd_journald_client_subj_type (subj)))

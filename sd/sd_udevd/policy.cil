@@ -13,7 +13,7 @@
 	(allow subj self (process (setfscreate getsched)))
 	(allow subj self create_netlink_kobject_uevent_socket_perms)
 	(allow subj self (netlink_route_socket (nlmsg_write)))
-	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept)))
 
 	(call sys_link_keyring (subj))

@@ -1,0 +1,25 @@
+(filecon "/root/.*" any (sysadm.id sysadm.role home_user.home_user_file (systemlow systemlow)))
+(filecon "/root/\.cache(/.*)?" any (sysadm.id sysadm.role home_cache.home_cache_file (systemlow systemlow)))
+(filecon "/root/\.config(/.*)?" any (sysadm.id sysadm.role home_config.home_config_file (systemlow systemlow)))
+(filecon "/root/\.local(/.*)?" any (sysadm.id sysadm.role home_data.home_data_file (systemlow systemlow)))
+(filecon "/root/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
+(filecon "/root/\.local/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
+(filecon "/root/\.xinitrc" file (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
+(filecon "/root/\.pki(/.*)?" any (sysadm.id sysadm.role home_cert.home_user_file (systemlow systemlow)))
+(filecon "/root/\.fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
+(filecon "/root/\.cache/fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
+(filecon "/root/\.fonts\.conf" file (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
+(filecon "/root/\.fonts\.conf\.d(/.*)?" any (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
+(filecon "/root/\.config/fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
+(filecon "/root/\.fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
+(filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
+(filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
+
+(tunableif enable_mls
+	(true
+		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))
+		(filecon "/var/spool/mail/root" file (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemhigh))))
+	(false
+		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemlow)))
+		(filecon "/var/spool/mail/root" file (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow)))))
+

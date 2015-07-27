@@ -34,6 +34,8 @@
 	(call fs_remount_all_fs (subj))
 	(call fs_unmount_all_fs (subj))
 
+	(call storage_rw_all (subj))
+
 	(call miscfile_read_locale (subj))
 
 	(booleanif (mount_any_file) (true
@@ -44,10 +46,7 @@
 		(call sd_machined_rw_var_lib_files (subj)))
 
 	(optional mount_optional_sd
-		(call sd_daemon (subj cmd_file)))
-
-	(optional mount_optional_storage
-		(call storage_rw_all (subj))))
+		(call sd_daemon (subj cmd_file))))
 
 (block mount_any_file
 	(blockinherit sec_bool_obj_blk))

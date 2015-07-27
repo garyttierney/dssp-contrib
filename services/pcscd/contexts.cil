@@ -1,8 +1,8 @@
 (context pcscd_cmd (sys.id sys.role pcscd.cmd_file (systemlow systemlow)))
-(context pcsc_config (sys.id sys.role pcsc.config_file (systemlow systemlow)))
+(context pcscd_config (sys.id sys.role pcscd.config_file (systemlow systemlow)))
 (context pcscd_runtime (sys.id sys.role pcscd.runtime_file (systemlow systemlow)))
 
-(filecon "/etc/reader\.conf\.d(/.*)?" any pcsc_config)
+(filecon "/etc/reader\.conf\.d(/.*)?" any pcscd_config)
 (filecon "/usr/sbin/pcscd" file pcscd_cmd)
 (filecon "/var/run/pcscd(/.*)?" any pcscd_runtime)
 

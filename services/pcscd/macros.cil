@@ -9,7 +9,7 @@
 	(call auto_subj_type_transition_pattern (ARG1 pcscd.cmd_file pcscd.subj)))
 
 (macro pcscd_send_signal ((type ARG1))
-	(allow ARG1 pcscd.subj (process (signal))
+	(allow ARG1 pcscd.subj (process (signal))))
 
 (macro pcscd_search_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -85,6 +85,9 @@
 	(allow ARG1 pcscd.runtime_file relabel_dir_perms)
 	(allow ARG1 pcscd.runtime_file relabel_sock_file_perms)
 	(allow ARG1 pcscd.runtime_file relabel_lnk_file_perms))
+
+(macro pcscd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 pcscd.runtime_file dir "pcscd")))
 
 (macro pcscd_stream_connect ((type ARG1))
 	(call file_search_runtime (ARG1))

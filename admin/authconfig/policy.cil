@@ -23,6 +23,8 @@
 
 	(call authconfig_rw_config_files (subj))
 
+	(call authconfig_read_data (subj))
+
 	(call authconfig_manage_var_lib (subj))
 	(call authconfig_var_lib_obj_type_transition_var_lib (subj))
 
@@ -38,6 +40,8 @@
 
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))
+
+	(call subj_obj_sys_change_exemption_type (subj))
 
 	(call hostname_exec (subj))
 

@@ -101,6 +101,12 @@
 		(call dhclient_manage_runtime_files (subj))
 		(call dhclient_manage_var_lib (subj)))
 
+	(optional sysadm_optional_dirmngr
+		(call dirmngr_run (sysadm_subj_type role))
+		(call dirmngr_manage_home (subj))
+		(call dirmngr_relabel_home (subj))
+		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_dm
 		(call dm_run_dmcrypt (sysadm_subj_type role))
 		(call dm_run_dmsetup (sysadm_subj_type role)))
@@ -346,6 +352,15 @@
 		(blockinherit analyze_subj_blk)
 
 		(call analyze_role_pattern (sysadm.role sysadm_subj_type sysadm_analyze.subj))))
+
+(optional sysadm_gpg_optional_gpg
+	(block sysadm_gpg
+		(blockinherit gpg_subj_blk)
+
+		(call gpg_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call gpg_exec_gpg_helper (sysadm.subj))
+		(call gpg_manage_config (sysadm.subj))))
 
 (optional sysadm_analyze_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_analyze.subj (fd (use)))

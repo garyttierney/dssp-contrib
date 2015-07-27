@@ -7,6 +7,12 @@
 
         (typeattributeset user_subj_type subj)
 
+	(optional user_optional_dirmngr
+		(call dirmngr_run (user_subj_type role))
+		(call dirmngr_manage_home (subj))
+		(call dirmngr_relabel_home (subj))
+		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
+
 	(optional user_optional_journalctl
 		(call journalctl_exec (subj)))
 
@@ -18,6 +24,14 @@
 
 	(optional user_optional_systemctl
 		(call systemctl_exec (subj))))
+
+(optional user_gpg_optional_gpg
+	(block user_gpg
+		(blockinherit gpg_subj_blk)
+
+		(call gpg_role_pattern (user.role user_subj_type subj))
+
+		(call gpg_exec_gpg_helper (user.subj))))
 
 (optional user_passwd_optional_passwd
 	(block user_passwd

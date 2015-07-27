@@ -15,6 +15,13 @@
 (filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
 (filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
 
+(optional sysadm_dirmngr_home_optional_dirmgr
+	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))
+
+(optional sysadm_gpg_home_optional_gpg
+	(filecon "/root/\.gnupg(/.*)?" any (sysadm.id sysadm.role gpg.home_user_file (systemlow systemlow))))
+
 (optional sysadm_screen_home_optional_screen
 	(filecon "/root/\.screenrc" file (sysadm.id sysadm.role screen.home_user_file (systemlow systemlow))))
 

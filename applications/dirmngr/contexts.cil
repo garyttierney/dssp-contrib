@@ -1,0 +1,5 @@
+(context dirmngr_cmd (sys.id sys.role dirmngr.cmd_file (systemlow systemlow)))
+(filecon "/usr/bin/dirmngr" file dirmngr_cmd)
+
+(filecon "HOME_DIR/\.gnupg/crls\.d(/.*)?" any (sys.id sys.role dirmngr.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/S\.dirmngr" socket (sys.id sys.role dirmngr.home_user_file (systemlow systemlow)))

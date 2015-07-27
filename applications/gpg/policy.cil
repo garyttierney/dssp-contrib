@@ -1,0 +1,54 @@
+(typeattribute gpg_subj_type)
+
+(block gpg
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (gpg_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+        (blockinherit usersubj_home_user_obj_blk))
+
+(allow gpg_subj_type self rw_fifo_file_perms)
+
+(call gpg_read_config (gpg_subj_type))
+
+(call gpg_manage_home (gpg_subj_type))
+(call gpg_home_dir_obj_type_transition_home (gpg_subj_type))
+
+(call gpg_exec_gpg_helper (gpg_subj_type))
+
+(call sys_read_crypto_sysctl_files (gpg_subj_type))
+
+(call dev_read_random (gpg_subj_type))
+(call dev_read_urandom (gpg_subj_type))
+
+(call file_read_data_files (gpg_subj_type))
+(call file_read_config_files (gpg_subj_type))
+(call file_search_mnt (gpg_subj_type))
+
+(call dirmngr_stream_connect (gpg_subj_type))
+
+(call miscfile_read_all_terminfo (gpg_subj_type))
+(call miscfile_read_locale (gpg_subj_type))
+
+(call usersubj_manage_home_user_files (gpg_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (gpg_subj_type))
+
+(call usersubj_manage_tmpfs_user_files (gpg_subj_type))
+(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (gpg_subj_type))
+
+(call usersubj_use_term (gpg_subj_type))
+
+(optional gpg_subj_type_optional_git
+	(call git_read_tmpfs_files (gpg_subj_type)))
+
+(optional gpg_subj_type_optional_mutt
+	(call mutt_read_home_files (gpg_subj_type))
+	(call mutt_rw_tmpfs_files (gpg_subj_type)))
+
+(optional gpg_subj_type_optional_pass
+	(call pass_manage_home_files (gpg_subj_type)))
+
+(block gpg_helper
+	(blockinherit cmd_obj_blk))

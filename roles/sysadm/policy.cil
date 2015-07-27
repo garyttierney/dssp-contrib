@@ -195,6 +195,9 @@
 	(optional sysadm_optional_pam
 		(call pam_adm_subj_type (subj)))
 
+	(optional sysadm_optional_pcscd
+		(call pcscd_adm (subj role)))
+
 	(optional sysadm_optional_plymouth
 		(call plymouth_adm (subj role))
 		(call plymouth_run_plymouth (sysadm_subj_type role)))

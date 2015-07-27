@@ -104,7 +104,7 @@
 (macro screen_relabel_tmpfs_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 screen.runtime_user_file relabel_file_perms))
+	(allow ARG1 screen.tmpfs_user_file relabel_file_perms))
 
 (macro screen_tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 screen.tmpfs_user_file file "*")))

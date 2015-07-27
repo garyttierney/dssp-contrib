@@ -57,8 +57,7 @@
 	(call seutil_run_setfiles (subj authconfig_role))
 
 	(optional authconfig_optional_sd
-		(call sd_getattr_unit_dirs (subj))
-		(call sd_read_state_files (subj))
+		(call sd_read_state (subj))
 		(call sd_status (subj))
 		(call sd_stream_connect (subj))
 		(call sd_stop (subj)))

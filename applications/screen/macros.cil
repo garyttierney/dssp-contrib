@@ -70,7 +70,7 @@
 	(allow ARG1 screen.runtime_file search_dir_perms))
 
 (macro screen_list_runtime ((type ARG1))
-	(call files_search_runtime (ARG1))
+	(call file_search_runtime (ARG1))
 	(allow ARG1 screen.runtime_file list_dir_perms))
 
 (macro screen_read_runtime ((type ARG1))
@@ -106,7 +106,7 @@
 	(call fs_search_tmpfs (ARG1))
 	(allow ARG1 screen.runtime_user_file relabel_file_perms))
 
-(macro screen_tmpfs_obj_type_transition_tmpfs_file ((type ARG1))
+(macro screen_tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 screen.tmpfs_user_file file "*")))
 
 (macro screen_use_fd_all_subj ((type ARG1))

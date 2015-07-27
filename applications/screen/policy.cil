@@ -5,7 +5,7 @@
 (block screen
 	(blockinherit app_cmd_obj_blk)
 
-	(call subj_entry (screen_subj_type cmd_file)))
+	(call subj_entry (screen_subj_type cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
@@ -16,7 +16,7 @@
 	(blockinherit usersubj_tmpfs_user_obj_blk))
 
 (allow screen_subj_type self (unix_stream_socket (listen accept connectto)))
-(allow screen_subj_type self rw_fifo_file_perms))
+(allow screen_subj_type self rw_fifo_file_perms)
 
 (call screen_read_config_files (screen_subj_type))
 

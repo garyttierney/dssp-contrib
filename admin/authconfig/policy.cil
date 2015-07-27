@@ -17,6 +17,10 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
+	(allow subj self (process (setfscreate)))
+
+	(call authconfig_read_config_files (subj))
+
 	(call authconfig_manage_var_lib (subj))
 	(call authconfig_var_lib_obj_type_transition_var_lib (subj))
 
@@ -26,18 +30,32 @@
 
 	(call dev_read_urandom (subj))
 
+	(call file_manage_config_files (subj))
 	(call file_read_data (subj))
+	(call file_relabel_config_files (subj))
 
 	(call sec_get_enforce_mode (subj))
+	(call sec_validate_context (subj))
 
-	(call miscfile_getattr_shadow (subj))
+	(call hostname_exec (subj))
+
+	(call miscfile_manage_shadow (subj))
 
 	(call nss_manage_config_files (subj))
+	(call nss_relabelto_config_files (subj))
 	(call nss_client_subj_type (subj))
 
 	(call pam_manage_config (subj))
 
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj))
 	(call seutil_run_setfiles (subj authconfig_role))
+
+	(optional authconfig_optional_sd
+		(call sd_stop (subj)))
+
+	(optional authconfig_optional_sd_askpwd_agent
+		(call sd_askpwd_exec_askpwd_agent (subj)))
 
 	(optional authconfig_optional_systemctl
 		(call systemctl_exec (subj))))

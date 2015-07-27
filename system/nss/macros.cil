@@ -12,7 +12,3 @@
 (macro nss_relabel_config_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 nss.config_file relabel_file_perms))
-
-(macro nss_relabelto_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nss.config_file relabelto_file_perms))

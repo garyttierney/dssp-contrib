@@ -75,6 +75,9 @@
 		(call auditd_run_ausearch (sysadm_subj_type role)))
 
 	(optional sysadm_optional_authconfig
+		(call authconfig_manage_config (subj))
+		(call authconfig_manage_data (subj))
+		(call authconfig_manage_var_lib (subj))
 		(call authconfig_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_bootloader

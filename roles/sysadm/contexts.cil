@@ -15,6 +15,16 @@
 (filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
 (filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
 
+(optional sysadm_screen_home_optional_screen
+	(filecon "/root/\.screenrc" file (sysadm.id sysadm.role screen.home_user_file (systemlow systemlow))))
+
+(optional sysadm_sduser_home_optional_sduser
+	(filecon "/root/\.config/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_config_file (systemlow systemlow)))
+	(filecon "/root/\.local/share/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_data_file (systemlow systemlow))))
+
+(optional sysadm_ssh_client_home_optional_ssh
+	(filecon "/root/\.ssh(/.*)?" any (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))
+
 (tunableif enable_mls
 	(true
 		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))
@@ -22,4 +32,3 @@
 	(false
 		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemlow)))
 		(filecon "/var/spool/mail/root" file (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow)))))
-

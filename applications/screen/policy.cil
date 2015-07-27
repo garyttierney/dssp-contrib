@@ -1,0 +1,51 @@
+(roleattribute screen_role)
+
+(typeattribute screen_subj_type)
+
+(block screen
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (screen_subj_type cmd_file)))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow screen_subj_type self (unix_stream_socket (listen accept connectto)))
+(allow screen_subj_type self rw_fifo_file_perms))
+
+(call screen_read_config_files (screen_subj_type))
+
+(call screen_read_home_files (screen_subj_type))
+
+(call screen_manage_runtime (screen_subj_type))
+(call screen_runtime_obj_type_transition_runtime (screen_subj_type))
+
+(call screen_manage_tmpfs_files (screen_subj_type))
+(call screen_tmpfs_obj_type_transition_tmpfs_files (screen_subj_type))
+
+(call sys_audit_client_subj_type (screen_subj_type))
+(call sys_read_crypto_sysctl_files (screen_subj_type))
+
+(call file_read_config_files (screen_subj_type))
+
+(call subj_interactive_fd_type (screen_subj_type))
+
+(call miscfile_read_all_terminfo (screen_subj_type))
+(call miscfile_read_locale (screen_subj_type))
+(call miscfile_read_utmp_runtime_files (screen_subj_type))
+
+(call nss_client_subj_type (screen_subj_type))
+
+(call pam_read_config (screen_subj_type))
+
+(call usersubj_create_ptys (screen_subj_type))
+(call usersubj_setattr_ptys (screen_subj_type))
+(call usersubj_use_term (screen_subj_type))
+
+(optional screen_subj_type_optional_sd_journald
+	(call sd_journald_client_subj_type (screen_subj_type)))

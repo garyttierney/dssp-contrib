@@ -432,12 +432,29 @@
 
 		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
 
-(block sysadm_sduser
-	(blockinherit sduser_subj_blk)
+(optional sysadm_screen_optional_screen
+	(block sysadm_screen
+		(blockinherit screen_subj_blk)
 
-	(call sduser_role_pattern (sysadm.role sysadm.subj subj))
+		(call screen_role_pattern (sysadm.role sysadm_subj_type subj)))
 
-	(typeattributeset sysadm_subj_type subj))
+		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call screen_manage_config_files (sysadm.subj))
+		(call screen_manage_runtime (sysadm.subj))))
+
+(optional sysadm_sduser_optional_sduser
+	(block sysadm_sduser
+		(blockinherit sduser_subj_blk)
+
+		(call sduser_role_pattern (sysadm.role sysadm.subj subj))
+
+		(typeattributeset sysadm_subj_type subj)))
 
 (optional sysadm_sessbus_optional_sessbus
 	(block sysadm_sessbus

@@ -122,12 +122,24 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
-(block wheel_sduser
-	(blockinherit sduser_subj_blk)
+(optional wheel_screen_optional_screen
+	(block wheel_screen
+		(blockinherit screen_subj_blk)
 
-	(call sduser_role_pattern (wheel.role wheel.subj subj))
+		(call screen_role_pattern (wheel.role wheel_subj_type subj))
 
-	(typeattributeset wheel_subj_type subj))
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj)))
+
+(optional wheel_sduser_optional_sduser
+	(block wheel_sduser
+		(blockinherit sduser_subj_blk)
+
+		(call sduser_role_pattern (wheel.role wheel.subj subj))
+
+		(typeattributeset wheel_subj_type subj)))
 
 (optional wheel_sessbus_optional_sessbus
 	(block wheel_sessbus

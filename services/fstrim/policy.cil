@@ -1,0 +1,34 @@
+(roleattribute fstrim_role)
+
+(typeattribute fstrim_adm_subj_type)
+
+(block fstrim
+	(blockinherit app_blk)
+
+	(roleattributeset fstrim_role sys.role)
+
+	(roletype fstrim_role subj)
+
+	(allow subj self (capability (sys_admin)))
+
+	(call sys_list_mountpoints (subj))
+
+	(call fs_read_devtmpfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
+
+	(call storage_getattr_all (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(optional fstrim_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(allow fstrim_adm_subj_type unit_file (service (stop status disable enable reload start)))
+
+		(allow fstrim_adm_subj_type unit_file manage_file_perms)
+		(allow fstrim_adm_subj_type unit_file relabel_file_perms)))
+
+(allow fstrim_adm_subj_type fstrim.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (fstrim_adm_subj_type fstrim.subj))

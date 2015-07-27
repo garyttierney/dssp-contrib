@@ -58,7 +58,6 @@
 
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
-	(call seutil_run_setfiles (subj authconfig_role))
 
 	(optional authconfig_optional_sd
 		(call sd_read_state (subj))

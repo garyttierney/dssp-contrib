@@ -17,9 +17,11 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
+	(allow subj self (capability (dac_override)))
+	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (process (setfscreate)))
 
-	(call authconfig_read_config_files (subj))
+	(call authconfig_rw_config_files (subj))
 
 	(call authconfig_manage_var_lib (subj))
 	(call authconfig_var_lib_obj_type_transition_var_lib (subj))
@@ -39,6 +41,8 @@
 
 	(call hostname_exec (subj))
 
+	(call miscfile_rw_network_files (subj))
+	(call miscfile_manage_passwords (subj))
 	(call miscfile_manage_shadow (subj))
 
 	(call nss_manage_config_files (subj))
@@ -46,16 +50,24 @@
 	(call nss_client_subj_type (subj))
 
 	(call pam_manage_config (subj))
+	(call pam_relabel_config (subj))
 
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 	(call seutil_run_setfiles (subj authconfig_role))
 
 	(optional authconfig_optional_sd
+		(call sd_getattr_unit_dirs (subj))
+		(call sd_read_state_files (subj))
+		(call sd_status (subj))
+		(call sd_stream_connect (subj))
 		(call sd_stop (subj)))
 
 	(optional authconfig_optional_sd_askpwd_agent
-		(call sd_askpwd_exec_askpwd_agent (subj)))
+		(call sd_askpwd_exec_askpwd_agent (subj))
+		(call sd_askpwd_agent_sd_runtime_obj_type_transition_runtime (subj))
+		(call sd_askpwd_manage_agent_runtime_fifo_files (subj))
+		(call sd_askpwd_list_runtime (subj)))
 
 	(optional authconfig_optional_systemctl
 		(call systemctl_exec (subj))))

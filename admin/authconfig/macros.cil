@@ -16,6 +16,10 @@
 	(call file_search_config (ARG1))
 	(allow ARG1 authconfig.config_file read_file_perms))
 
+(macro authconfig_rw_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 authconfig.config_file rw_file_perms))
+
 (macro authconfig_manage_config_files ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
 	(allow ARG1 authconfig.config_file manage_file_perms))

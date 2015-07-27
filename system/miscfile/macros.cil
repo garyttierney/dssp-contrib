@@ -509,7 +509,11 @@
 	(call file_search_config (ARG1))
 	(allow ARG1 network.config_file list_dir_perms))
 
-(macro miscfile_read_networkd_files ((type ARG1))
+(macro miscfile_read_network_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 network.config_file network.config_file)))
+
+(macro miscfile_rw_network_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_files_pattern (ARG1 network.config_file network.config_file)))
 

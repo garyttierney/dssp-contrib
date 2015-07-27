@@ -103,6 +103,10 @@
 	(call sd_search_runtime (ARG1))
 	(call read_fifo_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))
 
+(macro sd_askpwd_manage_agent_runtime_fifo_files ((type ARG1))
+	(call sd_rw_runtime_dirs (ARG1))
+	(call manage_fifo_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))
+
 (macro sd_askpwd_read_agent_runtime_lnk_files ((type ARG1))
 	(call sd_search_runtime (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_askpwd_agent.runtime_file sd_askpwd_agent.runtime_file)))

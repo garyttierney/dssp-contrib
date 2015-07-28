@@ -131,6 +131,9 @@
 	(optional sysadm_optional_getty
 		(call getty_adm (subj role)))
 
+	(optional sysadm_optional_gpg_pcsc_wrapper
+		(call gpg_pcsc_wrapper_run (subj role)))
+
 	(optional sysadm_optional_hostname
 		(call hostname_manage_config_files (subj)))
 
@@ -220,6 +223,14 @@
 	(optional sysadm_optional_rpm
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_scdaemon
+		(call scdaemon_run (sysadm_subj_type role))
+		(call scdaemon_manage_home (subj))
+		(call scdaemon_relabel_home (subj))
+		(call scdaemon_gpg_home_obj_type_transition_home (subj))
+		(call scdaemon_manage_tmpfs (subj))
+		(call scdaemon_relabel_tmpfs (subj)))
 
 	(optional sysadm_optional_sctl
 		(call sctl_manage_config (subj))

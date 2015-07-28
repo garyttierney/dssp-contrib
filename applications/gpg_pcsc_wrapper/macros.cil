@@ -1,0 +1,13 @@
+(macro gpg_pcsc_wrapper_exec ((type ARG1))
+	(call can_exec (ARG1 gpg_pcsc_wrapper.cmd_file)))
+
+(macro gpg_pcsc_wrapper_auto_subj_type_transition ((type ARG1))
+	(call gpg_pcsc_wrapper_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 gpg_pcsc_wrapper.cmd_file gpg_pcsc_wrapper.subj)))
+
+(macro gpg_pcsc_wrapper_send_signal ((type ARG1))
+	(allow ARG1 gpg_pcsc_wrapper.subj (process (signal))))
+
+(macro gpg_pcsc_wrapper_run ((type ARG1)(role ARG2))
+	(call gpg_pcsc_wrapper_auto_subj_type_transition (ARG1))
+	(roleattributeset gpg_pcsc_wrapper_role ARG2))

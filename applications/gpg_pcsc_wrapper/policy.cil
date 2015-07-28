@@ -1,0 +1,10 @@
+(roleattribute gpg_pcsc_wrapper_role)
+
+(block gpg_pcsc_wrapper
+	(blockinherit app_blk)
+
+	(roletype gpg_pcsc_wrapper_role subj)
+
+	(call file_search_config (subj))
+
+	(call pcscd_client_subj_type (subj)))

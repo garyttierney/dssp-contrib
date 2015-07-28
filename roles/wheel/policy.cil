@@ -16,11 +16,22 @@
 		(call dirmngr_relabel_home (subj))
 		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
 
+	(optional wheel_optional_gpg_pcsc_wrapper
+		(call gpg_pcsc_wrapper_run (subj role)))
+
 	(optional wheel_optional_networkctl
 		(call networkctl_run (wheel_subj_type role)))
 
 	(optional wheel_optional_run
 		(call run_exec (subj)))
+
+	(optional wheel_optional_scdaemon
+		(call scdaemon_run (wheel_subj_type role))
+		(call scdaemon_manage_home (subj))
+		(call scdaemon_relabel_home (subj))
+		(call scdaemon_gpg_home_obj_type_transition_home (subj))
+		(call scdaemon_manage_tmpfs (subj))
+		(call scdaemon_relabel_tmpfs (subj)))
 
 	(optional wheel_optional_sd_stdio
 		(call sd_stdio_run (wheel_subj_type role)))

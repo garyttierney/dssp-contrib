@@ -1,0 +1,42 @@
+(macro qemu_exec ((type ARG1))
+	(call can_exec (ARG1 qemu.cmd_file)))
+
+(macro qemu_mmap_cmd_files ((type ARG1))
+	(allow ARG1 qemu.cmd_file mmap_file_perms))
+
+(macro qemu_audit_access_cmd_files ((type ARG1))
+	(allow ARG1 qemu.cmd_file (file (read))))
+
+(macro qemu_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 qemu.config_file search_dir_perms))
+
+(macro qemu_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 qemu.config_file list_dir_perms))
+
+(macro qemu_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 qemu.config_file qemu.config_file)))
+
+(macro qemu_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 qemu.config_file qemu.config_file)))
+
+(macro qemu_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 qemu.config_file list_dir_perms)
+	(allow ARG1 qemu.config_file read_file_perms)
+	(allow ARG1 qemu.config_file read_lnk_file_perms))
+
+(macro qemu_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 qemu.config_file manage_dir_perms)
+	(allow ARG1 qemu.config_file manage_file_perms)
+	(allow ARG1 qemu.config_file manage_lnk_file_perms))
+
+(macro qemu_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 qemu.config_file relabel_dir_perms)
+	(allow ARG1 qemu.config_file relabel_file_perms)
+	(allow ARG1 qemu.config_file relabel_lnk_file_perms))

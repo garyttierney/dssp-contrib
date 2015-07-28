@@ -231,6 +231,9 @@
 		(call polkit_run_polkit_agent (sysadm_subj_type role))
 		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
 
+	(optional sysadm_optional_qemu
+		(call qemu_manage_config (subj)))
+
 	(optional sysadm_optional_rpm
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))

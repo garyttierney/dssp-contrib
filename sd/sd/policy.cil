@@ -300,7 +300,12 @@
 
 	(call sd_daemon_subj_type (subj))
 	(call sd_send_signal (subj))
-	(call sd_send_signal_daemon_subj (subj)))
+	(call sd_send_signal_daemon_subj (subj))
+
+	(tunableif enable_mls
+		(false
+			(optional sd_unknown_optional_unconfinedsubj
+				(call unconfinedsubj_type (subj))))))
 
 (block sd_helper
 	(blockinherit cmd_obj_blk))

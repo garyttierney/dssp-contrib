@@ -20,13 +20,6 @@
 (block qemu_use_hugepages
 	(blockinherit sec_bool_obj_blk))
 
-;todo
-; run qemu_guest.subj:
-; (call qemu_run_quest (myqemu_runner.subj myqemu_runner_role)
-; run custom qemu guests:
-; (call qemu_manual_subj_type_transition_pattern (myqemu_runner.subj myqemu_guest_subj_type))
-; (roletype myqemu_runner_role myqemu_guest_subj_type)
-
 (roleattributeset qemu_guest_role sys.role)
 
 (allow qemu_guest_subj_type self (capability (setuid setgid net_admin)))

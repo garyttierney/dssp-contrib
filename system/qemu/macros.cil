@@ -83,6 +83,10 @@
 
 (macro qemu_run_qemu_guest ((type ARG1)(role ARG2))
 	(call qemu_manual_subj_type_transition_pattern (ARG1 qemu_guest.subj))
+	(roletype ARG2 qemu_guest.subj))
+
+(macro qemu_run_all_qemu_guest ((type ARG1)(role ARG2))
+	(call qemu_manual_subj_type_transition_pattern (ARG1 qemu_guest_subj_type))
 	(roleattributeset qemu_guest_role ARG2))
 
 (macro qemu_search_config ((type ARG1))
@@ -119,8 +123,19 @@
 	(allow ARG1 qemu.config_file relabel_file_perms)
 	(allow ARG1 qemu.config_file relabel_lnk_file_perms))
 
+(macro qemu_relabel_all_guest_obj_files ((type ARG1))
+	(allow ARG1 qemu_guest_obj_type relabel_file_perms))
+
 (macro qemu_rw_all_guest_obj_files ((type ARG1))
 	(allow ARG1 qemu_guest_obj_type rw_file_perms))
+
+(macro qemu_manage_all_guest_runtime_obj_sock_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 qemu_guest_runtime_obj_type manage_sock_file_perms))
+
+(macro qemu_stream_connect_all_guest_subj ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 qemu_guest_runtime_obj_type qemu_guest_runtime_obj_type qemu_guest_subj_type)))
 
 (macro qemu_getattr_all_guest_ptys ((type ARG1))
 	(call fs_search_devpts (ARG1))

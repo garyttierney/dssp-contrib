@@ -1,0 +1,23 @@
+(typeattribute numactl_subj_type)
+
+(block numactl
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (numactl_subj_type cmd_file)))
+
+(allow numactl_subj_type self (capability (dac_override)))
+
+(call cmd_exec_shell (numactl_subj_type))
+
+(call fs_list_sysfs (numactl_subj_type))
+(call fs_rw_sysfs_files (numactl_subj_type))
+(call fs_read_sysfs_lnk_files (numactl_subj_type))
+
+(call subj_ptrace_uncond_type (numactl_subj_type))
+(call subj_getsched_common_subj (numactl_subj_type))
+(call subj_setsched_common_subj (numactl_subj_type))
+(call subj_read_common_subj_state (numactl_subj_type))
+
+(call miscfile_read_all_terminfo (numactl_subj_type))
+
+(call numactl_exec (numactl_subj_type))

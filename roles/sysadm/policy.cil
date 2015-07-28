@@ -376,7 +376,7 @@
 	(block sysadm_alsautil
 		(blockinherit alsautil_subj_blk)
 
-		(call alsautil_role_pattern (sysadm.role sysadm_subj_type sysadm_alsautil.subj))))
+		(call alsautil_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_alsautil_optional_sysadm_pa
 	(call pa_auto_subj_type_transition_pattern (sysadm_alsautil.subj sysadm_pa.subj)))
@@ -385,7 +385,7 @@
 	(block sysadm_analyze
 		(blockinherit analyze_subj_blk)
 
-		(call analyze_role_pattern (sysadm.role sysadm_subj_type sysadm_analyze.subj))))
+		(call analyze_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_gpg_optional_gpg
 	(block sysadm_gpg
@@ -421,7 +421,7 @@
 	(block sysadm_busctl
 		(blockinherit busctl_subj_blk)
 
-		(call busctl_role_pattern (sysadm.role sysadm_subj_type sysadm_busctl.subj))))
+		(call busctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_busctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_busctl.subj (fd (use)))
@@ -433,7 +433,7 @@
 	(block sysadm_hostnamectl
 		(blockinherit hostnamectl_subj_blk)
 
-		(call hostnamectl_role_pattern (sysadm.role sysadm_subj_type sysadm_hostnamectl.subj))))
+		(call hostnamectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_hostnamectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (fd (use)))
@@ -445,13 +445,13 @@
 	(block sysadm_journalctl
 		(blockinherit journalctl_subj_blk)
 
-		(call journalctl_role_pattern (sysadm.role sysadm_subj_type sysadm_journalctl.subj))))
+		(call journalctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_localectl_optional_localectl
 	(block sysadm_localectl
 		(blockinherit localectl_subj_blk)
 
-		(call localectl_role_pattern (sysadm.role sysadm_subj_type sysadm_localectl.subj))))
+		(call localectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_localectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_localectl.subj (fd (use)))
@@ -463,7 +463,7 @@
 	(block sysadm_loginctl
 		(blockinherit loginctl_subj_blk)
 
-		(call loginctl_role_pattern (sysadm.role sysadm_subj_type sysadm_loginctl.subj))))
+		(call loginctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_loginctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (fd (use)))
@@ -475,13 +475,24 @@
 	(block sysadm_machinectl
 		(blockinherit machinectl_subj_blk)
 
-		(call machinectl_role_pattern (sysadm.role sysadm_subj_type sysadm_machinectl.subj))))
+		(call machinectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_machinectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (fd (use)))
 		(allow sysadm_ssh_client.subj sysadm_machinectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_numactl_optional_numactl
+	(block sysadm_numactl
+		(blockinherit numactl_subj_blk)
+
+		(call numactl_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_passwd_optional_passwd
 	(block sysadm_passwd
@@ -563,13 +574,13 @@
 	(block sysadm_sudo
 		(blockinherit sudo_subj_blk)
 
-		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type sysadm_sudo.subj))))
+		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_systemctl
 	(block sysadm_systemctl
 		(blockinherit systemctl_subj_blk)
 
-		(call systemctl_role_pattern (sysadm.role sysadm_subj_type sysadm_systemctl.subj))))
+		(call systemctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (fd (use)))
@@ -581,7 +592,7 @@
 	(block sysadm_timedatectl
 		(blockinherit timedatectl_subj_blk)
 
-		(call timedatectl_role_pattern (sysadm.role sysadm_subj_type sysadm_timedatectl.subj))))
+		(call timedatectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_timedatectl_optional_ssh
 		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (fd (use)))

@@ -53,7 +53,7 @@
 	(block wheel_alsautil
 		(blockinherit alsautil_subj_blk)
 
-		(call alsautil_role_pattern (wheel.role wheel_subj_type wheel_alsautil.subj))))
+		(call alsautil_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_alsautil_optional_wheel_pa
 	(call pa_auto_subj_type_transition_pattern (wheel_alsautil.subj wheel_pa.subj)))
@@ -62,7 +62,7 @@
 	(block wheel_analyze
 		(blockinherit analyze_subj_blk)
 
-		(call analyze_role_pattern (wheel.role wheel_subj_type wheel_analyze.subj))))
+		(call analyze_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_gpg_optional_gpg
 	(block wheel_gpg
@@ -97,7 +97,7 @@
 	(block wheel_busctl
 		(blockinherit busctl_subj_blk)
 
-		(call busctl_role_pattern (wheel.role wheel_subj_type wheel_busctl.subj))))
+		(call busctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_busctl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_busctl.subj (fd (use)))
@@ -109,7 +109,7 @@
 	(block wheel_hostnamectl
 		(blockinherit hostnamectl_subj_blk)
 
-		(call hostnamectl_role_pattern (wheel.role wheel_subj_type wheel_hostnamectl.subj))))
+		(call hostnamectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_hostnamectl.subj (fd (use)))
@@ -121,7 +121,7 @@
 	(block wheel_journalctl
 		(blockinherit journalctl_subj_blk)
 
-		(call journalctl_role_pattern (wheel.role wheel_subj_type wheel_journalctl.subj))))
+		(call journalctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
@@ -139,7 +139,7 @@
 	(block wheel_loginctl
 		(blockinherit loginctl_subj_blk)
 
-		(call loginctl_role_pattern (wheel.role wheel_subj_type wheel_loginctl.subj))))
+		(call loginctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_loginctl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_loginctl.subj (fd (use)))
@@ -151,7 +151,7 @@
 	(block wheel_machinectl
 		(blockinherit machinectl_subj_blk)
 
-		(call machinectl_role_pattern (wheel.role wheel_subj_type wheel_machinectl.subj))))
+		(call machinectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_machinectl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_machinectl.subj (fd (use)))
@@ -228,7 +228,7 @@
 	(block wheel_sudo
 		(blockinherit sudo_subj_blk)
 
-		(call sudo_role_pattern_sudo (wheel.role wheel_subj_type wheel_sudo.subj))))
+		(call sudo_role_pattern_sudo (wheel.role wheel_subj_type subj))))
 
 (optional wheel_sudo_optional_sysadm
 	(call sysadm_shell_manual_subj_type_transition (wheel_sudo.subj)))
@@ -237,7 +237,7 @@
 	(block wheel_systemctl
 		(blockinherit systemctl_subj_blk)
 
-		(call systemctl_role_pattern (wheel.role wheel_subj_type wheel_systemctl.subj))))
+		(call systemctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_systemctl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_systemctl.subj (fd (use)))
@@ -249,7 +249,7 @@
 	(block wheel_timedatectl
 		(blockinherit timedatectl_subj_blk)
 
-		(call timedatectl_role_pattern (wheel.role wheel_subj_type wheel_timedatectl.subj))))
+		(call timedatectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_timedatectl_optional_ssh
 		(allow wheel_ssh_client.subj wheel_timedatectl.subj (fd (use)))

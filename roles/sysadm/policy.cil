@@ -132,7 +132,7 @@
 		(call getty_adm (subj role)))
 
 	(optional sysadm_optional_gpg_pcsc_wrapper
-		(call gpg_pcsc_wrapper_run (subj role)))
+		(call gpg_pcsc_wrapper_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_hostname
 		(call hostname_manage_config_files (subj)))
@@ -210,6 +210,11 @@
 
 	(optional sysadm_optional_pcscd
 		(call pcscd_adm (subj role)))
+
+	(optional sysadm_optional_pinentry
+		(call pinentry_run (sysadm_subj_type role))
+		(call pinentry_manage_tmpfs_files (subj))
+		(call pinentry_relabel_tmpfs_files (subj)))
 
 	(optional sysadm_optional_plymouth
 		(call plymouth_adm (subj role))

@@ -1,0 +1,31 @@
+(macro pinentry_exec ((type ARG1))
+	(call can_exec (ARG1 pinentry.cmd_file)))
+
+(macro pinentry_auto_subj_type_transition ((type ARG1))
+	(call pinentry_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 pinentry.cmd_file dirmngr.subj)))
+
+(macro pinentry_send_signal ((type ARG1))
+	(allow ARG1 pinentry.subj (process (signal))))
+
+(macro pinentry_run ((type ARG1)(role ARG2))
+	(call pinentry_auto_subj_type_transition (ARG1))
+	(roleattributeset pinentry_role ARG2))
+
+(macro pinentry_read_tmpfs_files ((type ARG1))
+        (call file_search_runtime_user (ARG1))
+        (call fs_search_tmpfs (ARG1))
+	(allow ARG1 pinentry.tmpfs_user_file read_file_perms))
+
+(macro pinentry_manage_tmpfs_files ((type ARG1))
+        (call file_search_runtime_user (ARG1))
+        (call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 pinentry.tmpfs_user_file manage_file_perms))
+
+(macro pinentry_relabel_tmpfs_files ((type ARG1))
+        (call file_search_runtime_user (ARG1))
+        (call fs_search_tmpfs (ARG1))
+	(allow ARG1 pinentry.tmpfs_user_file relabel_file_perms))
+
+(macro pinentry_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 pinentry.tmpfs_user_file file "*")))

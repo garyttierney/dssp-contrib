@@ -14,10 +14,15 @@
 		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
 
 	(optional user_optional_gpg_pcsc_wrapper
-		(call gpg_pcsc_wrapper_run (subj role)))
+		(call gpg_pcsc_wrapper_run (user_subj_type role)))
 
 	(optional user_optional_journalctl
 		(call journalctl_exec (subj)))
+
+	(optional user_optional_pinentry
+		(call pinentry_run (user_subj_type role))
+		(call pinentry_manage_tmpfs_files (subj))
+		(call pinentry_relabel_tmpfs_files (subj)))
 
 	(optional user_optional_run
 		(call run_exec (subj)))

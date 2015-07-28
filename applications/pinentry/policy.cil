@@ -1,0 +1,34 @@
+(roleattribute pinentry_role)
+
+(block pinentry
+	(blockinherit app_blk)
+
+	(roletype pinentry_role subj)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call pinentry_manage_tmpfs_files (subj))
+	(call pinentry_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call pinentry_exec (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call file_read_data (subj))
+
+	(call fs_getattr_fs (subj))
+
+	(call miscfile_read_all_fonts (subj))
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call usersubj_use_term (subj))
+
+	(optional pinentry_optional_gpg_agent
+		(call gpg_agent_stream_connect_all_subj (subj)))
+
+	(optional pinentry_optional_xserver
+		(call xserver_tmpfs_client (subj tmpfs_file))))

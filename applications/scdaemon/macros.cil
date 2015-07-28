@@ -86,7 +86,7 @@
 
 (macro scdaemon_manage_tmpfs ((type ARG1))
         (call file_search_runtime_user (ARG1))
-        (call fs_search_tmpfs (ARG1))
+        (call fs_rw_tmpfs_dirs (ARG1))
         (allow ARG1 scdaemon.tmpfs_user_file manage_dir_perms)
         (allow ARG1 scdaemon.tmpfs_user_file manage_sock_file_perms))
 

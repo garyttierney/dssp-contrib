@@ -18,9 +18,9 @@
 
 	(call dev_getattr_all (subj))
 
-	(call file_manage_boot (subj))
 	(call file_manage_config (subj))
 	(call file_manage_unknown (subj))
+	(call file_rootfs_obj_type_transition_unknown (subj))
 
 	(call fs_getattr_all_fs (subj))
 	(call fs_list_devpts (subj))
@@ -37,18 +37,6 @@
 	(call term_use_inherited_unallocated_ttys (subj))
 
 	(call miscfile_manage_cert (subj))
-	(call miscfile_manage_factory (subj))
-	(call miscfile_manage_fonts (subj))
-	(call miscfile_manage_hwdata (subj))
-	(call miscfile_manage_locale (subj))
-	(call miscfile_manage_man (subj))
-	(call miscfile_manage_modules (subj))
-	(call miscfile_manage_network (subj))
-	(call miscfile_manage_passwords (subj))
-	(call miscfile_manage_shadow (subj))
-	(call miscfile_manage_terminfo (subj))
-	(call miscfile_manage_utmp_runtime_files (subj))
-	(call miscfile_manage_wtmp_var_log_files (subj))
 
 	(call seutil_default_context_obj_type_transition_file_context (subj))
 	(call seutil_selinux_config_obj_type_transition_policy_config (subj))

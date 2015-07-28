@@ -1,0 +1,11 @@
+(context numad_cmd (sys.id sys.role numad.cmd_file (systemlow systemlow)))
+(context numad_runtime (sys.id sys.role numad.runtime_file (systemlow systemlow)))
+(context numad_var_log (sys.id sys.role numad.var_log_file (systemlow systemlow)))
+
+(filecon "/usr/bin/numad" file numad_cmd)
+(filecon "/var/log/numad.*" file numad_var_log)
+(filecon "/var/run/numad\.pid" file numad_runtime)
+
+(optional numad_unit_optional_sd
+	(context numad_unit (sys.id sys.role numad.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*numad.*" file numad_unit))

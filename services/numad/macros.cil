@@ -1,0 +1,46 @@
+(macro numad_exec ((type ARG1))
+	(call can_exec (ARG1 numad.cmd_file)))
+
+(macro numad_auto_subj_type_transition ((type ARG1))
+	(call numad_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 numad.cmd_file numad.subj)))
+
+(macro numad_send_signal ((type ARG1))
+	(allow ARG1 numad.subj (process (signal))))
+
+(macro numad_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 numad.var_log_file read_file_perms))
+
+(macro numad_manage_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 numad.var_log_file manage_file_perms))
+
+(macro numad_relabel_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 numad.var_log_file relabel_file_perms))
+
+(macro numad_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 numad.var_log_file file "numad")))
+
+(macro numad_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 numad.runtime_file read_file_perms))
+
+(macro numad_manage_runtime_files ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 numad.runtime_file manage_file_perms))
+
+(macro numad_relabel_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 numad.runtime_file relabel_file_perms))
+
+(macro numad_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 numad.runtime_file file "numad.pid")))
+
+(macro numad_adm ((type ARG1)(role ARG2))
+	(typeattributeset numad_adm_subj_type ARG1)
+	(optional numad_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional numad_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

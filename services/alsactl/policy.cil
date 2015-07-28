@@ -1,0 +1,80 @@
+(typeattribute alsactl_adm_subj_type)
+
+(typeattribute alsactl_obj_type)
+
+(block alsactl
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset alsactl_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset alsactl_obj_type runtime_file)
+
+	(blockinherit file_runtime_lock_obj_blk)
+
+	(typeattributeset alsactl_obj_type runtime_lock_file)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset alsactl_obj_type var_lib_file)
+
+	(dontaudit subj self (capability (sys_tty_config)))
+	(allow subj self (process (getsched setsched)))
+
+	(call alsactl_read_config (subj))
+
+	(call alsactl_manage_runtime_files (subj))
+	(call alsactl_runtime_obj_type_transition_runtime (subj))
+
+	(call alsactl_manage_runtime_lock_files (subj))
+	(call alsactl_runtime_lock_obj_type_transition_runtime_lock (subj))
+
+	(call alsactl_manage_var_lib (subj))
+	(call alsactl_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys_use_fd (subj))
+
+	(call fs_read_sysfs (subj))
+	(call fs_read_devtmpfs_chr_files (subj))
+
+	(call dev_rw_sound (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(optional alsactl_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset alsactl_obj_type unit_file)
+
+		(allow alsactl_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional alsactl_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional alsactl_optional_sd_udevd
+		(call sd_udevd_rw_inherited_udp_sockets (subj))))
+
+(allow alsactl_adm_subj_type alsactl.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (alsactl_adm_subj_type alsactl.subj))
+
+(call file_search_runtime_lock (alsactl_adm_subj_type))
+(call file_search_var_lib (alsactl_adm_subj_type))
+
+(allow alsactl_adm_subj_type alsactl_obj_type manage_file_perms)
+(allow alsactl_adm_subj_type alsactl_obj_type manage_dir_perms)
+(allow alsactl_adm_subj_type alsactl_obj_type manage_lnk_file_perms)
+
+(allow alsactl_adm_subj_type alsactl_obj_type relabel_file_perms)
+(allow alsactl_adm_subj_type alsactl_obj_type relabel_dir_perms)
+(allow alsactl_adm_subj_type alsactl_obj_type relabel_lnk_file_perms)

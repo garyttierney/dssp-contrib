@@ -66,6 +66,9 @@
 	(call seutil_run_setfiles (sysadm_subj_type role))
 	(call seutil_run_setsebool (sysadm_subj_type role))
 
+	(optional sysadm_optional_alsactl
+		(call alsactl_adm (subj role)))
+
 	(optional sysadm_optional_auditctl
 		(call auditctl_run (sysadm_subj_type role)))
 

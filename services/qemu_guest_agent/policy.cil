@@ -1,0 +1,57 @@
+(typeattribute qemu_guest_agent_adm_subj_type)
+
+(typeattribute qemu_guest_agent_obj_type)
+
+(block qemu_guest_agent
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset qemu_guest_agent_obj_type runtime_file)
+
+	(call qemu_guest_agent_manage_runtime_files (subj))
+	(call qemu_guest_agent_runtime_obj_type_transition_runtime (subj))
+
+	(call fs_getattr_tmpfs_fs (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+
+	(call term_use_virtio (subj))
+
+	(call miscfile_read_locale (subj))
+	(call miscfile_read_utmp_runtime_files (subj))
+
+	(optional qemu_quest_agent_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset qemu_guest_agent_obj_type unit_file)
+
+		(allow qemu_guest_agent_adm_subj_type unit_file (service (stop status disable enable reload start)))
+
+		(call sd_start_unit_power (subj))
+		(call sd_stream_connect (subj)))
+
+	(optional qemu_guest_agent_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional qemu_guest_agent_optional_sd_logind
+		(call sd_logind_client_subj_type (subj)))
+
+	(optional qemu_guest_agent_optional_systemctl
+		(call systemctl_exec (subj))))
+
+(allow qemu_guest_agent_adm_subj_type qemu_guest_agent.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (qemu_guest_agent_adm_subj_type qemu_guest_agent.subj))
+
+(call file_search_runtime (qemu_guest_agent_adm_subj_type))
+
+(allow qemu_guest_agent_adm_subj_type qemu_guest_agent_obj_type manage_file_perms)
+
+(allow qemu_guest_agent_adm_subj_type qemu_guest_agent_obj_type relabel_file_perms)

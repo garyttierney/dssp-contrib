@@ -7,6 +7,9 @@
 (macro qemu_audit_access_cmd_files ((type ARG1))
 	(allow ARG1 qemu.cmd_file (file (read))))
 
+(macro qemu_cmd_entry_obj_type ((type ARG1))
+	(allow ARG1 qemu.cmd_file (file (entrypoint))))
+
 (macro qemu_search_config ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 qemu.config_file search_dir_perms))

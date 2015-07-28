@@ -1,0 +1,9 @@
+(context qemu_guest_agent_cmd (sys.id sys.role qemu_guest_agent.cmd_file (systemlow systemlow)))
+(context qemu_guest_agent_runtime (sys.id sys.role qemu_guest_agent.runtime_file (systemlow systemlow)))
+
+(filecon "/usr/bin/qemu-ga" file qemu_guest_agent_cmd)
+(filecon "/var/run/qga\.state" file qemu_guest_agent_runtime)
+
+(optional qemu_guest_agent_unit_optional_sd
+	(context qemu_guest_agent_unit (sys.id sys.role qemu_guest_agent.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*qemu-guest-agent.*" file qemu_guest_agent_unit))

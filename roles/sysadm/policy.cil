@@ -234,6 +234,9 @@
 	(optional sysadm_optional_qemu
 		(call qemu_manage_config (subj)))
 
+	(optional sysadm_optional_qemu_guest_agent
+		(call qemu_guest_agent_adm (subj role)))
+
 	(optional sysadm_optional_rpm
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))

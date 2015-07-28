@@ -1,5 +1,5 @@
 (block gpg_subj_blk
-	(blockabstract ssh_client_subj_blk)
+	(blockabstract gpg_subj_blk)
 
 	(blockinherit app_subj_blk)
 
@@ -29,7 +29,7 @@
 	(optional gpg_role_pattern_optional_dirmngr
 		(call dirmngr_run (ARG3 ARG1))))
 
-(macro gog_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+(macro gpg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
         (call auto_subj_type_transition_pattern (ARG1 gpg.cmd_file ARG2)))
 
 (macro gpg_exec_gpg_helper ((type ARG1))
@@ -77,6 +77,10 @@
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 gpg.home_user_file list_dir_perms))
 
+(macro gpg_create_home_dirs ((type ARG1))
+	(call usersubj_add_entry_home_dir (ARG1))
+	(allow ARG1 gpg.home_user_file create_dir_perms))
+
 (macro gpg_read_home_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 gpg.home_user_file gpg.home_user_file)))
@@ -109,6 +113,9 @@
 
 (macro gpg_home_dir_obj_type_transition_home ((type ARG1))
 	(call usersubj_home_dir_obj_type_transition (ARG1 gpg.home_user_file dir ".gnupg")))
+
+(macro gpg_home_dir_add_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_add_obj_type_transition (ARG1 gpg.home_user_file dir ".gnupg")))
 
 (macro gpg_home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))

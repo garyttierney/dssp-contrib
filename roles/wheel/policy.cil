@@ -47,6 +47,21 @@
 
 		(call gpg_exec_gpg_helper (wheel.subj))))
 
+(optional wheel_gpg_optional_gpg_agent
+	(call gpg_agent_auto_subj_type_transition_pattern (wheel_gpg.subj wheel_gpg_agent.subj))
+	(call gpg_agent_stream_connect_pattern (wheel_gpg.subj wheel_gpg_agent.subj)))
+
+(optional wheel_gpg_agent_optional_gpg_agent
+	(block wheel_gpg_agent
+		(blockinherit gpg_agent_subj_blk)
+
+		(call gpg_agent_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
 (optional wheel_analyze_optional_ssh
 		(allow wheel_ssh_client.subj wheel_analyze.subj (fd (use)))
 		(allow wheel_ssh_client.subj wheel_analyze.subj rw_inherited_unix_stream_socket_perms)

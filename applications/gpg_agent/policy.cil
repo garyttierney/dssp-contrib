@@ -1,0 +1,34 @@
+(typeattribute gpg_agent_subj_type)
+
+(block gpg_agent
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (gpg_agent_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(allow gpg_agent_subj_type self create_unix_stream_stream_socket_perms)
+(allow gpg_agent_subj_type self (unix_stream_socket (connectto)))
+(allow gpg_agent_subj_type self rw_fifo_file_perms)
+
+(call gpg_agent_manage_home (gpg_agent_subj_type))
+(call gpg_agent_gpg_home_obj_type_transition_home (gpg_agent_subj_type))
+
+(call sys_read_crypto_sysctl_files (gpg_agent_subj_type))
+
+(call file_read_data_files (gpg_agent_subj_type))
+
+(call fs_list_devtmpfs (gpg_agent_subj_type))
+(call fs_search_tmpfs (gpg_agent_subj_type))
+
+(call gpg_create_home_dirs (gpg_agent_subj_type))
+(call gpg_home_dir_add_obj_type_transition_home (gpg_agent_subj_type))
+
+(call miscfile_read_locale (gpg_agent_subj_type))
+
+(call usersubj_use_term (gpg_agent_subj_type))
+
+(optional gpg_agent_optional_scdaemon
+	(call scdaemon (gpg_agent_subj_type)))

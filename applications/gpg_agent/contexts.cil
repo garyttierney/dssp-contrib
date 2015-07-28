@@ -1,0 +1,9 @@
+(context gpg_agent_cmd (sys.id sys.role gpg_agent.cmd_file (systemlow systemlow)))
+(filecon "/usr/bin/gpg-agent" file gpg_agent_cmd)
+
+(filecon "HOME_DIR/\.gnupg/gpg-agent\.conf" file (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/gpg-agent\.log" file (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/S\.gpg-agent" socket (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/S\.gpg-agent\.ssh" socket (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/sshcontrol" file (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg/private-keys-v1\.d(/.*)?" any (sys.id sys.role gpg_agent.home_user_file (systemlow systemlow)))

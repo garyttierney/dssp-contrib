@@ -322,6 +322,10 @@
 	(call file_search_home (ARG1))
 	(call obj_type_transition_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
 
+(macro usersubj_home_dir_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(call file_search_home (ARG1))
+	(call obj_type_transition_add_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
+
 (macro usersubj_home_obj_type_transition_home_dir ((type ARG1)(name ARG2))
 	(call file_home_obj_type_transition (ARG1 home_dir.file dir ARG2)))
 

@@ -33,6 +33,21 @@
 
 		(call gpg_exec_gpg_helper (user.subj))))
 
+(optional user_gpg_optional_gpg_agent
+	(call gpg_agent_auto_subj_type_transition_pattern (user_gpg.subj user_gpg_agent.subj))
+	(call gpg_agent_stream_connect_pattern (user_gpg.subj user_gpg_agent.subj)))
+
+(optional user_gpg_agent_optional_gpg_agent
+        (block user_gpg_agent
+                (blockinherit gpg_agent_subj_blk)
+
+                (call gpg_agent_role_pattern (user.role user_subj_type subj))
+
+                (call cmd_auto_subj_type_transition (subj user.subj))
+                (call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+                (call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
 (optional user_passwd_optional_passwd
 	(block user_passwd
 		(blockinherit passwd_subj_blk)

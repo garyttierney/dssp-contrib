@@ -22,6 +22,14 @@
 (optional sysadm_gpg_home_optional_gpg
 	(filecon "/root/\.gnupg(/.*)?" any (sysadm.id sysadm.role gpg.home_user_file (systemlow systemlow))))
 
+(optional sysadm_gpg_agent_home_optional_gpg_agent
+	(filecon "/root/\.gnupg/gpg-agent\.conf" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/gpg-agent\.log" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/S\.gpg-agent" socket (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/S\.gpg-agent\.ssh" socket (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/sshcontrol" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow))))
+
 (optional sysadm_screen_home_optional_screen
 	(filecon "/root/\.screenrc" file (sysadm.id sysadm.role screen.home_user_file (systemlow systemlow))))
 

@@ -369,6 +369,15 @@
 	(optional sysadm_optional_utempter
 		(call utempter_run (sysadm_subj_type role))))
 
+(optional sysadm_alsautil_optional_alsautil
+	(block sysadm_alsautil
+		(blockinherit alsautil_subj_blk)
+
+		(call alsautil_role_pattern (sysadm.role sysadm_subj_type sysadm_alsautil.subj))))
+
+(optional sysadm_alsautil_optional_sysadm_pa
+	(call pa_auto_subj_type_transition_pattern (sysadm_alsautil.subj sysadm_pa.subj)))
+
 (optional sysadm_analyze_optional_analyze
 	(block sysadm_analyze
 		(blockinherit analyze_subj_blk)

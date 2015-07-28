@@ -41,6 +41,15 @@
 	(optional user_optional_systemctl
 		(call systemctl_exec (subj))))
 
+(optional user_alsautil_optional_alsautil
+	(block user_alsautil
+		(blockinherit alsautil_subj_blk)
+
+		(call alsautil_role_pattern (user.role user_subj_type user_alsautil.subj))))
+
+(optional user_alsautil_optional_user_pa
+	(call pa_auto_subj_type_transition_pattern (user_alsautil.subj user_pa.subj)))
+
 (optional user_gpg_optional_gpg
 	(block user_gpg
 		(blockinherit gpg_subj_blk)

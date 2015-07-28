@@ -75,9 +75,6 @@
 (macro qemu_audit_access_cmd_files ((type ARG1))
 	(allow ARG1 qemu.cmd_file (file (read))))
 
-(macro qemu_cmd_entry_obj_type ((type ARG1))
-	(allow ARG1 qemu.cmd_file (file (entrypoint))))
-
 (macro qemu_manual_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(call manual_subj_type_transition_pattern (ARG1 qemu.cmd_file ARG2)))
 

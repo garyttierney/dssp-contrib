@@ -70,8 +70,8 @@
 		(call sysbus_acquire_service (subj))
 		(call sysbus_read_config_files (subj)))
 
-	(optional sd_networkd_optional_myqemu
-		(call myqemu_relabelfrom_all_virt_subjects_tun_socket (subj))))
+	(optional sd_networkd_optional_qemu
+		(call qemu_relabelfrom_all_guest_subj_tun_socket (subj))))
 
 (optional sd_networkd_sysbus_chat_client_subj_type_optional_sysbus
 	(allow sd_networkd.subj sd_networkd_sysbus_chat_client_subj_type (dbus (send_msg)))

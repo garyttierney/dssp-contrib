@@ -1,3 +1,71 @@
+(block qemu_guest_blk
+	(blockabstract qemu_guest_blk)
+
+	(blockinherit qemu_guest_subj_blk)
+
+	(blockinherit qemu_guest_obj_blk)
+
+	(blockinherit qemu_guest_runtime_obj_blk)
+
+	(blockinherit qemu_guest_pty_obj_blk)
+
+	(call qemu_guest_pattern (subj file runtime_file pty_dev)))
+
+(block qemu_guest_subj_blk
+	(blockabstract qemu_guest_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset qemu_guest_subj_type subj))
+
+(block qemu_guest_obj_blk
+        (blockabstract qemu_guest_obj_blk)
+
+        (blockinherit file_obj_blk)
+
+        (typeattributeset qemu_guest_obj_type file))
+
+(block qemu_guest_runtime_obj_blk
+        (blockabstract qemu_guest_runtime_obj_blk)
+
+        (blockinherit file_runtime_obj_blk)
+
+        (typeattributeset qemu_guest_runtime_obj_type runtime_file))
+
+(block qemu_guest_pty_obj_blk
+        (blockabstract qemu_guest_pty_obj_blk)
+
+        (blockinherit term_pty_obj_blk)
+
+        (typeattributeset qemu_guest_pty_obj_type pty_dev))
+
+(macro qemu_guest_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset qemu_guest_subj_type ARG1))
+
+(macro qemu_guest_obj_type ((type ARG1))
+	(call file_obj_type (ARG1))
+	(typeattributeset qemu_guest_obj_type ARG1))
+
+(macro qemu_guest_runtime_obj_type ((type ARG1))
+	(call file_runtime_obj_type (ARG1))
+	(typeattributeset qemu_guest_runtime_obj_type ARG1))
+
+(macro qemu_guest_pty_obj_type ((type ARG1))
+	(call term_pty_obj_type (ARG1))
+	(typeattributeset qemu_guest_pty_obj_type ARG1))
+
+(macro qemu_guest_pattern ((type ARG1)(type ARG2)(type ARG3)(type ARG4))
+	(roletype qemu_guest_role ARG1)
+
+	(allow ARG1 ARG2 rw_file_perms)
+
+	(allow ARG1 ARG3 manage_sock_file_perms)
+	(call file_runtime_obj_type_transition (ARG1 ARG3 sock_file "*"))
+
+	(call term_create_pty (ARG1 ARG4))
+	(allow ARG1 ARG4 rw_term_perms))
+
 (macro qemu_exec ((type ARG1))
 	(call can_exec (ARG1 qemu.cmd_file)))
 
@@ -9,6 +77,13 @@
 
 (macro qemu_cmd_entry_obj_type ((type ARG1))
 	(allow ARG1 qemu.cmd_file (file (entrypoint))))
+
+(macro qemu_manual_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call manual_subj_type_transition_pattern (ARG1 qemu.cmd_file ARG2)))
+
+(macro qemu_run_qemu_guest ((type ARG1)(role ARG2))
+	(call qemu_manual_subj_type_transition_pattern (ARG1 qemu_guest.subj))
+	(roleattributeset qemu_guest_role ARG2))
 
 (macro qemu_search_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -43,3 +118,17 @@
 	(allow ARG1 qemu.config_file relabel_dir_perms)
 	(allow ARG1 qemu.config_file relabel_file_perms)
 	(allow ARG1 qemu.config_file relabel_lnk_file_perms))
+
+(macro qemu_rw_all_guest_obj_files ((type ARG1))
+	(allow ARG1 qemu_guest_obj_type rw_file_perms))
+
+(macro qemu_getattr_all_guest_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 qemu_guest_pty_obj_type (chr_file (getattr))))
+
+(macro qemu_use_all_inherited_guest_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 qemu_guest_pty_obj_type rw_inherited_term_perms))
+
+(macro qemu_relabelfrom_all_guest_subj_tun_socket ((type ARG1))
+	(allow ARG1 qemu_guest_subj_type (tun_socket (relabelfrom))))

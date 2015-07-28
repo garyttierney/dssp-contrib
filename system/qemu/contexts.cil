@@ -1,5 +1,6 @@
 (context qemu_cmd (sys.id sys.role qemu.cmd_file (systemlow systemlow)))
 (context qemu_config (sys.id sys.role qemu.config_file (systemlow systemlow)))
+(context qemu_use_hugepages (sys.id sys.role qemu_use_hugepages.bool (systemlow systemlow)))
 
 (filecon "/etc/qemu(/.*)?" any qemu_config)
 (filecon "/usr/bin/qemu-img" file qemu_cmd)
@@ -7,3 +8,5 @@
 (filecon "/usr/bin/qemu-kvm" file qemu_cmd)
 (filecon "/usr/bin/qemu-nbd" file qemu_cmd)
 (filecon "/usr/bin/qemu-system-x86_64" file qemu_cmd)
+
+(genfscon "selinuxfs" "/booleans/myqemu_use_hugepages" qemu_use_hugepages)

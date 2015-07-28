@@ -24,7 +24,7 @@
 
 	(typeattributeset sd_machined_obj_type var_lib_file)
 
-	(allow subj self (capability (sys_ptrace sys_chroot setgid sys_admin dac_override)))
+	(allow subj self (capability (sys_chroot setgid sys_admin dac_override)))
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self (process (setfscreate)))
 
@@ -43,6 +43,8 @@
 
 	(call fs_search_tmpfs (subj))
 	(call fs_list_rootfs (subj))
+
+	(call subj_ptrace_uncond_type (subj))
 
 	(call term_use_console (subj))
 

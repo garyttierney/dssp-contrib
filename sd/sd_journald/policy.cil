@@ -33,7 +33,7 @@
 
 	(typeattributeset sd_journald_obj_type var_lib_file)
 
-	(allow subj self (capability (audit_control setgid setuid sys_admin sys_ptrace)))
+	(allow subj self (capability (audit_control setgid setuid sys_admin)))
 	(allow subj self (capability2 (audit_read)))
 	(allow subj self (process (getcap)))
 	(allow subj self create_netlink_audit_socket_perms)
@@ -70,6 +70,7 @@
 
 	(call sec_get_enforce_mode (subj))
 
+	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 
 	(call term_write_console (subj))

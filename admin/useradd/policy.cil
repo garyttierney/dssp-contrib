@@ -42,7 +42,7 @@
 
 	(roletype useradd_role subj)
 
-	(allow subj self (capability (chown fsetid fowner sys_ptrace dac_override)))
+	(allow subj self (capability (chown fsetid fowner dac_override)))
 	(allow subj self (process (setfscreate)))
 
 	(call sys_audit_client_subj_type (subj))
@@ -57,6 +57,7 @@
 	(call sec_validate_context (subj))
 
 	(call subj_obj_sys_change_exemption_type (subj))
+	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 
 	(call miscfile_config_obj_type_transition_passwords (subj "*"))

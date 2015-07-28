@@ -5,7 +5,7 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(allow subj self (capability (setuid setgid setpcap sys_ptrace dac_override)))
+	(allow subj self (capability (setuid setgid setpcap dac_override)))
 	(allow subj self (process (getcap setcap setfscreate)))
 
 	(call sd_coredump_read_config (subj))
@@ -22,6 +22,7 @@
 
 	(call fs_getattr_fs (subj))
 
+	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 
 	(call sd_journald_client_subj_type (subj)))

@@ -12,7 +12,7 @@
 
 	(roletype nettools_role subj)
 
-	(allow subj self (capability (sys_ptrace dac_override net_raw net_admin setgid setuid)))
+	(allow subj self (capability (dac_override net_raw net_admin setgid setuid)))
 	(allow subj self (process (getcap setcap)))
 	(allow subj self create_netlink_socket_perms)
 	(allow subj self create_packet_socket_perms)
@@ -35,6 +35,7 @@
 	(call sec_get_enforce_mode (subj))
 
 	(call subj_getattr_common_subj (subj))
+	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 
 	(call miscfile_read_locale (subj))

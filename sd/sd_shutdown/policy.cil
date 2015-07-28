@@ -5,7 +5,7 @@
 (block sd_shutdown
 	(blockinherit sd_daemon_blk)
 
-	(allow subj self (capability (sys_boot ipc_lock kill sys_admin sys_chroot sys_ptrace dac_override)))
+	(allow subj self (capability (sys_boot ipc_lock kill sys_admin sys_chroot dac_override)))
 	(allow subj self (process (setfscreate)))
 	(allow subj self create_unix_stream_socket_perms)
 	(allow subj self manage_fifo_file_perms)
@@ -48,6 +48,7 @@
 	(call storage_setattr_all (subj))
 
 	(call subj_getpgid_common_subj (subj))
+	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 	(call subj_send_sigkill_common_subj (subj))
 	(call subj_send_signal_common_subj (subj))

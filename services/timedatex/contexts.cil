@@ -1,0 +1,6 @@
+(context timedatex_cmd (sys.id sys.role timedatex.cmd_file (systemlow systemlow)))
+(filecon "/usr/sbin/timedatex" file timedatex_cmd)
+
+(optional timedatex_unit_optional_sd
+	(context timedatex_unit (sys.id sys.role timedatex.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*timedatex.*" file timedatex_unit))

@@ -1,0 +1,19 @@
+(macro timedatex_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset timedatex_sysbus_chat_client_subj_type ARG1))
+
+(macro timedatex_exec ((type ARG1))
+	(call can_exec (ARG1 timedatex.cmd_file)))
+
+(macro timedatex_auto_subj_type_transition ((type ARG1))
+	(call timedatex_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 timedatex.cmd_file timedatex.subj)))
+
+(macro timedatex_send_signal ((type ARG1))
+	(allow ARG1 timedatex.subj (process (signal))))
+
+(macro timedatex_adm ((type ARG1)(role ARG2))
+	(typeattributeset timedatex_adm_subj_type ARG1)
+	(optional timedatex_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional timedatex_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

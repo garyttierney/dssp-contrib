@@ -198,6 +198,9 @@
 		(call mount_manage_runtime (subj))
 		(call mount_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_myqemu
+		(call myqemu_adm (subj role)))
+
 	(optional sysadm_optional_nettools
 		(call nettools_adm (subj role))
 		(call nettools_run_arp (sysadm_subj_type role))
@@ -210,6 +213,12 @@
 
 	(optional sysadm_optional_nss
 		(call nss_manage_config_files (subj)))
+
+	(optional sysadm_optional_openssl
+		(call openssl_run (subj role))
+		(call openssl_manage_home_files (subj))
+		(call openssl_relabel_home_files (subj))
+		(call openssl_home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_pam
 		(call pam_adm_subj_type (subj)))

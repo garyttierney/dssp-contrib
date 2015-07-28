@@ -1,0 +1,15 @@
+(roleattribute openssl_role)
+
+(block openssl
+	(blockinherit app_blk)
+
+	(roletype openssl_role subj)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(call openssl_manage_home_files (subj))
+	(call openssl_home_dir_obj_type_transition_home (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call usersubj_manage_home_cert (subj)))

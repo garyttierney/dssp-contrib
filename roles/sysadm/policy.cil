@@ -102,6 +102,9 @@
 		(call dm_run_dmcrypt (sysadm_subj_type role))
 		(call dm_run_dmsetup (sysadm_subj_type role)))
 
+	(optional sysadm_optional_dmesg
+		(call dmesg_run (subj role)))
+
 	(optional sysadm_optional_dns
 		(call dns_manage_resolv_config_files (subj)))
 

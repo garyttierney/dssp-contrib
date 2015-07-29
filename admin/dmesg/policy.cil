@@ -1,0 +1,17 @@
+(roleattribute dmesg_role)
+
+(block dmesg
+	(blockinherit app_blk)
+
+	(roletype dmesg_role subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call sys_read_ring_buffer (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_read_kmsg (subj))
+
+	(call miscfile_read_all_terminfo (subj)))

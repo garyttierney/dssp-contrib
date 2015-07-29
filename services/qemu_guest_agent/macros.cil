@@ -21,7 +21,7 @@
 	(allow ARG1 qemu_guest_agent.runtime_file relabel_file_perms))
 
 (macro qemu_guest_agent_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 qemu_guest_agent.runtime_file file "qga.state")))
+	(call file_runtime_obj_type_transition (ARG1 qemu_guest_agent.runtime_file file "*")))
 
 (macro qemu_guest_agent_adm ((type ARG1)(role ARG2))
 	(typeattributeset qemu_guest_agent_adm_subj_type ARG1)

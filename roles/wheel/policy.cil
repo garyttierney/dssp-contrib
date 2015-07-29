@@ -55,6 +55,11 @@
 		(call pinentry_manage_tmpfs_files (subj))
 		(call pinentry_relabel_tmpfs_files (subj)))
 
+	(optional wheel_optional_rpws
+		(call rpws_run (wheel_subj_type role))
+		(call rpws_manage_tmpfs_files (subj))
+		(call rpws_relabel_tmpfs_files (subj)))
+
 	(optional wheel_optional_run
 		(call run_exec (subj)))
 

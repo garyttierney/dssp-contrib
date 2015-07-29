@@ -264,6 +264,11 @@
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_rpws
+		(call rpws_run (sysadm_subj_type role))
+		(call rpws_manage_tmpfs_files (subj))
+		(call rpws_relabel_tmpfs_files (subj)))
+
 	(optional sysadm_optional_scdaemon
 		(call scdaemon_run (sysadm_subj_type role))
 		(call scdaemon_manage_home (subj))

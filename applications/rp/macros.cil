@@ -12,6 +12,9 @@
 (macro rp_client_subj_type ((type ARG1))
 	(typeattributeset rp_client_subj_type ARG1))
 
+(macro rp_exec ((type ARG1))
+	(call can_exec (ARG1 rp.cmd_file)))
+
 (macro rp_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 rp.cmd_file ARG3))
 

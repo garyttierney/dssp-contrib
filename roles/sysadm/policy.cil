@@ -272,6 +272,9 @@
 		(call rpws_manage_tmpfs_files (subj))
 		(call rpws_relabel_tmpfs_files (subj)))
 
+	(optional sysadm_optional_rtkitctl
+		(call rtkitctl_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_rtkitd
 		(call rtkitd_adm (subj role)))
 

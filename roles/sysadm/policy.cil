@@ -87,6 +87,13 @@
 	(optional sysadm_optional_coredumpctl
 		(call coredumpctl_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_curl
+		(call curl_run (sysadm_subj_type role))
+		(call curl_manage_config_files (subj))
+		(call curl_manage_home_files (subj))
+		(call curl_relabel_home_files (subj))
+		(call curl_home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_dhclient
 		(call dhclient_manage_config (subj))
 		(call dhclient_manage_runtime_files (subj))
@@ -103,7 +110,7 @@
 		(call dm_run_dmsetup (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dmesg
-		(call dmesg_run (subj role)))
+		(call dmesg_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dns
 		(call dns_manage_resolv_config_files (subj)))
@@ -115,7 +122,7 @@
 		(call dracut_initramfs_adm (subj role)))
 
 	(optional sysadm_optional_fpaste
-		(call fpaste_run (subj role))
+		(call fpaste_run (sysadm_subj_type role))
 		(call fpaste_manage_var_tmp (subj))
 		(call fpaste_relabel_var_tmp (subj)))
 
@@ -211,7 +218,7 @@
 		(call nss_manage_config_files (subj)))
 
 	(optional sysadm_optional_openssl
-		(call openssl_run (subj role))
+		(call openssl_run (sysadm_subj_type role))
 		(call openssl_manage_home_files (subj))
 		(call openssl_relabel_home_files (subj))
 		(call openssl_home_dir_obj_type_transition_home (subj)))
@@ -220,7 +227,7 @@
 		(call pam_adm_subj_type (subj)))
 
 	(optional sysadm_optional_pcitools
-		(call pcitools_run (subj role)))
+		(call pcitools_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_pcscd
 		(call pcscd_adm (subj role)))
@@ -381,6 +388,9 @@
 
 	(optional sysadm_optional_udevadm
 		(call udevadm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_usbutil
+		(call usbutil_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_useradd
 		(call useradd_run_groupadd (sysadm_subj_type role))

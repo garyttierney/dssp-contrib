@@ -15,6 +15,10 @@
 (filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
 (filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
 
+(optional sysadm_curl_optional_curl
+	(filecon "/root/\.wgetrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.curlrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow))))
+
 (optional sysadm_dirmngr_home_optional_dirmgr
 	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))

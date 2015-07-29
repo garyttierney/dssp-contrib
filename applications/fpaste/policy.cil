@@ -5,7 +5,7 @@
 
 	(roletype fpaste_role subj)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj_var_tmp_user_obj_blk)
 
 	(allow subj self (process (getsched)))
 
@@ -58,7 +58,7 @@
 
 	(call udev_client_subj_type (subj))
 
-	(call usbutils_exec (subj))
+	(call usbutil_exec (subj))
 
 	(optional fpaste_optional_sd_journald
 		(call sd_journald_client_subj_type (subj)))

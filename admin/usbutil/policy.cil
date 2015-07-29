@@ -1,0 +1,20 @@
+(roleattribute usbutil_role)
+
+(block usbutil
+	(blockinherit app_blk)
+
+	(roletype usbutil_role subj)
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_mmap_shell (subj))
+
+	(call fs_list_devtmpfs (subj))
+	(call fs_read_sysfs (subj))
+
+	(call miscfile_read_hwdata (subj))
+	(call miscfile_read_locale (subj))
+
+	(call udev_client_subj_type (subj)))

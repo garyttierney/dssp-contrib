@@ -1,0 +1,35 @@
+(roleattribute curl_role)
+
+(block curl
+	(blockinherit app_blk)
+
+	(roletype curl_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(call curl_read_config_files (subj))
+
+	(call curl_read_home_files (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+
+	(call fs_getattr_fs (subj))
+
+	(call http_tcp_connect_http_port (subj))
+
+	(call miscfile_read_all_cert (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call usersubj_manage_home_user_dirs (subj))
+	(call usersubj_manage_home_user_files (subj))
+	(call usersubj_home_dir_obj_type_transition_home_user_dirs (subj))
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional curl_optional_tor
+		(call tor_socks_client_subj_type (subj))))

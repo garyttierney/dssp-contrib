@@ -7,6 +7,12 @@
 
         (typeattributeset user_subj_type subj)
 
+	(optional user_optional_curl
+		(call curl_run (user_subj_type role))
+		(call curl_manage_home_files (subj))
+		(call curl_relabel_home_files (subj))
+		(call curl_home_dir_obj_type_transition_home (subj)))
+
 	(optional user_optional_dirmngr
 		(call dirmngr_run (user_subj_type role))
 		(call dirmngr_manage_home (subj))
@@ -20,7 +26,7 @@
 		(call journalctl_exec (subj)))
 
 	(optional user_optional_openssl
-		(call openssl_run (subj role))
+		(call openssl_run (user_subj_type role))
 		(call openssl_manage_home_files (subj))
 		(call openssl_relabel_home_files (subj))
 		(call openssl_home_dir_obj_type_transition_home (subj)))

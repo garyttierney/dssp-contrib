@@ -1,0 +1,18 @@
+(roleattribute nmcli_role)
+
+(block nmcli
+	(blockinherit app_blk)
+
+	(roletype nmcli_role subj)
+
+	(call dev_read_urandom (subj))
+
+	(call fs_list_tmpfs (subj))
+	(call fs_read_sysfs_files (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nm_client_subj_type (subj))
+
+	(call udev_client_subj_type (subj)))

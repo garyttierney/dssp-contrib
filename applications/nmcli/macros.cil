@@ -1,0 +1,13 @@
+(macro nmcli_exec ((type ARG1))
+	(call can_exec (ARG1 nmcli.cmd_file)))
+
+(macro nmcli_auto_subj_type_transition ((type ARG1))
+	(call nmcli_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 nmcli.cmd_file nmcli.subj)))
+
+(macro nmcli_send_signal ((type ARG1))
+	(allow ARG1 nmcli.subj (process (signal))))
+
+(macro nmcli_run ((type ARG1)(role ARG2))
+	(call nmcli_auto_subj_type_transition (ARG1))
+	(roleattributeset nmcli_role ARG2))

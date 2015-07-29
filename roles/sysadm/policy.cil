@@ -214,6 +214,9 @@
 		(call nettools_run_ping (sysadm_subj_type role))
 		(call nettools_run_traceroute (sysadm_subj_type role)))
 
+	(optional sysadm_optional_nmcli
+		(call nmcli_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_nm
 		(call nm_adm (subj role))
 

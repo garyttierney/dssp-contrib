@@ -1,0 +1,19 @@
+(context unbound_cmd (sys.id sys.role unbound.cmd_file (systemlow systemlow)))
+(context unbound_config (sys.id sys.role unbound.config_file (systemlow systemlow)))
+(context unbound_runtime (sys.id sys.role unbound.runtime_file (systemlow systemlow)))
+(context unbound_var_lib (sys.id sys.role unbound.var_lib_file (systemlow systemlow)))
+(context unboundanch_cmd (sys.id sys.role unboundanch.cmd_file (systemlow systemlow)))
+(context unboundcs_cmd (sys.id sys.role unboundcs.cmd_file (systemlow systemlow)))
+
+(filecon "/etc/unbound(/.*)?" any unbound_config)
+(filecon "/etc/sysconfig/unbound" file unbound_config)
+(filecon "/usr/sbin/unbound" file unbound_cmd)
+(filecon "/usr/sbin/unbound-anchor" file unboundanch_cmd)
+(filecon "/usr/sbin/unbound-control-setup" file unboundcs_cmd)
+(filecon "/var/lib/unbound(/.*)?" any unbound_var_lib)
+(filecon "/var/run/unbound(/.*)?" any unbound_runtime)
+(filecon "/var/run/unbound/unbound\.pid" file unbound_runtime)
+
+(optional unbound_unit_optional_sd
+	(context unbound_unit (sys.id sys.role unbound.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*unbound.*" file unbound_unit))

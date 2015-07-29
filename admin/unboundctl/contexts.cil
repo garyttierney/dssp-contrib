@@ -1,5 +1,7 @@
+(context unboundcc_cmd (sys.id sys.role unboundcc.cmd_file (systemlow systemlow)))
 (context unboundctl_cmd (sys.id sys.role unboundctl.cmd_file (systemlow systemlow)))
 
+(filecon "/usr/sbin/unbound-checkconf" file unboundcc_cmd)
 (filecon "/usr/sbin/unbound-control" file unboundctl_cmd)
 (filecon "/usr/sbin/unbound-host" file unboundctl_cmd)
 (filecon "/usr/sbin/unbound-streamtcp" file unboundctl_cmd)

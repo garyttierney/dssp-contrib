@@ -414,8 +414,12 @@
 	(optional sysadm_optional_udevadm
 		(call udevadm_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_unbound
+		(call unbound_adm (subj role)))
+
 	(optional sysadm_optional_unboundctl
-		(call unboundctl_run (sysadm_subj_type role)))
+		(call unboundctl_run (sysadm_subj_type role))
+		(call unboundctl_run_unboundcc (sysadm_subj_type role)))
 
 	(optional sysadm_optional_usbutil
 		(call usbutil_run (sysadm_subj_type role)))

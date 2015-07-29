@@ -571,7 +571,10 @@
 	(block sysadm_pa
 		(blockinherit pa_subj_blk)
 
-		(call pa_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call pa_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call pa_manage_config (sysadm.subj))
+		(call pa_manage_var_lib (sysadm.subj))))
 
 (optional sysadm_pactl_optional_pactl
 	(block sysadm_pactl

@@ -69,7 +69,13 @@
 		(call xserver_manage_tmpfs_files (subj))
 		(call xserver_manage_tmpfs_sock_files (subj))
 		(call xserver_relabel_tmpfs_files (subj))
-		(call xserver_relabel_tmpfs_sock_files (subj))))
+		(call xserver_relabel_tmpfs_sock_files (subj)))
+
+	(optional user_optional_xutil
+		(call xutil_run (user_subj_type role))
+		(call xutil_manage_home_files (subj))
+		(call xutil_relabel_home_files (subj))
+		(call xutil_home_dir_obj_type_transition_home (subj))))
 
 (optional user_alsautil_optional_alsautil
 	(block user_alsautil

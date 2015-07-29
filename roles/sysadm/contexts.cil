@@ -62,6 +62,9 @@
 	(filecon "/root/\.xserverrc" file (sysadm.id sysadm.role xserver.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.local/share/xorg(/.*)?" any (sysadm.id sysadm.role xserver.home_data_file (systemlow systemlow))))
 
+(optional sysadm_xutil_home_optional_xutil
+	(filecon "/root/\.Xresources" file (sysadm.id sysadm.role xutil.home_user_file (systemlow systemlow))))
+
 (tunableif enable_mls
 	(true
 		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))

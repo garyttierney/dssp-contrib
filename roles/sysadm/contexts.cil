@@ -36,6 +36,9 @@
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 
+(optional sysadm_pass_home_optional_pass
+	(filecon "/root/\.password-store(/.*)?" any (sysadm.id sysadm.role pass.home_user_file (systemlow systemlow))))
+
 (optional sysadm_scdaemon_home_optional_scdaemon
 	(filecon "/root/\.gnupg/reader.*\.status" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/scdaemon\.conf" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))

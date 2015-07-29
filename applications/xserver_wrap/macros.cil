@@ -1,0 +1,14 @@
+(macro xserver_wrap_exec ((type ARG1))
+	(call can_exec (ARG1 xserver_wrap.cmd_file)))
+
+(macro xserver_wrap_auto_subj_type_transition ((type ARG1))
+	(call xserver_wrap_send_signal (ARG1))
+	(allow ARG1 xserver_wrap.subj (process (siginh)))
+	(call auto_subj_type_transition_pattern (ARG1 xserver_wrap.cmd_file xserver_wrap.subj)))
+
+(macro xserver_wrap_send_signal ((type ARG1))
+	(allow ARG1 xserver_wrap.subj (process (signal))))
+
+(macro xserver_wrap_run ((type ARG1)(role ARG2))
+	(call xserver_wrap_auto_subject_type_transition (ARG1))
+	(roleattributeset xserver_wrap_role ARG2))

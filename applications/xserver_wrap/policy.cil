@@ -1,0 +1,13 @@
+(roleattribute xserver_wrap_role)
+
+(block xserver_wrap
+	(blockinherit app_blk)
+
+	(roletype xserver_wrap_role subj)
+
+	(allow subj self (capability (setuid setgid sys_admin)))
+
+	(call dev_rw_dri (subj))
+
+	(call xserver_run (subj xserver_wrap_role))
+	(call xserver_read_config (subj)))

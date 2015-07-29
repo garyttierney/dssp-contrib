@@ -16,6 +16,11 @@
 		(call dirmngr_relabel_home (subj))
 		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
 
+	(optional wheel_optional_fpaste
+		(call fpaste_run (subj role))
+		(call fpaste_manage_var_tmp (subj))
+		(call fpaste_relabel_var_tmp (subj)))
+
 	(optional wheel_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper_run (wheel_subj_type role)))
 

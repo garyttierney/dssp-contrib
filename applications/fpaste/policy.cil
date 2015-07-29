@@ -1,0 +1,67 @@
+(roleattribute fpaste_role)
+
+(block fpaste
+	(blockinherit app_blk)
+
+	(roletype fpaste_role subj)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(allow subj self (process (getsched)))
+
+	(call fpaste_manage_var_tmp (subj))
+	(call fpaste_var_tmp_obj_type_transition_var_tmp (subj))
+
+	(call sys_read_kernel_sysctl_files (subj))
+	(call sys_list_mountpoints (subj))
+	(call sys_read_ring_buffer (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_read_kmsg (subj))
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+	(call file_read_data_files (subj))
+
+	(call fs_getattr_all_fs (subj))
+	(call fs_read_sysfs_files (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call storage_getattr_all (subj))
+
+	(call subj_read_common_subj_state (subj))
+
+	(call dmesg_exec (subj))
+
+	(call fstools_exec (subj))
+
+	(call http_tcp_connect_http_port (subj))
+
+	(call miscfile_read_hwdata (subj))
+	(call miscfile_read_utmp_runtime_files (subj))
+	(call miscfile_read_wtmp_var_log_files (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call pcitools_exec (subj))
+
+	(call rpm_exec (subj))
+	(call rpm_read_config (subj))
+	(call rpm_read_var_cache_files (subj))
+	(call rpm_read_var_lib_files (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+
+	(call udev_client_subj_type (subj))
+
+	(call usbutils_exec (subj))
+
+	(optional fpaste_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional fpaste_optional_xserver
+		(call xserver_read_var_log_files (subj))))

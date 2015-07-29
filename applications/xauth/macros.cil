@@ -9,7 +9,7 @@
 	(allow ARG1 xauth.subj (process (signal))))
 
 (macro xauth_run ((type ARG1)(role ARG2))
-	(call xauth_auto_subject_type_transition_xauth (ARG1))
+	(call xauth_auto_subj_type_transition (ARG1))
 	(roleattributeset xauth_role ARG2))
 
 (macro xauth_read_home_files ((type ARG1))

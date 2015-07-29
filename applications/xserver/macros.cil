@@ -213,7 +213,7 @@
 
 (macro xserver_rw_inherited_unix_stream_sockets ((type ARG1))
 	(call xserver_use_fd (ARG1))
-	(allow ARG1 xserver_t rw_inherited_unix_stream_socket_perms))
+	(allow ARG1 xserver.subj rw_inherited_unix_stream_socket_perms))
 
 (macro xserver_read_state ((type ARG1))
 	(call fs_search_proc (ARG1))

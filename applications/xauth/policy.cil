@@ -21,9 +21,3 @@
 
 	(optional xauth_optional_sd_machined
 		(call sd_machined_read_runtime (subj))))
-
-(context xauth_exec (system_u object_r xauth_exec_t (systemlow systemlow)))
-(filecon "/usr/bin/xauth" file xauth_exec)
-
-(filecon "HOME_DIR/\.Xauthority.*" file (system_u object_r xauth_home_t (systemlow systemlow)))
-(filecon "HOME_DIR/\.serverauth.*" file (system_u object_r xauth_home_t (systemlow systemlow)))

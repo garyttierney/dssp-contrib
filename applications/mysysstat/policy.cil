@@ -1,0 +1,20 @@
+(roleattribute mysysstat_role)
+
+(block mysysstat
+	(blockinherit app_blk)
+
+	(roletype mysysstat_role subj)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call fs_read_sysfs (subj))
+
+	(call sec_get_enforce_mode (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call usersubj_read_home_cmd_lnk_files (subj))
+	(call usersubj_search_home_cmd (subj)))

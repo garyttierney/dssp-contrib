@@ -25,6 +25,9 @@
 	(optional user_optional_journalctl
 		(call journalctl_exec (subj)))
 
+	(optional user_optional_mysysstat
+		(call mysysstat_run (user_subj_type role)))
+
 	(optional user_optional_openssl
 		(call openssl_run (user_subj_type role))
 		(call openssl_manage_home_files (subj))

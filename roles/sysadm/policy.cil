@@ -204,6 +204,9 @@
 	(optional sysadm_optional_myqemu
 		(call myqemu_adm (subj role)))
 
+	(optional sysadm_optional_mysysstat
+		(call mysysstat_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_nettools
 		(call nettools_adm (subj role))
 		(call nettools_run_arp (sysadm_subj_type role))

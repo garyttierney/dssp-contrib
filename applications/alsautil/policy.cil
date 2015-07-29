@@ -5,7 +5,10 @@
 
 	(call subj_entry (alsautil_subj_type cmd_file))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(optional alsautil_optional_pa
+		(call pa_tmpfs_obj_type (tmpfs_user_file))))
 
 (call alsautil_manage_tmpfs_files (alsautil_subj_type))
 (call alsautil_tmpfs_obj_type_transition_tmpfs (alsautil_subj_type))

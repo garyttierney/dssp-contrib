@@ -1,0 +1,6 @@
+(context rtkitd_cmd (sys.id sys.role rtkitd.cmd_file (systemlow systemlow)))
+(filecon "/usr/libexec/rtkit-daemon" file rtkitd_cmd)
+
+(optional rtkitd_unit_optional_sd
+	(context rtkitd_unit (sys.id sys.role rtkitd.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*rtkit-daemon.*" file rtkitd_unit))

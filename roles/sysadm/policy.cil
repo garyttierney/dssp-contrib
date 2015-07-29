@@ -272,6 +272,9 @@
 		(call rpws_manage_tmpfs_files (subj))
 		(call rpws_relabel_tmpfs_files (subj)))
 
+	(optional sysadm_optional_rtkitd
+		(call rtkitd_adm (subj role)))
+
 	(optional sysadm_optional_scdaemon
 		(call scdaemon_run (sysadm_subj_type role))
 		(call scdaemon_manage_home (subj))
@@ -449,7 +452,7 @@
 		(call alsautil_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_alsautil_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_alsautil.subj sysadm_pa.subj)))
+	(call pa_client_pattern (sysadm.role sysadm_alsautil.subj sysadm_pa.subj)))
 
 (optional sysadm_analyze_optional_analyze
 	(block sysadm_analyze
@@ -577,7 +580,7 @@
 		(call pactl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_pactl_optional_sysadm_pa
-	(call pa_client_template (sysadm.role sysadm_pactl.subj sysadm_pa.subj))
+	(call pa_client_pattern (sysadm.role sysadm_pactl.subj sysadm_pa.subj))
 	(call pa_read_state_pattern (sysadm_pactl.subj sysadm_pa.subj))
 	(call pa_stream_connect_pattern (sysadm_pactl.subj sysadm_pa.subj)))
 

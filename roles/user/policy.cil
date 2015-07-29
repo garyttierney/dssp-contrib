@@ -100,7 +100,7 @@
 		(call alsautil_role_pattern (user.role user_subj_type user_alsautil.subj))))
 
 (optional user_alsautil_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_alsautil.subj user_pa.subj)))
+	(call pa_client_pattern (user.role user_alsautil.subj user_pa.subj)))
 
 (optional user_gpg_optional_gpg
 	(block user_gpg
@@ -138,7 +138,7 @@
 		(call pactl_role_pattern (user.role user_subj_type subj))))
 
 (optional user_pactl_optional_user_pa
-	(call pa_client_template (user.role user_pactl.subj user_pa.subj))
+	(call pa_client_pattern (user.role user_pactl.subj user_pa.subj))
 	(call pa_read_state_pattern (user_pactl.subj user_pa.subj))
 	(call pa_stream_connect_pattern (user_pactl.subj user_pa.subj)))
 

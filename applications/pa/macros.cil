@@ -21,17 +21,11 @@
 	(allow ARG3 ARG2 (process (signal)))
 	(roletype ARG1 ARG3))
 
-(macro pa_tmpfs_client_pattern ((role ARG1)(type ARG2)(type ARG3)(type ARG4))
-	(call pa_client_pattern (ARG1 ARG2 ARG3))
-	(call pa_tmpfs_obj_type (ARG4)))
-
 (macro pa_exec ((type ARG1))
 	(call can_exec (ARG1 pa.cmd_file)))
 
 (macro pa_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 pa.cmd_file ARG3))
-
-	(roleattributeset pa_client_role ARG1)
 
 	(roletype ARG1 ARG3)
 
@@ -50,6 +44,9 @@
 	(call pa_manage_home_files (ARG2))
 	(call pa_relabel_home_files (ARG2))
 	(call pa_home_dir_obj_type_transition_home (ARG2)))
+
+(macro pa_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call auto_subj_type_transition_pattern (ARG1 pa.cmd_file ARG2)))
 
 (macro pa_search_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -120,7 +117,7 @@
 	(allow ARG1 pa.var_lib_file relabel_lnk_file_perms))
 
 (macro pa_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition_var_lib (ARG1 pa.var_lib_file dir "pulse")))
+	(call file_var_lib_obj_type_transition (ARG1 pa.var_lib_file dir "pulse")))
 
 (macro pa_search_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))
@@ -177,35 +174,35 @@
 (macro pa_tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 pa.tmpfs_user_file file "*")))
 
-(macro pa_search_config_home ((type ARG1))
+(macro pa_search_home_config ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(allow ARG1 pa.home_config_file search_dir_perms))
 
-(macro pa_list_config_home ((type ARG1))
+(macro pa_list_home_config ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(allow ARG1 pa.home_config_file list_dir_perms))
 
-(macro pa_read_config_home_files ((type ARG1))
+(macro pa_read_home_config_files ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(call read_files_pattern (ARG1 pa.home_config_file pa.home_config_file)))
 
-(macro pa_read_config_home_lnk_files ((type ARG1))
+(macro pa_read_home_config_lnk_files ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 pa.home_config_file pa.home_config_file)))
 
-(macro pa_read_config_home ((type ARG1))
+(macro pa_read_home_config ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(allow ARG1 pa.home_config_file read_file_perms)
 	(allow ARG1 pa.home_config_file list_dir_perms)
 	(allow ARG1 pa.home_config_file read_lnk_file_perms))
 
-(macro pa_manage_config_home ((type ARG1))
+(macro pa_manage_home_config ((type ARG1))
 	(call usersubj_rw_home_config_dirs (ARG1))
 	(allow ARG1 pa.home_config_file manage_file_perms)
 	(allow ARG1 pa.home_config_file manage_dir_perms)
 	(allow ARG1 pa.home_config_file manage_lnk_file_perms))
 
-(macro pa_relabel_config_home ((type ARG1))
+(macro pa_relabel_home_config ((type ARG1))
 	(call usersubj_search_home_config (ARG1))
 	(allow ARG1 pa.home_config_file relabel_file_perms)
 	(allow ARG1 pa.home_config_file relabel_dir_perms)

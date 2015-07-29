@@ -1,0 +1,59 @@
+(typeattribute rtkitd_adm_subj_type)
+(typeattribute rtkitd_client_subj_type)
+(typeattribute rtkitd_sysbus_chat_client_subj_type)
+
+(block rtkitd
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(allow subj self (capability (sys_nice sys_chroot setuid setgid)))
+	(allow subj self (process (setsched setcap setrlimit)))
+
+	(call subj_ptrace_uncond_type (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional rtkitd_optional_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
+
+	(optional rtkitd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(allow rtkitd_adm_subj_type unit_file manage_file_perms)
+		(allow rtkitd_adm_subj_type unit_file relabel_file_perms)
+
+		(allow rtkitd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional rtkitd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional rtkitd_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_read_config_files (subj)))
+
+	(optional rtkitd_optional_unconfinedsubj
+		(call unconfinedsubj_getsched (subj))
+		(call unconfinedsubj_setsched (subj))
+		(call unconfinedsubj_read_state (subj))))
+
+(optional rtkitd_sysbus_chat_client_subj_type_optional_sysbus
+	(allow rtkitd.subj rtkitd_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow rtkitd_sysbus_chat_client_subj_type rtkitd.subj (dbus (send_msg))))
+
+(allow rtkitd.subj rtkitd_client_subj_type (process (getsched setsched)))
+
+(allow rtkitd.subj rtkitd_client_subj_type read_file_perms)
+(allow rtkitd.subj rtkitd_client_subj_type list_dir_perms)
+(allow rtkitd.subj rtkitd_client_subj_type read_lnk_file_perms)
+
+(call rtkitd_sysbus_chat_client_subj_type (rtkitd_client_subj_type))
+
+(allow rtkitd_adm_subj_type rtkitd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (rtkitd_adm_subj_type rtkitd.subj))

@@ -119,7 +119,7 @@
 		(call alsautil_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_alsautil_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_alsautil.subj wheel_pa.subj)))
+	(call pa_client_pattern (wheel.role wheel_alsautil.subj wheel_pa.subj)))
 
 (optional wheel_analyze_optional_analyze
 	(block wheel_analyze
@@ -235,7 +235,7 @@
 		(call pactl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pactl_optional_wheel_pa
-	(call pa_client_template (wheel.role wheel_pactl.subj wheel_pa.subj))
+	(call pa_client_pattern (wheel.role wheel_pactl.subj wheel_pa.subj))
 	(call pa_read_state_pattern (wheel_pactl.subj wheel_pa.subj))
 	(call pa_stream_connect_pattern (wheel_pactl.subj wheel_pa.subj)))
 

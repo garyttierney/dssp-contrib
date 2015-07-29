@@ -254,6 +254,9 @@
 		(call polkit_run_polkit_agent (sysadm_subj_type role))
 		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
 
+	(optional sysadm_optional_pwgen
+		(call pwgen_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_qemu
 		(call qemu_manage_config (subj)))
 

@@ -916,6 +916,9 @@
 	(call fs_search_tmpfs (ARG1))
 	(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
+(macro usersubj_rw_inherited_tmpfs_user_files ((type ARG1))
+	(allow ARG1 tmpfs_user.tmpfs_user_file rw_inherited_file_perms))
+
 (macro usersubj_manage_tmpfs_user_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_rw_tmpfs_dirs (ARG1))

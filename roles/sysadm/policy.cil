@@ -397,7 +397,20 @@
 		(call useradd_run_useradd (sysadm_subj_type role)))
 
 	(optional sysadm_optional_utempter
-		(call utempter_run (sysadm_subj_type role))))
+		(call utempter_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_xserver
+		(call xserver_run (sysadm_subj_type role))
+		(call xserver_manage_config (subj))
+		(call xserver_manage_var_log_files (subj))
+		(call xserver_manage_var_lib (subj))
+		(call xserver_manage_home_data (subj))
+		(call xserver_relabel_home_data (subj))
+		(call xserver_home_data_obj_type_transition_home_data (subj))
+		(call xserver_manage_tmpfs_files (subj))
+		(call xserver_manage_tmpfs_sock_files (subj))
+		(call xserver_relabel_tmpfs_files (subj))
+		(call xserver_relabel_tmpfs_sock_files (subj))))
 
 (optional sysadm_alsautil_optional_alsautil
 	(block sysadm_alsautil

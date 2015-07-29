@@ -123,6 +123,17 @@
 
 		(call passwd_role_pattern (user.role user_subj_type subj))))
 
+(optional user_rp_optional_rp
+	(block user_rp
+		(blockinherit rp_subj_blk)
+
+		(call rp_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
 (optional user_screen_optional_screen
 	(block user_screen
 		(blockinherit screen_subj_blk)
@@ -175,13 +186,13 @@
 	(block user_startx
 		(blockinherit startx_subj_blk)
 
-		(call startx_pattern (user.role user_subj_type subj))))
+		(call startx_role_pattern (user.role user_subj_type subj))))
 
 (optional user_xbindkeys_optional_xbindkeys
 	(block user_xbindkeys
 		(blockinherit xbindkeys_subj_blk)
 
-		(call xbindkeys_pattern (user.role user_subj_type subj))
+		(call xbindkeys_role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
@@ -191,8 +202,11 @@
 	(block user_xinit
 		(blockinherit xinit_subj_blk)
 
-		(call xinit_pattern (user.role user_subj_type subj))
+		(call xinit_role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_xinit_optional_user_rp
+	(call rp_auto_subj_type_transition_pattern (user_xinit.subj user_rp.subj)))

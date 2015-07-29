@@ -1,0 +1,46 @@
+(block rp_subj_blk
+	(blockabstract rp_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset rp_subj_type subj))
+
+(macro rp_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset rp_subj_type ARG1))
+
+(macro rp_client_subj_type ((type ARG1))
+	(typeattributeset rp_client_subj_type ARG1))
+
+(macro rp_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 rp.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call rp_manage_home_files (ARG2))
+	(call rp_relabel_home_files (ARG2))
+
+	(call rp_home_dir_obj_type_transition_home (ARG2)))
+
+(macro rp_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call auto_subj_type_transition_pattern (ARG1 rp.cmd_file ARG2)))
+
+(macro rp_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 rp.home_user_file read_file_perms))
+
+(macro rp_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 rp.home_user_file manage_file_perms))
+
+(macro rp_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 rp.home_user_file relabel_file_perms))
+
+(macro rp_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 rp.home_user_file file ".ratpoisonrc"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 rp.home_user_file file ".ratpoison_history")))

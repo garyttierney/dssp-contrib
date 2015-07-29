@@ -9,7 +9,7 @@
 	(call app_subj_type (ARG1))
 	(typeattributeset xinit_subj_type ARG1))
 
-(macro xinit_pattern ((role ARG1)(type ARG2)(type ARG3))
+(macro xinit_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 xinit.cmd_file ARG3))
 
 	(roletype ARG1 ARG3)
@@ -32,16 +32,6 @@
 
 	(optional xinit_optional_xutil
 		(call xutil_run (ARG3 ARG1))))
-
-(macro xinit_daemon ((type ARG1)(type ARG2)(role ARG3))
-	(allow xinit_subj_type ARG1 (process (signal)))
-	(call auto_subj_type_transition_pattern (xinit_subj_type ARG2 ARG1))
-	(roletype ARG3 ARG1))
-
-(macro xinit_daemon_pattern ((type ARG1)(type ARG2)(type ARG3)(role ARG4))
-	(allow ARG1 ARG3 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 ARG2 ARG3))
-	(roletype ARG4 ARG3))
 
 (macro xinit_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(call auto_subj_type_transition_pattern (ARG1 xinit.cmd_file ARG2)))

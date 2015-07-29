@@ -25,7 +25,7 @@
 	(allow ARG1 pass.home_user_file read_lnk_file_perms))
 
 (macro pass_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir_dirs (ARG1))
+	(call usersubj_rw_home_dir (ARG1))
 	(allow ARG1 pass.home_user_file manage_file_perms)
 	(allow ARG1 pass.home_user_file manage_dir_perms)
 	(allow ARG1 pass.home_user_file manage_lnk_file_perms))
@@ -37,7 +37,7 @@
 	(allow ARG1 pass.home_user_file relabel_lnk_file_perms))
 
 (macro pass_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_object_type_transition (ARG1 pass.home_user_file dir ".password-store")))
+	(call usersubj_home_dir_obj_type_transition (ARG1 pass.home_user_file dir ".password-store")))
 
 (macro pass_home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call usersubj_search_home_dir (ARG1))

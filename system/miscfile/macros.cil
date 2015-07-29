@@ -129,6 +129,9 @@
 	(call file_search_var_cache (ARG1))
 	(allow ARG1 fonts.var_cache_file list_dir_perms))
 
+(macro miscfile_dontaudit_setattr_fonts_var_cache_dirs ((type ARG1))
+	(dontaudit ARG1 fonts.var_cache_file (dir (setattr))))
+
 (macro miscfile_read_fonts_var_cache_files ((type ARG1))
 	(call file_search_var_cache (ARG1))
 	(call read_files_pattern (ARG1 fonts.var_cache_file fonts.var_cache_file)))

@@ -231,6 +231,17 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
+(optional wheel_rp_optional_rp
+	(block wheel_rp
+		(blockinherit rp_subj_blk)
+
+		(call rp_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
 (optional wheel_screen_optional_screen
 	(block wheel_screen
 		(blockinherit screen_subj_blk)
@@ -283,7 +294,7 @@
 	(block wheel_startx
 		(blockinherit startx_subj_blk)
 
-		(call startx_pattern (wheel.role wheel_subj_type subj))))
+		(call startx_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_sudo_optional_sudo
 	(block wheel_sudo
@@ -322,7 +333,7 @@
 	(block wheel_xbindkeys
 		(blockinherit xbindkeys_subj_blk)
 
-		(call xbindkeys_pattern (wheel.role wheel_subj_type subj))
+		(call xbindkeys_role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 
@@ -332,8 +343,11 @@
 	(block wheel_xinit
 		(blockinherit xinit_subj_blk)
 
-		(call xinit_pattern (wheel.role wheel_subj_type subj))
+		(call xinit_role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_xinit_optional_wheel_rp
+	(call rp_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_rp.subj)))

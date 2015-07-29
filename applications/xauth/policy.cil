@@ -1,0 +1,29 @@
+(roleattribute xauth_role)
+
+(block xauth
+	(blockinherit app_blk)
+
+	(roletype xauth_role subj)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call xauth_manage_home_files (subj))
+	(call xauth_home_dir_obj_type_transition_home (subj))
+
+	(call fs_getattr_fs (subj))
+	(call fs_read_sysfs (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call startx_read_tmpfs_files (subj))
+
+	(optional xauth_optional_sd_machined
+		(call sd_machined_read_runtime (subj))))
+
+(context xauth_exec (system_u object_r xauth_exec_t (systemlow systemlow)))
+(filecon "/usr/bin/xauth" file xauth_exec)
+
+(filecon "HOME_DIR/\.Xauthority.*" file (system_u object_r xauth_home_t (systemlow systemlow)))
+(filecon "HOME_DIR/\.serverauth.*" file (system_u object_r xauth_home_t (systemlow systemlow)))

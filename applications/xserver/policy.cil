@@ -92,7 +92,7 @@
 
 	(call udev_client_subj_type (subj))
 
-	;(call xauth_read_home_files (subj))
+	(call xauth_read_home_files (subj))
 
 	(call usersubj_create_home_data_dirs (subj))
 	(call usersubj_home_dir_add_obj_type_transition_home_data (subj))
@@ -126,7 +126,7 @@
 (call xserver_tcp_connect_xserver_port (xserver_client_subj_type))
 (call xserver_use_fd (xserver_client_subj_type))
 
-;(call xauth_read_home_files (xserver_client_subj_type))
+(call xauth_read_home_files (xserver_client_subj_type))
 
 (call xinit_use_fd_all_subj (xserver_client_subj_type))
 

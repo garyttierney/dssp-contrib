@@ -1,0 +1,6 @@
+(context xauth_cmd (sys.id sys.role xauth.cmd_file (systemlow systemlow)))
+
+(filecon "/usr/bin/xauth" file xauth_cmd)
+
+(filecon "HOME_DIR/\.Xauthority.*" file (sys.id sys.role xauth.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.serverauth.*" file (sys.id sys.role xauth.home_user_file (systemlow systemlow)))

@@ -169,6 +169,16 @@
 
 		(call startx_pattern (user.role user_subj_type subj))))
 
+(optional user_xbindkeys_optional_xbindkeys
+	(block user_xbindkeys
+		(blockinherit xbindkeys_subj_blk)
+
+		(call xbindkeys_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
 (optional user_xinit_optional_xinit
 	(block user_xinit
 		(blockinherit xinit_subj_blk)

@@ -55,6 +55,9 @@
 	(filecon "/root/\.Xauthority.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.serverauth.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow))))
 
+(optional sysadm_xbindkeys_home_optional_xbindkeys
+	(filecon "/root/\.xbindkeysrc" file (sysadm.id sysadm.role xbindkeys.home_user_file (systemlow systemlow))))
+
 (optional sysadm_xinit_home_optional_xinit
 	(filecon "/root/\.xinitrc" file (sysadm.id sysadm.role xinit.home_user_file (systemlow systemlow))))
 

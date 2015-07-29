@@ -660,12 +660,22 @@
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
 
+(optional sysadm_xbindkeys_optional_xbindkeys
+	(block sysadm_xbindkeys
+		(blockinherit xbindkeys_subj_blk)
+
+		(call xbindkeys_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
 (optional sysadm_xinit_optional_xinit
 	(block sysadm_xinit
 		(blockinherit xinit_subj_blk)
 
 		(call xinit_pattern (sysadm.role sysadm_subj_type subj))
 
-                (call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-                (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))

@@ -1,0 +1,25 @@
+(typeattribute xbindkeys_subj_type)
+
+(block xbindkeys
+        (blockinherit app_cmd_obj_blk)
+
+        (call subj_entry (xbindkeys_subj_type cmd_file))
+
+        (blockinherit usersubj_home_user_obj_blk))
+
+(call xbindkeys_manage_home_files (xbindkeys_subj_type))
+(call xbindkeys_home_dir_obj_type_transition_home (xbindkeys_subj_type))
+
+(allow xbindkeys_subj_type self (process (getsched)))
+
+(call cmd_exec_shell (xbindkeys_subj_type))
+
+(call dev_read_urandom (xbindkeys_subj_type))
+
+(call file_read_data_files (xbindkeys_subj_type))
+
+(call xserver_client_subj_type (xbindkeys_subj_type))
+
+(call usersubj_read_home_cmd_lnk_files (xbindkeys_subj_type))
+(call usersubj_search_home_cmd (xbindkeys_subj_type))
+(call usersubj_use_term (xbindkeys_subj_type))

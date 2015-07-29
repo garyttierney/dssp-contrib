@@ -1,0 +1,17 @@
+(roleattribute pcitools_role)
+
+(block pcitools
+	(blockinherit app_blk)
+
+	(roletype pcitools_role subj)
+
+	(allow subj_t self (capability (sys_admin)))
+
+	(call fs_read_sysfs (subj))
+
+	(call kmod_read_config (subj))
+
+	(call miscfile_read_hwdata (subj))
+	(call miscfile_read_modules (subj))
+
+	(call nss_client_subj_type (subj)))

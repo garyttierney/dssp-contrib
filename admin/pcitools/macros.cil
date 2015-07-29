@@ -1,0 +1,13 @@
+(macro pcitools_exec ((type ARG1))
+	(call can_exec (ARG1 pcitools.cmd_file)))
+
+(macro pcitools_auto_subj_type_transition ((type ARG1))
+	(call pcitools_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 pcitools.cmd_file pcitools.subj)))
+
+(macro pcitools_send_signal ((type ARG1))
+	(allow ARG1 pcitools.subj (process (signal))))
+
+(macro pcitools_run ((type ARG1)(role ARG2))
+	(call pcitools_auto_subj_type_transition (ARG1))
+	(roleattributeset pcitools_role (ARG2)))

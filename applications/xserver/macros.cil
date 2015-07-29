@@ -178,12 +178,30 @@
 (macro xserver_home_data_obj_type_transition_home_data ((type ARG1))
 	(call usersubj_home_data_obj_type_transition (ARG1 xserver.home_data_file dir "xorg")))
 
+(macro xserver_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xserver.home_user_file read_file_perms))
+
+(macro xserver_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 xserver.home_user_file manage_file_perms))
+
+(macro xserver_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xserver.home_user_file relabel_file_perms))
+
+(macro xserver_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 xserver.home_user_file file ".xserverrc")))
+
 (macro xserver_tcp_bind_xserver_port ((type ARG1))
 	(allow ARG1 self (capability (net_bind_service)))
 	(allow ARG1 xserver.port (tcp_socket (name_bind))))
 
 (macro xserver_tcp_connect_xserver_port ((type ARG1))
 	(allow ARG1 xserver.port (tcp_socket (name_connect))))
+
+(macro xserver_send_signal_client_subj ((type ARG1))
+	(allow ARG1 xserver_client_subj_type (process (signal))))
 
 (macro xserver_use_fd ((type ARG1))
 	(allow ARG1 xserver.subj (fd (use))))

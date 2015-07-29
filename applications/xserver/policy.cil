@@ -20,6 +20,8 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
+	(blockinherit usersubj_home_user_obj_blk)
+
 	(blockinherit usersubj_home_data_obj_blk)
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
@@ -36,6 +38,8 @@
 
 	(call xserver_manage_var_lib (subj))
 	(call xserver_var_lib_obj_type_transition_var_lib (subj))
+
+	(call xserver_read_home_files (subj))
 
 	(call xserver_manage_home_data (subj))
 	(call xserver_home_data_obj_type_transition_home_data (subj))
@@ -124,7 +128,7 @@
 
 ;(call xauth_read_home_files (xserver_client_subj_type))
 
-;(call xinit_use_fd_all_subj (xserver_client_subj_type))
+(call xinit_use_fd_all_subj (xserver_client_subj_type))
 
 (optional xserver_client_subj_type_optional_rp
 	(call rp_client_subj_type (xserver_client_subj_type)))

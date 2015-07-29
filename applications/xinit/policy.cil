@@ -1,0 +1,26 @@
+(typeattribute xinit_subj_type)
+
+(block xinit
+        (blockinherit app_cmd_obj_blk)
+
+        (call subj_entry (xinit_subj_type cmd_file))
+
+        (blockinherit usersubj_home_user_obj_blk))
+
+(allow xinit_subj_type self (process (setpgid)))
+
+(call xinit_read_home_files (xinit_subj_type))
+
+(call cmd_shell_obj_entry_subj (xinit_subj_type))
+(call cmd_exec_shell (xinit_subj_type))
+
+(call fs_search_tmpfs (xinit_subj_type))
+
+(call nss_client_subj_type (xinit_subj_type))
+
+;(call xauth_read_home_files (xinit_subj_type))
+
+(call xserver_send_signal (xinit_subj_type))
+(call xserver_send_signal_client_subj (xinit_subj_type))
+(call xserver_stream_connect (xinit_subj_type))
+(call xserver_tcp_connect_xserver_port (xinit_subj_type))

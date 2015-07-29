@@ -1,0 +1,26 @@
+(typeattribute startx_subj_type)
+
+(block startx
+        (blockinherit app_cmd_obj_blk)
+
+        (call subj_entry (startx_subj_type cmd_file))
+
+        (blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow startx_subj_type self rw_fifo_file_perms)
+
+(call startx_manage_tmpfs_files (startx_subj_type))
+(call startx_tmpfs_obj_type_transition_tmpfs (startx_subj_type))
+
+(call sys_read_net_proc_files (startx_subj_type))
+
+(call cmd_exec_cmd (startx_subj_type))
+(call cmd_audit_access_shell_files (startx_subj_type))
+
+(call dev_read_urandom (startx_subj_type))
+
+(call fs_getattr_tmpfs_fs (startx_subj_type))
+
+(call miscfile_read_locale (startx_subj_type))
+
+;(call xauth_delete_home_files (startx_subj_type))

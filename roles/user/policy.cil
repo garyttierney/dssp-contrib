@@ -55,6 +55,9 @@
 
 	(optional user_optional_xserver
 		(call xserver_run (user_subj_type role))
+		(call xserver_manage_home_files (subj))
+		(call xserver_relabel_home_files (subj))
+		(call xserver_home_dir_obj_type_transition_home (subj))
 		(call xserver_manage_home_data (subj))
 		(call xserver_relabel_home_data (subj))
 		(call xserver_home_data_obj_type_transition_home_data (subj))
@@ -148,3 +151,19 @@
 		(call ssh_role_pattern_ssh_client (user.role user_subj_type subj))
 
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))))
+
+(optional user_startx_optional_startx
+	(block user_startx
+		(blockinherit startx_subj_blk)
+
+		(call startx_pattern (user.role user_subj_type subj))))
+
+(optional user_xinit_optional_xinit
+	(block user_xinit
+		(blockinherit xinit_subj_blk)
+
+		(call xinit_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))

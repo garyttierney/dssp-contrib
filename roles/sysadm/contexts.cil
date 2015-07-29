@@ -4,7 +4,6 @@
 (filecon "/root/\.local(/.*)?" any (sysadm.id sysadm.role home_data.home_data_file (systemlow systemlow)))
 (filecon "/root/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
 (filecon "/root/\.local/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
-(filecon "/root/\.xinitrc" file (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
 (filecon "/root/\.pki(/.*)?" any (sysadm.id sysadm.role home_cert.home_user_file (systemlow systemlow)))
 (filecon "/root/\.fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
 (filecon "/root/\.cache/fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
@@ -15,7 +14,7 @@
 (filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
 (filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
 
-(optional sysadm_curl_optional_curl
+(optional sysadm_curl_home_optional_curl
 	(filecon "/root/\.wgetrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.curlrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow))))
 
@@ -34,7 +33,7 @@
 	(filecon "/root/\.gnupg/sshcontrol" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow))))
 
-(optional sysadm_openssl_optional_openssl
+(optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 
 (optional sysadm_scdaemon_home_optional_scdaemon
@@ -52,7 +51,11 @@
 (optional sysadm_ssh_client_home_optional_ssh
 	(filecon "/root/\.ssh(/.*)?" any (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))
 
-(optional sysadm_xserver_optional_xserver
+(optional sysadm_xinit_home_optional_xinit
+	(filecon "/root/\.xinitrc" file (sysadm.id sysadm.role xinit.home_user_file (systemlow systemlow))))
+
+(optional sysadm_xserver_home_optional_xserver
+	(filecon "/root/\.xserverrc" file (sysadm.id sysadm.role xserver.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.local/share/xorg(/.*)?" any (sysadm.id sysadm.role xserver.home_data_file (systemlow systemlow))))
 
 (tunableif enable_mls

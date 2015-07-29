@@ -1,0 +1,72 @@
+(block xinit_subj_blk
+	(blockabstract xinit_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset xinit_subj_type subj))
+
+(macro xinit_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset xinit_subj_type ARG1))
+
+(macro xinit_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 xinit.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call xinit_exec_home_files (ARG2))
+	(call xinit_home_obj_entry_subj (ARG2))
+	(call xinit_manage_home_files (ARG2))
+	(call xinit_relabel_home_files (ARG2))
+
+	(call xinit_home_dir_obj_type_transition_home (ARG2))
+
+	;(call xserver_wrap_run (ARG3 ARG1))
+
+	(optional xinit_pattern_optional_rp
+		(call rpws_run (ARG3 ARG1)))
+
+	(optional xinit_optional_xutil
+		(call xutil_run (ARG3 ARG1))))
+
+(macro xinit_daemon ((type ARG1)(type ARG2)(role ARG3))
+	(allow xinit_subj_type ARG1 (process (signal)))
+	(call auto_subj_type_transition_pattern (xinit_subj_type ARG2 ARG1))
+	(roletype ARG3 ARG1))
+
+(macro xinit_daemon_pattern ((type ARG1)(type ARG2)(type ARG3)(role ARG4))
+	(allow ARG1 ARG3 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 ARG2 ARG3))
+	(roletype ARG4 ARG3))
+
+(macro xinit_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call auto_subj_type_transition_pattern (ARG1 xinit.cmd_file ARG2)))
+
+(macro xinit_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xinit.home_user_file read_file_perms))
+
+(macro xinit_exec_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xinit.home_user_file exec_file_perms))
+
+(macro xinit_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 xinit.home_user_file manage_file_perms))
+
+(macro xinit_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xinit.home_user_file relabel_file_perms))
+
+(macro xinit_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 xinit.home_user_file file ".xinitrc")))
+
+(macro xinit_home_obj_entry_subj ((type ARG1))
+        (call subj_entry (ARG1 xinit.home_user_file)))
+
+(macro xinit_use_fd_all_subj ((type ARG1))
+	(allow ARG1 xinit_subj_type (fd (use))))

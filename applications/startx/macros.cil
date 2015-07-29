@@ -1,0 +1,48 @@
+(block startx_subj_blk
+	(blockabstract startx_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset startx_subj_type subj))
+
+(macro startx_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset startx_subj_type ARG1))
+
+(macro startx_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 startx.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call startx_manage_tmpfs_files (ARG2))
+	(call startx_relabel_tmpfs_files (ARG2))
+
+	;(call xauth_run (ARG3 ARG1))
+
+	(optional startx_pattern_optional_hostname
+		(call hostname_run (ARG3 ARG1))))
+
+(macro startx_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call auto_subj_type_transition_pattern (ARG1 startx.cmd_file ARG2)))
+
+(macro startx_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 startx.tmpfs_user_file read_file_perms))
+
+(macro startx_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 startx.tmpfs_user_file manage_file_perms))
+
+(macro startx_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 startx.tmpfs_user_file relabel_file_perms))
+
+(macro startx_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 startx.tmpfs_user_file file "*")))

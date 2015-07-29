@@ -11,6 +11,7 @@
 (filecon "/var/log/Xorg.*\.log.*" file xserver_var_log)
 (filecon "/var/lib/xkb(/.*)?" any xserver_var_lib)
 
+(filecon "HOME_DIR/\.xserverrc" file (sys.id sys.role xserver.home_user_file (systemlow systemlow)))
 (filecon "HOME_DIR/\.local/share/xorg(/.*)?" any (sys.id sys.role xserver.home_data_file (systemlow systemlow)))
 
 (portcon "tcp" 6000 xserver_port)

@@ -404,6 +404,9 @@
 		(call xserver_manage_config (subj))
 		(call xserver_manage_var_log_files (subj))
 		(call xserver_manage_var_lib (subj))
+		(call xserver_manage_home_files (subj))
+		(call xserver_relabel_home_files (subj))
+		(call xserver_home_dir_obj_type_transition_home (subj))
 		(call xserver_manage_home_data (subj))
 		(call xserver_relabel_home_data (subj))
 		(call xserver_home_data_obj_type_transition_home_data (subj))
@@ -610,6 +613,12 @@
 
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))))
 
+(optional sysadm_startx_optional_startx
+	(block sysadm_startx
+		(blockinherit startx_subj_blk)
+
+		(call startx_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_sudo_optional_sudo
 	(block sysadm_sudo
 		(blockinherit sudo_subj_blk)
@@ -639,3 +648,13 @@
 		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_xinit_optional_xinit
+	(block sysadm_xinit
+		(blockinherit xinit_subj_blk)
+
+		(call xinit_pattern (sysadm.role sysadm_subj_type subj))
+
+                (call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+                (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))

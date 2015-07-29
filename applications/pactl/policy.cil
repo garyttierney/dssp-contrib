@@ -1,0 +1,14 @@
+(typeattribute pactl_subj_type)
+
+(block pactl
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (pactl_subj_type cmd_file)))
+
+(call miscfile_read_locale (pactl_subj_type))
+
+(call pa_mmap_tmpfs_files (pactl_subj_type))
+(call pa_tmpfs_obj_type_transition_tmpfs_files (pactl_subj_type))
+
+(optional pactl_subj_type_optional_xserver
+	(call xserver_client_subj_type (pa_pactl_subj_type)))

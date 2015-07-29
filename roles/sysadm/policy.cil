@@ -564,6 +564,23 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
+(optional sysadm_pa_optional_pa
+	(block sysadm_pa
+		(blockinherit pa_subj_blk)
+
+		(call pa_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_pactl_optional_pactl
+	(block sysadm_pactl
+		(blockinherit pactl_subj_blk)
+
+		(call pactl_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_pactl_optional_sysadm_pa
+	(call pa_client_template (sysadm.role sysadm_pactl.subj sysadm_pa.subj))
+	(call pa_read_state_pattern (sysadm_pactl.subj sysadm_pa.subj))
+	(call pa_stream_connect_pattern (sysadm_pactl.subj sysadm_pa.subj)))
+
 (optional sysadm_passwd_optional_passwd
 	(block sysadm_passwd
 		(blockinherit passwd_subj_blk)

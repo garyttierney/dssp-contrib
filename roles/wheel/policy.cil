@@ -222,6 +222,23 @@
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_machinectl.subj wheel_ssh_client.subj)))
 
+(optional wheel_pa_optional_pa
+	(block wheel_pa
+		(blockinherit pa_subj_blk)
+
+		(call pa_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_pactl_optional_pactl
+	(block wheel_pactl
+		(blockinherit pactl_subj_blk)
+
+		(call pactl_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_pactl_optional_wheel_pa
+	(call pa_client_template (wheel.role wheel_pactl.subj wheel_pa.subj))
+	(call pa_read_state_pattern (wheel_pactl.subj wheel_pa.subj))
+	(call pa_stream_connect_pattern (wheel_pactl.subj wheel_pa.subj)))
+
 (optional wheel_passwd_optional_passwd
 	(block wheel_passwd
 		(blockinherit passwd_subj_blk)

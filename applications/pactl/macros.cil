@@ -1,0 +1,19 @@
+(block pactl_subj_blk
+	(blockabstract pactl_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset pactl_subj_type subj))
+
+(macro pactl_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset pactl_subj_type ARG1))
+
+(macro pactl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 pactl.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal))))

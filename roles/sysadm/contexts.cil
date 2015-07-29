@@ -36,6 +36,10 @@
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 
+(optional sysadm_pa_home_optional_pa
+	(filecon "/root/\.esd_auth" file (sysadm.id sysadm.role pa.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.config/pulse(/.*)?" any (sysadm.id sysadm.role pa.home_config_file (systemlow systemlow))))
+
 (optional sysadm_pass_home_optional_pass
 	(filecon "/root/\.password-store(/.*)?" any (sysadm.id sysadm.role pass.home_user_file (systemlow systemlow))))
 

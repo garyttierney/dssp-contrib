@@ -71,6 +71,8 @@
 
 	(call nss_client_subj_type (subj))
 
+	(call tor_socks_tcp_bind_tor_socks_port (subj))
+
 	(optional tor_optional_http
 		(call http_tcp_connect_http_port (subj)))
 

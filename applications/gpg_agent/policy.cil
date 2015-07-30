@@ -30,5 +30,8 @@
 
 (call usersubj_use_term (gpg_agent_subj_type))
 
-(optional gpg_agent_optional_scdaemon
+(optional gpg_agent_subj_type_optional_tor
+	(call tor_read_config_files (gpg_agent_subj_type)))
+
+(optional gpg_agent_subj_type_optional_scdaemon
 	(call scdaemon_stream_connect (gpg_agent_subj_type)))

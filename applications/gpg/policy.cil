@@ -50,5 +50,8 @@
 (optional gpg_subj_type_optional_pass
 	(call pass_manage_home_files (gpg_subj_type)))
 
+(optional gpg_subj_type_optional_tor
+	(call tor_read_config_files (gpg_subj_type)))
+
 (block gpg_helper
 	(blockinherit cmd_obj_blk))

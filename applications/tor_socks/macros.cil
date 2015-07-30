@@ -1,0 +1,41 @@
+(block tor_socks_subj_blk
+	(blockabstract tor_socks_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset tor_socks_subj_type subj))
+
+(macro tor_socks_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset tor_socks_subj_type ARG1))
+
+(macro tor_socks_client_subj_type ((type ARG1))
+	(typeattributeset tor_socks_client_subj_type ARG1))
+
+(macro tor_socks_exec ((type ARG1))
+	(call tor_socks_client_subj_type (ARG1))
+	(call can_exec (ARG1 tor_socks.cmd_file)))
+
+(macro tor_socks_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+        (call auto_subj_type_transition_pattern (ARG2 tor_socks.cmd_file ARG3))
+
+        (roletype ARG1 ARG3)
+
+        (allow ARG2 ARG3 (process (signal)))
+
+        (allow ARG3 ARG2 (process (signal)))
+
+	(optional tor_socks_role_pattern_optional_bti
+		(call bti_run (ARG3 ARG1)))
+
+	(optional tor_sock_role_pattern_optional_curl
+		(call curl_run (ARG3 ARG1))))
+
+(macro tor_socks_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+        (call auto_subj_type_transition_pattern (ARG1 tor_socks.cmd_file ARG2)))
+
+(macro tor_socks_tcp_bind_tor_socks_port ((type ARG1))
+	(allow ARG1 tor_socks.port (tcp_socket (name_bind))))
+
+(macro tor_socks_tcp_connect_tor_socks_port ((type ARG1))
+	(allow ARG1 tor_socks.port (tcp_socket (name_connect))))

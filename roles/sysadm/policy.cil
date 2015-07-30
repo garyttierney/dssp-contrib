@@ -616,6 +616,9 @@
 (optional sysadm_git_optional_sysadm_git_email
 	(call git_email_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_git_email.subj)))
 
+(optional sysadm_git_optional_sysadm_tor_socks
+	(call tor_socks_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_tor_socks.subj)))
+
 (optional sysadm_git_email_optional_git_email
 	(block sysadm_git_email
 		(blockinherit git_email_subj_blk)
@@ -879,6 +882,29 @@
 		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj rw_inherited_unix_stream_socket_perms)
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_tor_socks_optional_tor_socks
+	(block sysadm_tor_socks
+		(blockinherit tor_socks_subj_blk)
+
+		(call tor_socks_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_tor_socks_optional_sysadm_git
+	(call tor_socks_client_subj_type (sysadm_git.subj))
+	(call git_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_git.subj)))
+
+(optional sysadm_tor_socks_optional_sysadm_git_email
+	(call tor_socks_client_subj_type (sysadm_git_email.subj))
+	(call git_email_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_git_email.subj)))
+
+(optional sysadm_tor_socks_optional_sysadm_ssh_client
+	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_xbindkeys_optional_xbindkeys
 	(block sysadm_xbindkeys

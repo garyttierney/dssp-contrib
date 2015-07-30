@@ -1,0 +1,108 @@
+(macro wpa_sysbus_chat_client_subj_type ((type ARG1))
+	(typeattributeset wpa_sysbus_chat_client_subj_type ARG1))
+
+(macro wpa_exec ((type ARG1))
+	(call can_exec (ARG1 wpa.cmd_file)))
+
+(macro wpa_auto_subj_type_transition ((type ARG1))
+	(call wpa_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 wpa.cmd_file wpa.subj)))
+
+(macro wpa_send_signal ((type ARG1))
+	(allow ARG1 wpa.subj (process (signal))))
+
+(macro wpa_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 wpa.config_file search_dir_perms))
+
+(macro wpa_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 wpa.config_file list_dir_perms))
+
+(macro wpa_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 wpa.config_file wpa.config_file)))
+
+(macro wpa_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 wpa.config_file wpa.config_file)))
+
+(macro wpa_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 wpa.config_file read_file_perms)
+	(allow ARG1 wpa.config_file list_dir_perms)
+	(allow ARG1 wpa.config_file read_lnk_file_perms))
+
+(macro wpa_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 wpa.config_file manage_file_perms)
+	(allow ARG1 wpa.config_file manage_dir_perms)
+	(allow ARG1 wpa.config_file manage_lnk_file_perms))
+
+(macro wpa_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 wpa.config_file relabel_file_perms)
+	(allow ARG1 wpa.config_file relabel_dir_perms)
+	(allow ARG1 wpa.config_file relabel_lnk_file_perms))
+
+(macro wpa_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 wpa.runtime_file search_dir_perms))
+
+(macro wpa_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 wpa.runtime_file list_dir_perms))
+
+(macro wpa_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 wpa.runtime_file wpa.runtime_file)))
+
+(macro wpa_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 wpa.runtime_file wpa.runtime_file)))
+
+(macro wpa_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 wpa.runtime_file read_file_perms)
+	(allow ARG1 wpa.runtime_file list_dir_perms)
+	(allow ARG1 wpa.runtime_file read_sock_file_perms)
+	(allow ARG1 wpa.runtime_file read_lnk_file_perms))
+
+(macro wpa_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 wpa.runtime_file manage_file_perms)
+	(allow ARG1 wpa.runtime_file manage_dir_perms)
+	(allow ARG1 wpa.runtime_file manage_sock_file_perms)
+	(allow ARG1 wpa.runtime_file manage_lnk_file_perms))
+
+(macro wpa_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 wpa.runtime_file relabel_file_perms)
+	(allow ARG1 wpa.runtime_file relabel_dir_perms)
+	(allow ARG1 wpa.runtime_file relabel_sock_file_perms)
+	(allow ARG1 wpa.runtime_file relabel_lnk_file_perms))
+
+(macro wpa_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 wpa.runtime_file dir "wpa_supplicant")))
+
+(macro wpa_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wpa.var_log_file read_file_perms))
+
+(macro wpa_manage_var_log_files ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 wpa.var_log_file manage_file_perms))
+
+(macro wpa_relabel_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 wpa.var_log_file relabel_file_perms))
+
+(macro wpa_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 wpa.var_log_file file "wpa_supplicant.log")))
+
+(macro wpa_adm ((type ARG1)(role ARG2))
+	(typeattributeset wpa_adm_subj_type ARG1)
+	(optional wpa_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional wpa_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

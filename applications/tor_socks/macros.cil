@@ -17,13 +17,13 @@
 	(call can_exec (ARG1 tor_socks.cmd_file)))
 
 (macro tor_socks_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-        (call auto_subj_type_transition_pattern (ARG2 tor_socks.cmd_file ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 tor_socks.cmd_file ARG3))
 
-        (roletype ARG1 ARG3)
+	(roletype ARG1 ARG3)
 
-        (allow ARG2 ARG3 (process (signal)))
+	(allow ARG2 ARG3 (process (signal)))
 
-        (allow ARG3 ARG2 (process (signal)))
+	(allow ARG3 ARG2 (process (signal)))
 
 	(optional tor_socks_role_pattern_optional_bti
 		(call bti_run (ARG3 ARG1)))

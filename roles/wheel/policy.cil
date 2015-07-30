@@ -100,6 +100,12 @@
 		(call tor_home_dir_obj_type_transition_home (subj))
 		(call tor_run (wheel_subj_type role)))
 
+	(optional wheel_optional_tor_gencert
+		(call tor_gencert_run (wheel_subj_type role)))
+
+	(optional wheel_optional_tor_resolve
+		(call tor_resolve_run (wheel_subj_type role)))
+
 	(optional wheel_optional_usbutil
 		(call usbutil_run (wheel_subj_type role)))
 

@@ -1,0 +1,13 @@
+(macro tor_resolve_exec ((type ARG1))
+	(call can_exec (ARG1 tor_resolve.cmd_file)))
+
+(macro tor_resolve_auto_subj_type_transition ((type ARG1))
+	(call tor_resolve_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 tor_resolve.cmd_file tor_resolve.subj)))
+
+(macro tor_resolve_send_signal ((type ARG1))
+	(allow ARG1 tor_resolve.subj (process (signal))))
+
+(macro tor_resolve_run ((type ARG1)(role ARG2))
+	(call tor_resolve_auto_subj_type_transition (ARG1))
+	(roleattributeset tor_resolve_role ARG2))

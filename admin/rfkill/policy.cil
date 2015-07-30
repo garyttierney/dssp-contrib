@@ -1,0 +1,10 @@
+(roleattribute rfkill_role)
+
+(block rfkill
+	(blockinherit app_blk)
+
+	(roletype rfkill_role subj)
+
+	(call dev_rw_wireless (subj))
+
+	(call fs_read_sysfs (subj)))

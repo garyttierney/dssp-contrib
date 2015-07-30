@@ -315,6 +315,9 @@
 	(optional sysadm_optional_qemu_guest_agent
 		(call qemu_guest_agent_adm (subj role)))
 
+	(optional sysadm_optional_rfkill
+		(call rfkill_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_rpm
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))

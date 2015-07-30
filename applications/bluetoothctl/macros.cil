@@ -3,7 +3,7 @@
 
 (macro bluetoothctl_auto_subj_type_transition ((type ARG1))
 	(call bluetoothctl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 bluetoothctl.cmd bluetoothctl.subj)))
+	(call auto_subj_type_transition_pattern (ARG1 bluetoothctl.cmd_file bluetoothctl.subj)))
 
 (macro bluetoothctl_send_signal ((type ARG1))
 	(allow ARG1 bluetoothctl.subj (process (signal))))

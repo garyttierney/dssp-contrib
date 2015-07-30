@@ -1,0 +1,90 @@
+(typeattribute bluetoothd_adm_subj_type)
+(typeattribute bluetoothd_sysbus_chat_client_subj_type)
+
+(typeattribute bluetoothd_obj_type)
+
+(block bluetoothd
+	(blockinherit subj_common_blk)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_var_lib_obj_blk)
+
+	(typeattributeset bluetoothd_obj_type var_lib_file)
+
+	(blockinherit file_tmpfs_obj_blk)
+
+	(typeattributeset bluetoothd_obj_type tmpfs_file)
+
+	(allow subj self (capability (net_bind_service net_admin)))
+	(allow subj self create_socket_perms)
+	(allow subj self (socket (listen accept)))
+
+	(call bluetoothd_manage_var_lib (subj))
+	(call bluetoothd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call bluetoothd_manage_tmpfs_fifo_files (subj))
+	(call bluetoothd_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call sys_request_load_module (subj))
+
+	(call dev_read_urandom (subj))
+	(call dev_rw_wireless (subj))
+
+	(call fs_getattr_fs (subj))
+	(call fs_read_sysfs (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call udev_client_subj_type (subj))
+
+	(optional bluetoothd_optional_nm
+		(call nm_sysbus_chat_client_subj_type (subj)))
+
+	(optional bluetoothd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset bluetoothd_obj_type unit_file)
+
+		(allow bluetoothd_adm_subj_type unit_file (service (stop status disable enable reload start)))
+
+		(call sd_notify_subj_type (subj)))
+
+	(optional bluetoothd_optional_sd_hostnamed
+		(call sd_hostnamed_sysbus_chat_client_subj_type (subj)))
+
+	(optional bluetoothd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional bluetoothd_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_client_subj_type (subj))
+		(call sysbus_read_config_files (subj))))
+
+(optional bluetoothd_sysbus_chat_client_subj_type_optional_sysbus
+        (allow bluetoothd.subj bluetoothd_sysbus_chat_client_subj_type (dbus (send_msg)))
+        (allow bluetoothd_sysbus_chat_client_subj_type bluetoothd.subj (dbus (send_msg))))
+
+(allow bluetoothd_adm_subj_type bluetoothd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (bluetoothd_adm_subj_type bluetoothd.subj))
+
+(call file_search_var_lib (bluetoothd_adm_subj_type))
+(call fs_search_tmpfs (bluetoothd_adm_subj_type))
+
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type manage_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type manage_dir_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type manage_lnk_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type manage_sock_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type manage_fifo_file_perms)
+
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type relabel_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type relabel_dir_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type relabel_lnk_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type relabel_sock_file_perms)
+(allow bluetoothd_adm_subj_type bluetoothd_obj_type relabel_fifo_file_perms)

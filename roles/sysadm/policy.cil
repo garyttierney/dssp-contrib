@@ -74,6 +74,9 @@
 	(optional sysadm_optional_bluetoothctl
 		(call bluetoothctl_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_bluetoothd
+		(call bluetoothd_adm (subj role)))
+
 	(optional sysadm_optional_bootloader
 		(call bootloader_manage_config (subj))
 		(call bootloader_manage_boot_files (subj))

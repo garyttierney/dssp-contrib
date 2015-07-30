@@ -64,6 +64,9 @@
 	(optional wheel_optional_pwgen
 		(call pwgen_run (wheel_subj_type role)))
 
+	(optional wheel_optional_quota
+		(call quota_exec (wheel_subj_type)))
+
 	(optional wheel_optional_rpws
 		(call rpws_run (wheel_subj_type role))
 		(call rpws_manage_tmpfs_files (subj))

@@ -1,0 +1,25 @@
+(roleattribute quota_role)
+
+(typeattribute quota_client_subj_type)
+
+(block quota
+	(blockinherit app_blk)
+
+	(roletype quota_role subj)
+
+	(allow subj self (capability (sys_admin)))
+
+	(call sys_read_fs_sysctl_files (subj))
+	(call sys_list_mountpoints (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call quota_client_subj_type (subj)))
+
+(call fs_read_devtmpfs_lnk_files (quota_client_subj_type))
+(call fs_getattr_fs (quota_client_subj_type))
+(call fs_get_fs_quotas (quota_client_subj_type))
+
+(call storage_getattr_all (quota_client_subj_type))

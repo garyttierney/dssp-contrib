@@ -56,7 +56,7 @@
 		(allow dnssec_trigger_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional dnssec_triggerd_optional_sd_journald
-		(call sd_journald_client_subj_type (suvj))))
+		(call sd_journald_client_subj_type (subj))))
 
 (block dnssec_triggercs
 	(blockinherit subj_common_blk)
@@ -127,11 +127,12 @@
 	(call dns_manage_resolv_config_files (subj))
 	(call dns_relabel_resolv_config_files (subj))
 
-	(call dnssec_trigger_auto_subj_type_transition_dnssec_triggerc (subj))
 	(call dnssec_trigger_read_config_files (subj))
 	(call dnssec_trigger_manage_dnssec_triggerd_runtime_files (subj))
 	(call dnssec_trigger_manage_dnssec_triggerd_runtime_lnk_files (subj))
 	(call dnssec_trigger_relabel_dnssec_triggerd_runtime_files (subj))
+
+	(call dnssec_triggerc_auto_subj_type_transition (subj))
 
 	(call miscfile_read_locale (subj))
 

@@ -1,0 +1,13 @@
+(macro dnssec_triggerc_exec ((type ARG1))
+	(call can_exec (ARG1 dnssec_triggerc.cmd_file)))
+
+(macro dnssec_triggerc_auto_subj_type_transition ((type ARG1))
+	(call dnssec_triggerc_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 dnssec_triggerc.cmd_file dnssec_triggerc.subj)))
+
+(macro dnssec_triggerc_send_signal ((type ARG1))
+	(allow ARG1 dnssec_triggerc.subj (process (signal))))
+
+(macro dnssec_triggerc_run ((type ARG1)(role ARG2))
+	(call dnssec_triggerc_auto_subj_type_transition (ARG1))
+	(roleattributeset dnssec_triggerc_role ARG2))

@@ -1,0 +1,10 @@
+(roleattribute dmidecode_role)
+
+(block dmidecode
+	(blockinherit app_blk)
+
+	(roletype dmidecode_role subj)
+
+	(call dev_read_memory (subj))
+
+	(call fs_read_sysfs (subj)))

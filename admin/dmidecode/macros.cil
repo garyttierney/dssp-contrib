@@ -1,0 +1,13 @@
+(macro dmidecode_exec ((type ARG1))
+	(call can_exec (ARG1 dmidecode.cmd_file)))
+
+(macro dmidecode_auto_subj_type_transition ((type ARG1))
+	(call dmidecode_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 dmidecode.cmd_file dmidecode.subj)))
+
+(macro dmidecode_send_signal ((type ARG1))
+	(allow ARG1 dmidecode.subj (process (signal))))
+
+(macro dmidecode_run ((type ARG1)(role ARG2))
+	(call dmidecode_auto_subj_type_transition (ARG1))
+	(roleattributeset dmidecode_role ARG2))

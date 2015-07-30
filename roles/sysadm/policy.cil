@@ -115,6 +115,9 @@
 	(optional sysadm_optional_dns
 		(call dns_manage_resolv_config_files (subj)))
 
+	(optional sysadm_optional_dnssec_trigger
+		(call dnssec_trigger_adm (subj role)))
+
 	(optional sysadm_optional_dracut
 		(call dracut_run (sysadm_subj_type role)))
 

@@ -1,0 +1,163 @@
+(typeattribute dnssec_trigger_subj_type)
+(typeattribute dnssec_trigger_adm_subj_type)
+
+(typeattribute dnssec_trigger_obj_type)
+
+(block dnssec_trigger
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset dnssec_trigger_obj_type config_file))
+
+(block dnssec_triggerd
+	(blockinherit subj_common_blk)
+
+	(typeattributeset dnssec_trigger_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset dnssec_trigger_obj_type runtime_file)
+
+	(allow subj self create_tcp_stream_socket_perms)
+
+	(call dnssec_trigger_manage_dnssec_triggerd_runtime (subj))
+	(call dnssec_trigger_runtime_obj_type_transition_dnssec_triggerd_runtime (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+
+	(call net_tcp_bind_generic_node (subj))
+
+	(call dnssec_tcp_bind_dnssec_port (subj))
+
+	(call dnssec_trigger_read_config (subj))
+	(call dnssec_trigger_auto_subj_type_transition_dnssec_triggers (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional dnssec_triggerd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(call sd_daemon_pid_obj_type (runtime_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset dnssec_trigger_obj_type unit_file)
+
+		(allow dnssec_trigger_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional dnssec_triggerd_optional_sd_journald
+		(call sd_journald_client_subj_type (suvj))))
+
+(block dnssec_triggercs
+	(blockinherit subj_common_blk)
+
+	(typeattributeset dnssec_trigger_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_tmpfs_obj_blk)
+
+	(typeattributeset dnssec_trigger_obj_type tmpfs_file)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call dnssec_trigger_manage_dnssec_triggercs_tmpfs_files (subj))
+	(call dnssec_trigger_tmpfs_obj_type_transition_dnssec_triggercs_tmpfs (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_audit_access_shell_files (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call dnssec_trigger_manage_config (subj))
+
+	(call miscfile_read_cert (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional dnssec_triggercs_optional_openssl
+		(call openssl_exec (subj)))
+
+	(optional dnssec_triggercs_optional_sd
+		(call sd_daemon (subj cmd_file))))
+
+(block dnssec_triggers
+	(blockinherit subj_common_blk)
+
+	(typeattributeset dnssec_trigger_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(allow subj self (capability (sys_admin linux_immutable))) ; chattr +i /etc/resolv.conf
+	(allow subj self rw_fifo_file_perms)
+
+	(allow subj dnssec_triggerd.subj rw_inherited_tcp_socket_perms)
+
+	(call cmd_list_cmd (subj))
+	(call cmd_exec_cmd (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call file_list_var_tmp (subj))
+	(call file_create_config_lnk_files (subj))
+	(call file_delete_config_lnk_files (subj))
+
+	(call fs_list_tmpfs (subj))
+
+	(call dns_config_obj_type_transition_config (subj))
+	(call dns_manage_resolv_config_files (subj))
+	(call dns_relabel_resolv_config_files (subj))
+
+	(call dnssec_trigger_auto_subj_type_transition_dnssec_triggerc (subj))
+	(call dnssec_trigger_read_config_files (subj))
+	(call dnssec_trigger_manage_dnssec_triggerd_runtime_files (subj))
+	(call dnssec_trigger_manage_dnssec_triggerd_runtime_lnk_files (subj))
+	(call dnssec_trigger_relabel_dnssec_triggerd_runtime_files (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(optional dnssec_triggers_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional dnssec_triggers_optional_sysbus
+		(call sysbus_client_subj_type (subj)))
+
+	(optional dnssec_triggers_optional_unbound
+		(call unboundctl_auto_subj_type_transition (subj)))
+
+	(optional triggers_optional_usersubj
+		(call usersubj_search_home_dir (subj))))
+
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (dnssec_trigger_adm_subj_type dnssec_trigger_subj_type))
+
+(call file_search_runtime (dnssec_trigger_adm_subj_type))
+
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type manage_file_perms)
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type manage_dir_perms)
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type manage_lnk_file_perms)
+
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type relabel_file_perms)
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type relabel_dir_perms)
+(allow dnssec_trigger_adm_subj_type dnssec_trigger_obj_type relabel_lnk_file_perms)

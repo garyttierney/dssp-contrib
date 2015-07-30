@@ -7,6 +7,9 @@
 
         (typeattributeset user_subj_type subj)
 
+	(optional user_optional_bluetoothctl
+		(call bluetoothctl_run (user_subj_type role)))
+
 	(optional user_optional_curl
 		(call curl_run (user_subj_type role))
 		(call curl_manage_home_files (subj))

@@ -1,0 +1,13 @@
+(macro bluetoothctl_exec ((type ARG1))
+	(call can_exec (ARG1 bluetoothctl.cmd_file)))
+
+(macro bluetoothctl_auto_subj_type_transition ((type ARG1))
+	(call bluetoothctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 bluetoothctl.cmd bluetoothctl.subj)))
+
+(macro bluetoothctl_send_signal ((type ARG1))
+	(allow ARG1 bluetoothctl.subj (process (signal))))
+
+(macro bluetoothctl_run ((type ARG1)(role ARG2))
+	(call bluetoothctl_auto_subj_type_transition (ARG1))
+	(roleattributeset bluetoothctl_role ARG2))

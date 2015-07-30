@@ -71,6 +71,9 @@
 		(call authconfig_manage_var_lib (subj))
 		(call authconfig_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_bluetoothctl
+		(call bluetoothctl_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_bootloader
 		(call bootloader_manage_config (subj))
 		(call bootloader_manage_boot_files (subj))

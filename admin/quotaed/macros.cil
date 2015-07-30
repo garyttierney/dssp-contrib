@@ -1,0 +1,31 @@
+(macro quotaed_exec ((type ARG1))
+	(call can_exec (ARG1 quotaed.cmd_file)))
+
+(macro quotaed_auto_subj_type_transition ((type ARG1))
+	(call quotaed_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 quotaed.cmd_file quotaed.subj)))
+
+(macro quotaed_send_signal ((type ARG1))
+	(allow ARG1 quotaed.subj (process (signal))))
+
+(macro quotaed_run ((type ARG1)(role ARG2))
+	(call quotaed_auto_subj_type_transition (ARG1))
+	(roleattributeset quotaed_role ARG2))
+
+(macro quotaed_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 quotaed.tmpfs_user_file read_file_perms))
+
+(macro quotaed_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 quotaed.tmpfs_user_file manage_file_perms))
+
+(macro quotaed_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 quotaed.tmpfs_user_file relabel_file_perms))
+
+(macro quotaed_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 quotaed.tmpfs_user_file file "*")))

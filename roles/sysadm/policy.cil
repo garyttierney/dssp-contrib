@@ -315,6 +315,10 @@
 	(optional sysadm_optional_qemu_guest_agent
 		(call qemu_guest_agent_adm (subj role)))
 
+	(optional sysadm_optional_quotaed
+		(call quotaed_run (sysadm_subj_type role))
+		(call quotaed_manage_tmpfs_files (subj)))
+
 	(optional sysadm_optional_quotaon
 		(call quotaon_adm (subj role))
 		(call quotaon_run (sysadm_subj_type role)))

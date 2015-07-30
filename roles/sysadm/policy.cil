@@ -293,6 +293,10 @@
 		(call polkit_run_polkit_agent (sysadm_subj_type role))
 		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
 
+	(optional sysadm_optional_powertop
+		(call powertop_adm (subj role))
+		(call powertop_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_pppd
 		(call pppd_manage_config (subj))
 		(call pppd_manage_runtime_lock (subj))

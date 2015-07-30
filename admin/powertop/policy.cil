@@ -1,0 +1,95 @@
+(roleattribute powertop_role)
+
+(typeattribute powertop_adm_subj_type)
+
+(typeattribute powertop_obj_type)
+
+(block powertop
+	(blockinherit app_blk)
+
+	(roleattributeset powertop_role sys.role)
+
+	(roletype powertop_role subj)
+
+	(blockinherit file_var_cache_obj_blk)
+
+	(typeattributeset powertop_obj_type var_cache_file)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(typeattributeset powertop_obj_type tmpfs_user_file)
+
+	(allow subj self (capability (dac_override net_admin sys_rawio sys_resource sys_admin ipc_lock)))
+	(allow subj self (process (setrlimit)))
+	(allow subj self create_socket_perms)
+	(allow subj self create_udp_socket_perms)
+	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call powertop_manage_var_cache (subj))
+	(call powertop_var_cache_obj_type_transition_var_cache (subj))
+
+	(call powertop_manage_tmpfs_files (subj))
+	(call powertop_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call sys_read_net_proc_files (subj))
+	(call sys_read_kallsyms_proc_files (subj))
+	(call sys_request_load_module (subj))
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_rw_fs_sysctl_files (subj))
+	(call sys_rw_irq_sysctl_files (subj))
+	(call sys_rw_kernel_sysctl_files (subj))
+	(call sys_rw_vm_sysctl_files (subj))
+
+	(call cmd_exec_shell (subj))
+
+	(call dev_read_cpu (subj))
+
+	(call file_read_config_files (subj))
+
+	(call fs_getattr_debugfs_fs (subj))
+	(call fs_list_sysfs (subj))
+	(call fs_mount_tracefs_fs (subj))
+	(call fs_read_debugfs (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+	(call fs_read_tracefs (subj))
+	(call fs_rw_sysfs_files (subj))
+
+	(call kmod_auto_subj_type_transition (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_hwdata (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call subj_ptrace_uncond_type (subj))
+	(call subj_read_common_subj_state (subj))
+
+	(call usersubj_manage_home_user_files (subj))
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional powertop_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset powertop_obj_type unit_file)
+
+		(allow powertop_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional powertop_optional_xutil
+		(call xutil_run (subj powertop_role))))
+
+(allow powertop_adm_subj_type powertop.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (powertop_adm_subj_type powertop.subj))
+
+(call file_search_var_cache (powertop_adm_subj_type))
+(call fs_search_tmpfs (powertop_adm_subj_type))
+
+(allow powertop_adm_subj_type powertop_obj_type manage_file_perms)
+(allow powertop_adm_subj_type powertop_obj_type manage_dir_perms)
+(allow powertop_adm_subj_type powertop_obj_type manage_lnk_file_perms)
+
+(allow powertop_adm_subj_type powertop_obj_type relabel_file_perms)
+(allow powertop_adm_subj_type powertop_obj_type relabel_dir_perms)
+(allow powertop_adm_subj_type powertop_obj_type relabel_lnk_file_perms)

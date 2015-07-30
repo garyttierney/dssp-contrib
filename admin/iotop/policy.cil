@@ -5,9 +5,9 @@
 
 	(roletype iotop_role subj)
 
-	(allow iotop_t self (capability (net_admin)))
-	(allow iotop_t self rw_fifo_file_perms)
-	(allow iotop_t self create_netlink_socket_perms)
+	(allow subj self (capability (net_admin)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self create_netlink_socket_perms)
 
 	(call sys_read_kernel_sysctl_files (subj))
 

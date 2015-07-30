@@ -1,0 +1,13 @@
+(macro ppputil_exec ((type ARG1))
+	(call can_exec (ARG1 ppputil.cmd_file)))
+
+(macro ppputil_auto_subj_type_transition ((type ARG1))
+	(call ppputil_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 ppputil.cmd_file ppputil.subj)))
+
+(macro ppputil_send_signal ((type ARG1))
+	(allow ARG1 ppputil.subj (process (signal))))
+
+(macro ppputil_run ((type ARG1)(role ARG2))
+	(call ppputil_auto_subj_type_transition (ARG1))
+	(roleattributeset ppputil_role ARG2))

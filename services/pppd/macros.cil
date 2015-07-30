@@ -1,0 +1,154 @@
+(macro pppd_exec ((type ARG1))
+	(call can_exec (ARG1 pppd.cmd_file)))
+
+(macro pppd_auto_subj_type_transition ((type ARG1))
+	(call pppd_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 pppd.cmd_file pppd.subj)))
+
+(macro pppd_send_signal ((type ARG1))
+	(allow ARG1 pppd.subj (process (signal))))
+
+(macro pppd_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pppd.config_file search_dir_perms))
+
+(macro pppd_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pppd.config_file list_dir_perms))
+
+(macro pppd_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 pppd.config_file pppd.config_file)))
+
+(macro pppd_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 pppd.config_file pppd.config_file)))
+
+(macro pppd_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pppd.config_file read_file_perms)
+	(allow ARG1 pppd.config_file list_dir_perms)
+	(allow ARG1 pppd.config_file read_lnk_file_perms))
+
+(macro pppd_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 pppd.config_file manage_file_perms)
+	(allow ARG1 pppd.config_file manage_dir_perms)
+	(allow ARG1 pppd.config_file manage_lnk_file_perms))
+
+(macro pppd_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 pppd.config_file relabel_file_perms)
+	(allow ARG1 pppd.config_file relabel_dir_perms)
+	(allow ARG1 pppd.config_file relabel_lnk_file_perms))
+
+(macro pppd_search_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 pppd.runtime_lock_file search_dir_perms))
+
+(macro pppd_list_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 pppd.runtime_lock_file list_dir_perms))
+
+(macro pppd_read_runtime_lock_files ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(call read_files_pattern (ARG1 pppd.runtime_lock_file pppd.runtime_lock_file)))
+
+(macro pppd_read_runtime_lock_lnk_files ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(call read_lnk_files_pattern (ARG1 pppd.runtime_lock_file pppd.runtime_lock_file)))
+
+(macro pppd_read_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 pppd.runtime_lock_file read_file_perms)
+	(allow ARG1 pppd.runtime_lock_file list_dir_perms)
+	(allow ARG1 pppd.runtime_lock_file read_lnk_file_perms))
+
+(macro pppd_manage_runtime_lock ((type ARG1))
+	(call file_rw_runtime_lock_dirs (ARG1))
+	(allow ARG1 pppd.runtime_lock_file manage_file_perms)
+	(allow ARG1 pppd.runtime_lock_file manage_dir_perms)
+	(allow ARG1 pppd.runtime_lock_file manage_lnk_file_perms))
+
+(macro pppd_relabel_runtime_lock ((type ARG1))
+	(call file_search_runtime_lock (ARG1))
+	(allow ARG1 pppd.runtime_lock_file relabel_file_perms)
+	(allow ARG1 pppd.runtime_lock_file relabel_dir_perms)
+	(allow ARG1 pppd.runtime_lock_file relabel_lnk_file_perms))
+
+(macro pppd_runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
+	(call file_runtime_lock_obj_type_transition (ARG1 pppd.runtime_lock_file dir "ppp")))
+
+(macro pppd_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pppd.runtime_file search_dir_perms))
+
+(macro pppd_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pppd.runtime_file list_dir_perms))
+
+(macro pppd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 pppd.runtime_file pppd.runtime_file)))
+
+(macro pppd_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 pppd.runtime_file pppd.runtime_file)))
+
+(macro pppd_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pppd.runtime_file read_file_perms)
+	(allow ARG1 pppd.runtime_file list_dir_perms)
+	(allow ARG1 pppd.runtime_file read_lnk_file_perms))
+
+(macro pppd_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 pppd.runtime_file manage_file_perms)
+	(allow ARG1 pppd.runtime_file manage_dir_perms)
+	(allow ARG1 pppd.runtime_file manage_lnk_file_perms))
+
+(macro pppd_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 pppd.runtime_file relabel_file_perms)
+	(allow ARG1 pppd.runtime_file relabel_dir_perms)
+	(allow ARG1 pppd.runtime_file relabel_lnk_file_perms))
+
+(macro pppd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 pppd.runtime_file dir "ppp")))
+
+(macro pppd_search_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 pppd.var_log_file search_dir_perms))
+
+(macro pppd_list_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 pppd.var_log_file list_dir_perms))
+
+(macro pppd_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_files_pattern (ARG1 pppd.var_log_file pppd.var_log_file)))
+
+(macro pppd_read_var_log_lnk_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_lnk_files_pattern (ARG1 pppd.var_log_file pppd.var_log_file)))
+
+(macro pppd_read_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 pppd.var_log_file read_file_perms)
+	(allow ARG1 pppd.var_log_file list_dir_perms)
+	(allow ARG1 pppd.var_log_file read_lnk_file_perms))
+
+(macro pppd_manage_var_log ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 pppd.var_log_file manage_file_perms)
+	(allow ARG1 pppd.var_log_file manage_dir_perms)
+	(allow ARG1 pppd.var_log_file manage_lnk_file_perms))
+
+(macro pppd_relabel_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 pppd.var_log_file relabel_file_perms)
+	(allow ARG1 pppd.var_log_file relabel_dir_perms)
+	(allow ARG1 pppd.var_log_file relabel_lnk_file_perms))
+
+(macro pppd_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 pppd.var_log_file dir "ppp")))

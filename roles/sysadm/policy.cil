@@ -263,6 +263,15 @@
 		(call polkit_run_polkit_agent (sysadm_subj_type role))
 		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
 
+	(optional sysadm_optional_pppd
+		(call pppd_manage_config (subj))
+		(call pppd_manage_runtime_lock (subj))
+		(call pppd_manage_runtime (subj))
+		(call pppd_manage_var_log (subj)))
+
+	(optional sysadm_optional_ppputil
+		(call ppputil_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_pwgen
 		(call pwgen_run (sysadm_subj_type role)))
 

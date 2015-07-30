@@ -859,6 +859,9 @@
 
 		(call startx_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_startx_optional_sysadm_xinit
+	(call xinit_auto_subj_type_transition_pattern (sysadm_startx.subj sysadm_xinit.subj)))
+
 (optional sysadm_sudo_optional_sudo
 	(block sysadm_sudo
 		(blockinherit sudo_subj_blk)
@@ -934,3 +937,9 @@
 
 (optional sysadm_xinit_optional_sysadm_rp
 	(call rp_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_rp.subj)))
+
+(optional sysadm_xinit_optional_sysadm_systemctl
+	(call systemctl_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_systemctl.subj)))
+
+(optional sysadm_xinit_optional_sysadm_xbindkeys
+	(call xbindkeys_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_xbindkeys.subj)))

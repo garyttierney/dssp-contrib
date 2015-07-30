@@ -415,6 +415,9 @@
 
 		(call startx_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_startx_optional_wheel_xinit
+	(call xinit_auto_subj_type_transition_pattern (wheel_startx.subj wheel_xinit.subj)))
+
 (optional wheel_sudo_optional_sudo
 	(block wheel_sudo
 		(blockinherit sudo_subj_blk)
@@ -493,3 +496,9 @@
 
 (optional wheel_xinit_optional_wheel_rp
 	(call rp_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_rp.subj)))
+
+(optional wheel_xinit_optional_wheel_systemctl
+	(call systemctl_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_systemctl.subj)))
+
+(optional wheel_xinit_optional_wheel_xbindkeys
+	(call xbindkeys_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_xbindkeys.subj)))

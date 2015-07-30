@@ -1,0 +1,27 @@
+(roleattribute iotop_role)
+
+(block iotop
+	(blockinherit app_blk)
+
+	(roletype iotop_role subj)
+
+	(allow iotop_t self (capability (net_admin)))
+	(allow iotop_t self rw_fifo_file_perms)
+	(allow iotop_t self create_netlink_socket_perms)
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call cmd_exec_cmd (subj))
+
+	(call file_read_config_files (subj))
+	(call file_read_data_files (subj))
+
+	(call subj_getsched_common_subj (subj))
+	(call subj_read_common_subj_state (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call usersubj_search_home_data (subj)))

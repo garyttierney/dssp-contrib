@@ -169,6 +169,9 @@
 		(call hwclock_manage_config_files (subj))
 		(call hwclock_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_iotop
+		(call iotop_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_iptables
 		(call iptables_adm (subj role))
 		(call iptables_run (sysadm_subj_type role)))

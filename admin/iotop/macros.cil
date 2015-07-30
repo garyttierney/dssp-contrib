@@ -1,0 +1,13 @@
+(macro iotop_exec ((type ARG1))
+	(call can_exec (ARG1 iotop.cmd_file)))
+
+(macro iotop_auto_subj_type_transition ((type ARG1))
+	(call iotop_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 iotop.cmd_file iotop.subj)))
+
+(macro iotop_send_signal ((type ARG1))
+	(allow ARG1 iotop.subj (process (signal))))
+
+(macro iotop_run ((type ARG1)(role ARG2))
+	(call iotop_auto_subj_type_transition (ARG1))
+	(roleattributeset iotop_role (ARG2)))

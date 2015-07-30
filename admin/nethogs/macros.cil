@@ -1,0 +1,13 @@
+(macro nethogs_exec ((type ARG1))
+	(call can_exec (ARG1 nethogs.cmd_file)))
+
+(macro nethogs_auto_subj_type_transition ((type ARG1))
+	(call nethogs_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 nethogs.cmd_file nethogs.subj)))
+
+(macro nethogs_send_signal ((type ARG1))
+	(allow ARG1 nethogs.subj (process (signal))))
+
+(macro nethogs_run ((type ARG1)(role ARG2))
+	(call nethogs_auto_subj_type_transition (ARG1))
+	(roleattributeset nethogs_role (ARG2)))

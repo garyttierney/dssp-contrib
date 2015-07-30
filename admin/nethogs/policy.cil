@@ -1,0 +1,23 @@
+(roleattribute nethogs_role)
+
+(block nethogs
+	(blockinherit app_blk)
+
+	(roletype nethogs_role subj)
+
+	(allow subj self (capability (net_raw dac_override)))
+	(allow subj self create_packet_socket_perms)
+	(allow subj self create_rawip_socket_perms)
+
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_read_net_proc_files (subj))
+	(call sys_request_load_module (subj))
+
+	(call fs_read_sysfs (subj))
+
+	(call subj_ptrace_uncond_type (subj))
+	(call subject_read_common_subj_state (subj))
+
+	(call miscfile_read_all_terminfo (subj))
+
+	(call nss_client_subj_type (subj)))

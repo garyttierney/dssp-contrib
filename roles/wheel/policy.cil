@@ -133,6 +133,15 @@
 
 		(call analyze_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_fuse_optional_fuse
+	(block wheel_fuse_sshfs
+		(blockinherit fuse_sshfs_subj_blk)
+
+		(call fuse_sshfs_role_pattern (wheel.role wheel_subj_type subj)))
+
+	(call fuse_run_fusermount (wheel.subj wheel.role))
+	(call fuse_run_ulockmgr (wheel.subj wheel.role)))
+
 (optional wheel_gpg_optional_gpg
 	(block wheel_gpg
 		(blockinherit gpg_subj_blk)

@@ -1,0 +1,9 @@
+(context fusermount_cmd (sys.id sys.role fusermount.cmd_file (systemlow systemlow)))
+(context fusermount_config (sys.id sys.role fusermount.config_file (systemlow systemlow)))
+(context sshfs_cmd (sys.id sys.role sshfs.cmd_file (systemlow systemlow)))
+(context ulockmgr_cmd (sys.id sys.role ulockmgr.cmd_file (systemlow systemlow)))
+
+(filecon "/etc/fuse\.conf" file fusermount_config)
+(filecon "/usr/bin/fusermount" file fusermount_cmd)
+(filecon "/usr/bin/sshfs" file sshfs_cmd)
+(filecon "/usr/bin/ulockmgr_server" file ulockmgr_cmd)

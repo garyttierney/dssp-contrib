@@ -108,6 +108,15 @@
 (optional user_alsautil_optional_user_pa
 	(call pa_client_pattern (user.role user_alsautil.subj user_pa.subj)))
 
+(optional user_fuse_optional_fuse
+	(block user_fuse_sshfs
+		(blockinherit fuse_sshfs_subj_blk)
+
+		(call fuse_sshfs_role_pattern (user.role user_subj_type subj)))
+
+	(call fuse_run_fusermount (user.subj user.role))
+	(call fuse_run_ulockmgr (user.subj user.role)))
+
 (optional user_gpg_optional_gpg
 	(block user_gpg
 		(blockinherit gpg_subj_blk)

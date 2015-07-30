@@ -706,6 +706,9 @@
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 home_user.home_user_file rw_dir_perms))
 
+(macro usersubj_mounton_home_user_dirs ((type ARG1))
+	(allow ARG1 home_user.home_user_file (dir (mounton))))
+
 (macro usersubj_manage_home_user_dirs ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 home_user.home_user_file manage_dir_perms))

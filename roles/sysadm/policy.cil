@@ -520,6 +520,16 @@
 
 		(call analyze_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_fuse_optional_fuse
+	(block sysadm_fuse_sshfs
+		(blockinherit fuse_sshfs_subj_blk)
+
+		(call fuse_sshfs_role_pattern (sysadm.role sysadm_subj_type subj)))
+
+	(call fuse_manage_fusermount_config_files (sysadm.subj))
+	(call fuse_run_fusermount (sysadm.subj sysadm.role))
+	(call fuse_run_ulockmgr (sysadm.subj sysadm.role)))
+
 (optional sysadm_gpg_optional_gpg
 	(block sysadm_gpg
 		(blockinherit gpg_subj_blk)

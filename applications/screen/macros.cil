@@ -35,6 +35,10 @@
 	(optional screen_role_pattern_optional_mysysstat
 		(call mysysstat_run (ARG3 ARG1))))
 
+(macro screen_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 screen.cmd_file ARG2)))
+
 (macro screen_read_config_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 screen.config_file read_file_perms))

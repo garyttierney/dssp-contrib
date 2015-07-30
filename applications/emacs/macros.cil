@@ -29,6 +29,7 @@
 	(call emacs_relabel_tmpfs (ARG2)))
 
 (macro emacs_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 emacs.cmd_file ARG2)))
 
 (macro emacs_search_tmpfs ((type ARG1))

@@ -25,6 +25,7 @@
 	(call alsautil_relabel_tmpfs_files (ARG2)))
 
 (macro alsautil_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 alsautil.cmd_file ARG2)))
 
 (macro alsautil_read_tmpfs_files ((type ARG1))

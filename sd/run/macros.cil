@@ -23,5 +23,9 @@
 
 	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
+(macro run_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 run.cmd_file ARG2)))
+
 (macro run_use_fd_all_subj ((type ARG1))
 	(allow ARG1 run_subj_type (fd (use))))

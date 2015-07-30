@@ -32,7 +32,7 @@
 	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file systemctl.subj)))
 
 (macro systemctl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(call systemctl_send_signal (ARG1))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file ARG2)))
 
 (macro systemctl_send_signal ((type ARG1))

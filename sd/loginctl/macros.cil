@@ -31,5 +31,9 @@
 	(call loginctl_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 loginctl.cmd_file loginctl.subj)))
 
+(macro loginctl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 loginctl.cmd_file ARG2)))
+
 (macro loginctl_send_signal ((type ARG1))
 	(allow ARG1 loginctl.subj (process (signal))))

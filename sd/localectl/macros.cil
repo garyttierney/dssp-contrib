@@ -31,5 +31,9 @@
 	(call localectl_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 localectl.cmd_file localectl.subj)))
 
+(macro localectl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 localectl.cmd_file ARG2)))
+
 (macro localectl_send_signal ((type ARG1))
 	(allow ARG1 localectl.subj (process (signal))))

@@ -25,6 +25,7 @@
 	(call git_email_relabel_home_files (ARG2)))
 
 (macro git_email_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 git_email.cmd_file ARG2)))
 
 (macro git_email_read_home_files ((type ARG1))

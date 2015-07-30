@@ -23,6 +23,10 @@
 
 	(call fuse_run_fusermount (ARG3 ARG1)))
 
+(macro fuse_sshd_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 sshfs.cmd_file ARG2)))
+
 (macro fuse_exec_fusermount ((type ARG1))
 	(call can_exec (ARG1 fusermount.cmd_file)))
 

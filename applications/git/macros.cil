@@ -33,9 +33,11 @@
 	(call git_relabel_tmpfs_files (ARG2)))
 
 (macro git_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 git.cmd_file ARG2)))
 
 (macro git_home_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 git.home_user_file ARG2)))
 
 (macro git_home_obj_entry_subj ((type ARG1))

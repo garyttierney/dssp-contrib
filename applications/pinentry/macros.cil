@@ -3,7 +3,7 @@
 
 (macro pinentry_auto_subj_type_transition ((type ARG1))
 	(call pinentry_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 pinentry.cmd_file dirmngr.subj)))
+	(call auto_subj_type_transition_pattern (ARG1 pinentry.cmd_file pinentry.subj)))
 
 (macro pinentry_send_signal ((type ARG1))
 	(allow ARG1 pinentry.subj (process (signal))))

@@ -183,6 +183,7 @@
 	(call ssh_home_dir_obj_type_transition_client_home (ARG2)))
 
 (macro ssh_auto_subj_type_transition_pattern_ssh_client ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 ssh_client.cmd_file ARG2)))
 
 (macro ssh_agent_subj_type ((type ARG1))
@@ -199,6 +200,7 @@
 	(allow ARG3 ARG2 (process (signal))))
 
 (macro ssh_auto_subj_type_transition_pattern_ssh_agent ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 ssh_agent.cmd_file ARG2)))
 
 (macro ssh_search_sshd_config ((type ARG1))

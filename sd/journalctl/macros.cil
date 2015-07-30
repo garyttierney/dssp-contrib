@@ -31,5 +31,9 @@
 	(call journalctl_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 journalctl.cmd_file journalctl.subj)))
 
+(macro journalctl_auto_subj_type_transtion_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 journalct.cmd_file ARG2)))
+
 (macro journalctl_send_signal ((type ARG1))
 	(allow ARG1 journalctl.subj (process (signal))))

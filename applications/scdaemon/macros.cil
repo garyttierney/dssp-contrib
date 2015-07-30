@@ -3,7 +3,7 @@
 
 (macro scdaemon_auto_subj_type_transition ((type ARG1))
 	(call scdaemon_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 scdaemon.cmd_file dirmngr.subj)))
+	(call auto_subj_type_transition_pattern (ARG1 scdaemon.cmd_file scdaemon.subj)))
 
 (macro scdaemon_send_signal ((type ARG1))
 	(allow ARG1 scdaemon.subj (process (signal))))

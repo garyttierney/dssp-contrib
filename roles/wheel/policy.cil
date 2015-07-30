@@ -136,6 +136,33 @@
 
 		(call analyze_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_emacs_optional_emacs
+	(block wheel_emacs
+		(blockinherit emacs_subj_blk)
+
+		(call emacs_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_emacs_optional_wheel_git
+	(call git_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_git.subj)))
+
+(optional wheel_emacs_optional_wheel_gpg
+	(call gpg_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_gpg.subj)))
+
+(optional wheel_emacsclient_optional_emacsclient
+	(block wheel_emacsclient
+		(blockinherit emacsclient_subj_blk)
+
+		(call emacsclient_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_emacsclient_optional_wheel_emacs
+		(allow wheel_emacsclient.subj wheel_emacs.subj (process (signal)))
+		(call emacs_stream_connect_pattern (wheel_emacsclient.subj wheel_emacs.subj)))
+
 (optional wheel_fuse_optional_fuse
 	(block wheel_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)
@@ -159,7 +186,10 @@
 		(call git_home_obj_entry_subj (wheel.subj))
 		(call git_home_auto_subj_type_transition_pattern (subj wheel.subj))))
 
-(optional wheel_git_optional_git_email
+(optional wheel_git_optional_wheel_gpg
+	(call gpg_auto_subj_type_transition_pattern (wheel_git.subj wheel_gpg.subj)))
+
+(optional wheel_git_optional_wheel_git_email
 	(call git_email_auto_subj_type_transition_pattern (wheel_git.subj wheel_git_email.subj)))
 
 (optional wheel_git_email_optional_git_email
@@ -173,8 +203,8 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
-(optional wheel_git_email_optional_git
-		(call git_auto_subj_type_transition_pattern (wheel_git_email.subj wheel_git.subj)))
+(optional wheel_git_email_optional_wheel_git
+	(call git_auto_subj_type_transition_pattern (wheel_git_email.subj wheel_git.subj)))
 
 (optional wheel_gpg_optional_gpg
 	(block wheel_gpg

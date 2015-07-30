@@ -111,6 +111,33 @@
 (optional user_alsautil_optional_user_pa
 	(call pa_client_pattern (user.role user_alsautil.subj user_pa.subj)))
 
+(optional user_emacs_optional_emacs
+	(block user_emacs
+		(blockinherit emacs_subj_blk)
+
+		(call emacs_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_emacs_optional_user_git
+	(call git_auto_subj_type_transition_pattern (user_emacs.subj user_git.subj)))
+
+(optional user_emacs_optional_user_gpg
+	(call gpg_auto_subj_type_transition_pattern (user_emacs.subj user_gpg.subj)))
+
+(optional user_emacsclient_optional_emacsclient
+	(block user_emacsclient
+		(blockinherit emacsclient_subj_blk)
+
+		(call emacsclient_role_pattern (user.role user_subj_type subj))))
+
+(optional user_emacsclient_optional_user_emacs
+		(allow user_emacsclient.subj user_emacs.subj (process (signal)))
+		(call emacs_stream_connect_pattern (user_emacsclient.subj user_emacs.subj)))
+
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)
@@ -134,7 +161,10 @@
 		(call git_home_obj_entry_subj (user.subj))
 		(call git_home_auto_subj_type_transition_pattern (subj user.subj))))
 
-(optional user_git_optional_git_email
+(optional user_git_optional_user_gpg
+	(call gpg_auto_subj_type_transition_pattern (user_git.subj user_gpg.subj)))
+
+(optional user_git_optional_user_git_email
 	(call git_email_auto_subj_type_transition_pattern (user_git.subj user_git_email.subj)))
 
 (optional user_git_email_optional_git_email
@@ -148,8 +178,8 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
-(optional user_git_email_optional_git
-		(call git_auto_subj_type_transition_pattern (user_git_email.subj user_git.subj)))
+(optional user_git_email_optional_user_git
+	(call git_auto_subj_type_transition_pattern (user_git_email.subj user_git.subj)))
 
 (optional user_gpg_optional_gpg
 	(block user_gpg

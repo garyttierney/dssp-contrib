@@ -1,0 +1,56 @@
+(typeattribute emacs_subj_type)
+
+(block emacs
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (emacs_subj_type cmd_file))
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(optional emacs_optional_sduser
+		(blockinherit sd_unit_obj_blk)))
+
+(allow emacs_subj_type self rw_fifo_file_perms)
+(allow emacs_subj_type self create_unix_dgram_socket_perms)
+(allow emacs_subj_type self (unix_stream_socket (listen accept)))
+
+(call emacs_manage_home (emacs_subj_type))
+(call emacs_home_dir_obj_type_transition_home (emacs_subj_type))
+
+(call emacs_manage_tmpfs (emacs_subj_type))
+(call emacs_tmpfs_obj_type_transition_tmpfs (emacs_subj_type))
+
+(call sys_read_net_proc_files (emacs_subj_type))
+
+(call dev_read_urandom (emacs_subj_type))
+(call dev_rw_ptmx (emacs_subj_type))
+
+(call file_read_config_files (emacs_subj_type))
+(call file_read_data (emacs_subj_type))
+
+(call miscfile_read_all_terminfo (emacs_subj_type))
+(call miscfile_read_locale (emacs_subj_type))
+(call miscfile_read_utmp_runtime_files (emacs_subj_type))
+
+(call nss_client_subj_type (emacs_subj_type))
+
+(call usersubj_manage_tmpfs_user_files (emacs_subj_type))
+(call usersubj_manage_tmpfs_user_lnk_files (emacs_subj_type))
+(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (emacs_subj_type))
+(call usersubj_tmpfs_obj_type_transition_tmpfs_user_lnk_files (emacs_subj_type))
+
+(call usersubj_use_term (emacs_subj_type))
+
+(call usersubj_manage_home_cmd_files (emacs_subj_type))
+(call usersubj_manage_home_cmd_lnk_files (emacs_subj_type))
+
+(call usersubj_manage_home_user_dirs (emacs_subj_type))
+(call usersubj_manage_home_user_files (emacs_subj_type))
+(call usersubj_manage_home_user_lnk_files (emacs_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_dirs (emacs_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (emacs_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_lnk_files (emacs_subj_type))
+
+(call usersubj_read_var_spool_user_files (emacs_subj_type))

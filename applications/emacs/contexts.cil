@@ -1,0 +1,10 @@
+(context emacs_cmd (sys.id sys.role emacs.cmd_file (systemlow systemlow)))
+(filecon "/usr/bin/emacs-.*" file emacs_cmd)
+
+(filecon "HOME_DIR/\.emacs" file (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.emacs\.el" file (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.emacs\.d(/.*)?" any (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
+
+(optional emacs_unit_optional_sduser
+	(context emacs_unit (sys.id sys.role emacs.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file emacs_unit))

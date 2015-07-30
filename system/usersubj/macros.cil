@@ -940,6 +940,11 @@
 	(call fs_search_tmpfs (ARG1))
 	(call read_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
+(macro usersubj_manage_tmpfs_user_lnk_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call manage_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+
 (macro usersubj_read_tmpfs_user ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
@@ -1036,6 +1041,14 @@
 	(call file_search_runtime_user (ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file file "*")))
 
+(macro usersubj_tmpfs_obj_type_transition_tmpfs_user_lnk_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file lnk_file "*")))
+
+(macro usersubj_tmpfs_obj_type_transition_tmpfs_user_dirs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file dir "*")))
+
 (macro usersubj_tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 	(call file_search_runtime_user (ARG1))
 	(call obj_type_transition_pattern (ARG1 tmpfs_user.tmpfs_user_file ARG2 ARG3 ARG4)))
@@ -1058,6 +1071,10 @@
 	(call usersubj_search_home_data (ARG1))
 	(call read_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
 
+(macro usersubj_manage_home_cmd_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call manage_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+
 (macro usersubj_exec_home_cmd_files ((type ARG1))
 	(call usersubj_search_home_data (ARG1))
 	(call exec_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
@@ -1069,6 +1086,10 @@
 (macro usersubj_read_home_cmd_lnk_files ((type ARG1))
 	(call usersubj_search_home_data (ARG1))
 	(call read_lnk_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+
+(macro usersubj_manage_home_cmd_lnk_files ((type ARG1))
+	(call usersubj_search_home_data (ARG1))
+	(call manage_lnk_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
 
 (macro usersubj_read_home_cmd ((type ARG1))
 	(call usersubj_search_home_data (ARG1))

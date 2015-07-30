@@ -552,6 +552,33 @@
 
 		(call analyze_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_emacs_optional_emacs
+	(block sysadm_emacs
+		(blockinherit emacs_subj_blk)
+
+		(call emacs_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_emacs_optional_sysadm_git
+	(call git_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_git.subj)))
+
+(optional sysadm_emacs_optional_sysadm_gpg
+	(call gpg_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_gpg.subj)))
+
+(optional sysadm_emacsclient_optional_emacsclient
+	(block sysadm_emacsclient
+		(blockinherit emacsclient_subj_blk)
+
+		(call emacsclient_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_emacsclient_optional_sysadm_emacs
+		(allow sysadm_emacsclient.subj sysadm_emacs.subj (process (signal)))
+		(call emacs_stream_connect_pattern (sysadm_emacsclient.subj sysadm_emacs.subj)))
+
 (optional sysadm_fuse_optional_fuse
 	(block sysadm_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)
@@ -576,7 +603,10 @@
 		(call git_home_obj_entry_subj (sysadm.subj))
 		(call git_home_auto_subj_type_transition_pattern (subj sysadm.subj))))
 
-(optional sysadm_git_optional_git_email
+(optional sysadm_git_optional_sysadm_gpg
+	(call gpg_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_gpg.subj)))
+
+(optional sysadm_git_optional_sysadm_git_email
 	(call git_email_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_git_email.subj)))
 
 (optional sysadm_git_email_optional_git_email
@@ -590,8 +620,8 @@
 
                 (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
-(optional sysadm_git_email_optional_git
-		(call git_auto_subj_type_transition_pattern (sysadm_git_email.subj sysadm_git.subj)))
+(optional sysadm_git_email_optional_sysadm_git
+	(call git_auto_subj_type_transition_pattern (sysadm_git_email.subj sysadm_git.subj)))
 
 (optional sysadm_gpg_optional_gpg
 	(block sysadm_gpg

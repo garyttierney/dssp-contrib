@@ -1,0 +1,30 @@
+(typeattribute sd_quotacheck_adm_subj_type)
+
+(typeattribute sd_quotacheck_obj_type)
+
+(block sd_quotacheck
+	(blockinherit sd_daemon_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sd_quotacheck_obj_type unit_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset sd_quotacheck_obj_type runtime_file)
+
+	(call sd_quotacheck_manage_runtime_files (subj))
+	(call sd_quotacheck_sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_journald_client_subj_type (subj)))
+
+(allow sd_quotacheck_adm_subj_type sd_quotacheck.unit_file (service (stop status disable enable reload start)))
+
+(allow sd_quotacheck_adm_subj_type sd_quotacheck.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (sd_quotacheck_adm_subj_type sd_quotacheck.subj))
+
+(call sd_search_runtime (sd_quotacheck_adm_subj_type))
+
+(allow sd_quotacheck_adm_subj_type sd_quotacheck_obj_type manage_file_perms)
+
+(allow sd_quotacheck_adm_subj_type sd_quotacheck_obj_type relabel_file_perms)

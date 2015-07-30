@@ -16,7 +16,7 @@
 	(call sd_search_var_lib (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file list_dir_perms))
 
-(macro sd_rfkill_var_lib_files ((type ARG1))
+(macro sd_rfkill_read_var_lib_files ((type ARG1))
 	(call sd_search_var_lib (ARG1))
 	(call read_files_pattern (ARG1 sd_rfkill.var_lib_file sd_rfkill.var_lib_file)))
 

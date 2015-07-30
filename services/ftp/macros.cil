@@ -1,0 +1,6 @@
+(macro ftp_tcp_bind_ftp_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 ftp.port (tcp_socket (name_bind))))
+
+(macro ftp_tcp_connect_ftp_port ((type ARG1))
+	(allow ARG1 ftp.port (tcp_socket (name_connect))))

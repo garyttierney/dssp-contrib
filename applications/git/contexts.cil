@@ -1,0 +1,14 @@
+(context git_cmd (sys.id sys.role git.cmd_file (systemlow systemlow)))
+(context git_port (sys.id sys.role git.port (systemlow systemlow)))
+
+(filecon "/usr/bin/git" file git_cmd)
+(filecon "/usr/bin/git-receive-pack" file git_cmd)
+(filecon "/usr/bin/git-upload-archive" file git_cmd)
+(filecon "/usr/bin/git-upload-pack" file git_cmd)
+(filecon "/usr/libexec/git-core(/.*)?" file git_cmd)
+
+(filecon "HOME_DIR/.*/\.git(/.*)?" any (sys.id sys.role git.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.config/git(/.*)?" any (sys.id sys.role git.home_config_file (systemlow systemlow)))
+
+(portcon "tcp" 9418 git_port)
+(portcon "udp" 9418 git_port)

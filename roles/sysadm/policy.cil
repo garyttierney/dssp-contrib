@@ -562,6 +562,20 @@
 	(call fuse_run_fusermount (sysadm.subj sysadm.role))
 	(call fuse_run_ulockmgr (sysadm.subj sysadm.role)))
 
+(optional sysadm_git_optional_git
+	(block sysadm_git
+		(blockinherit git_subj_blk)
+
+		(call git_role_pattern (sysadm.role sysadm_subj_type subj))
+
+                (call cmd_auto_subj_type_transition (subj sysadm.subj))
+                (call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+                (call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call git_home_obj_entry_subj (sysadm.subj))
+		(call git_home_auto_subj_type_transition_pattern (subj sysadm.subj))))
+
 (optional sysadm_gpg_optional_gpg
 	(block sysadm_gpg
 		(blockinherit gpg_subj_blk)

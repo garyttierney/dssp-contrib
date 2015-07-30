@@ -22,6 +22,10 @@
 	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))
 
+(optional sysadm_git_home_optional_git
+	(filecon "/root/.*/\.git(/.*)?" any (sysadm.id sysadm.role git.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.config/git(/.*)?" any (sysadm.id sysadm.role git.home_config_file (systemlow systemlow))))
+
 (optional sysadm_gpg_home_optional_gpg
 	(filecon "/root/\.gnupg(/.*)?" any (sysadm.id sysadm.role gpg.home_user_file (systemlow systemlow))))
 

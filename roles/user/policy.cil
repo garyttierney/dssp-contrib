@@ -120,6 +120,20 @@
 	(call fuse_run_fusermount (user.subj user.role))
 	(call fuse_run_ulockmgr (user.subj user.role)))
 
+(optional user_git_optional_git
+	(block user_git
+		(blockinherit git_subj_blk)
+
+		(call git_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))
+
+		(call git_home_obj_entry_subj (user.subj))
+		(call git_home_auto_subj_type_transition_pattern (subj user.subj))))
+
 (optional user_gpg_optional_gpg
 	(block user_gpg
 		(blockinherit gpg_subj_blk)

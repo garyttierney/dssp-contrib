@@ -481,6 +481,13 @@
 	(optional sysadm_optional_timedatex
 		(call timedatex_adm (subj role)))
 
+	(optional sysadm_optional_tor
+		(call tor_manage_home (subj))
+		(call tor_relabel_home (subj))
+		(call tor_home_dir_obj_type_transition_home (subj))
+		(call tor_run (sysadm_subj_type role))
+		(call tor_adm (subj role)))
+
 	(optional sysadm_optional_tunctl
 		(call tunctl_run (subj role)))
 

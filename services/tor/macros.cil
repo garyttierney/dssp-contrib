@@ -1,0 +1,193 @@
+(macro tor_exec ((type ARG1))
+	(call can_exec (ARG1 tor.cmd_file)))
+
+(macro tor_auto_subj_type_transition ((type ARG1))
+	(call tor_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 tor.cmd_file tor.subj)))
+
+(macro tor_send_signal ((type ARG1))
+	(allow ARG1 tor.subj (process (signal))))
+
+(macro tor_run ((type ARG1)(role ARG2))
+	(call tor_auto_subj_type_transition (ARG1))
+	(roleattributeset tor_role ARG2))
+
+(macro tor_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 tor.config_file search_dir_perms))
+
+(macro tor_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 tor.config_file list_dir_perms))
+
+(macro tor_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 tor.config_file tor.config_file)))
+
+(macro tor_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 tor.config_file tor.config_file)))
+
+(macro tor_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 tor.config_file read_file_perms)
+	(allow ARG1 tor.config_file list_dir_perms)
+	(allow ARG1 tor.config_file read_lnk_file_perms))
+
+(macro tor_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 tor.config_file manage_file_perms)
+	(allow ARG1 tor.config_file manage_dir_perms)
+	(allow ARG1 tor.config_file manage_lnk_file_perms))
+
+(macro tor_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 tor.config_file relabel_file_perms)
+	(allow ARG1 tor.config_file relabel_dir_perms)
+	(allow ARG1 tor.config_file relabel_lnk_file_perms))
+
+(macro tor_search_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 tor.var_log_file search_dir_perms))
+
+(macro tor_list_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 tor.var_log_file list_dir_perms))
+
+(macro tor_read_var_log_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_files_pattern (ARG1 tor.var_log_file tor.var_log_file)))
+
+(macro tor_read_var_log_lnk_files ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(call read_lnk_files_pattern (ARG1 tor.var_log_file tor.var_log_file)))
+
+(macro tor_read_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 tor.var_log_file read_file_perms)
+	(allow ARG1 tor.var_log_file list_dir_perms)
+	(allow ARG1 tor.var_log_file read_lnk_file_perms))
+
+(macro tor_manage_var_log ((type ARG1))
+	(call file_rw_var_log_dirs (ARG1))
+	(allow ARG1 tor.var_log_file manage_file_perms)
+	(allow ARG1 tor.var_log_file manage_dir_perms)
+	(allow ARG1 tor.var_log_file manage_lnk_file_perms))
+
+(macro tor_relabel_var_log ((type ARG1))
+	(call file_search_var_log (ARG1))
+	(allow ARG1 tor.var_log_file relabel_file_perms)
+	(allow ARG1 tor.var_log_file relabel_dir_perms)
+	(allow ARG1 tor.var_log_file relabel_lnk_file_perms))
+
+(macro tor_var_log_obj_type_transition_var_log ((type ARG1))
+	(call file_var_log_obj_type_transition (ARG1 tor.var_log_file dir "tor")))
+
+(macro tor_search_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 tor.var_lib_file search_dir_perms))
+
+(macro tor_list_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 tor.var_lib_file list_dir_perms))
+
+(macro tor_read_var_lib_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_files_pattern (ARG1 tor.var_lib_file tor.var_lib_file)))
+
+(macro tor_read_var_lib_lnk_files ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(call read_lnk_files_pattern (ARG1 tor.var_lib_file tor.var_lib_file)))
+
+(macro tor_read_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 tor.var_lib_file read_file_perms)
+	(allow ARG1 tor.var_lib_file list_dir_perms)
+	(allow ARG1 tor.var_lib_file read_lnk_file_perms))
+
+(macro tor_manage_var_lib ((type ARG1))
+	(call file_rw_var_lib_dirs (ARG1))
+	(allow ARG1 tor.var_lib_file manage_file_perms)
+	(allow ARG1 tor.var_lib_file manage_dir_perms)
+	(allow ARG1 tor.var_lib_file manage_lnk_file_perms))
+
+(macro tor_relabel_var_lib ((type ARG1))
+	(call file_search_var_lib (ARG1))
+	(allow ARG1 tor.var_lib_file relabel_file_perms)
+	(allow ARG1 tor.var_lib_file relabel_dir_perms)
+	(allow ARG1 tor.var_lib_file relabel_lnk_file_perms))
+
+(macro tor_var_lib_obj_type_transition_var_lib ((type ARG1))
+	(call file_var_lib_obj_type_transition (ARG1 tor.var_lib_file dir "tor")))
+
+(macro tor_search_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 tor.home_user_file search_dir_perms))
+
+(macro tor_list_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 tor.home_user_file list_dir_perms))
+
+(macro tor_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
+
+(macro tor_manage_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call manage_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
+
+(macro tor_read_home_lnk_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_lnk_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
+
+(macro tor_read_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 tor.home_user_file read_file_perms)
+	(allow ARG1 tor.home_user_file list_dir_perms)
+	(allow ARG1 tor.home_user_file read_lnk_file_perms))
+
+(macro tor_manage_home ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 tor.home_user_file manage_file_perms)
+	(allow ARG1 tor.home_user_file manage_dir_perms)
+	(allow ARG1 tor.home_user_file manage_lnk_file_perms))
+
+(macro tor_relabel_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 tor.home_user_file relabel_file_perms)
+	(allow ARG1 tor.home_user_file relabel_dir_perms)
+	(allow ARG1 tor.home_user_file relabel_lnk_file_perms))
+
+(macro tor_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 tor.home_user_file dir ".tor")))
+
+(macro tor_tcp_bind_tor_control_port ((type ARG1))
+	(allow ARG1 tor_control.port (tcp_socket (name_bind))))
+
+(macro tor_tcp_connect_tor_control_port ((type ARG1))
+	(allow ARG1 tor_control.port (tcp_socket (name_connect))))
+
+(macro tor_tcp_bind_tor_trans_port ((type ARG1))
+	(allow ARG1 tor_trans.port (tcp_socket (name_bind))))
+
+(macro tor_tcp_connect_tor_trans_port ((type ARG1))
+	(allow ARG1 tor_trans.port (tcp_socket (name_connect))))
+
+(macro tor_tcp_bind_tor_or_port ((type ARG1))
+	(allow ARG1 tor_or.port (tcp_socket (name_bind))))
+
+(macro tor_tcp_connect_tor_or_port ((type ARG1))
+	(allow ARG1 tor_or.port (tcp_socket (name_connect))))
+
+(macro tor_tcp_bind_tor_dir_port ((type ARG1))
+	(allow ARG1 tor_dir.port (tcp_socket (name_bind))))
+
+(macro tor_tcp_connect_tor_dir_port ((type ARG1))
+	(allow ARG1 tor_dir.port (tcp_socket (name_connect))))
+
+(macro tor_adm ((type ARG1)(role ARG2))
+	(typeattributeset tor_adm_subj_type ARG1)
+	(optional tor_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional tor_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

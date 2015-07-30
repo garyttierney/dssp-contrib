@@ -94,6 +94,12 @@
 		(call sysadm_send_signal (subj))
 		(call sysadm_userrole (id)))
 
+	(optional wheel_optional_tor
+		(call tor_manage_home (subj))
+		(call tor_relabel_home (subj))
+		(call tor_home_dir_obj_type_transition_home (subj))
+		(call tor_run (wheel_subj_type role)))
+
 	(optional wheel_optional_usbutil
 		(call usbutil_run (wheel_subj_type role)))
 

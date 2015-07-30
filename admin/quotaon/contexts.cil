@@ -1,0 +1,6 @@
+(context quotaon_cmd (sys.id sys.role quotaon.cmd_file (systemlow systemlow)))
+(filecon "/usr/sbin/quotaon" file quotaon_cmd)
+
+(optional quotaon_unit_optional_sd
+	(context quotaon_unit (sys.id sys.role quotaon.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*quotaon.*" file quotaon_unit))

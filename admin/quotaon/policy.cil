@@ -1,0 +1,39 @@
+(roleattribute quotaon_role)
+
+(typeattribute quotaon_adm_subj_type)
+
+(block quotaon
+	(blockinherit app_blk)
+
+	(roleattributeset quotaon_role sys.role)
+
+	(roletype quotaon_role subj)
+
+	(allow subj self (capability (sys_admin)))
+
+	(call sys_read_fs_sysctl_files (subj))
+
+	(call fs_get_fs_quotas (subj))
+	(call fs_getattr_fs (subj))
+	(call fs_mod_fs_quotas (subj))
+	(call fs_read_devtmpfs_lnk_files (subj))
+
+	(call storage_getattr_all (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call quotacheck_read_db_files (subj))
+	(call quotacheck_enable_db_files (subj))
+
+	(optional quotaon_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(allow quotaon_adm_subj_type unit_file manage_file_perms)
+		(allow quotaon_adm_subj_type unit_file relabel_file_perms)
+
+		(allow quotaon_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow quotaon_adm_subj_type quotaon.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (quotaon_adm_subj_type quotaon.subj))

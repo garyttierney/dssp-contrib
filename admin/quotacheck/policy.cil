@@ -1,0 +1,31 @@
+(roleattribute quotacheck_role)
+
+(block quotacheck
+	(blockinherit app_blk)
+
+	(roletype quotacheck_role subj)
+
+	(blockinherit file_obj_blk)
+
+	(allow subj self (capability (dac_override)))
+
+	(call quotacheck_manage_db_files (subj))
+	(call quotacheck_mountpoint_obj_type_transition_file (subj))
+
+	(call file_read_all_except (subj))
+
+	(call fs_get_fs_quotas (subj))
+	(call fs_getattr_fs (subj))
+
+	(call storage_getattr_all (subj))
+
+	(call miscfile_read_shadow (subj))
+
+	(call seutil_read_policy_config (subj))
+
+	(optional quotacheck_optional_auditd
+		(call auditd_read_config (subj))
+		(call auditd_read_var_log (subj)))
+
+	(optional quotacheck_optional_audispd
+		(call audispd_read_config (subj))))

@@ -1,0 +1,31 @@
+(macro quotacheck_exec ((type ARG1))
+	(call can_exec (ARG1 quotacheck.cmd_file)))
+
+(macro quotacheck_auto_subj_type_transition ((type ARG1))
+	(call quotacheck_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 quotacheck.cmd_file quotacheck.subj)))
+
+(macro quotacheck_send_signal ((type ARG1))
+	(allow ARG1 quotacheck.subj (process (signal))))
+
+(macro quotacheck_run ((type ARG1)(role ARG2))
+	(call quotacheck_auto_subj_type_transition (ARG1))
+	(roleattributeset quotacheck_role ARG2))
+
+(macro quotacheck_read_db_files ((type ARG1))
+	(call sys_search_mountpoints (ARG1))
+	(allow ARG1 quotacheck.file read_file_perms))
+
+(macro quotacheck_enable_db_files ((type ARG1))
+	(call sys_search_mountpoints (ARG1))
+	(allow ARG1 quotacheck.file (file (quotaon))))
+
+(macro quotacheck_manage_db_files ((type ARG1))
+	(call sys_rw_mountpoint_dirs (ARG1))
+	(allow ARG1 quotacheck.file manage_file_perms))
+
+(macro quotacheck_mountpoint_obj_type_transition_file ((type ARG1))
+        (call sys_mountpoint_obj_type_transition (ARG1 quotacheck.file file "aquota.user"))
+        (call sys_mountpoint_obj_type_transition (ARG1 quotacheck.file file "aquota.user.new"))
+        (call sys_mountpoint_obj_type_transition (ARG1 quotacheck.file file "aquota.group"))
+        (call sys_mountpoint_obj_type_transition (ARG1 quotacheck.file file "aquota.group.new")))

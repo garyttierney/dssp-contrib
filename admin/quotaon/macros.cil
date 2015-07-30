@@ -1,0 +1,20 @@
+(macro quotaon_exec ((type ARG1))
+	(call can_exec (ARG1 quotaon.cmd_file)))
+
+(macro quotaon_auto_subj_type_transition ((type ARG1))
+	(call quotaon_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 quotaon.cmd_file quotaon.subj)))
+
+(macro quotaon_send_signal ((type ARG1))
+	(allow ARG1 quotaon.subj (process (signal))))
+
+(macro quotaon_run ((type ARG1)(role ARG2))
+	(call quotaon_auto_subj_type_transition (ARG1))
+	(roleattributeset quotaon_role ARG2))
+
+(macro quotaon_adm ((type ARG1)(role ARG2))
+	(typeattributeset quotaon_adm_subj_type ARG1)
+	(optional quotaon_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional quotaon_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

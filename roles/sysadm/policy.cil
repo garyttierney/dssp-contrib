@@ -315,6 +315,14 @@
 	(optional sysadm_optional_qemu_guest_agent
 		(call qemu_guest_agent_adm (subj role)))
 
+	(optional sysadm_optional_quotaon
+		(call quotaon_adm (subj role))
+		(call quotaon_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_quotacheck
+		(call quotacheck_run (sysadm_subj_type role))
+		(call quotacheck_manage_db_files (subj)))
+
 	(optional sysadm_optional_rfkill
 		(call rfkill_run (sysadm_subj_type role)))
 

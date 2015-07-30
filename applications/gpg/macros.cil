@@ -31,7 +31,7 @@
 
 (macro gpg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
-        (call auto_subj_type_transition_pattern (ARG1 gpg.cmd_file ARG2)))
+	(call auto_subj_type_transition_pattern (ARG1 gpg.cmd_file ARG2)))
 
 (macro gpg_exec_gpg_helper ((type ARG1))
 	(call can_exec (ARG1 gpg_helper.cmd_file)))

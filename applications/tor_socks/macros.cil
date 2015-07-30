@@ -33,7 +33,7 @@
 
 (macro tor_socks_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
-        (call auto_subj_type_transition_pattern (ARG1 tor_socks.cmd_file ARG2)))
+	(call auto_subj_type_transition_pattern (ARG1 tor_socks.cmd_file ARG2)))
 
 (macro tor_socks_tcp_bind_tor_socks_port ((type ARG1))
 	(allow ARG1 tor_socks.port (tcp_socket (name_bind))))

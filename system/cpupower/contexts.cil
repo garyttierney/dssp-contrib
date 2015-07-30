@@ -1,0 +1,14 @@
+(context cpupower_cmd (sys.id sys.role cpupower.cmd_file (systemlow systemlow)))
+(context cpupower_config (sys.id sys.role cpupower.config_file (systemlow systemlow)))
+
+(filecon "/etc/sysconfig/cpupower" file cpupower_config)
+(filecon "/usr/bin/centrino-decode" file cpupower_cmd)
+(filecon "/usr/bin/cpupower" file cpupower_cmd)
+(filecon "/usr/bin/powernow-k8-decode" file cpupower_cmd)
+(filecon "/usr/bin/tmon" file cpupower_cmd)
+(filecon "/usr/bin/turbostat" file cpupower_cmd)
+(filecon "/usr/bin/x86_energy_perf_policy" file cpupower_cmd)
+
+(optional cpupower_unit_optional_sd
+	(context cpupower_unit (sys.id sys.role cpupower.unit_file (systemlow systemlow)))
+	(filecon "/usr/lib/systemd/system/[^/]*cpupower.*" file cpupower_unit))

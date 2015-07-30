@@ -1,0 +1,32 @@
+(macro cpupower_exec ((type ARG1))
+	(call can_exec (ARG1 cpupower.cmd_file)))
+
+(macro cpupower_auto_subj_type_transition ((type ARG1))
+	(call cpupower_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 cpupower.cmd_file cpupower.subj)))
+
+(macro cpupower_send_signal ((type ARG1))
+	(allow ARG1 cpupower.subj (process (signal))))
+
+(macro cpupower_run ((type ARG1)(role ARG2))
+	(call cpupower_auto_subj_type_transition (ARG1))
+	(roleattributeset cpupower_role ARG2))
+
+(macro cpupower_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 cpupower.config_file read_file_perms))
+
+(macro cpupower_manage_config_files ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 cpupower.config_file manage_file_perms))
+
+(macro cpupower_relabel_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 cpupower.config_file relabel_file_perms))
+
+(macro cpupower_adm ((type ARG1)(role ARG2))
+	(typeattributeset cpupower_adm_subj_type ARG1)
+	(optional cpupower_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional cpupower_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

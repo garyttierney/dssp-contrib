@@ -1,0 +1,44 @@
+(roleattribute cpupower_role)
+
+(typeattribute cpupower_adm_subj_type)
+
+(typeattribute cpupower_obj_type)
+
+(block cpupower
+	(blockinherit app_blk)
+
+	(roleattributeset cpupower_role sys.role)
+
+	(roletype cpupower_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset cpupower_obj_type config_file)
+
+	(allow subj self (capability (sys_rawio)))
+
+	(call cpupower_read_config_files (subj))
+
+	(call dev_rw_cpu (subj))
+
+	(call fs_list_sysfs (subj))
+	(call fs_rw_sysfs_files (subj))
+	(call fs_read_sysfs_lnk_files (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(optional cpupower_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset cpupower_obj_type unit_file)
+
+		(allow cpupower_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow cpupower_adm_subj_type cpupower.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (cpupower_adm_subj_type cpupower.subj))
+
+(allow cpupower_adm_subj_type cpupower_obj_type manage_file_perms)
+
+(allow cpupower_adm_subj_type cpupower_obj_type relabel_file_perms)

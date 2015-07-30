@@ -83,6 +83,9 @@
 		(call bootloader_manage_var_log_files (subj))
 		(call bootloader_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_bridgeutil
+		(call bridgeutil_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_chkpwd
 		(call chkpwd_run (sysadm_subj_type role)))
 
@@ -92,6 +95,10 @@
 
 	(optional sysadm_optional_coredumpctl
 		(call coredumpctl_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_cpupower
+		(call cpupower_adm (subj role))
+		(call cpupower_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_curl
 		(call curl_run (sysadm_subj_type role))

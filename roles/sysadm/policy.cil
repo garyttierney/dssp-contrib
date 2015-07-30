@@ -440,6 +440,9 @@
 	(optional sysadm_optional_wpa
 		(call wpa_adm (subj role)))
 
+	(optional sysadm_optional_wpacli
+		(call wpacli_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_xauth
 		(call xauth_run (sysadm_subj_type role))
 		(call xauth_manage_home_files (subj))

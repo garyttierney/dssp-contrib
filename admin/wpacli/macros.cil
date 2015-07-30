@@ -1,0 +1,13 @@
+(macro wpacli_exec ((type ARG1))
+	(call can_exec (ARG1 wpacli.cmd_file)))
+
+(macro wpacli_auto_subj_type_transition ((type ARG1))
+	(call wpacli_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 wpacli.cmd_file wpacli.subj)))
+
+(macro wpacli_send_signal ((type ARG1))
+	(allow ARG1 wpacli.subj (process (signal))))
+
+(macro wpacli_run ((type ARG1)(role ARG2))
+	(call wpacli_auto_subj_type_transition (ARG1))
+	(roleattributeset wpacli_role ARG2))

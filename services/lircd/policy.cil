@@ -1,0 +1,72 @@
+(typeattribute lircd_adm_subj_type)
+(typeattribute lircd_subj_type)
+
+(typeattribute lircd_obj_type)
+
+(block lircd
+	(blockinherit subj_common_blk)
+
+	(typeattributeset lircd_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset lircd_obj_type config_file)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(typeattributeset lircd_obj_type runtime_file)
+
+	(call lircd_read_config (subj))
+
+	(call lircd_manage_runtime (subj))
+	(call lircd_runtime_obj_type_transition_runtime (subj))
+
+	(optional lircd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset lircd_obj_type unit_file)
+
+		(allow lircd_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(block lircmd
+	(blockinherit subj_common_blk)
+
+	(typeattributeset lircd_subj_type subj)
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(optional lircmd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset lircd_obj_type unit_file)
+
+		(allow lircd_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+
+(allow lircd_adm_subj_type lircd_subj_type (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (lircd_adm_subj_type lircd_subj_type))
+
+(call file_search_runtime (lircd_adm_subj_type))
+
+(allow lircd_adm_subj_type lircd_obj_type manage_file_perms)
+(allow lircd_adm_subj_type lircd_obj_type manage_dir_perms)
+(allow lircd_adm_subj_type lircd_obj_type manage_lnk_file_perms)
+(allow lircd_adm_subj_type lircd_obj_type manage_sock_file_perms)
+
+(allow lircd_adm_subj_type lircd_obj_type relabel_file_perms)
+(allow lircd_adm_subj_type lircd_obj_type relabel_dir_perms)
+(allow lircd_adm_subj_type lircd_obj_type relabel_lnk_file_perms)
+(allow lircd_adm_subj_type lircd_obj_type relabel_sock_file_perms)

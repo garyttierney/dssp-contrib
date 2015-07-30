@@ -25,6 +25,9 @@
 	(optional user_optional_journalctl
 		(call journalctl_exec (subj)))
 
+	(optional user_optional_lirc
+		(call lirc_run_lirc (user_subj_type role)))
+
 	(optional user_optional_mysysstat
 		(call mysysstat_run (user_subj_type role)))
 

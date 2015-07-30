@@ -1,0 +1,104 @@
+(macro lircd_exec_lircd ((type ARG1))
+	(call can_exec (ARG1 lircd.cmd_file)))
+
+(macro lircd_auto_subj_type_transition_lircd ((type ARG1))
+	(call lircd_send_signal_lircd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 lircd.cmd_file lircd.subj)))
+
+(macro lircd_send_signal_lircd ((type ARG1))
+	(allow ARG1 lircd.subj (process (signal))))
+
+(macro lircd_exec_lircmd ((type ARG1))
+	(call can_exec (ARG1 lircmd.cmd_file)))
+
+(macro lircd_auto_subj_type_transition_lircmd ((type ARG1))
+	(call lircd_send_signal_lircmd (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 lircmd.cmd_file lircmd.subj)))
+
+(macro lircd_send_signal_lircmd ((type ARG1))
+	(allow ARG1 lircmd.subj (process (signal))))
+
+(macro lircd_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lircd.config_file search_dir_perms))
+
+(macro lircd_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lircd.config_file list_dir_perms))
+
+(macro lircd_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 lircd.config_file lircd.config_file)))
+
+(macro lircd_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 lircd.config_file lircd.config_file)))
+
+(macro lircd_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lircd.config_file read_file_perms)
+	(allow ARG1 lircd.config_file list_dir_perms)
+	(allow ARG1 lircd.config_file read_lnk_file_perms))
+
+(macro lircd_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 lircd.config_file manage_file_perms)
+	(allow ARG1 lircd.config_file manage_dir_perms)
+	(allow ARG1 lircd.config_file manage_lnk_file_perms))
+
+(macro lircd_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 lircd.config_file relabel_file_perms)
+	(allow ARG1 lircd.config_file relabel_dir_perms)
+	(allow ARG1 lircd.config_file relabel_lnk_file_perms))
+
+(macro lircd_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lircd.runtime_file search_dir_perms))
+
+(macro lircd_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lircd.runtime_file list_dir_perms))
+
+(macro lircd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 lircd.runtime_file lircd.runtime_file)))
+
+(macro lircd_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 lircd.runtime_file lircd.runtime_file)))
+
+(macro lircd_read_runtime_sock_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_sock_files_pattern (ARG1 lircd.runtime_file lircd.runtime_file)))
+
+(macro lircd_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lircd.runtime_file read_file_perms)
+	(allow ARG1 lircd.runtime_file list_dir_perms)
+	(allow ARG1 lircd.runtime_file read_lnk_file_perms)
+	(allow ARG1 lircd.runtime_file read_sock_file_perms))
+
+(macro lircd_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 lircd.runtime_file manage_file_perms)
+	(allow ARG1 lircd.runtime_file manage_dir_perms)
+	(allow ARG1 lircd.runtime_file manage_lnk_file_perms)
+	(allow ARG1 lircd.runtime_file manage_sock_file_perms))
+
+(macro lircd_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 lircd.runtime_file relabel_file_perms)
+	(allow ARG1 lircd.runtime_file relabel_dir_perms)
+	(allow ARG1 lircd.runtime_file relabel_lnk_file_perms)
+	(allow ARG1 lircd.runtime_file relabel_sock_file_perms))
+
+(macro lircd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 lircd.runtime_file dir "lirc")))
+
+(macro lircd_adm ((type ARG1)(role ARG2))
+	(typeattributeset lircd_adm_subj_type ARG1)
+	(optional lircd_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional lircd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

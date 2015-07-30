@@ -7,6 +7,9 @@
 (filecon "/usr/bin/git-upload-pack" file git_cmd)
 (filecon "/usr/libexec/git-core(/.*)?" file git_cmd)
 
+(filecon "/usr/bin/git-shell" file shell)
+(filecon "/usr/libexec/git-core/git-shell" file shell)
+
 (filecon "HOME_DIR/.*/\.git(/.*)?" any (sys.id sys.role git.home_user_file (systemlow systemlow)))
 (filecon "HOME_DIR/\.config/git(/.*)?" any (sys.id sys.role git.home_config_file (systemlow systemlow)))
 

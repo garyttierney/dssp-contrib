@@ -1,0 +1,43 @@
+(block git_email_subj_blk
+	(blockabstract git_email_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset git_email_subj_type subj))
+
+(macro git_email_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset git_email_subj_type ARG1))
+
+(macro git_email_exec ((type ARG1))
+	(call can_exec (ARG1 git_email.cmd_file)))
+
+(macro git_email_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 git_email.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call git_email_manage_home_files (ARG2))
+	(call git_email_relabel_home_files (ARG2)))
+
+(macro git_email_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(call auto_subj_type_transition_pattern (ARG1 git_email.cmd_file ARG2)))
+
+(macro git_email_read_home_files ((type ARG1))
+	(call git_search_home (ARG1))
+	(allow ARG1 git_email.home_user_file read_file_perms))
+
+(macro git_email_manage_home_files ((type ARG1))
+	(call git_rw_home_dirs (ARG1))
+	(allow ARG1 git_email.home_user_file manage_file_perms))
+
+(macro git_email_relabel_home_files ((type ARG1))
+	(call git_search_home (ARG1))
+	(allow ARG1 git_email.home_user_file relabel_file_perms))
+
+(macro git_email_git_home_obj_type_transition_home ((type ARG1))
+	(call git_home_obj_type_transition (ARG1 git_email.home_user_file file "*")))

@@ -991,3 +991,17 @@
 
 (optional sysadm_xinit_optional_sysadm_xbindkeys
 	(call xbindkeys_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_xbindkeys.subj)))
+
+(optional sysadm_xterm_optional_xterm
+	(block sysadm_xterm
+		(blockinherit xterm_subj_blk)
+
+		(call xterm_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_xterm_optional_sysadm_screen
+	(call screen_auto_subj_type_transition_pattern (sysadm_xterm.subj sysadm_screen.subj)))

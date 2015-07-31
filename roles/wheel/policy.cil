@@ -550,3 +550,17 @@
 
 (optional wheel_xinit_optional_wheel_xbindkeys
 	(call xbindkeys_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_xbindkeys.subj)))
+
+(optional wheel_xterm_optional_xterm
+	(block wheel_xterm
+		(blockinherit xterm_subj_blk)
+
+		(call xterm_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_xterm_optional_wheel_screen
+	(call screen_auto_subj_type_transition_pattern (wheel_xterm.subj wheel_screen.subj)))

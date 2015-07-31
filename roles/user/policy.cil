@@ -363,3 +363,20 @@
 
 (optional user_xinit_optional_user_rp
 	(call rp_auto_subj_type_transition_pattern (user_xinit.subj user_rp.subj)))
+
+(optional user_xinit_optional_user_xbindkeys
+	(call xbindkeys_auto_subj_type_transition_pattern (user_xinit.subj user_xbindkeys.subj)))
+
+(optional user_xterm_optional_xterm
+	(block user_xterm
+		(blockinherit xterm_subj_blk)
+
+		(call xterm_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_xterm_optional_user_screen
+	(call screen_auto_subj_type_transition_pattern (user_xterm.subj user_screen.subj)))

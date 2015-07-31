@@ -46,6 +46,7 @@
 (allow journalctl_client_subj_type self (process (setrlimit)))
 (allow journalctl_client_subj_type self rw_fifo_file_perms)
 
+(call sys_read_crypto_sysctl_files (journalctl_client_subj_type))
 (call sys_read_kernel_sysctl_files (journalctl_client_subj_type))
 
 (call cmd_exec_cmd (journalctl_client_subj_type))

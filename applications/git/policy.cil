@@ -26,6 +26,8 @@
 (call git_exec (git_subj_type))
 (call git_tcp_connect_git_port (git_subj_type))
 
+(call sys_read_cpu_sysfs_files (git_subj_type))
+
 (call dev_read_urandom (git_subj_type))
 
 (call file_list_var_tmp (git_subj_type))

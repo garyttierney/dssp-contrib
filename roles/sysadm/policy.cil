@@ -608,6 +608,9 @@
 (optional sysadm_emacs_optional_sysadm_gpg
 	(call gpg_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_gpg.subj)))
 
+(optional sysadm_emacs_optional_sysadm_ssh_client
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_emacs.subj sysadm_ssh_client.subj)))
+
 (optional sysadm_emacsclient_optional_emacsclient
 	(block sysadm_emacsclient
 		(blockinherit emacsclient_subj_blk)

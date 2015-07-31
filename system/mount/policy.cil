@@ -16,6 +16,7 @@
 	(call mount_manage_runtime (subj))
 	(call mount_runtime_obj_type_transition_runtime (subj "*"))
 
+	(call sys_dontaudit_audit_access_mountpoint_dirs (subj))
 	(call sys_setattr_mountpoint_dirs (subj))
 	(call sys_list_mountpoints (subj))
 	(call sys_mounton_mountpoint_dirs (subj))

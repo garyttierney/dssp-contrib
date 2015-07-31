@@ -23,7 +23,7 @@
 	(allow subj self (process (setrlimit)))
 	(allow subj self create_socket_perms)
 	(allow subj self create_udp_socket_perms)
-	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 
 	(call powertop_manage_var_cache (subj))
@@ -32,10 +32,12 @@
 	(call powertop_manage_tmpfs_files (subj))
 	(call powertop_tmpfs_obj_type_transition_tmpfs (subj))
 
+	(call sys_list_cpu_sysfs (subj))
+	(call sys_load_kernel_module_subj_type (subj))
+	(call sys_rw_cpu_sysfs_files (subj))
 	(call sys_read_net_proc_files (subj))
 	(call sys_read_kallsyms_proc_files (subj))
 	(call sys_request_load_module (subj))
-	(call sys_load_kernel_module_subj_type (subj))
 	(call sys_rw_fs_sysctl_files (subj))
 	(call sys_rw_irq_sysctl_files (subj))
 	(call sys_rw_kernel_sysctl_files (subj))
@@ -53,12 +55,12 @@
 	(call fs_read_debugfs (subj))
 	(call fs_read_sysfs_lnk_files (subj))
 	(call fs_read_tracefs (subj))
-	(call fs_rw_sysfs_files (subj))
 
 	(call kmod_auto_subj_type_transition (subj))
 
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_hwdata (subj))
+	(call miscfile_read_locale (subj))
 
 	(call nss_client_subj_type (subj))
 

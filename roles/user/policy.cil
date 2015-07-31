@@ -156,6 +156,9 @@
 (optional user_emacs_optional_user_gpg
 	(call gpg_auto_subj_type_transition_pattern (user_emacs.subj user_gpg.subj)))
 
+(optional user_emacs_optional_user_ssh_client
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_emacs.subj user_ssh_client.subj)))
+
 (optional user_emacsclient_optional_emacsclient
 	(block user_emacsclient
 		(blockinherit emacsclient_subj_blk)

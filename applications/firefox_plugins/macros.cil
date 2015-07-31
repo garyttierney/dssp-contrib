@@ -1,0 +1,54 @@
+(block firefox_plugins_subj_blk
+	(blockabstract firefox_plugins_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset firefox_plugins_subj_type subj))
+
+(macro firefox_plugins_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset firefox_plugins_subj_type ARG1))
+
+(macro firefox_plugins_exec ((type ARG1))
+	(call can_exec (ARG1 firefox_plugins.cmd_file)))
+
+(macro firefox_plugins_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 firefox_plugins.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call firefox_plugins_manage_tmpfs_files (ARG2))
+	(call firefox_plugins_relabel_tmpfs_files (ARG2)))
+
+(macro firefox_plugins_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 firefox_plugins.cmd_file ARG2)))
+
+(macro firefox_plugins_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 firefox_plugins.tmpfs_user_file read_file_perms))
+
+(macro firefox_plugins_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 firefox_plugins.tmpfs_user_file manage_file_perms))
+
+(macro firefox_plugins_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 firefox_plugins.tmpfs_user_file relabel_file_perms))
+
+(macro firefox_plugins_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 firefox_plugins.tmpfs_user_file file "*")))
+
+(macro firefox_plugins_use_fd_all_subj ((type ARG1))
+	(allow ARG1 firefox_plugins_subj_type (fd (use))))
+
+(macro firefox_plugins_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call firefox_plugins_use_fd_all_subj (ARG1))
+	(allow ARG1 firefox_plugins_subj_type rw_inherited_unix_stream_socket_perms))

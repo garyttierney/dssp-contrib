@@ -563,6 +563,10 @@
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))
 
+(macro usersubj_manage_home_data_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call manage_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))
+
 (macro usersubj_read_home_data_lnk_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))

@@ -24,12 +24,12 @@
 	(call firefox_manage_home (ARG2))
 	(call firefox_relabel_home (ARG2))
 
-	(call firefox_home_obj_type_transition_home (ARG2))
+	(call firefox_home_dir_obj_type_transition_home (ARG2))
 
-	(call firefox_manage_cache_home (ARG2))
-	(call firefox_relabel_cache_home (ARG2))
+	(call firefox_manage_home_cache (ARG2))
+	(call firefox_relabel_home_cache (ARG2))
 
-	(call firefox_cache_home_obj_type_transition_cache_home (ARG2))
+	(call firefox_home_cache_obj_type_transition_home_cache (ARG2))
 
 	(call firefox_manage_tmpfs_files (ARG2))
 	(call firefox_relabel_tmpfs_files (ARG2)))
@@ -129,3 +129,10 @@
 
 (macro firefox_tmpfs_obj_type_transition_tmpfs ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 firefox.tmpfs_user_file file "*")))
+
+(macro firefox_use_fd_all_subj ((type ARG1))
+	(allow ARG1 firefox_subj_type (fd (use))))
+
+(macro firefox_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call firefox_use_fd_all_subj (ARG1))
+	(allow ARG1 firefox_subj_type rw_inherited_unix_stream_socket_perms))

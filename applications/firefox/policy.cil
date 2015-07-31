@@ -1,7 +1,5 @@
 (boolean firefox_use_webcam true)
 
-(roleattribute firefox_role)
-
 (typeattribute firefox_subj_type)
 
 (block firefox
@@ -57,7 +55,7 @@
 
 (call subj_execmem_uncond_type (firefox_subj_type))
 
-(call firefox_plugins_rw_inherited_stream_sockets_all_subj (firefox_subj_type))
+(call firefox_plugins_rw_inherited_unix_stream_sockets_all_subj (firefox_subj_type))
 
 (call http_tcp_connect_http_port (firefox_subj_type))
 
@@ -68,21 +66,21 @@
 
 (call udev_client_subj_type (firefox_subj_type))
 
-(call usersubj_home_data_files (firefox_subj_type))
+(call usersubj_manage_home_data_files (firefox_subj_type))
 (call usersubj_create_home_data_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_data (firefox_subj_type))
 
-(call usersubj_manage_user_home_files (firefox_subj_type))
-(call usersubj_manage_user_home_dirs (firefox_subj_type))
+(call usersubj_manage_home_user_files (firefox_subj_type))
+(call usersubj_manage_home_user_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_files (firefox_subj_type))
 
 (call usersubj_create_home_cache_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_cache (firefox_subj_type))
 
-(call usersubj_manage_fonts_home_cache (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_fonts_home_cache (firefox_subj_type))
-(call usersubj_home_cache_obj_type_transition_fonts_home_cache (firefox_subj_type))
+(call usersubj_manage_home_fonts_cache (firefox_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_fonts_cache (firefox_subj_type))
+(call usersubj_home_cache_obj_type_transition_home_fonts_cache (firefox_subj_type))
 
 (call xserver_tmpfs_client (firefox_subj_type firefox.tmpfs_user_file))
 
@@ -91,7 +89,7 @@
 		(call dev_rw_v4l (firefox_subj_type))))
 
 (optional firefox_subj_type_optional_gstreamer
-	(call gstreamer_client_subject_type (firefox_subj_type)))
+	(call gstreamer_client_subj_type (firefox_subj_type)))
 
 (optional firefox_subj_type_optional_mutt
 	(call mutt_rw_tmpfs_files (firefox_subj_type)))

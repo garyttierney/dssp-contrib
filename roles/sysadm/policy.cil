@@ -692,6 +692,15 @@
 
 		(call firefox_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_firefox_optional_sysadm_firefox_plugins
+	(call firefox_plugins_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
+
+(optional sysadm_firefox_plugins_optional_firefox_plugins
+	(block sysadm_firefox_plugins
+		(blockinherit firefox_plugins_subj_blk)
+
+		(call firefox_plugins_role_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_hostnamectl_optional_hostnamectl
 	(block sysadm_hostnamectl
 		(blockinherit hostnamectl_subj_blk)

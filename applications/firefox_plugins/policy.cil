@@ -1,0 +1,34 @@
+(typeattribute firefox_plugins_subj_type)
+
+(block firefox_plugins
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (firefox_plugins_subj_type cmd_file))
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow firefox_plugins_subj_type self (process (getsched setsched)))
+(allow firefox_plugins_subj_type self create_unix_dgram_socket_perms)
+
+(call firefox_plugins_manage_tmpfs_files (firefox_plugins_subj_type))
+(call firefox_plugins_tmpfs_obj_type_transition_tmpfs (firefox_plugins_subj_type))
+
+(call sys_getattr_core_if (firefox_plugins_subj_type))
+
+(call fs_getattr_fs (firefox_plugins_subj_type))
+
+(call net_tcp_connect_all_ephemeral_ports (firefox_plugins_subj_type))
+
+(call subj_dontaudit_read_common_subj_state (firefox_plugins_subj_type))
+(call subj_execmem_type (firefox_plugins_subj_type))
+
+(call firefox_rw_inherited_unix_stream_sockets_all_subj (firefox_plugins_subj_type))
+
+(call usersubj_create_home_cache_dirs (firefox_plugins_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_cache (firefox_plugins_subj_type))
+
+(call usersubj_manage_home_fonts_cache (firefox_plugins_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_fonts_cache (firefox_plugins_subj_type))
+(call usersubj_home_cache_obj_type_transition_home_fonts_cache (firefox_plugins_subj_type))
+
+(call xserver_tmpfs_client (firefox_plugins_subj_type firefox_plugins.tmpfs_user_file))

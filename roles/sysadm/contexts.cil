@@ -27,6 +27,10 @@
 	(filecon "/root/\.emacs\.el" file (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.emacs\.d(/.*)?" any (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow))))
 
+(optional sysadm_firefox_home_optional_firefox
+	(filecon "/root/\.mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.cache/mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_cache_file (systemlow systemlow))))
+
 (optional sysadm_git_home_optional_git
 	(filecon "/root/.*/\.git(/.*)?" any (sysadm.id sysadm.role git.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.config/git(/.*)?" any (sysadm.id sysadm.role git.home_config_file (systemlow systemlow))))

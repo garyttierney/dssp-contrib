@@ -148,6 +148,12 @@
 		(allow user_emacsclient.subj user_emacs.subj (process (signal)))
 		(call emacs_stream_connect_pattern (user_emacsclient.subj user_emacs.subj)))
 
+(optional user_firefox_optional_firefox
+	(block user_firefox
+		(blockinherit firefox_subj_blk)
+
+		(call firefox_role_pattern (user.role user_subj_type subj))))
+
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)

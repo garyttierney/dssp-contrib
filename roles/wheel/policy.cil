@@ -267,6 +267,12 @@
 
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))
 
+(optional wheel_firefox_optional_firefox
+	(block wheel_firefox
+		(blockinherit firefox_subj_blk)
+
+		(call firefox_role_pattern (wheel.role wheel_subj_type subj))))
+
 (optional wheel_hostnamectl_optional_hostnamectl
 	(block wheel_hostnamectl
 		(blockinherit hostnamectl_subj_blk)
@@ -466,6 +472,10 @@
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_tor_socks_optional_wheel_firefox
+	(call tor_socks_client_subj_type (wheel_firefox.subj))
+	(call firefox_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_firefox.subj)))
 
 (optional wheel_tor_socks_optional_wheel_git
 	(call tor_socks_client_subj_type (wheel_git.subj))

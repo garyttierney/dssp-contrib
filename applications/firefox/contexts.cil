@@ -1,0 +1,13 @@
+(context firefox_cmd (sys.id sys.role firefox.cmd_file (systemlow systemlow)))
+(context firefox_use_webcam (sys.id sys.role firefox_use_webcam.bool (systemlow systemlow)))
+
+(filecon "/usr/bin/firefox" file firefox_cmd)
+(filecon "/usr/lib/firefox/firefox" file firefox_cmd)
+
+(filecon "HOME_DIR/\.mozilla(/.*)?" any (sys.id sys.role firefox.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.cache/mozilla(/.*)?" any (sys.id sys.role firefox.home_cache_file (systemlow systemlow)))
+
+(filecon "/usr/lib/firefox/crashreporter" file cmd)
+(filecon "/usr/lib/firefox/run-mozilla\.sh" file cmd)
+
+(genfscon "selinuxfs" "/booleans/firefox_use_webcam" firefox_use_webcam)

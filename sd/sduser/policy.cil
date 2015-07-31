@@ -34,6 +34,8 @@
 (call fs_dontaudit_audit_access_sysfs_dirs (sduser_subj_type))
 (call fs_getattr_sysfs_fs (sduser_subj_type))
 
+(call rbacsep_exempt_subj_type (sduser_subj_type))
+
 (call subj_interactive_fd_type (sduser_subj_type))
 (call subj_user_exemption_target_type (sduser_subj_type))
 

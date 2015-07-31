@@ -25,9 +25,8 @@
 
 (call pa_mmap_tmpfs_files (pa_subj_type))
 (call pa_tmpfs_obj_type_transition_tmpfs (pa_subj_type))
+(call fs_tmpfs_obj_type_transition (pa_subj_type pa.tmpfs_user_file dir "*"))
 (call pa_tmpfs_obj_type_transition_tmpfs_files (pa_subj_type))
-
-(call sys_read_cpu_sysfs_files (pa_subj_type))
 
 (call dev_rw_sound (pa_subj_type))
 
@@ -77,10 +76,11 @@
 
 (allow pa_client_subj_type pa_subj_type (unix_stream_socket (connectto)))
 
+(call sys_read_cpu_sysfs_files (pa_client_subj_type))
+
 (call dev_read_urandom (pa_client_subj_type))
 
 (call fs_getattr_tmpfs_fs (pa_client_subj_type))
-(call fs_read_sysfs (pa_client_subj_type))
 
 (call alsactl_read_config (pa_client_subj_type))
 

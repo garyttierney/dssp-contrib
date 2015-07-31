@@ -285,9 +285,9 @@
 	(allow ARG1 rpm.tmpfs_file manage_lnk_file_perms))
 
 (macro rpm_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call file_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file file "*"))
-	(call file_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file dir "*"))
-	(call file_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file lnk_file "*")))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file file "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file dir "*"))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpm.tmpfs_file lnk_file "*")))
 
 (macro rpm_read_state ((type ARG1))
 	(call fs_search_proc (ARG1))

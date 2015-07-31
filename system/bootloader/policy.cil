@@ -16,6 +16,7 @@
 	(blockinherit file_boot_obj_blk)
 
 	(allow subj self (capability (dac_override sys_admin)))
+	(allow subj self rw_fifo_file_perms)
 	(allow subj self (process (getsched)))
 
 	(call bootloader_read_config (subj))
@@ -66,6 +67,7 @@
 	(call lvm_run (subj bootloader_role))
 
 	(call miscfile_read_modules (subj))
+	(call miscfile_read_locale (subj))
 
 	(call mount_exec (subj))
 

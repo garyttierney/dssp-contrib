@@ -59,6 +59,10 @@
 	(call file_search_var_tmp (ARG1))
 	(call read_files_pattern (ARG1 dracut.var_tmp_file dracut.var_tmp_file)))
 
+(macro dracut_mmap_var_tmp_files ((type ARG1))
+	(call file_search_var_tmp (ARG1))
+	(call mmap_files_pattern (ARG1 dracut.var_tmp_file dracut.var_tmp_file)))
+
 (macro dracut_read_var_tmp_lnk_files ((type ARG1))
 	(call file_search_var_tmp (ARG1))
 	(call read_lnk_files_pattern (ARG1 dracut.var_tmp_file dracut.var_tmp_file)))

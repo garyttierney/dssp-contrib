@@ -32,8 +32,8 @@
 (macro sysbus_send_signal ((type ARG1))
 	(allow ARG1 sysbus (process (signal))))
 
-(macro sysbus_entry_subj ((type ARG1))
-	(call subj_entry (ARG1 sysbus.subj)))
+(macro sysbus_cmd_obj_entry_subj ((type ARG1))
+	(call subj_entry (ARG1 sysbus.cmd_file)))
 
 (macro sysbus_acquire_service ((type ARG1))
 	(allow ARG1 sysbus.subj (dbus (acquire_svc))))

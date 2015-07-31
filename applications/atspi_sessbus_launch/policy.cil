@@ -8,6 +8,8 @@
 
 (allow atspi_sessbus_launch_subj_type self rw_fifo_file_perms)
 
+(call dev_read_urandom (atspi_sessbus_launch_subj_type))
+
 (call file_read_data_files (atspi_sessbus_launch_subj_type))
 
 (call nss_client_subj_type (atspi_sessbus_launch_subj_type))

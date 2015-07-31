@@ -15,8 +15,9 @@
 
 (allow sessbus_subj_type sessbus_client_subj_type (process (signal signull sigkill sigstop)))
 
-(call sysbus_read_config (sessbus_subj_type))
+(call sysbus_cmd_obj_entry_subj (sessbus_subj_type))
 (call sysbus_dbus_subj_type (sessbus_subj_type))
+(call sysbus_read_config (sessbus_subj_type))
 
 (optional sessbus_subj_type_optional_sessbus_launch
 	(call sessbus_launch_write_inherited_fifo_files_client_subj (sessbus_subj_type)))

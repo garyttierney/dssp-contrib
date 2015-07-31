@@ -91,9 +91,20 @@
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 emacs.home_user_file emacs.home_user_file)))
 
+(macro emacs_write_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call write_files_pattern (ARG1 emacs.home_user_file emacs.home_user_file)))
+
 (macro emacs_manage_home_files ((type ARG1))
 	(call usersubj_rw_home_dir (ARG1))
 	(call manage_files_pattern (ARG1 emacs.home_user_file emacs.home_user_file)))
+
+(macro emacs_setattr_home_files ((type ARG1))
+	(allow ARG1 emacs.home_user_file (file (setattr))))
+
+(macro emacs_create_home_files ((type ARG1))
+	(call usersubj_add_entry_home_dir (ARG1))
+	(allow ARG1 emacs.home_user_file create_file_perms))
 
 (macro emacs_read_home_lnk_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))

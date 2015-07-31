@@ -310,6 +310,17 @@
 	(call file_search_home (ARG1))
 	(allow ARG1 home_dir.file del_entry_dir_perms))
 
+(macro usersubj_setattr_home_dir ((type ARG1))
+	(allow ARG1 home_dir.file (dir (setattr))))
+
+(macro usersubj_create_home_dir ((type ARG1))
+	(call file_add_entry_home (ARG1))
+	(allow ARG1 home_dir.file create_dir_perms))
+
+(macro usersubj_delete_home_dir ((type ARG1))
+	(call file_del_entry_home (ARG1))
+	(allow ARG1 home_dir.file delete_dir_perms))
+
 (macro usersubj_rw_home_dir ((type ARG1))
 	(call file_search_home (ARG1))
 	(allow ARG1 home_dir.file rw_dir_perms))
@@ -677,6 +688,21 @@
 (macro usersubj_read_home_user_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
+(macro usersubj_write_home_user_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call write_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
+(macro usersubj_setattr_home_user_files ((type ARG1))
+	(allow ARG1 home_user.home_user_file (file (setattr))))
+
+(macro usersubj_create_home_user_files ((type ARG1))
+	(call usersubj_add_entry_home_dir (ARG1))
+	(call create_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
+(macro usersubj_delete_home_user_files ((type ARG1))
+	(call usersubj_del_entry_home_dir (ARG1))
+	(call delete_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
 
 (macro usersubj_manage_home_user_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -1226,6 +1252,21 @@
 (macro usersubj_read_var_spool_user_files ((type ARG1))
 	(call file_search_var_spool (ARG1))
 	(allow ARG1 var_spool_user.var_spool_file read_file_perms))
+
+(macro usersubj_write_var_spool_user_files ((type ARG1))
+	(call file_search_var_spool (ARG1))
+	(allow ARG1 var_spool_user.var_spool_file write_file_perms))
+
+(macro usersubj_setattr_var_spool_user_files ((type ARG1))
+	(allow ARG1 var_spool_user.var_spool_file (file (setattr))))
+
+(macro usersubj_create_var_spool_user_files ((type ARG1))
+	(call file_add_entry_var_spool (ARG1))
+	(allow ARG1 var_spool_user.var_spool_file create_file_perms))
+
+(macro usersubj_delete_var_spool_user_files ((type ARG1))
+	(call file_del_entry_var_spool (ARG1))
+	(allow ARG1 var_spool_user.var_spool_file delete_file_perms))
 
 (macro usersubj_rw_var_spool_user_files ((type ARG1))
 	(call file_search_var_spool (ARG1))

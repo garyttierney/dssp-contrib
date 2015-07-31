@@ -276,11 +276,26 @@
 (optional wheel_firefox_optional_wheel_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_plugins.subj)))
 
+(optional wheel_firefox_optional_wheel_firefox_xremotec
+	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_xremotec.subj)))
+
+(optional wheel_firefox_optional_wheel_pa
+	(call pa_client_pattern (wheel.role wheel_firefox.subj wheel_pa.subj)))
+
 (optional wheel_firefox_plugins_optional_firefox_plugins
 	(block wheel_firefox_plugins
 		(blockinherit firefox_plugins_subj_blk)
 
 		(call firefox_plugins_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_firefox_plugins_optional_wheel_pa
+	(call pa_client_pattern (wheel.role wheel_firefox_plugins.subj wheel_pa.subj)))
+
+(optional wheel_firefox_xremotec_optional_firefox_xremotec
+	(block wheel_firefox_xremotec
+		(blockinherit firefox_xremotec_subj_blk)
+
+		(call firefox_xremotec_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_hostnamectl
 	(block wheel_hostnamectl
@@ -341,6 +356,9 @@
 		(blockinherit pa_subj_blk)
 
 		(call pa_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_pa_optional_wheel_sessbus
+	(call sessbus_acquire_service_pattern (wheel_pa.subj wheel_sessbus.subj)))
 
 (optional wheel_pactl_optional_pactl
 	(block wheel_pactl

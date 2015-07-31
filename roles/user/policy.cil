@@ -154,14 +154,29 @@
 
 		(call firefox_role_pattern (user.role user_subj_type subj))))
 
-(optional user_firefox_optiona_user_firefox_plugins
+(optional user_firefox_optional_user_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_plugins.subj)))
+
+(optional user_firefox_optional_user_firefox_xremotec
+	(call firefox_xremotec_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_xremotec.subj)))
+
+(optional user_firefox_optional_user_pa
+	(call pa_client_pattern (user.role user_firefox.subj user_pa.subj)))
 
 (optional user_firefox_plugins_optional_firefox_plugins
 	(block user_firefox_plugins
 		(blockinherit firefox_plugins_subj_blk)
 
 		(call firefox_plugins_role_pattern (user.role user_subj_type subj))))
+
+(optional user_firefox_plugins_optional_user_pa
+	(call pa_client_pattern (user.role user_firefox_plugins.subj user_pa.subj)))
+
+(optional user_firefox_xremotec_optional_firefox_xremotec
+	(block user_firefox_xremotec
+		(blockinherit firefox_xremotec_subj_blk)
+
+		(call firefox_xremotec_role_pattern (user.role user_subj_type subj))))
 
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
@@ -234,6 +249,9 @@
 		(blockinherit pa_subj_blk)
 
 		(call pa_role_pattern (user.role user_subj_type subj))))
+
+(optional user_pa_optional_user_sessbus
+	(call sessbus_acquire_service_pattern (user_pa.subj user_sessbus.subj)))
 
 (optional user_pactl_optional_pactl
 	(block user_pactl

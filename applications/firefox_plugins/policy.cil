@@ -5,7 +5,10 @@
 
 	(call subj_entry (firefox_plugins_subj_type cmd_file))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(optional firefox_optional_pa
+		(call pa_tmpfs_obj_type (tmpfs_user_file))))
 
 (allow firefox_plugins_subj_type self (process (getsched setsched)))
 (allow firefox_plugins_subj_type self create_unix_dgram_socket_perms)

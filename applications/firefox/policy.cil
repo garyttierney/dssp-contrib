@@ -11,7 +11,10 @@
 
 	(blockinherit usersubj_home_cache_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(optional firefox_optional_pa
+		(call pa_tmpfs_obj_type (tmpfs_user_file))))
 
 (block firefox_use_webcam
 	(blockinherit sec_bool_obj_blk))

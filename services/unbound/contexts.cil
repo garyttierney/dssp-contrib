@@ -4,6 +4,10 @@
 (context unbound_var_lib (sys.id sys.role unbound.var_lib_file (systemlow systemlow)))
 (context unboundanch_cmd (sys.id sys.role unboundanch.cmd_file (systemlow systemlow)))
 (context unboundcs_cmd (sys.id sys.role unboundcs.cmd_file (systemlow systemlow)))
+(context unbounddnsctl_port (sys.id sys.role unbounddnsctl.port (systemlow systemlow)))
+
+(portcon "tcp" 8953 unbounddnsctl_port)
+(portcon "udp" 8953 unbounddnsctl_port)
 
 (filecon "/etc/unbound(/.*)?" any unbound_config)
 (filecon "/etc/sysconfig/unbound" file unbound_config)

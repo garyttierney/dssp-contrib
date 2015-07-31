@@ -154,7 +154,7 @@
 		(call alsautil_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_alsautil_optional_wheel_pa
-	(call pa_client_pattern (wheel.role wheel_alsautil.subj wheel_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (wheel_alsautil.subj wheel_pa.subj)))
 
 (optional wheel_analyze_optional_analyze
 	(block wheel_analyze
@@ -169,10 +169,7 @@
 		(call atspi_sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
-	(call sessbus_acquire_service_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
-	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
-	(call sessbus_client_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
-	(call sessbus_daemon_subj_type (wheel_atspi_sessbus_launch.subj)))
+	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
 
 (optional wheel_emacs_optional_emacs
 	(block wheel_emacs
@@ -196,10 +193,6 @@
 		(blockinherit emacsclient_subj_blk)
 
 		(call emacsclient_role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_emacsclient_optional_wheel_emacs
-		(allow wheel_emacsclient.subj wheel_emacs.subj (process (signal)))
-		(call emacs_stream_connect_pattern (wheel_emacsclient.subj wheel_emacs.subj)))
 
 (optional wheel_fuse_optional_fuse
 	(block wheel_fuse_sshfs
@@ -256,8 +249,7 @@
 		(call gpg_exec_gpg_helper (wheel.subj))))
 
 (optional wheel_gpg_optional_gpg_agent
-	(call gpg_agent_auto_subj_type_transition_pattern (wheel_gpg.subj wheel_gpg_agent.subj))
-	(call gpg_agent_stream_connect_pattern (wheel_gpg.subj wheel_gpg_agent.subj)))
+	(call gpg_agent_auto_subj_type_transition_pattern (wheel_gpg.subj wheel_gpg_agent.subj)))
 
 (optional wheel_gpg_agent_optional_gpg_agent
 	(block wheel_gpg_agent
@@ -283,9 +275,6 @@
 		(call busctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_busctl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_busctl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_busctl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_firefox_optional_firefox
@@ -294,10 +283,6 @@
 
 		(call firefox_role_pattern (wheel.role wheel_subj_type subj))))
 
-(optional wheel_firefox_optional_wheel_atpsi_sessbus_launch
-	(allow wheel_firefox.subj wheel_atspi_sessbus_launch.subj (dbus (send_msg)))
-	(allow wheel_atspi_sessbus_launch.subj wheel_firefox.subj (dbus (send_msg))))
-
 (optional wheel_firefox_optional_wheel_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_plugins.subj)))
 
@@ -305,7 +290,7 @@
 	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_xremotec.subj)))
 
 (optional wheel_firefox_optional_wheel_pa
-	(call pa_client_pattern (wheel.role wheel_firefox.subj wheel_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_pa.subj)))
 
 (optional wheel_firefox_plugins_optional_firefox_plugins
 	(block wheel_firefox_plugins
@@ -314,7 +299,7 @@
 		(call firefox_plugins_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_firefox_plugins_optional_wheel_pa
-	(call pa_client_pattern (wheel.role wheel_firefox_plugins.subj wheel_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (wheel_firefox_plugins.subj wheel_pa.subj)))
 
 (optional wheel_firefox_xremotec_optional_firefox_xremotec
 	(block wheel_firefox_xremotec
@@ -382,9 +367,6 @@
 
 		(call pa_role_pattern (wheel.role wheel_subj_type subj))))
 
-(optional wheel_pa_optional_wheel_sessbus
-	(call sessbus_acquire_service_pattern (wheel_pa.subj wheel_sessbus.subj)))
-
 (optional wheel_pactl_optional_pactl
 	(block wheel_pactl
 		(blockinherit pactl_subj_blk)
@@ -392,9 +374,7 @@
 		(call pactl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pactl_optional_wheel_pa
-	(call pa_client_pattern (wheel.role wheel_pactl.subj wheel_pa.subj))
-	(call pa_read_state_pattern (wheel_pactl.subj wheel_pa.subj))
-	(call pa_stream_connect_pattern (wheel_pactl.subj wheel_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (wheel_pactl.subj wheel_pa.subj)))
 
 (optional wheel_passwd_optional_passwd
 	(block wheel_passwd
@@ -459,6 +439,9 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
+(optional wheel_sessbus_optional_wheel_atspi_sessbus_launch
+	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_atspi_sessbus_launch.subj)))
+
 (optional wheel_sessbus_optional_wheel_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_sessbus_launch.subj)))
 
@@ -466,9 +449,7 @@
 	(block wheel_sessbus_launch
 		(blockinherit sessbus_launch_subj_blk)
 
-		(call sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))
-
-		(call sessbus_client_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj))))
+		(call sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_sessbus_launch_optional_wheel_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj)))

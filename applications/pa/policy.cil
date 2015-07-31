@@ -53,7 +53,8 @@
 	(call sd_logind_read_runtime (pa_subj_type)))
 
 (optional pa_subj_type_optional_sessbus
-	(call sessbus_client_subj_type (pa_subj_type)))
+	(call sessbus_acquire_service_all_subj (pa_subj_type))
+	(call sessbus_client_all_subj (pa_subj_type)))
 
 (optional pa_subj_type_optional_sysbus
 	(call sysbus_client_subj_type (pa_subj_type)))

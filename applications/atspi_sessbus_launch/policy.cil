@@ -1,4 +1,5 @@
 (typeattribute atspi_sessbus_launch_subj_type)
+(typeattribute atspi_sessbus_launch_sessbus_chat_client_subj_type)
 
 (block atspi_sessbus_launch
 	(blockinherit app_cmd_obj_blk)
@@ -11,5 +12,13 @@
 
 (call nss_client_subj_type (atspi_sessbus_launch_subj_type))
 
+(optional atspi_sessbus_launch_subj_type_optional_sessbus
+        (call sessbus_acquire_service_all_subj (atspi_sessbus_launch_subj_type))
+        (call sessbus_client_all_subj (atspi_sessbus_launch_subj_type)))
+
 (optional atspi_sessbus_launch_subj_type_optional_xserver
 	(call xserver_client_subj_type (atspi_sessbus_launch_subj_type)))
+
+(optional atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sessbus
+	(allow atspi_sessbus_launch_sessbus_chat_client_subj_type atspi_sessbus_launch_subj_type (dbus (send_msg)))
+	(allow atspi_sessbus_launch_subj_type atspi_sessbus_launch_sessbus_chat_client_subj_type (dbus (send_msg))))

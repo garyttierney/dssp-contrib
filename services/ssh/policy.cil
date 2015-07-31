@@ -126,6 +126,9 @@
 (call usersubj_manage_tmpfs_user_files (ssh_client_subj_type))
 (call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (ssh_client_subj_type))
 
+(optional ssh_client_subj_type_optional_busctl
+	(call busctl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
 (optional ssh_client_subj_type_optional_gpg
 	(call gpg_search_home (ssh_client_subj_type)))
 

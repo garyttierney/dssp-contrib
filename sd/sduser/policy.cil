@@ -1,24 +1,8 @@
 (typeattribute sduser_subj_type)
+(typeattribute sduser_notify_all_subj_type)
+(typeattribute sduser_sysbus_chat_client_all_subj_type)
 
 (typeattribute sduser_unit_obj_type)
-
-(typeattribute sduser_notify_all_subj_type)
-
-(typeattribute sduser_fifo_file_activated_all_obj_type)
-(typeattribute sduser_socket_activated_all_obj_type)
-
-(typeattribute sduser_dccp_socket_activated_all_subj_type)
-(typeattribute sduser_tcp_socket_activated_all_subj_type)
-(typeattribute sduser_udp_socket_activated_all_subj_type)
-
-(typeattribute sduser_dccp_socket_activated_all_obj_type)
-(typeattribute sduser_tcp_socket_activated_all_obj_type)
-(typeattribute sduser_udp_socket_activated_all_obj_type)
-
-(typeattribute sduser_unix_stream_socket_activated_all_subj_type)
-(typeattribute sduser_unix_dgram_socket_activated_all_subj_type)
-
-(typeattribute sduser_sysbus_chat_client_all_subj_type)
 
 (block sduser
 	(blockinherit usersubj_tmpfs_user_obj_blk)
@@ -92,24 +76,6 @@
 (optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus
 	(allow sduser_subj_type sduser_sysbus_chat_client_all_subj_type (dbus (send_msg)))
 	(allow sduser_sysbus_chat_client_all_subj_type sduser_subj_type (dbus (send_msg))))
-
-(allow sduser_subj_type sduser_tcp_socket_activated_all_subj_type create_tcp_stream_socket_perms)
-(allow sduser_subj_type sduser_tcp_socket_activated_all_obj_type (tcp_socket (name_bind)))
-
-(allow sduser_subj_type sduser_udp_socket_activated_all_subj_type create_udp_socket_perms)
-(allow sduser_subj_type sduser_udp_socket_activated_all_obj_type (udp_socket (name_bind)))
-
-(allow sduser_subj_type sduser_dccp_socket_activated_all_subj_type create_dccp_stream_socket_perms)
-(allow sduser_subj_type sduser_dccp_socket_activated_all_obj_type (dccp_socket (name_bind)))
-
-(allow sduser_subj_type sduser_fifo_file_activated_all_obj_type manage_dir_perms)
-(allow sduser_subj_type sduser_fifo_file_activated_all_obj_type manage_fifo_file_perms)
-
-(allow sduser_subj_type sduser_unix_stream_socket_activated_all_subj_type create_unix_stream_stream_socket_perms)
-(allow sduser_subj_type sduser_unix_dgram_socket_activated_all_subj_type create_unix_dgram_stream_socket_perms)
-
-(allow sduser_subj_type sduser_socket_activated_all_obj_type manage_dir_perms)
-(allow sduser_subj_type sduser_socket_activated_all_obj_type manage_sock_file_perms)
 
 (allow sduser_notify_all_subj_type self (unix_dgram_socket (sendto)))
 (call sduser_dgram_send_notify_all_subj (sduser_notify_all_subj_type))

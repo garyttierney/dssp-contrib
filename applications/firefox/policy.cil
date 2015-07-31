@@ -14,6 +14,7 @@
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
 	(optional firefox_optional_pa
+		(call pa_client_subj_type (firefox_subj_type))
 		(call pa_tmpfs_obj_type (tmpfs_user_file))))
 
 (block firefox_use_webcam
@@ -90,6 +91,9 @@
 (booleanif firefox_use_webcam
 	(true
 		(call dev_rw_v4l (firefox_subj_type))))
+
+(optional firefox_subj_type_optional_atspi_sessbus_launch
+	(call atspi_sessbus_launch_sessbus_chat_client_subj_type (firefox_subj_type)))
 
 (optional firefox_subj_type_optional_gstreamer
 	(call gstreamer_client_subj_type (firefox_subj_type)))

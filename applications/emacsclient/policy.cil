@@ -10,6 +10,9 @@
 (call fs_list_devtmpfs (emacsclient_subj_type))
 (call fs_search_tmpfs (emacsclient_subj_type))
 
+(call emacs_send_signal_all_subj (emacsclient_subj_type))
+(call emacs_stream_connect_all_subj (emacsclient_subj_type))
+
 (call nss_client_subj_type (emacsclient_subj_type))
 
 (call usersubj_use_term (emacsclient_subj_type))

@@ -37,3 +37,10 @@
 
 (macro busctl_send_signal ((type ARG1))
 	(allow ARG1 busctl.subj (process (signal))))
+
+(macro busctl_use_fd_all_subj ((type ARG1))
+	(allow ARG1 busctl_subj_type (fd (use))))
+
+(macro busctl_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call busctl_use_fd_all_subj (ARG1))
+	(allow ARG1 busctl_subj_type rw_inherited_unix_stream_socket_perms))

@@ -122,8 +122,8 @@
 	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".emacs.el"))
 	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file dir ".emacs.d")))
 
-(macro emacs_stream_connect_pattern ((type ARG1)(type ARG2))
-	(call stream_connect_pattern (ARG1 emacs.tmpfs_user_file emacs.tmpfs_user_file ARG2)))
+(macro emacs_send_signal_all_subj ((type ARG1))
+	(allow ARG1 emacs_subj_type (process (signal))))
 
 (macro emacs_stream_connect_all_subj ((type ARG1))
 	(call stream_connect_pattern (ARG1 emacs.tmpfs_user_file emacs.tmpfs_user_file emacs_subj_type)))

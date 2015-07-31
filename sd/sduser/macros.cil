@@ -56,13 +56,13 @@
 
 	(call usersubj_home_cmd_auto_subj_type_transition (ARG3 ARG2)))
 
-(macro sduser_forked_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (fd (use)))
-	(allow ARG1 ARG2 rw_inherited_unix_stream_socket_perms))
-
 (macro sduser_forked_all_subj ((type ARG1)(type ARG2))
 	(allow ARG1 sduser_subj_type (fd (use)))
 	(allow ARG1 sduser_subj_type rw_inherited_unix_stream_socket_perms))
+
+(macro sduser_forked_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (fd (use)))
+	(allow ARG1 ARG2 rw_inherited_unix_stream_socket_perms))
 
 (macro sduser_unit_obj_type ((type ARG1))
 	(call sd_unit_obj_type (ARG1))
@@ -77,49 +77,11 @@
 (macro sduser_dccp_socket_activated_subj_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 create_dccp_stream_socket_perms))
 
-(macro sduser_fifo_file_activated_subj_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 manage_dir_perms)
-	(allow ARG1 ARG2 manage_fifo_file_perms))
-
 (macro sduser_unix_stream_socket_activated_subj_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 create_unix_stream_stream_socket_perms))
 
 (macro sduser_unix_dgram_socket_activated_subj_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 create_unix_dgram_stream_socket_perms))
-
-(macro sduser_tcp_socket_activated_all_subj_type ((type ARG1))
-	(typeattributeset sduser_tcp_socket_activated_all_subj_type ARG1))
-
-(macro sduser_tcp_socket_activated_all_obj_type ((type ARG1))
-	(typeattributeset sduser_tcp_socket_activated_all_obj_type ARG1))
-
-(macro sduser_udp_socket_activated_all_subj_type ((type ARG1))
-	(typeattributeset sduser_udp_socket_activated_all_subj_type ARG1))
-
-(macro sduser_udp_socket_activated_all_obj_type ((type ARG1))
-	(typeattributeset sduser_udp_socket_activated_all_obj_type ARG1))
-
-(macro sduser_dccp_socket_activated_all_subj_type ((type ARG1))
-	(typeattributeset sduser_dccp_socket_activated_all_subj_type ARG1))
-
-(macro sduser_dccp_socket_activated_all_obj_type ((type ARG1))
-	(typeattributeset sduser_dccp_socket_activated_all_obj_type ARG1))
-
-(macro sduser_fifo_file_activated_all_obj_type ((type ARG1))
-	(typeattributeset sduser_fifo_file_activated_all_obj_type ARG1))
-
-(macro sduser_unix_stream_socket_activated_all_subj_type ((type ARG1))
-	(typeattributeset sduser_unix_stream_socket_activated_all_subj_type ARG1))
-
-(macro sduser_unix_dgram_socket_activated_all_subj_type ((type ARG1))
-	(typeattributeset sduser_unix_dgram_socket_activated_all_subj_type ARG1))
-
-(macro sduser_socket_activated_all_obj_type ((type ARG1))
-	(typeattributeset sduser_socket_activated_all_obj_type ARG1))
-
-(macro sduser_notify_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 self (unix_dgram_socket (sendto)))
-	(call sduser_dgram_send_notify_pattern (ARG1 ARG2)))
 
 (macro sduser_notify_all_subj_type ((type ARG1))
 	(typeattributeset sduser_notify_all_subj_type ARG1))

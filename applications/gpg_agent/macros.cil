@@ -81,10 +81,6 @@
 	(call gpg_home_obj_type_transition (ARG1 gpg_agent.home_user_file sock_file "S.gpg-agent"))
 	(call gpg_home_obj_type_transition (ARG1 gpg_agent.home_user_file sock_file "S.gpg-agent.ssh")))
 
-(macro gpg_agent_stream_connect_pattern ((type ARG1)(type ARG2))
-	(call gpg_search_home(ARG1))
-	(call stream_connect_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file ARG2)))
-
 (macro gpg_agent_stream_connect_all_subj ((type ARG1))
 	(call gpg_search_home(ARG1))
 	(call stream_connect_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file gpg_subj_type)))

@@ -128,7 +128,7 @@
 		(call alsautil_role_pattern (user.role user_subj_type user_alsautil.subj))))
 
 (optional user_alsautil_optional_user_pa
-	(call pa_client_pattern (user.role user_alsautil.subj user_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (user_alsautil.subj user_pa.subj)))
 
 (optional user_atspi_sessbus_launch_optional_atspi_sessbus_launch
 	(block user_atspi_sessbus_launch
@@ -137,10 +137,7 @@
 		(call atspi_sessbus_launch_role_pattern (user.role user_subj_type subj))))
 
 (optional user_atspi_sessbus_launch_optional_user_sessbus
-        (call sessbus_acquire_service_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj))
-        (call sessbus_auto_subj_type_transition_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj))
-        (call sessbus_client_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj))
-        (call sessbus_daemon_subj_type (user_atspi_sessbus_launch.subj)))
+        (call sessbus_auto_subj_type_transition_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj)))
 
 (optional user_emacs_optional_emacs
 	(block user_emacs
@@ -165,19 +162,11 @@
 
 		(call emacsclient_role_pattern (user.role user_subj_type subj))))
 
-(optional user_emacsclient_optional_user_emacs
-		(allow user_emacsclient.subj user_emacs.subj (process (signal)))
-		(call emacs_stream_connect_pattern (user_emacsclient.subj user_emacs.subj)))
-
 (optional user_firefox_optional_firefox
 	(block user_firefox
 		(blockinherit firefox_subj_blk)
 
 		(call firefox_role_pattern (user.role user_subj_type subj))))
-
-(optional user_firefox_optional_user_atpsi_sessbus_launch
-	(allow user_firefox.subj user_atspi_sessbus_launch.subj (dbus (send_msg)))
-	(allow user_atspi_sessbus_launch.subj user_firefox.subj (dbus (send_msg))))
 
 (optional user_firefox_optional_user_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_plugins.subj)))
@@ -186,7 +175,7 @@
 	(call firefox_xremotec_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_xremotec.subj)))
 
 (optional user_firefox_optional_user_pa
-	(call pa_client_pattern (user.role user_firefox.subj user_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (user_firefox.subj user_pa.subj)))
 
 (optional user_firefox_plugins_optional_firefox_plugins
 	(block user_firefox_plugins
@@ -195,7 +184,7 @@
 		(call firefox_plugins_role_pattern (user.role user_subj_type subj))))
 
 (optional user_firefox_plugins_optional_user_pa
-	(call pa_client_pattern (user.role user_firefox_plugins.subj user_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (user_firefox_plugins.subj user_pa.subj)))
 
 (optional user_firefox_xremotec_optional_firefox_xremotec
 	(block user_firefox_xremotec
@@ -255,8 +244,7 @@
 		(call gpg_exec_gpg_helper (user.subj))))
 
 (optional user_gpg_optional_gpg_agent
-	(call gpg_agent_auto_subj_type_transition_pattern (user_gpg.subj user_gpg_agent.subj))
-	(call gpg_agent_stream_connect_pattern (user_gpg.subj user_gpg_agent.subj)))
+	(call gpg_agent_auto_subj_type_transition_pattern (user_gpg.subj user_gpg_agent.subj)))
 
 (optional user_gpg_agent_optional_gpg_agent
         (block user_gpg_agent
@@ -275,9 +263,6 @@
 
 		(call pa_role_pattern (user.role user_subj_type subj))))
 
-(optional user_pa_optional_user_sessbus
-	(call sessbus_acquire_service_pattern (user_pa.subj user_sessbus.subj)))
-
 (optional user_pactl_optional_pactl
 	(block user_pactl
 		(blockinherit pactl_subj_blk)
@@ -285,9 +270,7 @@
 		(call pactl_role_pattern (user.role user_subj_type subj))))
 
 (optional user_pactl_optional_user_pa
-	(call pa_client_pattern (user.role user_pactl.subj user_pa.subj))
-	(call pa_read_state_pattern (user_pactl.subj user_pa.subj))
-	(call pa_stream_connect_pattern (user_pactl.subj user_pa.subj)))
+	(call pa_auto_subj_type_transition_pattern (user_pactl.subj user_pa.subj)))
 
 (optional user_passwd_optional_passwd
 	(block user_passwd
@@ -341,6 +324,9 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
+(optional user_sessbus_optional_user_atspi_sessbus_launch
+	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_atspi_sessbus_launch.subj)))
+
 (optional user_sessbus_optional_user_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_sessbus_launch.subj)))
 
@@ -348,9 +334,7 @@
 	(block user_sessbus_launch
 		(blockinherit sessbus_launch_subj_blk)
 
-		(call sessbus_launch_role_pattern (user.role user_subj_type subj))
-
-		(call sessbus_client_pattern (user_sessbus_launch.subj user_sessbus.subj))))
+		(call sessbus_launch_role_pattern (user.role user_subj_type subj))))
 
 (optional user_sessbus_launch_optional_user_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (user_sessbus_launch.subj user_sessbus.subj)))

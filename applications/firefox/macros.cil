@@ -54,6 +54,10 @@
 	(call usersubj_search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
 
+(macro firefox_create_home_dirs ((type ARG1))
+	(call usersubj_add_entry_home_dir (ARG1))
+	(allow ARG1 firefox.home_user_file create_dir_perms))
+
 (macro firefox_read_home ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file read_file_perms)
@@ -74,6 +78,9 @@
 
 (macro firefox_home_dir_obj_type_transition_home ((type ARG1))
 	(call usersubj_home_dir_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
+
+(macro firefox_home_dir_add_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_add_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
 
 (macro firefox_search_home_cache ((type ARG1))
 	(call usersubj_search_home_cache (ARG1))

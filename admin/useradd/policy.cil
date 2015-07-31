@@ -79,6 +79,10 @@
 	(call usersubj_manage_var_spool_user_files (subj))
 	(call usersubj_var_spool_obj_type_transition_var_spool_user (subj "*"))
 
+	(optional useradd_optional_firefox
+		(call firefox_create_home_dirs (subj))
+		(call firefox_home_dir_add_obj_type_transition_home (subj)))
+
 	(optional useradd_optional_rpm
 		(call rpm_rw_inherited_fifo_files (subj))
 		(call rpm_rw_inherited_tmpfs_files (subj)))

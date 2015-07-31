@@ -229,6 +229,9 @@
 (optional wheel_git_optional_wheel_tor_socks
 	(call tor_socks_auto_subj_type_transition_pattern (wheel_git.subj wheel_tor_socks.subj)))
 
+(optional wheel_git_optional_wheel_ssh_client
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_git.subj wheel_ssh_client.subj)))
+
 (optional wheel_git_email_optional_git_email
 	(block wheel_git_email
 		(blockinherit git_email_subj_blk)

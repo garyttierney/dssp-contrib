@@ -224,6 +224,9 @@
 (optional user_git_optional_user_git_email
 	(call git_email_auto_subj_type_transition_pattern (user_git.subj user_git_email.subj)))
 
+(optional user_git_optional_user_ssh_client
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_git.subj user_ssh_client.subj)))
+
 (optional user_git_email_optional_git_email
 	(block user_git_email
 		(blockinherit git_email_subj_blk)

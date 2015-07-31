@@ -650,6 +650,9 @@
 (optional sysadm_git_optional_sysadm_tor_socks
 	(call tor_socks_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_tor_socks.subj)))
 
+(optional sysadm_git_optional_sysadm_ssh_client
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_git.subj sysadm_ssh_client.subj)))
+
 (optional sysadm_git_email_optional_git_email
 	(block sysadm_git_email
 		(blockinherit git_email_subj_blk)

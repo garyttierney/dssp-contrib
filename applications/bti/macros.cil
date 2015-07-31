@@ -1,0 +1,29 @@
+(macro bti_exec ((type ARG1))
+	(call can_exec (ARG1 bti.cmd_file)))
+
+(macro bti_auto_subj_type_transition ((type ARG1))
+	(call bti_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 bti.cmd_file bti.subj)))
+
+(macro bti_send_signal ((type ARG1))
+	(allow ARG1 bti.subj (process (signal))))
+
+(macro bti_run ((type ARG1)(role ARG2))
+	(call bti_auto_subj_type_transition (ARG1))
+	(roleattributeset bti_role ARG2))
+
+(macro bti_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 bti.home_user_file read_file_perms))
+
+(macro bti_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 bti.home_user_file manage_file_perms))
+
+(macro bti_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 bti.home_user_file relabel_file_perms))
+
+(macro bti_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 bti.home_user_file file ".bti"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 bti.home_user_file file ".bti.log")))

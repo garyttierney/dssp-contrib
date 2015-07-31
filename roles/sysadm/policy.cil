@@ -87,6 +87,12 @@
 	(optional sysadm_optional_bridgeutil
 		(call bridgeutil_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_bti
+		(call bti_run (sysadm_subj_type role))
+		(call bti_manage_home_files (subj))
+		(call bti_relabel_home_files (subj))
+		(call bti_home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_chkpwd
 		(call chkpwd_run (sysadm_subj_type role)))
 

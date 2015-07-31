@@ -18,6 +18,10 @@
 	(filecon "/root/\.wgetrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.curlrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow))))
 
+(optional sysadm_bti_home_optional_bti
+	(filecon "/root/\.bti" file (sysadm.id sysadm.role bti.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.bti\.log.*" file (sysadm.id sysadm.role bti.home_user_file (systemlow systemlow))))
+
 (optional sysadm_dirmngr_home_optional_dirmgr
 	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))

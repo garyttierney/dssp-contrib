@@ -22,7 +22,7 @@
 
 (macro sd_initctl_getattr_runtime_fifo_files ((type ARG1))
 	(call sd_search_runtime (ARG1))
-	(call getattr_files_pattern (ARG1 sd_initctl.runtime_file sd_initctl.runtime_file)))
+	(call getattr_fifo_files_pattern (ARG1 sd_initctl.runtime_file sd_initctl.runtime_file)))
 
 (macro sd_initctl_read_runtime ((type ARG1))
 	(call sd_search_runtime (ARG1))

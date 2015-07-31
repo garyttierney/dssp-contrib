@@ -27,6 +27,8 @@
 (call pa_tmpfs_obj_type_transition_tmpfs (pa_subj_type))
 (call pa_tmpfs_obj_type_transition_tmpfs_files (pa_subj_type))
 
+(call sys_read_cpu_sysfs_files (pa_subj_type))
+
 (call dev_rw_sound (pa_subj_type))
 
 (call file_read_data (pa_subj_type))
@@ -42,6 +44,9 @@
 (call rtkitd_client_subj_type (pa_subj_type))
 
 (call udev_client_subj_type (pa_subj_type))
+
+(call usersubj_search_home_cmd (pa_subj_type))
+(call usersubj_read_home_cmd_lnk_files (pa_subj_type))
 
 (optional pa_subj_type_optional_livestreamer
 	(call livestreamer_use_fd_all_subj (pa_subj_type)))

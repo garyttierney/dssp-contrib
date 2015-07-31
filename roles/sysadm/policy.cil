@@ -806,6 +806,9 @@
 		(call pa_manage_config (sysadm.subj))
 		(call pa_manage_var_lib (sysadm.subj))))
 
+(optional sysadm_pa_optional_sysadm_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_pa.subj sysadm_sessbus_launch.subj)))
+
 (optional sysadm_pactl_optional_pactl
 	(block sysadm_pactl
 		(blockinherit pactl_subj_blk)

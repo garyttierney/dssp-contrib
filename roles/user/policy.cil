@@ -266,6 +266,9 @@
 
 		(call pa_role_pattern (user.role user_subj_type subj))))
 
+(optional user_pa_optional_user_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (user_pa.subj user_sessbus_launch.subj)))
+
 (optional user_pactl_optional_pactl
 	(block user_pactl
 		(blockinherit pactl_subj_blk)

@@ -79,6 +79,9 @@
 	(filecon "/root/\.config/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_config_file (systemlow systemlow)))
 	(filecon "/root/\.local/share/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_data_file (systemlow systemlow))))
 
+(optional sysadm_sessbus_launch_home_optional_sessbus_launch
+	(filecon "/root/\.dbus(/.*)?" any (sysadm.id sysadm.role sessbus_launch.home_user_file (systemlow systemlow))))
+
 (optional sysadm_ssh_client_home_optional_ssh
 	(filecon "/root/\.ssh(/.*)?" any (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))
 

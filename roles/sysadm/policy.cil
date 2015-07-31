@@ -582,6 +582,18 @@
 
 		(call analyze_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_atspi_sessbus_launch_optional_atspi_sessbus_launch
+	(block sysadm_atspi_sessbus_launch
+		(blockinherit atspi_sessbus_launch_subj_blk)
+
+		(call atspi_sessbus_launch_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
+	(call sessbus_acquire_service_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj))
+	(call sessbus_auto_subj_type_transition_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj))
+	(call sessbus_client_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj))
+	(call sessbus_daemon_subj_type (sysadm_atspi_sessbus_launch.subj)))
+
 (optional sysadm_emacs_optional_emacs
 	(block sysadm_emacs
 		(blockinherit emacs_subj_blk)
@@ -703,6 +715,10 @@
 		(blockinherit firefox_subj_blk)
 
 		(call firefox_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_firefox_optional_sysadm_atpsi_sessbus_launch
+        (allow sysadm_firefox.subj sysadm_atspi_sessbus_launch.subj (dbus (send_msg)))
+        (allow sysadm_atspi_sessbus_launch.subj sysadm_firefox.subj (dbus (send_msg))))
 
 (optional sysadm_firefox_optional_sysadm_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
@@ -874,6 +890,12 @@
 
 		(typeattributeset sysadm_subj_type subj)))
 
+(optional sysadm_sduser_optional_sysadm_sessbus
+	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+
+	(call sessbus_manage_tmpfs (sysadm_sduser.subj))
+	(call sessbus_tmpfs_obj_type_transition_tmpfs (sysadm_sduser.subj)))
+
 (optional sysadm_sessbus_optional_sessbus
 	(block sysadm_sessbus
 		(blockinherit sessbus_subj_blk)
@@ -883,6 +905,20 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_sessbus_optional_sysadm_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))
+
+(optional sysadm_sessbus_launch_optional_sessbus_launch
+	(block sysadm_sessbus_launch
+		(blockinherit sessbus_launch_subj_blk)
+
+		(call sessbus_launch_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call sessbus_client_pattern (sysadm_sessbus_launch.subj sysadm_sessbus.subj))))
+
+(optional sysadm_sessbus_launch_optional_sysadm_sessbus
+	(call sessbus_auto_subj_type_transition_pattern (sysadm_sessbus_launch.subj sysadm_sessbus.subj)))
 
 (optional sysadm_ssh_agent_optional_ssh
 	(block sysadm_ssh_agent
@@ -994,6 +1030,9 @@
 
 (optional sysadm_xinit_optional_sysadm_rp
 	(call rp_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_rp.subj)))
+
+(optional sysadm_xinit_optional_sysadm_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_xinit_optional_sysadm_systemctl
 	(call systemctl_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_systemctl.subj)))

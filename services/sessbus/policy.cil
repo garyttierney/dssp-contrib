@@ -19,6 +19,12 @@
 (call sysbus_read_config (sessbus_subj_type))
 (call sysbus_dbus_subj_type (sessbus_subj_type))
 
+(optional sessbus_subj_type_optional_sessbus_launch
+	(call sessbus_launch_write_inherited_fifo_files_client_subj (sessbus_subj_type)))
+
 (allow sessbus_client_subj_type self (dbus (send_msg)))
 
 (call sysbus_read_var_lib_files (sessbus_client_subj_type))
+
+(optional sessbus_client_subj_type_optional_sessbus_launch
+	(call sessbus_launch_use_fd_all_subj (sessbus_client_subj_type)))

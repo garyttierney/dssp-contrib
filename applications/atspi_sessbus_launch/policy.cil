@@ -1,0 +1,15 @@
+(typeattribute atspi_sessbus_launch_subj_type)
+
+(block atspi_sessbus_launch
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (atspi_sessbus_launch_subj_type cmd_file)))
+
+(allow atspi_sessbus_launch_subj_type self rw_fifo_file_perms)
+
+(call file_read_data_files (atspi_sessbus_launch_subj_type))
+
+(call nss_client_subj_type (atspi_sessbus_launch_subj_type))
+
+(optional atspi_sessbus_launch_subj_type_optional_xserver
+	(call xserver_client_subj_type (atspi_sessbus_launch_subj_type)))

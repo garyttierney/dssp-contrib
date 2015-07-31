@@ -1,0 +1,85 @@
+(block sessbus_launch_subj_blk
+	(blockabstract sessbus_launch_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset sessbus_launch_subj_type subj))
+
+(macro sessbus_launch_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset sessbus_launch_subj_type ARG1))
+
+(macro sessbus_launch_client_subj_type ((type ARG1))
+	(typeattributeset sessbus_launch_client_subj_type ARG1))
+
+(macro sessbus_launch_exec ((type ARG1))
+        (call sessbus_launch_client_subj_type (ARG1))
+	(call can_exec (ARG1 sessbus_launch.cmd_file)))
+
+(macro sessbus_launch_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 sessbus_launch.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call sessbus_launch_client_subj_type (ARG2))
+
+	(call sessbus_launch_manage_home (ARG2))
+	(call sessbus_launch_relabel_home (ARG2))
+
+	(call sessbus_launch_home_dir_obj_type_transition_home (ARG2)))
+
+(macro sessbus_launch_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+        (call sessbus_launch_client_subj_type (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 sessbus_launch.cmd_file ARG2)))
+
+(macro sessbus_launch_search_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 sessbus_launch.home_user_file search_dir_perms))
+
+(macro sessbus_launch_list_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 sessbus_launch.home_user_file list_dir_perms))
+
+(macro sessbus_launch_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_files_pattern (ARG1 sessbus_launch.home_user_file sessbus_launch.home_user_file)))
+
+(macro sessbus_launch_read_home_lnk_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_lnk_files_pattern (ARG1 sessbus_launch.home_user_file sessbus_launch.home_user_file)))
+
+(macro sessbus_launch_read_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 sessbus_launch.home_user_file read_file_perms)
+	(allow ARG1 sessbus_launch.home_user_file list_dir_perms)
+	(allow ARG1 sessbus_launch.home_user_file read_lnk_file_perms))
+
+(macro sessbus_launch_manage_home ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 sessbus_launch.home_user_file manage_file_perms)
+	(allow ARG1 sessbus_launch.home_user_file manage_dir_perms)
+	(allow ARG1 sessbus_launch.home_user_file manage_lnk_file_perms))
+
+(macro sessbus_launch_relabel_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 sessbus_launch.home_user_file relabel_file_perms)
+	(allow ARG1 sessbus_launch.home_user_file relabel_dir_perms)
+	(allow ARG1 sessbus_launch.home_user_file relabel_lnk_file_perms))
+
+(macro sessbus_launch_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 sessbus_launch.home_user_file dir ".dbus")))
+
+(macro sessbus_launch_use_fd_all_subj ((type ARG1))
+	(allow ARG1 sessbus_launch_subj_type (fd (use))))
+
+(macro sessbus_launch_use_fd_client_subj ((type ARG1))
+	(allow ARG1 sessbus_launch_client_subj_type (fd (use))))
+
+(macro sessbus_launch_write_inherited_fifo_files_client_subj ((type ARG1))
+	(call sessbus_launch_use_fd_client_subj (ARG1))
+	(allow ARG1 sessbus_launch_client_subj_type (fifo_file (write))))

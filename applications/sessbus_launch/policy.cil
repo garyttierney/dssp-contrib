@@ -1,0 +1,20 @@
+(typeattribute sessbus_launch_subj_type)
+(typeattribute sessbus_launch_client_subj_type)
+
+(block sessbus_launch
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (sessbus_launch_subj_type cmd_file))
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(allow sessbus_launch_subj_type self rw_fifo_file_perms)
+
+(call sessbus_launch_manage_home (sessbus_launch_subj_type))
+(call sessbus_launch_home_dir_obj_type_transition_home (sessbus_launch_subj_type))
+
+(call file_read_data (sessbus_launch_subj_type))
+
+(call nss_client_subj_type (sessbus_launch_subj_type))
+
+(call xserver_client_subj_type (sessbus_launch_subj_type))

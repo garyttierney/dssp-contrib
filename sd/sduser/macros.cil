@@ -68,31 +68,24 @@
 	(call sd_unit_obj_type (ARG1))
 	(typeattributeset sduser_unit_obj_type ARG1))
 
-(macro sduser_tcp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(allow ARG1 ARG2 create_tcp_stream_socket_perms)
-	(allow ARG1 ARG3 (tcp_socket (name_bind))))
+(macro sduser_tcp_socket_activated_subj_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 create_tcp_stream_socket_perms))
 
-(macro sduser_udp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(allow ARG1 ARG2 create_udp_socket_perms)
-	(allow ARG1 ARG3 (udp_socket (name_bind))))
+(macro sduser_udp_socket_activated_subj_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 create_udp_socket_perms))
 
-(macro sduser_dccp_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(allow ARG1 ARG2 create_dccp_stream_socket_perms)
-	(allow ARG1 ARG3 (dccp_socket (name_bind))))
+(macro sduser_dccp_socket_activated_subj_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 create_dccp_stream_socket_perms))
 
-(macro sduser_fifo_file_activated_pattern ((type ARG1)(type ARG2))
+(macro sduser_fifo_file_activated_subj_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 manage_dir_perms)
 	(allow ARG1 ARG2 manage_fifo_file_perms))
 
-(macro sduser_unix_stream_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(allow ARG1 ARG2 create_unix_stream_stream_socket_perms)
-	(allow ARG1 ARG3 manage_dir_perms)
-	(allow ARG1 ARG3 manage_sock_file_perms))
+(macro sduser_unix_stream_socket_activated_subj_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 create_unix_stream_stream_socket_perms))
 
-(macro sduser_unix_dgram_socket_activated_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(allow ARG1 ARG2 create_unix_dgram_stream_socket_perms)
-	(allow ARG1 ARG3 manage_dir_perms)
-	(allow ARG1 ARG3 manage_sock_file_perms))
+(macro sduser_unix_dgram_socket_activated_subj_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 create_unix_dgram_stream_socket_perms))
 
 (macro sduser_tcp_socket_activated_all_subj_type ((type ARG1))
 	(typeattributeset sduser_tcp_socket_activated_all_subj_type ARG1))

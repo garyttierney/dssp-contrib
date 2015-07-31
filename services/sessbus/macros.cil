@@ -52,19 +52,6 @@
 
 	(call auto_subj_type_transition_pattern (sessbus_subj_type ARG2 ARG1)))
 
-(macro sessbus_daemon_pattern ((type ARG1)(type ARG2)(type ARG3)(role ARG4))
-	(call app_subj_type (ARG1))
-
-	(call subj_entry (ARG1 ARG3))
-
-	(roletype ARG4 ARG1)
-
-	(call sessbus_acquire_service_pattern (ARG1 ARG2))
-	(call sessbus_client_pattern (ARG1 ARG2))
-	(call sessbus_daemon_subj_type (ARG1))
-
-	(call auto_subj_type_transition_pattern (ARG2 ARG3 ARG1)))
-
 (macro sessbus_stream_connect_all_subj ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
@@ -92,6 +79,10 @@
 	(call sessbus_relabel_tmpfs (ARG2))
 
 	(call sessbus_tmpfs_obj_type_transition_tmpfs (ARG2)))
+
+(macro sessbus_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call sysbus_auto_subj_type_transition_pattern (ARG1 ARG2)))
 
 (macro sessbus_search_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))

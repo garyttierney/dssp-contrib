@@ -162,6 +162,18 @@
 
 		(call analyze_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_atspi_sessbus_launch_optional_atspi_sessbus_launch
+	(block wheel_atspi_sessbus_launch
+		(blockinherit atspi_sessbus_launch_subj_blk)
+
+		(call atspi_sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
+	(call sessbus_acquire_service_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
+	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
+	(call sessbus_client_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj))
+	(call sessbus_daemon_subj_type (wheel_atspi_sessbus_launch.subj)))
+
 (optional wheel_emacs_optional_emacs
 	(block wheel_emacs
 		(blockinherit emacs_subj_blk)
@@ -281,6 +293,10 @@
 		(blockinherit firefox_subj_blk)
 
 		(call firefox_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_firefox_optional_wheel_atpsi_sessbus_launch
+	(allow wheel_firefox.subj wheel_atspi_sessbus_launch.subj (dbus (send_msg)))
+	(allow wheel_atspi_sessbus_launch.subj wheel_firefox.subj (dbus (send_msg))))
 
 (optional wheel_firefox_optional_wheel_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_plugins.subj)))
@@ -427,6 +443,12 @@
 
 		(typeattributeset wheel_subj_type subj)))
 
+(optional wheel_sduser_optional_wheel_sessbus
+	(call sduser_unix_stream_socket_activated_subj_pattern (wheel_sduser.subj wheel_sessbus.subj))
+
+	(call sessbus_manage_tmpfs (wheel_sduser.subj))
+	(call sessbus_tmpfs_obj_type_transition_tmpfs (wheel_sduser.subj)))
+
 (optional wheel_sessbus_optional_sessbus
 	(block wheel_sessbus
 		(blockinherit sessbus_subj_blk)
@@ -436,6 +458,20 @@
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_sessbus_optional_wheel_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_sessbus_launch.subj)))
+
+(optional wheel_sessbus_launch_optional_sessbus_launch
+	(block wheel_sessbus_launch
+		(blockinherit sessbus_launch_subj_blk)
+
+		(call sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call sessbus_client_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj))))
+
+(optional wheel_sessbus_launch_optional_wheel_sessbus
+	(call sessbus_auto_subj_type_transition_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj)))
 
 (optional wheel_ssh_agent_optional_ssh
 	(block wheel_ssh_agent
@@ -550,6 +586,9 @@
 
 (optional wheel_xinit_optional_wheel_rp
 	(call rp_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_rp.subj)))
+
+(optional wheel_xinit_optional_wheel_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_xinit_optional_wheel_systemctl
 	(call systemctl_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_systemctl.subj)))

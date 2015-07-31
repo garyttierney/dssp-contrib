@@ -87,7 +87,6 @@
 
 	(call fs_list_devtmpfs (subj))
 	(call fs_search_devpts (subj))
-	(call fs_search_sysfs (subj))
 
 	(call chkpwd_run (subj polkit_agent_role))
 
@@ -120,8 +119,6 @@
 	(allow subj polkit_tty_agent_client_subj_type read_file_perms)
 	(allow subj polkit_tty_agent_client_subj_type list_dir_perms)
 	(allow subj polkit_tty_agent_client_subj_type read_lnk_file_perms)
-
-	(call fs_search_sysfs (subj))
 
 	(call term_use_inherited_console (subj))
 

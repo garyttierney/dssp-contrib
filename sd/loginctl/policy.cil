@@ -26,7 +26,6 @@
 (allow loginctl_client_subj_type self rw_fifo_file_perms)
 
 (call fs_getattr_fs (loginctl_client_subj_type))
-(call fs_search_sysfs (loginctl_client_subj_type))
 
 (call miscfile_read_all_terminfo (loginctl_client_subj_type))
 (call miscfile_read_locale (loginctl_client_subj_type))

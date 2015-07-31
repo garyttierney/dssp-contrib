@@ -42,6 +42,9 @@
 	(filecon "/root/\.gnupg/sshcontrol" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow))))
 
+(optional sysadm_gstreamer_home_optional_gstreamer
+	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
+
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 

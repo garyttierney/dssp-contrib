@@ -163,6 +163,11 @@
 	(optional sysadm_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper_run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_gstreamer
+		(call gstreamer_manage_home_cache (subj))
+		(call gstreamer_relabel_home_cache (subj))
+		(call gstreamer_home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional sysadm_optional_hostname
 		(call hostname_manage_config_files (subj)))
 

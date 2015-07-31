@@ -1,0 +1,10 @@
+(typeattribute gstreamer_client_subj_type)
+
+(block gstreamer
+	(blockinherit usersubj_home_cache_obj_blk))
+
+(call gstreamer_manage_home_cache (gstreamer_client_subj_type))
+(call gstreamer_home_cache_obj_type_transition_home_cache (gstreamer_client_subj_type))
+
+(call usersubj_create_home_cache_dirs (gstreamer_client_subj_type))
+(call usersubj_home_dir_add_obj_type_transition_home_cache (gstreamer_client_subj_type))

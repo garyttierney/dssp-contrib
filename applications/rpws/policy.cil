@@ -7,6 +7,8 @@
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
+	(allow subj self rw_fifo_file_perms)
+
 	(call rpws_manage_tmpfs_files (subj))
 	(call rpws_tmpfs_obj_type_transition_tmpfs (subj))
 
@@ -16,6 +18,8 @@
 	(call dev_read_urandom (subj))
 
 	(call file_read_data (subj))
+
+	(call miscfile_read_locale (subj))
 
 	(call rp_exec (subj))
 

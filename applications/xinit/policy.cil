@@ -9,8 +9,6 @@
 
 (allow xinit_subj_type self (process (setpgid)))
 
-(call xinit_read_home_files (xinit_subj_type))
-
 (call cmd_shell_obj_entry_subj (xinit_subj_type))
 (call cmd_exec_shell (xinit_subj_type))
 
@@ -20,6 +18,7 @@
 
 (call xauth_read_home_files (xinit_subj_type))
 
+(call xserver_read_home_files (xinit_subj_type))
 (call xserver_send_signal (xinit_subj_type))
 (call xserver_send_signal_client_subj (xinit_subj_type))
 (call xserver_stream_connect (xinit_subj_type))

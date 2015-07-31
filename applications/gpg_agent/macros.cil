@@ -83,7 +83,7 @@
 
 (macro gpg_agent_stream_connect_all_subj ((type ARG1))
 	(call gpg_search_home(ARG1))
-	(call stream_connect_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file gpg_subj_type)))
+	(call stream_connect_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file gpg_agent_subj_type)))
 
 (macro gpg_agent_send_signal_all_subj ((type ARG1))
 	(allow ARG1 gpg_agent_subj_type (process (signal))))

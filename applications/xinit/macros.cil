@@ -37,6 +37,10 @@
 	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 xinit.cmd_file ARG2)))
 
+(macro xinit_home_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 xinit.home_user_file ARG2)))
+
 (macro xinit_read_home_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 xinit.home_user_file read_file_perms))
@@ -61,3 +65,15 @@
 
 (macro xinit_use_fd_all_subj ((type ARG1))
 	(allow ARG1 xinit_subj_type (fd (use))))
+
+(macro xinit_read_all_subj_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 xinit_subj_type read_file_perms)
+	(allow ARG1 xinit_subj_type list_dir_perms)
+	(allow ARG1 xinit_subj_type read_lnk_file_perms))
+
+(macro xinit_send_sigchld_all_subj ((type ARG1))
+	(allow ARG1 xinit_subj_type (process (sigchld))))
+
+(macro xinit_send_signal_all_subj ((type ARG1))
+	(allow ARG1 xinit_subj_type (process (signal))))

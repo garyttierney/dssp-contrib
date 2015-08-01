@@ -93,6 +93,15 @@
 		(call rpws_manage_tmpfs_files (subj))
 		(call rpws_relabel_tmpfs_files (subj)))
 
+	(optional user_optional_rtorrent
+		(call rtorrent_manage_home (subj))
+		(call rtorrent_relabel_home (subj))
+		(call rtorrent_manage_home_config_files (subj))
+		(call rtorrent_relabel_home_config_files (subj))
+		(call rtorrent_home_dir_obj_type_transition_home (subj))
+		(call rtorrent_home_config_obj_type_transition_home_config (subj))
+		(call rtorrent_run (user_subj_type role)))
+
 	(optional user_optional_run
 		(call run_exec (subj)))
 

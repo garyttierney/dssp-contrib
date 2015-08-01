@@ -99,6 +99,10 @@
 	(filecon "/root/\.ratpoisonrc" file (sysadm.id sysadm.role rp.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.ratpoison_history" file (sysadm.id sysadm.role rp.home_user_file (systemlow systemlow))))
 
+(optional sysadm_rtorrent_home_optional_rtorrent
+	(filecon "/root/\.rtorrent(/.*)?" any (sysadm.id sysadm.role rtorrent.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.config/rtorrent\.rc" file (sysadm.id sysadm.role rtorrent.home_config_file (systemlow systemlow))))
+
 (optional sysadm_scdaemon_home_optional_scdaemon
 	(filecon "/root/\.gnupg/reader.*\.status" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/scdaemon\.conf" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))

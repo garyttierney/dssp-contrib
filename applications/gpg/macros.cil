@@ -98,6 +98,10 @@
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 gpg.home_user_file rw_dir_perms))
 
+(macro gpg_manage_home_dirs ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(call manage_dirs_pattern (ARG1 gpg.home_user_file gpg.home_user_file)))
+
 (macro gpg_read_home ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 gpg.home_user_file read_file_perms)

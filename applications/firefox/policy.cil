@@ -14,8 +14,7 @@
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
 	(optional firefox_optional_pa
-		(call pa_client_subj_type (firefox_subj_type))
-		(call pa_tmpfs_obj_type (tmpfs_user_file))))
+		(call pa_tmpfs_client (firefox_subj_type tmpfs_user_file))))
 
 (block firefox_use_webcam
 	(blockinherit sec_bool_obj_blk))

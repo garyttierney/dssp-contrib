@@ -215,6 +215,12 @@
 
 		(call firefox_xremotec_role_pattern (user.role user_subj_type subj))))
 
+(optional user_festival_optional_festival
+	(block user_festival
+		(blockinherit festival_subj_blk)
+
+		(call festival_role_pattern (user.role user_subj_type subj))))
+
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)

@@ -1,0 +1,11 @@
+(context festival_cmd (sys.id sys.role festival.cmd_file (systemlow systemlow)))
+(context festival_config (sys.id sys.role festival.config_file (systemlow systemlow)))
+
+(filecon "/etc/festival(/.*)?" any festival_config)
+(filecon "/usr/bin/festival" file festival_cmd)
+(filecon "/usr/bin/festival_client" file festival_cmd)
+(filecon "/usr/bin/festival_server" file festival_cmd)
+(filecon "/usr/bin/festival_server_control" file festival_cmd)
+(filecon "/usr/bin/saytime" file festival_cmd)
+(filecon "/usr/bin/text2wave" file festival_cmd)
+(filecon "/usr/lib/festival/etc/audsp" file festival_cmd)

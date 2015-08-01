@@ -637,6 +637,14 @@
 
 		(call emacsclient_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_festival_optional_festival
+	(block sysadm_festival
+		(blockinherit festival_subj_blk)
+
+		(call festival_manage_config (sysadm.subj))
+
+		(call festival_role_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_fuse_optional_fuse
 	(block sysadm_fuse_sshfs
 		(blockinherit fuse_sshfs_subj_blk)

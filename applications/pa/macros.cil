@@ -15,6 +15,10 @@
 (macro pa_client_subj_type ((type ARG1))
 	(typeattributeset pa_client_subj_type ARG1))
 
+(macro pa_tmpfs_client ((type ARG1)(type ARG2))
+	(call pa_client_subj_type (ARG1))
+	(call pa_tmpfs_obj_type (ARG2)))
+
 (macro pa_exec ((type ARG1))
 	(call can_exec (ARG1 pa.cmd_file)))
 

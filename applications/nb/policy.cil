@@ -1,0 +1,34 @@
+(typeattribute nb_subj_type)
+
+(block nb
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (nb_subj_type cmd_file))
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(call nb_manage_home (nb_subj_type))
+(call nb_home_dir_obj_type_transition_home (nb_subj_type))
+
+(call sys_read_vm_sysctl_files (nb_subj_type))
+
+(call cmd_exec_shell (nb_subj_type))
+
+(call dev_read_urandom (nb_subj_type))
+
+(call file_search_mnt (nb_subj_type))
+(call file_search_var_tmp (nb_subj_type))
+
+(call fs_list_tmpfs (nb_subj_type))
+
+(call http_tcp_connect_http_port (nb_subj_type))
+
+(call miscfile_read_all_cert (nb_subj_type))
+(call miscfile_read_all_terminfo (nb_subj_type))
+
+(call nss_client_subj_type (nb_subj_type))
+
+(call usersubj_manage_home_user_dirs (nb_subj_type))
+(call usersubj_manage_home_user_files (nb_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_dirs (nb_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (nb_subj_type))

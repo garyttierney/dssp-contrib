@@ -392,6 +392,28 @@
 (optional user_mutt_pgp_ewrap_optional_user_gpg
 	(call gpg_auto_subj_type_transition_pattern (user_mutt_pgp_ewrap.subj user_gpg.subj)))
 
+(optional user_nb_optional_nb
+	(block user_nb
+		(blockinherit nb_subj_blk)
+
+		(call nb_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_nb_optional_user_firefox
+	(call firefox_auto_subj_type_transition_pattern (user_nb.subj user_firefox.subj)))
+
+(optional user_nb_optional_user_lynx
+	(call lynx_auto_subj_type_transition_pattern (user_nb.subj user_lynx.subj)))
+
+(optional user_nb_optional_user_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (user_nb.subj user_mplayer.subj)))
+
+(optional user_nb_optional_user_mutt
+	(call mutt_auto_subj_type_transition_pattern (user_nb.subj user_mutt.subj)))
+
 (optional user_pa_optional_pa
 	(block user_pa
 		(blockinherit pa_subj_blk)

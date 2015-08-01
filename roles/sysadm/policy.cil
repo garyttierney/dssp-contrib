@@ -913,6 +913,28 @@
 (optional sysadm_mutt_pgp_ewrap_optional_sysadm_gpg
 	(call gpg_auto_subj_type_transition_pattern (sysadm_mutt_pgp_ewrap.subj sysadm_gpg.subj)))
 
+(optional sysadm_nb_optional_nb
+	(block sysadm_nb
+		(blockinherit nb_subj_blk)
+
+		(call nb_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_nb_optional_sysadm_firefox
+	(call firefox_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_firefox.subj)))
+
+(optional sysadm_nb_optional_sysadm_lynx
+	(call lynx_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_lynx.subj)))
+
+(optional sysadm_nb_optional_sysadm_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_mplayer.subj)))
+
+(optional sysadm_nb_optional_sysadm_mutt
+	(call mutt_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_mutt.subj)))
+
 (optional sysadm_numactl_optional_numactl
 	(block sysadm_numactl
 		(blockinherit numactl_subj_blk)

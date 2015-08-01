@@ -82,6 +82,9 @@
 	(filecon "/root/\.mutt_cache\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.mutt_certificates" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow))))
 
+(optional sysadm_nb_home_optional_nb
+	(filecon "/root/\.newsbeuter(/.*)?" any (sysadm.id sysadm.role nb.home_user_file (systemlow systemlow))))
+
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 

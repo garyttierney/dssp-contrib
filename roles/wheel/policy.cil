@@ -481,6 +481,28 @@
 
 		(call mplayer_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_nb_optional_nb
+	(block wheel_nb
+		(blockinherit nb_subj_blk)
+
+		(call nb_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_nb_optional_wheel_firefox
+	(call firefox_auto_subj_type_transition_pattern (wheel_nb.subj wheel_firefox.subj)))
+
+(optional wheel_nb_optional_wheel_lynx
+	(call lynx_auto_subj_type_transition_pattern (wheel_nb.subj wheel_lynx.subj)))
+
+(optional wheel_nb_optional_wheel_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mplayer.subj)))
+
+(optional wheel_nb_optional_wheel_mutt
+	(call mutt_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mutt.subj)))
+
 (optional wheel_pa_optional_pa
 	(block wheel_pa
 		(blockinherit pa_subj_blk)

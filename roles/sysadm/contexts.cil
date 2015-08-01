@@ -72,6 +72,13 @@
 (optional sysadm_lynx_home_optional_lynx
 	(filecon "/root/\.lynxrc" file (sysadm.id sysadm.role lynx.home_user_file (systemlow systemlow))))
 
+(optional sysadm_mutt_home_optional_mutt
+	(filecon "/root/\.muttrc" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.muttrc\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.mutt_cache" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.mutt_cache\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
+	(filecon "/root/\.mutt_certificates" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow))))
+
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 

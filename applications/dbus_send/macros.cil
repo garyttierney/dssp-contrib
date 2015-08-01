@@ -1,0 +1,30 @@
+(block dbus_send_subj_blk
+	(blockabstract dbus_send_subj_blk)
+
+	(blockinherit app_subj_blk)
+
+	(typeattributeset dbus_send_subj_type subj))
+
+(macro dbus_send_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset dbus_send_subj_type ARG1))
+
+(macro dbus_send_client_subj_type ((type ARG1))
+	(typeattributeset dbus_send_client_subj_type ARG1))
+
+(macro dbus_send_exec ((type ARG1))
+	(call dbus_send_client_subj_type (ARG1))
+	(call can_exec (ARG1 dbus_send.cmd_file)))
+
+(macro dbus_send_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 dbus_send.cmd_file ARG3))
+
+	(roletype ARG1 ARG3)
+
+	(allow ARG2 ARG3 (process (signal)))
+
+	(allow ARG3 ARG2 (process (signal))))
+
+(macro dbus_send_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (process (signal)))
+	(call auto_subj_type_transition_pattern (ARG1 dbus_send.cmd_file ARG2)))

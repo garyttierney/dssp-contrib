@@ -1,0 +1,50 @@
+(typeattribute mutt_subj_type)
+
+(block mutt
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (mutt_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(block mutt_helper
+	(blockinherit cmd_obj_blk))
+
+(allow mutt_subj_type self rw_fifo_file_perms)
+
+(call mutt_read_config_files (mutt_subj_type))
+
+(call mutt_manage_home_files (mutt_subj_type))
+(call mutt_home_dir_obj_type_transition_home (mutt_subj_type))
+
+(call mutt_manage_tmpfs (mutt_subj_type))
+(call mutt_tmpfs_obj_type_transition_tmpfs (mutt_subj_type))
+
+(call dev_read_urandom (mutt_subj_type))
+
+(call file_read_config_files (mutt_subj_type))
+(call file_read_data_files (mutt_subj_type))
+
+(call imap_tcp_connect_imap_port (mutt_subj_type))
+(call smtp_tcp_connect_smtp_port (mutt_subj_type))
+
+(call miscfile_read_all_cert (mutt_subj_type))
+(call miscfile_read_all_terminfo (mutt_subj_type))
+(call miscfile_read_locale (mutt_subj_type))
+
+(call nss_client_subj_type (mutt_subj_type))
+
+(call usersubj_manage_home_user_files (mutt_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (mutt_subj_type))
+(call usersubj_rw_var_spool_user_files (mutt_subj_type))
+(call usersubj_setattr_var_spool_user_files (mutt_subj_type))
+
+(optional mutt_subj_type_optional_sd_journald
+    (call sd_journald_client_subj_type (mutt_subj_type)))
+
+(optional mutt_subj_type_optional_sysbus
+    (call sysbus_read_var_lib_files (mutt_subj_type)))

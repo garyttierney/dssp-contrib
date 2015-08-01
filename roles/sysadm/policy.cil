@@ -609,6 +609,12 @@
 (optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
 
+(optional sysadm_dbus_send_optional_dbus_send
+	(block sysadm_dbus_send
+		(blockinherit dbus_send_subj_blk)
+
+		(call dbus_send_role_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_dunst_optional_dunst
 	(block sysadm_dunst
 		(blockinherit dunst_subj_blk)
@@ -852,6 +858,9 @@
 (optional sysadm_lynx_optional_sysadm_irssi
 	(call irssi_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_irssi.subj)))
 
+(optional sysadm_lynx_optional_sysadm_mutt
+	(call mutt_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_mutt.subj)))
+
 (optional sysadm_machinectl_optional_machinectl
 	(block sysadm_machinectl
 		(blockinherit machinectl_subj_blk)
@@ -860,6 +869,25 @@
 
 (optional sysadm_machinectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_mutt_optional_mutt
+	(block sysadm_mutt
+		(blockinherit mutt_subj_blk)
+
+		(call mutt_manage_config_files (sysadm.subj))
+
+		(call mutt_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_mutt_optional_sysadm_firefox
+	(call firefox_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox.subj)))
+
+(optional sysadm_mutt_optional_sysadm_firefox_xremotec
+	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
 
 (optional sysadm_numactl_optional_numactl
 	(block sysadm_numactl
@@ -1071,6 +1099,10 @@
 (optional sysadm_tor_socks_optional_sysadm_lynx
 	(call tor_socks_client_subj_type (sysadm_lynx.subj))
 	(call lynx_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_lynx.subj)))
+
+(optional sysadm_tor_socks_optional_sysadm_mutt
+	(call tor_socks_client_subj_type (sysadm_mutt.subj))
+	(call mutt_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_mutt.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
 	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))

@@ -187,6 +187,12 @@
 (optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
 
+(optional wheel_dbus_send_optional_dbus_send
+	(block wheel_dbus_send
+		(blockinherit dbus_send_subj_blk)
+
+		(call dbus_send_role_pattern (wheel.role wheel_subj_type subj))))
+
 (optional wheel_dunst_optional_dunst
 	(block wheel_dunst
 		(blockinherit dunst_subj_blk)
@@ -422,6 +428,26 @@
 (optional wheel_lynx_optional_wheel_irssi
 	(call irssi_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_irssi.subj)))
 
+(optional wheel_lynx_optional_wheel_mutt
+	(call mutt_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_mutt.subj)))
+
+(optional wheel_mutt_optional_mutt
+	(block wheel_mutt
+		(blockinherit mutt_subj_blk)
+
+		(call mutt_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_mutt_optional_wheel_firefox
+	(call firefox_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox.subj)))
+
+(optional wheel_mutt_optional_wheel_firefox_xremotec
+	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox_xremotec.subj)))
+
 (optional wheel_machinectl_optional_machinectl
 	(block wheel_machinectl
 		(blockinherit machinectl_subj_blk)
@@ -619,6 +645,10 @@
 (optional wheel_tor_socks_optional_wheel_lynx
 	(call tor_socks_client_subj_type (wheel_lynx.subj))
 	(call lynx_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_lynx.subj)))
+
+(optional wheel_tor_socks_optional_wheel_mutt
+	(call tor_socks_client_subj_type (wheel_mutt.subj))
+	(call mutt_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_mutt.subj)))
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks_client_subj_type (wheel_ssh_client.subj))

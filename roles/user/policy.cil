@@ -322,6 +322,12 @@
 
 		(call libnotify_role_pattern (user.role user_subj_type subj))))
 
+(optional user_livestreamer_optional_livestreamer
+	(block user_livestreamer
+		(blockinherit livestreamer_subj_blk)
+
+		(call livestreamer_role_pattern (user.role user_subj_type subj))))
+
 (optional user_pa_optional_pa
 	(block user_pa
 		(blockinherit pa_subj_blk)

@@ -1,0 +1,49 @@
+(typeattribute livestreamer_subj_type)
+
+(block livestreamer
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (livestreamer_subj_type cmd_file))
+
+	(blockinherit usersubj_home_cache_obj_blk)
+
+	(blockinherit usersubj_home_config_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(call livestreamer_read_home_config (livestreamer_subj_type))
+
+(call livestreamer_manage_home_cache (livestreamer_subj_type))
+(dontaudit livestreamer_subj_type livestreamer.home_cache_file relabel_file_perms)
+(call livestreamer_home_cache_obj_type_transition_home_cache (livestreamer_subj_type))
+
+(call livestreamer_manage_tmpfs_files (livestreamer_subj_type))
+(dontaudit livestreamer_subj_type livestreamer.tmpfs_user_file relabel_file_perms)
+(call livestreamer_tmpfs_obj_type_transition_tmpfs (livestreamer_subj_type))
+
+(call cmd_list_cmd (livestreamer_subj_type))
+(call cmd_exec_cmd (livestreamer_subj_type))
+(call cmd_exec_shell (livestreamer_subj_type))
+
+(call dev_read_urandom (livestreamer_subj_type))
+
+(call file_read_config_files (livestreamer_subj_type))
+
+(call http_tcp_connect_http_port (livestreamer_subj_type))
+
+(call ldconfig_exec (livestreamer_subj_type))
+
+(call miscfile_read_all_cert (livestreamer_subj_type))
+
+(call nss_client_subj_type (livestreamer_subj_type))
+
+(call usersubj_create_home_cache_dirs (livestreamer_subj_type))
+(call usersubj_home_dir_add_obj_type_transition_home_cache (livestreamer_subj_type))
+(call usersubj_search_home_cmd (livestreamer_subj_type))
+(call usersubj_read_home_cmd_lnk_files (livestreamer_subj_type))
+
+(optional livestreamer_subj_type_optional_firefox
+	(call firefox_mmap_cmd_files (livestreamer_subj_type)))
+
+(optional livestreamer_subj_type_optional_lynx
+	(call lynx_mmap_cmd_files (livestreamer_subj_type)))

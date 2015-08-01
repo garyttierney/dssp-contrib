@@ -12,6 +12,9 @@
 (macro firefox_exec ((type ARG1))
 	(call can_exec (ARG1 firefox.cmd_file)))
 
+(macro firefox_mmap_cmd_files ((type ARG1))
+	(allow ARG1 firefox.cmd_file mmap_file_perms))
+
 (macro firefox_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 firefox.cmd_file ARG3))
 

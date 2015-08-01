@@ -384,6 +384,12 @@
 
 		(call libnotify_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_livestreamer_optional_livestreamer
+	(block wheel_livestreamer
+		(blockinherit livestreamer_subj_blk)
+
+		(call livestreamer_role_pattern (wheel.role wheel_subj_type subj))))
+
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
 		(blockinherit localectl_subj_blk)
@@ -591,6 +597,10 @@
 (optional wheel_tor_socks_optional_wheel_irssi
 	(call tor_socks_client_subj_type (wheel_irssi.subj))
 	(call irssi_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_irssi.subj)))
+
+(optional wheel_tor_socks_optional_wheel_livestreamer
+	(call tor_socks_client_subj_type (wheel_livestreamer.subj))
+	(call livestreamer_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_livestreamer.subj)))
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks_client_subj_type (wheel_ssh_client.subj))

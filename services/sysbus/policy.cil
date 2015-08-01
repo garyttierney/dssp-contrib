@@ -2,6 +2,8 @@
 (typeattribute sysbus_client_subj_type)
 (typeattribute sysbus_daemon_subj_type)
 (typeattribute sysbus_dbus_subj_type)
+(typeattribute sysbus_mls_recv_subj_type)
+(typeattribute sysbus_mls_send_subj_type)
 (typeattribute sysbus_unconfined_subj_type)
 
 (typeattribute sysbus_obj_type)
@@ -135,3 +137,18 @@
 (call sysbus_acquire_service (sysbus_unconfined_subj_type))
 (call sysbus_chat_client_subj (sysbus_unconfined_subj_type))
 (call sysbus_chat_unconfined_subj (sysbus_unconfined_subj_type))
+
+(tunableif enable_mls
+	(true
+		(constrain (dbus (send_msg))
+		(or (or (eq l1 l2)
+		(eq t1 sysbus_mls_send_subj_type))
+		(eq t2 sysbus_mls_recv_subj_type)))))
+
+(tunableif enable_rbacsep
+	(true
+		(constrain (dbus (acquire_svc send_msg))
+		(or (or (or (eq r1 r2)
+		(eq r1 rbacsep_exempt_role))
+		(eq r2 rbacsep_exempt_role))
+		(eq t1 rbacsep_exempt_subj_type)))))

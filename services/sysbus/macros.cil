@@ -13,6 +13,12 @@
 
 	(call auto_subj_type_transition_pattern (sysbus.subj cmd_file subj)))
 
+(macro sysbus_mls_recv_subj_type ((type ARG1))
+	(typeattributeset sysbus_mls_recv_subj_type ARG1))
+
+(macro sysbus_mls_send_subj_type ((type ARG1))
+	(typeattributeset sysbus_mls_send_subj_type ARG1))
+
 (macro sysbus_client_subj_type ((type ARG1))
 	(typeattributeset sysbus_client_subj_type ARG1))
 

@@ -574,6 +574,12 @@
 		(call xauth_manage_home_files (subj))
 		(call xauth_relabel_home_files (subj)))
 
+	(optional sysadm_optional_xlock
+		(call xlock_manage_home_files (subj))
+		(call xlock_relabel_home_files (subj))
+		(call xlock_home_dir_obj_type_transition_home (subj))
+		(call xlock_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_xserver
 		(call xserver_run (sysadm_subj_type role))
 		(call xserver_manage_config (subj))

@@ -1,0 +1,28 @@
+(macro xlock_exec ((type ARG1))
+	(call can_exec (ARG1 xlock.cmd_file)))
+
+(macro xlock_auto_subj_type_transition ((type ARG1))
+	(call xlock_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 xlock.cmd_file xlock.subj)))
+
+(macro xlock_send_signal ((type ARG1))
+	(allow ARG1 xlock.subj (process (signal))))
+
+(macro xlock_run ((type ARG1)(role ARG2))
+	(call xlock_auto_subj_type_transition (ARG1))
+	(roleattributeset xlock_role ARG2))
+
+(macro xlock_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xlock.home_user_file read_file_perms))
+
+(macro xlock_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 xlock.home_user_file manage_file_perms))
+
+(macro xlock_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 xlock.home_user_file relabel_file_perms))
+
+(macro xlock_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 xlock.home_user_file file ".xlockrc")))

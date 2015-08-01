@@ -1,0 +1,45 @@
+(roleattribute xlock_role)
+
+(block xlock
+	(blockinherit app_blk)
+
+	(roleattributeset xlock_role sys.role)
+
+	(roletype xlock_role subj)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(allow subj self (process (setsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call xlock_read_home_files (subj))
+
+	(call sys_audit_client_subj_type (subj))
+
+	(call dev_rw_dri (subj))
+
+	(call file_read_config_files (subj))
+	(call file_read_data_files (subj))
+
+	(call fs_read_sysfs (subj))
+
+	(call chkpwd_run (subj xlock_role))
+
+	(call miscfile_read_locale (subj))
+	(call miscfile_read_utmp_runtime_files (subj))
+
+	(call nss_client_subj_type (subj))
+
+	(call pam_read_config (subj))
+
+	(call udev_client_subj_type (subj))
+
+	(call usersubj_read_home_user_files (subj))
+
+	(call xserver_client_subj_type (subj))
+
+	(optional xlock_optional_sd
+		(call sd_daemon (subj cmd_file)))
+
+	(optional xlock_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))

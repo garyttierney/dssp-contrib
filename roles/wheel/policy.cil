@@ -415,6 +415,9 @@
 
 		(call libnotify_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_libnotify_optional_wheel_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_libnotify.subj wheel_sessbus_launch.subj)))
+
 (optional wheel_livestreamer_optional_livestreamer
 	(block wheel_livestreamer
 		(blockinherit livestreamer_subj_blk)

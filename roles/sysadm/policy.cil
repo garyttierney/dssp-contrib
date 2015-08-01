@@ -838,6 +838,9 @@
 
 		(call libnotify_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_libnotify_optional_sysadm_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_libnotify.subj sysadm_sessbus_launch.subj)))
+
 (optional sysadm_livestreamer_optional_livestreamer
 	(block sysadm_livestreamer
 		(blockinherit livestreamer_subj_blk)

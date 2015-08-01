@@ -348,6 +348,9 @@
 
 		(call libnotify_role_pattern (user.role user_subj_type subj))))
 
+(optional user_libnotify_optional_sysadm_user_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (user_libnotify.subj user_sessbus_launch.subj)))
+
 (optional user_livestreamer_optional_livestreamer
 	(block user_livestreamer
 		(blockinherit livestreamer_subj_blk)

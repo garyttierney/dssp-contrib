@@ -1,0 +1,9 @@
+(context xpdf_cmd (sys.id sys.role xpdf.cmd_file (systemlow systemlow)))
+(context xpdf_config (sys.id sys.role xpdf.config_file (systemlow systemlow)))
+
+(filecon "/etc/xpdf(/.*)?" any xpdf_config)
+(filecon "/etc/xpdfrc" file xpdf_config)
+(filecon "/usr/bin/xpdf" file xpdf_cmd)
+(filecon "/usr/bin/pdftopng" file xpdf_cmd)
+
+(filecon "HOME_DIR/\.xpdfrc" file (sys.id sys.role xpdf.home_user_file (systemlow systemlow)))

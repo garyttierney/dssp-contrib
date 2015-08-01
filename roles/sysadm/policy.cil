@@ -1225,6 +1225,14 @@
 (optional sysadm_xinit_optional_sysadm_xbindkeys
 	(call xbindkeys_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_xbindkeys.subj)))
 
+(optional sysadm_xpdf_optional_xpdf
+	(block sysadm_xpdf
+		(blockinherit xpdf_subj_blk)
+
+		(call xpdf_manage_config (sysadm.subj))
+
+		(call xpdf_role_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_xterm_optional_xterm
 	(block sysadm_xterm
 		(blockinherit xterm_subj_blk)

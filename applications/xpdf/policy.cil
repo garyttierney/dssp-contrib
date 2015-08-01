@@ -1,0 +1,41 @@
+(typeattribute xpdf_subj_type)
+
+(block xpdf
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (xpdf_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(call xpdf_read_config (xpdf_subj_type))
+
+(call xpdf_read_home_files (xpdf_subj_type))
+
+(call xpdf_manage_tmpfs_files (xpdf_subj_type))
+(call xpdf_tmpfs_obj_type_transition_tmpfs (xpdf_subj_type))
+
+(call cmd_exec_shell (xpdf_subj_type))
+
+(call file_read_config_files (xpdf_subj_type))
+(call file_read_data_files (xpdf_subj_type))
+
+(call miscfile_read_all_fonts (xpdf_subj_type))
+
+(call usersubj_list_home_user (xpdf_subj_type))
+(call usersubj_create_home_data_dirs (xpdf_subj_type))
+(call usersubj_home_dir_add_obj_type_transition_home_data (xpdf_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (xpdf_subj_type))
+(call usersubj_manage_home_data_files (xpdf_subj_type))
+(call usersubj_manage_home_user_files (xpdf_subj_type))
+
+(call xserver_tmpfs_client (xpdf_subj_type xpdf.tmpfs_user_file))
+
+(optional xpdf_subj_type_optional_firefox
+	(call firefox_read_tmpfs_files (xpdf_subj_type)))
+
+(optional xpdf_subj_type_optional_mutt
+	(call mutt_read_tmpfs_files (xpdf_subj_type)))

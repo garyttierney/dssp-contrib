@@ -570,6 +570,12 @@
 (optional user_xbindkeys_optional_user_pactl
 	(call pactl_auto_subj_type_transition_pattern (user_xbindkeys.subj user_pactl.subj)))
 
+(optional user_xpdf_optional_xpdf
+	(block user_xpdf
+		(blockinherit xpdf_subj_blk)
+
+		(call xpdf_role_pattern (user.role user_subj_type subj))))
+
 (optional user_xinit_optional_xinit
 	(block user_xinit
 		(blockinherit xinit_subj_blk)

@@ -140,6 +140,9 @@
 (optional sysadm_xlock_home_optional_xlock
 	(filecon "/root/\.xlockrc" file (sysadm.id sysadm.role xlock.home_user_file (systemlow systemlow))))
 
+(optional sysadm_xpdf_home_optional_xpdf
+	(filecon "/root/\.xpdfrc" file (sysadm.id sysadm.role xpdf.home_user_file (systemlow systemlow))))
+
 (optional sysadm_xserver_home_optional_xserver
 	(filecon "/root/\.xserverrc" file (sysadm.id sysadm.role xserver.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.local/share/xorg(/.*)?" any (sysadm.id sysadm.role xserver.home_data_file (systemlow systemlow))))

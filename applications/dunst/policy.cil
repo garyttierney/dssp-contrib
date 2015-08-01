@@ -1,0 +1,37 @@
+(roleattribute dunst_role)
+
+(typeattribute dunst_subj_type)
+(typeattribute dunst_sessbus_chat_client_subj_type)
+
+(block dunst
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (dunst_subj_type cmd_file))
+
+	(blockinherit usersubj_home_config_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow dunst_subj_type self rw_fifo_file_perms)
+
+(call dunst_read_home_config (dunst_subj_type))
+
+(call dunst_manage_tmpfs_files (dunst_subj_type))
+(call dunst_tmpfs_obj_type_transition_tmpfs (dunst_subj_type))
+
+(call file_read_data (dunst_subj_type))
+
+(call fs_getattr_fs (dunst_subj_type))
+
+(call miscfile_read_all_fonts (dunst_subj_type))
+(call miscfile_read_locale (dunst_subj_type))
+
+(call xserver_tmpfs_client (dunst_subj_type dunst.tmpfs_user_file))
+
+(optional dunst_subj_type_optional_sessbus
+	(call sessbus_acquire_service_all_subj (dunst_subj_type))
+	(call sessbus_client_all_subj (dunst_subj_type)))
+
+(optional dunst_sessbus_chat_client_subj_type_optional_sessbus
+	(allow dunst_sessbus_chat_client_subj_type dunst_subj_type (dbus (send_msg)))
+	(allow dunst_subj_type dunst_sessbus_chat_client_subj_type (dbus (send_msg))))

@@ -1,0 +1,15 @@
+(roleattribute dmenu_role)
+
+(block dmenu
+	(blockinherit app_blk)
+
+	(roletype dmenu_role subj)
+
+	(call file_search_var_cache (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call xserver_client_subj_type (subj))
+
+	(optional dmenu_optional_sessbus
+		(call sessbus_rw_inherited_unix_stream_sockets_all_subj (subj))))

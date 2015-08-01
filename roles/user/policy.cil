@@ -28,6 +28,9 @@
 		(call dirmngr_relabel_home (subj))
 		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
 
+	(optional user_optional_dmenu
+		(call dmenu_run (user_subj_type role)))
+
 	(optional user_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper_run (user_subj_type role)))
 
@@ -138,6 +141,23 @@
 
 (optional user_atspi_sessbus_launch_optional_user_sessbus
         (call sessbus_auto_subj_type_transition_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj)))
+
+(optional user_dunst_optional_dunst
+	(block user_dunst
+		(blockinherit dunst_subj_blk)
+
+		(call dunst_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj user.subj))
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_dunst_optional_user_firefox
+	(call firefox_auto_subj_type_transition_pattern (user_dunst.subj user_firefox.subj)))
+
+(optional user_dunst_optional_user_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (user_dunst.subj user_sessbus_launch.subj)))
 
 (optional user_emacs_optional_emacs
 	(block user_emacs
@@ -335,6 +355,9 @@
 
 (optional user_sessbus_optional_user_atspi_sessbus_launch
 	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_atspi_sessbus_launch.subj)))
+
+(optional user_sessbus_optional_user_dunst
+	(call dunst_auto_subj_type_transition_pattern (user_sessbus.subj user_dunst.subj)))
 
 (optional user_sessbus_optional_user_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_sessbus_launch.subj)))

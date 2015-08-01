@@ -1,0 +1,13 @@
+(macro dmenu_exec ((type ARG1))
+	(call can_exec (ARG1 dmenu.cmd_file)))
+
+(macro dmenu_auto_subj_type_transition ((type ARG1))
+	(call dmenu_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 dmenu.cmd_file dmenu.subj)))
+
+(macro dmenu_send_signal ((type ARG1))
+	(allow ARG1 dmenu.subj (process (signal))))
+
+(macro dmenu_run ((type ARG1)(role ARG2))
+	(call dmenu_auto_subj_type_transition (ARG1))
+	(roleattributeset dmenu_role ARG2))

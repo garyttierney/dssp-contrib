@@ -26,6 +26,9 @@
 	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))
 
+(optional sysadm_dunst_home_optional_dunst
+	(filecon "/root/\.config/dunst(/.*)?" any (sysadm.id sysadm.role dunst.home_config_file (systemlow systemlow))))
+
 (optional sysadm_emacs_home_optional_emacs
 	(filecon "/root/\.emacs" file (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.emacs\.el" file (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow)))

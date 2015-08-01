@@ -132,6 +132,9 @@
 		(call dm_run_dmcrypt (sysadm_subj_type role))
 		(call dm_run_dmsetup (sysadm_subj_type role)))
 
+	(optional sysadm_optional_dmenu
+		(call dmenu_run (sysadm_subj_type role)))
+
 	(optional sysadm_optional_dmesg
 		(call dmesg_run (sysadm_subj_type role)))
 
@@ -591,6 +594,23 @@
 (optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
 
+(optional sysadm_dunst_optional_dunst
+	(block sysadm_dunst
+		(blockinherit dunst_subj_blk)
+
+		(call dunst_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_dunst_optional_sysadm_firefox
+	(call firefox_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_firefox.subj)))
+
+(optional sysadm_dunst_optional_sysadm_sessbus_launch
+	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_sessbus_launch.subj)))
+
 (optional sysadm_emacs_optional_emacs
 	(block sysadm_emacs
 		(blockinherit emacs_subj_blk)
@@ -897,6 +917,9 @@
 
 (optional sysadm_sessbus_optional_sysadm_atspi_sessbus_launch
 	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
+
+(optional sysadm_sessbus_optional_sysadm_dunst
+	(call dunst_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_dunst.subj)))
 
 (optional sysadm_sessbus_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))

@@ -55,12 +55,6 @@
 	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc"))
 	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc.gmail")))
 
-(macro mutt_send_sigchld_all_subj ((type ARG1))
-	(allow ARG1 mutt_subj_type (process (sigchld))))
-
-(macro mutt_use_fd_all_subj ((type ARG1))
-	(allow ARG1 mutt_subj_type (fd (use))))
-
 (macro mutt_search_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
@@ -125,3 +119,13 @@
 (macro mutt_relabel_config_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 mutt.config_file relabel_file_perms))
+
+(macro mutt_send_sigchld_all_subj ((type ARG1))
+	(allow ARG1 mutt_subj_type (process (sigchld))))
+
+(macro mutt_use_fd_all_subj ((type ARG1))
+	(allow ARG1 mutt_subj_type (fd (use))))
+
+(macro mutt_rw_inherited_fifo_files_all_subj ((type ARG1))
+	(call mutt_use_fd_all_subj (ARG1))
+	(allow ARG1 mutt_subj_type rw_inherited_fifo_file_perms))

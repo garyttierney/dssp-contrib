@@ -364,6 +364,14 @@
 (optional wheel_hostnamectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_hostnamectl.subj wheel_ssh_client.subj)))
 
+(optional wheel_irssi_optional_irssi
+	(block wheel_irssi
+		(blockinherit irssi_subj_blk)
+
+		(call irssi_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))))
+
 (optional wheel_journalctl_optional_journalctl
 	(block wheel_journalctl
 		(blockinherit journalctl_subj_blk)
@@ -579,6 +587,10 @@
 (optional wheel_tor_socks_optional_wheel_git_email
 	(call tor_socks_client_subj_type (wheel_git_email.subj))
 	(call git_email_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_git_email.subj)))
+
+(optional wheel_tor_socks_optional_wheel_irssi
+	(call tor_socks_client_subj_type (wheel_irssi.subj))
+	(call irssi_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_irssi.subj)))
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks_client_subj_type (wheel_ssh_client.subj))

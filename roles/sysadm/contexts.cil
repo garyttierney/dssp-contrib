@@ -59,6 +59,9 @@
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
 
+(optional sysadm_irssi_home_optional_irssi
+	(filecon "/root/\.irssi(/.*)?" any (sysadm.id sysadm.role irssi.home_user_file (systemlow systemlow))))
+
 (optional sysadm_java_home_optional_java
 	(filecon "/root/\.java(/.*)?" any (sysadm.id sysadm.role java.home_user_file (systemlow systemlow))))
 

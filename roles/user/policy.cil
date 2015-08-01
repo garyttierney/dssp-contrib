@@ -308,6 +308,14 @@
 
                 (call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
+(optional user_irssi_optional_irssi
+	(block user_irssi
+		(blockinherit irssi_subj_blk)
+
+		(call irssi_role_pattern (user.role user_subj_type subj))
+
+		(call cmd_shell_auto_subj_type_transition (subj user.subj))))
+
 (optional user_libnotify_optional_libnotify
 	(block user_libnotify
 		(blockinherit libnotify_subj_blk)

@@ -156,6 +156,13 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs_adm (subj role)))
 
+	(optional sysadm_optional_fop
+		(call fop_run (sysadm_subj_type role))
+		(call fop_manage_config_files (subj))
+		(call fop_manage_home (subj))
+		(call fop_relabel_home (subj))
+		(call fop_home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_fpaste
 		(call fpaste_run (sysadm_subj_type role))
 		(call fpaste_manage_var_tmp (subj))
@@ -197,6 +204,14 @@
 	(optional sysadm_optional_iptools
 		(call iptools_manage_config (subj))
 		(call iptools_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_java
+		(call java_exec (sysadm_subj_type))
+		(call java_manage_config (subj))
+		(call java_manage_tmpfs (subj))
+		(call java_manage_home (subj))
+		(call java_relabel_home (subj))
+		(call java_home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_networkctl
 		(call networkctl_run (sysadm_subj_type role)))

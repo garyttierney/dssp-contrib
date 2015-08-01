@@ -1,0 +1,129 @@
+(macro java_exec ((type ARG1))
+	(call can_exec (ARG1 java.cmd_file)))
+
+(macro java_client_subj_type ((type ARG1))
+	(typeattributeset java_client_subj_type ARG1))
+
+(macro java_client ((type ARG1))
+	(call java_client_subj_type (ARG1))
+	(call java_tmpfs_obj_type_transition_tmpfs (ARG1 dir "*"))
+
+	(optional java_client_subj_type_optional_xserver
+		(call java_tmpfs_obj_type_transition_tmpfs (ARG1 file "*"))
+		(call xserver_tmpfs_client (ARG1 java.tmpfs_file))))
+
+(macro java_tmpfs_client ((type ARG1)(type ARG2))
+	(call java_client_subj_type (ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
+
+	(optional java_tmpfs_client_optional_xserver
+		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
+		(call xserver_tmpfs_client (ARG1 ARG2))))
+
+(macro java_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 java.config_file search_dir_perms))
+
+(macro java_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 java.config_file list_dir_perms))
+
+(macro java_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 java.config_file java.config_file)))
+
+(macro java_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 java.config_file java.config_file)))
+
+(macro java_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 java.config_file read_file_perms)
+	(allow ARG1 java.config_file list_dir_perms)
+	(allow ARG1 java.config_file read_lnk_file_perms))
+
+(macro java_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 java.config_file manage_file_perms)
+	(allow ARG1 java.config_file manage_dir_perms)
+	(allow ARG1 java.config_file manage_lnk_file_perms))
+
+(macro java_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 java.config_file relabel_file_perms)
+	(allow ARG1 java.config_file relabel_dir_perms)
+	(allow ARG1 java.config_file relabel_lnk_file_perms))
+
+(macro java_search_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 java.home_user_file search_dir_perms))
+
+(macro java_list_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 java.home_user_file list_dir_perms))
+
+(macro java_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_files_pattern (ARG1 java.home_user_file java.home_user_file)))
+
+(macro java_read_home_lnk_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(call read_lnk_files_pattern (ARG1 java.home_user_file java.home_user_file)))
+
+(macro java_read_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 java.home_user_file read_file_perms)
+	(allow ARG1 java.home_user_file list_dir_perms)
+	(allow ARG1 java.home_user_file read_lnk_file_perms))
+
+(macro java_manage_home ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 java.home_user_file manage_file_perms)
+	(allow ARG1 java.home_user_file manage_dir_perms)
+	(allow ARG1 java.home_user_file manage_lnk_file_perms))
+
+(macro java_relabel_home ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 java.home_user_file relabel_file_perms)
+	(allow ARG1 java.home_user_file relabel_dir_perms)
+	(allow ARG1 java.home_user_file relabel_lnk_file_perms))
+
+(macro java_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 java.home_user_file dir ".java")))
+
+(macro java_search_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 java.tmpfs_file search_dir_perms))
+
+(macro java_list_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 java.tmpfs_file list_dir_perms))
+
+(macro java_read_tmpfs_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 java.tmpfs_file java.tmpfs_file)))
+
+(macro java_read_tmpfs_lnk_files ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_lnk_files_pattern (ARG1 java.tmpfs_file java.tmpfs_file)))
+
+(macro java_read_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 java.tmpfs_file read_file_perms)
+	(allow ARG1 java.tmpfs_file list_dir_perms)
+	(allow ARG1 java.tmpfs_file read_lnk_file_perms))
+
+(macro java_manage_tmpfs ((type ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 java.tmpfs_file manage_file_perms)
+	(allow ARG1 java.tmpfs_file manage_dir_perms)
+	(allow ARG1 java.tmpfs_file manage_lnk_file_perms))
+
+(macro java_relabel_tmpfs ((type ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 java.tmpfs_file relabel_file_perms)
+	(allow ARG1 java.tmpfs_file relabel_dir_perms)
+	(allow ARG1 java.tmpfs_file relabel_lnk_file_perms))
+
+(macro java_tmpfs_obj_type_transition_tmpfs ((type ARG1)(class ARG2)(name ARG3))
+	(call fs_tmpfs_obj_type_transition (ARG1 java.tmpfs_file ARG2 ARG3)))

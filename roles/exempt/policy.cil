@@ -28,6 +28,9 @@
 		(call firefox_home_dir_obj_type_transition_home (subj))
 		(call firefox_home_cache_obj_type_transition_home_cache (subj)))
 
+	(optional exempt_optional_fop
+		(call fop_home_dir_obj_type_transition_home (subj)))
+
 	(optional exempt_optional_git
 		(call git_home_user_obj_type_transition_home (subj))
 		(call git_home_config_obj_type_transition_home_config (subj)))
@@ -40,6 +43,9 @@
 
 	(optional exempt_optional_gstreamer
                 (call gstreamer_home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional exempt_optional_java
+		(call java_home_dir_obj_type_transition_home (subj)))
 
 	(optional exempt_optional_openssl
 		(call openssl_home_dir_obj_type_transition_home (subj)))

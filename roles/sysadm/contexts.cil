@@ -38,6 +38,9 @@
 	(filecon "/root/\.mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.cache/mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_cache_file (systemlow systemlow))))
 
+(optional sysadm_fop_home_optional_fop
+	(filecon "/root/\.fop(/.*)?" any (sysadm.id sysadm.role fop.home_user_file (systemlow systemlow))))
+
 (optional sysadm_git_home_optional_git
 	(filecon "/root/.*/\.git(/.*)?" any (sysadm.id sysadm.role git.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.config/git(/.*)?" any (sysadm.id sysadm.role git.home_config_file (systemlow systemlow))))
@@ -55,6 +58,9 @@
 
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
+
+(optional sysadm_java_home_optional_java
+	(filecon "/root/\.java(/.*)?" any (sysadm.id sysadm.role java.home_user_file (systemlow systemlow))))
 
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))

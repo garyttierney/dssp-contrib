@@ -1,0 +1,7 @@
+(context java_cmd (sys.id sys.role java.cmd_file (systemlow systemlow)))
+(context java_config (sys.id sys.role java.config_file (systemlow systemlow)))
+
+(filecon "/etc/java(/.*)?" any java_config)
+(filecon "/usr/lib/jvm/java-.*-openjdk-.*/jre/bin/java" file java_cmd)
+
+(filecon "HOME_DIR/\.java(/.*)?" any (sys.id sys.role java.home_user_file (systemlow systemlow)))

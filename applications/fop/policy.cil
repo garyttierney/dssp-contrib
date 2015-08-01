@@ -1,0 +1,28 @@
+(roleattribute fop_role)
+
+(block fop
+	(blockinherit app_blk)
+
+	(roletype fop_role subj)
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(call fop_read_config_files (subj))
+
+	(call fop_manage_home (subj))
+	(call fop_home_dir_obj_type_transition_home (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
+
+	(call file_search_var_lib (subj))
+
+	(call java_client (subj))
+
+	(call miscfile_read_all_fonts (subj))
+	(call miscfile_read_network (subj))
+
+	(call usersubj_manage_home_user_files (subj))
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj)))

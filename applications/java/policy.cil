@@ -1,0 +1,36 @@
+(typeattribute java_client_subj_type)
+
+(block java
+	(blockinherit cmd_obj_blk)
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit file_tmpfs_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(allow java_client_subj_type self (process (getsched)))
+
+(call java_read_config (java_client_subj_type))
+
+(call java_manage_home (java_client_subj_type))
+(call java_home_dir_obj_type_transition_home (java_client_subj_type))
+
+(call java_manage_tmpfs (java_client_subj_type))
+
+(call java_exec (java_client_subj_type))
+
+(call sys_read_net_proc_files (java_client_subj_type))
+
+(call dev_read_random (java_client_subj_type))
+(call dev_read_urandom (java_client_subj_type))
+
+(call file_read_config (java_client_subj_type))
+(call file_read_data (java_client_subj_type))
+
+(call fs_getattr_fs (java_client_subj_type))
+(call fs_read_sysfs (java_client_subj_type))
+
+(call subj_execmem_uncond_type (java_client_subj_type))
+
+(call nss_client_subj_type (java_client_subj_type))

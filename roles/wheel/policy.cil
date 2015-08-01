@@ -66,6 +66,11 @@
 	(optional wheel_optional_lirc
 		(call lirc_run_lirc (wheel_subj_type role)))
 
+	(optional wheel_optional_myqemu
+		(call myqemu_read_installer_cmd_files (subj))
+		(call myqemu_read_runner_cmd_files (subj))
+		(call myqemu_read_shutdown_cmd_files (subj)))
+
 	(optional wheel_optional_mysysstat
 		(call mysysstat_run (wheel_subj_type role)))
 
@@ -90,6 +95,11 @@
 
 	(optional wheel_optional_pwgen
 		(call pwgen_run (wheel_subj_type role)))
+
+	(optional wheel_optional_qiv
+		(call qiv_manage_tmpfs_files (subj))
+		(call qiv_relabel_tmpfs_files (subj))
+		(call qiv_run (wheel_subj_type role)))
 
 	(optional wheel_optional_quota
 		(call quota_exec (wheel_subj_type)))

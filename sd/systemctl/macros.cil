@@ -21,14 +21,14 @@
 
 	(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (signal)))
+	(allow ARG2 ARG3 (process (noatsecure signal)))
 
 	(allow ARG3 ARG2 (process (signal)))
 
 	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
 (macro systemctl_auto_subj_type_transition ((type ARG1))
-	(call systemctl_send_signal (ARG1))
+	(allow ARG1 systemctl.subj (process (noatsecure signal)))
 	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file systemctl.subj)))
 
 (macro systemctl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))

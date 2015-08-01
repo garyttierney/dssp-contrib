@@ -1223,6 +1223,7 @@
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_xinit_optional_sysadm_systemctl
+	(allow sysadm_xinit.subj sysadm_systemctl.subj (process (noatsecure)))
 	(call systemctl_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_systemctl.subj)))
 
 (optional sysadm_xinit_optional_sysadm_xbindkeys

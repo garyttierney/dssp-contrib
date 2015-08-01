@@ -328,6 +328,20 @@
 
 		(call livestreamer_role_pattern (user.role user_subj_type subj))))
 
+(optional user_lynx_optional_lynx
+	(block user_lynx
+		(blockinherit lynx_subj_blk)
+
+		(call lynx_role_pattern (user.role user_subj_type subj))
+
+                (call cmd_auto_subj_type_transition (subj user.subj))
+                (call cmd_shell_auto_subj_type_transition (subj user.subj))
+
+                (call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+
+(optional user_lynx_optional_user_irssi
+	(call irssi_auto_subj_type_transition_pattern (user_lynx.subj user_irssi.subj)))
+
 (optional user_pa_optional_pa
 	(block user_pa
 		(blockinherit pa_subj_blk)

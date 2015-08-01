@@ -836,6 +836,22 @@
 (optional sysadm_loginctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))
 
+(optional sysadm_lynx_optional_lynx
+	(block sysadm_lynx
+		(blockinherit lynx_subj_blk)
+
+		(call lynx_manage_config_files (sysadm.subj))
+
+		(call lynx_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_lynx_optional_sysadm_irssi
+	(call irssi_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_irssi.subj)))
+
 (optional sysadm_machinectl_optional_machinectl
 	(block sysadm_machinectl
 		(blockinherit machinectl_subj_blk)
@@ -1051,6 +1067,10 @@
 (optional sysadm_tor_socks_optional_sysadm_livestreamer
 	(call tor_socks_client_subj_type (sysadm_livestreamer.subj))
 	(call livestreamer_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_livestreamer.subj)))
+
+(optional sysadm_tor_socks_optional_sysadm_lynx
+	(call tor_socks_client_subj_type (sysadm_lynx.subj))
+	(call lynx_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_lynx.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
 	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))

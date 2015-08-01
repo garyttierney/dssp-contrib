@@ -408,6 +408,20 @@
 (optional wheel_loginctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_loginctl.subj wheel_ssh_client.subj)))
 
+(optional wheel_lynx_optional_lynx
+	(block wheel_lynx
+		(blockinherit lynx_subj_blk)
+
+		(call lynx_role_pattern (wheel.role wheel_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj wheel.subj))
+		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
+
+(optional wheel_lynx_optional_wheel_irssi
+	(call irssi_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_irssi.subj)))
+
 (optional wheel_machinectl_optional_machinectl
 	(block wheel_machinectl
 		(blockinherit machinectl_subj_blk)
@@ -601,6 +615,10 @@
 (optional wheel_tor_socks_optional_wheel_livestreamer
 	(call tor_socks_client_subj_type (wheel_livestreamer.subj))
 	(call livestreamer_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_livestreamer.subj)))
+
+(optional wheel_tor_socks_optional_wheel_lynx
+	(call tor_socks_client_subj_type (wheel_lynx.subj))
+	(call lynx_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_lynx.subj)))
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks_client_subj_type (wheel_ssh_client.subj))

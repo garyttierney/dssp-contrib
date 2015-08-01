@@ -1,0 +1,51 @@
+(typeattribute lynx_subj_type)
+
+(block lynx
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (lynx_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow lynx_subj_type self (process (getsched setsched)))
+(allow lynx_subj_type self (unix_stream_socket (listen accept connectto)))
+(allow lynx_subj_type self rw_fifo_file_perms)
+
+(call lynx_read_config_files (lynx_subj_type))
+
+(call lynx_manage_home_files (lynx_subj_type))
+(call lynx_home_dir_obj_type_transition_home (lynx_subj_type))
+
+(call lynx_manage_tmpfs_files (lynx_subj_type))
+(call lynx_tmpfs_obj_type_transition_tmpfs (lynx_subj_type))
+
+(call dev_read_urandom (lynx_subj_type))
+
+(call file_read_config_files (lynx_subj_type))
+(call file_read_data (lynx_subj_type))
+(call file_search_mnt (lynx_subj_type))
+
+(call fs_list_tmpfs (lynx_subj_type))
+(call fs_list_devtmpfs (lynx_subj_type))
+(call fs_read_devtmpfs_lnk_files (lynx_subj_type))
+
+(call http_tcp_connect_http_port (lynx_subj_type))
+
+(call miscfile_read_all_cert (lynx_subj_type))
+(call miscfile_read_all_terminfo (lynx_subj_type))
+(call miscfile_read_locale (lynx_subj_type))
+(call miscfile_read_utmp_runtime_files (lynx_subj_type))
+
+(call nss_client_subj_type (lynx_subj_type))
+
+(call usersubj_manage_home_user_files (lynx_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (lynx_subj_type))
+(call usersubj_use_term (lynx_subj_type))
+
+(optional lynx_subj_type_optional_nb
+	(call nb_rw_inherited_home_files (lynx_subj_type)))
+

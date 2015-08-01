@@ -69,6 +69,9 @@
 	(filecon "/root/\.cache/livestreamer(/.*)?" any (sysadm.id sysadm.role livestreamer.home_cache_file (systemlow systemlow)))
 	(filecon "/root/\.config/livestreamer(/.*)?" any (sysadm.id sysadm.role livestreamer.home_config_file (systemlow systemlow))))
 
+(optional sysadm_lynx_home_optional_lynx
+	(filecon "/root/\.lynxrc" file (sysadm.id sysadm.role lynx.home_user_file (systemlow systemlow))))
+
 (optional sysadm_openssl_home_optional_openssl
 	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
 

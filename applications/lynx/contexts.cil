@@ -1,0 +1,10 @@
+(context lynx_cmd (sys.id sys.role lynx.cmd_file (systemlow systemlow)))
+(context lynx_config (sys.id sys.role lynx.config_file (systemlow systemlow)))
+
+(filecon "/etc/lynx-site\.cfg" file lynx_config)
+(filecon "/etc/lynx\.cfg" file lynx_config)
+(filecon "/etc/lynx\.lss" file lynx_config)
+(filecon "/usr/bin/lynx" file lynx_cmd)
+
+(filecon "HOME_DIR/\.lynxrc" file (sys.id sys.role lynx.home_user_file (systemlow systemlow)))
+

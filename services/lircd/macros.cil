@@ -96,6 +96,10 @@
 (macro lircd_runtime_obj_type_transition_runtime ((type ARG1))
 	(call file_runtime_obj_type_transition (ARG1 lircd.runtime_file dir "lirc")))
 
+(macro lircd_stream_connect ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 lircd.runtime_file lircd.runtime_file lircd.subj)))
+
 (macro lircd_adm ((type ARG1)(role ARG2))
 	(typeattributeset lircd_adm_subj_type ARG1)
 	(optional lircd_adm_optional_sd

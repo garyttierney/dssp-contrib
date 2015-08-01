@@ -711,9 +711,6 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_analyze_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_analyze.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_analyze.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_analyze.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_busctl_optional_busctl
@@ -762,9 +759,6 @@
 		(call hostnamectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_hostnamectl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_hostnamectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_journalctl_optional_journalctl
@@ -773,6 +767,12 @@
 
 		(call journalctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_libnotify_optional_libnotify
+	(block sysadm_libnotify
+		(blockinherit libnotify_subj_blk)
+
+		(call libnotify_role_pattern (sysadm.role sysadm_subj_type subj))))
+
 (optional sysadm_localectl_optional_localectl
 	(block sysadm_localectl
 		(blockinherit localectl_subj_blk)
@@ -780,9 +780,6 @@
 		(call localectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_localectl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_localectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_localectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_localectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_loginctl_optional_loginctl
@@ -792,9 +789,6 @@
 		(call loginctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_loginctl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_loginctl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_loginctl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_machinectl_optional_machinectl
@@ -804,9 +798,6 @@
 		(call machinectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_machinectl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_machinectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_machinectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_numactl_optional_numactl
@@ -974,9 +965,6 @@
 		(call systemctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_systemctl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_systemctl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_systemctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_timedatectl_optional_timedatectl
@@ -986,9 +974,6 @@
 		(call timedatectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_timedatectl_optional_ssh
-		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj (fd (use)))
-		(allow sysadm_ssh_client.subj sysadm_timedatectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_tor_socks_optional_tor_socks

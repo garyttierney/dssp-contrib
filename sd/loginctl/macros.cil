@@ -37,3 +37,10 @@
 
 (macro loginctl_send_signal ((type ARG1))
 	(allow ARG1 loginctl.subj (process (signal))))
+
+(macro loginctl_use_fd_all_subj ((type ARG1))
+	(allow ARG1 loginctl_subj_type (fd (use))))
+
+(macro loginctl_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call loginctl_use_fd_all_subj (ARG1))
+	(allow ARG1 loginctl_subj_type rw_inherited_unix_stream_socket_perms))

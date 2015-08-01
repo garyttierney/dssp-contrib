@@ -126,11 +126,32 @@
 (call usersubj_manage_tmpfs_user_files (ssh_client_subj_type))
 (call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (ssh_client_subj_type))
 
+(optional ssh_client_subj_type_optional_analyze
+	(call analyze_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
 (optional ssh_client_subj_type_optional_busctl
 	(call busctl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
 
 (optional ssh_client_subj_type_optional_gpg_agent
 	(call gpg_agent_stream_connect_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_hostnamectl
+	(call hostnamectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_localectl
+	(call localectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_loginctl
+	(call loginctl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_machinectl
+	(call machinectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_systemctl
+	(call systemctl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_type_optional_timedatectl
+	(call timedatectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
 
 (allow ssh_agent_subj_type self (process (setrlimit)))
 (allow ssh_agent_subj_type self (unix_stream_socket (listen accept connectto)))

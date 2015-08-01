@@ -289,9 +289,6 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_analyze_optional_ssh
-		(allow wheel_ssh_client.subj wheel_analyze.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_analyze.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_analyze.subj wheel_ssh_client.subj)))
 
 (optional wheel_busctl_optional_busctl
@@ -340,9 +337,6 @@
 		(call hostnamectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_hostnamectl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_hostnamectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_hostnamectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_journalctl_optional_journalctl
@@ -351,6 +345,12 @@
 
 		(call journalctl_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_libnotify_optional_libnotify
+	(block wheel_libnotify
+		(blockinherit libnotify_subj_blk)
+
+		(call libnotify_role_pattern (wheel.role wheel_subj_type subj))))
+
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
 		(blockinherit localectl_subj_blk)
@@ -358,9 +358,6 @@
 		(call localectl_role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
 
 (optional wheel_localectl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_localectl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_localectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_localectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_loginctl_optional_loginctl
@@ -370,9 +367,6 @@
 		(call loginctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_loginctl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_loginctl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_loginctl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_loginctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_machinectl_optional_machinectl
@@ -382,9 +376,6 @@
 		(call machinectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_machinectl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_machinectl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_machinectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_machinectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_pa_optional_pa
@@ -530,9 +521,6 @@
 		(call systemctl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_systemctl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_systemctl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_systemctl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_systemctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_timedatectl_optional_timedatectl
@@ -542,9 +530,6 @@
 		(call timedatectl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_timedatectl_optional_ssh
-		(allow wheel_ssh_client.subj wheel_timedatectl.subj (fd (use)))
-		(allow wheel_ssh_client.subj wheel_timedatectl.subj rw_inherited_unix_stream_socket_perms)
-
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_timedatectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_tor_socks_optional_tor_socks

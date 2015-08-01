@@ -30,3 +30,10 @@
 
 (macro analyze_send_signal ((type ARG1))
 	(allow ARG1 analyze.subj (process (signal))))
+
+(macro analyze_use_fd_all_subj ((type ARG1))
+	(allow ARG1 analyze_subj_type (fd (use))))
+
+(macro analyze_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+	(call analyze_use_fd_all_subj (ARG1))
+	(allow ARG1 analyze_subj_type rw_inherited_unix_stream_socket_perms))

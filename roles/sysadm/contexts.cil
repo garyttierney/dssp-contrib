@@ -72,6 +72,9 @@
 (optional sysadm_lynx_home_optional_lynx
 	(filecon "/root/\.lynxrc" file (sysadm.id sysadm.role lynx.home_user_file (systemlow systemlow))))
 
+(optional sysadm_mplayer_home_optional_mplayer
+	(filecon "/root/\.mplayer(/.*)?" any (sysadm.id sysadm.role mplayer.home_user_file (systemlow systemlow))))
+
 (optional sysadm_mutt_home_optional_mutt
 	(filecon "/root/\.muttrc" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.muttrc\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))

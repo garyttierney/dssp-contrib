@@ -334,6 +334,9 @@
 
 		(call livestreamer_role_pattern (user.role user_subj_type subj))))
 
+(optional user_livestreamer_optional_user_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (user_livestreamer.subj user_mplayer.subj)))
+
 (optional user_lynx_optional_lynx
 	(block user_lynx
 		(blockinherit lynx_subj_blk)
@@ -353,6 +356,12 @@
 
 (optional user_lynx_optional_user_mutt
 	(call mutt_auto_subj_type_transition_pattern (user_lynx.subj user_mutt.subj)))
+
+(optional user_mplayer_optional_mplayer
+	(block user_mplayer
+		(blockinherit mplayer_subj_blk)
+
+		(call mplayer_role_pattern (user.role user_subj_type subj))))
 
 (optional user_mutt_optional_mutt
 	(block user_mutt

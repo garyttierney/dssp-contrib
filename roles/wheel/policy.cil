@@ -396,6 +396,9 @@
 
 		(call livestreamer_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_livestreamer_optional_wheel_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (wheel_livestreamer.subj wheel_mplayer.subj)))
+
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
 		(blockinherit localectl_subj_blk)
@@ -471,6 +474,12 @@
 
 (optional wheel_machinectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_machinectl.subj wheel_ssh_client.subj)))
+
+(optional wheel_mplayer_optional_mplayer
+	(block wheel_mplayer
+		(blockinherit mplayer_subj_blk)
+
+		(call mplayer_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pa_optional_pa
 	(block wheel_pa
@@ -660,6 +669,10 @@
 (optional wheel_tor_socks_optional_wheel_lynx
 	(call tor_socks_client_subj_type (wheel_lynx.subj))
 	(call lynx_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_lynx.subj)))
+
+(optional wheel_tor_socks_optional_wheel_mplayer
+	(call tor_socks_client_subj_type (wheel_mplayer.subj))
+	(call mplayer_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_mplayer.subj)))
 
 (optional wheel_tor_socks_optional_wheel_mutt
 	(call tor_socks_client_subj_type (wheel_mutt.subj))

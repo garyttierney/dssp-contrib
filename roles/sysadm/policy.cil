@@ -824,6 +824,9 @@
 
 		(call livestreamer_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_livestreamer_optional_sysadm_mplayer
+	(call mplayer_auto_subj_type_transition_pattern (sysadm_livestreamer.subj sysadm_mplayer.subj)))
+
 (optional sysadm_localectl_optional_localectl
 	(block sysadm_localectl
 		(blockinherit localectl_subj_blk)
@@ -872,6 +875,12 @@
 
 (optional sysadm_machinectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_mplayer_optional_mplayer
+	(block sysadm_mplayer
+		(blockinherit mplayer_subj_blk)
+
+		(call mplayer_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_mutt_optional_mutt
 	(block sysadm_mutt
@@ -1114,6 +1123,10 @@
 (optional sysadm_tor_socks_optional_sysadm_lynx
 	(call tor_socks_client_subj_type (sysadm_lynx.subj))
 	(call lynx_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_lynx.subj)))
+
+(optional sysadm_tor_socks_optional_sysadm_mplayer
+	(call tor_socks_client_subj_type (sysadm_mplayer.subj))
+	(call mplayer_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_mplayer.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_mutt
 	(call tor_socks_client_subj_type (sysadm_mutt.subj))

@@ -1,0 +1,7 @@
+(context mplayer_cmd (sys.id sys.role mplayer.cmd_file (systemlow systemlow)))
+(context mplayer_config (sys.id sys.role mplayer.config_file (systemlow systemlow)))
+
+(filecon "/etc/mplayer(/.*)?" any mplayer_config)
+(filecon "/usr/bin/mplayer" file mplayer_cmd)
+
+(filecon "HOME_DIR/\.mplayer(/.*)?" any (sys.id sys.role mplayer.home_user_file (systemlow systemlow)))

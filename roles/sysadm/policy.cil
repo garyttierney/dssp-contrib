@@ -855,6 +855,9 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
+(optional sysadm_lynx_optional_sysadm_gpg
+	(call gpg_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_gpg.subj)))
+
 (optional sysadm_lynx_optional_sysadm_irssi
 	(call irssi_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_irssi.subj)))
 
@@ -888,6 +891,18 @@
 
 (optional sysadm_mutt_optional_sysadm_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
+
+(optional sysadm_mutt_optional_sysadm_mutt_pgp_ewrap
+	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_mutt_pgp_ewrap.subj)))
+
+(optional sysadm_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
+	(block sysadm_mutt_pgp_ewrap
+		(blockinherit mutt_pgp_ewrap_subj_blk)
+
+		(call mutt_pgp_ewrap_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_mutt_pgp_ewrap_optional_sysadm_gpg
+	(call gpg_auto_subj_type_transition_pattern (sysadm_mutt_pgp_ewrap.subj sysadm_gpg.subj)))
 
 (optional sysadm_numactl_optional_numactl
 	(block sysadm_numactl

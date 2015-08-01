@@ -425,6 +425,9 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
+(optional wheel_lynx_optional_wheel_gpg
+	(call gpg_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_gpg.subj)))
+
 (optional wheel_lynx_optional_wheel_irssi
 	(call irssi_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_irssi.subj)))
 
@@ -447,6 +450,18 @@
 
 (optional wheel_mutt_optional_wheel_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox_xremotec.subj)))
+
+(optional wheel_mutt_optional_wheel_mutt_pgp_ewrap
+	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_mutt_pgp_ewrap.subj)))
+
+(optional wheel_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
+	(block wheel_mutt_pgp_ewrap
+		(blockinherit mutt_pgp_ewrap_subj_blk)
+
+		(call mutt_pgp_ewrap_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_mutt_pgp_ewrap_optional_wheel_gpg
+        (call gpg_auto_subj_type_transition_pattern (wheel_mutt_pgp_ewrap.subj wheel_gpg.subj)))
 
 (optional wheel_machinectl_optional_machinectl
 	(block wheel_machinectl

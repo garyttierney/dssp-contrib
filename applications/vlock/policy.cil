@@ -1,0 +1,27 @@
+(typeattribute vlock_subj_type)
+
+(block vlock
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (vlock_subj_type cmd_file))
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(allow vlock_subj_type self (capability (setuid)))
+(allow vlock_subj_type self rw_fifo_file_perms)
+
+(call vlock_read_home_files (vlock_subj_type))
+
+(call sys_audit_client_subj_type (vlock_subj_type))
+
+(call file_read_config_files (vlock_subj_type))
+
+(call miscfile_read_locale (vlock_subj_type))
+(call miscfile_read_utmp_runtime_files (vlock_subj_type))
+
+(call nss_client_subj_type (vlock_subj_type))
+
+(call pam_read_config (vlock_subj_type))
+
+(optional vlock_subj_type_optional_sd_journald
+	(call sd_journald_client_subj_type (vlock_subj_type)))

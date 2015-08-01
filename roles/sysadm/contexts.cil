@@ -124,6 +124,9 @@
 (optional sysadm_tor_home_optional_tor
 	(filecon "/root/\.tor(/.*)?" any (sysadm.id sysadm.role tor.home_user_file (systemlow systemlow))))
 
+(optional sysadm_vlock_home_optional_vlock
+	(filecon "/root/\.vlockrc" file (sysadm.id sysadm.role vlock.home_user_file (systemlow systemlow))))
+
 (optional sysadm_xauth_home_optional_xauth
 	(filecon "/root/\.Xauthority.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow)))
 	(filecon "/root/\.serverauth.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow))))

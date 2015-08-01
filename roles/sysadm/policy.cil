@@ -1172,6 +1172,16 @@
 	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
 
+(optional sysadm_vlock_optional_vlock
+	(block sysadm_vlock
+		(blockinherit vlock_subj_blk)
+
+		(call vlock_role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
 (optional sysadm_xbindkeys_optional_xbindkeys
 	(block sysadm_xbindkeys
 		(blockinherit xbindkeys_subj_blk)

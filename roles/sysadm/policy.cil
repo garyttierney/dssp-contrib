@@ -686,11 +686,17 @@
 
 		(call festival_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_festival_optional_sysadm_pa
+	(call pa_auto_subj_type_transition_pattern (sysadm_festival.subj sysadm_pa.subj)))
+
 (optional sysadm_ffmpeg_optional_ffmpeg
 	(block sysadm_ffmpeg
 		(blockinherit ffmpeg_subj_blk)
 
 		(call ffmpeg_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_ffmpeg_optional_sysadm_pa
+	(call pa_auto_subj_type_transition_pattern (sysadm_ffmpeg.subj sysadm_pa.subj)))
 
 (optional sysadm_fuse_optional_fuse
 	(block sysadm_fuse_sshfs

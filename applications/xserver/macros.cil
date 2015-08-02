@@ -33,6 +33,10 @@
 	(call file_search_config (ARG1))
 	(call read_files_pattern (ARG1 xserver.config_file xserver.config_file)))
 
+(macro xserver_manage_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call manage_files_pattern (ARG1 xserver.config_file xserver.config_file)))
+
 (macro xserver_read_config_lnk_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 xserver.config_file xserver.config_file)))

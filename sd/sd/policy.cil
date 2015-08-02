@@ -120,6 +120,8 @@
 	(call sys_rw_unix_stream_sockets (subj))
 	(call sys_use_fd (subj))
 
+	(call rbacsep_read_state_target_subj_type (subj))
+
 	(call dev_create_devtty (subj))
 	(call dev_tmpfs_obj_type_transition_devtty (subj))
 	(call dev_create_null (subj))

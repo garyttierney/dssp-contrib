@@ -22,14 +22,13 @@
 (call mplayer_manage_tmpfs_files (mplayer_subj_type))
 (call mplayer_tmpfs_obj_type_transition_tmpfs (mplayer_subj_type))
 
-(call sys_read_cpu_sysfs_files (mplayer_subj_type))
-
 (call dev_rw_dri (mplayer_subj_type))
 
 (call file_read_config_files (mplayer_subj_type))
 (call file_read_data_files (mplayer_subj_type))
-
 (call file_search_mnt (mplayer_subj_type))
+
+(call fs_read_fuse_subj_type (mplayer_subj_type))
 
 (call miscfile_read_locale (mplayer_subj_type))
 

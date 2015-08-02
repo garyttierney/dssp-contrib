@@ -275,6 +275,9 @@
 	(call fuse_run_fusermount (user.subj user.role))
 	(call fuse_run_ulockmgr (user.subj user.role)))
 
+(optional user_fuse_optional_user_ssh
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_fuse_sshfs.subj user_ssh_client.subj)))
+
 (optional user_git_optional_git
 	(block user_git
 		(blockinherit git_subj_blk)
@@ -385,6 +388,9 @@
 		(blockinherit mplayer_subj_blk)
 
 		(call mplayer_role_pattern (user.role user_subj_type subj))))
+
+(optional user_mplayer_optional_user_pa
+	(call pa_auto_subj_type_transition_pattern (user_mplayer.subj user_pa.subj)))
 
 (optional user_mutt_optional_mutt
 	(block user_mutt

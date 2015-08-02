@@ -76,11 +76,13 @@
 
 (allow pa_client_subj_type pa_subj_type (unix_stream_socket (connectto)))
 
+(call sys_list_cpu_sysfs (pa_client_subj_type))
 (call sys_read_cpu_sysfs_files (pa_client_subj_type))
 
 (call dev_read_urandom (pa_client_subj_type))
 
 (call fs_getattr_tmpfs_fs (pa_client_subj_type))
+(call fs_read_sysfs (pa_client_subj_type))
 
 (call alsactl_read_config (pa_client_subj_type))
 

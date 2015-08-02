@@ -110,6 +110,8 @@
 
 (call file_read_config (ssh_client_subj_type))
 
+(call fs_manage_fuse_subj_type (ssh_client_subj_type))
+
 (call miscfile_read_all_terminfo (ssh_client_subj_type))
 (call miscfile_read_all_cert (ssh_client_subj_type))
 (call miscfile_read_locale (ssh_client_subj_type))
@@ -131,6 +133,9 @@
 
 (optional ssh_client_subj_type_optional_busctl
 	(call busctl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+
+(optional ssh_client_subj_Type_optional_fuse
+	(call fuse_rw_inherited_unix_stream_sockets_all_sshfs_subj (ssh_client_subj_type)))
 
 (optional ssh_client_subj_type_optional_gpg_agent
 	(call gpg_agent_stream_connect_all_subj (ssh_client_subj_type)))

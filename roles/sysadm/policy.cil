@@ -702,6 +702,9 @@
 	(call fuse_run_fusermount (sysadm.subj sysadm.role))
 	(call fuse_run_ulockmgr (sysadm.subj sysadm.role)))
 
+(optional sysadm_fuse_optional_sysadm_ssh
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_fuse_sshfs.subj sysadm_ssh_client.subj)))
+
 (optional sysadm_git_optional_git
 	(block sysadm_git
 		(blockinherit git_subj_blk)
@@ -904,6 +907,9 @@
 		(blockinherit mplayer_subj_blk)
 
 		(call mplayer_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_mplayer_optional_sysadm_pa
+	(call pa_auto_subj_type_transition_pattern (sysadm_mplayer.subj sysadm_pa.subj)))
 
 (optional sysadm_mutt_optional_mutt
 	(block sysadm_mutt

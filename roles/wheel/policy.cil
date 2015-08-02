@@ -282,6 +282,9 @@
 	(call fuse_run_fusermount (wheel.subj wheel.role))
 	(call fuse_run_ulockmgr (wheel.subj wheel.role)))
 
+(optional wheel_fuse_optional_wheel_ssh
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_fuse_sshfs.subj wheel_ssh_client.subj)))
+
 (optional wheel_git_optional_git
 	(block wheel_git
 		(blockinherit git_subj_blk)
@@ -508,6 +511,9 @@
 		(blockinherit mplayer_subj_blk)
 
 		(call mplayer_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_mplayer_optional_wheel_pa
+	(call pa_auto_subj_type_transition_pattern (wheel_mplayer.subj wheel_pa.subj)))
 
 (optional wheel_nb_optional_nb
 	(block wheel_nb

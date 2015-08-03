@@ -32,8 +32,10 @@
 	(allow subj self create_unix_stream_socket_perms)
 
 	(call sys_audit_client_subj_type (subj))
+	(call sys_list_cpu_sysfs (subj))
 	(call sys_list_invalid (subj))
 	(call sys_list_unlabeled (subj))
+	(call sys_read_cpu_sysfs_files (subj))
 	(call sys_read_invalid_lnk_files (subj))
 	(call sys_read_unlabeled_lnk_files (subj))
 	(call sys_relabelfrom_invalid (subj))

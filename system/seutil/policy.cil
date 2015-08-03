@@ -107,6 +107,8 @@
 
 	(roletype seutil_matchpathcon_role subj)
 
+	(allow subj self create_unix_stream_socket_perms)
+
 	(call sys_getattr_all_sysctl_files (subj))
 	(call sys_getattr_all_sysctl_lnk_files (subj))
 

@@ -9,15 +9,14 @@
 
 	(blockinherit usersubj_home_config_obj_blk)
 
-	(allow subj self create_unix_stream_socket_perms)
-	(allow subj self create_tcp_stream_socket_perms)
-	(allow subj self create_udp_socket_perms)
+	(allow subj self (tcp_socket (listen accept)))
 
 	(call rtorrent_read_home_config_files (subj))
 
 	(call rtorrent_manage_home (subj))
 	(call rtorrent_home_dir_obj_type_transition_home (subj))
 
+	(call file_list_home (subj))
 	(call file_search_mnt (subj))
 
 	(call fs_getattr_fs (subj))
@@ -33,17 +32,17 @@
 	(call net_udp_bind_ephemeral_port (subj))
 	(call net_udp_bind_all_unreserved_ports (subj))
 
-	(call dns_resolv_client_subj_type (subj))
-
 	(call http_tcp_connect_http_port (subj))
+
+	(call nss_client_subj_type (subj))
 
 	(call torrent_tcp_bind_torrent_port (subj))
 
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_locale (subj))
-	(call miscfile_read_network (subj))
 
 	(call usersubj_manage_home_user_dirs (subj))
 	(call usersubj_manage_home_user_files (subj))
 	(call usersubj_home_dir_obj_type_transition_home_user_dirs (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj)))
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj_read_home_user_lnk_files (subj)))

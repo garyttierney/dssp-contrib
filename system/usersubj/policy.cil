@@ -116,6 +116,7 @@
 
 (allow usersubj_common_login_type self create_unix_dgram_socket_perms)
 
+(call sys_list_cpu_sysfs (usersubj_common_login_type))
 (call sys_read_cpu_sysfs_files (usersubj_common_login_type))
 (call sys_read_kernel_sysctl_files (usersubj_common_login_type))
 (call sys_read_net_proc_files (usersubj_common_login_type))

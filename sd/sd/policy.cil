@@ -265,7 +265,9 @@
 (block sd_unit
 	(blockinherit sd_unit_obj_blk)
 
-	(typeattributeset sd_obj_type unit_file))
+	(typeattributeset sd_obj_type unit_file)
+
+	(call fs_associate_tmpfs (unit_file)))
 
 (block sd_unit_kexec
 	(blockinherit sd_unit_obj_blk)

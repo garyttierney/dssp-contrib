@@ -36,6 +36,9 @@
 	(allow ARG3 ARG2 (process (signal)))
 	(allow ARG3 ARG2 rw_key_perms)
 
+	(call sudo_manage_tmpfs_files (ARG2))
+	(call sudo_relabel_tmpfs_files (ARG2))
+
 	(call chkpwd_run (ARG3 ARG1))
 
 	(call usersubj_send_signal_priv_subj (ARG2)))

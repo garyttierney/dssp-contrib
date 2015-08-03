@@ -1139,6 +1139,10 @@
 	(block sysadm_sudo
 		(blockinherit sudo_subj_blk)
 
+		(call sudo_manage_config (sysadm.subj))
+		(call sudo_manage_var_db (sysadm.subj))
+		(call sudo_manage_runtime (sysadm.subj))
+
 		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_systemctl

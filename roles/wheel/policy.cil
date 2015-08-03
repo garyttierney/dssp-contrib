@@ -133,6 +133,7 @@
 		(call sd_stdio_run (wheel_subj_type role)))
 
 	(optional wheel_optional_ssh
+		(call ssh_run_ssh_sftpserver (wheel_subj_type role))
 		(call ssh_run_ssh_keygen (wheel_subj_type role))
 		(call ssh_login_subj_type (subj)))
 

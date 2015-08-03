@@ -534,6 +534,7 @@
 
 	(optional sysadm_optional_ssh
 		(call ssh_adm (sysadm_subj_type role))
+		(call ssh_run_ssh_sftpserver (sysadm_subj_type role))
 		(call ssh_run_ssh_keygen (sysadm_subj_type role))
 		(call ssh_priv_login_subj_type (subj)))
 

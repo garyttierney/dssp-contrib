@@ -31,6 +31,7 @@
 
 (allow qemu_guest_subj_type qemu_guest.subj (tun_socket (relabelfrom)))
 
+(call sys_read_cpu_sysfs_files (qemu_guest_subj_type))
 (call sys_read_kernel_sysctl_files (qemu_guest_subj_type))
 (call sys_read_net_proc_files (qemu_guest_subj_type))
 
@@ -42,7 +43,6 @@
 (call file_read_config_files (qemu_guest_subj_type))
 
 (call fs_getattr_fs (qemu_guest_subj_type))
-(call fs_read_sysfs (qemu_guest_subj_type))
 
 (call subj_use_interactive_fd_type (qemu_guest_subj_type))
 

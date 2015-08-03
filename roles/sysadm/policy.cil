@@ -271,6 +271,9 @@
 		(call mount_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_myqemu
+		(call myqemu_run_runner (sysadm_subj_type role))
+		(call myqemu_run_installer (sysadm_subj_type role))
+		(call myqemu_run_shutdown (sysadm_subj_type role))
 		(call myqemu_adm (subj role)))
 
 	(optional sysadm_optional_mysysstat

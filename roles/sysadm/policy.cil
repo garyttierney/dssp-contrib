@@ -286,7 +286,7 @@
 		(call nmcli_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_nm
-		(call nm_adm (subj role))
+		(call nm_adm (subj role)))
 
 	(optional sysadm_optional_nss
 		(call nss_manage_config_files (subj)))
@@ -500,7 +500,7 @@
 		(call sd_timesyncd_adm (subj role)))
 
 	(optional sysadm_optional_sd_tmpfiles
-		(call sd_tmpfiles_adm (subj role)))
+		(call sd_tmpfiles_adm (subj role))
 		(call sd_tmpfiles_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_sd_udevd

@@ -460,7 +460,7 @@
 (macro sduser_tmpfs_obj_type_transition_private_tmpfs ((type ARG1))
 	(call sduser_tmpfs_obj_type_transition (ARG1 sduser_private.tmpfs_user_file sock_file "private")))
 
-(macro sduser_halt_pattern ((type ARG1)(type AR2))
+(macro sduser_halt_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (system (halt))))
 
 (macro sduser_reboot_pattern ((type ARG1)(type ARG2))

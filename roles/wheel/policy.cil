@@ -212,6 +212,12 @@
 (optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
 
+(optional wheel_chfn_optional_chfn
+	(block wheel_chfn
+		(blockinherit chfn_subj_blk)
+
+		(call chfn_role_pattern (wheel.role wheel_subj_type subj))))
+
 (optional wheel_dbus_send_optional_dbus_send
 	(block wheel_dbus_send
 		(blockinherit dbus_send_subj_blk)

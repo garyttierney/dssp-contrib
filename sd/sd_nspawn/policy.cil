@@ -197,6 +197,8 @@
 (call sys_read_sysctl_files (sd_nspawn_container_subj_type))
 (call sys_read_vm_sysctl_files (sd_nspawn_container_subj_type))
 
+(call mcs_constrained_subj_type (sd_nspawn_container_subj_type))
+
 (call fs_dontaudit_audit_access_hugetlbfs_dirs (sd_nspawn_container_subj_type))
 (call fs_dontaudit_setattr_proc_dirs (sd_nspawn_container_subj_type))
 (call fs_getattr_cgroup_fs (sd_nspawn_container_subj_type))

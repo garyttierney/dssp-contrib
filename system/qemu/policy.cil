@@ -36,6 +36,8 @@
 (call sys_read_kernel_sysctl_files (qemu_guest_subj_type))
 (call sys_read_net_proc_files (qemu_guest_subj_type))
 
+(call mcs_constrained_subj_type (qemu_guest_subj_type))
+
 (call dev_read_urandom (qemu_guest_subj_type))
 (call dev_rw_kvm (qemu_guest_subj_type))
 (call dev_rw_tun_tap (qemu_guest_subj_type))

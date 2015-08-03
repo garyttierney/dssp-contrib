@@ -114,6 +114,7 @@
 		(call scdaemon_relabel_tmpfs (subj)))
 
 	(optional user_optional_ssh
+		(call ssh_run_ssh_keygen (user_subj_type role))
 		(call ssh_login_subj_type (subj)))
 
 	(optional user_optional_systemctl

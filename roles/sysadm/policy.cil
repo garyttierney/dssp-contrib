@@ -519,6 +519,7 @@
 		(call setools_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_ssh
+		(call ssh_run_ssh_keygen (sysadm_subj_type role))
 		(call ssh_priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_sysbus

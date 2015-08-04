@@ -23,6 +23,7 @@
 (filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config_users)
 (filecon "/etc/selinux/([^/]*/)?source(/.*)?" any policy_src)
 (filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config_users)
+(filecon "/usr/bin/chcon" file setfiles_cmd)
 (filecon "/usr/sbin/load_policy" file load_policy_cmd)
 (filecon "/usr/sbin/matchpathcon" file matchpathcon_cmd)
 (filecon "/usr/sbin/setenforce" file setenforce_cmd)

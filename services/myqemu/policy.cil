@@ -28,10 +28,12 @@
 
 	(call miscfile_read_locale (subj))
 
+	(call nss_client_subj_type (subj))
+
 	(call qemu_relabel_all_guest_obj_files (subj))
 	(call qemu_run_all_qemu_guest (subj myqemu_runner_role))
 
-	(call nss_client_subj_type (subj))
+	(call seutil_exec_setfiles (subj))
 
 	(optional mqemu_runner_optional_sd
 		(call sd_daemon (subj cmd_file))

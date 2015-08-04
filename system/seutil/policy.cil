@@ -72,10 +72,12 @@
 
 	(optional setfiles_optional_auditd
 		(call auditd_relabel_config (subj))
-		(call auditd_relabel_var_log (subj)))
+		(call auditd_relabel_var_log (subj))
+		(call auditd_relabel_runtime_sock_files (subj)))
 
 	(optional setfiles_optional_audispd
-		(call audispd_relabel_config (subj)))
+		(call audispd_relabel_config (subj))
+		(call audispd_relabel_runtime_sock_files (subj)))
 
 	(optional setfiles_optional_sd
 		(call sd_forked_subj_type (subj))))

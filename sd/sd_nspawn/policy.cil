@@ -53,6 +53,7 @@
 	(call sd_nspawn_sd_runtime_obj_type_transition_runtime (subj))
 
 	(call sd_nspawn_manage_tmpfs (subj))
+	(allow subj tmpfs_file (dir (mounton)))
 	(call sd_nspawn_tmpfs_obj_type_transition_tmpfs (subj))
 
 	(call sd_nspawn_setattr_ptys (subj))

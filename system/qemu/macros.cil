@@ -138,6 +138,10 @@
 	(call fs_search_devpts (ARG1))
 	(allow ARG1 qemu_guest_pty_obj_type (chr_file (getattr))))
 
+(macro qemu_use_all_guest_ptys ((type ARG1))
+	(call fs_search_devpts (ARG1))
+	(allow ARG1 qemu_guest_pty_obj_type rw_term_perms))
+
 (macro qemu_use_all_inherited_guest_ptys ((type ARG1))
 	(call fs_search_devpts (ARG1))
 	(allow ARG1 qemu_guest_pty_obj_type rw_inherited_term_perms))

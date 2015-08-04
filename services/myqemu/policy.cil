@@ -15,6 +15,7 @@
 
 	(roletype myqemu_runner_role subj)
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self (process (setexec)))
 	(allow subj self rw_fifo_file_perms)
 

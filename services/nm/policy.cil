@@ -30,7 +30,7 @@
 
 	(allow subj self (capability (net_admin net_raw sys_admin dac_override)))
 	(allow subj self (process (setpgid)))
-	(allow subj self create_netlink_socket_perms)
+	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self (netlink_route_socket (nlmsg_write)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_rawip_socket_perms)

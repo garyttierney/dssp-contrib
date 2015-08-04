@@ -258,6 +258,15 @@
 	(call usersubj_use_fd_unpriv_subj (ARG1))
 	(allow ARG1 usersubj_unpriv_type rw_inherited_unix_stream_socket_perms))
 
+(macro usersubj_getattr_common_subj ((type ARG1))
+	(allow ARG1 usersubj_common_type (process (getattr))))
+
+(macro usersubj_read_common_subj_state ((type ARG1))
+	(call fs_search_proc (ARG1))
+	(allow ARG1 usersubj_common_type read_file_perms)
+	(allow ARG1 usersubj_common_type list_dir_perms)
+	(allow ARG1 usersubj_common_type read_lnk_file_perms))
+
 (macro usersubj_home_user_obj_type ((type ARG1))
 	(call file_obj_type (ARG1))
 	(typeattributeset usersubj_home_user_obj_type ARG1))

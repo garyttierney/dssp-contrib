@@ -69,10 +69,15 @@
 (call sduser_tmpfs_obj_type_transition_tmpfs (sduser_subj_type))
 (call sduser_tmpfs_obj_type_transition_unit_runtime (sduser_subj_type))
 
+(call systemctl_getattr_all_subj (sduser_subj_type))
+(call systemctl_read_all_subj_state (sduser_subj_type))
+
+(call usersubj_getattr_common_subj (sduser_subj_type))
 (call usersubj_create_home_config_dirs (sduser_subj_type))
 (call usersubj_create_home_data_dirs (sduser_subj_type))
 (call usersubj_home_dir_add_obj_type_transition_home_config (sduser_subj_type))
 (call usersubj_home_dir_add_obj_type_transition_home_data (sduser_subj_type))
+(call usersubj_read_common_subj_state (sduser_subj_type))
 (call usersubj_read_home_cmd_lnk_files (sduser_subj_type))
 
 (optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus

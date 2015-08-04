@@ -42,38 +42,59 @@
 	(call miscfile_manage_cert (subj))
 	(call miscfile_read_utmp_runtime_files (subj))
 
-	(call seutil_default_context_obj_type_transition_file_context (subj))
-	(call seutil_selinux_config_obj_type_transition_policy_config (subj))
-	(call seutil_selinux_config_obj_type_transition_default_context (subj))
-	(call seutil_selinux_config_obj_type_transition_policy_src (subj))
-	(call seutil_config_obj_type_transition_selinux_config (subj))
-	(call seutil_manage_default_context (subj))
-	(call seutil_manage_file_context (subj))
-	(call seutil_manage_policy_config (subj))
-	(call seutil_manage_policy_src (subj))
-	(call seutil_manage_selinux_config (subj))
-	(call seutil_run_load_policy (sysadm_subj_type role))
-	(call seutil_run_matchpathcon (sysadm_subj_type role))
-	(call seutil_run_setenforce (sysadm_subj_type role))
-	(call seutil_run_setfiles (sysadm_subj_type role))
-	(call seutil_run_setsebool (sysadm_subj_type role))
+	(tunableif enable_mls
+		(false
+			(call seutil_default_context_obj_type_transition_file_context (subj))
+			(call seutil_selinux_config_obj_type_transition_policy_config (subj))
+			(call seutil_selinux_config_obj_type_transition_default_context (subj))
+			(call seutil_selinux_config_obj_type_transition_policy_src (subj))
+			(call seutil_config_obj_type_transition_selinux_config (subj))
+			(call seutil_manage_default_context (subj))
+			(call seutil_manage_file_context (subj))
+			(call seutil_manage_policy_config (subj))
+			(call seutil_manage_policy_src (subj))
+			(call seutil_manage_selinux_config (subj))
+			(call seutil_run_load_policy (sysadm_subj_type role))
+			(call seutil_run_matchpathcon (sysadm_subj_type role))
+			(call seutil_run_setenforce (sysadm_subj_type role))
+			(call seutil_run_setfiles (sysadm_subj_type role))
+			(call seutil_run_setsebool (sysadm_subj_type role))
+
+			(optional sysadm_optional_audispd
+				(call audispd_manage_config (subj))
+				(call audispd_manage_runtime_sock_files (subj)))
+
+			(optional sysadm_optional_auditctl
+				(call auditctl_run (sysadm_subj_type role)))
+
+			(optional sysadm_optional_auditd
+				(call auditd_adm (subj role))
+				(call auditd_run_augenrules (sysadm_subj_type role))
+				(call auditd_run_ausearch (sysadm_subj_type role)))
+
+			(optional sysadm_optional_authconfig
+				(call authconfig_manage_config_files (subj))
+				(call authconfig_manage_data (subj))
+				(call authconfig_manage_var_lib (subj))
+				(call authconfig_run (sysadm_subj_type role)))
+
+			(optional sysadm_optional_chage
+				(call chage_run (sysadm_subj_type role)))
+
+			(optional sysadm_optional_iptables
+				(call iptables_adm (subj role))
+				(call iptables_run (sysadm_subj_type role)))
+
+			(optional sysadm_optional_pam
+				(call pam_adm_subj_type (subj)))
+
+			(optional sysadm_optional_sudo
+				(call sudo_manage_config (sysadm.subj))
+				(call sudo_manage_var_db (sysadm.subj))
+				(call sudo_manage_runtime (sysadm.subj)))))
 
 	(optional sysadm_optional_alsactl
 		(call alsactl_adm (subj role)))
-
-	(optional sysadm_optional_auditctl
-		(call auditctl_run (sysadm_subj_type role)))
-
-	(optional sysadm_optional_auditd
-		(call auditd_adm (subj role))
-		(call auditd_run_augenrules (sysadm_subj_type role))
-		(call auditd_run_ausearch (sysadm_subj_type role)))
-
-	(optional sysadm_optional_authconfig
-		(call authconfig_manage_config_files (subj))
-		(call authconfig_manage_data (subj))
-		(call authconfig_manage_var_lib (subj))
-		(call authconfig_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_bluetoothctl
 		(call bluetoothctl_run (sysadm_subj_type role)))
@@ -95,9 +116,6 @@
 		(call bti_manage_home_files (subj))
 		(call bti_relabel_home_files (subj))
 		(call bti_home_dir_obj_type_transition_home (subj)))
-
-	(optional sysadm_optional_chage
-		(call chage_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_chkpwd
 		(call chkpwd_run (sysadm_subj_type role)))
@@ -203,10 +221,6 @@
 	(optional sysadm_optional_iotop
 		(call iotop_run (sysadm_subj_type role)))
 
-	(optional sysadm_optional_iptables
-		(call iptables_adm (subj role))
-		(call iptables_run (sysadm_subj_type role)))
-
 	(optional sysadm_optional_iptools
 		(call iptools_manage_config (subj))
 		(call iptools_run (sysadm_subj_type role)))
@@ -305,9 +319,6 @@
 		(call openssl_manage_home_files (subj))
 		(call openssl_relabel_home_files (subj))
 		(call openssl_home_dir_obj_type_transition_home (subj)))
-
-	(optional sysadm_optional_pam
-		(call pam_adm_subj_type (subj)))
 
 	(optional sysadm_optional_pass
 		(call pass_manage_home (subj))
@@ -1154,10 +1165,6 @@
 (optional sysadm_sudo_optional_sudo
 	(block sysadm_sudo
 		(blockinherit sudo_subj_blk)
-
-		(call sudo_manage_config (sysadm.subj))
-		(call sudo_manage_var_db (sysadm.subj))
-		(call sudo_manage_runtime (sysadm.subj))
 
 		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type subj))))
 

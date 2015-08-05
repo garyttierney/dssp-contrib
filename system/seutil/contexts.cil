@@ -10,19 +10,17 @@
 
 (tunableif enable_mls
 	(true
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh)))
-		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemhigh systemhigh))))
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))
 	(false
-		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))
-		(context selinux_config_users (sys.id sys.role selinux_config.config_file (systemlow systemlow)))))
+		(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow)))))
 
 (filecon "/etc/selinux(/.*)?" any selinux_config)
 (filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any default_context)
 (filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any file_context)
 (filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
-(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config_users)
+(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config)
 (filecon "/etc/selinux/([^/]*/)?source(/.*)?" any policy_src)
-(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config_users)
+(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config)
 (filecon "/usr/bin/chcon" file setfiles_cmd)
 (filecon "/usr/sbin/load_policy" file load_policy_cmd)
 (filecon "/usr/sbin/matchpathcon" file matchpathcon_cmd)

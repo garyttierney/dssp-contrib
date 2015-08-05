@@ -349,6 +349,8 @@
 (call sys_audit_client_subj_type (sd_subj_type))
 (call sys_read_kernel_sysctl_files (sd_subj_type))
 
+(call mls_file_read_subj_type (sd_subj_type))
+
 (call dev_read_urandom (sd_subj_type))
 
 (call file_manage_var_tmp_dirs (sd_subj_type))

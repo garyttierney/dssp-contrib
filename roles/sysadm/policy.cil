@@ -85,13 +85,16 @@
 				(call iptables_adm (subj role))
 				(call iptables_run (sysadm_subj_type role)))
 
+			(optional sysadm_optional_netlabelctl
+				(call netlabelctl_run (sysadm_subj_type role)))
+
 			(optional sysadm_optional_pam
 				(call pam_adm_subj_type (subj)))
 
 			(optional sysadm_optional_sudo
-				(call sudo_manage_config (sysadm.subj))
-				(call sudo_manage_var_db (sysadm.subj))
-				(call sudo_manage_runtime (sysadm.subj)))))
+				(call sudo_manage_config (subj))
+				(call sudo_manage_var_db (subj))
+				(call sudo_manage_runtime (subj)))))
 
 	(optional sysadm_optional_alsactl
 		(call alsactl_adm (subj role)))

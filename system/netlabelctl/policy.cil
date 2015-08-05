@@ -1,0 +1,15 @@
+(roleattribute netlabelctl_role)
+
+(block netlabelctl
+	(blockinherit app_blk)
+
+	(roleattributeset netlabelctl_role sys.role)
+
+	(roletype netlabelctl_role subj)
+
+	(allow subj self (capability (net_admin)))
+	(allow subj self create_netlink_generic_socket_perms)
+
+	(call sys_read_net_sysctl_files (subj))
+
+	(call file_read_config_files (subj)))

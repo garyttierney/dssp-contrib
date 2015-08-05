@@ -1,0 +1,13 @@
+(macro netlabelctl_exec ((type ARG1))
+	(call can_exec (ARG1 netlabelctl.cmd_file)))
+
+(macro netlabelctl_auto_subj_type_transition ((type ARG1))
+	(call netlabelctl_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 netlabelctl.cmd_file netlabelctl.subj)))
+
+(macro netlabelctl_run ((type ARG1)(role ARG2))
+	(call netlabelctl_auto_subj_type_transition (ARG1))
+	(roleattributeset netlabelctl_role (ARG2)))
+
+(macro netlabelctl_send_signal ((type ARG1))
+	(allow ARG1 netlabelctl.subj (process (signal))))

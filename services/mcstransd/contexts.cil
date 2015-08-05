@@ -1,13 +1,12 @@
 (context mcstransd_cmd (sys.id sys.role mcstransd.cmd_file (systemlow systemlow)))
 
 (filecon "/usr/sbin/mcstransd" file mcstransd_cmd)
-(filecon "/var/run/setrans(/.*)?" any mcstransd_runtime)
 (filecon "/var/run/mcstransd./pid" file mcstransd_runtime)
+(filecon "/var/run/setrans(/.*)?" any mcstransd_runtime)
 
 (tunableif enable_mls
 	(true
 		(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemhigh systemhigh))))
-
 	(false
 		(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemlow systemlow)))))
 

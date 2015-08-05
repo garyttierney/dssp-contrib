@@ -21,6 +21,9 @@
 	(call sys_setsched (subj))
 	(call sys_use_fd (subj))
 
+        (call mls_proc_read_subj_type (subj))
+        (call mls_proc_write_subj_type (subj))
+
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))
 

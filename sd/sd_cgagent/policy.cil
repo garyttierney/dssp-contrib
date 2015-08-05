@@ -3,6 +3,8 @@
 
 	(allow subj self (capability (net_admin)))
 
+	(call mls_range_trans_subj_type (subj))
+
 	(call dev_write_kmsg (subj))
 
 	(call file_search_config (subj))

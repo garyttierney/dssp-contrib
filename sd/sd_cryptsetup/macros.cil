@@ -8,9 +8,6 @@
 (macro sd_cryptsetup_send_signal ((type ARG1))
 	(allow ARG1 sd_cryptsetup.subj (process (signal))))
 
-(macro sd_cryptsetup_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 sd_cryptsetup.cmd_file process (ARG2 ARG3)))))
-
 (macro sd_cryptsetup_read_state ((type ARG1))
 	(call fs_search_proc (ARG1))
 	(allow ARG1 sd_cryptsetup.subj read_file_perms)

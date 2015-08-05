@@ -36,6 +36,10 @@
 	(call sys_getattr_core_if (subj))
 	(call sys_use_fd (subj))
 
+	(call mls_file_read_subj_type (subj))
+	(call mls_file_write_to_clr_subj_type (subj))
+	(call mls_file_upgrade_subj_type (subj))
+
 	(call dev_getattr_all (subj))
 	(call dev_read_urandom (subj))
 	(call dev_rw_lvm_control (subj))

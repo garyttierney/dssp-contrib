@@ -1,4 +1,5 @@
 (typeattribute mcstransd_adm_subj_type)
+(typeattribute mcstransd_client_subj_type)
 
 (typeattribute mcstransd_obj_type)
 
@@ -21,6 +22,7 @@
 
 	(allow subj self (capability (sys_resource)))
 	(allow subj self (process (setrlimit getcap setcap)))
+	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (context (contains)))
 
@@ -44,6 +46,8 @@
 	(call subj_getattr_common_subj (subj))
 	(call subj_getsession_common_subj (subj))
 
+	(call miscfile_read_locale (subj))
+
 	(call seutil_read_selinux_config (subj))
 
 	(optional msctransd_optional_sd
@@ -59,6 +63,9 @@
 
 	(optional mcstransd_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))))
+
+(allow mcstransd_client_subj_type self (context (translate)))
+(call mcstransd_stream_connect (mcstransd_client_subj_type))
 
 (allow mcstransd_adm_subj_type mcstransd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (mcstransd_adm_subj_type mcstransd.subj))

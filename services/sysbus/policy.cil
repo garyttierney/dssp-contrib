@@ -42,8 +42,17 @@
 	(call sysbus_manage_var_lib (subj))
 	(call sysbus_var_lib_obj_type_transition_var_lib (subj))
 
+	(call sysbus_mls_recv_subj_type (subj))
+
 	(call sys_audit_client_subj_type (subj))
 	(call sys_read_kernel_sysctl_files (subj))
+
+	(call mls_fd_use_subj_type (subj))
+	(call mls_file_read_subj_type (subj))
+	(call mls_net_read_subj_type (subj))
+	(call mls_net_write_subj_type (subj))
+	(call mls_range_trans_subj_type (subj))
+	(call mls_trusted_obj_type (subj))
 
 	(call dev_rw_inherited_dri (subj))
 	(call dev_rw_inherited_event (subj))

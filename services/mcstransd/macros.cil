@@ -1,3 +1,6 @@
+(macro mcstransd_client_subj_type ((type ARG1))
+	(typeattributeset mcstransd_client_subj_type ARG1))
+
 (macro mcstransd_exec ((type ARG1))
 	(call can_exec (ARG1 mcstransd.cmd_file)))
 
@@ -48,6 +51,10 @@
 (macro mcstransd_runtime_obj_type_transition_runtime ((type ARG1))
 	(call file_runtime_obj_type_transition (ARG1 mcstransd.runtime_file dir "setrans"))
 	(call file_runtime_obj_type_transition (ARG1 mcstransd.runtime_file file "mcstransd.pid")))
+
+(macro mcstransd_stream_connect ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call stream_connect_pattern (ARG1 mcstransd.runtime_file mcstransd.runtime_file mcstransd.subj)))
 
 (macro mcstransd_adm ((type ARG1)(role ARG2))
 	(typeattributeset mcstransd_adm_subj_type ARG1)

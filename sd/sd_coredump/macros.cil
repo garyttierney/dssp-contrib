@@ -5,6 +5,9 @@
 	(call sd_coredump_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 sd_coredump.cmd_file sd_coredump.subj)))
 
+(macro sd_coredump_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd_coredump.cmd_file process (ARG2 ARG3)))))
+
 (macro sd_coredump_send_signal ((type ARG1))
 	(allow ARG1 sd_coredump.subj (process (signal))))
 

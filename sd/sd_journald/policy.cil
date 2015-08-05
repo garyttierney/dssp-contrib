@@ -64,6 +64,7 @@
 
 	(call mls_file_read_subj_type (subj))
 	(call mls_file_write_subj_type (subj))
+	(call mls_net_write_subj_type (subj))
 
 	(call dev_rw_kmsg (subj))
 	(call dev_read_urandom (subj))
@@ -111,6 +112,11 @@
 (call term_dontaudit_use_console (sd_journald_client_subj_type))
 
 (call sd_search_runtime (sd_journald_client_subj_type))
+
+(tunableif enable_mls
+	(true
+		(call mls_file_read_subj_type (sd_journald_client_subj_type))
+		(call mls_net_write_subj_type (sd_journald_client_subj_type))))
 
 (allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))
 

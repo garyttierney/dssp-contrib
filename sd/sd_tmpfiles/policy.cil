@@ -43,6 +43,8 @@
 	(call sys_read_cpu_sysfs_files (subj))
 	(call sys_relabelfrom_invalid_dirs (subj))
 
+	(call mls_file_downgrade_subj_type (subj))
+	(call mls_file_read_subj_type (subj))
 	(call mls_file_upgrade_subj_type (subj))
 	(call mls_file_write_subj_type (subj))
 

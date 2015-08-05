@@ -17,12 +17,14 @@
 
 	(allow subj self (capability (dac_override)))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
-
 	(call sys_link_keyring (subj))
 	(call sys_load_kernel_module_subj_type (subj))
 	(call sys_request_load_module (subj))
+
+	(call mls_range_trans_subj_type (subj))
+
+	(call cmd_exec_cmd (subj))
+	(call cmd_exec_shell (subj))
 
 	(call fs_getattr_debugfs_fs (subj))
 	(call fs_mount_tracefs_fs (subj))

@@ -13,8 +13,6 @@
 
 	(call mls_fd_share_subj_type (subj))
 	(call mls_file_downgrade_subj_type (subj))
-	(call mls_file_read_subj_type (subj))
-	(call mls_file_write_subj_type (subj))
 	(call mls_file_upgrade_subj_type (subj))
 	(call mls_proc_set_sl_subj_type (subj))
 
@@ -23,6 +21,7 @@
 	(call file_read_config_files (subj))
 
 	(call fs_getattr_fs (subj))
+	(call fs_list_devtmpfs (subj))
 
 	(call sec_validate_context (subj))
 	(call sec_compute_access_vector (subj))
@@ -41,7 +40,7 @@
 	(call seutil_read_selinux_config (subj))
 	(call seutil_read_default_context (subj))
 
-	(call usersubj_relabel_ttys (subj))
+	(call usersubj_relabel_term (subj))
 	(call usersubj_search_home_dir (subj))
 	(call usersubj_shell_manual_subj_type_transition_common_subj (subj))
-	(call usersubj_use_ttys (subj)))
+	(call usersubj_use_term (subj)))

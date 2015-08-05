@@ -12,6 +12,9 @@
 (macro kmod_send_signal ((type ARG1))
 	(allow ARG1 kmod.subj (process (signal))))
 
+(macro kmod_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 kmod.cmd_file process (ARG2 ARG3)))))
+
 (macro kmod_search_config ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 kmod.config_file search_dir_perms))

@@ -44,9 +44,7 @@
 	(call sys_relabelfrom_invalid_dirs (subj))
 
 	(call mls_file_downgrade_subj_type (subj))
-	(call mls_file_read_subj_type (subj))
 	(call mls_file_upgrade_subj_type (subj))
-	(call mls_file_write_subj_type (subj))
 
 	(call dev_manage_all (subj))
 	(call dev_relabel_all (subj))
@@ -55,8 +53,7 @@
 	(call fs_manage_devtmpfs_dirs (subj))
 	(call fs_manage_devtmpfs_lnk_files (subj))
 	(call fs_manage_tmpfs_dirs (subj))
-	(call fs_list_sysfs (subj))
-	(call fs_read_sysfs_lnk_files (subj))
+	(call fs_read_sysfs (subj))
 	(call fs_relabel_devtmpfs_dirs (subj))
 	(call fs_relabel_sysfs_dirs (subj))
 	(call fs_relabel_tmpfs_dirs (subj))

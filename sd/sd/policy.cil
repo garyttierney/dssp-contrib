@@ -123,7 +123,6 @@
 	(call mls_fd_use_subj_type (subj))
 	(call mls_fd_share_subj_type (subj))
 	(call mls_file_downgrade_subj_type (subj))
-	(call mls_file_read_subj_type (subj))
 	(call mls_file_upgrade_subj_type (subj))
 	(call mls_file_write_subj_type (subj))
 	(call mls_priv_range_trans_subj_type (subj))
@@ -351,6 +350,8 @@
 
 (call sys_audit_client_subj_type (sd_subj_type))
 (call sys_read_kernel_sysctl_files (sd_subj_type))
+
+(call mls_file_read_subj_type (sd_subj_type))
 
 (call dev_read_urandom (sd_subj_type))
 

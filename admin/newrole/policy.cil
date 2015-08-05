@@ -5,8 +5,8 @@
 
 	(roletype newrole_role subj)
 
-	(allow subj self (capability (fowner setuid setgid dac_override)))
-	(allow subj self (process (setcap setexec)))
+	(allow subj self (capability (dac_override)))
+	(allow subj self (process (setcap)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys_read_kernel_sysctl_files (subj))

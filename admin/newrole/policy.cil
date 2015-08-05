@@ -1,0 +1,43 @@
+(roleattribute newrole_role)
+
+(block newrole
+	(blockinherit app_blk)
+
+	(roletype newrole_role subj)
+
+	(allow subj self (capability (fowner setuid setgid dac_override)))
+	(allow subj self (process (setexec)))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call mls_fd_share_subj_type (subj))
+	(call mls_file_downgrade_subj_type (subj))
+	(call mls_file_read_subj_type (subj))
+	(call mls_file_upgrade_subj_type (subj))
+	(call mls_file_write_subj_type (subj))
+	(call mls_proc_set_sl_subj_type (subj))
+
+	(call dev_read_urandom (subj))
+
+	(call file_read_config_files (subj))
+
+	(call fs_getattr_fs (subj))
+
+	(call sec_validate_context (subj))
+	(call sec_compute_access_vector (subj))
+	(call sec_compute_create_context (subj))
+	(call sec_compute_relabel_context (subj))
+	(call sec_compute_user_contexts (subj))
+
+	(call subj_interactive_fd_type (subj))
+	(call subj_obj_change_exemption_type (subj))
+	(call subj_role_change_exemption_type (subj))
+
+	(call miscfile_read_locale (subj))
+
+	(call pam_client_subj_type (subj))
+
+	(call seutil_read_selinux_config (subj))
+	(call seutil_read_default_context (subj))
+
+	(call usersubj_shell_manual_subj_type_transition_common_subj (subj)))

@@ -21,6 +21,31 @@
 
 	(call miscfile_read_locale (subj)))
 
+(block matchpathcon
+	(blockinherit app_blk)
+
+	(roleattributeset seutil_matchpathcon_role sys.role)
+
+	(roletype seutil_matchpathcon_role subj)
+
+	(allow subj self create_unix_stream_socket_perms)
+
+	(call sys_getattr_all_sysctl_files (subj))
+	(call sys_getattr_all_sysctl_lnk_files (subj))
+
+	(call dev_getattr_all (subj))
+
+	(call file_getattr_all (subj))
+	(call file_read_all_lnk_files (subj))
+
+	(call fs_getattr_all (subj))
+	(call fs_read_all_lnk_files (subj))
+
+	(call sec_validate_context (subj))
+
+	(call seutil_read_selinux_config_files (subj))
+	(call seutil_read_file_context_files (subj)))
+
 (block setfiles
 	(blockinherit app_blk)
 
@@ -104,31 +129,6 @@
 	(call sec_set_enforce_mode (subj))
 
 	(call seutil_read_selinux_config_files (subj)))
-
-(block matchpathcon
-	(blockinherit app_blk)
-
-	(roleattributeset seutil_matchpathcon_role sys.role)
-
-	(roletype seutil_matchpathcon_role subj)
-
-	(allow subj self create_unix_stream_socket_perms)
-
-	(call sys_getattr_all_sysctl_files (subj))
-	(call sys_getattr_all_sysctl_lnk_files (subj))
-
-	(call dev_getattr_all (subj))
-
-	(call file_getattr_all (subj))
-	(call file_read_all_lnk_files (subj))
-
-	(call fs_getattr_all (subj))
-	(call fs_read_all_lnk_files (subj))
-
-	(call sec_validate_context (subj))
-
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj)))
 
 (block default_context
 	(blockinherit file_config_obj_blk))

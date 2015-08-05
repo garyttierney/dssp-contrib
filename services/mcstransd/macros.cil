@@ -1,0 +1,57 @@
+(macro mcstransd_exec ((type ARG1))
+	(call can_exec (ARG1 mcstransd.cmd_file)))
+
+(macro mcstransd_auto_subj_type_transition ((type ARG1))
+	(call mcstransd_send_signal (ARG1))
+	(call auto_subj_type_transition_pattern (ARG1 mcstransd.cmd_file mcstransd.subj)))
+
+(macro mcstransd_send_signal ((type ARG1))
+	(allow ARG1 mcstransd.subj (process (signal))))
+
+(macro mcstransd_search_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mcstransd.runtime_file search_dir_perms))
+
+(macro mcstransd_list_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mcstransd.runtime_file list_dir_perms))
+
+(macro mcstransd_read_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_files_pattern (ARG1 mcstransd.runtime_file mcstransd.runtime_file)))
+
+(macro mcstransd_read_runtime_lnk_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call read_lnk_files_pattern (ARG1 mcstransd.runtime_file mcstransd.runtime_file)))
+
+(macro mcstransd_read_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mcstransd.runtime_file read_file_perms)
+	(allow ARG1 mcstransd.runtime_file list_dir_perms)
+	(allow ARG1 mcstransd.runtime_file read_lnk_file_perms)
+	(allow ARG1 mcstransd.runtime_file read_sock_file_perms))
+
+(macro mcstransd_manage_runtime ((type ARG1))
+	(call file_rw_runtime_dirs (ARG1))
+	(allow ARG1 mcstransd.runtime_file manage_file_perms)
+	(allow ARG1 mcstransd.runtime_file manage_dir_perms)
+	(allow ARG1 mcstransd.runtime_file manage_lnk_file_perms)
+	(allow ARG1 mcstransd.runtime_file manage_sock_file_perms))
+
+(macro mcstransd_relabel_runtime ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(allow ARG1 mcstransd.runtime_file relabel_file_perms)
+	(allow ARG1 mcstransd.runtime_file relabel_dir_perms)
+	(allow ARG1 mcstransd.runtime_file relabel_lnk_file_perms)
+	(allow ARG1 mcstransd.runtime_file relabel_sock_file_perms))
+
+(macro mcstransd_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 mcstransd.runtime_file dir "setrans"))
+	(call file_runtime_obj_type_transition (ARG1 mcstransd.runtime_file file "mcstransd.pid")))
+
+(macro mcstransd_adm ((type ARG1)(role ARG2))
+	(typeattributeset mcstransd_adm_subj_type ARG1)
+	(optional mcstransd_adm_optional_sd
+		(call sd_daemon_adm_subj_type (ARG1)))
+	(optional mcstransd_adm_optional_sd_askpwd
+		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

@@ -42,6 +42,9 @@
 	(call dynamic_subj_type_transition_pattern (ARG1 sd.subj))
 	(typetransition ARG1 sd.cmd_file process "*" sd.subj))
 
+(macro sd_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd.cmd_file process (ARG2 ARG3)))))
+
 (macro sd_cmd_obj_entry_subj ((type ARG1))
 	(call subj_entry (ARG1 sd.cmd_file)))
 
@@ -72,6 +75,10 @@
 	(roletype sys.role ARG1)
 	(call sd_daemon_subj_type (ARG1))
 	(call auto_subj_type_transition_pattern (sd.subj ARG2 ARG1)))
+
+(macro sd_daemon_mls ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
+	(tunableif enable_mls (true (rangetransition sd.subj ARG2 process (ARG3 ARG4))
+	(call mls_range_trans_subj_type (ARG1)))))
 
 (macro sd_subj_type ((type ARG1))
 	(typeattributeset sd_subj_type ARG1))

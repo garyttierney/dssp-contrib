@@ -1,0 +1,76 @@
+(typeattribute mcstransd_adm_subj_type)
+
+(typeattribute mcstransd_obj_type)
+
+(block mcstransd
+	(blockinherit subj_common_blk)
+
+	(call mls_trusted_obj_type (subj))
+
+	(blockinherit cmd_obj_blk)
+
+	(call subj_entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file_runtime_obj_blk)
+
+	(call mls_trusted_obj_type (runtime_file))
+
+	(typeattributeset mcstransd_obj_type runtime_file)
+
+	(allow subj self (capability (sys_resource)))
+	(allow subj self (process (setrlimit getcap setcap)))
+	(allow subj self create_netlink_selinux_socket_perms)
+	(allow subj self (context (contains)))
+
+	(call mcstransd_manage_runtime (subj))
+	(call mcstransd_runtime_obj_type_transition_runtime (subj))
+
+	(call sys_read_kernel_sysctl_files (subj))
+
+	(call mls_file_read_subj_type (subj))
+	(call mls_file_write_subj_type (subj))
+	(call mls_net_inbound_subj_type (subj))
+	(call mls_net_read_subj_type (subj))
+	(call mls_net_write_subj_type (subj))
+	(call mls_proc_read_subj_type (subj))
+
+	(call file_read_config_files (subj))
+
+	(call sec_compute_access_vector (subj))
+
+	(call subj_read_common_subj_state (subj))
+	(call subj_getattr_common_subj (subj))
+	(call subj_getsession_common_subj (subj))
+
+	(call seutil_read_selinux_config (subj))
+
+	(optional msctransd_optional_sd
+		(call sd_daemon (subj cmd_file))
+
+		(call sd_daemon_mls (subj cmd_file (s0) (s15 (range c0 c1023))))
+
+		(blockinherit sd_unit_obj_blk)
+
+		(typeattributeset mcstransd_obj_type unit_file)
+
+		(allow mcstransd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+
+	(optional mcstransd_optional_sd_journald
+		(call sd_journald_client_subj_type (subj))))
+
+(allow mcstransd_adm_subj_type mcstransd.subj (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (mcstransd_adm_subj_type mcstransd.subj))
+
+(call file_search_runtime (mcstransd_adm_subj_type))
+
+(allow mcstransd_adm_subj_type mcstransd_obj_type manage_file_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type manage_dir_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type manage_lnk_file_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type manage_sock_file_perms)
+
+(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_file_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_dir_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_lnk_file_perms)
+(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_sock_file_perms)

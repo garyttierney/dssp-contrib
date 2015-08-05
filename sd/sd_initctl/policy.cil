@@ -13,6 +13,8 @@
 
 	(blockinherit file_runtime_obj_blk)
 
+	(call mls_trusted_obj_type (runtime_file))
+
 	(typeattributeset sd_initctl_obj_type runtime_file)
 
 	(call sd_initctl_manage_runtime (subj))
@@ -25,8 +27,8 @@
 
 (call sd_search_runtime (sd_initctl_adm_subj_type))
 
-(allow sd_initctl_adm_subj_type sd_initctl.unit_file manage_dir_perms)
-(allow sd_initctl_adm_subj_type sd_initctl.unit_file manage_fifo_file_perms)
+(allow sd_initctl_adm_subj_type sd_initctl_obj_type manage_dir_perms)
+(allow sd_initctl_adm_subj_type sd_initctl_obj_type manage_fifo_file_perms)
 
-(allow sd_initctl_adm_subj_type sd_initctl.unit_file relabel_dir_perms)
-(allow sd_initctl_adm_subj_type sd_initctl.unit_file relabel_fifo_file_perms)
+(allow sd_initctl_adm_subj_type sd_initctl_obj_type relabel_dir_perms)
+(allow sd_initctl_adm_subj_type sd_initctl_obj_type relabel_fifo_file_perms)

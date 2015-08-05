@@ -29,6 +29,8 @@
 
 	(blockinherit file_runtime_obj_blk)
 
+	(call mls_trusted_obj_type (runtime_file))
+
 	(typeattributeset sd_journald_obj_type runtime_file)
 
 	(blockinherit file_var_lib_obj_blk)
@@ -116,7 +118,6 @@
 (tunableif enable_mls
 	(true
 		(call mls_file_read_subj_type (sd_journald_client_subj_type))
-		(call mls_file_write_subj_type (sd_journald_client_subj_type))
 		(call mls_net_write_subj_type (sd_journald_client_subj_type))))
 
 (allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))

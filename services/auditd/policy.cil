@@ -33,6 +33,8 @@
 	(call auditd_manage_runtime_sock_files (subj))
 	(call auditd_runtime_obj_type_transition_runtime (subj))
 
+	(call mls_file_write_subj_type (subj))
+
 	(call fs_getattr_fs (subj))
 
 	(call miscfile_read_locale (subj))
@@ -43,6 +45,8 @@
 
 	(optional auditd_optional_sd
 		(call sd_daemon (subj cmd_file))
+
+		(call sd_daemon_mls (subj cmd_file systemhigh systemhigh))
 
 		(blockinherit sd_unit_obj_blk)
 

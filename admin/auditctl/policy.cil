@@ -12,6 +12,8 @@
 	(call sys_audit_client_subj_type (subj))
 	(call sys_audit_set_params (subj))
 
+	(call mls_file_read_subj_type (subj))
+
 	(call file_getattr_all (subj))
 
 	(call pam_read_config_files (subj))

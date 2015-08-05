@@ -36,6 +36,8 @@
 	(call sys_getattr_core_if (subj))
 	(call sys_use_fd (subj))
 
+	(call mls_file_downgrade_subj_type (subj))
+	(call mls_file_read_subj_type (subj))
 	(call mls_file_upgrade_subj_type (subj))
 	(call mls_file_write_subj_type (subj))
 

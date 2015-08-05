@@ -77,6 +77,9 @@
 	(optional wheel_optional_networkctl
 		(call networkctl_run (wheel_subj_type role)))
 
+	(optional wheel_optional_newrole
+		(call newrole_run (wheel_subj_type role)))
+
 	(optional wheel_optional_openssl
 		(call openssl_run (wheel_subj_type role))
 		(call openssl_manage_home_files (subj))

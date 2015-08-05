@@ -7,6 +7,7 @@
 
 	(allow subj self (capability (fowner setuid setgid dac_override)))
 	(allow subj self (process (setcap setexec)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -38,4 +39,7 @@
 	(call seutil_read_selinux_config (subj))
 	(call seutil_read_default_context (subj))
 
-	(call usersubj_shell_manual_subj_type_transition_common_subj (subj)))
+	(call usersubj_relabel_ttys (subj))
+	(call usersubj_search_home_dir (subj))
+	(call usersubj_shell_manual_subj_type_transition_common_subj (subj))
+	(call usersubj_use_ttys (subj)))

@@ -53,7 +53,7 @@
 	(optional msctransd_optional_sd
 		(call sd_daemon (subj cmd_file))
 
-		(call sd_daemon_mls (subj cmd_file (s0) (s15 (range c0 c1023))))
+		(call sd_daemon_mls (subj cmd_file systemlow systemhigh))
 
 		(blockinherit sd_unit_obj_blk)
 

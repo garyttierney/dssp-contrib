@@ -23,6 +23,10 @@
 	(call sys_request_load_module (subj))
 	(call sys_setsched (subj))
 
+	(call mls_file_read_to_clr_subj_type (subj))
+	(call mls_file_write_to_clr_subj_type (subj))
+	(call mls_proc_write_to_clr_subj_type (subj))
+
 	(call dev_rw_loop_control (subj))
 
 	(call file_read_config_files (subj))

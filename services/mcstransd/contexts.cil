@@ -1,5 +1,6 @@
 (context mcstransd_cmd (sys.id sys.role mcstransd.cmd_file (systemlow systemlow)))
 
+(filecon "/etc/selinux/([^/]*/)?secolor\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.d(/.*)?" any mcstransd_config)
 (filecon "/usr/sbin/mcstransd" file mcstransd_cmd)

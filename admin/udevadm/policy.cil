@@ -47,6 +47,9 @@
 	(call udev_manage_config (subj))
 	(call udev_manage_runtime (subj))
 
+	(optional udevdadm_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj)))
+
 	(optional udevadm_optional_sd
 		(call sd_daemon (subj cmd_file)))
 

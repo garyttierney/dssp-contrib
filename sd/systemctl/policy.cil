@@ -12,7 +12,10 @@
 
 	(roletype systemctl_role subj)
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd_daemon (subj cmd_file))
+
+	(optional systemctl_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj))))
 
 (allow systemctl_subj_type self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
 (allow systemctl_subj_type self (process (setfscreate)))

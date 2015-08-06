@@ -63,7 +63,6 @@
 	(optional mcstransd_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))))
 
-(allow mcstransd_client_subj_type self (context (translate)))
 (call mcstransd_stream_connect (mcstransd_client_subj_type))
 
 (allow mcstransd_adm_subj_type mcstransd.subj (process (ptrace signal signull sigkill sigstop)))

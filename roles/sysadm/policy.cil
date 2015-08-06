@@ -14,6 +14,8 @@
 	(call sys_read_all_proc_files (subj))
 	(call sys_read_all_sysctl_files (subj))
 
+	(call mls_priv_range_trans_subj_type (subj))
+
 	(call cmd_list_cmd (subj))
 
 	(call dev_getattr_all (subj))
@@ -504,6 +506,8 @@
 		(call sd_quotacheck_adm (subj role)))
 
 	(optional sysadm_optional_sd_randomseed
+		(call sd_randomseed_run (sysadm_subj_type role))
+		(call sd_randomseed_mls (sysadm_subj_type systemhigh systemhigh))
 		(call sd_randomseed_adm (subj role)))
 
 	(optional sysadm_optional_sd_resolved
@@ -522,6 +526,7 @@
 		(call sd_stdio_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_sd_sysctl
+		(call sd_sysctl_run (sysadm_subj_type role))
 		(call sd_sysctl_adm (subj role)))
 
 	(optional sysadm_optional_sd_sysusers

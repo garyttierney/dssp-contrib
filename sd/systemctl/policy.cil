@@ -1,3 +1,5 @@
+(roleattribute systemctl_role)
+
 (typeattribute systemctl_subj_type)
 (typeattribute systemctl_client_subj_type)
 
@@ -7,6 +9,8 @@
 	(blockinherit app_cmd_obj_blk)
 
 	(call subj_entry (systemctl_subj_type cmd_file))
+
+	(roletype systemctl_role subj)
 
 	(call sd_daemon (subj cmd_file)))
 

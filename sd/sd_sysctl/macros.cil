@@ -8,6 +8,10 @@
 (macro sd_sysctl_send_signal ((type ARG1))
 	(allow ARG1 sd_sysctl.subj (process (signal))))
 
+(macro sd_sysctl_run ((type ARG1)(role ARG2))
+	(call sd_sysctl_auto_subj_type_transition (ARG1))
+	(roleattributeset sd_sysctl_role ARG2))
+
 (macro sd_sysctl_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_sysctl_adm_subj_type ARG1)
 	(call sd_daemon_adm_subj_type (ARG1))

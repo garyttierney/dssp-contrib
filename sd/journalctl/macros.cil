@@ -37,3 +37,7 @@
 
 (macro journalctl_send_signal ((type ARG1))
 	(allow ARG1 journalctl.subj (process (signal))))
+
+(macro journalctl_run ((type ARG1)(role ARG2))
+	(call journalctl_auto_subj_type_transition (ARG1))
+	(roleattributeset journalctl_role ARG2))

@@ -1,3 +1,5 @@
+(roleattribute journalctl_role)
+
 (typeattribute journalctl_subj_type)
 (typeattribute journalctl_client_subj_type)
 
@@ -7,6 +9,8 @@
 	(blockinherit app_cmd_obj_blk)
 
 	(call subj_entry (journalctl_subj_type cmd_file))
+
+	(roletype journalctl_role subj)
 
 	(call sd_daemon (subj cmd_file)))
 

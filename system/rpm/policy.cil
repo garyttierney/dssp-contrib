@@ -95,6 +95,8 @@
 (call subj_unconfined_type (rpm_subj_type))
 (call sys_unconfined_subj_type (rpm_subj_type))
 
+(call mls_priv_range_trans_subj_type (rpm_script_t))
+
 (call lib_config_obj_type_transition_ld_so_cache_files (rpm_subj_type))
 
 (optional rpm_script_optional_bootloader
@@ -107,6 +109,9 @@
 	(call fstools_runtime_obj_type_transition_runtime (rpm_script_t))
 	(call fstools_run (rpm_script_t rpm_role)))
 
+(optional rpm_script_optional_journalctl
+	(call journalctl_run (rpm_script_t rpm_role)))
+
 (optional rpm_script_optional_ldconfig
 	(call ldconfig_run (rpm_script_t rpm_role)))
 
@@ -116,8 +121,24 @@
 (optional rpm_script_optional_sd
 	(call sd_unconfined_subj_type (rpm_script_t)))
 
+(optional rpm_script_optional_sd_randomseed
+	(call sd_randomseed_run (rpm_script_t rpm_role))
+	(call sd_randomseed_mls (rpm_script_t systemhigh systemhigh)))
+
+(optional rpm_script_optional_sd_sysctl
+	(call sd_sysctl_run (rpm_script_t rpm_role)))
+
+(optional rpm_script_optional_sd_tmpfiles
+	(call sd_tmpfiles_run (rpm_script_t rpm_role)))
+
 (optional rpm_subj_optional_sysbus
 	(call sysbus_unconfined_subj_type (rpm_subj_type)))
+
+(optional rpm_script_optional_systemctl
+	(call systemctl_run (rpm_script_t rpm_role)))
+
+(optional rpm_script_optional_udevadm
+	(call udevadm_run (rpm_script_t rpm_role)))
 
 (optional rpm_script_optional_usermanage
 	(call useradd_run_groupadd (rpm_script_t rpm_role))

@@ -1,3 +1,5 @@
+(roleattribute sd_randomseed_role)
+
 (typeattribute sd_randomseed_adm_subj_type)
 
 (typeattribute sd_randomseed_obj_type)
@@ -6,6 +8,8 @@
 	(blockinherit sd_daemon_blk)
 
 	(call sd_daemon_mls (subj cmd_file systemhigh systemhigh))
+
+	(roletype sd_randomseed_role subj)
 
 	(blockinherit sd_unit_obj_blk)
 

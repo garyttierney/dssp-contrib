@@ -8,6 +8,13 @@
 (macro sd_randomseed_send_signal ((type ARG1))
 	(allow ARG1 sd_randomseed.subj (process (signal))))
 
+(macro sd_randomseed_run ((type ARG1)(role ARG2))
+	(call sd_randomseed_auto_subj_type_transition (ARG1))
+	(roleattributeset sd_randomseed_role ARG2))
+
+(macro sd_randomseed_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 randomseed.cmd_file process (ARG2 ARG3)))))
+
 (macro sd_randomseed_read_var_lib_files ((type ARG1))
 	(call sd_search_var_lib (ARG1))
 	(allow ARG1 sd_randomseed.var_lib_file read_file_perms))

@@ -16,6 +16,8 @@
 	(call dev_read_urandom (subj))
 	(call dev_write_kmsg (subj))
 
+	(call subj_ptrace_uncond_type (subj))
+
 	(call miscfile_read_locale (subj))
 
 	(call sctl_read_config (subj))

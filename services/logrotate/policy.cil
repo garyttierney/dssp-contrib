@@ -28,14 +28,14 @@
 	(call logrotate_manage_var_lib (subj))
 	(call logrotate_var_lib_obj_type_transition_var_lib (subj))
 
+	(call standard_obj_sys_change_exemption_subj_type (subj))
+
 	(call file_read_config (subj))
 	(call file_rw_var_log_dirs (subj))
 
 	(call fs_list_rootfs (subj))
 
 	(call sec_get_enforce_mode (subj))
-
-	(call subj_obj_sys_change_exemption_type (subj))
 
 	(call miscfile_read_locale (subj))
 

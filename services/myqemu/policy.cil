@@ -19,12 +19,12 @@
 	(allow subj self (process (setexec)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call standard_obj_change_exemption_subj_type (subj))
+
 	(call cmd_exec_cmd (subj))
 	(call cmd_audit_access_shell_files (subj))
 
 	(call sec_validate_context (subj))
-
-	(call subj_obj_change_exemption_type (subj))
 
 	(call miscfile_read_locale (subj))
 

@@ -66,6 +66,8 @@
 	(call sys_relabelfrom_invalid (subj))
 	(call sys_relabelfrom_unlabeled (subj))
 
+	(call standard_obj_change_exemption_subj_type (subj))
+
 	(call dev_relabel_all (subj))
 
 	(call file_list_all (subj))
@@ -83,8 +85,6 @@
 
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))
-
-	(call subj_obj_change_exemption_type (subj))
 
 	(call term_use_inherited_console (subj))
 

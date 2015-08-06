@@ -13,6 +13,8 @@
 (call sys_audit_client_subj_type (passwd_subj_type))
 (call sys_read_crypto_sysctl_files (passwd_subj_type))
 
+(call standard_obj_sys_change_exemption_subj_type (passwd_subj_type))
+
 (call dev_read_urandom (passwd_subj_type))
 
 (call file_read_config_files (passwd_subj_type))
@@ -23,8 +25,6 @@
 
 (call sec_compute_access_vector (passwd_subj_type))
 (call sec_list_fs (passwd_subj_type))
-
-(call subj_obj_sys_change_exemption_type (passwd_subj_type))
 
 (call miscfile_manage_passwords (passwd_subj_type))
 (call miscfile_manage_shadow (passwd_subj_type))

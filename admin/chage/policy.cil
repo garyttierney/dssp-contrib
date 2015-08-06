@@ -10,6 +10,8 @@
 
 	(call sys_audit_client_subj_type (subj))
 
+	(call standard_obj_sys_change_exemption_subj_type (subj))
+
 	(call sec_list_fs (subj))
 	(call sec_compute_access_vector (subj))
 	(call sec_validate_context (subj))
@@ -21,8 +23,6 @@
 
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
-
-	(call subj_obj_sys_change_exemption_type (subj))
 
 	(optional chage_optional_sd_journald
 		(call sd_journald_client_subj_type (subj))))

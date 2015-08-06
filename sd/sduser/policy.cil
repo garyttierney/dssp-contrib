@@ -27,6 +27,10 @@
 
 	(call sd_obj_type (unit_file)))
 
+(call rbacsep_read_state_source_subj_type (sduser_subj_type))
+
+(call standard_user_exemption_target_subj_type (sduser_subj_type))
+
 (call dev_getattr_all (sduser_subj_type))
 
 (call file_read_data (sduser_subj_type))
@@ -34,10 +38,7 @@
 (call fs_dontaudit_audit_access_sysfs_dirs (sduser_subj_type))
 (call fs_getattr_sysfs_fs (sduser_subj_type))
 
-(call rbacsep_read_state_source_subj_type (sduser_subj_type))
-
 (call subj_interactive_fd_type (sduser_subj_type))
-(call subj_user_exemption_target_type (sduser_subj_type))
 
 (call app_read_state (sduser_subj_type))
 (call app_rw_inherited_unix_stream_sockets (sduser_subj_type))

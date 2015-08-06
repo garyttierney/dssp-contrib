@@ -40,6 +40,9 @@
 (call sys_read_kernel_sysctl_files (sudo_subj_type))
 (call sys_link_keyring (sudo_subj_type))
 
+(call standard_role_change_exemption_subj_type (sudo_subj_type))
+(call standard_obj_role_change_exemption_subj_type (sudo_subj_type))
+
 (call cmd_getattr_all_cmd_files (sudo_subj_type))
 
 (call dev_getattr_all (sudo_subj_type))
@@ -55,8 +58,6 @@
 (call sec_validate_context (sudo_subj_type))
 
 (call subj_interactive_fd_type (sudo_subj_type))
-(call subj_role_change_exemption_type (sudo_subj_type))
-(call subj_obj_role_change_exemption_type (sudo_subj_type))
 
 (call app_send_signal (sudo_subj_type))
 

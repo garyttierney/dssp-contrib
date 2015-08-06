@@ -69,6 +69,9 @@
 	(call sys_request_load_module (subj))
 	(call sys_setsched (subj))
 
+	(call standard_change_exemption_subj_type (subj))
+	(call standard_obj_change_exemption_subj_type (subj))
+
 	(call dev_getattr_random (subj))
 	(call dev_getattr_tun_tap (subj))
 	(call dev_read_urandom (subj))
@@ -107,9 +110,6 @@
 	(call sec_validate_context (subj))
 
 	(call storage_rw_fixed_disk (subj))
-
-	(call subj_change_exemption_type (subj))
-	(call subj_obj_change_exemption_type (subj))
 
 	(call term_create_pty (subj pty_dev))
 	(call term_use_console (subj))

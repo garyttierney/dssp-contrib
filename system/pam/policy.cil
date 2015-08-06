@@ -61,14 +61,15 @@
 (allow pam_login_prog_subj_type self (process (setexec setsched)))
 (allow pam_login_prog_subj_type self write_key_perms)
 
+(call standard_id_change_exemption_subj_type (pam_login_prog_subj_type))
+(call standard_role_change_exemption_subj_type (pam_login_prog_subj_type))
+(call standard_obj_change_exemption_subj_type (pam_login_prog_subj_type))
+
 (call sec_compute_user_contexts (pam_login_prog_subj_type))
 (call sec_compute_relabel_context (pam_login_prog_subj_type))
 (call sec_validate_context (pam_login_prog_subj_type))
 
-(call subj_id_change_exemption_type (pam_login_prog_subj_type))
 (call subj_interactive_fd_type (pam_login_prog_subj_type))
-(call subj_role_change_exemption_type (pam_login_prog_subj_type))
-(call subj_obj_change_exemption_type (pam_login_prog_subj_type))
 
 (call app_send_signal (pam_login_prog_subj_type))
 

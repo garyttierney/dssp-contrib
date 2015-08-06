@@ -84,6 +84,10 @@
 
 	(call sys_read_crypto_sysctl_files (subj))
 
+	(call standard_id_change_exemption_subj_type (subj))
+	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard_role_change_exemption_subj_type (subj))
+
 	(call fs_list_devtmpfs (subj))
 	(call fs_dontaudit_getattr_devtmpfs_chr_files (subj))
 	(call fs_dontaudit_getattr_devtmpfs_blk_files (subj))
@@ -94,10 +98,7 @@
 	(call sec_compute_user_contexts (subj))
 	(call sec_validate_context (subj))
 
-	(call subj_id_change_exemption_type (subj))
 	(call subj_interactive_fd_type (subj))
-	(call subj_obj_change_exemption_type (subj))
-	(call subj_role_change_exemption_type (subj))
 
 	(call term_use_console (subj))
 	(call term_use_unallocated_ttys (subj))

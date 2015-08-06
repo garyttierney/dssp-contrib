@@ -28,6 +28,8 @@
 	(call authconfig_manage_var_lib (subj))
 	(call authconfig_var_lib_obj_type_transition_var_lib (subj))
 
+	(call standard_obj_sys_change_exemption_subj_type (subj))
+
 	(call cmd_getattr_cmd_files (subj))
 	(call cmd_audit_access_cmd_files (subj))
 	(call cmd_exec_shell (subj))
@@ -40,8 +42,6 @@
 
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))
-
-	(call subj_obj_sys_change_exemption_type (subj))
 
 	(call hostname_exec (subj))
 

@@ -91,6 +91,8 @@
 (allow usersubj_common_type self create_unix_stream_socket_perms)
 (allow usersubj_common_type self rw_fifo_file_perms)
 
+(call standard_user_exemption_target_subj_type (usersubj_common_type))
+
 (call cmd_obj_entry_subj (usersubj_common_type))
 (call cmd_shell_obj_entry_subj (usersubj_common_type))
 
@@ -100,7 +102,6 @@
 (call fs_getattr_fs (usersubj_common_type))
 
 (call subj_interactive_fd_type (usersubj_common_type))
-(call subj_user_exemption_target_type (usersubj_common_type))
 
 (call miscfile_read_all_terminfo (usersubj_common_type))
 (call miscfile_read_locale (usersubj_common_type))

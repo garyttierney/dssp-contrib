@@ -36,6 +36,8 @@
 	(call sys_getattr_core_if (subj))
 	(call sys_use_fd (subj))
 
+	(call standard_obj_sys_change_exemption_subj_type (subj))
+
 	(call dev_getattr_all (subj))
 	(call dev_read_urandom (subj))
 	(call dev_rw_lvm_control (subj))
@@ -53,8 +55,6 @@
 	(call sec_get_enforce_mode (subj))
 
 	(call storage_manage_all (subj))
-
-	(call subj_obj_sys_change_exemption_type (subj))
 
 	(call lvm_read_config (subj))
 	(call lvm_manage_metadata (subj))

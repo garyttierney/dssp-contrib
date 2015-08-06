@@ -11,6 +11,47 @@
 (macro mcstransd_send_signal ((type ARG1))
 	(allow ARG1 mcstransd.subj (process (signal))))
 
+(macro mcstransd_search_config ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(allow ARG1 mcstransd.config_file search_dir_perms))
+
+(macro mcstransd_list_config ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(allow ARG1 mcstransd.config_file list_dir_perms))
+
+(macro mcstransd_read_config_files ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(call read_files_pattern (ARG1 mcstransd.config_file mcstransd.config_file)))
+
+(macro mcstransd_read_config_lnk_files ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 mcstransd.config_file mcstransd.config_file)))
+
+(macro mcstransd_read_config ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(allow ARG1 mcstransd.config_file read_file_perms)
+	(allow ARG1 mcstransd.config_file list_dir_perms)
+	(allow ARG1 mcstransd.config_file read_lnk_file_perms)
+	(allow ARG1 mcstransd.config_file read_sock_file_perms))
+
+(macro mcstransd_manage_config ((type ARG1))
+	(call seutil_rw_selinux_config_dirs (ARG1))
+	(allow ARG1 mcstransd.config_file manage_file_perms)
+	(allow ARG1 mcstransd.config_file manage_dir_perms)
+	(allow ARG1 mcstransd.config_file manage_lnk_file_perms)
+	(allow ARG1 mcstransd.config_file manage_sock_file_perms))
+
+(macro mcstransd_relabel_config ((type ARG1))
+	(call seutil_search_selinux_config (ARG1))
+	(allow ARG1 mcstransd.config_file relabel_file_perms)
+	(allow ARG1 mcstransd.config_file relabel_dir_perms)
+	(allow ARG1 mcstransd.config_file relabel_lnk_file_perms)
+	(allow ARG1 mcstransd.config_file relabel_sock_file_perms))
+
+(macro mcstransd_selinux_config_obj_type_transition_config ((type ARG1))
+	(call seutil_config_obj_type_transition (ARG1 mcstransd.config_file dir "setrans.d"))
+	(call seutil_config_obj_type_transition (ARG1 mcstransd.config_file file "setrans.conf")))
+
 (macro mcstransd_search_runtime ((type ARG1))
 	(call file_search_runtime (ARG1))
 	(allow ARG1 mcstransd.runtime_file search_dir_perms))

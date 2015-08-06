@@ -33,8 +33,6 @@
 	(call auditd_manage_runtime_sock_files (subj))
 	(call auditd_runtime_obj_type_transition_runtime (subj))
 
-	(call mls_file_write_subj_type (subj))
-
 	(call fs_getattr_fs (subj))
 
 	(call miscfile_read_locale (subj))

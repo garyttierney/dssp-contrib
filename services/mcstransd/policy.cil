@@ -31,13 +31,6 @@
 
 	(call sys_read_kernel_sysctl_files (subj))
 
-	(call mls_file_read_subj_type (subj))
-	(call mls_file_write_subj_type (subj))
-	(call mls_net_inbound_subj_type (subj))
-	(call mls_net_read_subj_type (subj))
-	(call mls_net_write_subj_type (subj))
-	(call mls_proc_read_subj_type (subj))
-
 	(call file_read_config_files (subj))
 
 	(call sec_compute_access_vector (subj))
@@ -52,8 +45,6 @@
 
 	(optional msctransd_optional_sd
 		(call sd_daemon (subj cmd_file))
-
-		(call sd_daemon_mls (subj cmd_file systemlow systemhigh))
 
 		(call sd_daemon_pid_obj_type (runtime_file))
 

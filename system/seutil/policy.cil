@@ -14,8 +14,6 @@
 
 	(roletype seutil_load_policy_role subj)
 
-	(call mls_file_read_subj_type (subj))
-
 	(call sec_load_policy_subj_type (subj))
 
 	(call seutil_read_selinux_config_files (subj))
@@ -67,11 +65,6 @@
 	(call sys_read_unlabeled_lnk_files (subj))
 	(call sys_relabelfrom_invalid (subj))
 	(call sys_relabelfrom_unlabeled (subj))
-
-	(call mls_file_downgrade_subj_type (subj))
-	(call mls_file_read_subj_type (subj))
-	(call mls_file_upgrade_subj_type (subj))
-	(call mls_file_write_subj_type (subj))
 
 	(call dev_relabel_all (subj))
 

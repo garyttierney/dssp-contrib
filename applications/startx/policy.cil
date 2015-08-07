@@ -23,8 +23,12 @@
 
 (call miscfile_read_locale (startx_subj_type))
 
+(call usersubj_use_ttys (startx_subj_type))
+
 (call xauth_delete_home_files (startx_subj_type))
 
 (call xserver_read_home_files (startx_subj_type))
+(call xserver_read_tmpfs_files (startx_subj_type))
+(call xserver_stream_connect (startx_subj_type))
 
 (call xinit_read_home_files (startx_subj_type))

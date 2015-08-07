@@ -1,7 +1,14 @@
-(context iptables_cmd (sys.id sys.role iptables.cmd_file (systemlow systemlow)))
-(context iptables_config (sys.id sys.role iptables.config_file (systemlow systemlow)))
-(context iptables_runtime_lock (sys.id sys.role iptables.runtime_lock_file (systemlow systemlow)))
-(context iptables_var_lib (sys.id sys.role iptables.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context iptables_cmd (sys.id sys.role iptables.cmd_file (systemlow systemlow)))
+		(context iptables_config (sys.id sys.role iptables.config_file (systemlow systemlow)))
+		(context iptables_runtime_lock (sys.id sys.role iptables.runtime_lock_file (systemlow systemlow)))
+		(context iptables_var_lib (sys.id sys.role iptables.var_lib_file (systemlow systemlow))))
+	(false
+		(context iptables_cmd (sys.id object_r iptables.cmd_file (systemlow systemlow)))
+		(context iptables_config (sys.id object_r iptables.config_file (systemlow systemlow)))
+		(context iptables_runtime_lock (sys.id object_r iptables.runtime_lock_file (systemlow systemlow)))
+		(context iptables_var_lib (sys.id object_r iptables.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/ethertypes" file iptables_config)
 (filecon "/etc/nftables(/.*)?" any iptables_config)
@@ -24,10 +31,15 @@
 (filecon "/var/run/lock/subsys/iptables" file iptables_runtime_lock)
 
 (optional iptables_unit_optional_sd
-    (context iptables_unit (sys.id sys.role iptables.unit_file (systemlow systemlow)))
-    (filecon "/usr/lib/systemd/system/[^/]*arptables.*" file iptables_unit)
-    (filecon "/usr/lib/systemd/system/[^/]*ebtables.*" file iptables_unit)
-    (filecon "/usr/lib/systemd/system/[^/]*iptables.*" file iptables_unit)
-    (filecon "/usr/lib/systemd/system/[^/]*ip6tables.*" file iptables_unit)
-    (filecon "/usr/lib/systemd/system/[^/]*nftables.*" file iptables_unit)
-    (filecon "/usr/lib/systemd/system/[^/]*nf6tables.*" file iptables_unit))
+	(tunableif enable_rbacsep
+		(true
+		    (context iptables_unit (sys.id sys.role iptables.unit_file (systemlow systemlow))))
+		(false
+		    (context iptables_unit (sys.id object_r iptables.unit_file (systemlow systemlow)))))
+
+	(filecon "/usr/lib/systemd/system/[^/]*arptables.*" file iptables_unit)
+	(filecon "/usr/lib/systemd/system/[^/]*ebtables.*" file iptables_unit)
+	(filecon "/usr/lib/systemd/system/[^/]*iptables.*" file iptables_unit)
+	(filecon "/usr/lib/systemd/system/[^/]*ip6tables.*" file iptables_unit)
+	(filecon "/usr/lib/systemd/system/[^/]*nftables.*" file iptables_unit)
+	(filecon "/usr/lib/systemd/system/[^/]*nf6tables.*" file iptables_unit))

@@ -1,7 +1,14 @@
-(context wpa_cmd (sys.id sys.role wpa.cmd_file (systemlow systemlow)))
-(context wpa_config (sys.id sys.role wpa.config_file (systemlow systemlow)))
-(context wpa_runtime (sys.id sys.role wpa.runtime_file (systemlow systemlow)))
-(context wpa_var_log (sys.id sys.role wpa.var_log_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context wpa_cmd (sys.id sys.role wpa.cmd_file (systemlow systemlow)))
+		(context wpa_config (sys.id sys.role wpa.config_file (systemlow systemlow)))
+		(context wpa_runtime (sys.id sys.role wpa.runtime_file (systemlow systemlow)))
+		(context wpa_var_log (sys.id sys.role wpa.var_log_file (systemlow systemlow))))
+	(false
+		(context wpa_cmd (sys.id object_r wpa.cmd_file (systemlow systemlow)))
+		(context wpa_config (sys.id object_r wpa.config_file (systemlow systemlow)))
+		(context wpa_runtime (sys.id object_r wpa.runtime_file (systemlow systemlow)))
+		(context wpa_var_log (sys.id object_r wpa.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/wpa_supplicant(/.*)?" any wpa_config)
 (filecon "/usr/sbin/wpa_supplicant" file wpa_cmd)
@@ -9,5 +16,10 @@
 (filecon "/var/run/wpa_supplicant(/.*)?" any wpa_runtime)
 
 (optional wpa_unit_optional_sd
-	(context wpa_unit (sys.id sys.role wpa.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context wpa_unit (sys.id sys.role wpa.unit_file (systemlow systemlow))))
+		(false
+			(context wpa_unit (sys.id object_r wpa.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*wpa_supplicant.*" file wpa_unit))

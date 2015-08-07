@@ -1,4 +1,8 @@
-(context smtp_port (sys.id sys.role smtp.port (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context smtp_port (sys.id sys.role smtp.port (systemlow systemlow))))
+	(false
+		(context smtp_port (sys.id object_r smtp.port (systemlow systemlow)))))
 
 (portcon "tcp" 465 smtp_port)
 (portcon "udp" 465 smtp_port)

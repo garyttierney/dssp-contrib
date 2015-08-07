@@ -1,23 +1,66 @@
-(filecon "HOME_DIR/.*" any (sys.id sys.role home_user.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.cache(/.*)?" any (sys.id sys.role home_cache.home_cache_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.config(/.*)?" any (sys.id sys.role home_config.home_config_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.local(/.*)?" any (sys.id sys.role home_data.home_data_file (systemlow systemlow)))
-(filecon "HOME_DIR/bin(/.*)?" any (sys.id sys.role home_cmd.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.local/bin(/.*)?" any (sys.id sys.role home_cmd.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.pki(/.*)?" any (sys.id sys.role home_cert.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.fontconfig(/.*)?" any (sys.id sys.role home_fonts.home_cache_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any (sys.id sys.role home_fonts.home_cache_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.fonts\.conf" file (sys.id sys.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any (sys.id sys.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any (sys.id sys.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.fonts(/.*)?" any (sys.id sys.role home_fonts.home_data_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any (sys.id sys.role home_fonts.home_data_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.terminfo" file (sys.id sys.role home_terminfo.home_data_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context home_user (sys.id sys.role home_user.home_user_file (systemlow systemlow)))
+		(context home_cache (sys.id sys.role home_cache.home_cache_file (systemlow systemlow)))
+		(context home_config (sys.id sys.role home_config.home_config_file (systemlow systemlow)))
+		(context home_data (sys.id sys.role home_data.home_data_file (systemlow systemlow)))
+		(context home_cmd (sys.id sys.role home_cmd.home_user_file (systemlow systemlow)))
+		(context home_cert (sys.id sys.role home_cert.home_user_file (systemlow systemlow)))
+		(context home_fonts_cache (sys.id sys.role home_fonts.home_cache_file (systemlow systemlow)))
+		(context home_fonts_config (sys.id sys.role home_fonts.home_config_file (systemlow systemlow)))
+		(context home_fonts_data (sys.id sys.role home_fonts.home_data_file (systemlow systemlow)))
+		(context home_terminfo_data (sys.id sys.role home_terminfo.home_data_file (systemlow systemlow))))
+	(false
+		(context home_user (sys.id object_r home_user.home_user_file (systemlow systemlow)))
+		(context home_cache (sys.id object_r home_cache.home_cache_file (systemlow systemlow)))
+		(context home_config (sys.id object_r home_config.home_config_file (systemlow systemlow)))
+		(context home_data (sys.id object_r home_data.home_data_file (systemlow systemlow)))
+		(context home_cmd (sys.id object_r home_cmd.home_user_file (systemlow systemlow)))
+		(context home_cert (sys.id object_r home_cert.home_user_file (systemlow systemlow)))
+		(context home_fonts_cache (sys.id object_r home_fonts.home_cache_file (systemlow systemlow)))
+		(context home_fonts_config (sys.id object_r home_fonts.home_config_file (systemlow systemlow)))
+		(context home_fonts_data (sys.id object_r home_fonts.home_data_file (systemlow systemlow)))
+		(context home_terminfo_data (sys.id object_r home_terminfo.home_data_file (systemlow systemlow)))))
+
+(filecon "HOME_DIR/.*" any home_user)
+(filecon "HOME_DIR/\.cache(/.*)?" any home_cache)
+(filecon "HOME_DIR/\.config(/.*)?" any home_config)
+(filecon "HOME_DIR/\.local(/.*)?" any home_data)
+(filecon "HOME_DIR/bin(/.*)?" any home_cmd)
+(filecon "HOME_DIR/\.local/bin(/.*)?" any home_cmd)
+(filecon "HOME_DIR/\.pki(/.*)?" any home_cert)
+(filecon "HOME_DIR/\.fontconfig(/.*)?" any home_fonts_cache)
+(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any home_fonts_cache)
+(filecon "HOME_DIR/\.fonts\.conf" file home_fonts_config)
+(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any home_fonts_config)
+(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any home_fonts_config)
+(filecon "HOME_DIR/\.fonts(/.*)?" any home_fonts_data)
+(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any home_fonts_data)
+(filecon "HOME_DIR/\.terminfo" file home_terminfo_data)
 
 (tunableif enable_mls
-	(true
-		(filecon "HOME_DIR" dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
-		(filecon "USER_SPOOL" file (sys.id sys.role var_spool_user.var_spool_file (systemlow systemhigh))))
-	(false
-		(filecon "HOME_DIR" dir (sys.id sys.role home_dir.file (systemlow systemlow)))
-		(filecon "USER_SPOOL" file (sys.id sys.role var_spool_user.var_spool_file (systemlow systemlow)))))
+        (true   
+                (tunableif enable_rbacsep
+                        (true   
+                                (context home_dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
+                                (context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemhigh))))))
+        (false  
+                (tunableif (not enable_rbacsep)
+                        (true   
+                                (context home_dir (sys.id object_r home_dir.file (systemlow systemhigh)))
+                                (context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemhigh)))))))
+
+(tunableif (not enable_mls)
+        (true   
+                (tunableif enable_rbacsep
+                        (true   
+                                (context home_dir (sys.id sys.role home_dir.file (systemlow systemlow)))
+                                (context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemlow))))))
+        (false  
+                (tunableif (not enable_rbacsep)
+                        (true   
+                                (context home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
+                                (context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
+
+(filecon "HOME_DIR" dir home_dir)
+(filecon "USER_SPOOL" file user_spool)

@@ -1,8 +1,16 @@
-(context lvm_cmd (sys.id sys.role lvm.cmd_file (systemlow systemlow)))
-(context lvm_config (sys.id sys.role lvm.config_file (systemlow systemlow)))
-(context lvm_metadata_config (sys.id sys.role lvm_metadata.config_file (systemlow systemlow)))
-(context lvm_runtime_lock (sys.id sys.role lvm.runtime_lock_file (systemlow systemlow)))
-(context lvm_runtime (sys.id sys.role lvm.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context lvm_cmd (sys.id sys.role lvm.cmd_file (systemlow systemlow)))
+		(context lvm_config (sys.id sys.role lvm.config_file (systemlow systemlow)))
+		(context lvm_metadata_config (sys.id sys.role lvm_metadata.config_file (systemlow systemlow)))
+		(context lvm_runtime_lock (sys.id sys.role lvm.runtime_lock_file (systemlow systemlow)))
+		(context lvm_runtime (sys.id sys.role lvm.runtime_file (systemlow systemlow))))
+	(false
+		(context lvm_cmd (sys.id object_r lvm.cmd_file (systemlow systemlow)))
+		(context lvm_config (sys.id object_r lvm.config_file (systemlow systemlow)))
+		(context lvm_metadata_config (sys.id object_r lvm_metadata.config_file (systemlow systemlow)))
+		(context lvm_runtime_lock (sys.id object_r lvm.runtime_lock_file (systemlow systemlow)))
+		(context lvm_runtime (sys.id object_r lvm.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/lvm(/.*)?" any lvm_config)
 (filecon "/etc/lvm/archive(/.*)?" any lvm_metadata_config)
@@ -18,6 +26,11 @@
 (filecon "/var/run/lvm(/.*)?" any lvm_runtime)
 
 (optional lvm_unit_optional_sd
-	(context lvm_unit (sys.id sys.role lvm.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context lvm_unit (sys.id sys.role lvm.unit_file (systemlow systemlow))))
+		(false
+			(context lvm_unit (sys.id object_r lvm.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/blk-availability.*" file lvm_unit)
 	(filecon "/usr/lib/systemd/system/lvm2-.*" file lvm_unit))

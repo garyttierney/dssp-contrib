@@ -1,4 +1,8 @@
-(context imap_port (sys.id sys.role imap.port (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context imap_port (sys.id sys.role imap.port (systemlow systemlow))))
+	(false
+		(context imap_port (sys.id object_r imap.port (systemlow systemlow)))))
 
 (portcon "tcp" 993 imap_port)
 (portcon "udp" 993 imap_port)

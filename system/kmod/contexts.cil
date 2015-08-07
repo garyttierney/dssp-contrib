@@ -1,10 +1,20 @@
-(context kmod_cmd (sys.id sys.role kmod.cmd_file (systemlow systemlow)))
-(context kmod_config (sys.id sys.role kmod.config_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context kmod_cmd (sys.id sys.role kmod.cmd_file (systemlow systemlow)))
+		(context kmod_config (sys.id sys.role kmod.config_file (systemlow systemlow))))
+	(false
+		(context kmod_cmd (sys.id object_r kmod.cmd_file (systemlow systemlow)))
+		(context kmod_config (sys.id object_r kmod.config_file (systemlow systemlow)))))
 
 (filecon "/etc/depmod\.d(/.*)?" any kmod_config)
 (filecon "/etc/modprobe\.d(/.*)?" any kmod_config)
 (filecon "/usr/bin/kmod" file kmod_cmd)
 
 (optional kmod_unit_optional_sd
-	(context kmod_unit (sys.id sys.role kmod.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context kmod_unit (sys.id sys.role kmod.unit_file (systemlow systemlow))))
+		(false
+			(context kmod_unit (sys.id object_r kmod.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*kmod-static-nodes.*" file kmod_unit))

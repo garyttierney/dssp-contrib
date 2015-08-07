@@ -1,9 +1,19 @@
-(context getty_cmd (sys.id sys.role getty.cmd_file (systemlow systemlow)))
-(context getty_runtime (sys.id sys.role getty.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context getty_cmd (sys.id sys.role getty.cmd_file (systemlow systemlow)))
+		(context getty_runtime (sys.id sys.role getty.runtime_file (systemlow systemlow))))
+	(false
+		(context getty_cmd (sys.id object_r getty.cmd_file (systemlow systemlow)))
+		(context getty_runtime (sys.id object_r getty.runtime_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/agetty" file getty_cmd)
 (filecon "/var/run/agetty\.reload" file getty_runtime)
 
 (optional getty_unit_optional_sd
-	(context getty_unit (sys.id sys.role getty.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context getty_unit (sys.id sys.role getty.unit_file (systemlow systemlow))))
+		(false
+			(context getty_unit (sys.id object_r getty.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*getty.*" file getty_unit))

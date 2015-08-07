@@ -1,7 +1,14 @@
-(context authconfig_cmd (sys.id sys.role authconfig.cmd_file (systemlow systemlow)))
-(context authconfig_config (sys.id sys.role authconfig.config_file (systemlow systemlow)))
-(context authconfig_data (sys.id sys.role authconfig.data_file (systemlow systemlow)))
-(context authconfig_var_lib (sys.id sys.role authconfig.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context authconfig_cmd (sys.id sys.role authconfig.cmd_file (systemlow systemlow)))
+		(context authconfig_config (sys.id sys.role authconfig.config_file (systemlow systemlow)))
+		(context authconfig_data (sys.id sys.role authconfig.data_file (systemlow systemlow)))
+		(context authconfig_var_lib (sys.id sys.role authconfig.var_lib_file (systemlow systemlow))))
+	(false
+		(context authconfig_cmd (sys.id object_r authconfig.cmd_file (systemlow systemlow)))
+		(context authconfig_config (sys.id object_r authconfig.config_file (systemlow systemlow)))
+		(context authconfig_data (sys.id object_r authconfig.data_file (systemlow systemlow)))
+		(context authconfig_var_lib (sys.id object_r authconfig.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/sysconfig/authconfig" file authconfig_config)
 (filecon "/usr/sbin/authconfig" file authconfig_cmd)

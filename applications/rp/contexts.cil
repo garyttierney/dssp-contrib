@@ -1,6 +1,11 @@
-(context rp_cmd (sys.id sys.role rp.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context rp_cmd (sys.id sys.role rp.cmd_file (systemlow systemlow)))
+		(context rp_home (sys.id sys.role rp.home_user_file (systemlow systemlow))))
+	(false
+		(context rp_cmd (sys.id object_r rp.cmd_file (systemlow systemlow)))
+		(context rp_home (sys.id object_r rp.home_user_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/ratpoison" file rp_cmd)
-
-(filecon "HOME_DIR/\.ratpoisonrc" file (sys.id sys.role rp.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.ratpoison_history" file (sys.id sys.role rp.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.ratpoisonrc" file rp_home)
+(filecon "HOME_DIR/\.ratpoison_history" file rp_home)

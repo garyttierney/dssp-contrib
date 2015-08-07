@@ -1,3 +1,7 @@
-(context bridgeutil_cmd (sys.id sys.role bridgeutil.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context bridgeutil_cmd (sys.id sys.role bridgeutil.cmd_file (systemlow systemlow))))
+	(false
+		(context bridgeutil_cmd (sys.id object_r bridgeutil.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/brctl" file bridgeutil_cmd)

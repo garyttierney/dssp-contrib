@@ -1,6 +1,12 @@
-(context sd_updated_cmd (sys.id sys.role sd_updated.cmd_file (systemlow systemlow)))
-(context sd_updated_file (sys.id sys.role sd_updated.file (systemlow systemlow)))
-(context sd_updated_unit (sys.id sys.role sd_updated.unit_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_updated_cmd (sys.id sys.role sd_updated.cmd_file (systemlow systemlow)))
+		(context sd_updated_file (sys.id sys.role sd_updated.file (systemlow systemlow)))
+		(context sd_updated_unit (sys.id sys.role sd_updated.unit_file (systemlow systemlow))))
+	(false
+		(context sd_updated_cmd (sys.id object_r sd_updated.cmd_file (systemlow systemlow)))
+		(context sd_updated_file (sys.id object_r sd_updated.file (systemlow systemlow)))
+		(context sd_updated_unit (sys.id object_r sd_updated.unit_file (systemlow systemlow)))))
 
 (filecon "/etc/\.updated" file sd_updated_file)
 (filecon "/usr/lib/systemd/system/[^/]*systemd-update-done.*" file sd_updated_unit)

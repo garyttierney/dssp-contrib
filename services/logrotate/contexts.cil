@@ -1,6 +1,12 @@
-(context logrotate_cmd (sys.id sys.role logrotate.cmd_file (systemlow systemlow)))
-(context logrotate_config (sys.id sys.role logrotate.config_file (systemlow systemlow)))
-(context logrotate_var_lib (sys.id sys.role logrotate.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context logrotate_cmd (sys.id sys.role logrotate.cmd_file (systemlow systemlow)))
+		(context logrotate_config (sys.id sys.role logrotate.config_file (systemlow systemlow)))
+		(context logrotate_var_lib (sys.id sys.role logrotate.var_lib_file (systemlow systemlow))))
+	(false
+		(context logrotate_cmd (sys.id object_r logrotate.cmd_file (systemlow systemlow)))
+		(context logrotate_config (sys.id object_r logrotate.config_file (systemlow systemlow)))
+		(context logrotate_var_lib (sys.id object_r logrotate.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/logrotate\.conf" file logrotate_config)
 (filecon "/etc/logrotate\.d(/.*)?" any logrotate_config)
@@ -9,5 +15,10 @@
 (filecon "/var/lib/logrotate\.status.*" file logrotate_var_lib)
 
 (optional logrotate_unit_optional_sd
-	(context logrotate_unit (sys.id sys.role logrotate.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context logrotate_unit (sys.id sys.role logrotate.unit_file (systemlow systemlow))))
+		(false
+			(context logrotate_unit (sys.id object_r logrotate.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*logrotate.*" file logrotate_unit))

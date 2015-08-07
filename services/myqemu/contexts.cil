@@ -1,6 +1,12 @@
-(context myqemu_installer_cmd (sys.id sys.role myqemu_installer.cmd_file (systemlow systemlow)))
-(context myqemu_runner_cmd (sys.id sys.role myqemu_runner.cmd_file (systemlow systemlow)))
-(context myqemu_shutdown_cmd (sys.id sys.role myqemu_shutdown.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context myqemu_installer_cmd (sys.id sys.role myqemu_installer.cmd_file (systemlow systemlow)))
+		(context myqemu_runner_cmd (sys.id sys.role myqemu_runner.cmd_file (systemlow systemlow)))
+		(context myqemu_shutdown_cmd (sys.id sys.role myqemu_shutdown.cmd_file (systemlow systemlow))))
+	(false
+		(context myqemu_installer_cmd (sys.id object_r myqemu_installer.cmd_file (systemlow systemlow)))
+		(context myqemu_runner_cmd (sys.id object_r myqemu_runner.cmd_file (systemlow systemlow)))
+		(context myqemu_shutdown_cmd (sys.id object_r myqemu_shutdown.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/myqemu_installer" file myqemu_installer_cmd)
 (filecon "/usr/sbin/myqemu_runner" file myqemu_runner_cmd)
@@ -8,5 +14,10 @@
 (filecon "/usr/sbin/myqemu_shutdown" file myqemu_shutdown_cmd)
 
 (optional myqemu_runner_unit_optional_sd
-	(context myqemu_runner_unit (sys.id sys.role myqemu_runner.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context myqemu_runner_unit (sys.id sys.role myqemu_runner.unit_file (systemlow systemlow))))
+		(false
+			(context myqemu_runner_unit (sys.id object_r myqemu_runner.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*myqemu_runner.*" file myqemu_runner_unit))

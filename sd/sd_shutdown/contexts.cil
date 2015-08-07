@@ -1,4 +1,8 @@
-(context sd_shutdown_cmd (sys.id sys.role sd_shutdown.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_shutdown_cmd (sys.id sys.role sd_shutdown.cmd_file (systemlow systemlow))))
+	(false
+		(context sd_shutdown_cmd (sys.id object_r sd_shutdown.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/lib/systemd/systemd-shutdown" file sd_shutdown_cmd)
 (filecon "/usr/lib/systemd/system-shutdown(/.*)?" file cmd)

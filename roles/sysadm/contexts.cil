@@ -1,159 +1,422 @@
-(filecon "/root/.*" any (sysadm.id sysadm.role home_user.home_user_file (systemlow systemlow)))
-(filecon "/root/\.cache(/.*)?" any (sysadm.id sysadm.role home_cache.home_cache_file (systemlow systemlow)))
-(filecon "/root/\.config(/.*)?" any (sysadm.id sysadm.role home_config.home_config_file (systemlow systemlow)))
-(filecon "/root/\.local(/.*)?" any (sysadm.id sysadm.role home_data.home_data_file (systemlow systemlow)))
-(filecon "/root/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
-(filecon "/root/\.local/bin(/.*)?" any (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
-(filecon "/root/\.pki(/.*)?" any (sysadm.id sysadm.role home_cert.home_user_file (systemlow systemlow)))
-(filecon "/root/\.fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
-(filecon "/root/\.cache/fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
-(filecon "/root/\.fonts\.conf" file (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "/root/\.fonts\.conf\.d(/.*)?" any (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "/root/\.config/fontconfig(/.*)?" any (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
-(filecon "/root/\.fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
-(filecon "/root/\.local/share/fonts(/.*)?" any (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
-(filecon "/root/\.terminfo" file (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context root_home_user (sysadm.id sysadm.role home_user.home_user_file (systemlow systemlow)))
+		(context root_home_cache (sysadm.id sysadm.role home_cache.home_cache_file (systemlow systemlow)))
+		(context root_home_config (sysadm.id sysadm.role home_config.home_config_file (systemlow systemlow)))
+		(context root_home_data (sysadm.id sysadm.role home_data.home_data_file (systemlow systemlow)))
+		(context root_home_cmd (sysadm.id sysadm.role home_cmd.home_user_file (systemlow systemlow)))
+		(context root_home_cert (sysadm.id sysadm.role home_cert.home_user_file (systemlow systemlow)))
+		(context root_home_fonts_cache (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
+		(context root_home_fonts_config (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
+		(context root_home_fonts_data (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_terminfo_data (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow))))
+	(false
+		(context root_home_user (sysadm.id object_r home_user.home_user_file (systemlow systemlow)))
+		(context root_home_cache (sysadm.id object_r home_cache.home_cache_file (systemlow systemlow)))
+		(context root_home_config (sysadm.id object_r home_config.home_config_file (systemlow systemlow)))
+		(context root_home_data (sysadm.id object_r home_data.home_data_file (systemlow systemlow)))
+		(context root_home_cmd (sysadm.id object_r home_cmd.home_user_file (systemlow systemlow)))
+		(context root_home_cert (sysadm.id object_r home_cert.home_user_file (systemlow systemlow)))
+		(context root_home_fonts_cache (sysadm.id object_r home_fonts.home_cache_file (systemlow systemlow)))
+		(context root_home_fonts_config (sysadm.id object_r home_fonts.home_config_file (systemlow systemlow)))
+		(context root_home_fonts_data (sysadm.id object_r home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_terminfo_data (sysadm.id object_r home_terminfo.home_data_file (systemlow systemlow)))))
 
 (optional sysadm_curl_home_optional_curl
-	(filecon "/root/\.wgetrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.curlrc" file (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_curl_home (sysadm.id sysadm.role curl.home_user_file (systemlow systemlow))))
+		(false
+			(context root_curl_home (sysadm.id object_r curl.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.wgetrc" file root_curl_home)
+	(filecon "/root/\.curlrc" file root_curl_home))
 
 (optional sysadm_bti_home_optional_bti
-	(filecon "/root/\.bti" file (sysadm.id sysadm.role bti.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.bti\.log.*" file (sysadm.id sysadm.role bti.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_bti_home (sysadm.id sysadm.role bti.home_user_file (systemlow systemlow))))
+		(false
+			(context root_bti_home (sysadm.id object_r bti.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.bti" file root_bti_home)
+	(filecon "/root/\.bti\.log.*" file root_bti_home))
 
 (optional sysadm_dirmngr_home_optional_dirmgr
-	(filecon "/root/\.gnupg/crls\.d(/.*)?" any (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/S\.dirmngr" socket (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_dirmngr_home (sysadm.id sysadm.role dirmngr.home_user_file (systemlow systemlow))))
+		(false
+			(context root_dirmngr_home (sysadm.id object_r dirmngr.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gnupg/crls\.d(/.*)?" any root_dirmngr_home)
+	(filecon "/root/\.gnupg/S\.dirmngr" socket root_dirmngr_home))
 
 (optional sysadm_dunst_home_optional_dunst
-	(filecon "/root/\.config/dunst(/.*)?" any (sysadm.id sysadm.role dunst.home_config_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_dunst_home_config (sysadm.id sysadm.role dunst.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dunst_home_config (sysadm.id object_r dunst.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/dunst(/.*)?" any root_dunst_home_config))
 
 (optional sysadm_emacs_home_optional_emacs
-	(filecon "/root/\.emacs" file (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.emacs\.el" file (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.emacs\.d(/.*)?" any (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_emacs_home (sysadm.id sysadm.role emacs.home_user_file (systemlow systemlow))))
+		(false
+			(context root_emacs_home (sysadm.id object_r emacs.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.emacs" file root_emacs_home)
+	(filecon "/root/\.emacs\.el" file root_emacs_home)
+	(filecon "/root/\.emacs\.d(/.*)?" any root_emacs_home))
 
 (optional sysadm_firefox_home_optional_firefox
-	(filecon "/root/\.mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.cache/mozilla(/.*)?" any (sysadm.id sysadm.role firefox.home_cache_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_firefox_home_cache (sysadm.id sysadm.role firefox.home_cache_file (systemlow systemlow)))
+			(context root_firefox_home (sysadm.id sysadm.role firefox.home_user_file (systemlow systemlow))))
+		(false
+			(context root_firefox_home_cache (sysadm.id object_r firefox.home_cache_file (systemlow systemlow)))
+			(context root_firefox_home (sysadm.id object_r firefox.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.mozilla(/.*)?" any root_firefox_home)
+	(filecon "/root/\.cache/mozilla(/.*)?" any root_firefox_home_cache))
 
 (optional sysadm_fop_home_optional_fop
-	(filecon "/root/\.fop(/.*)?" any (sysadm.id sysadm.role fop.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_fop_home (sysadm.id sysadm.role fop.home_user_file (systemlow systemlow))))
+		(false
+			(context root_fop_home (sysadm.id object_r fop.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.fop(/.*)?" any root_fop_home))
 
 (optional sysadm_git_home_optional_git
-	(filecon "/root/.*/\.git(/.*)?" any (sysadm.id sysadm.role git.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.config/git(/.*)?" any (sysadm.id sysadm.role git.home_config_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_git_home (sysadm.id sysadm.role git.home_user_file (systemlow systemlow)))
+			(context root_git_home_config (sysadm.id sysadm.role git.home_config_file (systemlow systemlow))))
+		(false
+			(context root_git_home (sysadm.id object_r git.home_user_file (systemlow systemlow)))
+			(context root_git_home_config (sysadm.id object_r git.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/.*/\.git(/.*)?" any root_git_home)
+	(filecon "/root/\.config/git(/.*)?" any root_git_home_config))
 
 (optional sysadm_gpg_home_optional_gpg
-	(filecon "/root/\.gnupg(/.*)?" any (sysadm.id sysadm.role gpg.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_gpg_home (sysadm.id sysadm.role gpg.home_user_file (systemlow systemlow))))
+		(false
+			(context root_gpg_home (sysadm.id object_r gpg.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gnupg(/.*)?" any root_gpg_home))
 
 (optional sysadm_gpg_agent_home_optional_gpg_agent
-	(filecon "/root/\.gnupg/gpg-agent\.conf" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/gpg-agent\.log" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/S\.gpg-agent" socket (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/S\.gpg-agent\.ssh" socket (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/sshcontrol" file (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_gpg_agent_home (sysadm.id sysadm.role gpg_agent.home_user_file (systemlow systemlow))))
+		(false
+			(context root_gpg_agent_home (sysadm.id object_r gpg_agent.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gnupg/gpg-agent\.conf" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/gpg-agent\.log" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/S\.gpg-agent" socket root_gpg_agent_home)
+	(filecon "/root/\.gnupg/S\.gpg-agent\.ssh" socket root_gpg_agent_home)
+	(filecon "/root/\.gnupg/sshcontrol" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any root_gpg_agent_home))
 
 (optional sysadm_gstreamer_home_optional_gstreamer
-	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_gstreamer_home_cache (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gstreamer_home_cache (sysadm.id object_r gstreamer.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any root_gstreamer_home_cache))
 
 (optional sysadm_irssi_home_optional_irssi
-	(filecon "/root/\.irssi(/.*)?" any (sysadm.id sysadm.role irssi.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_irssi_home (sysadm.id sysadm.role irssi.home_user_file (systemlow systemlow))))
+		(false
+			(context root_irssi_home (sysadm.id object_r irssi.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.irssi(/.*)?" any root_irssi_home))
 
 (optional sysadm_java_home_optional_java
-	(filecon "/root/\.java(/.*)?" any (sysadm.id sysadm.role java.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_java_home (sysadm.id sysadm.role java.home_user_file (systemlow systemlow))))
+		(false
+			(context root_java_home (sysadm.id object_r java.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.java(/.*)?" any root_java_home))
 
 (optional sysadm_livestreamer_home_optional_livestreamer
-	(filecon "/root/\.cache/livestreamer(/.*)?" any (sysadm.id sysadm.role livestreamer.home_cache_file (systemlow systemlow)))
-	(filecon "/root/\.config/livestreamer(/.*)?" any (sysadm.id sysadm.role livestreamer.home_config_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_livestreamer_home_cache (sysadm.id sysadm.role livestreamer.home_cache_file (systemlow systemlow)))
+			(context root_livestreamer_home_config (sysadm.id sysadm.role livestreamer.home_config_file (systemlow systemlow))))
+		(false
+			(context root_livestreamer_home_cache (sysadm.id object_r livestreamer.home_cache_file (systemlow systemlow)))
+			(context root_livestreamer_home_config (sysadm.id object_r livestreamer.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/livestreamer(/.*)?" any root_livestreamer_home_cache)
+	(filecon "/root/\.config/livestreamer(/.*)?" any root_livestreamer_home_config))
 
 (optional sysadm_lynx_home_optional_lynx
-	(filecon "/root/\.lynxrc" file (sysadm.id sysadm.role lynx.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_lynx_home (sysadm.id sysadm.role lynx.home_user_file (systemlow systemlow))))
+		(false
+			(context root_lynx_home (sysadm.id object_r lynx.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.lynxrc" file root_lynx_home))
 
 (optional sysadm_mplayer_home_optional_mplayer
-	(filecon "/root/\.mplayer(/.*)?" any (sysadm.id sysadm.role mplayer.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_mplayer_home (sysadm.id sysadm.role mplayer.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mplayer_home (sysadm.id object_r mplayer.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.mplayer(/.*)?" any root_mplayer_home))
 
 (optional sysadm_mutt_home_optional_mutt
-	(filecon "/root/\.muttrc" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.muttrc\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.mutt_cache" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.mutt_cache\..*" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.mutt_certificates" file (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_mutt_home (sysadm.id sysadm.role mutt.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mutt_home (sysadm.id object_r mutt.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.muttrc" file root_mutt_home)
+	(filecon "/root/\.muttrc\..*" file root_mutt_home)
+	(filecon "/root/\.mutt_cache" file root_mutt_home)
+	(filecon "/root/\.mutt_cache\..*" file root_mutt_home)
+	(filecon "/root/\.mutt_certificates" file root_mutt_home))
 
 (optional sysadm_nb_home_optional_nb
-	(filecon "/root/\.newsbeuter(/.*)?" any (sysadm.id sysadm.role nb.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_nb_home (sysadm.id sysadm.role nb.home_user_file (systemlow systemlow))))
+		(false
+			(context root_nb_home (sysadm.id object_r nb.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.newsbeuter(/.*)?" any root_nb_home))
 
 (optional sysadm_openssl_home_optional_openssl
-	(filecon "/root/\.rnd" file (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_openssl_home (sysadm.id sysadm.role openssl.home_user_file (systemlow systemlow))))
+		(false
+			(context root_openssl_home (sysadm.id object_r openssl.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.rnd" file root_openssl_home))
 
 (optional sysadm_pa_home_optional_pa
-	(filecon "/root/\.esd_auth" file (sysadm.id sysadm.role pa.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.config/pulse(/.*)?" any (sysadm.id sysadm.role pa.home_config_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_pa_home (sysadm.id sysadm.role pa.home_user_file (systemlow systemlow)))
+			(context root_pa_home_config (sysadm.id sysadm.role pa.home_config_file (systemlow systemlow))))
+		(false
+			(context root_pa_home (sysadm.id object_r pa.home_user_file (systemlow systemlow)))
+			(context root_pa_home_config (sysadm.id object_r pa.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.esd_auth" file root_pa_home)
+	(filecon "/root/\.config/pulse(/.*)?" any root_pa_home_config))
 
 (optional sysadm_pass_home_optional_pass
-	(filecon "/root/\.password-store(/.*)?" any (sysadm.id sysadm.role pass.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_pass_home (sysadm.id sysadm.role pass.home_user_file (systemlow systemlow))))
+		(false
+			(context root_pass_home (sysadm.id object_r pass.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.password-store(/.*)?" any root_pass_home))
 
 (optional sysadm_rp_home_optional_rp
-	(filecon "/root/\.ratpoisonrc" file (sysadm.id sysadm.role rp.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.ratpoison_history" file (sysadm.id sysadm.role rp.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_rp_home (sysadm.id sysadm.role rp.home_user_file (systemlow systemlow))))
+		(false
+			(context root_rp_home (sysadm.id object_r rp.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.ratpoisonrc" file root_rp_home)
+	(filecon "/root/\.ratpoison_history" file root_rp_home))
 
 (optional sysadm_rtorrent_home_optional_rtorrent
-	(filecon "/root/\.rtorrent(/.*)?" any (sysadm.id sysadm.role rtorrent.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.config/rtorrent\.rc" file (sysadm.id sysadm.role rtorrent.home_config_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_rtorrent_home (sysadm.id sysadm.role rtorrent.home_user_file (systemlow systemlow)))
+			(context root_rtorrent_home_config (sysadm.id sysadm.role rtorrent.home_config_file (systemlow systemlow))))
+		(false
+			(context root_rtorrent_home (sysadm.id object_r rtorrent.home_user_file (systemlow systemlow)))
+			(context root_rtorrent_home_config (sysadm.id object_r rtorrent.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.rtorrent(/.*)?" any root_rtorrent_home)
+	(filecon "/root/\.config/rtorrent\.rc" file root_rtorrent_home_config))
 
 (optional sysadm_scdaemon_home_optional_scdaemon
-	(filecon "/root/\.gnupg/reader.*\.status" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/scdaemon\.conf" file (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.gnupg/S\.scdaemon" socket (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_scdaemon_home (sysadm.id sysadm.role scdaemon.home_user_file (systemlow systemlow))))
+		(false
+			(context root_scdaemon_home (sysadm.id object_r scdaemon.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gnupg/reader.*\.status" file root_scdaemon_home)
+	(filecon "/root/\.gnupg/scdaemon\.conf" file root_scdaemon_home)
+	(filecon "/root/\.gnupg/S\.scdaemon" socket root_scdaemon_home))
 
 (optional sysadm_screen_home_optional_screen
-	(filecon "/root/\.screenrc" file (sysadm.id sysadm.role screen.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_screen_home (sysadm.id sysadm.role screen.home_user_file (systemlow systemlow))))
+		(false
+			(context root_screen_home (sysadm.id object_r screen.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.screenrc" file root_screen_home))
 
 (optional sysadm_sduser_home_optional_sduser
-	(filecon "/root/\.config/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_config_file (systemlow systemlow)))
-	(filecon "/root/\.local/share/systemd(/.*)?" any (sysadm.id sysadm.role sduser.home_data_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_sduser_home_config (sysadm.id sysadm.role sduser.home_config_file (systemlow systemlow)))
+			(context root_sduser_home_data (sysadm.id sysadm.role sduser.home_data_file (systemlow systemlow))))
+		(false
+			(context root_sduser_home_config (sysadm.id object_r sduser.home_config_file (systemlow systemlow)))
+			(context root_sduser_home_data (sysadm.id object_r sduser.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/systemd(/.*)?" any root_sduser_home_config)
+	(filecon "/root/\.local/share/systemd(/.*)?" any root_sduser_home_data))
 
 (optional sysadm_sessbus_launch_home_optional_sessbus_launch
-	(filecon "/root/\.dbus(/.*)?" any (sysadm.id sysadm.role sessbus_launch.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_sessbus_launch_home (sysadm.id sysadm.role sessbus_launch.home_user_file (systemlow systemlow))))
+		(false
+			(context root_sessbus_launch_home (sysadm.id object_r sessbus_launch.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.dbus(/.*)?" any root_sessbus_launch_home))
 
 (optional sysadm_ssh_client_home_optional_ssh
-	(filecon "/root/\.ssh(/.*)?" any (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_ssh_client_home (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))
+		(false
+			(context root_ssh_client_home (sysadm.id object_r ssh_client.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.ssh(/.*)?" any root_ssh_client_home))
 
 (optional sysadm_tor_home_optional_tor
-	(filecon "/root/\.tor(/.*)?" any (sysadm.id sysadm.role tor.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_tor_home (sysadm.id sysadm.role tor.home_user_file (systemlow systemlow))))
+		(false
+			(context root_tor_home (sysadm.id object_r tor.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.tor(/.*)?" any root_tor_home))
 
 (optional sysadm_vlock_home_optional_vlock
-	(filecon "/root/\.vlockrc" file (sysadm.id sysadm.role vlock.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_vlock_home (sysadm.id sysadm.role vlock.home_user_file (systemlow systemlow))))
+		(false
+			(context root_vlock_home (sysadm.id object_r vlock.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.vlockrc" file root_vlock_home))
 
 (optional sysadm_xauth_home_optional_xauth
-	(filecon "/root/\.Xauthority.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.serverauth.*" file (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xauth_home (sysadm.id sysadm.role xauth.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xauth_home (sysadm.id object_r xauth.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.Xauthority.*" file root_xauth_home)
+	(filecon "/root/\.serverauth.*" file root_xauth_home))
 
 (optional sysadm_xbindkeys_home_optional_xbindkeys
-	(filecon "/root/\.xbindkeysrc" file (sysadm.id sysadm.role xbindkeys.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xbindkeys_home (sysadm.id sysadm.role xbindkeys.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xbindkeys_home (sysadm.id object_r xbindkeys.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xbindkeysrc" file root_xbindkeys_home))
 
 (optional sysadm_xinit_home_optional_xinit
-	(filecon "/root/\.xinitrc" file (sysadm.id sysadm.role xinit.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xinit_home (sysadm.id sysadm.role xinit.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xinit_home (sysadm.id object_r xinit.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xinitrc" file root_xinit_home))
 
 (optional sysadm_xlock_home_optional_xlock
-	(filecon "/root/\.xlockrc" file (sysadm.id sysadm.role xlock.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xlock_home (sysadm.id sysadm.role xlock.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xlock_home (sysadm.id object_r xlock.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xlockrc" file root_xlock_home))
 
 (optional sysadm_xpdf_home_optional_xpdf
-	(filecon "/root/\.xpdfrc" file (sysadm.id sysadm.role xpdf.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xpdf_home (sysadm.id sysadm.role xpdf.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xpdf_home (sysadm.id object_r xpdf.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xpdfrc" file root_xpdf_home))
 
 (optional sysadm_xserver_home_optional_xserver
-	(filecon "/root/\.xserverrc" file (sysadm.id sysadm.role xserver.home_user_file (systemlow systemlow)))
-	(filecon "/root/\.local/share/xorg(/.*)?" any (sysadm.id sysadm.role xserver.home_data_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xserver_home (sysadm.id sysadm.role xserver.home_user_file (systemlow systemlow)))
+			(context root_xserver_home_data (sysadm.id sysadm.role xserver.home_data_file (systemlow systemlow))))
+		(false
+			(context root_xserver_home (sysadm.id object_r xserver.home_user_file (systemlow systemlow)))
+			(context root_xserver_home_data (sysadm.id object_r xserver.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xserverrc" file root_xserver_home)
+	(filecon "/root/\.local/share/xorg(/.*)?" any root_xserver_home_data))
 
 (optional sysadm_xutil_home_optional_xutil
-	(filecon "/root/\.Xresources" file (sysadm.id sysadm.role xutil.home_user_file (systemlow systemlow))))
+	(tunableif enable_rbacsep
+		(true
+			(context root_xutil_home (sysadm.id sysadm.role xutil.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xutil_home (sysadm.id object_r xutil.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.Xresources" file root_xutil_home))
 
 (tunableif enable_mls
 	(true
-		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))
-		(filecon "/var/spool/mail/root" file (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemhigh))))
+		(tunableif enable_rbacsep
+			(true
+				(context root_home_dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))
+				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemhigh))))))
 	(false
-		(filecon "/root" dir (sysadm.id sysadm.role home_dir.file (systemlow systemlow)))
-		(filecon "/var/spool/mail/root" file (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow)))))
+		(tunableif (not enable_rbacsep)
+			(true
+				(context root_home_dir (sysadm.id object_r home_dir.file (systemlow systemhigh)))
+				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemhigh)))))))
+
+(tunableif (not enable_mls)
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context root_home_dir (sysadm.id sysadm.role home_dir.file (systemlow systemlow)))
+				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow))))))
+	(false
+		(tunableif (not enable_rbacsep)
+			(true
+				(context root_home_dir (sysadm.id object_r home_dir.file (systemlow systemlow)))
+				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
+
+(filecon "/root" dir root_home_dir)
+(filecon "/var/spool/mail/root" file root_user_spool)

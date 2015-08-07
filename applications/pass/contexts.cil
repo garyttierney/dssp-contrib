@@ -1,1 +1,7 @@
-(filecon "HOME_DIR/\.password-store(/.*)?" any (sys.id sys.role pass.home_user_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context pass_home (sys.id sys.role pass.home_user_file (systemlow systemlow))))
+	(false
+		(context pass_home (sys.id object_r pass.home_user_file (systemlow systemlow)))))
+
+(filecon "HOME_DIR/\.password-store(/.*)?" any pass_home)

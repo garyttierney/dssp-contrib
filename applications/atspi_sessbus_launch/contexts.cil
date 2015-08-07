@@ -1,3 +1,7 @@
-(context atspi_sessbus_launch_cmd (sys.id sys.role atspi_sessbus_launch.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context atspi_sessbus_launch_cmd (sys.id sys.role atspi_sessbus_launch.cmd_file (systemlow systemlow))))
+	(false
+		(context atspi_sessbus_launch_cmd (sys.id object_r atspi_sessbus_launch.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/libexec/at-spi-bus-launcher" file atspi_sessbus_launch_cmd)

@@ -1,4 +1,8 @@
-(context pactl_cmd (sys.id sys.role pactl.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context pactl_cmd (sys.id sys.role pactl.cmd_file (systemlow systemlow))))
+	(false
+		(context pactl_cmd (sys.id object_r pactl.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/pactl" file pactl_cmd)
 (filecon "/usr/bin/pacmd" file pactl_cmd)

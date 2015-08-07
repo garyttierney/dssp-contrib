@@ -1,6 +1,16 @@
-(context fstrim_cmd (sys.id sys.role fstrim.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context fstrim_cmd (sys.id sys.role fstrim.cmd_file (systemlow systemlow))))
+	(false
+		(context fstrim_cmd (sys.id object_r fstrim.cmd_file (systemlow systemlow)))))
+
 (filecon "/usr/sbin/fstrim.*" file fstrim_cmd)
 
 (optional fstrim_unit_optional_sd
-	(context fstrim_unit (sys.id sys.role fstrim.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context fstrim_unit (sys.id sys.role fstrim.unit_file (systemlow systemlow))))
+		(false
+			(context fstrim_unit (sys.id object_r fstrim.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*fstrim.*" file fstrim_unit))

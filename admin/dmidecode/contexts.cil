@@ -1,4 +1,8 @@
-(context dmidecode_cmd (sys.id sys.role dmidecode.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dmidecode_cmd (sys.id sys.role dmidecode.cmd_file (systemlow systemlow))))
+	(false
+		(context dmidecode_cmd (sys.id object_r dmidecode.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/biosdecode" file dmidecode_cmd)
 (filecon "/usr/sbin/dmidecode" file dmidecode_cmd)

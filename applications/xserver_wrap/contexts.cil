@@ -1,3 +1,7 @@
-(context xserver_wrap_cmd (sys.id sys.role xserver_wrap.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context xserver_wrap_cmd (sys.id sys.role xserver_wrap.cmd_file (systemlow systemlow))))
+	(false
+		(context xserver_wrap_cmd (sys.id object_r xserver_wrap.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/libexec/Xorg\.wrap" file xserver_wrap_cmd)

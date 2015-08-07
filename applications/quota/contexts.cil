@@ -1,4 +1,8 @@
-(context quota_cmd (sys.id sys.role quota.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context quota_cmd (sys.id sys.role quota.cmd_file (systemlow systemlow))))
+	(false
+		(context quota_cmd (sys.id object_r quota.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/quota" file quota_cmd)
 (filecon "/usr/bin/quotasync" file quota_cmd)

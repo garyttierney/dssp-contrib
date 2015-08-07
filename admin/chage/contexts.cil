@@ -1,3 +1,7 @@
-(context chage_cmd (sys.id sys.role chage.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context chage_cmd (sys.id sys.role chage.cmd_file (systemlow systemlow))))
+	(false
+		(context chage_cmd (sys.id object_r chage.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/chage" file chage_cmd)

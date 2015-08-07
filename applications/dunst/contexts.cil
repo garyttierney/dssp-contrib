@@ -1,6 +1,11 @@
-(context dunst_cmd (sys.id sys.role dunst.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dunst_cmd (sys.id sys.role dunst.cmd_file (systemlow systemlow)))
+		(context dunst_home_config (sys.id sys.role dunst.home_config_file (systemlow systemlow))))
+	(false
+		(context dunst_cmd (sys.id object_r dunst.cmd_file (systemlow systemlow)))
+		(context dunst_home_config (sys.id object_r dunst.home_config_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/dunst" file dunst_cmd)
-
-(filecon "HOME_DIR/\.config/dunst(/.*)?" any (sys.id sys.role dunst.home_config_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.config/dunst(/.*)?" any dunst_home_config)
 

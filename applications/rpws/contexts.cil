@@ -1,3 +1,7 @@
-(context rpws_cmd (sys.id sys.role rpws.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context rpws_cmd (sys.id sys.role rpws.cmd_file (systemlow systemlow))))
+	(false
+		(context rpws_cmd (sys.id object_r rpws.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/rpws" file rpws_cmd)

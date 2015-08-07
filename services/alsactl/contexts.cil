@@ -1,8 +1,16 @@
-(context alsactl_cmd (sys.id sys.role alsactl.cmd_file (systemlow systemlow)))
-(context alsactl_config (sys.id sys.role alsactl.config_file (systemlow systemlow)))
-(context alsactl_runtime (sys.id sys.role alsactl.runtime_file (systemlow systemlow)))
-(context alsactl_runtime_lock (sys.id sys.role alsactl.runtime_lock_file (systemlow systemlow)))
-(context alsactl_var_lib (sys.id sys.role alsactl.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context alsactl_cmd (sys.id sys.role alsactl.cmd_file (systemlow systemlow)))
+		(context alsactl_config (sys.id sys.role alsactl.config_file (systemlow systemlow)))
+		(context alsactl_runtime (sys.id sys.role alsactl.runtime_file (systemlow systemlow)))
+		(context alsactl_runtime_lock (sys.id sys.role alsactl.runtime_lock_file (systemlow systemlow)))
+		(context alsactl_var_lib (sys.id sys.role alsactl.var_lib_file (systemlow systemlow))))
+	(false
+		(context alsactl_cmd (sys.id object_r alsactl.cmd_file (systemlow systemlow)))
+		(context alsactl_config (sys.id object_r alsactl.config_file (systemlow systemlow)))
+		(context alsactl_runtime (sys.id object_r alsactl.runtime_file (systemlow systemlow)))
+		(context alsactl_runtime_lock (sys.id object_r alsactl.runtime_lock_file (systemlow systemlow)))
+		(context alsactl_var_lib (sys.id object_r alsactl.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/alsa(/.*)?" any alsactl_config)
 (filecon "/etc/asound\.conf(/.*)?" any alsactl_config)
@@ -12,7 +20,12 @@
 (filecon "/var/lib/alsa(/.*)?" any alsactl_var_lib)
 
 (optional alsactl_unit_optional_sd
-	(context alsactl_unit (sys.id sys.role alsactl.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context alsactl_unit (sys.id sys.role alsactl.unit_file (systemlow systemlow))))
+		(false
+			(context alsactl_unit (sys.id object_r alsactl.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*alsa-state.*" file alsactl_unit)
 	(filecon "/usr/lib/systemd/system/[^/]*alsa-restore.*" file alsactl_unit)
 	(filecon "/usr/lib/systemd/system/[^/]*alsa-store.*" file alsactl_unit))

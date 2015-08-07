@@ -1,11 +1,18 @@
-(context gpg_cmd (sys.id sys.role gpg.cmd_file (systemlow systemlow)))
-(context gpg_config (sys.id sys.role gpg.config_file (systemlow systemlow)))
-(context gpg_helper_cmd (sys.id sys.role gpg_helper.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context gpg_cmd (sys.id sys.role gpg.cmd_file (systemlow systemlow)))
+		(context gpg_config (sys.id sys.role gpg.config_file (systemlow systemlow)))
+		(context gpg_home (sys.id sys.role gpg.home_user_file (systemlow systemlow)))
+		(context gpg_helper_cmd (sys.id sys.role gpg_helper.cmd_file (systemlow systemlow))))
+	(false
+		(context gpg_cmd (sys.id object_r gpg.cmd_file (systemlow systemlow)))
+		(context gpg_config (sys.id object_r gpg.config_file (systemlow systemlow)))
+		(context gpg_home (sys.id object_r gpg.home_user_file (systemlow systemlow)))
+		(context gpg_helper_cmd (sys.id object_r gpg_helper.cmd_file (systemlow systemlow)))))
 
 (filecon "/etc/gnupg(/.*)?" any gpg_config)
 (filecon "/usr/bin/gpg.*" file gpg_cmd)
 (filecon "/usr/libexec/gpg-check-pattern" file gpg_helper_cmd)
 (filecon "/usr/libexec/gpg-preset-passphrase" file gpg_helper_cmd)
 (filecon "/usr/libexec/gpg-protect-tool" file gpg_helper_cmd)
-
-(filecon "HOME_DIR/\.gnupg(/.*)?" any (sys.id sys.role gpg.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.gnupg(/.*)?" any gpg_home)

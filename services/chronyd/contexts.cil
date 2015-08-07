@@ -1,11 +1,22 @@
-(context chrony_cmdmon_port (sys.id sys.role chrony_cmdmon.port (systemlow systemlow)))
-(context chronyc_cmd (sys.id sys.role chronyc.cmd_file (systemlow systemlow)))
-(context chronyd_cmd (sys.id sys.role chronyd.cmd_file (systemlow systemlow)))
-(context chronyd_config (sys.id sys.role chronyd.config_file (systemlow systemlow)))
-(context chronyd_helper_cmd (sys.id sys.role chronyd_helper.cmd_file (systemlow systemlow)))
-(context chronyd_runtime (sys.id sys.role chronyd.runtime_file (systemlow systemlow)))
-(context chronyd_var_lib (sys.id sys.role chronyd.var_lib_file (systemlow systemlow)))
-(context chronyd_var_log (sys.id sys.role chronyd.var_log_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context chrony_cmdmon_port (sys.id sys.role chrony_cmdmon.port (systemlow systemlow)))
+		(context chronyc_cmd (sys.id sys.role chronyc.cmd_file (systemlow systemlow)))
+		(context chronyd_cmd (sys.id sys.role chronyd.cmd_file (systemlow systemlow)))
+		(context chronyd_config (sys.id sys.role chronyd.config_file (systemlow systemlow)))
+		(context chronyd_helper_cmd (sys.id sys.role chronyd_helper.cmd_file (systemlow systemlow)))
+		(context chronyd_runtime (sys.id sys.role chronyd.runtime_file (systemlow systemlow)))
+		(context chronyd_var_lib (sys.id sys.role chronyd.var_lib_file (systemlow systemlow)))
+		(context chronyd_var_log (sys.id sys.role chronyd.var_log_file (systemlow systemlow))))
+	(false
+		(context chrony_cmdmon_port (sys.id object_r chrony_cmdmon.port (systemlow systemlow)))
+		(context chronyc_cmd (sys.id object_r chronyc.cmd_file (systemlow systemlow)))
+		(context chronyd_cmd (sys.id object_r chronyd.cmd_file (systemlow systemlow)))
+		(context chronyd_config (sys.id object_r chronyd.config_file (systemlow systemlow)))
+		(context chronyd_helper_cmd (sys.id object_r chronyd_helper.cmd_file (systemlow systemlow)))
+		(context chronyd_runtime (sys.id object_r chronyd.runtime_file (systemlow systemlow)))
+		(context chronyd_var_lib (sys.id object_r chronyd.var_lib_file (systemlow systemlow)))
+		(context chronyd_var_log (sys.id object_r chronyd.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/chrony\.conf" file chronyd_config)
 (filecon "/etc/chrony\.keys" file chronyd_config)
@@ -20,6 +31,11 @@
 (portcon "udp" 323 chrony_cmdmon_port)
 
 (optional chronyd_unit_optional_sd
-	(context chronyd_unit (sys.id sys.role chronyd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context chronyd_unit (sys.id sys.role chronyd.unit_file (systemlow systemlow))))
+		(false
+			(context chronyd_unit (sys.id object_r chronyd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*chrony-wait.*" file chronyd_unit)
 	(filecon "/usr/lib/systemd/system/[^/]*chronyd.*" file chronyd_unit))

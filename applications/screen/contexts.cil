@@ -1,9 +1,16 @@
-(context screen_cmd (sys.id sys.role screen.cmd_file (systemlow systemlow)))
-(context screen_config (sys.id sys.role screen.config_file (systemlow systemlow)))
-(context screen_runtime (sys.id sys.role screen.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context screen_cmd (sys.id sys.role screen.cmd_file (systemlow systemlow)))
+		(context screen_config (sys.id sys.role screen.config_file (systemlow systemlow)))
+		(context screen_home (sys.id sys.role screen.home_user_file (systemlow systemlow)))
+		(context screen_runtime (sys.id sys.role screen.runtime_file (systemlow systemlow))))
+	(false
+		(context screen_cmd (sys.id object_r screen.cmd_file (systemlow systemlow)))
+		(context screen_config (sys.id object_r screen.config_file (systemlow systemlow)))
+		(context screen_home (sys.id object_r screen.home_user_file (systemlow systemlow)))
+		(context screen_runtime (sys.id object_r screen.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/screenrc" file screen_config)
 (filecon "/usr/bin/screen" file screen_cmd)
 (filecon "/var/run/screen(/.*)?" any screen_runtime)
-
-(filecon "HOME_DIR/\.screenrc" file (sys.id sys.role screen.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.screenrc" file screen_home)

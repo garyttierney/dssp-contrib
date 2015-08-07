@@ -122,8 +122,6 @@
 
 	(call mls_priv_range_trans_subj_type (subj))
 
-	(call rbacsep_read_state_target_subj_type (subj))
-
 	(call standard_id_change_exemption_subj_type (subj))
 	(call standard_role_change_exemption_subj_type (subj))
 
@@ -227,6 +225,10 @@
 	(call sduser_send_sigchld_all_subj (subj))
 	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
 	(call sduser_sysbus_chat_client_all_subj_type (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep_read_state_target_subj_type (subj))))
 
 	(optional sd_optional_sysbus
 		(call sysbus_acquire_service (subj))

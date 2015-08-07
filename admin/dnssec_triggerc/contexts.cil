@@ -1,3 +1,7 @@
-(context dnssec_triggerc_cmd (sys.id sys.role dnssec_triggerc.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dnssec_triggerc_cmd (sys.id sys.role dnssec_triggerc.cmd_file (systemlow systemlow))))
+	(false
+		(context dnssec_triggerc_cmd (sys.id object_r dnssec_triggerc.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/dnssec-trigger-control" file dnssec_triggerc_cmd)

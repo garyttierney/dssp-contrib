@@ -1,17 +1,35 @@
-(context ssh_agent_cmd (sys.id sys.role ssh_agent.cmd_file (systemlow systemlow)))
-(context ssh_client_cmd (sys.id sys.role ssh_client.cmd_file (systemlow systemlow)))
-(context sshd_cmd (sys.id sys.role sshd.cmd_file (systemlow systemlow)))
-(context sshd_config (sys.id sys.role sshd.config_file (systemlow systemlow)))
-(context sshd_keygen_cmd (sys.id sys.role sshd_keygen.cmd_file (systemlow systemlow)))
-(context sshd_key (sys.id sys.role sshd_key.file (systemlow systemlow)))
-(context sshd_runtime (sys.id sys.role sshd.runtime_file (systemlow systemlow)))
-(context ssh_helper_cmd (sys.id sys.role ssh_helper.cmd_file (systemlow systemlow)))
-(context ssh_keygen_cmd (sys.id sys.role ssh_keygen.cmd_file (systemlow systemlow)))
-(context sshd_port (sys.id sys.role sshd.port (systemlow systemlow)))
-(context ssh_priv_login (sys.id sys.role ssh_priv_login.bool (systemlow systemlow)))
-(context ssh_sftpserver_cmd (sys.id sys.role ssh_sftpserver.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context ssh_agent_cmd (sys.id sys.role ssh_agent.cmd_file (systemlow systemlow)))
+		(context ssh_client_cmd (sys.id sys.role ssh_client.cmd_file (systemlow systemlow)))
+		(context sshd_cmd (sys.id sys.role sshd.cmd_file (systemlow systemlow)))
+		(context sshd_config (sys.id sys.role sshd.config_file (systemlow systemlow)))
+		(context ssh_client_home (sys.id sys.role ssh_client.home_user_file (systemlow systemlow)))
+		(context sshd_keygen_cmd (sys.id sys.role sshd_keygen.cmd_file (systemlow systemlow)))
+		(context sshd_key (sys.id sys.role sshd_key.file (systemlow systemlow)))
+		(context sshd_runtime (sys.id sys.role sshd.runtime_file (systemlow systemlow)))
+		(context ssh_helper_cmd (sys.id sys.role ssh_helper.cmd_file (systemlow systemlow)))
+		(context ssh_keygen_cmd (sys.id sys.role ssh_keygen.cmd_file (systemlow systemlow)))
+		(context sshd_port (sys.id sys.role sshd.port (systemlow systemlow)))
+		(context ssh_priv_login (sys.id sys.role ssh_priv_login.bool (systemlow systemlow)))
+		(context ssh_sftpserver_cmd (sys.id sys.role ssh_sftpserver.cmd_file (systemlow systemlow))))
+	(false
+		(context ssh_agent_cmd (sys.id object_r ssh_agent.cmd_file (systemlow systemlow)))
+		(context ssh_client_cmd (sys.id object_r ssh_client.cmd_file (systemlow systemlow)))
+		(context sshd_cmd (sys.id object_r sshd.cmd_file (systemlow systemlow)))
+		(context sshd_config (sys.id object_r sshd.config_file (systemlow systemlow)))
+		(context ssh_client_home (sys.id object_r ssh_client.home_user_file (systemlow systemlow)))
+		(context sshd_keygen_cmd (sys.id object_r sshd_keygen.cmd_file (systemlow systemlow)))
+		(context sshd_key (sys.id object_r sshd_key.file (systemlow systemlow)))
+		(context sshd_runtime (sys.id object_r sshd.runtime_file (systemlow systemlow)))
+		(context ssh_helper_cmd (sys.id object_r ssh_helper.cmd_file (systemlow systemlow)))
+		(context ssh_keygen_cmd (sys.id object_r ssh_keygen.cmd_file (systemlow systemlow)))
+		(context sshd_port (sys.id object_r sshd.port (systemlow systemlow)))
+		(context ssh_priv_login (sys.id object_r ssh_priv_login.bool (systemlow systemlow)))
+		(context ssh_sftpserver_cmd (sys.id object_r ssh_sftpserver.cmd_file (systemlow systemlow)))))
 
-(filecon "HOME_DIR/\.ssh(/.*)?" any (sys.id sys.role ssh_client.home_user_file (systemlow systemlow)))
+
+(filecon "HOME_DIR/\.ssh(/.*)?" any ssh_client_home)
 (filecon "/etc/ssh(/.*)" any sshd_config)
 (filecon "/etc/ssh/moduli.*" file sshd_key)
 (filecon "/etc/ssh/ssh_host.*" file sshd_key)
@@ -37,9 +55,19 @@
 (portcon "udp" 22 sshd_port)
 
 (optional sshd_unit_optional_sd
-	(context sshd_unit (sys.id sys.role sshd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context sshd_unit (sys.id sys.role sshd.unit_file (systemlow systemlow))))
+		(false
+			(context sshd_unit (sys.id object_r sshd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*sshd.*" file sshd_unit))
 
 (optional sshd_keygen_unit_optional_sd
-	(context sshd_keygen_unit (sys.id sys.role sshd_keygen.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context sshd_keygen_unit (sys.id sys.role sshd_keygen.unit_file (systemlow systemlow))))
+		(false
+			(context sshd_keygen_unit (sys.id object_r sshd_keygen.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*sshd-keygen.*" file sshd_keygen_unit))

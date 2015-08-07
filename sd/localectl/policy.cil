@@ -10,8 +10,6 @@
 
 	(call sd_daemon (subj cmd_file)))
 
-(call rbacsep_read_state_source_subj_type (localectl_subj_type))
-
 (call nss_client_subj_type (localectl_subj_type))
 
 (call sd_machined_read_runtime (localectl_subj_type))
@@ -28,6 +26,10 @@
 (call usersubj_search_home_cmd (localectl_subj_type))
 (call usersubj_read_home_cmd_lnk_files (localectl_subj_type))
 (call usersubj_read_home_user_files (localectl_subj_type))
+
+(tunableif enable_rbacsep
+	(true
+		(call rbacsep_read_state_source_subj_type (localectl_subj_type))))
 
 (allow localectl_client_subj_type self rw_fifo_file_perms)
 

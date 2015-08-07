@@ -1,7 +1,14 @@
-(context lircd_cmd (sys.id sys.role lircd.cmd_file (systemlow systemlow)))
-(context lircd_config (sys.id sys.role lircd.config_file (systemlow systemlow)))
-(context lircd_runtime (sys.id sys.role lircd.runtime_file (systemlow systemlow)))
-(context lircmd_cmd (sys.id sys.role lircmd.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context lircd_cmd (sys.id sys.role lircd.cmd_file (systemlow systemlow)))
+		(context lircd_config (sys.id sys.role lircd.config_file (systemlow systemlow)))
+		(context lircd_runtime (sys.id sys.role lircd.runtime_file (systemlow systemlow)))
+		(context lircmd_cmd (sys.id sys.role lircmd.cmd_file (systemlow systemlow))))
+	(false
+		(context lircd_cmd (sys.id object_r lircd.cmd_file (systemlow systemlow)))
+		(context lircd_config (sys.id object_r lircd.config_file (systemlow systemlow)))
+		(context lircd_runtime (sys.id object_r lircd.runtime_file (systemlow systemlow)))
+		(context lircmd_cmd (sys.id object_r lircmd.cmd_file (systemlow systemlow)))))
 
 (filecon "/etc/lirc(/.*)?" any lircd_config)
 (filecon "/usr/sbin/lircd" file lircd_cmd)
@@ -9,9 +16,19 @@
 (filecon "/var/run/lirc(/.*)?" any lircd_runtime)
 
 (optional lircd_unit_optional_sd
-	(context lircd_unit (sys.id sys.role lircd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context lircd_unit (sys.id sys.role lircd.unit_file (systemlow systemlow))))
+		(false
+			(context lircd_unit (sys.id object_r lircd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*lircd.*" file lircd_unit))
 
 (optional lircmd_unit_optional_sd
-	(context lircmd_unit (sys.id sys.role lircmd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context lircmd_unit (sys.id sys.role lircmd.unit_file (systemlow systemlow))))
+		(false
+			(context lircmd_unit (sys.id object_r lircmd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*lircmd.*" file lircmd_unit))

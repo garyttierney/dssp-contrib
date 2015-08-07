@@ -1,11 +1,22 @@
-(context pcscd_cmd (sys.id sys.role pcscd.cmd_file (systemlow systemlow)))
-(context pcscd_config (sys.id sys.role pcscd.config_file (systemlow systemlow)))
-(context pcscd_runtime (sys.id sys.role pcscd.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context pcscd_cmd (sys.id sys.role pcscd.cmd_file (systemlow systemlow)))
+		(context pcscd_config (sys.id sys.role pcscd.config_file (systemlow systemlow)))
+		(context pcscd_runtime (sys.id sys.role pcscd.runtime_file (systemlow systemlow))))
+	(false
+		(context pcscd_cmd (sys.id object_r pcscd.cmd_file (systemlow systemlow)))
+		(context pcscd_config (sys.id object_r pcscd.config_file (systemlow systemlow)))
+		(context pcscd_runtime (sys.id object_r pcscd.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/reader\.conf\.d(/.*)?" any pcscd_config)
 (filecon "/usr/sbin/pcscd" file pcscd_cmd)
 (filecon "/var/run/pcscd(/.*)?" any pcscd_runtime)
 
 (optional pcscd_unit_optional_sd
-	(context pcscd_unit (sys.id sys.role pcscd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context pcscd_unit (sys.id sys.role pcscd.unit_file (systemlow systemlow))))
+		(false
+			(context pcscd_unit (sys.id object_r pcscd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*pcscd.*" file pcscd_unit))

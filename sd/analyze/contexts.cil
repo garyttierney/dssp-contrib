@@ -1,3 +1,7 @@
-(context analyze_cmd (sys.id sys.role analyze.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context analyze_cmd (sys.id sys.role analyze.cmd_file (systemlow systemlow))))
+	(false
+		(context analyze_cmd (sys.id object_r analyze.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/systemd-analyze" file analyze_cmd)

@@ -1,9 +1,19 @@
-(context powertop_cmd (sys.id sys.role powertop.cmd_file (systemlow systemlow)))
-(context powertop_var_cache (sys.id sys.role powertop.var_cache_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context powertop_cmd (sys.id sys.role powertop.cmd_file (systemlow systemlow)))
+		(context powertop_var_cache (sys.id sys.role powertop.var_cache_file (systemlow systemlow))))
+	(false
+		(context powertop_cmd (sys.id object_r powertop.cmd_file (systemlow systemlow)))
+		(context powertop_var_cache (sys.id object_r powertop.var_cache_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/powertop" file powertop_cmd)
 (filecon "/var/cache/powertop(/.*)?" any powertop_var_cache)
 
 (optional powertop_unit_optional_sd
-	(context powertop_unit (sys.id sys.role powertop.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context powertop_unit (sys.id sys.role powertop.unit_file (systemlow systemlow))))
+		(false
+			(context powertop_unit (sys.id object_r powertop.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*powertop.*" file powertop_unit))

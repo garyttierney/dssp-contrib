@@ -1,7 +1,14 @@
-(context qemu_cmd (sys.id sys.role qemu.cmd_file (systemlow systemlow)))
-(context qemu_config (sys.id sys.role qemu.config_file (systemlow systemlow)))
-(context qemu_use_hugepages (sys.id sys.role qemu_use_hugepages.bool (systemlow systemlow)))
-(context qemu_guest_runtime (sys.id sys.role qemu_guest.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context qemu_cmd (sys.id sys.role qemu.cmd_file (systemlow systemlow)))
+		(context qemu_config (sys.id sys.role qemu.config_file (systemlow systemlow)))
+		(context qemu_use_hugepages (sys.id sys.role qemu_use_hugepages.bool (systemlow systemlow)))
+		(context qemu_guest_runtime (sys.id sys.role qemu_guest.runtime_file (systemlow systemlow))))
+	(false
+		(context qemu_cmd (sys.id object_r qemu.cmd_file (systemlow systemlow)))
+		(context qemu_config (sys.id object_r qemu.config_file (systemlow systemlow)))
+		(context qemu_use_hugepages (sys.id object_r qemu_use_hugepages.bool (systemlow systemlow)))
+		(context qemu_guest_runtime (sys.id object_r qemu_guest.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/qemu(/.*)?" any qemu_config)
 (filecon "/usr/bin/qemu-img" file qemu_cmd)

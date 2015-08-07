@@ -1,4 +1,8 @@
-(context icecast_port (sys.id sys.role icecast.port (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context icecast_port (sys.id sys.role icecast.port (systemlow systemlow))))
+	(false
+		(context icecast_port (sys.id object_r icecast.port (systemlow systemlow)))))
 
 (portcon "tcp" 8000 icecast_port)
 (portcon "udp" 8000 icecast_port)

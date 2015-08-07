@@ -1,4 +1,8 @@
-(context quotaed_cmd (sys.id sys.role quotaed.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context quotaed_cmd (sys.id sys.role quotaed.cmd_file (systemlow systemlow))))
+	(false
+		(context quotaed_cmd (sys.id object_r quotaed.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/convertquota" file quotaed_cmd)
 (filecon "/usr/sbin/edquota" file quotaed_cmd)

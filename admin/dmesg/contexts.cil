@@ -1,3 +1,7 @@
-(context dmesg_cmd (sys.id sys.role dmesg.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dmesg_cmd (sys.id sys.role dmesg.cmd_file (systemlow systemlow))))
+	(false
+		(context dmesg_cmd (sys.id object_r dmesg.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/dmesg" file dmesg_cmd)

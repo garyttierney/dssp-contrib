@@ -1,5 +1,10 @@
-(context hostname_cmd (sys.id sys.role hostname.cmd_file (systemlow systemlow)))
-(context hostname_config (sys.id sys.role hostname.config_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context hostname_cmd (sys.id sys.role hostname.cmd_file (systemlow systemlow)))
+		(context hostname_config (sys.id sys.role hostname.config_file (systemlow systemlow))))
+	(false
+		(context hostname_cmd (sys.id object_r hostname.cmd_file (systemlow systemlow)))
+		(context hostname_config (sys.id object_r hostname.config_file (systemlow systemlow)))))
 
 (filecon "/etc/hostname" file hostname_config)
 (filecon "/usr/bin/hostname" file hostname_cmd)

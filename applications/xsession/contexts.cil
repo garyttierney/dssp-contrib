@@ -1,3 +1,7 @@
-(context xsession_cmd (sys.id sys.role xsession.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context xsession_cmd (sys.id sys.role xsession.cmd_file (systemlow systemlow))))
+	(false
+		(context xsession_cmd (sys.id object_r xsession.cmd_file (systemlow systemlow)))))
 
 (filecon "/etc/X11/xinit/Xsession" any xsession_cmd)

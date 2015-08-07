@@ -1,7 +1,14 @@
-(context sd_resolved_cmd (sys.id sys.role sd_resolved.cmd_file (systemlow systemlow)))
-(context sd_resolved_config (sys.id sys.role sd_resolved.config_file (systemlow systemlow)))
-(context sd_resolved_runtime (sys.id sys.role sd_resolved.runtime_file (systemlow systemlow)))
-(context sd_resolved_unit (sys.id sys.role sd_resolved.unit_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_resolved_cmd (sys.id sys.role sd_resolved.cmd_file (systemlow systemlow)))
+		(context sd_resolved_config (sys.id sys.role sd_resolved.config_file (systemlow systemlow)))
+		(context sd_resolved_runtime (sys.id sys.role sd_resolved.runtime_file (systemlow systemlow)))
+		(context sd_resolved_unit (sys.id sys.role sd_resolved.unit_file (systemlow systemlow))))
+	(false
+		(context sd_resolved_cmd (sys.id object_r sd_resolved.cmd_file (systemlow systemlow)))
+		(context sd_resolved_config (sys.id object_r sd_resolved.config_file (systemlow systemlow)))
+		(context sd_resolved_runtime (sys.id object_r sd_resolved.runtime_file (systemlow systemlow)))
+		(context sd_resolved_unit (sys.id object_r sd_resolved.unit_file (systemlow systemlow)))))
 
 (filecon "/etc/systemd/resolved\.conf\.d(/.*)?" any sd_resolved_config)
 (filecon "/etc/systemd/resolved\.conf" file sd_resolved_config)

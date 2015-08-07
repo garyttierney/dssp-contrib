@@ -1,11 +1,22 @@
-(context faillog_var_log (sys.id sys.role faillog.var_log_file (systemlow systemlow)))
-(context faillog_runtime (sys.id sys.role faillog.runtime_file (systemlow systemlow)))
-(context lastlog_var_log (sys.id sys.role lastlog.var_log_file (systemlow systemlow)))
-(context pam_config (sys.id sys.role pam.config_file (systemlow systemlow)))
-(context pam_console_cmd (sys.id sys.role pam_console.cmd_file (systemlow systemlow)))
-(context pam_console_runtime (sys.id sys.role pam_console.runtime_file (systemlow systemlow)))
-(context pam_cmd (sys.id sys.role pam.cmd_file (systemlow systemlow)))
-(context pam_runtime (sys.id sys.role pam.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context faillog_var_log (sys.id sys.role faillog.var_log_file (systemlow systemlow)))
+		(context faillog_runtime (sys.id sys.role faillog.runtime_file (systemlow systemlow)))
+		(context lastlog_var_log (sys.id sys.role lastlog.var_log_file (systemlow systemlow)))
+		(context pam_config (sys.id sys.role pam.config_file (systemlow systemlow)))
+		(context pam_console_cmd (sys.id sys.role pam_console.cmd_file (systemlow systemlow)))
+		(context pam_console_runtime (sys.id sys.role pam_console.runtime_file (systemlow systemlow)))
+		(context pam_cmd (sys.id sys.role pam.cmd_file (systemlow systemlow)))
+		(context pam_runtime (sys.id sys.role pam.runtime_file (systemlow systemlow))))
+	(false
+		(context faillog_var_log (sys.id object_r faillog.var_log_file (systemlow systemlow)))
+		(context faillog_runtime (sys.id object_r faillog.runtime_file (systemlow systemlow)))
+		(context lastlog_var_log (sys.id object_r lastlog.var_log_file (systemlow systemlow)))
+		(context pam_config (sys.id object_r pam.config_file (systemlow systemlow)))
+		(context pam_console_cmd (sys.id object_r pam_console.cmd_file (systemlow systemlow)))
+		(context pam_console_runtime (sys.id object_r pam_console.runtime_file (systemlow systemlow)))
+		(context pam_cmd (sys.id object_r pam.cmd_file (systemlow systemlow)))
+		(context pam_runtime (sys.id object_r pam.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/pam\.d(/.*)?" any pam_config)
 (filecon "/etc/security(/.*)?" any pam_config)
@@ -18,5 +29,4 @@
 (filecon "/var/run/console(/.*)?" any pam_console_runtime)
 (filecon "/var/run/faillock(/.*)?" any faillog_runtime)
 (filecon "/var/run/sepermit(/.*)?" any pam_runtime)
-
 (filecon "/etc/security/namespace\.init" file cmd)

@@ -1,8 +1,16 @@
-(context rpm_cmd (sys.id sys.role rpm.cmd_file (systemlow systemlow)))
-(context rpm_config (sys.id sys.role rpm.config_file (systemlow systemlow)))
-(context rpm_var_cache (sys.id sys.role rpm.var_cache_file (systemlow systemlow)))
-(context rpm_var_lib (sys.id sys.role rpm.var_lib_file (systemlow systemlow)))
-(context rpm_var_log (sys.id sys.role rpm.var_log_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context rpm_cmd (sys.id sys.role rpm.cmd_file (systemlow systemlow)))
+		(context rpm_config (sys.id sys.role rpm.config_file (systemlow systemlow)))
+		(context rpm_var_cache (sys.id sys.role rpm.var_cache_file (systemlow systemlow)))
+		(context rpm_var_lib (sys.id sys.role rpm.var_lib_file (systemlow systemlow)))
+		(context rpm_var_log (sys.id sys.role rpm.var_log_file (systemlow systemlow))))
+	(false
+		(context rpm_cmd (sys.id object_r rpm.cmd_file (systemlow systemlow)))
+		(context rpm_config (sys.id object_r rpm.config_file (systemlow systemlow)))
+		(context rpm_var_cache (sys.id object_r rpm.var_cache_file (systemlow systemlow)))
+		(context rpm_var_lib (sys.id object_r rpm.var_lib_file (systemlow systemlow)))
+		(context rpm_var_log (sys.id object_r rpm.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/dnf(/.*)?" any rpm_config)
 (filecon "/etc/rpm(/.*)?" any rpm_config)
@@ -30,10 +38,14 @@
 (filecon "/var/log/dnf\.rpm\.log.*" file rpm_var_log)
 (filecon "/var/log/hawkey\.log.*" file rpm_var_log)
 (filecon "/var/log/yum\.log.*" file rpm_var_log)
-
 (filecon "/usr/lib/rpm(/.*)?" file cmd)
 
 (optional rpm_unit_optional_sd
-	(context rpm_unit (sys.id sys.role rpm.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context rpm_unit (sys.id sys.role rpm.unit_file (systemlow systemlow))))
+		(false
+			(context rpm_unit (sys.id object_r rpm.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*yum-makecache.*" file rpm_unit)
 	(filecon "/usr/lib/systemd/system/[^/]*dnf-makecache.*" file rpm_unit))

@@ -1,7 +1,11 @@
-(context tetex_var_lib (sys.id sys.role tetex.var_lib_file (systemlow systemlow)))
-(context tetex_var_spool (sys.id sys.role tetex.var_spool_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context tetex_var_lib (sys.id sys.role tetex.var_lib_file (systemlow systemlow)))
+		(context tetex_var_spool (sys.id sys.role tetex.var_spool_file (systemlow systemlow))))
+	(false
+		(context tetex_var_lib (sys.id object_r tetex.var_lib_file (systemlow systemlow)))
+		(context tetex_var_spool (sys.id object_r tetex.var_spool_file (systemlow systemlow)))))
 
 (filecon "/var/lib/texmf(/.*)?" any tetex_var_lib)
 (filecon "/var/spool/texmf(/.*)?" any tetex_var_spool)
-
 (filecon "/usr/share/texlive/texmf-dist/scripts(/.*)?" file cmd)

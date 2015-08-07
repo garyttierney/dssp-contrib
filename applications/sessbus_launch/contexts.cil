@@ -1,6 +1,11 @@
-(context sessbus_launch_cmd (sys.id sys.role sessbus_launch.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sessbus_launch_cmd (sys.id sys.role sessbus_launch.cmd_file (systemlow systemlow)))
+		(context sessbus_launch_home (sys.id sys.role sessbus_launch.home_user_file (systemlow systemlow))))
+	(false
+		(context sessbus_launch_cmd (sys.id object_r sessbus_launch.cmd_file (systemlow systemlow)))
+		(context sessbus_launch_home (sys.id object_r sessbus_launch.home_user_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/dbus-launch" file sessbus_launch_cmd)
 (filecon "/usr/bin/dbus-run-session" file sessbus_launch_cmd)
-
-(filecon "HOME_DIR/\.dbus(/.*)?" any (sys.id sys.role sessbus_launch.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.dbus(/.*)?" any sessbus_launch_home)

@@ -1,6 +1,12 @@
-(context mdadm_cmd (sys.id sys.role mdadm.cmd_file (systemlow systemlow)))
-(context mdmon_cmd (sys.id sys.role mdmon.cmd_file (systemlow systemlow)))
-(context mdadm_runtime (sys.id sys.role mdadm.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context mdadm_cmd (sys.id sys.role mdadm.cmd_file (systemlow systemlow)))
+		(context mdmon_cmd (sys.id sys.role mdmon.cmd_file (systemlow systemlow)))
+		(context mdadm_runtime (sys.id sys.role mdadm.runtime_file (systemlow systemlow))))
+	(false
+		(context mdadm_cmd (sys.id object_r mdadm.cmd_file (systemlow systemlow)))
+		(context mdmon_cmd (sys.id object_r mdmon.cmd_file (systemlow systemlow)))
+		(context mdadm_runtime (sys.id object_r mdadm.runtime_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/mdadm" file mdadm_cmd)
 (filecon "/usr/sbin/mdmon" file mdmon_cmd)
@@ -8,7 +14,13 @@
 (filecon "/var/run/mdadm(/.*)?" any mdadm_runtime)
 
 (optional md_unit_optional_sd
-	(context mdadm_unit (sys.id sys.role mdadm.unit_file (systemlow systemlow)))
-	(context mdmon_unit (sys.id sys.role mdmon.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context mdadm_unit (sys.id sys.role mdadm.unit_file (systemlow systemlow)))
+			(context mdmon_unit (sys.id sys.role mdmon.unit_file (systemlow systemlow))))
+		(false
+			(context mdadm_unit (sys.id object_r mdadm.unit_file (systemlow systemlow)))
+			(context mdmon_unit (sys.id object_r mdmon.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*mdadm-.*" file mdadm_unit)
 	(filecon "/usr/lib/systemd/system/[^/]*mdmon.*" file mdmon_unit))

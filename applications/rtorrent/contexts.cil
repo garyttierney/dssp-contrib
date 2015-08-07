@@ -1,6 +1,13 @@
-(context rtorrent_cmd (sys.id sys.role rtorrent.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context rtorrent_cmd (sys.id sys.role rtorrent.cmd_file (systemlow systemlow)))
+		(context rtorrent_home_config (sys.id sys.role rtorrent.home_config_file (systemlow systemlow)))
+		(context rtorrent_home (sys.id sys.role rtorrent.home_user_file (systemlow systemlow))))
+	(false
+		(context rtorrent_cmd (sys.id object_r rtorrent.cmd_file (systemlow systemlow)))
+		(context rtorrent_home_config (sys.id object_r rtorrent.home_config_file (systemlow systemlow)))
+		(context rtorrent_home (sys.id object_r rtorrent.home_user_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/rtorrent" file rtorrent_cmd)
-
-(filecon "HOME_DIR/\.rtorrent(/.*)?" any (sys.id sys.role rtorrent.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.config/rtorrent\.rc" file (sys.id sys.role rtorrent.home_config_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.rtorrent(/.*)?" any rtorrent_home)
+(filecon "HOME_DIR/\.config/rtorrent\.rc" file rtorrent_home_config)

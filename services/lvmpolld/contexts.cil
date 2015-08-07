@@ -1,10 +1,20 @@
-(context lvmpolld_cmd (sys.id sys.role lvmpolld.cmd_file (systemlow systemlow)))
-(context lvmpolld_runtime (sys.id sys.role lvmpolld.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context lvmpolld_cmd (sys.id sys.role lvmpolld.cmd_file (systemlow systemlow)))
+		(context lvmpolld_runtime (sys.id sys.role lvmpolld.runtime_file (systemlow systemlow))))
+	(false
+		(context lvmpolld_cmd (sys.id object_r lvmpolld.cmd_file (systemlow systemlow)))
+		(context lvmpolld_runtime (sys.id object_r lvmpolld.runtime_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/lvmpolld" file lvmpolld_cmd)
 (filecon "/var/run/lvm/lvmpolld\.socket" socket lvmpolld_runtime)
 (filecon "/var/run/lvmpolld\.pid" file lvmpolld_runtime)
 
 (optional lvmpolld_unit_optional_sd
-	(context lvmpolld_unit (sys.id sys.role lvmpolld.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context lvmpolld_unit (sys.id sys.role lvmpolld.unit_file (systemlow systemlow))))
+		(false
+			(context lvmpolld_unit (sys.id object_r lvmpolld.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/lvm2-lvmpolld.*" file lvmpolld_unit))

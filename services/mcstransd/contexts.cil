@@ -1,4 +1,8 @@
-(context mcstransd_cmd (sys.id sys.role mcstransd.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context mcstransd_cmd (sys.id sys.role mcstransd.cmd_file (systemlow systemlow))))
+	(false
+		(context mcstransd_cmd (sys.id object_r mcstransd.cmd_file (systemlow systemlow)))))
 
 (filecon "/etc/selinux/([^/]*/)?secolor\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.conf" file mcstransd_config)
@@ -9,12 +13,33 @@
 
 (tunableif enable_mls
 	(true
-		(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemhigh systemhigh)))
-		(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemhigh systemhigh))))
+		(tunableif enable_rbacsep
+			(true   
+				(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemhigh systemhigh)))
+				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemhigh systemhigh))))))
 	(false
-		(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemlow systemlow)))
-		(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemlow systemlow)))))
+		(tunableif (not enable_rbacsep)
+			(true   
+				(context mcstransd_config (sys.id object_r mcstransd.config_file (systemhigh systemhigh)))
+				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemhigh systemhigh)))))))
+
+(tunableif (not enable_mls)
+	(true
+		(tunableif enable_rbacsep
+			(true   
+				(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemlow systemlow)))
+				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemlow systemlow))))))
+	(false
+		(tunableif (not enable_rbacsep)
+			(true   
+				(context mcstransd_config (sys.id object_r mcstransd.config_file (systemlow systemlow)))
+				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemlow systemlow)))))))
 
 (optional mcstransd_unit_optional_sd
-	(context mcstransd_unit (sys.id sys.role mcstransd.unit_file (systemlow systemlow)))
-	(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file mcstransd_unit))
+	(tunableif enable_rbacsep
+		(true
+			(context mcstransd_unit (sys.id sys.role mcstransd.unit_file (systemlow systemlow))))
+		(false
+			(context mcstransd_unit (sys.id object_r mcstransd.unit_file (systemlow systemlow)))))
+
+(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file mcstransd_unit))

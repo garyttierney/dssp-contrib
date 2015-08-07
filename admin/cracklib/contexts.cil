@@ -1,5 +1,10 @@
-(context cracklib_cmd (sys.id sys.role cracklib.cmd_file (systemlow systemlow)))
-(context cracklib_var_cache (sys.id sys.role cracklib.var_cache_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context cracklib_cmd (sys.id sys.role cracklib.cmd_file (systemlow systemlow)))
+		(context cracklib_var_cache (sys.id sys.role cracklib.var_cache_file (systemlow systemlow))))
+	(false
+		(context cracklib_cmd (sys.id object_r cracklib.cmd_file (systemlow systemlow)))
+		(context cracklib_var_cache (sys.id object_r cracklib.var_cache_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/cracklib-check" file cracklib_cmd)
 (filecon "/usr/sbin/cracklib-format" file cracklib_cmd)

@@ -1,6 +1,12 @@
-(context sd_bootchart_cmd (sys.id sys.role sd_bootchart.cmd_file (systemlow systemlow)))
-(context sd_bootchart_config (sys.id sys.role sd_bootchart.config_file (systemlow systemlow)))
-(context sd_bootchart_unit (sys.id sys.role sd_bootchart.unit_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_bootchart_cmd (sys.id sys.role sd_bootchart.cmd_file (systemlow systemlow)))
+		(context sd_bootchart_config (sys.id sys.role sd_bootchart.config_file (systemlow systemlow)))
+		(context sd_bootchart_unit (sys.id sys.role sd_bootchart.unit_file (systemlow systemlow))))
+	(false
+		(context sd_bootchart_cmd (sys.id object_r sd_bootchart.cmd_file (systemlow systemlow)))
+		(context sd_bootchart_config (sys.id object_r sd_bootchart.config_file (systemlow systemlow)))
+		(context sd_bootchart_unit (sys.id object_r sd_bootchart.unit_file (systemlow systemlow)))))
 
 (filecon "/etc/systemd/bootchart\.conf" file sd_bootchart_config)
 (filecon "/etc/systemd/bootchart\.conf\.d(/.*)?" any sd_bootchart_config)

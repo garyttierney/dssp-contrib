@@ -1,3 +1,7 @@
-(context fpaste_cmd (sys.id sys.role fpaste.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context fpaste_cmd (sys.id sys.role fpaste.cmd_file (systemlow systemlow))))
+	(false
+		(context fpaste_cmd (sys.id object_r fpaste.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/fpaste" file fpaste_cmd)

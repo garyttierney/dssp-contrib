@@ -1,4 +1,8 @@
-(context dmenu_cmd (sys.id sys.role dmenu.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dmenu_cmd (sys.id sys.role dmenu.cmd_file (systemlow systemlow))))
+	(false
+		(context dmenu_cmd (sys.id object_r dmenu.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/dmenu" file dmenu_cmd)
 (filecon "/usr/bin/dmenu_path" file dmenu_cmd)

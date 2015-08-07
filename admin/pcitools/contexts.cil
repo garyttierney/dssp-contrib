@@ -1,4 +1,8 @@
-(context pcitools_cmd (sys.id sys.role pcitools.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context pcitools_cmd (sys.id sys.role pcitools.cmd_file (systemlow systemlow))))
+	(false
+		(context pcitools_cmd (sys.id object_r pcitools.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/lspci" file pcitools_cmd)
 (filecon "/usr/sbin/setpci" file pcitools_cmd)

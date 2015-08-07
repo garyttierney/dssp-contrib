@@ -22,8 +22,6 @@
 
 (call sys_read_state_files (systemctl_subj_type))
 
-(call rbacsep_read_state_source_subj_type (systemctl_subj_type))
-
 (call fs_getattr_tmpfs_fs (systemctl_subj_type))
 (call fs_write_inherited_devpts_chr_files (systemctl_subj_type))
 
@@ -69,6 +67,10 @@
 (call usersubj_read_home_user_files (systemctl_subj_type))
 (call usersubj_create_home_config_dirs (systemctl_subj_type))
 (call usersubj_home_dir_add_obj_type_transition_home_config (systemctl_subj_type))
+
+(tunableif enable_rbacsep
+	(true
+		(call rbacsep_read_state_source_subj_type (systemctl_subj_type))))
 
 (optional systemctl_subj_type_optional_plymouth
 	(call plymouth_use_fd_plymouthd (systemctl_subj_type)))

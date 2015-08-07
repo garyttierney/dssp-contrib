@@ -1,6 +1,12 @@
-(context udev_config (sys.id sys.role udev.config_file (systemlow systemlow)))
-(context udev_helper_cmd (sys.id sys.role udev_helper.cmd_file (systemlow systemlow)))
-(context udev_runtime (sys.id sys.role udev.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context udev_config (sys.id sys.role udev.config_file (systemlow systemlow)))
+		(context udev_helper_cmd (sys.id sys.role udev_helper.cmd_file (systemlow systemlow)))
+		(context udev_runtime (sys.id sys.role udev.runtime_file (systemlow systemlow))))
+	(false
+		(context udev_config (sys.id object_r udev.config_file (systemlow systemlow)))
+		(context udev_helper_cmd (sys.id object_r udev_helper.cmd_file (systemlow systemlow)))
+		(context udev_runtime (sys.id object_r udev.runtime_file (systemlow systemlow)))))
 
 (filecon "/etc/udev(/.*)?" any udev_config)
 (filecon "/usr/lib/udev/[^/]*" file udev_helper_cmd)

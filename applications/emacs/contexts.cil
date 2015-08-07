@@ -1,10 +1,21 @@
-(context emacs_cmd (sys.id sys.role emacs.cmd_file (systemlow systemlow)))
-(filecon "/usr/bin/emacs-.*" file emacs_cmd)
+(tunableif enable_rbacsep
+	(true
+		(context emacs_cmd (sys.id sys.role emacs.cmd_file (systemlow systemlow)))
+		(context emacs_home (sys.id sys.role emacs.home_user_file (systemlow systemlow))))
+	(false
+		(context emacs_cmd (sys.id object_r emacs.cmd_file (systemlow systemlow)))
+		(context emacs_home (sys.id object_r emacs.home_user_file (systemlow systemlow)))))
 
-(filecon "HOME_DIR/\.emacs" file (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.emacs\.el" file (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.emacs\.d(/.*)?" any (sys.id sys.role emacs.home_user_file (systemlow systemlow)))
+(filecon "/usr/bin/emacs-.*" file emacs_cmd)
+(filecon "HOME_DIR/\.emacs" file emacs_home)
+(filecon "HOME_DIR/\.emacs\.el" file emacs_home)
+(filecon "HOME_DIR/\.emacs\.d(/.*)?" any emacs_home)
 
 (optional emacs_unit_optional_sduser
-	(context emacs_unit (sys.id sys.role emacs.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context emacs_unit (sys.id sys.role emacs.unit_file (systemlow systemlow))))
+		(false
+			(context emacs_unit (sys.id object_r emacs.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file emacs_unit))

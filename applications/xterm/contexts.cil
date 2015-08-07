@@ -1,3 +1,7 @@
-(context xterm_cmd (sys.id sys.role xterm.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context xterm_cmd (sys.id sys.role xterm.cmd_file (systemlow systemlow))))
+	(false
+		(context xterm_cmd (sys.id object_r xterm.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/xterm" file xterm_cmd)

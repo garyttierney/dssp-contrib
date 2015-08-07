@@ -1,6 +1,11 @@
-(context nb_cmd (sys.id sys.role nb.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context nb_cmd (sys.id sys.role nb.cmd_file (systemlow systemlow)))
+		(context nb_home (sys.id sys.role nb.home_user_file (systemlow systemlow))))
+	(false
+		(context nb_cmd (sys.id object_r nb.cmd_file (systemlow systemlow)))
+		(context nb_home (sys.id object_r nb.home_user_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/newsbeuter" file nb_cmd)
 (filecon "/usr/bin/podbeuter" file nb_cmd)
-
-(filecon "HOME_DIR/\.newsbeuter(/.*)?" any (sys.id sys.role nb.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.newsbeuter(/.*)?" any nb_home)

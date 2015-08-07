@@ -1,3 +1,7 @@
-(context rtkitctl_cmd (sys.id sys.role rtkitctl.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context rtkitctl_cmd (sys.id sys.role rtkitctl.cmd_file (systemlow systemlow))))
+	(false
+		(context rtkitctl_cmd (sys.id object_r rtkitctl.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/rtkitctl" file rtkitctl_cmd)

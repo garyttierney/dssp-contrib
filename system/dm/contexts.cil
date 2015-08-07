@@ -1,5 +1,10 @@
-(context dmcrypt_cmd (sys.id sys.role dmcrypt.cmd_file (systemlow systemlow)))
-(context dmsetup_cmd (sys.id sys.role dmsetup.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context dmcrypt_cmd (sys.id sys.role dmcrypt.cmd_file (systemlow systemlow)))
+		(context dmsetup_cmd (sys.id sys.role dmsetup.cmd_file (systemlow systemlow))))
+	(false
+		(context dmcrypt_cmd (sys.id object_r dmcrypt.cmd_file (systemlow systemlow)))
+		(context dmsetup_cmd (sys.id object_r dmsetup.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/cryptsetup" file dmcrypt_cmd)
 (filecon "/usr/sbin/dmsetup" file dmsetup_cmd)

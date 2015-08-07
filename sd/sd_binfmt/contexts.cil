@@ -1,6 +1,12 @@
-(context sd_binfmt_cmd (sys.id sys.role sd_binfmt.cmd_file (systemlow systemlow)))
-(context sd_binfmt_config (sys.id sys.role sd_binfmt.config_file (systemlow systemlow)))
-(context sd_binfmt_unit (sys.id sys.role sd_binfmt.unit_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_binfmt_cmd (sys.id sys.role sd_binfmt.cmd_file (systemlow systemlow)))
+		(context sd_binfmt_config (sys.id sys.role sd_binfmt.config_file (systemlow systemlow)))
+		(context sd_binfmt_unit (sys.id sys.role sd_binfmt.unit_file (systemlow systemlow))))
+	(false
+		(context sd_binfmt_cmd (sys.id object_r sd_binfmt.cmd_file (systemlow systemlow)))
+		(context sd_binfmt_config (sys.id object_r sd_binfmt.config_file (systemlow systemlow)))
+		(context sd_binfmt_unit (sys.id object_r sd_binfmt.unit_file (systemlow systemlow)))))
 
 (filecon "/etc/binfmt\.d(/.*)?" any sd_binfmt_config)
 (filecon "/usr/lib/systemd/systemd-binfmt" file sd_binfmt_cmd)

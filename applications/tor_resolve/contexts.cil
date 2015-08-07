@@ -1,3 +1,7 @@
-(context tor_resolve_cmd (sys.id sys.role tor_resolve.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context tor_resolve_cmd (sys.id sys.role tor_resolve.cmd_file (systemlow systemlow))))
+	(false
+		(context tor_resolve_cmd (sys.id object_r tor_resolve.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/tor-resolve" file tor_resolve_cmd)

@@ -1,3 +1,7 @@
-(context mutt_pgp_ewrap_cmd (sys.id sys.role mutt_pgp_ewrap.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context mutt_pgp_ewrap_cmd (sys.id sys.role mutt_pgp_ewrap.cmd_file (systemlow systemlow))))
+	(false
+		(context mutt_pgp_ewrap_cmd (sys.id object_r mutt_pgp_ewrap.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/pgpewrap" file mutt_pgp_ewrap_cmd)

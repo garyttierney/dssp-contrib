@@ -1,9 +1,18 @@
-(context plymouth_cmd (sys.id sys.role plymouth.cmd_file (systemlow systemlow)))
-(context plymouthd_cmd (sys.id sys.role plymouthd.cmd_file (systemlow systemlow)))
-(context plymouth_config (sys.id sys.role plymouth.config_file (systemlow systemlow)))
-(context plymouthd_runtime (sys.id sys.role plymouthd.runtime_file (systemlow systemlow)))
-(context plymouthd_var_lib (sys.id sys.role plymouthd.var_lib_file (systemlow systemlow)))
-(context plymouthd_var_spool (sys.id sys.role plymouthd.var_spool_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context plymouth_cmd (sys.id sys.role plymouth.cmd_file (systemlow systemlow)))
+		(context plymouthd_cmd (sys.id sys.role plymouthd.cmd_file (systemlow systemlow)))
+		(context plymouth_config (sys.id sys.role plymouth.config_file (systemlow systemlow)))
+		(context plymouthd_runtime (sys.id sys.role plymouthd.runtime_file (systemlow systemlow)))
+		(context plymouthd_var_lib (sys.id sys.role plymouthd.var_lib_file (systemlow systemlow)))
+		(context plymouthd_var_spool (sys.id sys.role plymouthd.var_spool_file (systemlow systemlow))))
+	(false
+		(context plymouth_cmd (sys.id object_r plymouth.cmd_file (systemlow systemlow)))
+		(context plymouthd_cmd (sys.id object_r plymouthd.cmd_file (systemlow systemlow)))
+		(context plymouth_config (sys.id object_r plymouth.config_file (systemlow systemlow)))
+		(context plymouthd_runtime (sys.id object_r plymouthd.runtime_file (systemlow systemlow)))
+		(context plymouthd_var_lib (sys.id object_r plymouthd.var_lib_file (systemlow systemlow)))
+		(context plymouthd_var_spool (sys.id object_r plymouthd.var_spool_file (systemlow systemlow)))))
 
 (filecon "/etc/plymouth(/.*)?" any plymouth_config)
 (filecon "/usr/bin/plymouth" file plymouth_cmd)
@@ -13,5 +22,10 @@
 (filecon "/var/spool/plymouth(/.*)?" any plymouthd_var_spool)
 
 (optional plymouthd_unit_optional_sd
-	(context plymouthd_unit (sys.id sys.role plymouthd.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context plymouthd_unit (sys.id sys.role plymouthd.unit_file (systemlow systemlow))))
+		(false
+			(context plymouthd_unit (sys.id object_r plymouthd.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*plymouth-.*" file plymouthd_unit))

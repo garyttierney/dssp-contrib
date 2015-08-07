@@ -1,5 +1,10 @@
-(context iptools_cmd (sys.id sys.role iptools.cmd_file (systemlow systemlow)))
-(context iptools_config (sys.id sys.role iptools.config_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context iptools_cmd (sys.id sys.role iptools.cmd_file (systemlow systemlow)))
+		(context iptools_config (sys.id sys.role iptools.config_file (systemlow systemlow))))
+	(false
+		(context iptools_cmd (sys.id object_r iptools.cmd_file (systemlow systemlow)))
+		(context iptools_config (sys.id object_r iptools.config_file (systemlow systemlow)))))
 
 (filecon "/etc/iproute2(/.*)?" any iptools_config)
 (filecon "/usr/sbin/ethtool" file iptools_cmd)

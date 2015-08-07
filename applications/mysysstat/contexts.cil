@@ -1,3 +1,7 @@
-(context mysysstat_cmd (sys.id sys.role mysysstat.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context mysysstat_cmd (sys.id sys.role mysysstat.cmd_file (systemlow systemlow))))
+	(false
+		(context mysysstat_cmd (sys.id object_r mysysstat.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/temps" file mysysstat_cmd)

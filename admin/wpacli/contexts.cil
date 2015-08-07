@@ -1,3 +1,7 @@
-(context wpacli_cmd (sys.id sys.role wpacli.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context wpacli_cmd (sys.id sys.role wpacli.cmd_file (systemlow systemlow))))
+	(false
+		(context wpacli_cmd (sys.id object_r wpacli.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/sbin/wpa_cli" file wpacli_cmd)

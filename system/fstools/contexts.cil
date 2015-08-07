@@ -1,5 +1,10 @@
-(context fstools_cmd (sys.id sys.role fstools.cmd_file (systemlow systemlow)))
-(context fstools_runtime (sys.id sys.role fstools.runtime_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context fstools_cmd (sys.id sys.role fstools.cmd_file (systemlow systemlow)))
+		(context fstools_runtime (sys.id sys.role fstools.runtime_file (systemlow systemlow))))
+	(false
+		(context fstools_cmd (sys.id object_r fstools.cmd_file (systemlow systemlow)))
+		(context fstools_runtime (sys.id object_r fstools.runtime_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/partition_uuid" file fstools_cmd)
 (filecon "/usr/bin/raw" file fstools_cmd)

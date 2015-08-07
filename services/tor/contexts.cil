@@ -1,18 +1,30 @@
-(context tor_cmd (sys.id sys.role tor.cmd_file (systemlow systemlow)))
-(context tor_config (sys.id sys.role tor.config_file (systemlow systemlow)))
-(context tor_control_port (sys.id sys.role tor_control.port (systemlow systemlow)))
-(context tor_dir_port (sys.id sys.role tor_dir.port (systemlow systemlow)))
-(context tor_or_port (sys.id sys.role tor_or.port (systemlow systemlow)))
-(context tor_trans_port (sys.id sys.role tor_trans.port (systemlow systemlow)))
-(context tor_var_lib (sys.id sys.role tor.var_lib_file (systemlow systemlow)))
-(context tor_var_log (sys.id sys.role tor.var_log_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context tor_cmd (sys.id sys.role tor.cmd_file (systemlow systemlow)))
+		(context tor_config (sys.id sys.role tor.config_file (systemlow systemlow)))
+		(context tor_control_port (sys.id sys.role tor_control.port (systemlow systemlow)))
+		(context tor_dir_port (sys.id sys.role tor_dir.port (systemlow systemlow)))
+		(context tor_or_port (sys.id sys.role tor_or.port (systemlow systemlow)))
+		(context tor_trans_port (sys.id sys.role tor_trans.port (systemlow systemlow)))
+		(context tor_home (sys.id sys.role tor.home_user_file (systemlow systemlow)))
+		(context tor_var_lib (sys.id sys.role tor.var_lib_file (systemlow systemlow)))
+		(context tor_var_log (sys.id sys.role tor.var_log_file (systemlow systemlow))))
+	(false
+		(context tor_cmd (sys.id object_r tor.cmd_file (systemlow systemlow)))
+		(context tor_config (sys.id object_r tor.config_file (systemlow systemlow)))
+		(context tor_control_port (sys.id object_r tor_control.port (systemlow systemlow)))
+		(context tor_dir_port (sys.id object_r tor_dir.port (systemlow systemlow)))
+		(context tor_or_port (sys.id object_r tor_or.port (systemlow systemlow)))
+		(context tor_trans_port (sys.id object_r tor_trans.port (systemlow systemlow)))
+		(context tor_home (sys.id object_r tor.home_user_file (systemlow systemlow)))
+		(context tor_var_lib (sys.id object_r tor.var_lib_file (systemlow systemlow)))
+		(context tor_var_log (sys.id object_r tor.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/tor(/.*)?" any tor_config)
 (filecon "/usr/bin/tor" file tor_cmd)
 (filecon "/var/lib/tor(/.*)?" any tor_var_lib)
 (filecon "/var/log/tor(/.*)?" any tor_var_log)
-
-(filecon "HOME_DIR/\.tor(/.*)?" any (sys.id sys.role tor.home_user_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.tor(/.*)?" any tor_home)
 
 (portcon "tcp" 9051 tor_control_port)
 (portcon "udp" 9051 tor_control_port)
@@ -26,5 +38,10 @@
 (portcon "udp" 9040 tor_trans_port)
 
 (optional tor_unit_optional_sd
-	(context tor_unit (sys.id sys.role tor.unit_file (systemlow systemlow)))
+	(tunableif enable_rbacsep
+		(true
+			(context tor_unit (sys.id sys.role tor.unit_file (systemlow systemlow))))
+		(false
+			(context tor_unit (sys.id object_r tor.unit_file (systemlow systemlow)))))
+
 	(filecon "/usr/lib/systemd/system/[^/]*tor.*" file tor_unit))

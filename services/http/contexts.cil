@@ -1,4 +1,8 @@
-(context http_port (sys.id sys.role http.port (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context http_port (sys.id sys.role http.port (systemlow systemlow))))
+	(false
+		(context http_port (sys.id object_r http.port (systemlow systemlow)))))
 
 (portcon "tcp" 80 http_port)
 (portcon "tcp" 443 http_port)

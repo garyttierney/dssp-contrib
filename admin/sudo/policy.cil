@@ -41,7 +41,6 @@
 (call sys_link_keyring (sudo_subj_type))
 
 (call standard_role_change_exemption_subj_type (sudo_subj_type))
-(call standard_obj_role_change_exemption_subj_type (sudo_subj_type))
 
 (call cmd_getattr_all_cmd_files (sudo_subj_type))
 
@@ -81,6 +80,10 @@
 (call usersubj_setattr_term (sudo_subj_type))
 (call usersubj_shell_manual_subj_type_transition_priv_subj (sudo_subj_type))
 (call usersubj_use_term (sudo_subj_type))
+
+(tunableif enable_rbacsep
+	(true
+		(call rbacsep_obj_role_change_exemption_subj_type (sudo_subj_type))))
 
 (optional sudo_subj_type_optional_sd
 	(call sd_getpgid (sudo_subj_type))

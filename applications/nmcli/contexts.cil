@@ -1,4 +1,8 @@
-(context nmcli_cmd (sys.id sys.role nmcli.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context nmcli_cmd (sys.id sys.role nmcli.cmd_file (systemlow systemlow))))
+	(false
+		(context nmcli_cmd (sys.id object_r nmcli.cmd_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/nmcli" file nmcli_cmd)
 (filecon "/usr/bin/nmtui" file nmcli_cmd)

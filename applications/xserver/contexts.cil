@@ -1,8 +1,20 @@
-(context xserver_cmd (sys.id sys.role xserver.cmd_file (systemlow systemlow)))
-(context xserver_config (sys.id sys.role xserver.config_file (systemlow systemlow)))
-(context xserver_port (sys.id sys.role xserver.port (systemlow systemlow)))
-(context xserver_var_log (sys.id sys.role xserver.var_log_file (systemlow systemlow)))
-(context xserver_var_lib (sys.id sys.role xserver.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context xserver_cmd (sys.id sys.role xserver.cmd_file (systemlow systemlow)))
+		(context xserver_config (sys.id sys.role xserver.config_file (systemlow systemlow)))
+		(context xserver_home_data (sys.id sys.role xserver.home_data_file (systemlow systemlow)))
+		(context xserver_home (sys.id sys.role xserver.home_user_file (systemlow systemlow)))
+		(context xserver_port (sys.id sys.role xserver.port (systemlow systemlow)))
+		(context xserver_var_log (sys.id sys.role xserver.var_log_file (systemlow systemlow)))
+		(context xserver_var_lib (sys.id sys.role xserver.var_lib_file (systemlow systemlow))))
+	(false
+		(context xserver_cmd (sys.id object_r xserver.cmd_file (systemlow systemlow)))
+		(context xserver_config (sys.id object_r xserver.config_file (systemlow systemlow)))
+		(context xserver_home_data (sys.id object_r xserver.home_data_file (systemlow systemlow)))
+		(context xserver_home (sys.id object_r xserver.home_user_file (systemlow systemlow)))
+		(context xserver_port (sys.id object_r xserver.port (systemlow systemlow)))
+		(context xserver_var_log (sys.id object_r xserver.var_log_file (systemlow systemlow)))
+		(context xserver_var_lib (sys.id object_r xserver.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/X11(/.*)?" any xserver_config)
 (filecon "/etc/X.*\.hosts" file xserver_config)
@@ -10,9 +22,8 @@
 (filecon "/usr/libexec/Xorg" file xserver_cmd)
 (filecon "/var/log/Xorg.*\.log.*" file xserver_var_log)
 (filecon "/var/lib/xkb(/.*)?" any xserver_var_lib)
-
-(filecon "HOME_DIR/\.xserverrc" file (sys.id sys.role xserver.home_user_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.local/share/xorg(/.*)?" any (sys.id sys.role xserver.home_data_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.xserverrc" file xserver_home)
+(filecon "HOME_DIR/\.local/share/xorg(/.*)?" any xserver_home_data)
 
 (portcon "tcp" 6000 xserver_port)
 (portcon "udp" 6000 xserver_port)

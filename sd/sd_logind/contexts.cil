@@ -1,8 +1,16 @@
-(context sd_logind_cmd (sys.id sys.role sd_logind.cmd_file (systemlow systemlow)))
-(context sd_logind_config (sys.id sys.role sd_logind.config_file (systemlow systemlow)))
-(context sd_logind_runtime (sys.id sys.role sd_logind.runtime_file (systemlow systemlow)))
-(context sd_logind_unit (sys.id sys.role sd_logind.unit_file (systemlow systemlow)))
-(context sd_logind_var_lib (sys.id sys.role sd_logind.var_lib_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context sd_logind_cmd (sys.id sys.role sd_logind.cmd_file (systemlow systemlow)))
+		(context sd_logind_config (sys.id sys.role sd_logind.config_file (systemlow systemlow)))
+		(context sd_logind_runtime (sys.id sys.role sd_logind.runtime_file (systemlow systemlow)))
+		(context sd_logind_unit (sys.id sys.role sd_logind.unit_file (systemlow systemlow)))
+		(context sd_logind_var_lib (sys.id sys.role sd_logind.var_lib_file (systemlow systemlow))))
+	(false
+		(context sd_logind_cmd (sys.id object_r sd_logind.cmd_file (systemlow systemlow)))
+		(context sd_logind_config (sys.id object_r sd_logind.config_file (systemlow systemlow)))
+		(context sd_logind_runtime (sys.id object_r sd_logind.runtime_file (systemlow systemlow)))
+		(context sd_logind_unit (sys.id object_r sd_logind.unit_file (systemlow systemlow)))
+		(context sd_logind_var_lib (sys.id object_r sd_logind.var_lib_file (systemlow systemlow)))))
 
 (filecon "/etc/systemd/logind\.conf" file sd_logind_config)
 (filecon "/etc/systemd/logind\.conf\.d(/.*)?" any sd_logind_config)

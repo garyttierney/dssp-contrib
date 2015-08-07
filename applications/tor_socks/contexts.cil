@@ -1,6 +1,12 @@
-(context tor_socks_cmd (sys.id sys.role tor_socks.cmd_file (systemlow systemlow)))
-(context tor_socks_port (sys.id sys.role tor_socks.port (systemlow systemlow)))
-(context tor_socks_use (sys.id sys.role tor_socks_use.bool (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context tor_socks_cmd (sys.id sys.role tor_socks.cmd_file (systemlow systemlow)))
+		(context tor_socks_port (sys.id sys.role tor_socks.port (systemlow systemlow)))
+		(context tor_socks_use (sys.id sys.role tor_socks_use.bool (systemlow systemlow))))
+	(false
+		(context tor_socks_cmd (sys.id object_r tor_socks.cmd_file (systemlow systemlow)))
+		(context tor_socks_port (sys.id object_r tor_socks.port (systemlow systemlow)))
+		(context tor_socks_use (sys.id object_r tor_socks_use.bool (systemlow systemlow)))))
 
 (filecon "/usr/bin/torify" file tor_socks_cmd)
 (filecon "/usr/bin/torsocks" file tor_socks_cmd)

@@ -1,6 +1,13 @@
-(context livestreamer_cmd (sys.id sys.role livestreamer.cmd_file (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context livestreamer_cmd (sys.id sys.role livestreamer.cmd_file (systemlow systemlow)))
+		(context livestreamer_home_cache (sys.id sys.role livestreamer.home_cache_file (systemlow systemlow)))
+		(context livestreamer_home_config (sys.id sys.role livestreamer.home_config_file (systemlow systemlow))))
+	(false
+		(context livestreamer_cmd (sys.id object_r livestreamer.cmd_file (systemlow systemlow)))
+		(context livestreamer_home_cache (sys.id object_r livestreamer.home_cache_file (systemlow systemlow)))
+		(context livestreamer_home_config (sys.id object_r livestreamer.home_config_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/livestreamer" file livestreamer_cmd)
-
-(filecon "HOME_DIR/\.cache/livestreamer(/.*)?" any (sys.id sys.role livestreamer.home_cache_file (systemlow systemlow)))
-(filecon "HOME_DIR/\.config/livestreamer(/.*)?" any (sys.id sys.role livestreamer.home_config_file (systemlow systemlow)))
+(filecon "HOME_DIR/\.cache/livestreamer(/.*)?" any livestreamer_home_cache)
+(filecon "HOME_DIR/\.config/livestreamer(/.*)?" any livestreamer_home_config)

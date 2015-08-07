@@ -1,4 +1,8 @@
-(context ftp_port (sys.id sys.role ftp.port (systemlow systemlow)))
+(tunableif enable_rbacsep
+	(true
+		(context ftp_port (sys.id sys.role ftp.port (systemlow systemlow))))
+	(false
+		(context ftp_port (sys.id object_r ftp.port (systemlow systemlow)))))
 
 (portcon "tcp" 21 ftp_port)
 (portcon "udp" 21 ftp_port)

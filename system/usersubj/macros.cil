@@ -1143,7 +1143,8 @@
 
 (macro usersubj_list_home_cmd ((type ARG1))
 	(call usersubj_search_home_data (ARG1))
-	(allow ARG1 home_cmd.home_user_file list_dir_perms))
+	(allow ARG1 home_cmd.home_user_file list_dir_perms)
+	(allow ARG1 home_cmd.home_user_file read_lnk_file_perms))
 
 (macro usersubj_read_home_cmd_files ((type ARG1))
 	(call usersubj_search_home_data (ARG1))

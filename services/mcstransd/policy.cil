@@ -28,7 +28,6 @@
 	(allow subj self (process (setrlimit getcap setcap)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_netlink_selinux_socket_perms)
-	(allow subj self (context (contains)))
 
 	(call mcstransd_read_config (subj))
 

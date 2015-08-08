@@ -40,3 +40,8 @@
 
 (macro tor_socks_tcp_connect_tor_socks_port ((type ARG1))
 	(allow ARG1 tor_socks.port (tcp_socket (name_connect))))
+
+(macro tor_socks_set_use_boolean ((type ARG1))
+	(call sec_set_spec_boolean (ARG1 tor_socks_use.bool))
+	(optional tor_socks_set_use_boolean_optional_seutil
+		(call seutil_exec_setsebool (ARG1))))

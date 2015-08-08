@@ -148,3 +148,8 @@
 
 (macro qemu_relabelfrom_all_guest_subj_tun_socket ((type ARG1))
 	(allow ARG1 qemu_guest_subj_type (tun_socket (relabelfrom))))
+
+(macro qemu_set_use_hugepages_boolean ((type ARG1))
+	(call sec_set_spec_boolean (ARG1 qemu_use_hugepages.bool))
+	(optional qemu_set_use_hugepages_boolean_optional_seutil
+		(call seutil_exec_setsebool (ARG1))))

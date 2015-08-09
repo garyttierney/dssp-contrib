@@ -47,12 +47,12 @@
 
 		(blockinherit sd_unit_obj_blk)
 
-		(typeattributeset dracut_initramfs_obj_type unit_file))
+		(typeattributeset dracut_initramfs_obj_type unit_file)
+
+		(allow dracut_initramfs_adm_subj_type dracut_initramfs.unit_file (service (stop status disable enable reload start))))
 
 	(optional dracut_initramfs_optional_sd_machined
 		(call sd_machined_read_config_files (subj))))
-
-(allow dracut_initramfs_adm_subj_type dracut_initramfs.unit_file (service (stop status disable enable reload start)))
 
 (allow dracut_initramfs_adm_subj_type dracut_initramfs.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (dracut_initramfs_adm_subj_type dracut_initramfs.subj))

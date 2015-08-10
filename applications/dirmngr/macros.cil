@@ -55,6 +55,7 @@
 
 (macro dirmngr_gpg_home_obj_type_transition_home ((type ARG1))
 	(call gpg_home_obj_type_transition (ARG1 dirmngr.home_user_file dir "crls.d"))
+	(call gpg_home_obj_type_transition (ARG1 dirmngr.home_user_file dir "dirmngr-cache.d"))
 	(call gpg_home_obj_type_transition (ARG1 dirmngr.home_user_file sock_file "S.dirmngr")))
 
 (macro dirmngr_stream_connect ((type ARG1))

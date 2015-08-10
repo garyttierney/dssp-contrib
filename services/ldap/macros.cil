@@ -1,0 +1,5 @@
+(macro ldap_tcp_connect_ldap_port ((type ARG1))
+	(allow ARG1 ldap.port (tcp_socket (name_connect))))
+
+(macro ldap_tcp_bind_irc_port ((type ARG1))
+	(allow ARG1 ldap.port (tcp_socket (name_bind))))

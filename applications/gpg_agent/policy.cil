@@ -18,6 +18,9 @@
 
 (call sys_read_crypto_sysctl_files (gpg_agent_subj_type))
 
+(call dev_read_random (gpg_agent_subj_type))
+(call dev_read_urandom (gpg_agent_subj_type))
+
 (call file_read_data_files (gpg_agent_subj_type))
 
 (call fs_list_devtmpfs (gpg_agent_subj_type))

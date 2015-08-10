@@ -50,6 +50,7 @@
 			(context root_dirmngr_home (sysadm.id object_r dirmngr.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.gnupg/crls\.d(/.*)?" any root_dirmngr_home)
+	(filecon "/root/\.gnupg/dirmngr-cache\.d(/.*)?" any root_dirmngr_home)
 	(filecon "/root/\.gnupg/S\.dirmngr" socket root_dirmngr_home))
 
 (optional sysadm_dunst_home_optional_dunst

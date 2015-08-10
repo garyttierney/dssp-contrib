@@ -43,6 +43,8 @@
 	(call sys_read_cpu_sysfs_files (subj))
 	(call sys_relabelfrom_invalid_dirs (subj))
 
+	(call standard_obj_change_exemption_subj_type (subj))
+
 	(call dev_manage_all (subj))
 	(call dev_relabel_all (subj))
 
@@ -60,7 +62,10 @@
 	(call miscfile_read_factory (subj))
 	(call miscfile_read_locale (subj))
 
-	(call sd_journald_client_subj_type (subj)))
+	(call sd_journald_client_subj_type (subj))
+
+	(optional sd_tmpfiles_optional_rpm
+		(call rpm_rw_inherited_fifo_files (subj))))
 
 (call file_spec_exception (sd_tmpfiles_manageable_obj_type sd_tmpfiles_manageable_obj_exception_type))
 (allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_file_perms)

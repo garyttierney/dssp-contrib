@@ -29,7 +29,7 @@
 	(call sd_udevd_rw_inherited_udp_sockets (subj))
 
 	(optional sd_sysctl_optional_rpm
-		(call rpm_rw_inherited_fifo_files (subj))))
+		(call rpm_script_client_subj_type (subj))))
 
 (allow sd_sysctl_adm_subj_type sd_sysctl.unit_file (service (stop status disable enable reload start)))
 

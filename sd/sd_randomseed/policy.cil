@@ -38,7 +38,7 @@
 	(call sd_journald_client_subj_type (subj))
 
 	(optional sd_randomseed_optional_rpm
-		(call rpm_rw_inherited_fifo_files (subj))))
+		(call rpm_script_client_subj_type (subj))))
 
 (allow sd_randomseed_adm_subj_type sd_randomseed.unit_file (service (stop status disable enable reload start)))
 

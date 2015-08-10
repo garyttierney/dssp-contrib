@@ -91,8 +91,8 @@
 		(call plymouth_exec_plymouth (subj)))
 
 	(optional dracut_optional_rpm
-		(call rpm_rw_inherited_fifo_files (subj))
-		(call rpm_rw_inherited_tmpfs_files (subj)))
+		(call rpm_rw_inherited_tmpfs_files (subj))
+		(call rpm_script_client_subj_type (subj)))
 
 	(optional dracut_optional_sctl
 		(call sctl_read_config (subj)))

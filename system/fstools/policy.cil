@@ -70,9 +70,9 @@
 		(call qemu_rw_all_guest_obj_files (subj)))
 
 	(optional fstools_optional_rpm
-		(call rpm_rw_inherited_fifo_files (subj))
 		(call rpm_rw_inherited_var_tmp_fifo_files (subj))
-		(call rpm_rw_inherited_tmpfs_files (subj)))
+		(call rpm_rw_inherited_tmpfs_files (subj))
+		(call rpm_script_client_subj_type (subj)))
 
 	(optional fstools_optional_sd
 		(call sd_daemon (subj cmd_file))))

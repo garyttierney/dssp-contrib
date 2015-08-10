@@ -78,7 +78,7 @@
 
 	(optional bootloader_optional_rpm
 		(call rpm_rw_inherited_tmpfs_files (subj))
-		(call rpm_rw_inherited_fifo_files (subj)))
+		(call rpm_script_client_subj_type (subj)))
 
 	(optional bootloader_optional_sd
 		(call sd_search_unit_runtime (subj)))

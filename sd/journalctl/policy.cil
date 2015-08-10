@@ -15,7 +15,7 @@
 	(call sd_daemon (subj cmd_file))
 
 	(optional journalctl_optional_rpm
-		(call rpm_rw_inherited_fifo_files (subj))))
+		(call rpm_script_client_subj_type (subj))))
 
 (allow journalctl_subj_type self (capability (dac_override net_admin sys_resource sys_chroot setgid setuid sys_admin)))
 (allow journalctl_subj_type self (unix_dgram_socket (sendto)))

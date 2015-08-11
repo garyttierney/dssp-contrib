@@ -42,15 +42,12 @@
 	(call dev_read_urandom (subj))
 	(call dev_rw_lvm_control (subj))
 
-	(call fs_getattr_debugfs_fs (subj))
 	(call fs_getattr_devpts_chr_files (subj))
 	(call fs_list_hugetlbfs (subj))
 	(call fs_list_tmpfs (subj))
-	(call fs_mount_tracefs_fs (subj))
-	(call fs_read_debugfs (subj))
 	(call fs_read_devtmpfs_lnk_files (subj))
 	(call fs_read_sysfs (subj))
-	(call fs_read_tracefs (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call sec_get_enforce_mode (subj))
 

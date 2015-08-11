@@ -76,12 +76,10 @@
 
 	(call fs_getattr_all_fs (subj))
 	(call fs_list_all (subj))
-	(call fs_mount_tracefs_fs (subj))
 	(call fs_read_all_lnk_files (subj))
 	(call fs_read_cgroup_files (subj))
-	(call fs_read_debugfs (subj))
-	(call fs_read_tracefs (subj))
 	(call fs_relabel_all (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))

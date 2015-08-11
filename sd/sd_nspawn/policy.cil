@@ -80,7 +80,6 @@
 
 	(call file_getattr_all_except (subj))
 
-	(call fs_getattr_debugfs_fs (subj))
 	(call fs_getattr_fs (subj))
 	(call fs_getattr_tmpfs_fs (subj))
 	(call fs_manage_cgroup_dirs (subj))
@@ -90,13 +89,10 @@
 	(call fs_mount_proc_fs (subj))
 	(call fs_mount_sysfs_fs (subj))
 	(call fs_mount_tmpfs_fs (subj))
-	(call fs_mount_tracefs_fs (subj))
 	(call fs_mounton_cgroup_dirs (subj))
 	(call fs_mounton_rootfs_dirs (subj))
 	(call fs_mounton_sysfs_dirs (subj))
-	(call fs_read_debugfs (subj))
 	(call fs_read_sysfs (subj))
-	(call fs_read_tracefs (subj))
 	(call fs_relabelfrom_devpts_fs (subj))
 	(call fs_relabelfrom_tmpfs_fs (subj))
 	(call fs_remount_cgroup_fs (subj))
@@ -104,6 +100,7 @@
 	(call fs_remount_proc_fs (subj))
 	(call fs_remount_sysfs_fs (subj))
 	(call fs_remount_tmpfs_fs (subj))
+	(call fs_trace_client_subj_type (subj))
 	(call fs_write_cgroup_files (subj))
 
 	(call sec_remount_fs (subj))

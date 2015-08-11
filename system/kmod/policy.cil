@@ -26,11 +26,8 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))
 
-	(call fs_getattr_debugfs_fs (subj))
-	(call fs_mount_tracefs_fs (subj))
-	(call fs_read_debugfs (subj))
 	(call fs_read_sysfs (subj))
-	(call fs_read_tracefs (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call kmod_read_config (subj))
 

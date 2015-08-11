@@ -15,13 +15,10 @@
 
 	(call sd_sleep_read_config (subj))
 
-	(call fs_getattr_debugfs_fs (subj))
 	(call fs_list_sysfs (subj))
-	(call fs_mount_tracefs_fs (subj))
-	(call fs_read_debugfs (subj))
 	(call fs_read_sysfs_lnk_files (subj))
-	(call fs_read_tracefs (subj))
 	(call fs_rw_sysfs_files (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call dev_write_kmsg (subj))
 	(call dev_read_urandom (subj))

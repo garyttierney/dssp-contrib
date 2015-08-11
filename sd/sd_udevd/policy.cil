@@ -32,7 +32,6 @@
 	(call file_list_config (subj))
 
 	(call fs_audit_access_rootfs_dirs (subj))
-	(call fs_getattr_debugfs_fs (subj))
 	(call fs_getattr_fs (subj))
 	(call fs_list_efivarfs (subj))
 	(call fs_list_sysfs (subj))
@@ -41,13 +40,11 @@
 	(call fs_manage_devtmpfs_lnk_files (subj))
 	(call fs_manage_devtmpfs_blk_files (subj))
 	(call fs_manage_devtmpfs_chr_files (subj))
-	(call fs_mount_tracefs_fs (subj))
-	(call fs_read_debugfs (subj))
 	(call fs_read_sysfs_lnk_files (subj))
-	(call fs_read_tracefs (subj))
 	(call fs_rw_sysfs_files (subj))
 	(call fs_relabelfrom_devtmpfs_blk_files (subj))
 	(call fs_relabelfrom_devtmpfs_chr_files (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call sec_get_enforce_mode (subj))
 

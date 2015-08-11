@@ -9,6 +9,8 @@
 
 	(blockinherit usersubj_home_user_obj_blk)
 
+	(allow subj self rw_fifo_file_perms)
+
 	(call fop_read_config_files (subj))
 
 	(call fop_manage_home (subj))
@@ -22,6 +24,7 @@
 	(call java_client (subj))
 
 	(call miscfile_read_all_fonts (subj))
+	(call miscfile_read_locale (subj))
 	(call miscfile_read_network (subj))
 
 	(call usersubj_manage_home_user_files (subj))

@@ -23,7 +23,11 @@
 
 	(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal)))
+	(allow ARG2 tor_socks_client_subj_type (process (noatsecure)))
+
+	(allow ARG3 ARG2 (process (signal noatsecure)))
+
+	(call tor_read_config (ARG2))
 
 	(optional tor_socks_role_pattern_optional_bti
 		(call bti_run (ARG3 ARG1)))

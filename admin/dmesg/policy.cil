@@ -6,6 +6,7 @@
 	(roletype dmesg_role subj)
 
 	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sys_read_ring_buffer (subj))
 

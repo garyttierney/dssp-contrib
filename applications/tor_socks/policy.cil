@@ -17,6 +17,8 @@
 
 (allow tor_socks_subj_type self rw_fifo_file_perms)
 
+(allow tor_socks_subj_type tor_socks_client_subj_type (process (noatsecure)))
+
 (call miscfile_read_locale (tor_socks_subj_type))
 
 (call tor_socks_exec (tor_socks_subj_type))

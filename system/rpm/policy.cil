@@ -45,7 +45,6 @@
 
 	(typeattributeset rpm_obj_type tmpfs_file)
 
-	(call rpm_tmpfs_obj_type_transition_tmpfs (subj))
 	(call rpm_var_cache_obj_type_transition_var_cache (subj))
 	(call rpm_var_lib_obj_type_transition_var_lib (subj))
 	(call rpm_var_log_obj_type_transition_var_log (subj))
@@ -95,6 +94,8 @@
 (call sys_unconfined_subj_type (rpm_subj_type))
 
 (call mls_priv_range_trans_subj_type (rpm_script_t))
+
+(call rpm_tmpfs_obj_type_transition_tmpfs (rpm_subj_type))
 
 (call subj_execmem_uncond_type (rpm_subj_type))
 

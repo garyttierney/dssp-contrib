@@ -267,6 +267,14 @@
 	(call fs_search_tmpfs (ARG1))
 	(call manage_files_pattern (ARG1 rpm.tmpfs_file rpm.tmpfs_file)))
 
+(macro rpm_append_inherited_tmpfs_files ((type ARG1))
+	(call rpm_use_fd (ARG1))
+	(allow ARG1 rpm.tmpfs_file append_inherited_file_perms))
+
+(macro rpm_read_inherited_tmpfs_files ((type ARG1))
+	(call rpm_use_fd (ARG1))
+	(allow ARG1 rpm.tmpfs_file read_inherited_file_perms))
+
 (macro rpm_rw_inherited_tmpfs_files ((type ARG1))
 	(call rpm_use_fd (ARG1))
 	(allow ARG1 rpm.tmpfs_file rw_inherited_file_perms))

@@ -9,6 +9,11 @@
 
 (call cmd_exec_shell (numactl_subj_type))
 
+(call sys_list_cpu_sysfs (numactl_subj_type))
+(call sys_list_node_sysfs (numaclt_subj_type))
+(call sys_read_cpu_sysfs_files (numactl_subj_type))
+(call sys_read_node_sysfs_files (numactl_subj_type))
+
 (call fs_list_sysfs (numactl_subj_type))
 (call fs_rw_sysfs_files (numactl_subj_type))
 (call fs_read_sysfs_lnk_files (numactl_subj_type))

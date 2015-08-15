@@ -29,7 +29,6 @@
 	(call seutil_read_file_context_files (subj))
 
 	(optional groupadd_optional_rpm
-		(call rpm_rw_inherited_tmpfs_files (subj))
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional groupadd_optional_sd_journald
@@ -98,7 +97,6 @@
 		(call firefox_setattr_home_dirs (subj)))
 
 	(optional useradd_optional_rpm
-		(call rpm_rw_inherited_tmpfs_files (subj))
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional useradd_optional_sd_journald

@@ -48,8 +48,6 @@
 	(call udev_manage_runtime (subj))
 
 	(optional udevdadm_optional_rpm
-		(call rpm_append_inherited_tmpfs_files (subj))
-		(call rpm_read_inherited_tmpfs_files (subj))
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional udevadm_optional_sd

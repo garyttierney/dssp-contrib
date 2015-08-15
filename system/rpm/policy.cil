@@ -146,6 +146,9 @@
 	(call useradd_run_groupadd (rpm_script_t rpm_role))
 	(call useradd_run_useradd (rpm_script_t rpm_role)))
 
+
+(call rpm_append_inherited_tmpfs_files (rpm_script_client_subj_type))
+(call rpm_read_inherited_tmpfs_files (rpm_script_client_subj_type))
 (call rpm_rw_inherited_fifo_files (rpm_script_client_subj_type))
 
 (allow rpm_adm_subj_type rpm_subj_type (process (ptrace signal signull sigkill sigstop)))

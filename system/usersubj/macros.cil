@@ -1096,7 +1096,7 @@
 	(allow ARG1 usersubj_tmpfs_user_obj_type read_sock_file_perms))
 
 (macro usersubj_manage_all_tmpfs_user ((type ARG1))
-	(call file_search_runtime_user_dirs (ARG1))
+	(call file_search_runtime_user (ARG1))
 	(call fs_rw_tmpfs_dirs (ARG1))
 	(allow ARG1 usersubj_tmpfs_user_obj_type manage_file_perms)
 	(allow ARG1 usersubj_tmpfs_user_obj_type manage_dir_perms)

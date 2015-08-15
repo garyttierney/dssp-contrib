@@ -815,6 +815,9 @@
 	(allow ARG1 home_user.home_user_file relabel_lnk_file_perms)
 	(allow ARG1 home_user.home_user_file relabel_sock_file_perms))
 
+(macro usersubj_dontaudit_search_all_home_user ((type ARG1))
+	(dontaudit ARG1 usersubj_home_user_obj_type search_dir_perms))
+
 (macro usersubj_search_all_home_user ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 usersubj_home_user_obj_type search_dir_perms))

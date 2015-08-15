@@ -13,6 +13,8 @@
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
+	(blockinherit usersubj_var_tmp_user_obj_blk)
+
 	(optional firefox_optional_pa
 		(call pa_tmpfs_client (firefox_subj_type tmpfs_user_file))))
 
@@ -32,6 +34,9 @@
 (call firefox_manage_tmpfs_files (firefox_subj_type))
 (call firefox_tmpfs_obj_type_transition_tmpfs (firefox_subj_type))
 
+(call firefox_manage_var_tmp_files (firefox_subj_type))
+(call firefox_var_tmp_obj_type_transition_var_tmp (firefox_subj_type))
+
 (call firefox_exec (firefox_subj_type))
 
 (call sys_read_crypto_sysctl_files (firefox_subj_type))
@@ -42,11 +47,9 @@
 (call dev_read_urandom (firefox_subj_type))
 (call dev_rw_dri (firefox_subj_type))
 
-(call file_audit_access_var_tmp_dirs (firefox_subj_type))
 (call file_read_config (firefox_subj_type))
 (call file_read_data (firefox_subj_type))
 (call file_list_mnt (firefox_subj_type))
-(call file_list_var_tmp (firefox_subj_type))
 
 (call fs_getattr_fs (firefox_subj_type))
 (call fs_manage_fuse_subj_type (firefox_subj_type))

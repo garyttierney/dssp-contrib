@@ -34,10 +34,11 @@
 
 	(call sys_list_cpu_sysfs (subj))
 	(call sys_load_kernel_module_subj_type (subj))
-	(call sys_rw_cpu_sysfs_files (subj))
+	(call sys_read_cpuinfo_proc_files (subj))
 	(call sys_read_net_proc_files (subj))
 	(call sys_read_kallsyms_proc_files (subj))
 	(call sys_request_load_module (subj))
+	(call sys_rw_cpu_sysfs_files (subj))
 	(call sys_rw_fs_sysctl_files (subj))
 	(call sys_rw_irq_sysctl_files (subj))
 	(call sys_rw_kernel_sysctl_files (subj))

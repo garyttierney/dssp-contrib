@@ -33,7 +33,7 @@
 
 	(typeattributeset sysbus_obj_type var_lib_file)
 
-	(allow subj self (process (getcap setcap setrlimit)))
+	(allow subj self (process (setcap setrlimit)))
 	(allow subj self (capability (setgid setuid sys_resource)))
 
 	(call sysbus_read_config (subj))
@@ -47,7 +47,6 @@
 	(call sysbus_mls_recv_subj_type (subj))
 
 	(call sys_audit_client_subj_type (subj))
-	(call sys_read_kernel_sysctl_files (subj))
 
 	(call mls_priv_range_trans_subj_type (subj))
 
@@ -84,8 +83,11 @@
 	(optional sysbus_optional_unconfinedsubj
 		(call unconfinedsubj_use_fd (subj))))
 
+(allow sysbus_dbus_subj_type self (process (getcap)))
 (allow sysbus_dbus_subj_type self create_netlink_selinux_socket_perms)
 (allow sysbus_dbus_subj_type self (unix_stream_socket (listen accept)))
+
+(call sys_read_kernel_sysctl_files (sysbus_dbus_subj_type))
 
 (call dev_read_urandom (sysbus_dbus_subj_type))
 

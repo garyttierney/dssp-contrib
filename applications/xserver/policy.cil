@@ -61,6 +61,7 @@
 
 	(allow subj xserver_tmpfs_client_obj_type (file (read write)))
 
+	(call sys_read_cpuinfo_proc_files (subj))
 	(call sys_write_mtrr_proc_files (subj))
 
 	(call cmd_exec_cmd (subj))

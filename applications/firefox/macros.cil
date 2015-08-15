@@ -35,7 +35,10 @@
 	(call firefox_home_cache_obj_type_transition_home_cache (ARG2))
 
 	(call firefox_manage_tmpfs_files (ARG2))
-	(call firefox_relabel_tmpfs_files (ARG2)))
+	(call firefox_relabel_tmpfs_files (ARG2))
+
+	(call firefox_manage_var_tmp_files (ARG2))
+	(call firefox_relabel_var_tmp_files (ARG2)))
 
 (macro firefox_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
@@ -142,6 +145,21 @@
 
 (macro firefox_tmpfs_obj_type_transition_tmpfs ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 firefox.tmpfs_user_file file "*")))
+
+(macro firefox_read_var_tmp_files ((type ARG1))
+	(call file_search_var_tmp (ARG1))
+	(allow ARG1 firefox.var_tmp_user_file read_file_perms))
+
+(macro firefox_manage_var_tmp_files ((type ARG1))
+	(call file_rw_var_tmp_dirs (ARG1))
+	(allow ARG1 firefox.var_tmp_user_file manage_file_perms))
+
+(macro firefox_relabel_var_tmp_files ((type ARG1))
+	(call file_search_var_tmp (ARG1))
+	(allow ARG1 firefox.var_tmp_user_file relabel_file_perms))
+
+(macro firefox_var_tmp_obj_type_transition_var_tmp ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 firefox.tmpfs_user_file file "*")))
 
 (macro firefox_use_fd_all_subj ((type ARG1))
 	(allow ARG1 firefox_subj_type (fd (use))))

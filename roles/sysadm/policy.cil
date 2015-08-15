@@ -12,7 +12,8 @@
 
 	(call sys_manage_var_log_files (subj))
 	(call sys_read_all_proc_files (subj))
-	(call sys_read_all_sysctl_files (subj))
+	(call sys_read_all_sysctl (subj))
+	(call sys_read_all_sysfs (subj))
 
 	(call mls_priv_range_trans_subj_type (subj))
 
@@ -31,6 +32,7 @@
 	(call fs_list_devtmpfs (subj))
 	(call fs_read_cgroup_files (subj))
 	(call fs_read_sysfs (subj))
+	(call fs_trace_client_subj_type (subj))
 
 	(call sec_get_all_booleans (subj))
 

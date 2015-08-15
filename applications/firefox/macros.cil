@@ -159,7 +159,7 @@
 	(allow ARG1 firefox.var_tmp_user_file relabel_file_perms))
 
 (macro firefox_var_tmp_obj_type_transition_var_tmp ((type ARG1))
-	(call file_var_tmp_obj_type_transition (ARG1 firefox.tmpfs_user_file file "*")))
+	(call file_var_tmp_obj_type_transition (ARG1 firefox.var_tmp_user_file file "*")))
 
 (macro firefox_use_fd_all_subj ((type ARG1))
 	(allow ARG1 firefox_subj_type (fd (use))))

@@ -733,6 +733,9 @@
 	(call miscfile_read_all_terminfo_data (ARG1))
 	(call miscfile_read_terminfo_config (ARG1)))
 
+(macro miscfile_dontaudit_read_utmp_runtime_files ((type ARG1))
+	(dontaudit ARG1 utmp.runtime_file read_file_perms))
+
 (macro miscfile_read_utmp_runtime_files ((type ARG1))
 	(call file_search_runtime (ARG1))
 	(allow ARG1 utmp.runtime_file read_file_perms))

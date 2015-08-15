@@ -6,13 +6,14 @@
 	(call subj_entry (numactl_subj_type cmd_file)))
 
 (allow numactl_subj_type self (capability (dac_override)))
-
-(call cmd_exec_shell (numactl_subj_type))
+(allow numactl_subj_type self rw_fifo_file_perms)
 
 (call sys_list_cpu_sysfs (numactl_subj_type))
 (call sys_list_node_sysfs (numactl_subj_type))
 (call sys_read_cpu_sysfs_files (numactl_subj_type))
 (call sys_read_node_sysfs_files (numactl_subj_type))
+
+(call cmd_exec_shell (numactl_subj_type))
 
 (call fs_list_sysfs (numactl_subj_type))
 (call fs_rw_sysfs_files (numactl_subj_type))
@@ -24,5 +25,6 @@
 (call subj_read_common_subj_state (numactl_subj_type))
 
 (call miscfile_read_all_terminfo (numactl_subj_type))
+(call miscfile_read_locale (numactl_subj_type))
 
 (call numactl_exec (numactl_subj_type))

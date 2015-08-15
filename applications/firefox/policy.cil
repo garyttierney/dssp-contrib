@@ -77,10 +77,12 @@
 (call usersubj_create_home_data_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_data (firefox_subj_type))
 
+(call usersubj_dontaudit_getattr_all_home_user_files (firefox_subj_type))
 (call usersubj_manage_home_user_files (firefox_subj_type))
 (call usersubj_manage_home_user_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_files (firefox_subj_type))
+(call usersubj_read_home_user_lnk_files (firefox_subj_type))
 
 (call usersubj_create_home_cache_dirs (firefox_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_cache (firefox_subj_type))

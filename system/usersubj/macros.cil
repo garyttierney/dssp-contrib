@@ -826,6 +826,9 @@
 	(call usersubj_search_home_dir (ARG1))
 	(allow ARG1 usersubj_home_user_obj_type list_dir_perms))
 
+(macro usersubj_dontaudit_getattr_all_home_user_files ((type ARG1))
+	(dontaudit ARG1 usersubj_home_user_obj_type (file (getattr))))
+
 (macro usersubj_read_all_home_user_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 usersubj_home_user_obj_type usersubj_home_user_obj_type)))

@@ -30,12 +30,14 @@
 (call miscfile_read_all_fonts (xpdf_subj_type))
 (call miscfile_read_locale (xpdf_subj_type))
 
+(call usersubj_dontaudit_getattr_all_home_user_files (xpdf_subj_type))
 (call usersubj_list_home_user (xpdf_subj_type))
 (call usersubj_create_home_data_dirs (xpdf_subj_type))
 (call usersubj_home_dir_add_obj_type_transition_home_data (xpdf_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_files (xpdf_subj_type))
 (call usersubj_manage_home_data_files (xpdf_subj_type))
 (call usersubj_manage_home_user_files (xpdf_subj_type))
+(call usersubj_read_home_user_lnk_files (xpdf_subj_type))
 
 (call xserver_tmpfs_client (xpdf_subj_type xpdf.tmpfs_user_file))
 

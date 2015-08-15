@@ -91,6 +91,9 @@
 (allow usersubj_common_type self create_unix_stream_socket_perms)
 (allow usersubj_common_type self rw_fifo_file_perms)
 
+(call sys_dontaudit_read_all_proc_files (usersubj_common_type))
+(call sys_dontaudit_read_all_sysctl (usersubj_common_type))
+(call sys_dontaudit_read_all_sysfs (usersubj_common_type))
 (call sys_read_cpu_online_sysfs_files (usersubj_common_type))
 
 (call standard_user_exemption_target_subj_type (usersubj_common_type))
@@ -101,6 +104,7 @@
 (call cmd_exec_cmd (usersubj_common_type))
 (call cmd_exec_shell (usersubj_common_type))
 
+(call fs_dontaudit_getattr_all_fs (usersubj_common_type))
 (call fs_getattr_fs (usersubj_common_type))
 
 (call subj_dontaudit_read_common_subj_state (usersubj_common_type))

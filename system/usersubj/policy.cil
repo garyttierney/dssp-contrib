@@ -91,7 +91,7 @@
 (allow usersubj_common_type self create_unix_stream_socket_perms)
 (allow usersubj_common_type self rw_fifo_file_perms)
 
-(call sys_dontaudit_getattr_mountpoint_dirs (usersubj_common_type))
+(call sys_dontaudit_list_mountpoints (usersubj_common_type))
 (call sys_dontaudit_read_all_proc_files (usersubj_common_type))
 (call sys_dontaudit_read_all_sysctl (usersubj_common_type))
 (call sys_dontaudit_read_all_sysfs (usersubj_common_type))

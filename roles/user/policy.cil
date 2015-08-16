@@ -22,6 +22,9 @@
 		(call bti_relabel_home_files (subj))
 		(call bti_home_dir_obj_type_transition_home (subj)))
 
+	(optional user_optional_dd
+		(call dd_exec (user_subj_type)))
+
 	(optional user_optional_dirmngr
 		(call dirmngr_run (user_subj_type role))
 		(call dirmngr_manage_home (subj))

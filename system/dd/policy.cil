@@ -1,0 +1,28 @@
+(roleattribute dd_role)
+
+(block dd
+	(blockinherit app_blk)
+
+	(roleattributeset dd_role sys.role)
+
+	(roletype dd_role subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call file_read_all_except (subj))
+
+	(call fs_manage_cifs_subj_type (subj))
+	(call fs_manage_dosfs_subj_type (subj))
+	(call fs_manage_fuse_subj_type (subj))
+	(call fs_manage_nfs_subj_type (subj))
+	(call fs_manage_removable_subj_type (subj))
+	(call fs_read_iso9660_subj_type (subj))
+
+	(call storage_rw_fixed_disk (subj))
+
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj_manage_home_user_files (subj))
+	(call usersubj_manage_tmpfs_user_files (subj))
+	(call usersubj_manage_var_tmp_user_files (subj))
+	(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (subj))
+	(call usersubj_var_tmp_obj_type_transition_var_tmp_user_files (subj)))

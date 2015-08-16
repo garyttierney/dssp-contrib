@@ -907,6 +907,10 @@
 	(call file_search_var_tmp (ARG1))
 	(call read_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
 
+(macro usersubj_manage_var_tmp_user_files ((type ARG1))
+	(call file_search_var_tmp (ARG1))
+	(call manage_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+
 (macro usersubj_read_var_tmp_user_lnk_files ((type ARG1))
 	(call file_search_var_tmp (ARG1))
 	(call read_lnk_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
@@ -974,6 +978,21 @@
 	(allow ARG1 usersubj_var_tmp_user_obj_type relabel_fifo_file_perms)
 	(allow ARG1 usersubj_var_tmp_user_obj_type relabel_lnk_file_perms)
 	(allow ARG1 usersubj_var_tmp_user_obj_type relabel_sock_file_perms))
+
+(macro usersubj_var_tmp_obj_type_transition_var_tmp_user_files ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*")))
+
+(macro usersubj_var_tmp_obj_type_transition_var_tmp_user_dirs ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dirs "*")))
+
+(macro usersubj_var_tmp_obj_type_transition_var_tmp_user_fifo_files ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*")))
+
+(macro usersubj_var_tmp_obj_type_transition_var_tmp_user_sock_files ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
+
+(macro usersubj_var_tmp_obj_type_transition_var_tmp_user_lnk_files ((type ARG1))
+	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*")))
 
 (macro usersubj_var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
 	(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*"))

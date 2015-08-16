@@ -120,6 +120,8 @@
 
 (call usersubj_use_term (usersubj_common_type))
 
+(call fs_getattr_tmpfs_fs (usersubj_priv_type))
+
 (optional usersubj_priv_type_optional_sudo
 	(call usersubj_rw_inherited_fifo_files_unpriv_subj (usersubj_priv_type))
 	(call usersubj_rw_inherited_unix_stream_sockets_unpriv_subj (usersubj_priv_type))

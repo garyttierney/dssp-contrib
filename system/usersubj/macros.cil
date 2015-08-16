@@ -1140,8 +1140,7 @@
 (macro usersubj_tmpfs_user ((type ARG1))
 	(call usersubj_manage_tmpfs_user (ARG1))
 	(call usersubj_relabel_tmpfs_user (ARG1))
-	(call usersubj_tmpfs_obj_type_transition_tmpfs_user (ARG1))
-	(call fs_getattr_tmpfs_fs (ARG1)))
+	(call usersubj_tmpfs_obj_type_transition_tmpfs_user (ARG1)))
 
 (macro usersubj_search_home_cmd ((type ARG1))
 	(call usersubj_search_home_data (ARG1))

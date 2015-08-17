@@ -421,6 +421,10 @@
 	(call file_search_runtime_user (ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 sduser.tmpfs_user_file dir "systemd")))
 
+(macro sduser_tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 sduser.tmpfs_user_file file "*")))
+
 (macro sduser_read_private_tmpfs_sock_files ((type ARG1))
 	(call sduser_search_tmpfs (ARG1))
 	(allow ARG1 sduser_private.tmpfs_user_file read_sock_file_perms))

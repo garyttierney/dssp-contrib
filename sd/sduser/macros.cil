@@ -5,6 +5,13 @@
 
 	(typeattributeset sduser_subj_type subj))
 
+(block sduser_unit_obj_blk
+	(blockabstract sduser_unit_obj_blk)
+
+	(blockinherit sd_unit_obj_blk)
+
+	(typeattributeset sduser_unit_obj_type unit_file))
+
 (macro sduser_subj_type ((type ARG1))
 	(call app_subj_type (ARG1))
 	(typeattributeset sduser_subj_type ARG1))
@@ -37,6 +44,7 @@
 
 	(call sduser_home_data_obj_type_transition_home_data (ARG2))
 
+	(call sduser_all_unit_control (ARG2))
 	(call sduser_unit_runtime_control (ARG2))
 
 	(call sduser_manage_tmpfs (ARG2))

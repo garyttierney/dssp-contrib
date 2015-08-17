@@ -377,6 +377,7 @@
 		(call pwgen_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_qemu
+		(call qemu_manage_all_guest_files (subj))
 		(call qemu_manage_all_guest_runtime_obj_sock_files (subj))
 		(call qemu_manage_config (subj)))
 

@@ -1,0 +1,14 @@
+(roleattribute wodim_role)
+
+(block wodim
+	(blockinherit app_blk)
+
+	(roleattributeset wodim_role sys.role)
+
+	(roletype wodim_role subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call storage_rw_removable (subj))
+
+	(call usersubj_read_home_user_files (subj)))

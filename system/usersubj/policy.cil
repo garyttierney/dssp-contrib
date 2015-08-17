@@ -140,6 +140,7 @@
 (call file_read_config (usersubj_common_login_type))
 (call file_read_data (usersubj_common_login_type))
 
+(call fs_dontaudit_getattr_devtmpfs_lnk_files (usersubj_common_login_type))
 (call fs_getattr_sysfs_fs (usersubj_common_login_type))
 (call fs_list_tmpfs (usersubj_common_login_type))
 (call fs_manage_fuse_subj_type (usersubj_common_login_type))

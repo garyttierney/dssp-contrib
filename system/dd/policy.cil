@@ -9,6 +9,7 @@
 
 	(allow subj self (capability (dac_override)))
 
+	(call dev_read_memory (subj))
 	(call dev_read_urandom (subj))
 
 	(call fs_manage_cifs_subj_type (subj))

@@ -10,6 +10,8 @@
 (call nb_manage_home (nb_subj_type))
 (call nb_home_dir_obj_type_transition_home (nb_subj_type))
 
+(allow nb_subj_type self rw_fifo_file_perms)
+
 (call sys_read_vm_sysctl_files (nb_subj_type))
 
 (call cmd_exec_shell (nb_subj_type))
@@ -25,6 +27,7 @@
 
 (call miscfile_read_all_cert (nb_subj_type))
 (call miscfile_read_all_terminfo (nb_subj_type))
+(call miscfile_read_locale (nb_subj_type))
 
 (call nss_client_subj_type (nb_subj_type))
 

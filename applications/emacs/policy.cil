@@ -17,9 +17,11 @@
 (allow emacs_subj_type self (unix_stream_socket (listen accept)))
 
 (call emacs_manage_home (emacs_subj_type))
+(dontaudit emacs_subj_type emacs.home_user_file relabel_file_perms) 
 (call emacs_home_dir_obj_type_transition_home (emacs_subj_type))
 
 (call emacs_manage_tmpfs (emacs_subj_type))
+(dontaudit emacs_subj_type emacs.tmpfs_user_file relabel_file_perms)
 (call emacs_tmpfs_obj_type_transition_tmpfs (emacs_subj_type))
 
 (call sec_get_enforce_mode (emacs_subj_type))

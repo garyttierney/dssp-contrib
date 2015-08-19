@@ -723,11 +723,20 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
+(optional sysadm_emacs_optional_sysadm_firefox
+	(call firefox_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_firefox.subj)))
+
 (optional sysadm_emacs_optional_sysadm_git
 	(call git_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_git.subj)))
 
 (optional sysadm_emacs_optional_sysadm_gpg
 	(call gpg_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_gpg.subj)))
+
+(optional sysadm_emacs_optional_sysadm_lynx
+	(call lynx_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_lynx.subj)))
+
+(optional sysadm_emacs_optional_sysadm_dbus_send
+	(call dbus_send_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_dbus_send.subj)))
 
 (optional sysadm_emacs_optional_sysadm_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_emacs.subj sysadm_ssh_client.subj)))

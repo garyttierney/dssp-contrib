@@ -220,11 +220,20 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
+(optional user_emacs_optional_user_firefox
+	(call firefox_auto_subj_type_transition_pattern (user_emacs.subj user_firefox.subj)))
+
 (optional user_emacs_optional_user_git
 	(call git_auto_subj_type_transition_pattern (user_emacs.subj user_git.subj)))
 
 (optional user_emacs_optional_user_gpg
 	(call gpg_auto_subj_type_transition_pattern (user_emacs.subj user_gpg.subj)))
+
+(optional user_emacs_optional_user_lynx
+	(call lynx_auto_subj_type_transition_pattern (user_emacs.subj user_lynx.subj)))
+
+(optional user_emacs_optional_user_dbus_send
+	(call dbus_send_auto_subj_type_transition_pattern (user_emacs.subj user_dbus_send.subj)))
 
 (optional user_emacs_optional_user_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_emacs.subj user_ssh_client.subj)))

@@ -30,6 +30,7 @@
 (call file_read_config_files (emacs_subj_type))
 (call file_read_data (emacs_subj_type))
 
+(call miscfile_read_all_cert (emacs_subj_type))
 (call miscfile_read_all_terminfo (emacs_subj_type))
 (call miscfile_read_locale (emacs_subj_type))
 (call miscfile_read_utmp_runtime_files (emacs_subj_type))
@@ -41,6 +42,7 @@
 (call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (emacs_subj_type))
 (call usersubj_tmpfs_obj_type_transition_tmpfs_user_lnk_files (emacs_subj_type))
 
+(call usersubj_create_ptys (emacs_subj_type))
 (call usersubj_use_term (emacs_subj_type))
 
 (call usersubj_manage_home_cmd_files (emacs_subj_type))
@@ -52,3 +54,6 @@
 (call usersubj_home_dir_obj_type_transition_home_user_lnk_files (emacs_subj_type))
 
 (call usersubj_read_var_spool_user_files (emacs_subj_type))
+
+(optional emacs_subj_type_optional_http
+	(call http_tcp_connect_http_port (emacs_subj_type)))

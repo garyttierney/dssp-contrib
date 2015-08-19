@@ -22,6 +22,8 @@
 (call emacs_manage_tmpfs (emacs_subj_type))
 (call emacs_tmpfs_obj_type_transition_tmpfs (emacs_subj_type))
 
+(call sec_get_enforce_mode (emacs_subj_type))
+
 (call sys_read_net_proc_files (emacs_subj_type))
 
 (call dev_read_urandom (emacs_subj_type))

@@ -12,6 +12,8 @@
 
 (allow loginctl_subj_type self (capability (dac_override net_admin)))
 
+(call loginctl_client_subj_type (loginctl_subj_type))
+
 (call nss_client_subj_type (loginctl_subj_type))
 
 (call sd_machined_read_runtime (loginctl_subj_type))
@@ -21,9 +23,15 @@
 (call sd_nspawn_stream_connect_all_container_subj (loginctl_subj_type))
 (call sd_nspawn_read_state_all_container_subj (loginctl_subj_type))
 
-(call loginctl_client_subj_type (loginctl_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (loginctl_subj_type))
+(call usersubj_manage_home_user_files (loginctl_subj_type))
 
 (allow loginctl_client_subj_type self rw_fifo_file_perms)
+
+(call cmd_exec_cmd (loginctl_client_subj_type))
+
+(call file_read_config_files (loginctl_client_subj_type))
+(call file_read_data_files (loginctl_client_subj_type))
 
 (call fs_getattr_fs (loginctl_client_subj_type))
 

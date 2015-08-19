@@ -263,6 +263,9 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
+(optional wheel_emacs_optional_wheel_dbus_send
+	(call dbus_send_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_dbus_send.subj)))
+
 (optional wheel_emacs_optional_wheel_firefox
 	(call firefox_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_firefox.subj)))
 
@@ -275,8 +278,8 @@
 (optional wheel_emacs_optional_wheel_lynx
 	(call lynx_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_lynx.subj)))
 
-(optional wheel_emacs_optional_wheel_dbus_send
-	(call dbus_send_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_dbus_send.subj)))
+(optional wheel_emacs_optional_wheel_mutt
+	(call mutt_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_mutt.subj)))
 
 (optional wheel_emacs_optional_wheel_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_emacs.subj wheel_ssh_client.subj)))

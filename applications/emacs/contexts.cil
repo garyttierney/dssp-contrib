@@ -7,8 +7,13 @@
 		(context emacs_home (sys.id object_r emacs.home_user_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/emacs-.*" file emacs_cmd)
+(filecon "HOME_DIR/\.authinfo" file emacs_home)
 (filecon "HOME_DIR/\.emacs" file emacs_home)
 (filecon "HOME_DIR/\.emacs\.el" file emacs_home)
+(filecon "HOME_DIR/\.gnus" file emacs_home)
+(filecon "HOME_DIR/\.newsrc" file emacs_home)
+(filecon "HOME_DIR/\.newsrc\.eld" file emacs_home)
+(filecon "HOME_DIR/\.profile" file emacs_home)
 (filecon "HOME_DIR/\.emacs\.d(/.*)?" any emacs_home)
 
 (optional emacs_unit_optional_sduser

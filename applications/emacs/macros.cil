@@ -129,8 +129,13 @@
 	(allow ARG1 emacs.home_user_file relabel_lnk_file_perms))
 
 (macro emacs_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".authinfo"))
 	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".emacs"))
 	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".emacs.el"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".gnus"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".newsrc"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".newsrc.eld"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file file ".profile"))
 	(call usersubj_home_dir_obj_type_transition (ARG1 emacs.home_user_file dir ".emacs.d")))
 
 (macro emacs_send_signal_all_subj ((type ARG1))

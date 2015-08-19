@@ -1,0 +1,6 @@
+(macro news_tcp_connect_news_port ((type ARG1))
+	(allow ARG1 news.port (tcp_socket (name_connect))))
+
+(macro news_tcp_bind_news_port ((type ARG1))
+	(allow ARG1 self (capability (net_bind_service)))
+	(allow ARG1 news.port (tcp_socket (name_bind))))

@@ -1,0 +1,8 @@
+(tunableif enable_rbacsep
+	(true
+		(context news_port (sys.id sys.role news.port (systemlow systemlow))))
+	(false
+		(context news_port (sys.id object_r news.port (systemlow systemlow)))))
+
+(portcon "tcp" 119 news_port)
+(portcon "udp" 119 news_port)

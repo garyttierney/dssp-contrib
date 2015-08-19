@@ -737,6 +737,9 @@
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
 
+(macro usersubj_dontaudit_relabel_home_user_files ((type ARG1))
+	(dontaudit ARG1 home_user.home_user_file relabel_file_perms))
+
 (macro usersubj_write_home_user_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call write_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
@@ -832,6 +835,9 @@
 (macro usersubj_read_all_home_user_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 usersubj_home_user_obj_type usersubj_home_user_obj_type)))
+
+(macro usersubj_dontaudit_relabel_all_home_user_files ((type ARG1))
+	(dontaudit ARG1 usersubj_home_user_obj_type relabel_file_perms))
 
 (macro usersubj_read_all_home_user_lnk_files ((type ARG1))
 	(call usersubj_search_home_dir (ARG1))
@@ -1024,6 +1030,9 @@
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
 	(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+
+(macro usersubj_dontaudit_relabel_tmpfs_user_files ((type ARG1))
+	(dontaudit ARG1 tmpfs_user.tmpfs_user_file relabel_file_perms))
 
 (macro usersubj_delete_tmpfs_user_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))

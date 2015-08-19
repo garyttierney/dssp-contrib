@@ -44,6 +44,7 @@
 
 (call nss_client_subj_type (emacs_subj_type))
 
+(call usersubj_dontaudit_relabel_tmpfs_user_files (emacs_subj_type))
 (call usersubj_manage_tmpfs_user_files (emacs_subj_type))
 (call usersubj_manage_tmpfs_user_lnk_files (emacs_subj_type))
 (call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (emacs_subj_type))
@@ -54,6 +55,7 @@
 
 (call usersubj_manage_home_cmd_files (emacs_subj_type))
 (call usersubj_manage_home_user_dirs (emacs_subj_type))
+(call usersubj_dontaudit_relabel_home_user_files (emacs_subj_type))
 (call usersubj_manage_home_user_files (emacs_subj_type))
 (call usersubj_manage_home_user_lnk_files (emacs_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_dirs (emacs_subj_type))

@@ -5,6 +5,10 @@
 
 (call term_use_inherited_unallocated_ttys (app_subj_type))
 
+(optional app_optional_emacs
+	(call emacs_send_sigchld_all_subj (app_subj_type))
+	(call emacs_rw_inherited_fifo_files_all_subj (app_subj_type)))
+
 (optional app_optional_irssi
 	(call irssi_send_sigchld_all_subj (app_subj_type))
 	(call irssi_rw_inherited_fifo_files_all_subj (app_subj_type)))

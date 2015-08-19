@@ -141,5 +141,15 @@
 (macro emacs_send_signal_all_subj ((type ARG1))
 	(allow ARG1 emacs_subj_type (process (signal))))
 
+(macro emacs_send_sigchld_all_subj ((type ARG1))
+	(allow ARG1 emacs_subj_type (process (sigchld))))
+
+(macro emacs_rw_inherited_fifo_files_all_subj ((type ARG1))
+	(call emacs_use_fd_all_subj (ARG1))
+	(allow ARG1 emacs_subj_type rw_inherited_fifo_file_perms))
+
+(macro emacs_use_fd_all_subj ((type ARG1))
+	(allow ARG1 emacs_subj_type (fd (use))))
+
 (macro emacs_stream_connect_all_subj ((type ARG1))
 	(call stream_connect_pattern (ARG1 emacs.tmpfs_user_file emacs.tmpfs_user_file emacs_subj_type)))

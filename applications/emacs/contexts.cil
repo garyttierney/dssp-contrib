@@ -16,6 +16,8 @@
 (filecon "HOME_DIR/\.profile" file emacs_home)
 (filecon "HOME_DIR/\.emacs\.d(/.*)?" any emacs_home)
 
+(filecon "/usr/share/emacs/([^/]*/)?etc/e(/.*)?" any terminfo_data)
+
 (optional emacs_unit_optional_sduser
 	(tunableif enable_rbacsep
 		(true

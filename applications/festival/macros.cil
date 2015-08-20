@@ -22,7 +22,11 @@
 	(allow ARG3 ARG2 (process (signal)))
 
 	(call festival_manage_tmpfs_files (ARG2))
-	(call festival_relabel_tmpfs_files (ARG2)))
+	(call festival_relabel_tmpfs_files (ARG2))
+
+	(call festival_manage_home_files (ARG2))
+	(call festival_relabel_home_files (ARG2))
+	(call festival_home_dir_obj_type_transition_home (ARG2)))
 
 (macro festival_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
@@ -79,3 +83,20 @@
 
 (macro festival_tmpfs_obj_type_transition_tmpfs ((type ARG1))
 	(call fs_tmpfs_obj_type_transition (ARG1 festival.tmpfs_user_file file "*")))
+
+(macro festival_read_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 festival.home_user_file read_file_perms))
+
+(macro festival_manage_home_files ((type ARG1))
+	(call usersubj_rw_home_dir (ARG1))
+	(allow ARG1 festival.home_user_file manage_file_perms))
+
+(macro festival_relabel_home_files ((type ARG1))
+	(call usersubj_search_home_dir (ARG1))
+	(allow ARG1 festival.home_user_file relabel_file_perms))
+
+(macro festival_home_dir_obj_type_transition_home ((type ARG1))
+	(call usersubj_home_dir_obj_type_transition (ARG1 festival.home_user_file file ".festivalrc"))
+	(call usersubj_home_dir_obj_type_transition (ARG1 festival.home_user_file file ".festival_history")))
+

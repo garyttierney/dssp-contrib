@@ -7,12 +7,17 @@
 
 	(blockinherit file_config_obj_blk)
 
+	(blockinherit usersubj_home_user_obj_blk)
+
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
 	(optional festival_optional_pa
 		(call pa_tmpfs_client (festival_subj_type tmpfs_user_file))))
 
 (call festival_read_config (festival_subj_type))
+
+(call festival_manage_home_files (festival_subj_type))
+(call festival_home_dir_obj_type_transition_home (festival_subj_type))
 
 (call festival_manage_tmpfs_files (festival_subj_type))
 (call festival_tmpfs_obj_type_transition_tmpfs (festival_subj_type))
@@ -23,6 +28,8 @@
 (call cmd_exec_shell (festival_subj_type))
 
 (call file_read_data (festival_subj_type))
+
+(call miscfile_read_all_terminfo (festival_subj_type))
 
 (optional festival_subj_type_optional_xserver
 	(call xserver_client_subj_type (festival_subj_type)))

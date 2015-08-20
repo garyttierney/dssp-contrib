@@ -78,6 +78,16 @@
 	(filecon "/root/\.profile" file root_emacs_home)
 	(filecon "/root/\.emacs\.d(/.*)?" any root_emacs_home))
 
+(optional sysadm_festival_home_optional_festival
+	(tunableif enable_rbacsep
+		(true
+			(context root_festival_home (sysadm.id sysadm.role festival.home_user_file (systemlow systemlow))))
+		(false
+			(context root_festival_home (sysadm.id object_r festival.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.festival_history" file festival_home)
+	(filecon "/root/\.festivalrc" file festival_home))
+
 (optional sysadm_firefox_home_optional_firefox
 	(tunableif enable_rbacsep
 		(true

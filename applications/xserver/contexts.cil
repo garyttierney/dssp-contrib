@@ -25,5 +25,7 @@
 (filecon "HOME_DIR/\.xserverrc" file xserver_home)
 (filecon "HOME_DIR/\.local/share/xorg(/.*)?" any xserver_home_data)
 
+(filecon "/usr/share/X11/locale(/.*)?" any locale)
+
 (portcon "tcp" 6000 xserver_port)
 (portcon "udp" 6000 xserver_port)

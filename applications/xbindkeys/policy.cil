@@ -11,6 +11,7 @@
 (call xbindkeys_home_dir_obj_type_transition_home (xbindkeys_subj_type))
 
 (allow xbindkeys_subj_type self (process (getsched)))
+(allow xbindkeys_subj_type self rw_fifo_file_perms)
 
 (call cmd_exec_shell (xbindkeys_subj_type))
 

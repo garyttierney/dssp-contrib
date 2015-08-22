@@ -198,7 +198,10 @@
 
 	(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal))))
+	(allow ARG3 ARG2 (process (signal)))
+
+	(call ssh_manage_ssh_agent_tmpfs (ARG2))
+	(call ssh_relabel_ssh_agent_tmpfs (ARG2)))
 
 (macro ssh_auto_subj_type_transition_pattern_ssh_agent ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
@@ -338,21 +341,24 @@
 	(call fs_search_tmpfs (ARG1))
 	(allow ARG1 ssh_agent.tmpfs_user_file read_file_perms)
 	(allow ARG1 ssh_agent.tmpfs_user_file list_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file read_lnk_file_perms))
+	(allow ARG1 ssh_agent.tmpfs_user_file read_lnk_file_perms)
+	(allow ARG1 ssh_agent.tmpfs_user_file read_sock_file_perms))
 
 (macro ssh_manage_ssh_agent_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_rw_tmpfs_dirs (ARG1))
 	(allow ARG1 ssh_agent.tmpfs_user_file manage_file_perms)
 	(allow ARG1 ssh_agent.tmpfs_user_file manage_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file manage_lnk_file_perms))
+	(allow ARG1 ssh_agent.tmpfs_user_file manage_lnk_file_perms)
+	(allow ARG1 ssh_agent.tmpfs_user_file manage_sock_file_perms))
 
 (macro ssh_relabel_ssh_agent_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))
 	(allow ARG1 ssh_agent.tmpfs_user_file relabel_file_perms)
 	(allow ARG1 ssh_agent.tmpfs_user_file relabel_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file relabel_lnk_file_perms))
+	(allow ARG1 ssh_agent.tmpfs_user_file relabel_lnk_file_perms)
+	(allow ARG1 ssh_agent.tmpfs_user_file relabel_sock_file_perms))
 
 (macro ssh_tmpfs_obj_type_transition_agent_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))

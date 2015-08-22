@@ -161,6 +161,7 @@
 (optional ssh_client_subj_type_optional_timedatectl
 	(call timedatectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
 
+(allow ssh_agent_subj_type self (capability (setgid)))
 (allow ssh_agent_subj_type self (process (setrlimit)))
 (allow ssh_agent_subj_type self (unix_stream_socket (listen accept connectto)))
 

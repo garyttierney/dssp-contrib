@@ -259,8 +259,7 @@
 		(call polkit_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_usersubj
-		(call usersubj_link_keyring_common_login_subj (subj))
-		(call usersubj_use_term (subj)))
+		(call usersubj_link_keyring_common_login_subj (subj)))
 
 	(optional sd_optional_exempt
 		(call exempt_noatsecure (subj))
@@ -373,6 +372,9 @@
 (call sd_journald_stream_connect (sd_subj_type))
 
 (call udev_client_subj_type (sd_subj_type))
+
+(call usersubj_create_ptys (sd_subj_type))
+(call usersubj_use_term (sd_subj_type))
 
 (allow sd_daemon_adm_subj_type self (capability (kill sys_resource net_admin)))
 

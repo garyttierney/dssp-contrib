@@ -475,6 +475,11 @@
 	(call ssh_use_fd_all_sshd (ARG1))
 	(allow ARG1 ssh_sshd_subj_type rw_inherited_fifo_file_perms))
 
+(macro ssh_stream_connect_agent_all_subj ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call stream_connect_pattern (ARG1 ssh_agent.tmpfs_user_file ssh_agent.tmpfs_user_file ssh_agent_subj_type)))
+
 (macro ssh_set_priv_login_boolean ((type ARG1))
 	(call sec_set_spec_boolean (ARG1 ssh_priv_login.bool))
 	(optional ssh_set_priv_login_boolean_optional_seutil

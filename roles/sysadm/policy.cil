@@ -981,7 +981,7 @@
 		(call machinectl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_machinectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_mplayer_optional_mplayer
 	(block sysadm_mplayer
@@ -1113,6 +1113,9 @@
 		(blockinherit run_subj_blk)
 
 		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_run_optional_ssh
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_run.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_screen_optional_screen
 	(block sysadm_screen

@@ -22,7 +22,7 @@
 	(call standard_obj_change_exemption_subj_type (subj))
 
 	(call cmd_exec_cmd (subj))
-	(call cmd_audit_access_shell_files (subj))
+	(call cmd_audit_read_access_shell_files (subj))
 
 	(call sec_validate_context (subj))
 
@@ -77,7 +77,7 @@
 	(call sys_read_node_sysfs_files (subj))
 	(call sys_read_net_proc_files (subj))
 
-	(call cmd_audit_access_shell_files (subj))
+	(call cmd_audit_read_access_shell_files (subj))
 	(call cmd_exec_cmd (subj))
 	(call cmd_list_cmd (subj))
 
@@ -128,7 +128,7 @@
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd_exec_cmd (subj))
-	(call cmd_audit_access_shell_files (subj))
+	(call cmd_audit_read_access_shell_files (subj))
 
 	(call miscfile_read_locale (subj))
 

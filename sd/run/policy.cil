@@ -7,8 +7,8 @@
 
 (allow run_subj_type self (capability (net_admin sys_chroot setgid setuid sys_admin)))
 
-(call cmd_mmap_all_cmd (run_subj_type))
-(call cmd_mmap_shell (run_subj_type))
+(call cmd_audit_exec_access_all_cmd_files (run_subj_type))
+(call cmd_audit_exec_access_shell_files (run_subj_type))
 
 (call sd_start_unit_runtime (run_subj_type))
 (call sd_start (run_subj_type))

@@ -10,7 +10,7 @@
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd_exec_cmd (subj))
-	(call cmd_audit_access_shell_files (subj))
+	(call cmd_audit_read_access_shell_files (subj))
 
 	(call file_dontaudit_relabel_all (subj))
 	(call file_setattr_config_dirs (subj))
@@ -20,8 +20,6 @@
 	(call fs_list_tmpfs (subj))
 
 	(call sec_get_enforce_mode (subj))
-
-	;(call dracut_search_runtime (subj))
 
 	(call miscfile_read_locale (subj))
 	(call miscfile_setattr_network (subj))

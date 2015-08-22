@@ -212,6 +212,7 @@
 	(true
 		(allow ssh_priv_login_subj_type self (capability (setuid setgid sys_tty_config)))
 		(allow ssh_priv_login_subj_type self (process (setexec dyntransition setcurrent)))
+		(allow ssh_priv_login_subj_type self r_netlink_route_socket_perms)
 		(allow ssh_priv_login_subj_type self setattr_key_perms)
 
 		(call sys_audit_set_params (ssh_priv_login_subj_type))

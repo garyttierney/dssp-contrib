@@ -10,6 +10,13 @@
 	(call openssl_manage_home_files (subj))
 	(call openssl_home_dir_obj_type_transition_home (subj))
 
+	(allow subj self rw_key_perms)
+
 	(call dev_read_urandom (subj))
+
+	(call miscfile_read_cert (subj))
+	(call miscfile_read_locale (subj))
+
+	(call nss_client_subj_type (subj))
 
 	(call usersubj_manage_home_cert (subj)))

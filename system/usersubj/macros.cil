@@ -57,6 +57,7 @@
 	(blockinherit usersubj_base_priv_user_blk)
 
 	(call usersubj_common_login_type (subj))
+	(call usersubj_priv_login_type (subj))
 
 	(call sys_roleallow_role (role))
 
@@ -75,8 +76,6 @@
 	(blockabstract usersubj_priv_login_blk)
 
 	(blockinherit usersubj_base_priv_login_blk)
-
-	(call usersubj_priv_login_type (subj))
 
 	(call usersubj_mls (id systemlow (systemlow systemhigh))))
 
@@ -134,6 +133,7 @@
 (macro usersubj_base ((role ARG1)(type ARG2))
 	(call subj_type (ARG2))
 	(call usersubj_type (ARG2))
+
 	(roletype ARG1 ARG2)
 
 	(tunableif enable_rbacsep
@@ -143,6 +143,7 @@
 (macro usersubj_base_common ((role ARG1)(type ARG2))
 	(call subj_common_type (ARG2))
 	(call usersubj_common_type (ARG2))
+
 	(roletype ARG1 ARG2)
 
 	(tunableif enable_rbacsep
@@ -153,6 +154,7 @@
 	(call subj_common_type (ARG2))
 	(call usersubj_common_type (ARG2))
 	(call usersubj_priv_type (ARG2))
+
 	(roletype ARG1 ARG2)
 
 	(tunableif enable_rbacsep
@@ -162,6 +164,7 @@
 
 (macro usersubj_base_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base (ARG2 ARG3))
+
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2)
 
@@ -171,6 +174,8 @@
 
 (macro usersubj_base_common_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base_common (ARG2 ARG3))
+	(call usersubj_common_login_type (ARG3))
+
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2)
 
@@ -180,6 +185,9 @@
 
 (macro usersubj_base_priv_login ((user ARG1)(role ARG2)(type ARG3))
 	(call usersubj_base_priv (ARG2 ARG3))
+	(call usersubj_common_login_type (ARG3))
+	(call usersubj_priv_login_type (ARG3))
+
 	(call sys_roleallow_role (ARG2))
 	(userrole ARG1 ARG2)
 
@@ -193,13 +201,10 @@
 
 (macro usersubj_common_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
 	(call usersubj_base_common_login (ARG1 ARG2 ARG3))
-	(call usersubj_common_login_type (ARG3))
 	(call usersubj_mls (ARG1 ARG4 ARG5)))
 
 (macro usersubj_priv_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
 	(call usersubj_base_priv_login (ARG1 ARG2 ARG3))
-	(call usersubj_common_login_type (ARG3))
-	(call usersubj_priv_login_type (ARG3))
 	(call usersubj_mls (ARG1 ARG4 ARG5)))
 
 (macro usersubj_obj ((type ARG1))

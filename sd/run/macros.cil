@@ -29,3 +29,7 @@
 
 (macro run_use_fd_all_subj ((type ARG1))
 	(allow ARG1 run_subj_type (fd (use))))
+
+(macro run_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+        (call run_use_fd_all_subj (ARG1))
+        (allow ARG1 run_subj_type rw_inherited_unix_stream_socket_perms))

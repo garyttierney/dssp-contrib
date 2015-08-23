@@ -8,6 +8,7 @@
 	(blockinherit usersubj_var_tmp_user_obj_blk)
 
 	(allow subj self (process (getsched)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call fpaste_manage_var_tmp (subj))
 	(call fpaste_var_tmp_obj_type_transition_var_tmp (subj))
@@ -42,6 +43,7 @@
 	(call http_tcp_connect_http_port (subj))
 
 	(call miscfile_read_hwdata (subj))
+	(call miscfile_read_locale (subj))
 	(call miscfile_read_utmp_runtime_files (subj))
 	(call miscfile_read_wtmp_var_log_files (subj))
 

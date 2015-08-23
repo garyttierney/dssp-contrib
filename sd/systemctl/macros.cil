@@ -25,6 +25,10 @@
 
 	(allow ARG3 ARG2 (process (signal)))
 
+	(allow ARG3 ARG2 read_file_perms)
+	(allow ARG3 ARG2 list_dir_perms)
+	(allow ARG3 ARG2 read_lnk_file_perms)
+
 	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
 (macro systemctl_auto_subj_type_transition ((type ARG1))
@@ -33,6 +37,11 @@
 
 (macro systemctl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
+
+	(allow systemctl.subj ARG2 read_file_perms)
+	(allow systemctl.subj ARG2 list_dir_perms)
+	(allow systemctl.subj ARG2 read_lnk_file_perms)
+
 	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file ARG2)))
 
 (macro systemctl_send_signal ((type ARG1))
@@ -40,6 +49,7 @@
 
 (macro systemctl_run ((type ARG1)(role ARG2))
 	(call systemctl_auto_subj_type_transition (ARG1))
+
 	(roleattributeset systemctl_role ARG2))
 
 (macro systemctl_getattr_all_subj ((type ARG1))

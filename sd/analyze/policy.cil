@@ -9,15 +9,40 @@
 
 	(call sd_daemon (subj cmd_file)))
 
-(allow analyze_subj_type self (capability (net_admin dac_override sys_chroot setgid setuid sys_admin)))
+(allow analyze_subj_type self (capability (net_admin dac_override kill sys_chroot sys_boot setgid setuid sys_admin sys_tty_config)))
+(allow analyze_subj_type self (process (setfscreate setsched)))
+(allow analyze_subj_type self create_udp_socket_perms)
 (allow analyze_subj_type self rw_fifo_file_perms)
 
+(call cmd_audit_exec_access_all_cmd_files (analyze_subj_type))
 (call cmd_exec_cmd (analyze_subj_type))
+(call cmd_mmap_shell (analyze_subj_type))
+
+(call dev_read_memory (analyze_subj_type))
+
+(call file_read_config_files (analyze_subj_type))
+(call file_read_data (analyze_subj_type))
+
+(call fs_dontaudit_audit_access_sysfs_dirs (analyze_subj_type))
+(call fs_getattr_fs (analyze_subj_type))
+(call fs_getattr_sysfs_fs (analyze_subj_type))
+(call fs_read_devtmpfs_lnk_files (analyze_subj_type))
+(call fs_read_cgroup (analyze_subj_type))
+(call fs_read_sysfs (analyze_subj_type))
+
+(call storage_getattr_all (analyze_subj_type))
+
+(call term_use_unallocated_ttys (analyze_subj_type))
 
 (call miscfile_read_all_terminfo (analyze_subj_type))
 (call miscfile_read_locale (analyze_subj_type))
+(call miscfile_read_locale (analyze_subj_type))
+(call miscfile_manage_man (analyze_subj_type))
+
+(call mount_read_runtime (analyze_subj_type))
 
 (call sd_status_all_unit (analyze_subj_type))
+(call sd_read_all_unit (analyze_subj_type))
 (call sd_read_state (analyze_subj_type))
 (call sd_status (analyze_subj_type))
 (call sd_stream_connect (analyze_subj_type))
@@ -36,6 +61,8 @@
 
 (call usersubj_manage_home_user_files (analyze_subj_type))
 (call usersubj_home_dir_obj_type_transition_home_user_files (analyze_subj_type))
+
+(call udev_client_subj_type (analyze_subj_type))
 
 (optional analyze_subj_type_optional_sysbus
 	(call sysbus_client_subj_type (analyze_subj_type)))

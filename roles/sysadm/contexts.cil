@@ -435,4 +435,5 @@
 				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
 
 (filecon "/root" dir root_home_dir)
+(filecon "/root/.*" any root_home_user)
 (filecon "/var/spool/mail/root" file root_user_spool)

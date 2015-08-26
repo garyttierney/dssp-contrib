@@ -22,6 +22,22 @@
 		(context root_home_fonts_data (sysadm.id object_r home_fonts.home_data_file (systemlow systemlow)))
 		(context root_home_terminfo_data (sysadm.id object_r home_terminfo.home_data_file (systemlow systemlow)))))
 
+(filecon "/root/.*" any root_home_user)
+(filecon "/root/\.cache(/.*)?" any root_home_cache)
+(filecon "/root/\.config(/.*)?" any root_home_config)
+(filecon "/root/\.local(/.*)?" any root_home_data)
+(filecon "/root/bin(/.*)?" any root_home_cmd)
+(filecon "/root/\.local/bin(/.*)?" any root_home_cmd)
+(filecon "/root/\.pki(/.*)?" any root_home_cert)
+(filecon "/root/\.fontconfig(/.*)?" any root_home_fonts_cache)
+(filecon "/root/\.cache/fontconfig(/.*)?" any root_home_fonts_cache)
+(filecon "/root/\.fonts\.conf" file root_home_fonts_config)
+(filecon "/root/\.fonts\.conf\.d(/.*)?" any root_home_fonts_config)
+(filecon "/root/\.config/fontconfig(/.*)?" any root_home_fonts_config)
+(filecon "/root/\.fonts(/.*)?" any root_home_fonts_data)
+(filecon "/root/\.local/share/fonts(/.*)?" any root_home_fonts_data)
+(filecon "/root/\.terminfo" file root_home_terminfo_data)
+
 (optional sysadm_curl_home_optional_curl
 	(tunableif enable_rbacsep
 		(true
@@ -435,5 +451,4 @@
 				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
 
 (filecon "/root" dir root_home_dir)
-(filecon "/root/.*" any root_home_user)
 (filecon "/var/spool/mail/root" file root_user_spool)

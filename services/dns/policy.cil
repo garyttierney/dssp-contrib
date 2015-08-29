@@ -16,17 +16,3 @@
 (call dns_tcp_connect_dns_port (dns_resolv_client_subj_type))
 
 (call dnssec_tcp_connect_dnssec_port (dns_resolv_client_subj_type))
-
-(call llmnr_tcp_connect_llmnr_port (dns_resolv_client_subj_type))
-
-(call mdns_tcp_connect_mdns_port (dns_resolv_client_subj_type))
-
-(optional dns_resolv_client_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (dns_resolv_client_subj_type)))
-
-(optional dns_resolv_client_subj_type_optional_sd_machined
-	(call sd_machined_sysbus_chat_client_subj_type (dns_resolv_client_subj_type))
-	(call sd_machined_read_runtime (dns_resolv_client_subj_type)))
-
-(optional dns_resolv_client_subj_type_optional_sd_resolved
-	(call sd_resolved_sysbus_chat_client_subj_type (dns_resolv_client_subj_type)))

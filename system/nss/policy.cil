@@ -13,3 +13,19 @@
 (call miscfile_read_passwords (nss_client_subj_type))
 
 (call nss_read_config_files (nss_client_subj_type))
+
+(optional nss_client_subj_type_optional_llmnr
+	(call llmnr_tcp_connect_llmnr_port (nss_client_subj_type)))
+
+(optional nss_client_subj_type_optional_mdns
+	(call mdns_tcp_connect_mdns_port (nss_client_subj_type)))
+
+(optional nss_client_subj_type_optional_sysbus
+	(call sysbus_client_subj_type (nss_client_subj_type)))
+
+(optional nss_client_subj_type_optional_sd_machined
+	(call sd_machined_sysbus_chat_client_subj_type (nss_client_subj_type))
+	(call sd_machined_read_runtime (nss_client_subj_type)))
+
+(optional nss_client_subj_type_optional_sd_resolved
+	(call sd_resolved_sysbus_chat_client_subj_type (nss_client_subj_type)))

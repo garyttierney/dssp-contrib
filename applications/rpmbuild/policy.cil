@@ -1,0 +1,13 @@
+(roleattribute rpmbuild_role)
+
+(block rpmbuild
+	(blockinherit app_blk)
+
+	(roletype rpmbuild_role subj)
+
+	(blockinherit usersubj_var_tmp_user_obj_blk)
+
+	(call rpm_exec (subj))
+
+	(call rpmbuild_manage_var_tmp (subj))
+	(call rpmbuild_var_tmp_obj_type_transition_var_tmp (subj)))

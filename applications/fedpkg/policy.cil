@@ -12,6 +12,8 @@
 
 (call fedpkg_read_config (fedpkg_subj_type))
 
+(call sys_read_cpu_online_sysfs_files (fedpkg_subj_type))
+
 (call cmd_list_cmd (fedpkg_subj_type))
 (call cmd_exec_cmd (fedpkg_subj_type))
 (call cmd_exec_shell (fedpkg_subj_type))
@@ -19,7 +21,7 @@
 (call dev_read_urandom (fedpkg_subj_type))
 
 (call file_list_var_tmp (fedpkg_subj_type))
-(call file_read_config_files (fedpkg_subj_type))
+(call file_read_config (fedpkg_subj_type))
 (call file_read_data (fedpkg_subj_type))
 
 (call fs_list_tmpfs (fedpkg_subj_type))

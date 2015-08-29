@@ -3,6 +3,34 @@
 (block fedpkg
 	(blockinherit app_cmd_obj_blk)
 
-	(call subj_entry (fedpkg_subj_type cmd_file)))
+	(call subj_entry (fedpkg_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk))
+
+(allow fedpkg_subj_type self rw_fifo_file_perms)
+
+(call fedpkg_read_config (fedpkg_subj_type))
+
+(call cmd_list_cmd (fedpkg_subj_type))
+(call cmd_read_cmd_files (fedpkg_subj_type))
+(call cmd_exec_shell (fedpkg_subj_type))
+
+(call dev_read_urandom (fedpkg_subj_type))
+
+(call file_list_var_tmp (fedpkg_subj_type))
+
+(call fs_list_tmpfs (fedpkg_subj_type))
+
+(call subj_execmem_uncond_type (fedpkg_subj_type))
+
+(call ldconfig_exec (fedpkg_subj_type))
+
+(call miscfile_read_locale (fedpkg_subj_type))
 
 (call nss_client_subj_type (fedpkg_subj_type))
+
+(call rpm_read_config (fedpkg_subj_type))
+
+(call usersubj_manage_home_user_dirs (fedpkg_subj_type))
+(call usersubj_manage_home_user_files (fedpkg_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_dirs (fedpkg_subj_type))

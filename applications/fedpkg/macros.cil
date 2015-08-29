@@ -26,3 +26,37 @@
 (macro fedpkg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))
 	(call auto_subj_type_transition_pattern (ARG1 fedpkg.cmd_file ARG2)))
+
+(macro fedpkg_search_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 fedpkg.config_file search_dir_perms))
+
+(macro fedpkg_list_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 fedpkg.config_file list_dir_perms))
+
+(macro fedpkg_read_config_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_files_pattern (ARG1 fedpkg.config_file fedpkg.config_file)))
+
+(macro fedpkg_read_config_lnk_files ((type ARG1))
+	(call file_search_config (ARG1))
+	(call read_lnk_files_pattern (ARG1 fedpkg.config_file fedpkg.config_file)))
+
+(macro fedpkg_read_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 fedpkg.config_file read_file_perms)
+	(allow ARG1 fedpkg.config_file list_dir_perms)
+	(allow ARG1 fedpkg.config_file read_lnk_file_perms))
+
+(macro fedpkg_manage_config ((type ARG1))
+	(call file_rw_config_dirs (ARG1))
+	(allow ARG1 fedpkg.config_file manage_file_perms)
+	(allow ARG1 fedpkg.config_file manage_dir_perms)
+	(allow ARG1 fedpkg.config_file manage_lnk_file_perms))
+
+(macro fedpkg_relabel_config ((type ARG1))
+	(call file_search_config (ARG1))
+	(allow ARG1 fedpkg.config_file relabel_file_perms)
+	(allow ARG1 fedpkg.config_file relabel_dir_perms)
+	(allow ARG1 fedpkg.config_file relabel_lnk_file_perms))

@@ -1,7 +1,10 @@
 (tunableif enable_rbacsep
 	(true
-		(context fedpkg_cmd (sys.id sys.role fedpkg.cmd_file (systemlow systemlow))))
+		(context fedpkg_cmd (sys.id sys.role fedpkg.cmd_file (systemlow systemlow)))
+		(context fedpkg_config (sys.id sys.role fedpkg.config_file (systemlow systemlow))))
 	(false
-		(context fedpkg_cmd (sys.id object_r fedpkg.cmd_file (systemlow systemlow)))))
+		(context fedpkg_cmd (sys.id object_r fedpkg.cmd_file (systemlow systemlow)))
+		(context fedpkg_config (sys.id object_r fedpkg.config_file (systemlow systemlow)))))
 
 (filecon "/usr/bin/fedpkg" file fedpkg_cmd)
+(filecon "/etc/rpkg(/.*)?" any fedpkg_config)

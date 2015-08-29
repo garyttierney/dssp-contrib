@@ -192,6 +192,10 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs_adm (subj role)))
 
+	(optional sysadm_optional_fedpkg
+		(call fedpkg_manage_config (subj))
+		(call fedpkg_relabel_config (subj)))
+
 	(optional sysadm_optional_fop
 		(call fop_run (sysadm_subj_type role))
 		(call fop_manage_config_files (subj))

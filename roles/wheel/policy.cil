@@ -295,6 +295,15 @@
 
 		(call emacsclient_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_fedpkg_optional_fedpkg
+	(block wheel_fedpkg
+		(blockinherit fedpkg_subj_blk)
+
+		(call fedpkg_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_fedpkg_optional_wheel_git
+	(call git_auto_subj_type_transition_pattern (wheel_fedpkg.subj wheel_git.subj)))
+
 (optional wheel_festival_optional_festival
 	(block wheel_festival
 		(blockinherit festival_subj_blk)

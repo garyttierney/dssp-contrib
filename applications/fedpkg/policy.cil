@@ -1,0 +1,8 @@
+(typeattribute fedpkg_subj_type)
+
+(block fedpkg
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (fedpkg_subj_type cmd_file)))
+
+(call nss_client_subj_type (fedpkg_subj_type))

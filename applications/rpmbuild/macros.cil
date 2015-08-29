@@ -44,3 +44,21 @@
 
 (macro rpmbuild_var_tmp_obj_type_transition_var_tmp ((type ARG1))
 	(call file_var_tmp_obj_type_transition (ARG1 rpmbuild.var_tmp_user_file file "*")))
+
+(macro rpmbuild_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (subj))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 rpmbuild.tmpfs_user_file read_file_perms))
+
+(macro rpmbuild_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (subj))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 rpmbuild.tmpfs_user_file manage_file_perms))
+
+(macro rpmbuild_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (subj))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 rpmbuild.tmpfs_user_file relabel_file_perms))
+
+(macro rpmbuild_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpmbuild.tmpfs_user_file file "*")))

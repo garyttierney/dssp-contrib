@@ -7,21 +7,28 @@
 
 	(blockinherit file_config_obj_blk))
 
+(allow fedpkg_subj_type self (process (getsched)))
 (allow fedpkg_subj_type self rw_fifo_file_perms)
 
 (call fedpkg_read_config (fedpkg_subj_type))
 
 (call cmd_list_cmd (fedpkg_subj_type))
-(call cmd_read_cmd_files (fedpkg_subj_type))
+(call cmd_exec_cmd (fedpkg_subj_type))
 (call cmd_exec_shell (fedpkg_subj_type))
 
 (call dev_read_urandom (fedpkg_subj_type))
 
 (call file_list_var_tmp (fedpkg_subj_type))
+(call file_read_config_files (fedpkg_subj_type))
+(call file_read_data (fedpkg_subj_type))
 
 (call fs_list_tmpfs (fedpkg_subj_type))
 
 (call subj_execmem_uncond_type (fedpkg_subj_type))
+
+(call git_read_home (fedpkg_subj_type))
+
+(call http_tcp_connect_http_port (fedpkg_subj_type))
 
 (call ldconfig_exec (fedpkg_subj_type))
 
@@ -29,6 +36,7 @@
 
 (call nss_client_subj_type (fedpkg_subj_type))
 
+(call rpm_exec (fedpkg_subj_type))
 (call rpm_read_config (fedpkg_subj_type))
 
 (call usersubj_manage_home_user_dirs (fedpkg_subj_type))

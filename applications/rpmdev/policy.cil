@@ -7,12 +7,29 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk))
+	(blockinherit usersubj_home_user_obj_blk)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk))
+
+(allow rpmdev_subj_type self rw_fifo_file_perms)
 
 (call rpmdev_read_config (rpmdev_subj_type))
 
 (call rpmdev_manage_home_files (rpmdev_subj_type))
 (call rpmdev_home_dir_obj_type_transition_home (rpmdev_subj_type))
+
+(call rpmdev_manage_tmpfs_files (rpmdev_subj_type))
+(call rpmdev_tmpfs_obj_type_transition_tmpfs (rpmdev_subj_type))
+
+(call cmd_exec_cmd (rpmdev_subj_type))
+(call cmd_exec_shell (rpmdev_subj_type))
+
+(call dev_read_urandom (rpmdev_subj_type))
+
+(call file_list_var_tmp (rpmdev_subj_type))
+(call file_read_config (rpmdev_subj_type))
+
+(call miscfile_read_locale (rpmdev_subj_type))
 
 (call nss_client_subj_type (rpmdev_subj_type))
 

@@ -21,6 +21,9 @@
 
 	(allow ARG3 ARG2 (process (signal)))
 
+	(call rpmdev_manage_tmpfs_files (ARG2))
+	(call rpmdev_relabel_tmpfs_files (ARG2))
+
 	(call rpmdev_manage_home_files (ARG2))
 	(call rpmdev_relabel_home_files (ARG2))
 
@@ -78,3 +81,21 @@
 
 (macro rpmdev_home_dir_obj_type_transition_home ((type ARG1))
         (call usersubj_home_dir_obj_type_transition (ARG1 rpmdev.home_user_file file ".rpmmacros")))
+
+(macro rpmdev_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 rpmdev.tmpfs_user_file read_file_perms))
+
+(macro rpmdev_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 rpmdev.tmpfs_user_file manage_file_perms))
+
+(macro rpmdev_relabel_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 rpmdev.tmpfs_user_file relabel_file_perms))
+
+(macro rpmdev_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpmdev.tmpfs_user_file file "*")))

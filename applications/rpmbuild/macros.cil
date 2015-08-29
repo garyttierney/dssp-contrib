@@ -9,6 +9,7 @@
 	(allow ARG1 rpmbuild.subj (process (signal))))
 
 (macro rpmbuild_run ((type ARG1)(role ARG2))
+	(allow ARG1 rpmbuild.subj (process (noatsecure)))
 	(call rpmbuild_auto_subj_type_transition (ARG1))
 	(roleattributeset rpmbuild_role ARG2))
 

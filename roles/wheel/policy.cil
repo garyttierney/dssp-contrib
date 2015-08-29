@@ -640,6 +640,15 @@
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
+(optional wheel_rpmdev_optional_rpmdev
+	(block wheel_rpmdev
+		(blockinherit rpmdev_subj_blk)
+
+		(call rpmdev_role_pattern (wheel.role wheel_subj_type subj))))
+
+(optional wheel_rpmdev_optional_wheel_gpg
+	(call gpg_auto_subj_type_transition_pattern (wheel_rpmdev.subj wheel_gpg.subj)))
+
 (optional wheel_screen_optional_screen
 	(block wheel_screen
 		(blockinherit screen_subj_blk)

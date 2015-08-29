@@ -192,10 +192,6 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs_adm (subj role)))
 
-	(optional sysadm_optional_fedpkg
-		(call fedpkg_manage_config (subj))
-		(call fedpkg_relabel_config (subj)))
-
 	(optional sysadm_optional_fop
 		(call fop_run (sysadm_subj_type role))
 		(call fop_manage_config_files (subj))
@@ -414,6 +410,13 @@
 	(optional sysadm_optional_rpm
 		(call rpm_adm (subj role))
 		(call rpm_run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_rpmbuild
+		(call rpmbuild_manage_tmpfs_files (subj))
+		(call rpmbuild_relabel_tmpfs_files (subj))
+		(call rpmbuild_manage_var_tmp (subj))
+		(call rpmbuild_relabel_var_tmp (subj))
+		(call rpmbuild_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpws
 		(call rpws_run (sysadm_subj_type role))
@@ -862,6 +865,18 @@
 (optional sysadm_busctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
 
+(optional sysadm_fedpkg_optional_fedpkg
+	(block sysadm_fedpkg
+		(blockinherit fedpkg_subj_blk)
+
+		(call fedpkg_manage_config (sysadm.subj))
+		(call fedpkg_relabel_config (sysadm.subj))
+
+		(call fedpkg_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_fedpkg_optional_sysadm_git
+	(call git_auto_subj_type_transition_pattern (sysadm_fedpkg.subj sysadm_git.subj)))
+
 (optional sysadm_firefox_optional_firefox
 	(block sysadm_firefox
 		(blockinherit firefox_subj_blk)
@@ -1111,6 +1126,18 @@
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+
+(optional sysadm_rpmdev_optional_rpmdev
+	(block sysadm_rpmdev
+                (blockinherit rpmdev_subj_blk)
+
+		(call rpmdev_manage_config (sysadm.subj))
+		(call rpmdev_relabel_config (sysadm.subj))
+
+		(call rpmdev_role_pattern (sysadm.role sysadm_subj_type subj))))
+
+(optional sysadm_rpmdev_optional_sysadm_gpg
+	(call gpg_auto_subj_type_transition_pattern (sysadm_rpmdev.subj sysadm_gpg.subj)))
 
 (optional sysadm_run_optional_run
 	(block sysadm_run

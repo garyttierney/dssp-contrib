@@ -279,6 +279,15 @@
 	(filecon "/root/\.ratpoisonrc" file root_rp_home)
 	(filecon "/root/\.ratpoison_history" file root_rp_home))
 
+(optional sysadm_rpmdev_home_optional_rpmdev
+	(tunableif enable_rbacsep
+		(true
+			(context root_rpmdev_home (sysadm.id sysadm.role rpmdev.home_user_file (systemlow systemlow))))
+		(false
+			(context root_rpmdev_home (sysadm.id object_r rpmdev.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.rpmmacros" file root_rpmdev_home))
+
 (optional sysadm_rtorrent_home_optional_rtorrent
 	(tunableif enable_rbacsep
 		(true

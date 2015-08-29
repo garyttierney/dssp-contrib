@@ -1,0 +1,25 @@
+(typeattribute rpmdev_subj_type)
+
+(block rpmdev
+	(blockinherit app_cmd_obj_blk)
+
+	(call subj_entry (rpmdev_subj_type cmd_file))
+
+	(blockinherit file_config_obj_blk)
+
+	(blockinherit usersubj_home_user_obj_blk))
+
+(call rpmdev_read_config (rpmdev_subj_type))
+
+(call rpmdev_manage_home_files (rpmdev_subj_type))
+(call rpmdev_home_dir_obj_type_transition_home (rpmdev_subj_type))
+
+(call nss_client_subj_type (rpmdev_subj_type))
+
+(call rpm_exec (rpmdev_subj_type))
+(call rpm_read_config (rpmdev_subj_type))
+
+(call usersubj_manage_home_user_dirs (rpmdev_subj_type))
+(call usersubj_manage_home_user_files (rpmdev_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_dirs (rpmdev_subj_type))
+(call usersubj_home_dir_obj_type_transition_home_user_files (rpmdev_subj_type))

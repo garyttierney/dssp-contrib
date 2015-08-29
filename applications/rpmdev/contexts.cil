@@ -1,0 +1,22 @@
+(tunableif enable_rbacsep
+	(true
+		(context rpmdev_cmd (sys.id sys.role rpmdev.cmd_file (systemlow systemlow)))
+		(context rpmdev_config (sys.id sys.role rpmdev.config_file (systemlow systemlow)))
+		(context rpmdev_home (sys.id sys.role rpmdev.home_user_file (systemlow systemlow))))
+	(false
+		(context rpmdev_cmd (sys.id object_r rpmdev.cmd_file (systemlow systemlow)))
+		(context rpmdev_config (sys.id object_r rpmdev.config_file (systemlow systemlow)))
+		(context rpmdev_home (sys.id object_r rpmdev.home_user_file (systemlow systemlow)))))
+
+(filecon "/etc/rpmdevtools(/.*)?" any rpmdev_config)
+(filecon "/usr/bin/rpmargs" file rpmdev_cmd)
+(filecon "/usr/bin/rpmdev-.*" file rpmdev_cmd)
+(filecon "/usr/bin/rpmelfsym" file rpmdev_cmd)
+(filecon "/usr/bin/rpmfile" file rpmdev_cmd)
+(filecon "/usr/bin/rpminfo" file rpmdev_cmd)
+(filecon "/usr/bin/rpmls" file rpmdev_cmd)
+(filecon "/usr/bin/rpmpeek" file rpmdev_cmd)
+(filecon "/usr/bin/rpmsodiff" file rpmdev_cmd)
+(filecon "/usr/bin/rpmsoname" file rpmdev_cmd)
+(filecon "/usr/bin/spectool" file rpmdev_cmd)
+(filecon "HOME_DIR/\.rpmmacros" file rpmdev_home)

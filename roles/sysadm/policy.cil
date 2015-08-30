@@ -1146,6 +1146,7 @@
 		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_run_optional_sysadm_sduser
+	(call sduser_control_pattern (sysadm_run.subj sysadm_sduser.subj))
 	(call sduser_stream_connect_pattern (sysadm_run.subj sysadm_sduser.subj)))
 
 (optional sysadm_run_optional_sysadm_ssh

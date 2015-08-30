@@ -24,6 +24,13 @@
 
 	(typeattributeset sd_machined_obj_type var_lib_file)
 
+        (blockinherit term_login_pty_obj_blk)
+
+        (allow subj login_pty_dev rw_term_perms)
+        (allow subj login_pty_dev (chr_file (setattr)))
+        (allow subj login_pty_dev relabelfrom_chr_file_perms)
+        (call term_create_pty (subj login_pty_dev))
+
 	(allow subj self (capability (sys_chroot setgid sys_admin dac_override)))
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self (process (setfscreate)))

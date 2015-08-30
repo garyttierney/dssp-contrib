@@ -132,6 +132,12 @@
 (macro sd_machined_use_fd ((type ARG1))
 	(allow ARG1 sd_machined.subj (fd (use))))
 
+(macro sd_machined_setattr_login_ptys ((type ARG1))
+	(allow ARG1 sd_machined.login_pty_dev (chr_file (setattr))))
+
+(macro sd_machined_relabelfrom_login_ptys ((type ARG1))
+	(allow ARG1 sd_machined.login_pty_dev relabelfrom_chr_file_perms))
+
 (macro sd_machined_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_machined_adm_subj_type ARG1)
 	(call sd_daemon_adm_subj_type (ARG1))

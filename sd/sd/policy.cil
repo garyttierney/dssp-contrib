@@ -217,6 +217,8 @@
 	(call sd_logind_write_inherited_runtime_fifo_files (subj))
 
 	(call sd_machined_manage_var_lib (subj))
+	(call sd_machined_setattr_login_ptys (subj))
+	(call sd_machined_relabelfrom_login_ptys (subj))
 
 	(call sd_shutdown_share_state (subj))
 
@@ -262,6 +264,8 @@
 		(call polkit_sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_usersubj
+		(call sec_compute_relabel_context (subj))
+		(call usersubj_relabelto_ptys (subj))
 		(call usersubj_link_keyring_common_login_subj (subj)))
 
 	(optional sd_optional_exempt

@@ -1145,7 +1145,10 @@
 
 		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
 
-(optional sysadm_run_optional_ssh
+(optional sysadm_run_optional_sysadm_sduser
+	(call sduser_stream_connect_pattern (sysadm_run.subj sysadm_sduser.subj)))
+
+(optional sysadm_run_optional_sysadm_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_run.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_screen_optional_screen
@@ -1176,6 +1179,7 @@
 		(call sduser_role_pattern (sysadm.role sysadm.subj subj))
 
 		(allow subj self (capability (dac_override)))
+		(allow subj self (process (setpgid)))
 
 		(call cmd_shell_obj_entry_subj (subj))
 
@@ -1184,7 +1188,8 @@
 		(call hostname_exec (subj))
 
 		(call usersubj_pty (subj))
-		(call usersubj_read_home_user_files (subj))))
+		(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+		(call usersubj_manage_home_user_files (subj))))
 
 (optional sysadm_sduser_optional_sysadm_sessbus
 	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))

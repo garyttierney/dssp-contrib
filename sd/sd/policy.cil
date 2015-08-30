@@ -191,6 +191,8 @@
 
 	(call mount_manage_runtime_dirs (subj))
 
+	(call pam_read_faillog_var_log_files (subj))
+	(call pam_read_lastlog_var_log_files (subj))
 	(call pam_link_login_prog_keyring (subj))
 
 	(call sd_exec_sd (subj))
@@ -212,6 +214,7 @@
 	(call sd_journald_use_fd (subj))
 
 	(call sd_logind_read_runtime (subj))
+	(call sd_logind_write_inherited_runtime_fifo_files (subj))
 
 	(call sd_machined_manage_var_lib (subj))
 

@@ -1171,6 +1171,10 @@
 	(block sysadm_sduser
 		(blockinherit sduser_subj_blk)
 
+		(allow subj self (capability (dac_override)))
+
+		(call cmd_shell_obj_entry_subj (subj))
+
 		(call sduser_role_pattern (sysadm.role sysadm.subj subj))
 
 		(typeattributeset sysadm_subj_type subj)))

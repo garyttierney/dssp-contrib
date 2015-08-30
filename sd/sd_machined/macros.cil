@@ -138,6 +138,10 @@
 (macro sd_machined_relabelfrom_login_ptys ((type ARG1))
 	(allow ARG1 sd_machined.login_pty_dev relabelfrom_chr_file_perms))
 
+(macro sd_machined_rw_inherited_login_ptys ((type ARG1))
+	(call sd_machined_use_fd (ARG1))
+	(allow ARG1 sd_machined.subj rw_inherited_term_perms))
+
 (macro sd_machined_use_login_ptys ((type ARG1))
 	(call fs_search_devpts (ARG1))
 	(allow ARG1 sd_machined.login_pty_dev rw_term_perms))

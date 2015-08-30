@@ -23,4 +23,7 @@
 		(call sd_daemon (subj cmd_file)))
 
 	(optional chkpwd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))))
+		(call sd_journald_client_subj_type (subj)))
+
+	(optional chkpwd_optional_sd_machined
+		(call sd_machined_rw_inherited_login_ptys (subj))))

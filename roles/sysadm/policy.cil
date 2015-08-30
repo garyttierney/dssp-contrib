@@ -1179,7 +1179,12 @@
 
 		(call cmd_shell_obj_entry_subj (subj))
 
-		(call usersubj_pty (subj))))
+		(call file_list_config (subj))
+
+		(call hostname_exec (subj))
+
+		(call usersubj_pty (subj))
+		(call usersubj_read_home_user_files (subj))))
 
 (optional sysadm_sduser_optional_sysadm_sessbus
 	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))

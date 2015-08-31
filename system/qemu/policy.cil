@@ -27,6 +27,7 @@
 (allow qemu_guest_subj_type self rw_fifo_file_perms)
 (allow qemu_guest_subj_type self create_unix_stream_stream_socket_perms)
 (allow qemu_guest_subj_type self (tcp_socket (listen accept)))
+(allow qemu_guest_subj_type self create_tun_socket_perms)
 (allow qemu_guest_subj_type self (tun_socket (relabelto relabelfrom)))
 
 (allow qemu_guest_subj_type qemu_guest.subj (tun_socket (relabelfrom)))

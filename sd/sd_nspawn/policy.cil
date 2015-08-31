@@ -226,6 +226,7 @@
 (call net_udp_bind_generic_node (sd_nspawn_container_subj_type))
 
 (call sec_dontaudit_list_fs (sd_nspawn_container_subj_type))
+(call sec_dontaudit_write_securityfs_files (sd_nspawn_container_subj_type))
 
 (call subj_execheap_type (sd_nspawn_container_subj_type))
 (call subj_execmem_type (sd_nspawn_container_subj_type))

@@ -111,6 +111,7 @@
 	(allow ARG1 sessbus.tmpfs_user_file relabel_sock_file_perms))
 
 (macro sessbus_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 sessbus.tmpfs_user_file sock_file "bus"))
 	(call fs_tmpfs_obj_type_transition (ARG1 sessbus.tmpfs_user_file dir "dbus")))
 
 (macro sessbus_use_fd_all_subj ((type ARG1))

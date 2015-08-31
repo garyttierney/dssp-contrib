@@ -74,6 +74,7 @@
 (allow pa_client_subj_type pa_tmpfs_obj_type delete_file_perms)
 (allow pa_client_subj_type pa_tmpfs_obj_type read_file_perms)
 
+(allow pa_client_subj_type pa_subj_type (fd (use)))
 (allow pa_client_subj_type pa_subj_type (unix_stream_socket (connectto)))
 
 (call sys_list_cpu_sysfs (pa_client_subj_type))

@@ -97,7 +97,10 @@
 	(allow subj sd_fifo_file_activated_obj_type manage_dir_perms)
 	(allow subj sd_fifo_file_activated_obj_type manage_fifo_file_perms)
 
+	(allow subj sd_unix_stream_socket_activated_subj_type (unix_stream_socket (connectto)))
 	(allow subj sd_unix_stream_socket_activated_subj_type create_unix_stream_stream_socket_perms)
+
+	(allow subj sd_unix_dgram_socket_activated_subj_type (unix_dgram_socket (sendto)))
 	(allow subj sd_unix_dgram_socket_activated_subj_type create_unix_dgram_stream_socket_perms)
 
 	(allow subj sd_socket_activated_obj_type manage_dir_perms)

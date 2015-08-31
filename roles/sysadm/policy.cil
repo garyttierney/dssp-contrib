@@ -1197,6 +1197,8 @@
 (optional sysadm_sduser_optional_sysadm_sessbus
 	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
 
+	(call sessbus_client_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+
 	(call sessbus_manage_tmpfs (sysadm_sduser.subj))
 	(call sessbus_tmpfs_obj_type_transition_tmpfs (sysadm_sduser.subj)))
 

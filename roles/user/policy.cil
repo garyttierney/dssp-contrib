@@ -535,6 +535,8 @@
 (optional user_sduser_optional_user_sessbus
 	(call sduser_unix_stream_socket_activated_subj_pattern (user_sduser.subj user_sessbus.subj))
 
+	(call sessbus_client_pattern (user_sduser.subj user_sessbus.subj))
+
 	(call sessbus_manage_tmpfs (user_sduser.subj))
 	(call sessbus_tmpfs_obj_type_transition_tmpfs (user_sduser.subj)))
 

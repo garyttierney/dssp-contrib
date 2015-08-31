@@ -7,6 +7,7 @@
 
 	(typeattributeset sysadm_subj_type subj)
 
+	(dontaudit subj self (capability (sys_ptrace)))
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
 	(allow subj self (process (getcap setcap setfscreate)))
 

@@ -86,11 +86,9 @@
 	(allow ARG1 ARG2 create_dccp_stream_socket_perms))
 
 (macro sduser_unix_stream_socket_activated_subj_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (unix_stream_socket (connectto)))
 	(allow ARG1 ARG2 create_unix_stream_stream_socket_perms))
 
 (macro sduser_unix_dgram_socket_activated_subj_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (unix_dgram_socket (sendto)))
 	(allow ARG1 ARG2 create_unix_dgram_stream_socket_perms))
 
 (macro sduser_notify_all_subj_type ((type ARG1))

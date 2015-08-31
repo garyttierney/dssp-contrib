@@ -159,9 +159,9 @@
 (allow sd_nspawn_container_subj_type self (packet_socket (ioctl read write create getattr setattr lock relabelfrom
 	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
 (allow sd_nspawn_container_subj_type self (unix_stream_socket (ioctl read write create getattr setattr lock relabelfrom
-	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind connectto)))
 (allow sd_nspawn_container_subj_type self (unix_dgram_socket (ioctl read write create getattr setattr lock relabelfrom
-	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+	relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind sendto)))
 (allow sd_nspawn_container_subj_type self (sem (create destroy getattr setattr read write associate unix_read unix_write)))
 (allow sd_nspawn_container_subj_type self (msg (send receive)))
 (allow sd_nspawn_container_subj_type self (msgq (create destroy getattr setattr read write associate unix_read unix_write
@@ -181,6 +181,8 @@
 	sys_admin sys_chroot sys_nice sys_tty_config sys_resource sys_boot audit_write audit_control)))
 (allow sd_nspawn_container_subj_type self all_fifo_file_perms_except_mounton_and_execmod)
 
+(roletype sys.role sd_nspawn_container_subj_type)
+
 (call sys_dontaudit_link_keyring (sd_nspawn_container_subj_type))
 (call sys_dontaudit_manage_all_proc_files (sd_nspawn_container_subj_type))
 (call sys_dontaudit_manage_all_sysctl_files (sd_nspawn_container_subj_type))
@@ -192,6 +194,7 @@
 (call sys_read_irq_sysctl_files (sd_nspawn_container_subj_type))
 (call sys_read_kernel_sysctl_files (sd_nspawn_container_subj_type))
 (call sys_read_net_sysctl_files (sd_nspawn_container_subj_type))
+(call sys_read_cpu_online_sysfs_files (sd_nspawn_container_subj_type))
 (call sys_read_sysctl_files (sd_nspawn_container_subj_type))
 (call sys_read_vm_sysctl_files (sd_nspawn_container_subj_type))
 
@@ -229,6 +232,8 @@
 (call subj_execstack_type (sd_nspawn_container_subj_type))
 (call subj_mmap_low_type (sd_nspawn_container_subj_type))
 (call subj_ptrace_uncond_type (sd_nspawn_container_subj_type))
+
+(call sd_forked_subj_type (sd_nspawn_container_subj_type))
 
 (call sd_nspawn_dontaudit_audit_access_tmpfs_dirs (sd_nspawn_container_subj_type))
 (call sd_nspawn_list_tmpfs (sd_nspawn_container_subj_type))

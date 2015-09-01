@@ -703,6 +703,9 @@
 
 		(call dbus_send_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_dbus_send_optional_sysadm_sessbus
+	(call sessbus_client_pattern (sysadm_dbus_send.subj sysadm_sessbus.subj)))
+
 (optional sysadm_dunst_optional_dunst
 	(block sysadm_dunst
 		(blockinherit dunst_subj_blk)

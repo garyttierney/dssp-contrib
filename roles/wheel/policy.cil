@@ -242,6 +242,9 @@
 
 		(call dbus_send_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_dbus_send_optional_wheel_sessbus
+	(call sessbus_client_pattern (wheel_dbus_send.subj wheel_sessbus.subj)))
+
 (optional wheel_dunst_optional_dunst
 	(block wheel_dunst
 		(blockinherit dunst_subj_blk)

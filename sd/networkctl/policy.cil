@@ -12,7 +12,7 @@
 
 	(call cmd_exec_cmd (subj))
 
-	(call fs_read_sysfs_files (subj))
+	(call fs_read_sysfs (subj))
 
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_locale (subj))
@@ -22,4 +22,7 @@
 	(call sd_networkd_read_config (subj))
 	(call sd_networkd_read_runtime (subj))
 
-	(call udev_client_subj_type (subj)))
+	(call udev_client_subj_type (subj))
+
+	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj_manage_home_user_files (subj)))

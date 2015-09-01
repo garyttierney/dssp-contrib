@@ -76,6 +76,7 @@
 	(call dev_getattr_tun_tap (subj))
 	(call dev_read_urandom (subj))
 	(call dev_rw_loop_control (subj))
+	(call dev_setattr_null (subj))
 	(call dev_write_kmsg (subj))
 
 	(call file_getattr_all_except (subj))
@@ -119,6 +120,7 @@
 	(call sd_mmap_cmd_files (subj))
 	(call sd_notify_subj_type (subj))
 	(call sd_search_unit_runtime (subj))
+	(call sd_setattr_unix_stream_sockets (subj))
 	(call sd_stop (subj))
 	(call sd_status_unit_runtime (subj))
 

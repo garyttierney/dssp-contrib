@@ -10,6 +10,9 @@
 	(optional user_optional_bluetoothctl
 		(call bluetoothctl_run (user_subj_type role)))
 
+	(optional user_optional_busctl
+		(call busctl_exec (user_subj_type)))
+
 	(optional user_optional_curl
 		(call curl_run (user_subj_type role))
 		(call curl_manage_home_files (subj))
@@ -21,6 +24,9 @@
 		(call bti_manage_home_files (subj))
 		(call bti_relabel_home_files (subj))
 		(call bti_home_dir_obj_type_transition_home (subj)))
+
+	(optional user_optional_dbus_send
+		(call dbus_send_exec (user_subj_type)))
 
 	(optional user_optional_dd
 		(call dd_exec (user_subj_type)))
@@ -185,15 +191,6 @@
 		(blockinherit chfn_subj_blk)
 
 		(call chfn_role_pattern (user.role user_subj_type subj))))
-
-(optional user_dbus_send_optional_dbus_send
-	(block user_dbus_send
-		(blockinherit dbus_send_subj_blk)
-
-		(call dbus_send_role_pattern (user.role user_subj_type subj))))
-
-(optional user_dbus_send_optional_user_sessbus
-	(call sessbus_client_pattern (user_dbus_send.subj user_sessbus.subj)))
 
 (optional user_dunst_optional_dunst
 	(block user_dunst

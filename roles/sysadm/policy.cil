@@ -704,7 +704,13 @@
 		(call dbus_send_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_dbus_send_optional_sysadm_sessbus
+	(call sessbus_chat_all_client_subj (sysadm_dbus_send.subj))
 	(call sessbus_client_pattern (sysadm_dbus_send.subj sysadm_sessbus.subj)))
+
+(optional sysadm_dbus_send_optional_sysbus
+	(call sysbus_client_subj_type (sysadm_dbus_send.subj))
+	(call sysbus_chat_unconfined_subj (sysadm_dbus_send.subj))
+	(call sysbus_chat_client_subj (sysadm_dbus_send.subj)))
 
 (optional sysadm_dunst_optional_dunst
 	(block sysadm_dunst
@@ -866,8 +872,17 @@
 
 		(call busctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_busctl_optional_sysadm_sessbus
+	(call sessbus_chat_all_client_subj (sysadm_busctl.subj))
+	(call sessbus_client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))
+
+(optional sysadm_busctl_optional_sysbus
+	(call sysbus_client_subj_type (sysadm_busctl.subj))
+	(call sysbus_chat_unconfined_subj (sysadm_busctl.subj))
+	(call sysbus_chat_client_subj (sysadm_busctl.subj)))
+
 (optional sysadm_busctl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
+	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_fedpkg_optional_fedpkg
 	(block sysadm_fedpkg

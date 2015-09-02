@@ -23,23 +23,9 @@
 
 (call busctl_client_subj_type (busctl_subj_type))
 
-(optional busctl_subj_type_optional_sessbus
-	(call sessbus_acquire_service_all_subj (busctl_subj_type))
-	(call sessbus_client_all_subj (busctl_subj_type))
-	(call sessbus_chat_all_client_subj (busctl_subj_type)))
-
-(optional busctl_subj_type_optional_sysbus
-	(call sysbus_acquire_service (busctl_subj_type))
-	(call sysbus_client_subj_type (busctl_subj_type))
-	(call sysbus_chat_unconfined_subj (busctl_subj_type))
-	(call sysbus_chat_client_subj (busctl_subj_type)))
-
 (allow busctl_client_subj_type self rw_fifo_file_perms)
 
 (call miscfile_read_all_terminfo (busctl_client_subj_type))
 (call miscfile_read_locale (busctl_client_subj_type))
 
 (call sd_machined_read_config_files (busctl_client_subj_type))
-
-(optional busctl_client_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (busctl_client_subj_type)))

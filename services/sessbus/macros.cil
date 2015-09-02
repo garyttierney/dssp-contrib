@@ -65,7 +65,9 @@
 	(call sessbus_manage_tmpfs (ARG2))
 	(call sessbus_relabel_tmpfs (ARG2))
 
-	(call sessbus_tmpfs_obj_type_transition_tmpfs (ARG2)))
+	(call sessbus_tmpfs_obj_type_transition_tmpfs (ARG2))
+
+	(call sessbus_client_pattern (ARG2 ARG3)))
 
 (macro sessbus_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
 	(allow ARG1 ARG2 (process (signal)))

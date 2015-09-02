@@ -19,3 +19,8 @@
 
 (optional dbus_send_subj_type_optional_sd_machined
 	(call sd_machined_read_config_files (dbus_send_subj_type)))
+
+(optional dbus_send_subj_type_optional_sysbus
+	(call sysbus_client_subj_type (dbus_send_subj_type))
+	(call sysbus_chat_unconfined_subj (dbus_send_subj_type))
+	(call sysbus_chat_client_subj (dbus_send_subj_type)))

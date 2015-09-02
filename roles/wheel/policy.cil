@@ -246,11 +246,6 @@
 	(call sessbus_chat_all_client_subj (wheel_dbus_send.subj))
 	(call sessbus_client_pattern (wheel_dbus_send.subj wheel_sessbus.subj)))
 
-(optional wheel_dbus_send_optional_sysbus
-	(call sysbus_client_subj_type (wheel_dbus_send.subj))
-	(call sysbus_chat_unconfined_subj (wheel_dbus_send.subj))
-	(call sysbus_chat_client_subj (wheel_dbus_send.subj)))
-
 (optional wheel_dunst_optional_dunst
 	(block wheel_dunst
 		(blockinherit dunst_subj_blk)
@@ -422,11 +417,6 @@
 (optional wheel_busctl_optional_wheel_sessbus
 	(call sessbus_chat_all_client_subj (wheel_busctl.subj))
 	(call sessbus_client_pattern (wheel_busctl.subj wheel_sessbus.subj)))
-
-(optional wheel_busctl_optional_sysbus
-	(call sysbus_client_subj_type (wheel_busctl.subj))
-	(call sysbus_chat_unconfined_subj (wheel_busctl.subj))
-	(call sysbus_chat_client_subj (wheel_busctl.subj)))
 
 (optional wheel_busctl_optional_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))

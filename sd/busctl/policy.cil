@@ -29,6 +29,11 @@
 
 (call busctl_client_subj_type (busctl_subj_type))
 
+(optional busctl_subj_type_optional_sysbus
+	(call sysbus_client_subj_type (busctl_subj_type))
+	(call sysbus_chat_unconfined_subj (busctl_subj_type))
+	(call sysbus_chat_client_subj (busctl_subj_type)))
+
 (allow busctl_client_subj_type self rw_fifo_file_perms)
 
 (call miscfile_read_all_terminfo (busctl_client_subj_type))

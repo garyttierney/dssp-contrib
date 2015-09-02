@@ -416,6 +416,9 @@
 
 		(call busctl_role_pattern (wheel.role wheel_subj_type subj))))
 
+(optional wheel_busctl_optional_wheel_sduser
+	(call sduser_control_pattern (wheel_busctl.subj wheel_sduser.subj)))
+
 (optional wheel_busctl_optional_wheel_sessbus
 	(call sessbus_chat_all_client_subj (wheel_busctl.subj))
 	(call sessbus_client_pattern (wheel_busctl.subj wheel_sessbus.subj)))

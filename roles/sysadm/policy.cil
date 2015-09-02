@@ -872,6 +872,9 @@
 
 		(call busctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
+(optional sysadm_busctl_optional_sysadm_sduser
+	(call sduser_control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))
+
 (optional sysadm_busctl_optional_sysadm_sessbus
 	(call sessbus_chat_all_client_subj (sysadm_busctl.subj))
 	(call sessbus_client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))

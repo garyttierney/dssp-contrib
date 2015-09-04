@@ -3,4 +3,12 @@
 (block wpacli
 	(blockinherit app_blk)
 
-	(roletype wpacli_role subj))
+	(roletype wpacli_role subj)
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(call wpacli_manage_tmpfs_sock_files (subj))
+	(call wpacli_tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call wpa_dgram_send (subj))
+	(call wpa_list_runtime (subj)))

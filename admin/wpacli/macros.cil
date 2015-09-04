@@ -11,3 +11,26 @@
 (macro wpacli_run ((type ARG1)(role ARG2))
 	(call wpacli_auto_subj_type_transition (ARG1))
 	(roleattributeset wpacli_role ARG2))
+
+(macro wpacli_read_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 wpacli.tmpfs_user_file read_sock_file_perms))
+
+(macro wpacli_manage_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 wpacli.tmpfs_user_file manage_sock_file_perms))
+
+(macro wpacli_relabel_tmpfs_sock_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 wpacli.tmpfs_user_file relabel_sock_file_perms))
+
+(macro wpacli_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+	(call fs_tmpfs_obj_type_transition (ARG1 wpacli.tmpfs_user_file sock_file "*")))
+
+(macro wpacli_dgram_send ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call dgram_send_pattern (ARG1 wpacli.tmpfs_user_file wpacli.tmpfs_user_file wpacli.subj)))

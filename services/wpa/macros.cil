@@ -85,6 +85,10 @@
 (macro wpa_runtime_obj_type_transition_runtime ((type ARG1))
 	(call file_runtime_obj_type_transition (ARG1 wpa.runtime_file dir "wpa_supplicant")))
 
+(macro wpa_dgram_send ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call dgram_send_pattern (ARG1 wpa.runtime_file wpa.runtime_file wpa.subj)))
+
 (macro wpa_read_var_log_files ((type ARG1))
 	(call file_search_var_log (ARG1))
 	(allow ARG1 wpa.var_log_file read_file_perms))

@@ -59,6 +59,8 @@
 	(call fs_read_sysfs (subj))
 	(call fs_trace_client_subj_type (subj))
 
+	(call wpacli_dgram_send (subj))
+
 	(optional wpa_optional_nm
 		(call nm_sysbus_chat_client_subj_type (subj)))
 

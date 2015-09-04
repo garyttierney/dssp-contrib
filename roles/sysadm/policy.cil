@@ -629,6 +629,8 @@
 		(call wpa_adm (subj role)))
 
 	(optional sysadm_optional_wpacli
+		(call wpacli_manage_tmpfs_sock_files (subj))
+		(call wpacli_relabel_tmpfs_sock_files (subj))
 		(call wpacli_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_xauth

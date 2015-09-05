@@ -1,0 +1,39 @@
+(tunableif enable_rbacsep
+	(true
+		(context conntrack_cmd (sys.id sys.role conntrack.cmd_file (systemlow systemlow)))
+		(context conntrackd_cmd (sys.id sys.role conntrackd.cmd_file (systemlow systemlow)))
+		(context conntrackd_config (sys.id sys.role conntrackd.config_file (systemlow systemlow)))
+		(context conntrackd_port (sys.id sys.role conntrackd.port (systemlow systemlow)))
+		(context conntrackd_runtime (sys.id sys.role conntrackd.runtime_file (systemlow systemlow)))
+		(context conntrackd_runtime_lock (sys.id sys.role conntrackd.runtime_lock_file (systemlow systemlow)))
+		(context conntrackd_var_log (sys.id sys.role conntrackd.var_log_file (systemlow systemlow)))
+		(context nfct_cmd (sys.id sys.role nfct.cmd_file (systemlow systemlow))))
+	(false
+		(context conntrack_cmd (sys.id object_r conntrack.cmd_file (systemlow systemlow)))
+		(context conntrackd_cmd (sys.id object_r conntrackd.cmd_file (systemlow systemlow)))
+		(context conntrackd_config (sys.id object_r conntrackd.config_file (systemlow systemlow)))
+		(context conntrackd_port (sys.id object_r conntrackd.port (systemlow systemlow)))
+		(context conntrackd_runtime (sys.id object_r conntrackd.runtime_file (systemlow systemlow)))
+		(context conntrackd_runtime_lock (sys.id object_r conntrackd.runtime_lock_file (systemlow systemlow)))
+		(context conntrackd_var_log (sys.id object_r conntrackd.var_log_file (systemlow systemlow)))
+		(context nfct_cmd (sys.id object_r nfct.cmd_file (systemlow systemlow)))))
+
+(filecon "/etc/conntrackd(/.*)?" any conntrackd_config)
+(filecon "/usr/sbin/conntrack" file conntrack_cmd)
+(filecon "/usr/sbin/conntrackd" file conntrackd_cmd)
+(filecon "/usr/sbin/nfct" file nfct_cmd)
+(filecon "/var/log/conntrackd\.log.*" file conntrackd_var_log)
+(filecon "/var/run/conntrackd\.ctl" socket conntrackd_runtime)
+(filecon "/var/run/lock/conntrack\.lock" file conntrackd_runtime_lock)
+
+(portcon "tcp" 3780 conntrackd_port)
+(portcon "udp" 3780 conntrackd_port)
+
+(optional conntrackd_unit_optional_sd
+	(tunableif enable_rbacsep
+		(true
+			(context conntrackd_unit (sys.id sys.role conntrackd.unit_file (systemlow systemlow))))
+		(false
+			(context conntrackd_unit (sys.id object_r conntrackd.unit_file (systemlow systemlow)))))
+
+(filecon "/usr/lib/systemd/system/[^/]*conntrackd.*" file conntrackd_unit))

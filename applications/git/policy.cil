@@ -57,6 +57,9 @@
 (optional git_subj_type_optional_http
 	(call http_tcp_connect_http_port (git_subj_type)))
 
+(optional git_subj_type_optional_mutt
+	(call mutt_read_tmpfs_files (git_subj_type)))
+
 (optional git_subj_type_optional_pass
 	(call pass_manage_home (git_subj_type))
 	(call pass_home_obj_type_transition (git_subj_type git.home_user_file dir ".git")))

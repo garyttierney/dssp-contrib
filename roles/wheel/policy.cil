@@ -173,6 +173,11 @@
 	(optional wheel_optional_wodim
 		(call wodim_run (wheel_subj_type role)))
 
+	(optional wheel_optional_wpacli
+		(call wpacli_manage_tmpfs_sock_files (subj))
+		(call wpacli_relabel_tmpfs_sock_files (subj))
+		(call wpacli_run (wheel_subj_type role)))
+
 	(optional wheel_optional_xauth
 		(call xauth_run (wheel_subj_type role))
 		(call xauth_manage_home_files (subj))

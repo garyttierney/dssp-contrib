@@ -27,7 +27,7 @@
 	(optional wpa_optional_logrotate
 		(call logrotate_var_log_obj_type (var_log_file)))
 
-	(allow subj self (capability (net_raw net_admin)))
+	(allow subj self (capability (chown fsetid net_raw net_admin)))
 	(allow subj self create_unix_dgram_socket_perms)
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_netlink_generic_socket_perms)
@@ -58,6 +58,8 @@
 
 	(call fs_read_sysfs (subj))
 	(call fs_trace_client_subj_type (subj))
+
+	(call nss_client_subj_type (subj))
 
 	(call wpacli_dgram_send (subj))
 

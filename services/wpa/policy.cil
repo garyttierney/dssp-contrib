@@ -30,7 +30,7 @@
 	(allow subj self (capability (chown fsetid net_raw net_admin dac_override)))
 	(allow subj self create_unix_dgram_socket_perms)
 	(allow subj self create_netlink_generic_socket_perms)
-	(allow subj self create_netlink_route_socket_perms)
+	(allow subj self (netlink_route_socket (nlmsg_write)))
 	(allow subj self create_packet_socket_perms)
 
 	(call wpa_read_config (subj))

@@ -754,6 +754,32 @@
 	(call sd_reload_unit_runtime (ARG1))
 	(call sd_start_unit_runtime (ARG1)))
 
+(macro sd_stop_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (stop))))
+
+(macro sd_status_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (status))))
+
+(macro sd_disable_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (disable))))
+
+(macro sd_enable_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (enable))))
+
+(macro sd_reload_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (reload))))
+
+(macro sd_start_unit_transient ((type ARG1))
+	(allow ARG1 sd.subj (service (start))))
+
+(macro sd_unit_transient_control ((type ARG1))
+	(call sd_stop_unit_transient (ARG1))
+	(call sd_status_unit_transient (ARG1))
+	(call sd_disable_unit_transient (ARG1))
+	(call sd_enable_unit_transient (ARG1))
+	(call sd_reload_unit_transient (ARG1))
+	(call sd_start_unit_transient (ARG1)))
+
 (macro sd_stop_all_unit ((type ARG1))
 	(allow ARG1 sd_unit_obj_type (service (stop))))
 

@@ -29,6 +29,7 @@
 	(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
 
 	(call sduser_control_pattern (ARG2 ARG3))
+	(call sduser_unit_transient_control_pattern (ARG2 ARG3))
 	(call sduser_forked_pattern (ARG2 ARG3))
 	(call sduser_stream_connect_pattern (ARG2 ARG3))
 
@@ -617,6 +618,58 @@
 	(call sduser_enable_unit_runtime (ARG1))
 	(call sduser_reload_unit_runtime (ARG1))
 	(call sduser_start_unit_runtime (ARG1)))
+
+(macro sduser_stop_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (stop))))
+
+(macro sduser_status_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (status))))
+
+(macro sduser_disable_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (disable))))
+
+(macro sduser_enable_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (enable))))
+
+(macro sduser_reload_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (reload))))
+
+(macro sduser_start_unit_transient_pattern ((type ARG1)(type ARG2))
+	(allow ARG1 ARG2 (service (start))))
+
+(macro sduser_unit_transient_control_pattern ((type ARG1)(type ARG2))
+	(call sduser_stop_unit_transient_pattern (ARG1 ARG2))
+	(call sduser_status_unit_transient_pattern (ARG1 ARG2))
+	(call sduser_disable_unit_transient_pattern (ARG1 ARG2))
+	(call sduser_enable_unit_transient_pattern (ARG1 ARG2))
+	(call sduser_reload_unit_transient_pattern (ARG1 ARG2))
+	(call sduser_start_unit_transient_pattern (ARG1 ARG2)))
+
+(macro sduser_stop_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (stop))))
+
+(macro sduser_status_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (status))))
+
+(macro sduser_disable_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (disable))))
+
+(macro sduser_enable_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (enable))))
+
+(macro sduser_reload_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (reload))))
+
+(macro sduser_start_unit_transient_all_subj ((type ARG1))
+	(allow ARG1 sduser_subj_type (service (start))))
+
+(macro sduser_unit_transient_control_all_subj ((type ARG1))
+	(call sduser_stop_unit_transient_all_subj (ARG1))
+	(call sduser_status_unit_transient_all_subj (ARG1))
+	(call sduser_disable_unit_transient_all_subj (ARG1))
+	(call sduser_enable_unit_transient_all_subj (ARG1))
+	(call sduser_reload_unit_transient_all_subj (ARG1))
+	(call sduser_start_unit_transient_all_subj (ARG1)))
 
 (macro sduser_stop_home_config ((type ARG1))
 	(allow ARG1 sduser.home_config_file (service (stop))))

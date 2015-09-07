@@ -348,6 +348,24 @@
 	(call miscfile_manage_all_fonts_config (ARG1))
 	(call miscfile_manage_all_fonts_data (ARG1)))
 
+(macro miscfile_read_fstab ((type ARG1))
+        (call file_search_config (ARG1))
+        (allow ARG1 fstab.file read_file_perms))
+
+(macro miscfile_manage_fstab ((type ARG1))
+        (call file_rw_config_dirs (ARG1))
+        (allow ARG1 fstab.file manage_file_perms))
+
+(macro miscfile_relabel_fstab ((type ARG1))
+        (call file_search_config (ARG1))
+        (allow ARG1 fstab.file relabel_file_perms))
+
+(macro miscfile_config_obj_type_transition_fstab ((type ARG1))
+        (call file_config_obj_type_transition (ARG1 fstab.file file "fstab")))
+
+(macro miscfile_fstab_get_status_subj_type ((type ARG1))
+	(typeattributeset miscfile_fstab_get_status_subj_type ARG1))
+
 (macro miscfile_search_hwdata ((type ARG1))
 	(call file_search_data (ARG1))
 	(allow ARG1 hwdata.data_file search_dir_perms))

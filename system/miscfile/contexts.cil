@@ -5,6 +5,7 @@
 		(context fonts_var_cache (sys.id sys.role fonts.var_cache_file (systemlow systemlow)))
 		(context fonts_config (sys.id sys.role fonts.config_file (systemlow systemlow)))
 		(context fonts_data (sys.id sys.role fonts.data_file (systemlow systemlow)))
+		(context fstab (sys.id sys.role fstab.file (systemlow systemlow)))
 		(context hwdata_data (sys.id sys.role hwdata.data_file (systemlow systemlow)))
 		(context locale (sys.id sys.role locale.file (systemlow systemlow)))
 		(context man_data (sys.id sys.role man.data_file (systemlow systemlow)))
@@ -23,6 +24,7 @@
 		(context fonts_var_cache (sys.id object_r fonts.var_cache_file (systemlow systemlow)))
 		(context fonts_config (sys.id object_r fonts.config_file (systemlow systemlow)))
 		(context fonts_data (sys.id object_r fonts.data_file (systemlow systemlow)))
+		(context fstab (sys.id object_r fstab.file (systemlow systemlow)))
 		(context hwdata_data (sys.id object_r hwdata.data_file (systemlow systemlow)))
 		(context locale (sys.id object_r locale.file (systemlow systemlow)))
 		(context man_data (sys.id object_r man.data_file (systemlow systemlow)))
@@ -37,6 +39,7 @@
 		(context wtmp_var_log (sys.id object_r wtmp.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/fonts(/.*)?" any fonts_config)
+(filecon "/etc/fstab" file fstab)
 (filecon "/etc/group[-\+]?" file passwords)
 (filecon "/etc/group\.lock" file shadow_auth)
 (filecon "/etc/gshadow.*" file shadow_auth)

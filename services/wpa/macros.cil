@@ -83,6 +83,7 @@
 	(allow ARG1 wpa.runtime_file relabel_lnk_file_perms))
 
 (macro wpa_runtime_obj_type_transition_runtime ((type ARG1))
+	(call file_runtime_obj_type_transition (ARG1 wpa.runtime_file file "wpa_supplicant.pid"))
 	(call file_runtime_obj_type_transition (ARG1 wpa.runtime_file dir "wpa_supplicant")))
 
 (macro wpa_dgram_send ((type ARG1))

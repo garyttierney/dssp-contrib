@@ -11,9 +11,11 @@
 		(context wpa_var_log (sys.id object_r wpa.var_log_file (systemlow systemlow)))))
 
 (filecon "/etc/wpa_supplicant(/.*)?" any wpa_config)
+(filecon "/etc/sysconfig/wpa_supplicant" file wpa_config)
 (filecon "/usr/sbin/wpa_supplicant" file wpa_cmd)
 (filecon "/var/log/wpa_supplicant\.log.*" file wpa_var_log)
 (filecon "/var/run/wpa_supplicant(/.*)?" any wpa_runtime)
+(filecon "/var/run/wpa_supplicant\.pid" file wpa_runtime)
 
 (optional wpa_unit_optional_sd
 	(tunableif enable_rbacsep

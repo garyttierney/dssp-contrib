@@ -38,6 +38,7 @@
 		(context utmp_runtime (sys.id object_r utmp.runtime_file (systemlow systemlow)))
 		(context wtmp_var_log (sys.id object_r wtmp.var_log_file (systemlow systemlow)))))
 
+(filecon "/etc/crypttab" file fstab)
 (filecon "/etc/fonts(/.*)?" any fonts_config)
 (filecon "/etc/fstab" file fstab)
 (filecon "/etc/group[-\+]?" file passwords)

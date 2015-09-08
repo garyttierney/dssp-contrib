@@ -21,6 +21,10 @@
 	(typeattributeset sd_nspawn_obj_type unit_file)
 	(typeattributeset sd_nspawn_unit_obj_type unit_file)
 
+	(blockinherit file_config_obj_blk)
+
+	(typeattributeset sd_nspawn_obj_type config_file)
+
 	(blockinherit file_runtime_obj_blk)
 
 	(typeattributeset sd_nspawn_obj_type runtime_file)
@@ -48,6 +52,8 @@
 	(allow subj sd_nspawn_container_obj_type (chr_file (mounton)))
 	(allow subj sd_nspawn_container_obj_type manage_chr_file_perms)
 	(allow subj sd_nspawn_container_obj_type (filesystem (mount remount relabelto relabelfrom)))
+
+	(call sd_nspawn_read_config (subj))
 
 	(call sd_nspawn_manage_runtime (subj))
 	(call sd_nspawn_sd_runtime_obj_type_transition_runtime (subj))

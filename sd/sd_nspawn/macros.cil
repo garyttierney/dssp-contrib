@@ -82,6 +82,40 @@
 	(call sd_nspawn_auto_subj_type_transition (ARG1))
 	(roleattributeset sd_nspawn_role ARG2))
 
+(macro sd_nspawn_search_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_nspawn.config_file search_dir_perms))
+
+(macro sd_nspawn_list_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_nspawn.config_file list_dir_perms))
+
+(macro sd_nspawn_read_config_files ((type ARG1))
+	(call sd_search_config (ARG1))
+	(call read_files_pattern (ARG1 sd_nspawn.config_file sd_nspawn.config_file)))
+
+(macro sd_nspawn_manage_config_files ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(call manage_files_pattern (ARG1 sd_nspawn.config_file sd_nspawn.config_file)))
+
+(macro sd_nspawn_read_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_nspawn.config_file read_file_perms)
+	(allow ARG1 sd_nspawn.config_file list_dir_perms)
+	(allow ARG1 sd_nspawn.config_file read_lnk_file_perms))
+
+(macro sd_nspawn_manage_config ((type ARG1))
+	(call sd_rw_config_dirs (ARG1))
+	(allow ARG1 sd_nspawn.config_file manage_file_perms)
+	(allow ARG1 sd_nspawn.config_file manage_dir_perms)
+	(allow ARG1 sd_nspawn.config_file manage_lnk_file_perms))
+
+(macro sd_nspawn_relabel_config ((type ARG1))
+	(call sd_search_config (ARG1))
+	(allow ARG1 sd_nspawn.config_file relabel_file_perms)
+	(allow ARG1 sd_nspawn.config_file relabel_dir_perms)
+	(allow ARG1 sd_nspawn.config_file relabel_lnk_file_perms))
+
 (macro sd_nspawn_search_runtime ((type ARG1))
 	(call sd_search_runtime (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file search_dir_perms))

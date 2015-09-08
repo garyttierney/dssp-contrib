@@ -82,6 +82,9 @@
 (call seutil_read_default_context_files (pam_login_prog_subj_type))
 
 (optional pam_login_prog_subj_type_optional_sd_logind
+	(call file_search_runtime_user (pam_login_prog_subj_type))
+	(call fs_search_tmpfs (pam_login_prog_subj_type))
+
 	(call sd_logind_client_subj_type (pam_login_prog_subj_type)))
 
 (optional pam_login_prog_subj_type_optional_sduser

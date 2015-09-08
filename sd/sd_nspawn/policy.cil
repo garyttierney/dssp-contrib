@@ -65,6 +65,8 @@
 	(call sd_nspawn_setattr_ptys (subj))
 	(call sd_nspawn_use_ptys (subj))
 
+	(call sd_nspawn_getattr_all_container_fs (subj))
+
 	(call sys_audit_set_loginuid (subj))
 	(call sys_mounton_kernel_sysctl_files (subj))
 	(call sys_mounton_kmsg_proc_files (subj))

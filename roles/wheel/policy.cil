@@ -111,8 +111,8 @@
 		(call quota_exec (wheel_subj_type)))
 
 	(optional wheel_optional_rpmbuild
-		(call rpmbuild_manage_tmpfs_files (subj))
-		(call rpmbuild_relabel_tmpfs_files (subj))
+		(call rpmbuild_manage_tmpfs (subj))
+		(call rpmbuild_relabel_tmpfs (subj))
 		(call rpmbuild_manage_var_tmp (subj))
 		(call rpmbuild_relabel_var_tmp (subj))
 		(call rpmbuild_run (wheel_subj_type role)))

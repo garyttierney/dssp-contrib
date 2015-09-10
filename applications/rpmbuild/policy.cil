@@ -12,7 +12,7 @@
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call rpmbuild_manage_tmpfs_files (subj))
+	(call rpmbuild_manage_tmpfs (subj))
 	(call rpmbuild_tmpfs_obj_type_transition_tmpfs (subj))
 
 	(call rpmbuild_manage_var_tmp (subj))

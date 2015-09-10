@@ -61,6 +61,11 @@
 	(call fs_search_tmpfs (ARG1))
 	(call read_files_pattern (ARG1 rpmbuild.tmpfs_user_file rpmbuild.tmpfs_user_file)))
 
+(macro rpmbuild_manage_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call manage_files_pattern (ARG1 rpmbuild.tmpfs_user_file rpmbuild.tmpfs_user_file)))
+
 (macro rpmbuild_read_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))
 	(call fs_search_tmpfs (ARG1))

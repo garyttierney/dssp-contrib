@@ -3,7 +3,7 @@
 
 (macro tetex_auto_subj_type_transition_pdftex ((type ARG1))
 	(call tetex_send_signal_pdftex (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 pdftex.cmd_file rpmbuild.subj)))
+	(call auto_subj_type_transition_pattern (ARG1 pdftex.cmd_file pdftex.subj)))
 
 (macro tetex_send_signal_pdftex ((type ARG1))
 	(allow ARG1 pdftex.subj (process (signal))))

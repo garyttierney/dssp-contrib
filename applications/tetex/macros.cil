@@ -116,3 +116,42 @@
 
 (macro tetex_home_dir_obj_type_transition_home ((type ARG1))
 	(call usersubj_home_dir_obj_type_transition (ARG1 tetex.home_user_file dir ".texlive2015")))
+
+(macro tetex_search_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 tetex.tmpfs_user_file search_dir_perms))
+
+(macro tetex_list_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 tetex.tmpfs_user_file list_dir_perms))
+
+(macro tetex_read_tmpfs_files ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(call read_files_pattern (ARG1 tetex.tmpfs_user_file tetex.tmpfs_user_file)))
+
+(macro tetex_read_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 tetex.tmpfs_user_file read_file_perms)
+	(allow ARG1 tetex.tmpfs_user_file list_dir_perms)
+	(allow ARG1 tetex.tmpfs_user_file read_lnk_file_perms))
+
+(macro tetex_manage_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_rw_tmpfs_dirs (ARG1))
+	(allow ARG1 tetex.tmpfs_user_file manage_file_perms)
+	(allow ARG1 tetex.tmpfs_user_file manage_dir_perms)
+	(allow ARG1 tetex.tmpfs_user_file manage_lnk_file_perms))
+
+(macro tetex_relabel_tmpfs ((type ARG1))
+	(call file_search_runtime_user (ARG1))
+	(call fs_search_tmpfs (ARG1))
+	(allow ARG1 tetex.tmpfs_user_file relabel_file_perms)
+	(allow ARG1 tetex.tmpfs_user_file relabel_dir_perms)
+	(allow ARG1 tetex.tmpfs_user_file relabel_lnk_file_perms))
+
+(macro tetex_tmpfs_obj_type_transition_tmpfs ((type ARG1))
+        (call fs_tmpfs_obj_type_transition (ARG1 tetex.tmpfs_user_file dir "*")))

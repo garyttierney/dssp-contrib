@@ -1,11 +1,11 @@
-(block auditctl
-	(roleattribute role_attribute)
+(roleattribute auditctl_role)
 
+(block auditctl
 	(blockinherit app_blk)
 
-	(roleattributeset role_attribute sys.role)
+	(roleattributeset auditctl_role sys.role)
 
-	(roletype role_attribute subj)
+	(roletype auditctl_role subj)
 
 	(allow subj self (netlink_audit_socket (nlmsg_readpriv)))
 

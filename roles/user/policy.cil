@@ -130,6 +130,12 @@
 	(optional user_optional_systemctl
 		(call systemctl_exec (subj)))
 
+	(optional user_optional_tetex
+                (call tetex_manage_home (subj))
+                (call tetex_relabel_home (subj))
+                (call tetex_home_dir_obj_type_transition_home (subj))
+                (call tetex_run_pdftex (user_subj_type role)))
+
 	(optional user_optional_tor
 		(call tor_manage_home (subj))
 		(call tor_relabel_home (subj))

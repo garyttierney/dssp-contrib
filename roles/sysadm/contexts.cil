@@ -351,6 +351,15 @@
 
 	(filecon "/root/\.ssh(/.*)?" any root_ssh_client_home))
 
+(optional sysadm_tetex_home_optional_tetex
+	(tunableif enable_rbacsep
+		(true
+			(context root_tetex_home (sysadm.id sysadm.role tetex.home_user_file (systemlow systemlow))))
+		(false
+			(context root_tetex_home (sysadm.id object_r tetex.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.texlive2015(/.*)?" any root_tetex_home))
+
 (optional sysadm_tor_home_optional_tor
 	(tunableif enable_rbacsep
 		(true

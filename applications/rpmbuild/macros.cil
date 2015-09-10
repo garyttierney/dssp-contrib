@@ -83,5 +83,5 @@
 	(allow ARG1 rpmbuild.tmpfs_user_file relabel_lnk_file_perms))
 
 (macro rpmbuild_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 rpmbuild.tmpfs_user_file dir "*")))
+	(call fs_tmpfs_obj_type_transition (ARG1 rpmbuild.tmpfs_user_file dir "*"))
 	(call fs_tmpfs_obj_type_transition (ARG1 rpmbuild.tmpfs_user_file file "*")))

@@ -1,11 +1,18 @@
 (tunableif enable_rbacsep
 	(true
+		(context pdftex_cmd (sys.id sys.role pdftex.cmd_file (systemlow systemlow)))
+		(context tetex_home (sys.id sys.role tetex.home_user_file (systemlow systemlow)))
 		(context tetex_var_lib (sys.id sys.role tetex.var_lib_file (systemlow systemlow)))
 		(context tetex_var_spool (sys.id sys.role tetex.var_spool_file (systemlow systemlow))))
 	(false
+		(context pdftex_cmd (sys.id object_r pdftex.cmd_file (systemlow systemlow)))
+		(context tetex_home (sys.id object_r tetex.home_user_file (systemlow systemlow)))
 		(context tetex_var_lib (sys.id object_r tetex.var_lib_file (systemlow systemlow)))
 		(context tetex_var_spool (sys.id object_r tetex.var_spool_file (systemlow systemlow)))))
 
+(filecon "/usr/bin/pdftex" file pdftex_cmd)
 (filecon "/var/lib/texmf(/.*)?" any tetex_var_lib)
 (filecon "/var/spool/texmf(/.*)?" any tetex_var_spool)
+(filecon "HOME_DIR/\.texlive2015(/.*)?" any tetex_home)
+
 (filecon "/usr/share/texlive/texmf-dist/scripts(/.*)?" file cmd)

@@ -198,10 +198,11 @@
 	(call pam_read_lastlog_var_log_files (subj))
 	(call pam_link_login_prog_keyring (subj))
 
-	(call sd_exec_sd (subj))
 	(call sd_auto_subj_type_transition (subj))
-	(call sd_relabelto_unit_runtime_dirs (subj))
+	(call sd_exec_sd (subj))
+	(call sd_getattr_forked_subj (subj))
 	(call sd_manage_all_unit (subj))
+	(call sd_relabelto_unit_runtime_dirs (subj))
 
 	(call sd_askpwd_read_runtime (subj))
 

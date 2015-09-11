@@ -109,6 +109,9 @@
 (macro alsactl_runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
 	(call file_runtime_lock_obj_type_transition (ARG1 alsactl.runtime_lock_file file "asound.state.lock")))
 
+(macro alsactl_send_sigkill ((type ARG1))
+	(allow ARG1 alsactl.subj (process (sigkill))))
+
 (macro alsactl_adm ((type ARG1)(role ARG2))
 	(typeattributeset alsactl_adm_subj_type ARG1)
 	(optional alsactl_adm_optional_sd

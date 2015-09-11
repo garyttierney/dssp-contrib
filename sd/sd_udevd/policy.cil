@@ -78,7 +78,8 @@
 
 	(optional sd_udevd_optional_alsactl
 		(call alsactl_auto_subj_type_transition (subj))
-		(call alsactl_read_config (subj)))
+		(call alsactl_read_config (subj))
+		(call alsactl_send_sigkill (subj)))
 
 	(optional sd_udevd_optional_dm
 		(call dm_auto_subj_type_transition_dmsetup (subj)))

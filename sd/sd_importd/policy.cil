@@ -49,6 +49,16 @@
 	(allow sd_importd.subj sd_importd_sysbus_chat_client_subj_type (dbus (send_msg)))
 	(allow sd_importd_sysbus_chat_client_subj_type sd_importd.subj (dbus (send_msg))))
 
+(call sd_sysbus_chat_client_subj_type (sd_importd_sysbus_chat_client_subj_type))
+
+(call sd_getattr (sd_importd_adm_subj_type))
+(call sd_ptrace (sd_importd_adm_subj_type))
+(call sd_send_signal (sd_importd_adm_subj_type))
+(call sd_send_signull (sd_importd_adm_subj_type))
+(call sd_send_sigkill (sd_importd_adm_subj_type))
+(call sd_send_sigstop (sd_importd_adm_subj_type))
+(call sd_read_state (sd_importd_adm_subj_type))
+
 (allow sd_importd_adm_subj_type sd_importd.unit_file (service (stop status disable enable reload start)))
 
 (allow sd_importd_adm_subj_type sd_importd.subj (process (ptrace signal signull sigkill sigstop)))

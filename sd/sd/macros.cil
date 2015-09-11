@@ -35,9 +35,6 @@
 	(call sd_send_signal (ARG1))
 	(call auto_subj_type_transition_pattern (ARG1 sd.cmd_file sd.subj)))
 
-(macro sd_send_signal ((type ARG1))
-	(allow ARG1 sd.subj (process (signal))))
-
 (macro sd_dynamic_subj_type_transition ((type ARG1))
 	(call dynamic_subj_type_transition_pattern (ARG1 sd.subj))
 	(typetransition ARG1 sd.cmd_file process "*" sd.subj))
@@ -584,11 +581,29 @@
 (macro sd_setattr_unix_stream_sockets ((type ARG1))
 	(allow ARG1 sd.subj (unix_stream_socket (setattr))))
 
+(macro sd_ptrace ((type ARG1))
+	(allow ARG1 sd.subj (process (ptrace))))
+
+(macro sd_getattr ((type ARG1))
+	(allow ARG1 sd.subj (process (getattr))))
+
 (macro sd_getpgid ((type ARG1))
 	(allow ARG1 sd.subj (process (getpgid))))
 
 (macro sd_send_sigchld ((type ARG1))
 	(allow ARG1 sd.subj (process (sigchld))))
+
+(macro sd_send_signal ((type ARG1))
+	(allow ARG1 sd.subj (process (signal))))
+
+(macro sd_send_signull ((type ARG1))
+	(allow ARG1 sd.subj (process (signull))))
+
+(macro sd_send_sigkill ((type ARG1))
+	(allow ARG1 sd.subj (process (sigkill))))
+
+(macro sd_send_sigstop ((type ARG1))
+	(allow ARG1 sd.subj (process (sigstop))))
 
 (macro sd_link_keyring ((type ARG1))
 	(allow ARG1 sd.subj link_key_perms))

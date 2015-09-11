@@ -35,13 +35,14 @@
 (call nss_client_subj_type (systemctl_subj_type))
 
 (call sd_all_unit_control (systemctl_subj_type))
-(call sd_unit_transient_control (systemctl_subj_type))
+(call sd_getattr (systemctl_subj_type))
 (call sd_control (systemctl_subj_type))
 (call sd_getattr_forked_subj (systemctl_subj_type))
 (call sd_manage_all_unit (systemctl_subj_type))
 (call sd_read_state (systemctl_subj_type))
 (call sd_read_state_forked_subj (systemctl_subj_type))
 (call sd_stream_connect (systemctl_subj_type))
+(call sd_unit_transient_control (systemctl_subj_type))
 
 (call sd_logind_read_runtime (systemctl_subj_type))
 (call sd_logind_client_subj_type (systemctl_subj_type))

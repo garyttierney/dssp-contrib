@@ -200,7 +200,6 @@
 
 	(call sd_auto_subj_type_transition (subj))
 	(call sd_exec_sd (subj))
-	(call sd_getattr_forked_subj (subj))
 	(call sd_manage_all_unit (subj))
 	(call sd_relabelto_unit_runtime_dirs (subj))
 
@@ -210,6 +209,7 @@
 
 	(call sd_importd_cmd_obj_entry_subj (subj))
 	(call sd_importd_manage_runtime (subj))
+	(call sd_importd_sysbus_chat_client_subj_type (subj))
 
 	(call sd_journald_list_var_log (subj))
 	(call sd_journald_read_runtime (subj))
@@ -340,6 +340,8 @@
 (optional sd_sysbus_chat_client_subj_type_optional_sysbus
 	(allow sd.subj sd_sysbus_chat_client_subj_type (dbus (send_msg)))
 	(allow sd_sysbus_chat_client_subj_type sd.subj (dbus (send_msg))))
+
+(call sd_importd_sysbus_chat_client_subj_type (sd_sysbus_chat_client_subj_type))
 
 (allow sd_notify_subj_type self (unix_dgram_socket (sendto)))
 (call sd_dgram_send_notify (sd_notify_subj_type))

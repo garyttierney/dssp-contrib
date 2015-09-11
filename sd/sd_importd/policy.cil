@@ -1,4 +1,5 @@
 (typeattribute sd_importd_adm_subj_type)
+(typeattribute sd_importd_all_sysbus_chat_client_subj_type)
 (typeattribute sd_importd_sysbus_chat_client_subj_type)
 
 (typeattribute sd_importd_obj_type)
@@ -47,7 +48,10 @@
 
 (optional sd_importd_sysbus_chat_client_subj_type_optional_sysbus
 	(allow sd_importd.subj sd_importd_sysbus_chat_client_subj_type (dbus (send_msg)))
-	(allow sd_importd_sysbus_chat_client_subj_type sd_importd.subj (dbus (send_msg))))
+	(allow sd_importd_sysbus_chat_client_subj_type sd_importd.subj (dbus (send_msg)))
+
+	(allow sd_importd_all_sysbus_chat_client_subj_type sd_importd_sysbus_chat_client_subj_type (dbus (send_msg)))
+	(allow sd_importd_sysbus_chat_client_subj_type sd_importd_all_sysbus_chat_client_subj_type (dbus (send_msg))))
 
 (call sd_sysbus_chat_client_subj_type (sd_importd_sysbus_chat_client_subj_type))
 

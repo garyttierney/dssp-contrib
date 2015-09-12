@@ -1,11 +1,11 @@
-(roleattribute bootloader_role)
-
 (block bootloader
+	(roleattribute role_attribute)
+
 	(blockinherit app_blk)
 
-	(roleattributeset bootloader_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype bootloader_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
@@ -19,7 +19,7 @@
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self (process (getsched)))
 
-	(call bootloader_read_config (subj))
+	(call bootloader.read_config (subj))
 
 	(allow subj var_log_file (file (setattr)))
 	(allow subj var_log_file append_file_perms)
@@ -27,12 +27,12 @@
 	(allow subj var_log_file delete_file_perms)
 	(allow subj var_log_file read_file_perms)
 
-	(call bootloader_var_log_obj_type_transition_var_log (subj))
+	(call bootloader.var_log_obj_type_transition_var_log (subj))
 
-	(call bootloader_manage_tmpfs (subj))
-	(call bootloader_tmpfs_obj_type_transition_tmpfs (subj))
+	(call bootloader.manage_tmpfs (subj))
+	(call bootloader.tmpfs_obj_type_transition_tmpfs (subj))
 
-	(call bootloader_exec (subj))
+	(call bootloader.exec (subj))
 
 	(call sys_read_mdstat_proc_files (subj))
 	(call sys_list_mountpoints (subj))
@@ -60,12 +60,12 @@
 	(call storage_read_all (subj))
 
 	(call fstools_manage_runtime (subj))
-	(call fstools_run (subj bootloader_role))
+	(call fstools_run (subj role_attribute))
 	(call fstools_runtime_obj_type_transition_runtime (subj))
 
-	(call kmod_run (subj bootloader_role))
+	(call kmod_run (subj role_attribute))
 
-	(call lvm_run (subj bootloader_role))
+	(call lvm_run (subj role_attribute))
 
 	(call miscfile_read_modules (subj))
 	(call miscfile_read_locale (subj))
@@ -74,7 +74,7 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call udevadm_run (subj bootloader_role))
+	(call udevadm_run (subj role_attribute))
 
 	(optional bootloader_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

@@ -70,7 +70,7 @@
 				(call audispd_manage_runtime_sock_files (subj)))
 
 			(optional sysadm_optional_auditctl
-				(call auditctl_run (sysadm_subj_type role)))
+				(call auditctl.run (sysadm_subj_type role)))
 
 			(optional sysadm_optional_auditd
 				(call auditd_adm (subj role))
@@ -120,10 +120,10 @@
 		(call bluetoothd_adm (subj role)))
 
 	(optional sysadm_optional_bootloader
-		(call bootloader_manage_config (subj))
-		(call bootloader_manage_boot_files (subj))
-		(call bootloader_manage_var_log_files (subj))
-		(call bootloader_run (sysadm_subj_type role)))
+		(call bootloader.manage_config (subj))
+		(call bootloader.manage_boot_files (subj))
+		(call bootloader.manage_var_log_files (subj))
+		(call bootloader.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_bridgeutil
 		(call bridgeutil_run (sysadm_subj_type role)))

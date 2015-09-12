@@ -9,16 +9,16 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(call authconfig.rw_config_files (subj))
+	(call rw_config_files (subj))
 
 	(blockinherit file_data_obj_blk)
 
-	(call authconfig.manage_data (subj))
+	(call manage_data (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(call authconfig.manage_var_lib (subj))
-	(call authconfig.var_lib_obj_type_transition_var_lib (subj))
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (dac_override)))
 	(dontaudit subj self (capability (net_admin)))

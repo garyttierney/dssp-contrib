@@ -104,9 +104,9 @@
 				(call pam_adm_subj_type (subj)))
 
 			(optional sysadm_optional_sudo
-				(call sudo_manage_config (subj))
-				(call sudo_manage_var_db (subj))
-				(call sudo_manage_runtime (subj)))))
+				(call sudo.manage_config (subj))
+				(call sudo.manage_var_db (subj))
+				(call sudo.manage_runtime (subj)))))
 
 	(optional sysadm_optional_alsactl
 		(call alsactl_adm (subj role)))
@@ -1304,9 +1304,9 @@
 
 (optional sysadm_sudo_optional_sudo
 	(block sysadm_sudo
-		(blockinherit sudo_subj_blk)
+		(blockinherit sudo.subj_blk)
 
-		(call sudo_role_pattern_sudo (sysadm.role sysadm_subj_type subj))))
+		(call sudo.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_systemctl
 	(block sysadm_systemctl
@@ -1372,6 +1372,16 @@
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
 	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
+
+(optional sysadm_visudo_optional_visudo
+	(block sysadm_visudo
+		(blockinherit visudo.subj_blk)
+
+		(call visudo.role_pattern (sysadm.role sysadm_subj_type subj))
+
+		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+
+		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_vlock_optional_vlock
 	(block sysadm_vlock

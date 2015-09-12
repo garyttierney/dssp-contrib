@@ -125,7 +125,7 @@
 (optional usersubj_priv_type_optional_sudo
 	(call usersubj_rw_inherited_fifo_files_unpriv_subj (usersubj_priv_type))
 	(call usersubj_rw_inherited_unix_stream_sockets_unpriv_subj (usersubj_priv_type))
-	(call sudo_send_signal_all_subj (usersubj_priv_type)))
+	(call sudo.send_signal_all_subj (usersubj_priv_type)))
 
 (allow usersubj_common_login_type self create_unix_dgram_socket_perms)
 

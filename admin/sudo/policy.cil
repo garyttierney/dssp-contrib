@@ -1,106 +1,107 @@
-(typeattribute sudo_subj_type)
-(typeattribute sudo_visudo_subj_type)
-
 (block sudo
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (sudo_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj_type_attribute))
+
 	(blockinherit file_var_db_obj_blk)
+
+	(call manage_var_db (subj_type_attribute))
+	(call var_db_obj_type_transition_var_db (subj_type_attribute))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(call manage_runtime (subj_type_attribute))
+	(call runtime_obj_type_transition_runtime (subj_type_attribute))
+
+	(blockinherit usersubj_tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute "*"))
+
+	(allow subj_type_attribute self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
+	(allow subj_type_attribute self (process (setsched setrlimit setexec)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self link_key_perms)
+
+	(call sys_audit_client_subj_type (subj_type_attribute))
+	(call sys_getattr_core_if (subj_type_attribute))
+	(call sys_read_kernel_sysctl_files (subj_type_attribute))
+	(call sys_link_keyring (subj_type_attribute))
+
+	(call standard_role_change_exemption_subj_type (subj_type_attribute))
+
+	(call cmd_getattr_all_cmd_files (subj_type_attribute))
+
+	(call dev_getattr_all (subj_type_attribute))
+	(call dev_read_urandom (subj_type_attribute))
+
+	(call file_read_config_files (subj_type_attribute))
+
+	(call fs_list_devtmpfs (subj_type_attribute))
+	(call fs_dontaudit_getattr_devtmpfs_chr_files (subj_type_attribute))
+	(call fs_dontaudit_getattr_devtmpfs_blk_files (subj_type_attribute))
+
+	(call sec_compute_relabel_context (subj_type_attribute))
+	(call sec_validate_context (subj_type_attribute))
+
+	(call subj_interactive_fd_type (subj_type_attribute))
+
+	(call app.send_signal (subj_type_attribute))
+
+	(call pam_read_config (subj_type_attribute))
+
+	(call miscfile_read_locale (subj_type_attribute))
+	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
+
+	(call nss_client_subj_type (subj_type_attribute))
+
+	(call seutil_read_selinux_config_files (subj_type_attribute))
+	(call seutil_read_default_context_files (subj_type_attribute))
+
+	(call usersubj_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj_create_keyring_priv_subj (subj_type_attribute))
+	(call usersubj_home_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj_relabel_term (subj_type_attribute))
+	(call usersubj_send_signal_priv_subj (subj_type_attribute))
+	(call usersubj_setattr_term (subj_type_attribute))
+	(call usersubj_shell_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj_use_term (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep_obj_role_change_exemption_subj_type (subj_type_attribute))))
+
+	(optional sudo_subj_type_optional_sd
+		(call sd_getpgid (subj_type_attribute))
+		(call sd_link_keyring (subj_type_attribute)))
+
+	(optional sudo_subj_type_optional_sd_initctl
+		(call sd_initctl_getattr_runtime_fifo_files (subj_type_attribute)))
+
+	(optional sudo_subj_type_optional_sd_journald
+		(call sd_journald_client_subj_type (subj_type_attribute)))
+
+	(optional sudo_subj_type_optional_sd_logind
+		(call sd_logind_client_subj_type (subj_type_attribute))))
 
 (block visudo
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (sudo_visudo_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(allow sudo_subj_type self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
-(allow sudo_subj_type self (process (setsched setrlimit setexec)))
-(allow sudo_subj_type self rw_fifo_file_perms)
-(allow sudo_subj_type self link_key_perms)
+	(allow subj_type_attribute self (capability (dac_override)))
 
-(call sudo_read_config (sudo_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call sudo_manage_var_db (sudo_subj_type))
-(call sudo_var_db_obj_type_transition_var_db (sudo_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call sudo_manage_runtime (sudo_subj_type))
-(call sudo_runtime_obj_type_transition_runtime (sudo_subj_type))
-
-(call sudo_manage_tmpfs_files (sudo_subj_type))
-(call sudo_tmpfs_obj_type_transition_tmpfs (sudo_subj_type "*"))
-
-(call sys_audit_client_subj_type (sudo_subj_type))
-(call sys_getattr_core_if (sudo_subj_type))
-(call sys_read_kernel_sysctl_files (sudo_subj_type))
-(call sys_link_keyring (sudo_subj_type))
-
-(call standard_role_change_exemption_subj_type (sudo_subj_type))
-
-(call cmd_getattr_all_cmd_files (sudo_subj_type))
-
-(call dev_getattr_all (sudo_subj_type))
-(call dev_read_urandom (sudo_subj_type))
-
-(call file_read_config_files (sudo_subj_type))
-
-(call fs_list_devtmpfs (sudo_subj_type))
-(call fs_dontaudit_getattr_devtmpfs_chr_files (sudo_subj_type))
-(call fs_dontaudit_getattr_devtmpfs_blk_files (sudo_subj_type))
-
-(call sec_compute_relabel_context (sudo_subj_type))
-(call sec_validate_context (sudo_subj_type))
-
-(call subj_interactive_fd_type (sudo_subj_type))
-
-(call app.send_signal (sudo_subj_type))
-
-(call pam_read_config (sudo_subj_type))
-
-(call miscfile_read_locale (sudo_subj_type))
-(call miscfile_read_utmp_runtime_files (sudo_subj_type))
-
-(call nss_client_subj_type (sudo_subj_type))
-
-(call seutil_read_selinux_config_files (sudo_subj_type))
-(call seutil_read_default_context_files (sudo_subj_type))
-
-(call usersubj_cmd_manual_subj_type_transition_priv_subj (sudo_subj_type))
-(call usersubj_create_keyring_priv_subj (sudo_subj_type))
-(call usersubj_home_cmd_manual_subj_type_transition_priv_subj (sudo_subj_type))
-(call usersubj_relabel_term (sudo_subj_type))
-(call usersubj_send_signal_priv_subj (sudo_subj_type))
-(call usersubj_setattr_term (sudo_subj_type))
-(call usersubj_shell_manual_subj_type_transition_priv_subj (sudo_subj_type))
-(call usersubj_use_term (sudo_subj_type))
-
-(tunableif enable_rbacsep
-	(true
-		(call rbacsep_obj_role_change_exemption_subj_type (sudo_subj_type))))
-
-(optional sudo_subj_type_optional_sd
-	(call sd_getpgid (sudo_subj_type))
-	(call sd_link_keyring (sudo_subj_type)))
-
-(optional sudo_subj_type_optional_sd_initctl
-	(call sd_initctl_getattr_runtime_fifo_files (sudo_subj_type)))
-
-(optional sudo_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (sudo_subj_type)))
-
-(optional sudo_subj_type_optional_sd_logind
-	(call sd_logind_client_subj_type (sudo_subj_type)))
-
-(allow sudo_visudo_subj_type self (capability (dac_override)))
-
-(call sudo_manage_config (sudo_visudo_subj_type))
-(call sudo_config_obj_type_transition_config (sudo_visudo_subj_type "*"))
-
-(call miscfile_read_locale (sudo_visudo_subj_type))
-
-(call nss_client_subj_type (sudo_visudo_subj_type))
+	(call sudo.manage_config (subj_type_attribute))
+	(call sudo.config_obj_type_transition_config (subj_type_attribute "*")))

@@ -1,12 +1,12 @@
 (block loginctl_subj_blk
 	(blockabstract loginctl_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset loginctl_subj_type subj))
 
 (macro loginctl_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset loginctl_subj_type ARG1))
 
 (macro loginctl_client_subj_type ((type ARG1))

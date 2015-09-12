@@ -1,7 +1,7 @@
 (typeattribute xterm_subj_type)
 
 (block xterm
-	(blockinherit app.app_cmd_obj_blk)
+	(blockinherit app_cmd_obj_blk)
 
 	(call subj_entry (xterm_subj_type cmd_file)))
 
@@ -14,7 +14,7 @@
 
 (call subj_interactive_fd_type (xterm_subj_type))
 
-(call app.send_signal (xterm_subj_type))
+(call app_send_signal (xterm_subj_type))
 
 (call miscfile_read_all_terminfo (xterm_subj_type))
 (call miscfile_read_all_fonts (xterm_subj_type))

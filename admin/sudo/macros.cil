@@ -1,23 +1,23 @@
 (block sudo_subj_blk
 	(blockabstract sudo_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset sudo_subj_type subj))
 
 (block sudo_visudo_subj_blk
 	(blockabstract sudo_visudo_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset sudo_visudo_subj_type subj))
 
 (macro sudo_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset sudo_subj_type ARG1))
 
 (macro sudo_visudo_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset sudo_visudo_subj_type ARG1))
 
 (macro sudo_exec_sudo ((type ARG1))

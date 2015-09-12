@@ -1,12 +1,12 @@
 (block mutt_subj_blk
 	(blockabstract mutt_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset mutt_subj_type subj))
 
 (macro mutt_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset mutt_subj_type ARG1))
 
 (macro mutt_exec ((type ARG1))

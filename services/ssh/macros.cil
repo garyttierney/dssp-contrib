@@ -89,14 +89,14 @@
 (block ssh_client_subj_blk
 	(blockabstract ssh_client_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset ssh_client_subj_type subj))
 
 (block ssh_agent_subj_blk
 	(blockabstract ssh_agent_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset ssh_agent_subj_type subj))
 
@@ -164,7 +164,7 @@
 	(allow ARG1 sshd_keygen.subj (process (signal))))
 
 (macro ssh_client_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset ssh_client_subj_type ARG1))
 
 (macro ssh_role_pattern_ssh_client ((role ARG1)(type ARG2)(type ARG3))
@@ -188,7 +188,7 @@
 	(call auto_subj_type_transition_pattern (ARG1 ssh_client.cmd_file ARG2)))
 
 (macro ssh_agent_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset ssh_agent_subj_type ARG1))
 
 (macro ssh_role_pattern_ssh_agent ((role ARG1)(type ARG2)(type ARG3))

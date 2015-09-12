@@ -75,7 +75,7 @@
 	(call fs_associate_tmpfs (sec_file)))
 
 (block augenrules
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roleattributeset auditd_augenrules_role sys.role)
 
@@ -85,7 +85,7 @@
 		(call sd_daemon (subj cmd_file))))
 
 (block ausearch
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roletype auditd_ausearch_role subj)
 

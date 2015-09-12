@@ -75,7 +75,7 @@
 		(call sysbus_read_config_files (subj))))
 
 (block polkit_agent
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roletype polkit_agent_role subj)
 
@@ -103,7 +103,7 @@
 		(call sd_journald_client_subj_type (subj))))
 
 (block polkit_exec
-	(blockinherit app.app_cmd_obj_blk)
+	(blockinherit app_cmd_obj_blk)
 
 	(call subj_entry (polkit_exec_subj_type cmd_file)))
 
@@ -111,7 +111,7 @@
 	(blockinherit cmd_obj_blk))
 
 (block polkit_tty_agent
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roletype polkit_tty_agent_role subj)
 

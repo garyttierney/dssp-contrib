@@ -2,7 +2,7 @@
 (roleattribute dm_dmsetup_role)
 
 (block dmcrypt
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roleattributeset dm_dmcrypt_role sys.role)
 
@@ -35,7 +35,7 @@
 	(call udev_client_subj_type (subj)))
 
 (block dmsetup
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(roleattributeset dm_dmsetup_role sys.role)
 

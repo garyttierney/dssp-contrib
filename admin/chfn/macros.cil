@@ -1,27 +1,24 @@
-(in chfn
-	(blockinherit exec_blk)
+(block chfn_subj_blk
+	(blockabstract chfn_subj_blk)
 
-	(macro send_signal ((type ARG1))
-		(allow ARG1 subj (process (signal))))
+	(blockinherit app_subj_blk)
 
-	(block subj_blk
-		(blockabstract subj_blk)
+	(typeattributeset chfn_subj_type subj))
 
-		(blockinherit app.app_subj_blk)
+(macro chfn_subj_type ((type ARG1))
+	(call app_subj_type (ARG1))
+	(typeattributeset chfn_subj_type ARG1))
 
-		(typeattributeset subj_type_attribute subj))
+(macro chfn_exec ((type ARG1))
+	(call can_exec (ARG1 chfn.cmd_file)))
 
-	(macro subj_type ((type ARG1))
-		(call app.app_subj_type (ARG1))
-		(typeattributeset subj_type_attribute ARG1))
+(macro chfn_role_pattern ((role ARG1)(type ARG2)(type ARG3))
+	(call auto_subj_type_transition_pattern (ARG2 chfn.cmd_file ARG3))
 
-	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+	(roletype ARG1 ARG3)
 
-		(roletype ARG1 ARG3)
+	(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG2 ARG3 (process (signal)))
+	(allow ARG3 ARG2 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal)))
-
-		(call chkpwd_run (ARG3 ARG1)))) ; TODO
+	(call chkpwd_run (ARG3 ARG1)))

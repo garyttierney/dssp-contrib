@@ -7,7 +7,7 @@
 (typeattribute myqemu_obj_type)
 
 (block myqemu_runner
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(typeattributeset myqemu_subj_type subj)
 
@@ -48,7 +48,7 @@
 		(call sd_machined_relabelfrom_var_lib_files (subj))))
 
 (block myqemu_installer
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(typeattributeset myqemu_subj_type subj)
 
@@ -119,7 +119,7 @@
 		(call sd_machined_manage_var_lib_files (subj))))
 
 (block myqemu_shutdown
-	(blockinherit app.blk)
+	(blockinherit app_blk)
 
 	(typeattributeset myqemu_subj_type subj)
 

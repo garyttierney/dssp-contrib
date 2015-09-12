@@ -1,12 +1,12 @@
 (block numactl_subj_blk
 	(blockabstract numactl_subj_blk)
 
-	(blockinherit app.app_subj_blk)
+	(blockinherit app_subj_blk)
 
 	(typeattributeset numactl_subj_type subj))
 
 (macro numactl_subj_type ((type ARG1))
-	(call app.app_subj_type (ARG1))
+	(call app_subj_type (ARG1))
 	(typeattributeset numactl_subj_type ARG1))
 
 (macro numactl_exec ((type ARG1))

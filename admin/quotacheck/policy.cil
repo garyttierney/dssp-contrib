@@ -1,16 +1,16 @@
-(roleattribute quotacheck_role)
-
 (block quotacheck
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype quotacheck_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_obj_blk)
 
-	(allow subj self (capability (dac_override)))
+	(call manage_db_files (subj))
+	(call mountpoint_obj_type_transition_file (subj))
 
-	(call quotacheck_manage_db_files (subj))
-	(call quotacheck_mountpoint_obj_type_transition_file (subj))
+	(allow subj self (capability (dac_override)))
 
 	(call file_read_all_except (subj))
 

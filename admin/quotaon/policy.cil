@@ -22,8 +22,8 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call quotacheck_read_db_files (subj))
-	(call quotacheck_enable_db_files (subj))
+	(call quotacheck.read_db_files (subj))
+	(call quotacheck.enable_db_files (subj))
 
 	(optional quotaon_optional_sd
 		(call sd_daemon (subj cmd_file))

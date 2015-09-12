@@ -409,8 +409,8 @@
 		(call quotaed.manage_tmpfs_files (subj)))
 
 	(optional sysadm_optional_quotaon
-		(call quotaon_adm (subj role))
-		(call quotaon_run (sysadm_subj_type role)))
+		(call quotaon.adm (subj role))
+		(call quotaon.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_quotacheck
 		(call quotacheck.run (sysadm_subj_type role))

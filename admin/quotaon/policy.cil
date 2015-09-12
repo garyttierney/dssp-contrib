@@ -1,13 +1,13 @@
-(roleattribute quotaon_role)
-
-(typeattribute quotaon_adm_subj_type)
-
 (block quotaon
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset quotaon_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype quotaon_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (sys_admin)))
 
@@ -30,10 +30,10 @@
 
 		(blockinherit sd_unit_obj_blk)
 
-		(allow quotaon_adm_subj_type unit_file manage_file_perms)
-		(allow quotaon_adm_subj_type unit_file relabel_file_perms)
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms)
 
-		(allow quotaon_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow quotaon_adm_subj_type quotaon.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (quotaon_adm_subj_type quotaon.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

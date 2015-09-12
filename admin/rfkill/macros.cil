@@ -1,13 +1,8 @@
-(macro rfkill_exec ((type ARG1))
-	(call can_exec (ARG1 rfkill.cmd_file)))
+(in rfkill
+	(blockinherit exec_blk)
 
-(macro rfkill_auto_subj_type_transition ((type ARG1))
-	(call rfkill_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 rfkill.cmd_file rfkill.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro rfkill_send_signal ((type ARG1))
-	(allow ARG1 rfkill.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro rfkill_run ((type ARG1)(role ARG2))
-	(call rfkill_auto_subj_type_transition (ARG1))
-	(roleattributeset rfkill_role ARG2))
+	(blockinherit send_signal_blk))

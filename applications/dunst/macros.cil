@@ -1,12 +1,12 @@
 (block dunst_subj_blk
 	(blockabstract dunst_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset dunst_subj_type subj))
 
 (macro dunst_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset dunst_subj_type ARG1))
 
 (macro dunst_sessbus_chat_client_subj_type ((type ARG1))

@@ -1,12 +1,12 @@
 (block mutt_pgp_ewrap_subj_blk
 	(blockabstract mutt_pgp_ewrap_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset mutt_pgp_ewrap_subj_type subj))
 
 (macro mutt_pgp_ewrap_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset mutt_pgp_ewrap_subj_type ARG1))
 
 (macro mutt_pgp_ewrap_exec ((type ARG1))

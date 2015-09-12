@@ -1,12 +1,12 @@
 (block livestreamer_subj_blk
 	(blockabstract livestreamer_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset livestreamer_subj_type subj))
 
 (macro livestreamer_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset livestreamer_subj_type ARG1))
 
 (macro livestreamer_exec ((type ARG1))

@@ -1,12 +1,12 @@
 (block git_email_subj_blk
 	(blockabstract git_email_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset git_email_subj_type subj))
 
 (macro git_email_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset git_email_subj_type ARG1))
 
 (macro git_email_exec ((type ARG1))

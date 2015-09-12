@@ -1,7 +1,7 @@
 (block polkit_exec_subj_blk
 	(blockabstract polkit_exec_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset polkit_exec_subj_type subj))
 
@@ -39,7 +39,7 @@
 	(roleattributeset polkit_agent_role ARG2))
 
 (macro polkit_exec_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset polkit_exec_subj_type ARG1))
 
 (macro polkit_exec_polkit_exec ((type ARG1))

@@ -1,12 +1,12 @@
 (block festival_subj_blk
 	(blockabstract festival_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset festival_subj_type subj))
 
 (macro festival_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset festival_subj_type ARG1))
 
 (macro festival_exec ((type ARG1))

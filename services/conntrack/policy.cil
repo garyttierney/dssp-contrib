@@ -5,7 +5,7 @@
 (typeattribute conntrack_adm_subj_type)
 
 (block conntrack
-	(blockinherit app_blk)
+	(blockinherit app.application_blk)
 
 	(roletype conntrack_role subj)
 
@@ -15,7 +15,7 @@
 	(call sys_request_load_module (subj)))
 
 (block conntrackd
-	(blockinherit app_blk)
+	(blockinherit app.application_blk)
 
 	(roleattributeset conntrack_role sys.role)
 
@@ -90,7 +90,7 @@
 		(call sd_journald_client_subj_type (subj))))
 
 (block nfct
-	(blockinherit app_blk)
+	(blockinherit app.application_blk)
 
 	(roletype conntrack_role subj))
 

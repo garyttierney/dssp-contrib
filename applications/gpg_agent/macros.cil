@@ -1,12 +1,12 @@
 (block gpg_agent_subj_blk
 	(blockabstract gpg_agent_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset gpg_agent_subj_type subj))
 
 (macro gpg_agent_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset gpg_agent_subj_type ARG1))
 
 (macro gpg_agent_exec ((type ARG1))

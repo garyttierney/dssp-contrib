@@ -1,12 +1,12 @@
 (block sessbus_subj_blk
 	(blockabstract sessbus_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset sessbus_subj_type subj))
 
 (macro sessbus_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset sessbus_subj_type ARG1))
 
 (macro sessbus_client_subj_type ((type ARG1))

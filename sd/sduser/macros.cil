@@ -1,7 +1,7 @@
 (block sduser_subj_blk
 	(blockabstract sduser_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset sduser_subj_type subj))
 
@@ -13,7 +13,7 @@
 	(typeattributeset sduser_unit_obj_type unit_file))
 
 (macro sduser_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset sduser_subj_type ARG1))
 
 (macro sduser_role_pattern ((role ARG1)(type ARG2)(type ARG3))

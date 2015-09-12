@@ -1,26 +1,27 @@
-(typeattribute app_subj_type)
-(typeattribute app_cmd_obj_type)
+(block app
+	(typeattribute subj_type_attribute)
+	(typeattribute cmd_obj_type_attribute)
 
-(call subj_use_interactive_fd_type (app_subj_type))
+	(call subj_use_interactive_fd_type (subj_type_attribute))
 
-(call term_use_inherited_unallocated_ttys (app_subj_type))
+	(call term_use_inherited_unallocated_ttys (subj_type_attribute))
 
-(optional app_optional_emacs
-	(call emacs_send_sigchld_all_subj (app_subj_type))
-	(call emacs_rw_inherited_fifo_files_all_subj (app_subj_type)))
+	(optional app_optional_emacs
+		(call emacs_send_sigchld_all_subj (subj_type_attribute))
+		(call emacs_rw_inherited_fifo_files_all_subj (subj_type_attribute)))
 
-(optional app_optional_irssi
-	(call irssi_send_sigchld_all_subj (app_subj_type))
-	(call irssi_rw_inherited_fifo_files_all_subj (app_subj_type)))
+	(optional app_optional_irssi
+		(call irssi_send_sigchld_all_subj (subj_type_attribute))
+		(call irssi_rw_inherited_fifo_files_all_subj (subj_type_attribute)))
 
-(optional app_optional_sduser
-	(call sduser_rw_inherited_unix_stream_sockets_all_subj (app_subj_type))
-	(call sduser_send_sigchld_all_subj (app_subj_type)))
+	(optional app_optional_sduser
+		(call sduser_rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))
+		(call sduser_send_sigchld_all_subj (subj_type_attribute)))
 
-(optional app_optional_sudo
-	(call sudo_send_sigchld_all_subj (app_subj_type)))
+	(optional app_optional_sudo
+		(call sudo_send_sigchld_all_subj (subj_type_attribute)))
 
-(optional app_optional_usersubj
-	(call usersubj_list_home_cmd (app_subj_type))
-	(call usersubj_dontaudit_search_all_home_user (app_subj_type))
-	(call usersubj_use_inherited_term (app_subj_type)))
+	(optional app_optional_usersubj
+		(call usersubj_list_home_cmd (subj_type_attribute))
+		(call usersubj_dontaudit_search_all_home_user (subj_type_attribute))
+		(call usersubj_use_inherited_term (subj_type_attribute))))

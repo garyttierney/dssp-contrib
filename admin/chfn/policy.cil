@@ -1,12 +1,12 @@
-(typeattribute chfn_subj_type)
-
 (block chfn
-	(blockinherit app_cmd_obj_blk)
+	(typeattribute subj_type_attribute)
 
-	(call subj_entry (chfn_subj_type cmd_file)))
+	(blockinherit app.application_cmd_obj_blk)
 
-(call file_read_config_files (chfn_subj_type))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(call miscfile_read_locale (chfn_subj_type))
+	(call file_read_config_files (subj_type_attribute))
 
-(call pam_read_config_files (chfn_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(call pam_read_config_files (subj_type_attribute)))

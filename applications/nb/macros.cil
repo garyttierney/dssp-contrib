@@ -1,12 +1,12 @@
 (block nb_subj_blk
 	(blockabstract nb_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset nb_subj_type subj))
 
 (macro nb_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset nb_subj_type ARG1))
 
 (macro nb_exec ((type ARG1))

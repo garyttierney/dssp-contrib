@@ -1,12 +1,12 @@
 (block journalctl_subj_blk
 	(blockabstract journalctl_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset journalctl_subj_type subj))
 
 (macro journalctl_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset journalctl_subj_type ARG1))
 
 (macro journalctl_client_subj_type ((type ARG1))

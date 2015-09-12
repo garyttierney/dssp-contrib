@@ -1,12 +1,12 @@
 (block alsautil_subj_blk
 	(blockabstract alsautil_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.application_subj_blk)
 
 	(typeattributeset alsautil_subj_type subj))
 
 (macro alsautil_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.application_subj_type (ARG1))
 	(typeattributeset alsautil_subj_type ARG1))
 
 (macro alsautil_exec ((type ARG1))

@@ -2,11 +2,11 @@
 	(block application_blk
 		(blockabstract application_blk)
 
-                (blockinherit subj_common_blk)
-                (typeattributeset subj_type_attribute subj)
+		(blockinherit subj_common_blk)
+		(typeattributeset app.subj_type_attribute subj)
 
-                (blockinherit cmd_obj_blk)
-                (typeattributeset cmd_obj_type_attribute cmd_file)
+		(blockinherit cmd_obj_blk)
+		(typeattributeset app.cmd_obj_type_attribute cmd_file)
 
 		(call subj_entry (subj cmd_file)))
 
@@ -14,13 +14,14 @@
 		(blockabstract application_subj_blk)
 
 		(blockinherit subj_common_blk)
-		(typeattributeset subj_type_attribute subj))
+
+		(typeattributeset app.subj_type_attribute subj))
 
 	(block application_cmd_obj_blk
 		(blockabstract application_cmd_obj_blk)
 
 		(blockinherit cmd_obj_blk)
-		(typeattributeset cmd_obj_type_attribute cmd_file))
+		(typeattributeset app.cmd_obj_type_attribute cmd_file))
 
 	(macro application_subj_type ((type ARG1))
 		(call subj_common_type (ARG1))

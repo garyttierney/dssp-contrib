@@ -1,16 +1,16 @@
-(roleattribute quotaed_role)
-
 (block quotaed
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype quotaed_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
-	(allow subj self (capability (setuid setgid dac_override sys_admin)))
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
 
-	(call quotaed_manage_tmpfs_files (subj))
-	(call quotaed_tmpfs_obj_type_transition_tmpfs (subj))
+	(allow subj self (capability (setuid setgid dac_override sys_admin)))
 
 	(call sys_read_fs_sysctl_files (subj))
 	(call sys_list_mountpoints (subj))

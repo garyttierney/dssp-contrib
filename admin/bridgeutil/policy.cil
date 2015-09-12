@@ -1,9 +1,9 @@
-(roleattribute bridgeutil_role)
-
 (block bridgeutil
+	(roleattribute role_attribute)
+
 	(blockinherit app_blk)
 
-	(roletype bridgeutil_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (net_admin)))
 	(allow subj self create_unix_stream_socket_perms)

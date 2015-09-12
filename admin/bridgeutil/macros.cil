@@ -1,13 +1,9 @@
-(macro bridgeutil_cmd ((type ARG1))
-	(call can_exec (ARG1 bridgeutil.cmd_file)))
+(in bridgeutil
+	(blockinherit exec_blk)
 
-(macro bridgeutil_auto_subj_type_transition ((type ARG1))
-	(call bridgeutil_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 bridgeutil.cmd_file bridgeutil.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro bridgeutil_send_signal ((type ARG1))
-	(allow ARG1 bridgeutil.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro bridgeutil_run ((type ARG1)(role ARG2))
-	(call bridgeutil_auto_subj_type_transition (ARG1))
-	(roleattributeset bridgeutil_role (ARG2)))
+	(macro send_signal ((type ARG1))
+		(allow ARG1 subj (process (signal)))))

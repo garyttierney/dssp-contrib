@@ -1,11 +1,11 @@
-(roleattribute dnssec_triggerc_role)
-
 (block dnssec_triggerc
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset dnssec_triggerc_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype dnssec_triggerc_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self create_tcp_socket_perms)
 

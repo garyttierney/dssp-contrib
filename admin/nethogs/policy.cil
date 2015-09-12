@@ -1,9 +1,9 @@
-(roleattribute nethogs_role)
-
 (block nethogs
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype nethogs_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (net_raw dac_override)))
 	(allow subj self create_packet_socket_perms)

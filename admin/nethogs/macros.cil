@@ -1,13 +1,8 @@
-(macro nethogs_exec ((type ARG1))
-	(call can_exec (ARG1 nethogs.cmd_file)))
+(in nethogs
+	(blockinherit exec_blk)
 
-(macro nethogs_auto_subj_type_transition ((type ARG1))
-	(call nethogs_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 nethogs.cmd_file nethogs.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro nethogs_send_signal ((type ARG1))
-	(allow ARG1 nethogs.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro nethogs_run ((type ARG1)(role ARG2))
-	(call nethogs_auto_subj_type_transition (ARG1))
-	(roleattributeset nethogs_role (ARG2)))
+	(blockinherit send_signal_blk))

@@ -1,23 +1,29 @@
-(roleattribute powertop_role)
-
-(typeattribute powertop_adm_subj_type)
-
-(typeattribute powertop_obj_type)
-
 (block powertop
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset powertop_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype powertop_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_var_cache_obj_blk)
 
-	(typeattributeset powertop_obj_type var_cache_file)
+	(typeattributeset obj_type_attribute var_cache_file)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj))
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
-	(typeattributeset powertop_obj_type tmpfs_user_file)
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(typeattributeset obj_type_attribute tmpfs_user_file)
 
 	(allow subj self (capability (dac_override net_admin sys_rawio sys_resource sys_admin ipc_lock)))
 	(allow subj self (process (setrlimit)))
@@ -25,12 +31,6 @@
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
-
-	(call powertop_manage_var_cache (subj))
-	(call powertop_var_cache_obj_type_transition_var_cache (subj))
-
-	(call powertop_manage_tmpfs_files (subj))
-	(call powertop_tmpfs_obj_type_transition_tmpfs (subj))
 
 	(call sys_list_cpu_sysfs (subj))
 	(call sys_load_kernel_module_subj_type (subj))
@@ -74,23 +74,23 @@
 
 		(blockinherit sd_unit_obj_blk)
 
-		(typeattributeset powertop_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow powertop_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional powertop_optional_xutil
-		(call xutil_run (subj powertop_role))))
+		(call xutil_run (subj role_attribute)))
 
-(allow powertop_adm_subj_type powertop.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (powertop_adm_subj_type powertop.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_var_cache (powertop_adm_subj_type))
-(call fs_search_tmpfs (powertop_adm_subj_type))
+	(call file_search_var_cache (adm_subj_type_attribute))
+	(call fs_search_tmpfs (adm_subj_type_attribute))
 
-(allow powertop_adm_subj_type powertop_obj_type manage_file_perms)
-(allow powertop_adm_subj_type powertop_obj_type manage_dir_perms)
-(allow powertop_adm_subj_type powertop_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow powertop_adm_subj_type powertop_obj_type relabel_file_perms)
-(allow powertop_adm_subj_type powertop_obj_type relabel_dir_perms)
-(allow powertop_adm_subj_type powertop_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

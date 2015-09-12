@@ -1,13 +1,8 @@
-(macro iotop_exec ((type ARG1))
-	(call can_exec (ARG1 iotop.cmd_file)))
+(in iotop
+	(blockinherit exec_blk)
 
-(macro iotop_auto_subj_type_transition ((type ARG1))
-	(call iotop_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 iotop.cmd_file iotop.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro iotop_send_signal ((type ARG1))
-	(allow ARG1 iotop.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro iotop_run ((type ARG1)(role ARG2))
-	(call iotop_auto_subj_type_transition (ARG1))
-	(roleattributeset iotop_role (ARG2)))
+	(blockinherit send_signal_blk))

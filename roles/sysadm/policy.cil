@@ -78,10 +78,10 @@
 				(call auditd_run_ausearch (sysadm_subj_type role)))
 
 			(optional sysadm_optional_authconfig
-				(call authconfig_manage_config_files (subj))
-				(call authconfig_manage_data (subj))
-				(call authconfig_manage_var_lib (subj))
-				(call authconfig_run (sysadm_subj_type role)))
+				(call authconfig.manage_config_files (subj))
+				(call authconfig.manage_data (subj))
+				(call authconfig.manage_var_lib (subj))
+				(call authconfig.run (sysadm_subj_type role)))
 
 			(optional sysadm_optional_chage
 				(call chage_run (sysadm_subj_type role)))

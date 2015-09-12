@@ -1,13 +1,8 @@
-(macro dmesg_exec ((type ARG1))
-	(call can_exec (ARG1 dmesg.cmd_file)))
+(in dmesg
+	(blockinherit exec_blk)
 
-(macro dmesg_auto_subj_type_transition ((type ARG1))
-	(call dmesg_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dmesg.cmd_file dmesg.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dmesg_send_signal ((type ARG1))
-	(allow ARG1 dmesg.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro dmesg_run ((type ARG1)(role ARG2))
-	(call dmesg_auto_subj_type_transition (ARG1))
-	(roleattributeset dmesg_role (ARG2)))
+	(blockinherit send_signal_blk))

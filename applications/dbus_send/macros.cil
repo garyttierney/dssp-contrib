@@ -1,12 +1,12 @@
 (block dbus_send_subj_blk
 	(blockabstract dbus_send_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset dbus_send_subj_type subj))
 
 (macro dbus_send_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset dbus_send_subj_type ARG1))
 
 (macro dbus_send_client_subj_type ((type ARG1))

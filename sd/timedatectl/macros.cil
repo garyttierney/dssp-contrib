@@ -1,12 +1,12 @@
 (block timedatectl_subj_blk
 	(blockabstract timedatectl_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset timedatectl_subj_type subj))
 
 (macro timedatectl_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset timedatectl_subj_type ARG1))
 
 (macro timedatectl_client_subj_type ((type ARG1))

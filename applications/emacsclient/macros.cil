@@ -1,12 +1,12 @@
 (block emacsclient_subj_blk
 	(blockabstract emacsclient_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset emacsclient_subj_type subj))
 
 (macro emacsclient_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset emacsclient_subj_type ARG1))
 
 (macro emacsclient_exec ((type ARG1))

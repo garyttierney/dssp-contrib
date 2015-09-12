@@ -3,7 +3,7 @@
 (typeattribute fuse_sshfs_subj_type)
 
 (block fusermount
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roletype fuse_role subj)
 
@@ -28,12 +28,12 @@
 	(call usersubj_mounton_home_user_dirs (subj)))
 
 (block ulockmgr
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roletype fuse_role subj))
 
 (block sshfs
-        (blockinherit app_cmd_obj_blk)
+        (blockinherit app.app_cmd_obj_blk)
 
         (call subj_entry (fuse_sshfs_subj_type cmd_file)))
 

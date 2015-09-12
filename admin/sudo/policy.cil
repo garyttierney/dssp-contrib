@@ -2,7 +2,7 @@
 (typeattribute sudo_visudo_subj_type)
 
 (block sudo
-	(blockinherit app_cmd_obj_blk)
+	(blockinherit app.app_cmd_obj_blk)
 
 	(call subj_entry (sudo_subj_type cmd_file))
 
@@ -15,7 +15,7 @@
 	(blockinherit usersubj_tmpfs_user_obj_blk))
 
 (block visudo
-	(blockinherit app_cmd_obj_blk)
+	(blockinherit app.app_cmd_obj_blk)
 
 	(call subj_entry (sudo_visudo_subj_type cmd_file)))
 
@@ -58,7 +58,7 @@
 
 (call subj_interactive_fd_type (sudo_subj_type))
 
-(call app_send_signal (sudo_subj_type))
+(call app.send_signal (sudo_subj_type))
 
 (call pam_read_config (sudo_subj_type))
 

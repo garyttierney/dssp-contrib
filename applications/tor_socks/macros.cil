@@ -1,12 +1,12 @@
 (block tor_socks_subj_blk
 	(blockabstract tor_socks_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset tor_socks_subj_type subj))
 
 (macro tor_socks_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset tor_socks_subj_type ARG1))
 
 (macro tor_socks_client_subj_type ((type ARG1))

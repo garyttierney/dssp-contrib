@@ -6,7 +6,7 @@
 (typeattribute sd_askpwd_obj_type)
 
 (block sd_askpwd
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(call sd_daemon (subj cmd_file))
 
@@ -20,7 +20,7 @@
 	(call sd_askpwd_sd_runtime_obj_type_transition_runtime (subj)))
 
 (block sd_askpwd_agent
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(call sd_daemon (subj cmd_file))
 

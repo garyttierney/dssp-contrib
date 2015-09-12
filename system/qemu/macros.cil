@@ -14,7 +14,7 @@
 (block qemu_guest_subj_blk
 	(blockabstract qemu_guest_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset qemu_guest_subj_type subj))
 
@@ -40,7 +40,7 @@
         (typeattributeset qemu_guest_pty_obj_type pty_dev))
 
 (macro qemu_guest_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset qemu_guest_subj_type ARG1))
 
 (macro qemu_guest_obj_type ((type ARG1))

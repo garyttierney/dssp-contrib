@@ -1,12 +1,12 @@
 (block analyze_subj_blk
 	(blockabstract analyze_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset analyze_subj_type subj))
 
 (macro analyze_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset analyze_subj_type ARG1))
 
 (macro analyze_role_pattern ((role ARG1)(type ARG2)(type ARG3))

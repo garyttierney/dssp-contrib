@@ -1,12 +1,12 @@
 (block systemctl_subj_blk
 	(blockabstract systemctl_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset systemctl_subj_type subj))
 
 (macro systemctl_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset systemctl_subj_type ARG1))
 
 (macro systemctl_client_subj_type ((type ARG1))

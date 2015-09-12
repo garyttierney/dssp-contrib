@@ -1,12 +1,12 @@
 (block xbindkeys_subj_blk
 	(blockabstract xbindkeys_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset xbindkeys_subj_type subj))
 
 (macro xbindkeys_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset xbindkeys_subj_type ARG1))
 
 (macro xbindkeys_role_pattern ((role ARG1)(type ARG2)(type ARG3))

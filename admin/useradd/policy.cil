@@ -1,7 +1,7 @@
 (roleattribute useradd_role)
 
 (block groupadd
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset useradd_role sys.role)
 
@@ -35,7 +35,7 @@
 		(call sd_journald_client_subj_type (subj))))
 
 (block useradd
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset useradd_role sys.role)
 

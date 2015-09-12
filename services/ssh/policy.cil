@@ -54,14 +54,14 @@
 	(allow subj sshd.subj rw_inherited_unix_stream_socket_perms))
 
 (block ssh_agent
-	(blockinherit app_cmd_obj_blk)
+	(blockinherit app.app_cmd_obj_blk)
 
 	(call subj_entry (ssh_agent_subj_type cmd_file))
 
 	(blockinherit usersubj_tmpfs_user_obj_blk))
 
 (block ssh_client
-	(blockinherit app_cmd_obj_blk)
+	(blockinherit app.app_cmd_obj_blk)
 
 	(call subj_entry (ssh_client_subj_type cmd_file))
 
@@ -71,7 +71,7 @@
 	(blockinherit cmd_obj_blk))
 
 (block ssh_keygen
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roletype ssh_keygen_role subj)
 
@@ -85,7 +85,7 @@
 	(call nss_client_subj_type (subj)))
 
 (block ssh_sftpserver
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roletype ssh_sftpserver_role subj)
 

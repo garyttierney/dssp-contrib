@@ -1,12 +1,12 @@
 (block xterm_subj_blk
 	(blockabstract xterm_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset xterm_subj_type subj))
 
 (macro xterm_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset xterm_subj_type ARG1))
 
 (macro xterm_exec ((type ARG1))

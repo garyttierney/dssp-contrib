@@ -1,12 +1,12 @@
 (block run_subj_blk
 	(blockabstract run_subj_blk)
 
-	(blockinherit app_subj_blk)
+	(blockinherit app.app_subj_blk)
 
 	(typeattributeset run_subj_type subj))
 
 (macro run_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset run_subj_type ARG1))
 
 (macro run_exec ((type ARG1))

@@ -12,7 +12,7 @@
 (block sd_nspawn_container_subj_blk
         (blockabstract sd_nspawn_container_subj_blk)
 
-        (blockinherit app_subj_blk)
+        (blockinherit app.app_subj_blk)
 
         (typeattributeset sd_nspawn_container_subj_type subj))
 
@@ -36,7 +36,7 @@
 	(typeattributeset sd_nspawn_unit_obj_type ARG1))
 
 (macro sd_nspawn_container_subj_type ((type ARG1))
-	(call app_subj_type (ARG1))
+	(call app.app_subj_type (ARG1))
 	(typeattributeset sd_nspawn_container_subj_type ARG1))
 
 (macro sd_nspawn_container_obj_type ((type ARG1))

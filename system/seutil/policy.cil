@@ -8,7 +8,7 @@
 (typeattribute seutil_setsebool_client_subj_type)
 
 (block load_policy
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset seutil_load_policy_role sys.role)
 
@@ -22,7 +22,7 @@
 	(call miscfile_read_locale (subj)))
 
 (block matchpathcon
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset seutil_matchpathcon_role sys.role)
 
@@ -47,7 +47,7 @@
 	(call seutil_read_file_context_files (subj)))
 
 (block setfiles
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset seutil_setfiles_role sys.role)
 
@@ -107,7 +107,7 @@
 		(call sd_forked_subj_type (subj))))
 
 (block setsebool
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset seutil_setsebool_role sys.role)
 
@@ -118,7 +118,7 @@
 	(call seutil_setsebool_client_subj_type (subj)))
 
 (block setenforce
-	(blockinherit app_blk)
+	(blockinherit app.blk)
 
 	(roleattributeset seutil_setenforce_role sys.role)
 

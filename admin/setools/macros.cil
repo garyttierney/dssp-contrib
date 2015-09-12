@@ -1,13 +1,8 @@
-(macro setools_exec ((type ARG1))
-	(call can_exec (ARG1 setools.cmd_file)))
+(in setools
+	(blockinherit exec_blk)
 
-(macro setools_auto_subj_type_transition ((type ARG1))
-	(call setools_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 setools.cmd_file setools.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro setools_send_signal ((type ARG1))
-	(allow ARG1 setools.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro setools_run ((type ARG1)(role ARG2))
-	(call setools_auto_subj_type_transition (ARG1))
-	(roleattributeset setools_role ARG2))
+	(blockinherit send_signal_blk))

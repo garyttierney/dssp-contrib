@@ -1,39 +1,39 @@
-(typeattribute passwd_subj_type)
-
 (block passwd
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (passwd_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(allow passwd_subj_type self (capability (setuid dac_override chown fsetid)))
-(allow passwd_subj_type self (process (setfscreate)))
-(allow passwd_subj_type self create_netlink_selinux_socket_perms)
-(allow passwd_subj_type self rw_fifo_file_perms)
+	(allow subj_type_attribute self (capability (setuid dac_override chown fsetid)))
+	(allow subj_type_attribute self (process (setfscreate)))
+	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_audit_client_subj_type (passwd_subj_type))
-(call sys_read_crypto_sysctl_files (passwd_subj_type))
+	(call sys_audit_client_subj_type (subj_type_attribute))
+	(call sys_read_crypto_sysctl_files (subj_type_attribute))
 
-(call standard_obj_sys_change_exemption_subj_type (passwd_subj_type))
+	(call standard_obj_sys_change_exemption_subj_type (subj_type_attribute))
 
-(call dev_read_urandom (passwd_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_config_files (passwd_subj_type))
-(call file_read_data_files (passwd_subj_type))
+	(call file_read_config_files (subj_type_attribute))
+	(call file_read_data_files (subj_type_attribute))
 
-(call fs_list_devtmpfs (passwd_subj_type))
-(call fs_search_devpts (passwd_subj_type))
+	(call fs_list_devtmpfs (subj_type_attribute))
+	(call fs_search_devpts (subj_type_attribute))
 
-(call sec_compute_access_vector (passwd_subj_type))
-(call sec_list_fs (passwd_subj_type))
+	(call sec_compute_access_vector (subj_type_attribute))
+	(call sec_list_fs (subj_type_attribute))
 
-(call miscfile_manage_passwords (passwd_subj_type))
-(call miscfile_manage_shadow (passwd_subj_type))
-(call miscfile_read_locale (passwd_subj_type))
-(call miscfile_read_utmp_runtime_files (passwd_subj_type))
+	(call miscfile_manage_passwords (subj_type_attribute))
+	(call miscfile_manage_shadow (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
+	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
 
-(call nss_client_subj_type (passwd_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call pam_read_config (passwd_subj_type))
+	(call pam_read_config (subj_type_attribute))
 
-(optional passwd_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (passwd_subj_type)))
+	(optional passwd_subj_type_optional_sd_journald
+		(call sd_journald_client_subj_type (subj_type_attribute))))

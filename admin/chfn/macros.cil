@@ -8,8 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(macro send_signal ((type ARG1))
-		(allow ARG1 subj (process (signal))))
+	(blockinherit send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

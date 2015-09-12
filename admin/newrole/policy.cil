@@ -1,9 +1,9 @@
-(roleattribute newrole_role)
-
 (block newrole
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype newrole_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (setcap)))

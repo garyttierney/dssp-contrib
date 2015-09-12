@@ -1,13 +1,8 @@
-(macro rtkitctl_exec ((type ARG1))
-	(call can_exec (ARG1 rtkitctl.cmd_file)))
+(in rtkitctl
+	(blockinherit exec_blk)
 
-(macro rtkitctl_auto_subj_type_transition ((type ARG1))
-	(call rtkitctl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 rtkitctl.cmd_file rtkitctl.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro rtkitctl_send_signal ((type ARG1))
-	(allow ARG1 rtkitctl.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro rtkitctl_run ((type ARG1)(role ARG2))
-	(call rtkitctl_auto_subj_type_transition (ARG1))
-	(roleattributeset rtkitctl_role ARG2))
+	(blockinherit send_signal_blk))

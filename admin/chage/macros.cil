@@ -1,13 +1,9 @@
-(macro chage_exec ((type ARG1))
-	(call can_exec (ARG1 chage.cmd_file)))
+(in chage
+	(blockinherit exec_blk)
 
-(macro chage_auto_subj_type_transition ((type ARG1))
-	(call chage_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 chage.cmd_file chage.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro chage_send_signal ((type ARG1))
-	(allow ARG1 chage.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro chage_run ((type ARG1)(role ARG2))
-	(call chage_auto_subj_type_transition (ARG1))
-	(roleattributeset chage_role ARG2))
+	(macro send_signal ((type ARG1))
+		(allow ARG1 subj (process (signal)))))

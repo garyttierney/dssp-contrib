@@ -1,22 +1,24 @@
-(block numactl_subj_blk
-	(blockabstract numactl_subj_blk)
+(in numactl
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset numactl_subj_type subj))
+		(typeattributeset subj_type_attribute subj))
 
-(macro numactl_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset numactl_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro numactl_exec ((type ARG1))
-	(call can_exec (ARG1 numactl.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro numactl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 numactl.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal))))
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))))

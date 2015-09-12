@@ -1104,9 +1104,9 @@
 
 (optional sysadm_numactl_optional_numactl
 	(block sysadm_numactl
-		(blockinherit numactl_subj_blk)
+		(blockinherit numactl.subj_blk)
 
-		(call numactl_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call numactl.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))

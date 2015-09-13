@@ -1,30 +1,33 @@
-(block dbus_send_subj_blk
-	(blockabstract dbus_send_subj_blk)
+(in dbus_send
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset dbus_send_subj_type subj))
+		(typeattributeset dbus_send.subj_type_attribute subj))
 
-(macro dbus_send_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset dbus_send_subj_type ARG1))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
 
-(macro dbus_send_client_subj_type ((type ARG1))
-	(typeattributeset dbus_send_client_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro dbus_send_exec ((type ARG1))
-	(call dbus_send_client_subj_type (ARG1))
-	(call can_exec (ARG1 dbus_send.cmd_file)))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro dbus_send_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 dbus_send.cmd_file ARG3))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal))))
+		(allow ARG2 ARG3 (process (signal)))
 
-(macro dbus_send_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 dbus_send.cmd_file ARG2)))
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

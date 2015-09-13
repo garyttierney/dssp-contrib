@@ -254,9 +254,9 @@
 
 (optional wheel_dbus_send_optional_dbus_send
 	(block wheel_dbus_send
-		(blockinherit dbus_send_subj_blk)
+		(blockinherit dbus_send.subj_blk)
 
-		(call dbus_send_role_pattern (wheel.role wheel_subj_type subj))))
+		(call dbus_send.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_dbus_send_optional_wheel_sessbus
 	(call sessbus_chat_all_client_subj (wheel_dbus_send.subj))
@@ -291,7 +291,7 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_emacs_optional_wheel_dbus_send
-	(call dbus_send_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_dbus_send.subj)))
+	(call dbus_send.spec_auto_subj_type_transition (wheel_emacs.subj wheel_dbus_send.subj)))
 
 (optional wheel_emacs_optional_wheel_firefox
 	(call firefox_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_firefox.subj)))

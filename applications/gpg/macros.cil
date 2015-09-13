@@ -1,131 +1,69 @@
-(block gpg_subj_blk
-	(blockabstract gpg_subj_blk)
+(in gpg
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset gpg_subj_type subj))
+		(typeattributeset gpg.subj_type_attribute subj))
 
-(macro gpg_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset gpg_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro gpg_exec ((type ARG1))
-	(call can_exec (ARG1 gpg.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro gpg_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 gpg.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call gpg_manage_home (ARG2))
-	(call gpg_relabel_home (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call gpg_home_dir_obj_type_transition_home (ARG2))
+		(call manage_home_user (ARG2))
+		(call relabel_home_user (ARG2))
 
-	(optional gpg_role_pattern_optional_dirmngr
-		(call dirmngr_run (ARG3 ARG1))))
+		(call home_dir_obj_type_transition_home (ARG2))
 
-(macro gpg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 gpg.cmd_file ARG2)))
+		(optional gpg_role_pattern_optional_dirmngr
+			(call dirmngr_run (ARG3 ARG1))))
 
-(macro gpg_exec_gpg_helper ((type ARG1))
-	(call can_exec (ARG1 gpg_helper.cmd_file)))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro gpg_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 gpg.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro gpg_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 gpg.config_file list_dir_perms))
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.create_home_user_dirs_blk)
+	(blockinherit usersubj.delete_home_user_dirs_blk)
+	(blockinherit usersubj.rw_home_user_dirs_blk)
+	(blockinherit usersubj.manage_home_user_dirs_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro gpg_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 gpg.config_file gpg.config_file)))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
 
-(macro gpg_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 gpg.config_file gpg.config_file)))
+	(macro home_dir_add_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_add_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
 
-(macro gpg_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 gpg.config_file read_file_perms)
-	(allow ARG1 gpg.config_file list_dir_perms)
-	(allow ARG1 gpg.config_file read_lnk_file_perms))
+	(macro home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call usersubj.search_home_dir (ARG1))
+		(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4))))
 
-(macro gpg_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 gpg.config_file manage_file_perms)
-	(allow ARG1 gpg.config_file manage_dir_perms)
-	(allow ARG1 gpg.config_file manage_lnk_file_perms))
-
-(macro gpg_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 gpg.config_file relabel_file_perms)
-	(allow ARG1 gpg.config_file relabel_dir_perms)
-	(allow ARG1 gpg.config_file relabel_lnk_file_perms))
-
-(macro gpg_search_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file search_dir_perms))
-
-(macro gpg_list_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file list_dir_perms))
-
-(macro gpg_create_home_dirs ((type ARG1))
-	(call usersubj.add_entry_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file create_dir_perms))
-
-(macro gpg_delete_home_dirs ((type ARG1))
-	(call usersubj.del_entry_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file delete_dir_perms))
-
-(macro gpg_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_files_pattern (ARG1 gpg.home_user_file gpg.home_user_file)))
-
-(macro gpg_read_home_lnk_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_lnk_files_pattern (ARG1 gpg.home_user_file gpg.home_user_file)))
-
-(macro gpg_rw_home_dirs ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file rw_dir_perms))
-
-(macro gpg_manage_home_dirs ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(call manage_dirs_pattern (ARG1 gpg.home_user_file gpg.home_user_file)))
-
-(macro gpg_read_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file read_file_perms)
-	(allow ARG1 gpg.home_user_file list_dir_perms)
-	(allow ARG1 gpg.home_user_file read_lnk_file_perms))
-
-(macro gpg_manage_home ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file manage_file_perms)
-	(allow ARG1 gpg.home_user_file manage_dir_perms)
-	(allow ARG1 gpg.home_user_file manage_lnk_file_perms))
-
-(macro gpg_relabel_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 gpg.home_user_file relabel_file_perms)
-	(allow ARG1 gpg.home_user_file relabel_dir_perms)
-	(allow ARG1 gpg.home_user_file relabel_lnk_file_perms))
-
-(macro gpg_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 gpg.home_user_file dir ".gnupg")))
-
-(macro gpg_home_dir_add_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_add_obj_type_transition (ARG1 gpg.home_user_file dir ".gnupg")))
-
-(macro gpg_home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-	(call usersubj.search_home_dir (ARG1))
-	(call obj_type_transition_pattern (ARG1 gpg.home_user_file ARG2 ARG3 ARG4)))
+(in gpg_helper
+	(blockinherit exec_blk))

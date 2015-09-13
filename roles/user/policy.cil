@@ -15,14 +15,14 @@
 
 	(optional user_optional_curl
 		(call curl.run (user_subj_type role))
-		(call curl.manage_home_files (subj))
-		(call curl.relabel_home_files (subj))
+		(call curl.manage_home_user_files (subj))
+		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_bti
 		(call bti.run (user_subj_type role))
-		(call bti.manage_home_files (subj))
-		(call bti.relabel_home_files (subj))
+		(call bti.manage_home_user_files (subj))
+		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_dbus_send
@@ -238,7 +238,7 @@
 	(call git_auto_subj_type_transition_pattern (user_emacs.subj user_git.subj)))
 
 (optional user_emacs_optional_user_gpg
-	(call gpg_auto_subj_type_transition_pattern (user_emacs.subj user_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (user_emacs.subj user_gpg.subj)))
 
 (optional user_emacs_optional_user_lynx
 	(call lynx_auto_subj_type_transition_pattern (user_emacs.subj user_lynx.subj)))
@@ -333,7 +333,7 @@
 		(call git_home_auto_subj_type_transition_pattern (subj user.subj))))
 
 (optional user_git_optional_user_gpg
-	(call gpg_auto_subj_type_transition_pattern (user_git.subj user_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (user_git.subj user_gpg.subj)))
 
 (optional user_git_optional_user_git_email
 	(call git_email_auto_subj_type_transition_pattern (user_git.subj user_git_email.subj)))
@@ -357,11 +357,11 @@
 
 (optional user_gpg_optional_gpg
 	(block user_gpg
-		(blockinherit gpg_subj_blk)
+		(blockinherit gpg.subj_blk)
 
-		(call gpg_role_pattern (user.role user_subj_type subj))
+		(call gpg.role_pattern (user.role user_subj_type subj))
 
-		(call gpg_exec_gpg_helper (user.subj))))
+		(call gpg_helper.exec (user.subj))))
 
 (optional user_gpg_optional_gpg_agent
 	(call gpg_agent_auto_subj_type_transition_pattern (user_gpg.subj user_gpg_agent.subj)))
@@ -415,7 +415,7 @@
                 (call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_lynx_optional_user_gpg
-	(call gpg_auto_subj_type_transition_pattern (user_lynx.subj user_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (user_lynx.subj user_gpg.subj)))
 
 (optional user_lynx_optional_user_irssi
 	(call irssi_auto_subj_type_transition_pattern (user_lynx.subj user_irssi.subj)))
@@ -462,7 +462,7 @@
 		(call mutt_pgp_ewrap_role_pattern (user.role user_subj_type subj))))
 
 (optional user_mutt_pgp_ewrap_optional_user_gpg
-	(call gpg_auto_subj_type_transition_pattern (user_mutt_pgp_ewrap.subj user_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (user_mutt_pgp_ewrap.subj user_gpg.subj)))
 
 (optional user_nb_optional_nb
 	(block user_nb

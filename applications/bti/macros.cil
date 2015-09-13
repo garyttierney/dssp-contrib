@@ -7,15 +7,15 @@
 
 	(blockinherit send_signal_blk)
 
-	(macro read_home_files ((type ARG1))
+	(macro read_home_user_files ((type ARG1))
 		(call usersubj.search_home_dir (ARG1))
 		(allow ARG1 home_user_file read_file_perms))
 
-	(macro manage_home_files ((type ARG1))
+	(macro manage_home_user_files ((type ARG1))
 		(call usersubj.rw_home_dir (ARG1))
 		(allow ARG1 home_user_file manage_file_perms))
 
-	(macro relabel_home_files ((type ARG1))
+	(macro relabel_home_user_files ((type ARG1))
 		(call usersubj.search_home_dir (ARG1))
 		(allow ARG1 home_user_file relabel_file_perms))
 

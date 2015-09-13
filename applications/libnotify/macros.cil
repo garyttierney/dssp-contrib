@@ -10,7 +10,7 @@
 	(typeattributeset libnotify_subj_type ARG1))
 
 (macro libnotify_exec ((type ARG1))
-	(call can_exec (ARG1 gpg.cmd_file)))
+	(call can_exec (ARG1 libnotify.cmd_file)))
 
 (macro libnotify_role_pattern ((role ARG1)(type ARG2)(type ARG3))
 	(call auto_subj_type_transition_pattern (ARG2 libnotify.cmd_file ARG3))

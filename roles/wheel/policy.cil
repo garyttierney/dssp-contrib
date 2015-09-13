@@ -15,14 +15,14 @@
 
 	(optional wheel_optional_curl
 		(call curl.run (wheel_subj_type role))
-		(call curl.manage_home_files (subj))
-		(call curl.relabel_home_files (subj))
+		(call curl.manage_home_user_files (subj))
+		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_bti
 		(call bti.run (wheel_subj_type role))
-		(call bti.manage_home_files (subj))
-		(call bti.relabel_home_files (subj))
+		(call bti.manage_home_user_files (subj))
+		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_dd
@@ -300,7 +300,7 @@
 	(call git_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_git.subj)))
 
 (optional wheel_emacs_optional_wheel_gpg
-	(call gpg_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (wheel_emacs.subj wheel_gpg.subj)))
 
 (optional wheel_emacs_optional_wheel_lynx
 	(call lynx_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_lynx.subj)))
@@ -371,7 +371,7 @@
 		(call git_home_auto_subj_type_transition_pattern (subj wheel.subj))))
 
 (optional wheel_git_optional_wheel_gpg
-	(call gpg_auto_subj_type_transition_pattern (wheel_git.subj wheel_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (wheel_git.subj wheel_gpg.subj)))
 
 (optional wheel_git_optional_wheel_git_email
 	(call git_email_auto_subj_type_transition_pattern (wheel_git.subj wheel_git_email.subj)))
@@ -398,11 +398,11 @@
 
 (optional wheel_gpg_optional_gpg
 	(block wheel_gpg
-		(blockinherit gpg_subj_blk)
+		(blockinherit gpg.subj_blk)
 
-		(call gpg_role_pattern (wheel.role wheel_subj_type subj))
+		(call gpg.role_pattern (wheel.role wheel_subj_type subj))
 
-		(call gpg_exec_gpg_helper (wheel.subj))))
+		(call gpg_helper.exec (wheel.subj))))
 
 (optional wheel_gpg_optional_gpg_agent
 	(call gpg_agent_auto_subj_type_transition_pattern (wheel_gpg.subj wheel_gpg_agent.subj)))
@@ -541,7 +541,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_lynx_optional_wheel_gpg
-	(call gpg_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (wheel_lynx.subj wheel_gpg.subj)))
 
 (optional wheel_lynx_optional_wheel_irssi
 	(call irssi_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_irssi.subj)))
@@ -579,7 +579,7 @@
 		(call mutt_pgp_ewrap_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_mutt_pgp_ewrap_optional_wheel_gpg
-        (call gpg_auto_subj_type_transition_pattern (wheel_mutt_pgp_ewrap.subj wheel_gpg.subj)))
+        (call gpg.spec_auto_subj_type_transition (wheel_mutt_pgp_ewrap.subj wheel_gpg.subj)))
 
 (optional wheel_machinectl_optional_machinectl
 	(block wheel_machinectl
@@ -674,7 +674,7 @@
 		(call rpmdev_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_rpmdev_optional_wheel_gpg
-	(call gpg_auto_subj_type_transition_pattern (wheel_rpmdev.subj wheel_gpg.subj)))
+	(call gpg.spec_auto_subj_type_transition (wheel_rpmdev.subj wheel_gpg.subj)))
 
 (optional wheel_screen_optional_screen
 	(block wheel_screen

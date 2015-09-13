@@ -142,9 +142,9 @@
 (optional rpm_script_optional_udevadm
 	(call udevadm.run (rpm_script_t rpm_role)))
 
-(optional rpm_script_optional_usermanage
-	(call useradd_run_groupadd (rpm_script_t rpm_role))
-	(call useradd_run_useradd (rpm_script_t rpm_role)))
+(optional rpm_script_optional_useradd
+	(call groupadd.run (rpm_script_t rpm_role))
+	(call useradd.run (rpm_script_t rpm_role)))
 
 (call rpm_append_inherited_tmpfs_files (rpm_script_client_subj_type))
 (call rpm_read_inherited_tmpfs_files (rpm_script_client_subj_type))

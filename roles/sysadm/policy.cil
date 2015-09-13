@@ -637,8 +637,8 @@
 		(call usbutil.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_useradd
-		(call useradd_run_groupadd (sysadm_subj_type role))
-		(call useradd_run_useradd (sysadm_subj_type role)))
+		(call groupadd.run (sysadm_subj_type role))
+		(call useradd.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_utempter
 		(call utempter_run (sysadm_subj_type role)))

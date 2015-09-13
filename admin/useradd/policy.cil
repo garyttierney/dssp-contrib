@@ -1,11 +1,11 @@
-(roleattribute useradd_role)
-
 (block groupadd
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset useradd_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype useradd_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override setuid)))
 	(allow subj self (process (setfscreate setrlimit)))
@@ -35,11 +35,13 @@
 		(call sd_journald_client_subj_type (subj))))
 
 (block useradd
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset useradd_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype useradd_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (chown fsetid fowner dac_override)))
 	(allow subj self (process (setfscreate)))

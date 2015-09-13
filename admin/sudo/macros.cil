@@ -24,8 +24,8 @@
 		(allow ARG3 ARG2 (process (signal)))
 		(allow ARG3 ARG2 rw_key_perms)
 
-		(call manage_tmpfs_files (ARG2))
-		(call relabel_tmpfs_files (ARG2))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
 
 		(call chkpwd.run (ARG3 ARG1))
 
@@ -65,17 +65,17 @@
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "sudo")))
 
-	(macro read_tmpfs_files ((type ARG1))
+	(macro read_tmpfs_user_files ((type ARG1))
 		(call file_search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_file read_file_perms))
 
-	(macro manage_tmpfs_files ((type ARG1))
+	(macro manage_tmpfs_user_files ((type ARG1))
 		(call file_search_runtime_user (ARG1))
 		(call fs_rw_tmpfs_dirs (ARG1))
 		(allow ARG1 tmpfs_user_file manage_file_perms))
 
-	(macro relabel_tmpfs_files ((type ARG1))
+	(macro relabel_tmpfs_user_files ((type ARG1))
 		(call file_search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_file relabel_file_perms))

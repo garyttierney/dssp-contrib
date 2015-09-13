@@ -1,11 +1,11 @@
-(roleattribute unboundctl_role)
-
 (block unboundctl
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset unboundctl_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype unboundctl_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self create_tcp_socket_perms)
 
@@ -22,11 +22,13 @@
 		(call sd_forked_subj_type (subj))))
 
 (block unboundcc
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset unboundctl_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype unboundctl_role subj)
+	(roletype role_attribute subj)
 
 	(call nss_client_subj_type (subj))
 

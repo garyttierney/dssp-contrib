@@ -1,27 +1,17 @@
-(macro unboundctl_exec ((type ARG1))
-	(call can_exec (ARG1 unboundctl.cmd_file)))
+(in unboundctl
+	(blockinherit exec_blk)
 
-(macro unboundctl_auto_subj_type_transition ((type ARG1))
-	(call unboundctl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 unboundctl.cmd_file unboundctl.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro unboundctl_send_signal ((type ARG1))
-	(allow ARG1 unboundctl.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro unboundctl_run ((type ARG1)(role ARG2))
-	(call unboundctl_auto_subj_type_transition (ARG1))
-	(roleattributeset unboundctl_role ARG2))
+	(blockinherit send_signal_blk))
 
-(macro unboundctl_exec_unboundcc ((type ARG1))
-	(call can_exec (ARG1 unboundcc.cmd_file)))
+(in unboundcc
+	(blockinherit exec_blk)
 
-(macro unboundctl_auto_subj_type_transition_unboundcc ((type ARG1))
-	(call unboundctl_send_signal_unboundcc (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 unboundcc.cmd_file unboundcc.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro unboundctl_send_signal_unboundcc ((type ARG1))
-	(allow ARG1 unboundcc.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro unboundctl_run_unboundcc ((type ARG1)(role ARG2))
-	(call unboundctl_auto_subj_type_transition_unboundcc (ARG1))
-	(roleattributeset unboundctl_role ARG2))
+	(blockinherit send_signal_blk))

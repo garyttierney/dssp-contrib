@@ -1,9 +1,9 @@
-(roleattribute usbutil_role)
-
 (block usbutil
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype usbutil_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)

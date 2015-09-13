@@ -1,24 +1,24 @@
-(typeattribute alsautil_subj_type)
-
 (block alsautil
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (alsautil_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj_tmpfs_user_obj_blk)
 
-	(optional alsautil_optional_pa
-		(call pa_tmpfs_client (alsautil_subj_type tmpfs_user_file))))
+	(call manage_tmpfs_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call alsautil_manage_tmpfs_files (alsautil_subj_type))
-(call alsautil_tmpfs_obj_type_transition_tmpfs (alsautil_subj_type))
+	(call dev_rw_sound (subj_type_attribute))
 
-(call dev_rw_sound (alsautil_subj_type))
+	(call file_read_data (subj_type_attribute))
 
-(call file_read_data (alsautil_subj_type))
+	(call miscfile_read_all_terminfo (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call miscfile_read_all_terminfo (alsautil_subj_type))
-(call miscfile_read_locale (alsautil_subj_type))
+	(optional alsautil_subj_type_optional_pa
+		(call pa_tmpfs_client (subj_type_attribute tmpfs_user_file)))
 
-(optional alsautil_subj_type_optional_xserver
-	(call xserver_client_subj_type (alsautil_subj_type)))
+	(optional alsautil_subj_type_optional_xserver
+		(call xserver_client_subj_type (subj_type_attribute))))

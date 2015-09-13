@@ -1,47 +1,49 @@
-(block alsautil_subj_blk
-	(blockabstract alsautil_subj_blk)
+(in alsautil
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset alsautil_subj_type subj))
+		(typeattributeset alsautil.subj_type_attribute subj))
 
-(macro alsautil_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset alsautil_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro alsautil_exec ((type ARG1))
-	(call can_exec (ARG1 alsautil.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro alsautil_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 alsautil.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call alsautil_manage_tmpfs_files (ARG2))
-	(call alsautil_relabel_tmpfs_files (ARG2)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro alsautil_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 alsautil.cmd_file ARG2)))
+		(call manage_tmpfs_files (ARG2))
+		(call relabel_tmpfs_files (ARG2)))
 
-(macro alsautil_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 alsautil.tmpfs_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro alsautil_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 alsautil.tmpfs_user_file manage_file_perms))
+	(macro read_tmpfs_files ((type ARG1))
+		(call file_search_runtime_user (ARG1))
+		(call fs_search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file read_file_perms))
 
-(macro alsautil_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 alsautil.tmpfs_user_file relabel_file_perms))
+	(macro manage_tmpfs_files ((type ARG1))
+		(call file_search_runtime_user (ARG1))
+		(call fs_rw_tmpfs_dirs (ARG1))
+		(allow ARG1 tmpfs_user_file manage_file_perms))
 
-(macro alsautil_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 alsautil.tmpfs_user_file file "*")))
+	(macro relabel_tmpfs_files ((type ARG1))
+		(call file_search_runtime_user (ARG1))
+		(call fs_search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file relabel_file_perms))
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

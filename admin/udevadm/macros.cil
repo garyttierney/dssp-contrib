@@ -1,17 +1,11 @@
-(macro udevadm_client_subj_type ((type ARG1))
-	(typeattributeset udevadm_client_subj_type ARG1))
+(in udevadm
+	(blockinherit exec_blk)
 
-(macro udevadm_exec ((type ARG1))
-	(call can_exec (ARG1 udevadm.cmd_file))
-	(call udevadm_client_subj_type (ARG1)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro udevadm_auto_subj_type_transition ((type ARG1))
-	(call udevadm_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 udevadm.cmd_file udevadm.subj)))
+	(blockinherit run_blk)
 
-(macro udevadm_send_signal ((type ARG1))
-	(allow ARG1 udevadm.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro udevadm_run ((type ARG1)(role ARG2))
-	(call udevadm_auto_subj_type_transition (ARG1))
-	(roleattributeset udevadm_role ARG2))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))

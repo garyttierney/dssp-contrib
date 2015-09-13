@@ -1,17 +1,17 @@
-(roleattribute udevadm_role)
-
-(typeattribute udevadm_client_subj_type)
-
 (block udevadm
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset udevadm_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype udevadm_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override net_admin)))
 
-	(call udevadm_client_subj_type (subj))
+	(call client_subj_type (subj))
 
 	(call sys_rw_cpu_sysfs_files (subj))
 	(call sys_rw_memory_sysfs_files (subj))
@@ -56,14 +56,14 @@
 		(call sd_daemon (subj cmd_file)))
 
 	(optional udevadm_optional_sd_networkd
-		(call sd_networkd_read_config (subj))))
+		(call sd_networkd_read_config (subj)))
 
-(call dev_read_urandom (udevadm_client_subj_type))
+	(call dev_read_urandom (client_subj_type_attribute))
 
-(call udev_client_subj_type (udevadm_client_subj_type))
+	(call udev_client_subj_type (client_subj_type_attribute))
 
-(optional udevadm_client_subj_type_optional_sd
-	(call sd_search_runtime (udevadm_client_subj_type)))
+	(optional udevadm_client_subj_type_optional_sd
+		(call sd_search_runtime (client_subj_type_attribute)))
 
-(optional udevadm_client_subj_type_optional_sd_udevd
-	(call sd_udevd_stream_connect (udevadm_client_subj_type)))
+	(optional udevadm_client_subj_type_optional_sd_udevd
+		(call sd_udevd_stream_connect (client_subj_type_attribute))))

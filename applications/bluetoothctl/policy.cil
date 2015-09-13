@@ -1,9 +1,9 @@
-(roleattribute bluetoothctl_role)
-
 (block bluetoothctl
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype bluetoothctl_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (net_raw net_admin)))
 	(allow subj self create_socket_perms)

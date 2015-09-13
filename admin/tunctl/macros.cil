@@ -1,16 +1,11 @@
-(macro tunctl_exec ((type ARG1))
-	(call can_exec (ARG1 tunctl.cmd_file)))
+(in tunctl
+	(blockinherit exec_blk)
 
-(macro tunctl_auto_subj_type_transition ((type ARG1))
-	(call tunctl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 tunctl.cmd_file tunctl.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro tunctl_run ((type ARG1)(role ARG2))
-	(call tunctl_auto_subj_type_transition (ARG1))
-	(roleattributeset tunctl_role (ARG2)))
+	(blockinherit run_blk)
 
-(macro tunctl_send_signal ((type ARG1))
-	(allow ARG1 tunctl.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro tunctl_relabelfrom_tun_socket ((type ARG1))
-	(allow ARG1 tunctl.subj (tun_socket (relabelfrom))))
+	(macro relabelfrom_tun_socket ((type ARG1))
+		(allow ARG1 subj (tun_socket (relabelfrom)))))

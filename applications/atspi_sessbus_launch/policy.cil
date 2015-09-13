@@ -1,26 +1,26 @@
-(typeattribute atspi_sessbus_launch_subj_type)
-(typeattribute atspi_sessbus_launch_sessbus_chat_client_subj_type)
-
 (block atspi_sessbus_launch
+	(typeattribute subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (atspi_sessbus_launch_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(allow atspi_sessbus_launch_subj_type self rw_fifo_file_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call dev_read_urandom (atspi_sessbus_launch_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_data_files (atspi_sessbus_launch_subj_type))
+	(call file_read_data_files (subj_type_attribute))
 
-(call nss_client_subj_type (atspi_sessbus_launch_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(optional atspi_sessbus_launch_subj_type_optional_sessbus
-        (call sessbus_acquire_service_all_subj (atspi_sessbus_launch_subj_type))
-        (call sessbus_client_all_subj (atspi_sessbus_launch_subj_type)))
+	(optional atspi_sessbus_launch_subj_type_optional_sessbus
+        	(call sessbus_acquire_service_all_subj (subj_type_attribute))
+		(call sessbus_client_all_subj (subj_type_attribute)))
 
-(optional atspi_sessbus_launch_subj_type_optional_xserver
-	(call xserver_client_subj_type (atspi_sessbus_launch_subj_type)))
+	(optional atspi_sessbus_launch_subj_type_optional_xserver
+		(call xserver_client_subj_type (subj_type_attribute)))
 
-(optional atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sessbus
-	(allow atspi_sessbus_launch_sessbus_chat_client_subj_type atspi_sessbus_launch_subj_type (dbus (send_msg)))
-	(allow atspi_sessbus_launch_subj_type atspi_sessbus_launch_sessbus_chat_client_subj_type (dbus (send_msg))))
+	(optional atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj_type_attribute (dbus (send_msg)))
+		(allow subj_type_attribute sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

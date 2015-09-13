@@ -707,9 +707,9 @@
 
 (optional sysadm_atspi_sessbus_launch_optional_atspi_sessbus_launch
 	(block sysadm_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch_subj_blk)
+		(blockinherit atspi_sessbus_launch.subj_blk)
 
-		(call atspi_sessbus_launch_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call atspi_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
@@ -1248,7 +1248,7 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_sessbus_optional_sysadm_atspi_sessbus_launch
-	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
+	(call atspi_sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
 
 (optional sysadm_sessbus_optional_sysadm_dunst
 	(call dunst_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_dunst.subj)))

@@ -187,9 +187,9 @@
 
 (optional user_atspi_sessbus_launch_optional_atspi_sessbus_launch
 	(block user_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch_subj_blk)
+		(blockinherit atspi_sessbus_launch.subj_blk)
 
-		(call atspi_sessbus_launch_role_pattern (user.role user_subj_type subj))))
+		(call atspi_sessbus_launch.role_pattern (user.role user_subj_type subj))))
 
 (optional user_atspi_sessbus_launch_optional_user_sessbus
         (call sessbus_auto_subj_type_transition_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj)))
@@ -560,7 +560,7 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_sessbus_optional_user_atspi_sessbus_launch
-	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_atspi_sessbus_launch.subj)))
+	(call atspi_sessbus_launch.spec_auto_subj_type_transition (user_sessbus.subj user_atspi_sessbus_launch.subj)))
 
 (optional user_sessbus_optional_user_dunst
 	(call dunst_auto_subj_type_transition_pattern (user_sessbus.subj user_dunst.subj)))

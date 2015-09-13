@@ -239,9 +239,9 @@
 
 (optional wheel_atspi_sessbus_launch_optional_atspi_sessbus_launch
 	(block wheel_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch_subj_blk)
+		(blockinherit atspi_sessbus_launch.subj_blk)
 
-		(call atspi_sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))))
+		(call atspi_sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
@@ -715,7 +715,7 @@
 		(call usersubj_home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_sessbus_optional_wheel_atspi_sessbus_launch
-	(call atspi_sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_atspi_sessbus_launch.subj)))
+	(call atspi_sessbus_launch.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_atspi_sessbus_launch.subj)))
 
 (optional wheel_sessbus_optional_wheel_dunst
 	(call dunst_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_dunst.subj)))

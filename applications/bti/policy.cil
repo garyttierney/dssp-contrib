@@ -1,16 +1,16 @@
-(roleattribute bti_role)
-
 (block bti
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype bti_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj_home_user_obj_blk)
 
-	(allow subj self rw_fifo_file_perms)
+	(call manage_home_files (subj))
+	(call home_dir_obj_type_transition_home (subj))
 
-	(call bti_manage_home_files (subj))
-	(call bti_home_dir_obj_type_transition_home (subj))
+	(allow subj self rw_fifo_file_perms)
 
 	(call cmd_exec_cmd (subj))
 	(call cmd_mmap_shell (subj))

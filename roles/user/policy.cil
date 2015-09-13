@@ -20,10 +20,10 @@
 		(call curl_home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_bti
-		(call bti_run (user_subj_type role))
-		(call bti_manage_home_files (subj))
-		(call bti_relabel_home_files (subj))
-		(call bti_home_dir_obj_type_transition_home (subj)))
+		(call bti.run (user_subj_type role))
+		(call bti.manage_home_files (subj))
+		(call bti.relabel_home_files (subj))
+		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_dbus_send
 		(call dbus_send_exec (user_subj_type)))

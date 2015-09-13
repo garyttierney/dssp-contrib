@@ -121,45 +121,45 @@
 	(call file_var_lib_obj_type_transition (ARG1 tor.var_lib_file dir "tor")))
 
 (macro tor_search_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 tor.home_user_file search_dir_perms))
 
 (macro tor_list_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 tor.home_user_file list_dir_perms))
 
 (macro tor_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
 
 (macro tor_manage_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call manage_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
 
 (macro tor_read_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 tor.home_user_file tor.home_user_file)))
 
 (macro tor_read_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 tor.home_user_file read_file_perms)
 	(allow ARG1 tor.home_user_file list_dir_perms)
 	(allow ARG1 tor.home_user_file read_lnk_file_perms))
 
 (macro tor_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 tor.home_user_file manage_file_perms)
 	(allow ARG1 tor.home_user_file manage_dir_perms)
 	(allow ARG1 tor.home_user_file manage_lnk_file_perms))
 
 (macro tor_relabel_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 tor.home_user_file relabel_file_perms)
 	(allow ARG1 tor.home_user_file relabel_dir_perms)
 	(allow ARG1 tor.home_user_file relabel_lnk_file_perms))
 
 (macro tor_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 tor.home_user_file dir ".tor")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 tor.home_user_file dir ".tor")))
 
 (macro tor_tcp_bind_tor_control_port ((type ARG1))
 	(allow ARG1 tor_control.port (tcp_socket (name_bind))))

@@ -30,12 +30,12 @@
 (call sd_nspawn_start_all_unit (machinectl_subj_type))
 (call sd_nspawn_stop_all_unit (machinectl_subj_type))
 
-(call usersubj_home_dir_obj_type_transition_home_user (machinectl_subj_type))
-(call usersubj_manage_home_user (machinectl_subj_type))
-(call usersubj_manage_tmpfs_user (machinectl_subj_type))
-(call usersubj_manage_var_tmp_user (machinectl_subj_type))
-(call usersubj_tmpfs_obj_type_transition_tmpfs_user (machinectl_subj_type))
-(call usersubj_var_tmp_obj_type_transition_var_tmp_user (machinectl_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user (machinectl_subj_type))
+(call usersubj.manage_home_user (machinectl_subj_type))
+(call usersubj.manage_tmpfs_user (machinectl_subj_type))
+(call usersubj.manage_var_tmp_user (machinectl_subj_type))
+(call usersubj.tmpfs_obj_type_transition_tmpfs_user (machinectl_subj_type))
+(call usersubj.var_tmp_obj_type_transition_var_tmp_user (machinectl_subj_type))
 
 (allow machinectl_client_subj_type self create_unix_dgram_socket_perms)
 (allow machinectl_client_subj_type self rw_fifo_file_perms)

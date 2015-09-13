@@ -150,7 +150,7 @@
 		(call unboundctl.auto_subj_type_transition (subj)))
 
 	(optional triggers_optional_usersubj
-		(call usersubj_search_home_dir (subj))))
+		(call usersubj.search_home_dir (subj))))
 
 (allow dnssec_trigger_adm_subj_type dnssec_trigger_subj_type (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (dnssec_trigger_adm_subj_type dnssec_trigger_subj_type))

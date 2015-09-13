@@ -146,56 +146,56 @@
 	(call fs_tmpfs_obj_type_transition (ARG1 xserver.tmpfs_user_file sock_file "*")))
 
 (macro xserver_search_home_data ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(allow ARG1 xserver.home_data_file search_dir_perms))
 
 (macro xserver_list_home_data ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(allow ARG1 xserver.home_data_file list_dir_perms))
 
 (macro xserver_read_home_data_files ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(call read_files_pattern (ARG1 xserver.home_data_file xserver.home_data_file)))
 
 (macro xserver_read_home_data_lnk_files ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(call read_lnk_files_pattern (ARG1 xserver.home_data_file xserver.home_data_file)))
 
 (macro xserver_read_home_data ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(allow ARG1 xserver.home_data_file read_file_perms)
 	(allow ARG1 xserver.home_data_file list_dir_perms)
 	(allow ARG1 xserver.home_data_file read_lnk_file_perms))
 
 (macro xserver_manage_home_data ((type ARG1))
-	(call usersubj_rw_home_data_dirs (ARG1))
+	(call usersubj.rw_home_data_dirs (ARG1))
 	(allow ARG1 xserver.home_data_file manage_file_perms)
 	(allow ARG1 xserver.home_data_file manage_dir_perms)
 	(allow ARG1 xserver.home_data_file manage_lnk_file_perms))
 
 (macro xserver_relabel_home_data ((type ARG1))
-	(call usersubj_search_home_data (ARG1))
+	(call usersubj.search_home_data (ARG1))
 	(allow ARG1 xserver.home_data_file relabel_file_perms)
 	(allow ARG1 xserver.home_data_file relabel_dir_perms)
 	(allow ARG1 xserver.home_data_file relabel_lnk_file_perms))
 
 (macro xserver_home_data_obj_type_transition_home_data ((type ARG1))
-	(call usersubj_home_data_obj_type_transition (ARG1 xserver.home_data_file dir "xorg")))
+	(call usersubj.home_data_obj_type_transition (ARG1 xserver.home_data_file dir "xorg")))
 
 (macro xserver_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xserver.home_user_file read_file_perms))
 
 (macro xserver_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 xserver.home_user_file manage_file_perms))
 
 (macro xserver_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xserver.home_user_file relabel_file_perms))
 
 (macro xserver_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 xserver.home_user_file file ".xserverrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 xserver.home_user_file file ".xserverrc")))
 
 (macro xserver_tcp_bind_xserver_port ((type ARG1))
 	(allow ARG1 self (capability (net_bind_service)))

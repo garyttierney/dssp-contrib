@@ -5,7 +5,7 @@
 
 	(roletype qiv_role subj)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call qiv_manage_tmpfs_files (subj))
 	(call qiv_tmpfs_obj_type_transition_tmpfs (subj))
@@ -19,6 +19,6 @@
 	(call miscfile_read_all_fonts (subj))
 	(call miscfile_read_locale (subj))
 
-	(call usersubj_read_home_user_files (subj))
+	(call usersubj.read_home_user_files (subj))
 
 	(call xserver_tmpfs_client (subj tmpfs_user_file)))

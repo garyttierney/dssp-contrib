@@ -1,9 +1,9 @@
 (typeattribute sysadm_subj_type)
 
 (block sysadm
-	(blockinherit usersubj_base_priv_login_blk)
+	(blockinherit usersubj.base_priv_login_blk)
 
-	(call usersubj_mls (id systemlow (systemlow systemhigh)))
+	(call usersubj.mls (id systemlow (systemlow systemhigh)))
 
 	(typeattributeset sysadm_subj_type subj)
 
@@ -739,7 +739,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_dunst_optional_sysadm_firefox
 	(call firefox_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_firefox.subj)))
@@ -756,7 +756,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_emacs_optional_sysadm_dbus_send
 	(call dbus_send.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_dbus_send.subj)))
@@ -827,7 +827,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
 
 		(call git_home_obj_entry_subj (sysadm.subj))
 		(call git_home_auto_subj_type_transition_pattern (subj sysadm.subj))))
@@ -853,7 +853,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_git_email_optional_sysadm_git
 	(call git_auto_subj_type_transition_pattern (sysadm_git_email.subj sysadm_git.subj)))
@@ -879,7 +879,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_analyze_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_analyze.subj sysadm_ssh_client.subj)))
@@ -1017,7 +1017,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_lynx_optional_sysadm_gpg
 	(call gpg_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_gpg.subj)))
@@ -1057,7 +1057,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_mutt_optional_sysadm_emacsclient
 	(call emacsclient_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_emacsclient.subj)))
@@ -1088,7 +1088,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_nb_optional_sysadm_firefox
 	(call firefox_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_firefox.subj)))
@@ -1111,7 +1111,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_pa_optional_pa
 	(block sysadm_pa
@@ -1149,7 +1149,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_rp_optional_rp
 	(block sysadm_rp
@@ -1160,7 +1160,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_rpmdev_optional_rpmdev
 	(block sysadm_rpmdev
@@ -1198,7 +1198,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
 
 		(call screen_manage_config_files (sysadm.subj))
 		(call screen_manage_runtime (sysadm.subj))))
@@ -1224,9 +1224,9 @@
 
 		(call hostname_exec (subj))
 
-		(call usersubj_pty (subj))
-		(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
-		(call usersubj_manage_home_user_files (subj))))
+		(call usersubj.pty_template (subj))
+		(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+		(call usersubj.manage_home_user_files (subj))))
 
 (optional sysadm_sduser_optional_sysadm_sessbus
 	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
@@ -1245,7 +1245,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_sessbus_optional_sysadm_atspi_sessbus_launch
 	(call atspi_sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
@@ -1274,7 +1274,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_ssh_client_optional_ssh
 	(block sysadm_ssh_client
@@ -1335,7 +1335,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_tor_socks_optional_sysadm_firefox
 	(call tor_socks_client_subj_type (sysadm_firefox.subj))
@@ -1381,7 +1381,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_vlock_optional_vlock
 	(block sysadm_vlock
@@ -1391,7 +1391,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xbindkeys_optional_xbindkeys
 	(block sysadm_xbindkeys
@@ -1401,7 +1401,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xbindkeys_optional_sysadm_pactl
 	(call pactl_auto_subj_type_transition_pattern (sysadm_xbindkeys.subj sysadm_pactl.subj)))
@@ -1416,7 +1416,7 @@
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xinit_optional_sysadm_rp
 	(call rp_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_rp.subj)))
@@ -1448,7 +1448,7 @@
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xterm_optional_sysadm_screen
 	(call screen_auto_subj_type_transition_pattern (sysadm_xterm.subj sysadm_screen.subj)))

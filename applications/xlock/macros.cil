@@ -13,16 +13,16 @@
 	(roleattributeset xlock_role ARG2))
 
 (macro xlock_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xlock.home_user_file read_file_perms))
 
 (macro xlock_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 xlock.home_user_file manage_file_perms))
 
 (macro xlock_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xlock.home_user_file relabel_file_perms))
 
 (macro xlock_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 xlock.home_user_file file ".xlockrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 xlock.home_user_file file ".xlockrc")))

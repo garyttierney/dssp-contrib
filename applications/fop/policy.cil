@@ -7,7 +7,7 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(allow subj self rw_fifo_file_perms)
 
@@ -27,5 +27,5 @@
 	(call miscfile_read_locale (subj))
 	(call miscfile_read_network (subj))
 
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj)))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))

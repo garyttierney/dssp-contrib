@@ -13,16 +13,16 @@
 	(roleattributeset openssl_role ARG2))
 
 (macro openssl_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 openssl.home_user_file read_file_perms))
 
 (macro openssl_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 openssl.home_user_file manage_file_perms))
 
 (macro openssl_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 openssl.home_user_file relabel_file_perms))
 
 (macro openssl_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 openssl.home_user_file file ".rnd")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 openssl.home_user_file file ".rnd")))

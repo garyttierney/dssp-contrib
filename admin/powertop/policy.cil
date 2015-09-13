@@ -18,7 +18,7 @@
 	(call manage_var_cache (subj))
 	(call var_cache_obj_type_transition_var_cache (subj))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
@@ -66,8 +66,8 @@
 	(call subj_ptrace_uncond_type (subj))
 	(call subj_read_common_subj_state (subj))
 
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional powertop_optional_sd
 		(call sd_daemon (subj cmd_file))

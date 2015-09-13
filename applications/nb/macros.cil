@@ -31,19 +31,19 @@
 	(call auto_subj_type_transition_pattern (ARG1 nb.cmd_file ARG2)))
 
 (macro nb_search_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 nb.home_user_file search_dir_perms))
 
 (macro nb_list_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 nb.home_user_file list_dir_perms))
 
 (macro nb_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 nb.home_user_file nb.home_user_file)))
 
 (macro nb_rw_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call rw_files_pattern (ARG1 nb.home_user_file nb.home_user_file)))
 
 (macro nb_rw_inherited_home_files ((type ARG1))
@@ -51,29 +51,29 @@
 	(allow ARG1 nb.home_user_file rw_inherited_file_perms))
 
 (macro nb_read_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 nb.home_user_file nb.home_user_file)))
 
 (macro nb_read_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 nb.home_user_file read_file_perms)
 	(allow ARG1 nb.home_user_file list_dir_perms)
 	(allow ARG1 nb.home_user_file read_lnk_file_perms))
 
 (macro nb_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 nb.home_user_file manage_file_perms)
 	(allow ARG1 nb.home_user_file manage_dir_perms)
 	(allow ARG1 nb.home_user_file manage_lnk_file_perms))
 
 (macro nb_relabel_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 nb.home_user_file relabel_file_perms)
 	(allow ARG1 nb.home_user_file relabel_dir_perms)
 	(allow ARG1 nb.home_user_file relabel_lnk_file_perms))
 
 (macro nb_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 nb.home_user_file dir ".newsbeuter")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 nb.home_user_file dir ".newsbeuter")))
 
 (macro nb_use_fd_all_subj ((type ARG1))
 	(allow ARG1 nb_subj_type (fd (use))))

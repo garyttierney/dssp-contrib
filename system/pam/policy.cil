@@ -93,8 +93,8 @@
 	(call sduser_link_keyring_all_subj (pam_login_prog_subj_type)))
 
 (optional pam_login_prog_subj_type_optional_usersubj
-	(call usersubj_create_keyring_common_login_subj (pam_login_prog_subj_type))
-	(call usersubj_send_signal_common_login_subj (pam_login_prog_subj_type)))
+	(call usersubj.create_keyring_common_login_subj (pam_login_prog_subj_type))
+	(call usersubj.send_signal_common_login_subj (pam_login_prog_subj_type)))
 
 (call sys_audit_client_subj_type (pam_client_subj_type))
 

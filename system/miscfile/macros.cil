@@ -51,25 +51,25 @@
 	(call file_search_config (ARG1))
 	(allow ARG1 miscfile_cert_obj_type search_dir_perms)
 	(optional miscfile_search_all_cert_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_list_all_cert ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 miscfile_cert_obj_type list_dir_perms)
 	(optional miscfile_list_all_cert_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_cert_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_files_pattern (ARG1 miscfile_cert_obj_type miscfile_cert_obj_type))
 	(optional miscfile_read_all_cert_files_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_cert_lnk_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 miscfile_cert_obj_type miscfile_cert_obj_type))
 	(optional miscfile_read_all_cert_lnk_files_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_cert ((type ARG1))
 	(call file_search_config (ARG1))
@@ -77,7 +77,7 @@
 	(allow ARG1 miscfile_cert_obj_type list_dir_perms)
 	(allow ARG1 miscfile_cert_obj_type read_lnk_file_perms)
 	(optional miscfile_read_all_cert_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_manage_all_cert ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
@@ -85,7 +85,7 @@
 	(allow ARG1 miscfile_cert_obj_type manage_dir_perms)
 	(allow ARG1 miscfile_cert_obj_type manage_lnk_file_perms)
 	(optional miscfile_read_all_cert_optional_usersubj
-		(call usersubj_rw_home_dir (ARG1))))
+		(call usersubj.rw_home_dir (ARG1))))
 
 (macro miscfile_search_factory ((type ARG1))
 	(call file_search_data (ARG1))
@@ -156,25 +156,25 @@
 	(call file_search_var_cache (ARG1))
 	(allow ARG1 miscfile_fonts_cache_obj_type search_dir_perms)
 	(optional miscfile_search_all_fonts_cache_optional_usersubj
-		(call usersubj_search_home_cache (ARG1))))
+		(call usersubj.search_home_cache (ARG1))))
 
 (macro miscfile_list_all_fonts_cache ((type ARG1))
 	(call file_search_var_cache (ARG1))
 	(allow ARG1 miscfile_fonts_cache_obj_type list_dir_perms)
 	(optional miscfile_list_all_fonts_cache_optional_usersubj
-		(call usersubj_search_home_cache (ARG1))))
+		(call usersubj.search_home_cache (ARG1))))
 
 (macro miscfile_read_all_fonts_cache_files ((type ARG1))
 	(call file_search_var_cache (ARG1))
 	(call read_files_pattern (ARG1 miscfile_fonts_cache_obj_type miscfile_fonts_cache_obj_type))
 	(optional miscfile_read_all_fonts_cache_files_optional_usersubj
-		(call usersubj_search_home_cache (ARG1))))
+		(call usersubj.search_home_cache (ARG1))))
 
 (macro miscfile_read_all_fonts_cache_lnk_files ((type ARG1))
 	(call file_search_var_cache (ARG1))
 	(call read_lnk_files_pattern (ARG1 miscfile_fonts_cache_obj_type miscfile_fonts_cache_obj_type))
 	(optional miscfile_read_all_fonts_cache_lnk_files_optional_usersubj
-		(call usersubj_search_home_cache (ARG1))))
+		(call usersubj.search_home_cache (ARG1))))
 
 (macro miscfile_read_all_fonts_cache ((type ARG1))
 	(call file_search_var_cache (ARG1))
@@ -182,7 +182,7 @@
 	(allow ARG1 miscfile_fonts_cache_obj_type list_dir_perms)
 	(allow ARG1 miscfile_fonts_cache_obj_type read_lnk_file_perms)
 	(optional miscfile_read_all_fonts_cache_optional_usersubj
-		(call usersubj_search_home_cache (ARG1))))
+		(call usersubj.search_home_cache (ARG1))))
 
 (macro miscfile_manage_all_fonts_cache ((type ARG1))
 	(call file_rw_var_cache_dirs (ARG1))
@@ -190,7 +190,7 @@
 	(allow ARG1 miscfile_fonts_cache_obj_type manage_dir_perms)
 	(allow ARG1 miscfile_fonts_cache_obj_type manage_lnk_file_perms)
 	(optional miscfile_manage_all_fonts_cache_optional_usersubj
-		(call usersubj_rw_home_cache_dirs (ARG1))))
+		(call usersubj.rw_home_cache_dirs (ARG1))))
 
 (macro miscfile_search_fonts_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -224,25 +224,25 @@
 	(call file_search_config (ARG1))
 	(allow ARG1 miscfile_fonts_config_obj_type search_dir_perms)
 	(optional miscfile_search_all_fonts_config_optional_usersubj
-		(call usersubj_search_home_config (ARG1))))
+		(call usersubj.search_home_config (ARG1))))
 
 (macro miscfile_list_all_fonts_config ((type ARG1))
 	(call file_search_config (ARG1))
 	(allow ARG1 miscfile_fonts_config_obj_type list_dir_perms)
 	(optional miscfile_list_all_fonts_config_optional_usersubj
-		(call usersubj_search_home_config (ARG1))))
+		(call usersubj.search_home_config (ARG1))))
 
 (macro miscfile_read_all_fonts_config_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_files_pattern (ARG1 miscfile_fonts_config_obj_type miscfile_fonts_config_obj_type))
 	(optional miscfiles_read_all_fonts_config_files_optional_usersubj
-		(call usersubj_search_home_config (ARG1))))
+		(call usersubj.search_home_config (ARG1))))
 
 (macro miscfile_read_all_fonts_config_lnk_files ((type ARG1))
 	(call file_search_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 miscfile_fonts_config_obj_type miscfile_fonts_config_obj_type))
 	(optional miscfile_read_all_fonts_config_lnk_files_optional_usersubj
-		(call usersubj_search_home_config (ARG1))))
+		(call usersubj.search_home_config (ARG1))))
 
 (macro miscfile_read_all_fonts_config ((type ARG1))
 	(call file_search_config (ARG1))
@@ -250,7 +250,7 @@
 	(allow ARG1 miscfile_fonts_config_obj_type list_dir_perms)
 	(allow ARG1 miscfile_fonts_config_obj_type read_lnk_file_perms)
 	(optional miscfile_read_all_fonts_config_optional_usersubj
-		(call usersubj_search_home_config (ARG1))))
+		(call usersubj.search_home_config (ARG1))))
 
 (macro miscfile_manage_all_fonts_config ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
@@ -258,7 +258,7 @@
 	(allow ARG1 miscfile_fonts_config_obj_type manage_dir_perms)
 	(allow ARG1 miscfile_fonts_config_obj_type manage_lnk_file_perms)
 	(optional miscfiles_manage_all_fonts_config_optional_usersubj
-		(call usersubj_rw_home_config_dirs (ARG1))))
+		(call usersubj.rw_home_config_dirs (ARG1))))
 
 (macro miscfile_search_fonts_data ((type ARG1))
 	(call file_search_data (ARG1))
@@ -292,25 +292,25 @@
 	(call file_search_data (ARG1))
 	(allow ARG1 miscfile_fonts_data_obj_type search_dir_perms)
 	(optional miscfile_search_all_fonts_data_optional_usersubj
-		(call usersubj_search_home_data (ARG1))))
+		(call usersubj.search_home_data (ARG1))))
 
 (macro miscfile_list_all_fonts_data ((type ARG1))
 	(call file_search_data (ARG1))
 	(allow ARG1 miscfile_fonts_data_obj_type list_dir_perms)
 	(optional miscfile_list_all_fonts_data_optional_usersubj
-		(call usersubj_search_home_data (ARG1))))
+		(call usersubj.search_home_data (ARG1))))
 
 (macro miscfile_read_all_fonts_data_files ((type ARG1))
 	(call file_search_data (ARG1))
 	(call read_files_pattern (ARG1 miscfile_fonts_data_obj_type miscfile_fonts_data_obj_type))
 	(optional miscfile_read_all_fonts_data_files_optional_usersubj
-	(call usersubj_search_home_data (ARG1))))
+		(call usersubj.search_home_data (ARG1))))
 
 (macro miscfile_read_all_fonts_data_lnk_files ((type ARG1))
 	(call file_search_data (ARG1))
 	(call read_lnk_files_pattern (ARG1 miscfile_fonts_data_obj_type miscfile_fonts_data_obj_type))
 	(optional miscfile_read_all_data_config_lnk_files_optional_usersubj
-		(call usersubj_search_home_data (ARG1))))
+		(call usersubj.search_home_data (ARG1))))
 
 (macro miscfile_read_all_fonts_data ((type ARG1))
 	(call file_search_data (ARG1))
@@ -318,7 +318,7 @@
 	(allow ARG1 miscfile_fonts_data_obj_type list_dir_perms)
 	(allow ARG1 miscfile_fonts_data_obj_type read_lnk_file_perms)
 	(optional miscfile_read_all_fonts_data_optional_usersubj
-		(call usersubj_search_home_data (ARG1))))
+		(call usersubj.search_home_data (ARG1))))
 
 (macro miscfile_manage_all_fonts_data ((type ARG1))
 	(call file_rw_data_dirs (ARG1))
@@ -326,7 +326,7 @@
 	(allow ARG1 miscfile_fonts_data_obj_type manage_dir_perms)
 	(allow ARG1 miscfile_fonts_data_obj_type manage_lnk_file_perms)
 	(optional miscfile_manage_all_fonts_data_optional_usersubj
-        (call usersubj_rw_home_data_dirs (ARG1))))
+		(call usersubj.rw_home_data_dirs (ARG1))))
 
 (macro miscfile_read_fonts ((type ARG1))
 	(call miscfile_read_fonts_var_cache (ARG1))
@@ -708,25 +708,25 @@
 	(call file_search_data (ARG1))
 	(allow ARG1 miscfile_terminfo_data_obj_type search_dir_perms)
 	(optional miscfile_search_all_terminfo_data_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_list_all_terminfo_data ((type ARG1))
 	(call file_search_data (ARG1))
 	(allow ARG1 miscfile_terminfo_data_obj_type list_dir_perms)
 	(optional miscfile_list_all_terminfo_data_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_terminfo_data_files ((type ARG1))
 	(call file_search_data (ARG1))
 	(call read_files_pattern (ARG1 miscfile_terminfo_data_obj_type miscfile_terminfo_data_obj_type))
 	(optional miscfile_read_all_terminfo_data_files_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_terminfo_data_lnk_files ((type ARG1))
 	(call file_search_data (ARG1))
 	(call read_lnk_files_pattern (ARG1 miscfile_terminfo_data_obj_type miscfile_terminfo_data_obj_type))
 	(optional miscfile_read_all_terminfo_data_lnk_files_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_all_terminfo_data ((type ARG1))
 	(call file_search_data (ARG1))
@@ -734,7 +734,7 @@
 	(allow ARG1 miscfile_terminfo_data_obj_type list_dir_perms)
 	(allow ARG1 miscfile_terminfo_data_obj_type read_lnk_file_perms)
 	(optional miscfile_read_all_terminfo_data_optional_usersubj
-		(call usersubj_search_home_dir (ARG1))))
+		(call usersubj.search_home_dir (ARG1))))
 
 (macro miscfile_read_terminfo ((type ARG1))
 	(call miscfile_read_terminfo_config (ARG1))

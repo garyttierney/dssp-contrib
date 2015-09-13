@@ -5,9 +5,9 @@
 
 	(call subj_entry (emacs_subj_type cmd_file))
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(optional emacs_optional_sduser
 		(blockinherit sduser_unit_obj_blk)))
@@ -44,26 +44,26 @@
 
 (call nss_client_subj_type (emacs_subj_type))
 
-(call usersubj_dontaudit_relabel_tmpfs_user_files (emacs_subj_type))
-(call usersubj_manage_tmpfs_user_files (emacs_subj_type))
-(call usersubj_manage_tmpfs_user_lnk_files (emacs_subj_type))
-(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (emacs_subj_type))
-(call usersubj_tmpfs_obj_type_transition_tmpfs_user_lnk_files (emacs_subj_type))
+(call usersubj.dontaudit_relabel_tmpfs_user_files (emacs_subj_type))
+(call usersubj.manage_tmpfs_user_files (emacs_subj_type))
+(call usersubj.manage_tmpfs_user_lnk_files (emacs_subj_type))
+(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (emacs_subj_type))
+(call usersubj.tmpfs_obj_type_transition_tmpfs_user_lnk_files (emacs_subj_type))
 
-(call usersubj_create_ptys (emacs_subj_type))
-(call usersubj_use_term (emacs_subj_type))
+(call usersubj.create_ptys (emacs_subj_type))
+(call usersubj.use_term (emacs_subj_type))
 
-(call usersubj_manage_home_cmd_files (emacs_subj_type))
-(call usersubj_manage_home_cmd_lnk_files (emacs_subj_type))
-(call usersubj_manage_home_user_dirs (emacs_subj_type))
-(call usersubj_dontaudit_relabel_home_user_files (emacs_subj_type))
-(call usersubj_manage_home_user_files (emacs_subj_type))
-(call usersubj_manage_home_user_lnk_files (emacs_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_dirs (emacs_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (emacs_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_lnk_files (emacs_subj_type))
+(call usersubj.manage_home_cmd_files (emacs_subj_type))
+(call usersubj.manage_home_cmd_lnk_files (emacs_subj_type))
+(call usersubj.manage_home_user_dirs (emacs_subj_type))
+(call usersubj.dontaudit_relabel_home_user_files (emacs_subj_type))
+(call usersubj.manage_home_user_files (emacs_subj_type))
+(call usersubj.manage_home_user_lnk_files (emacs_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_dirs (emacs_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (emacs_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (emacs_subj_type))
 
-(call usersubj_read_var_spool_user_files (emacs_subj_type))
+(call usersubj.read_var_spool_user_files (emacs_subj_type))
 
 (optional emacs_subj_type_optional_http
 	(call http_tcp_connect_http_port (emacs_subj_type)))

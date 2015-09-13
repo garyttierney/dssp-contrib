@@ -43,41 +43,41 @@
 	(allow ARG1 irssi.config_file relabel_file_perms))
 
 (macro irssi_search_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 irssi.home_user_file search_dir_perms))
 
 (macro irssi_list_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 irssi.home_user_file list_dir_perms))
 
 (macro irssi_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 irssi.home_user_file irssi.home_user_file)))
 
 (macro irssi_read_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 irssi.home_user_file irssi.home_user_file)))
 
 (macro irssi_read_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 irssi.home_user_file read_file_perms)
 	(allow ARG1 irssi.home_user_file list_dir_perms)
 	(allow ARG1 irssi.home_user_file read_lnk_file_perms))
 
 (macro irssi_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 irssi.home_user_file manage_file_perms)
 	(allow ARG1 irssi.home_user_file manage_dir_perms)
 	(allow ARG1 irssi.home_user_file manage_lnk_file_perms))
 
 (macro irssi_relabel_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 irssi.home_user_file relabel_file_perms)
 	(allow ARG1 irssi.home_user_file relabel_dir_perms)
 	(allow ARG1 irssi.home_user_file relabel_lnk_file_perms))
 
 (macro irssi_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 irssi.home_user_file dir ".irssi")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 irssi.home_user_file dir ".irssi")))
 
 (macro irssi_send_sigchld_all_subj ((type ARG1))
 	(allow ARG1 irssi_subj_type (process (sigchld))))

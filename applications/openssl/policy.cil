@@ -5,7 +5,7 @@
 
 	(roletype openssl_role subj)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(call openssl_manage_home_files (subj))
 	(call openssl_home_dir_obj_type_transition_home (subj))
@@ -19,4 +19,4 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call usersubj_manage_home_cert (subj)))
+	(call usersubj.manage_home_cert (subj)))

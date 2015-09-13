@@ -7,7 +7,7 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk))
 
 (allow gpg_agent_subj_type self create_unix_stream_stream_socket_perms)
 (allow gpg_agent_subj_type self (unix_stream_socket (connectto)))
@@ -31,7 +31,7 @@
 
 (call miscfile_read_locale (gpg_agent_subj_type))
 
-(call usersubj_use_term (gpg_agent_subj_type))
+(call usersubj.use_term (gpg_agent_subj_type))
 
 (optional gpg_agent_subj_type_optional_tor
 	(call tor_read_config_files (gpg_agent_subj_type)))

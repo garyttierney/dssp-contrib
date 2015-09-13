@@ -7,7 +7,7 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk))
 
 (allow gpg_subj_type self rw_fifo_file_perms)
 
@@ -34,13 +34,13 @@
 (call miscfile_read_all_terminfo (gpg_subj_type))
 (call miscfile_read_locale (gpg_subj_type))
 
-(call usersubj_manage_home_user_files (gpg_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (gpg_subj_type))
+(call usersubj.manage_home_user_files (gpg_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (gpg_subj_type))
 
-(call usersubj_manage_tmpfs_user_files (gpg_subj_type))
-(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (gpg_subj_type))
+(call usersubj.manage_tmpfs_user_files (gpg_subj_type))
+(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (gpg_subj_type))
 
-(call usersubj_use_term (gpg_subj_type))
+(call usersubj.use_term (gpg_subj_type))
 
 (optional gpg_subj_type_optional_git
 	(call git_read_tmpfs_files (gpg_subj_type)))

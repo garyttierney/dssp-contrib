@@ -5,7 +5,7 @@
 
         (call subj_entry (startx_subj_type cmd_file))
 
-        (blockinherit usersubj_tmpfs_user_obj_blk))
+        (blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow startx_subj_type self rw_fifo_file_perms)
 
@@ -23,7 +23,7 @@
 
 (call miscfile_read_locale (startx_subj_type))
 
-(call usersubj_use_ttys (startx_subj_type))
+(call usersubj.use_ttys (startx_subj_type))
 
 (call xauth_delete_home_files (startx_subj_type))
 

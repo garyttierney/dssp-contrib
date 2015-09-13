@@ -9,7 +9,7 @@
 
 	(call read_config_files (subj))
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(call read_home_files (subj))
 
@@ -30,10 +30,10 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call usersubj_manage_home_user_dirs (subj))
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_dirs (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.manage_home_user_dirs (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional curl_optional_tor
 		(call tor_socks_client_subj_type (subj))))

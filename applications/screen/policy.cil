@@ -11,9 +11,9 @@
 
 	(blockinherit file_runtime_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow screen_subj_type self (unix_stream_socket (listen accept connectto)))
 (allow screen_subj_type self rw_fifo_file_perms)
@@ -43,9 +43,9 @@
 
 (call pam_read_config (screen_subj_type))
 
-(call usersubj_create_ptys (screen_subj_type))
-(call usersubj_setattr_term (screen_subj_type))
-(call usersubj_use_term (screen_subj_type))
+(call usersubj.create_ptys (screen_subj_type))
+(call usersubj.setattr_term (screen_subj_type))
+(call usersubj.use_term (screen_subj_type))
 
 (optional screen_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (screen_subj_type)))

@@ -37,18 +37,18 @@
 	(call pam_login_prog_subj_type (subj))
 	(call pam_read_config_files (subj))
 
-	(call usersubj_search_home_dir (subj))
-	(call usersubj_relabel_ttys (subj))
-	(call usersubj_setattr_ttys (subj))
-	(call usersubj_use_ttys (subj))
+	(call usersubj.search_home_dir (subj))
+	(call usersubj.relabel_ttys (subj))
+	(call usersubj.setattr_ttys (subj))
+	(call usersubj.use_ttys (subj))
 
-	(call usersubj_dontaudit_manual_subj_type_transition_common_subj (subj))
+	(call usersubj.dontaudit_manual_subj_type_transition_common_subj (subj))
 
 	(booleanif login_priv
 		(true
-			(call usersubj_shell_manual_subj_type_transition_common_login_subj (subj)))
+			(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj)))
 		(false
-			(call usersubj_shell_manual_subj_type_transition_unpriv_login_subj (subj))))
+			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (subj))))
 
 	(booleanif term_console_login
 		(true
@@ -111,8 +111,8 @@
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_default_context_files (subj))
 
-	(call usersubj_search_home_dir (subj))
-	(call usersubj_shell_manual_subj_type_transition_common_login_subj (subj))
+	(call usersubj.search_home_dir (subj))
+	(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj))
 
 	(optional sulogin_optional_plymouth
 		(call plymouth_exec_plymouth (subj)))

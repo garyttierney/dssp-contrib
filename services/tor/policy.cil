@@ -26,7 +26,7 @@
 	(optional tor_var_log_optional_logrotate
 		(call logrotate_var_log_obj_type (var_log_file)))
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(allow subj self (capability (setgid setuid)))
 	(allow subj self create_tcp_stream_socket_perms)

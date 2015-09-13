@@ -39,41 +39,41 @@
 	(call auto_subj_type_transition_pattern (ARG1 livestreamer.cmd_file ARG2)))
 
 (macro livestreamer_search_home_config ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 livestreamer.home_config_file search_dir_perms))
 
 (macro livestreamer_list_home_config ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 livestreamer.home_config_file list_dir_perms))
 
 (macro livestreamer_read_home_config_files ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(call read_files_pattern (ARG1 livestreamer.home_config_file livestreamer.home_config_file)))
 
 (macro livestreamer_read_home_config_lnk_files ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 livestreamer.home_config_file livestreamer.home_config_file)))
 
 (macro livestreamer_read_home_config ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 livestreamer.home_config_file read_file_perms)
 	(allow ARG1 livestreamer.home_config_file list_dir_perms)
 	(allow ARG1 livestreamer.home_config_file read_lnk_file_perms))
 
 (macro livestreamer_manage_home_config ((type ARG1))
-	(call usersubj_rw_home_config_dirs (ARG1))
+	(call usersubj.rw_home_config_dirs (ARG1))
 	(allow ARG1 livestreamer.home_config_file manage_file_perms)
 	(allow ARG1 livestreamer.home_config_file manage_dir_perms)
 	(allow ARG1 livestreamer.home_config_file manage_lnk_file_perms))
 
 (macro livestreamer_relabel_home_config ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 livestreamer.home_config_file relabel_file_perms)
 	(allow ARG1 livestreamer.home_config_file relabel_dir_perms)
 	(allow ARG1 livestreamer.home_config_file relabel_lnk_file_perms))
 
 (macro livestreamer_home_config_obj_type_transition_home_config ((type ARG1))
-	(call usersubj_home_config_obj_type_transition (ARG1 livestreamer.home_config_file dir "livestreamer")))
+	(call usersubj.home_config_obj_type_transition (ARG1 livestreamer.home_config_file dir "livestreamer")))
 
 (macro livestreamer_read_tmpfs_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))
@@ -94,45 +94,45 @@
 	(call fs_tmpfs_obj_type_transition (ARG1 livestreamer.tmpfs_user_file file "*")))
 
 (macro livestreamer_search_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 livestreamer.home_cache_file search_dir_perms))
 
 (macro livestreamer_list_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 livestreamer.home_cache_file list_dir_perms))
 
 (macro livestreamer_read_home_cache_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_files_pattern (ARG1 livestreamer.home_cache_file livestreamer.home_cache_file)))
 
 (macro livestreamer_read_home_cache_lnk_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_lnk_files_pattern (ARG1 livestreamer.home_cache_file livestreamer.home_cache_file)))
 
 (macro livestreamer_manage_home_cache_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call manage_files_pattern (ARG1 livestreamer.home_cache_file livestreamer.home_cache_file)))
 
 (macro livestreamer_read_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 livestreamer.home_cache_file read_file_perms)
 	(allow ARG1 livestreamer.home_cache_file list_dir_perms)
 	(allow ARG1 livestreamer.home_cache_file read_lnk_file_perms))
 
 (macro livestreamer_manage_home_cache ((type ARG1))
-	(call usersubj_rw_home_cache_dirs (ARG1))
+	(call usersubj.rw_home_cache_dirs (ARG1))
 	(allow ARG1 livestreamer.home_cache_file manage_file_perms)
 	(allow ARG1 livestreamer.home_cache_file manage_dir_perms)
 	(allow ARG1 livestreamer.home_cache_file manage_lnk_file_perms))
 
 (macro livestreamer_relabel_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 livestreamer.home_cache_file relabel_file_perms)
 	(allow ARG1 livestreamer.home_cache_file relabel_dir_perms)
 	(allow ARG1 livestreamer.home_cache_file relabel_lnk_file_perms))
 
 (macro livestreamer_home_cache_obj_type_transition_home_cache ((type ARG1))
-	(call usersubj_home_cache_obj_type_transition (ARG1 livestreamer.home_cache_file dir "livestreamer")))
+	(call usersubj.home_cache_obj_type_transition (ARG1 livestreamer.home_cache_file dir "livestreamer")))
 
 (macro livestreamer_use_fd_all_subj ((type ARG1))
 	(allow ARG1 livestreamer_subj_type (fd (use))))

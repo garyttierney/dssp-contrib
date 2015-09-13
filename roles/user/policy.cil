@@ -1,9 +1,9 @@
 (typeattribute user_subj_type)
 
 (block user
-	(blockinherit usersubj_base_login_blk)
+	(blockinherit usersubj.base_login_blk)
 
-	(call usersubj_mls (id systemlow (systemlow systemlow)))
+	(call usersubj.mls (id systemlow (systemlow systemlow)))
 
         (typeattributeset user_subj_type subj)
 
@@ -209,7 +209,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_dunst_optional_user_firefox
 	(call firefox_auto_subj_type_transition_pattern (user_dunst.subj user_firefox.subj)))
@@ -226,7 +226,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_emacs_optional_user_dbus_send
 	(call dbus_send.spec_auto_subj_type_transition (user_emacs.subj user.subj)))
@@ -327,7 +327,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))
 
 		(call git_home_obj_entry_subj (user.subj))
 		(call git_home_auto_subj_type_transition_pattern (subj user.subj))))
@@ -350,7 +350,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_git_email_optional_user_git
 	(call git_auto_subj_type_transition_pattern (user_git_email.subj user_git.subj)))
@@ -375,7 +375,7 @@
                 (call cmd_auto_subj_type_transition (subj user.subj))
                 (call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-                (call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+                (call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_irssi_optional_irssi
 	(block user_irssi
@@ -412,7 +412,7 @@
                 (call cmd_auto_subj_type_transition (subj user.subj))
                 (call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-                (call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+                (call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_lynx_optional_user_gpg
 	(call gpg_auto_subj_type_transition_pattern (user_lynx.subj user_gpg.subj)))
@@ -441,7 +441,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_mutt_optional_user_emacsclient
 	(call emacsclient_auto_subj_type_transition_pattern (user_mutt.subj user_emacsclient.subj)))
@@ -472,7 +472,7 @@
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_nb_optional_user_firefox
 	(call firefox_auto_subj_type_transition_pattern (user_nb.subj user_firefox.subj)))
@@ -519,7 +519,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_screen_optional_screen
 	(block user_screen
@@ -530,7 +530,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_sduser_optional_sduser
 	(block user_sduser
@@ -557,7 +557,7 @@
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_sessbus_optional_user_atspi_sessbus_launch
 	(call atspi_sessbus_launch.spec_auto_subj_type_transition (user_sessbus.subj user_atspi_sessbus_launch.subj)))
@@ -586,7 +586,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_ssh_client_optional_ssh
 	(block user_ssh_client
@@ -610,7 +610,7 @@
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xbindkeys_optional_xbindkeys
 	(block user_xbindkeys
@@ -620,7 +620,7 @@
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xbindkeys_optional_user_pactl
 	(call pactl_auto_subj_type_transition_pattern (user_xbindkeys.subj user_pactl.subj)))
@@ -641,7 +641,7 @@
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xinit_optional_user_rp
 	(call rp_auto_subj_type_transition_pattern (user_xinit.subj user_rp.subj)))
@@ -661,7 +661,7 @@
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
-		(call usersubj_home_cmd_auto_subj_type_transition (subj user.subj))))
+		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xterm_optional_user_screen
 	(call screen_auto_subj_type_transition_pattern (user_xterm.subj user_screen.subj)))

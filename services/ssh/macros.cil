@@ -284,39 +284,39 @@
 	(allow ARG1 ssh_sshd_config_obj_type relabel_lnk_file_perms))
 
 (macro ssh_search_client_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 ssh_client.home_user_file search_dir_perms))
 
 (macro ssh_list_client_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 ssh_client.home_user_file list_dir_perms))
 
 (macro ssh_read_client_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
 
 (macro ssh_manage_client_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call manage_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
 
 (macro ssh_read_client_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
 
 (macro ssh_read_client_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 ssh_client.home_user_file read_file_perms)
 	(allow ARG1 ssh_client.home_user_file list_dir_perms)
 	(allow ARG1 ssh_client.home_user_file read_lnk_file_perms))
 
 (macro ssh_manage_client_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 ssh_client.home_user_file manage_file_perms)
 	(allow ARG1 ssh_client.home_user_file manage_dir_perms)
 	(allow ARG1 ssh_client.home_user_file manage_lnk_file_perms))
 
 (macro ssh_relabel_client_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 ssh_client.home_user_file relabel_file_perms)
 	(allow ARG1 ssh_client.home_user_file relabel_dir_perms)
 	(allow ARG1 ssh_client.home_user_file relabel_lnk_file_perms))
@@ -365,7 +365,7 @@
 	(call fs_tmpfs_obj_type_transition (ARG1 ssh_agent.tmpfs_user_file dir "*")))
 
 (macro ssh_home_dir_obj_type_transition_client_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 ssh_client.home_user_file dir ".ssh")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 ssh_client.home_user_file dir ".ssh")))
 
 (macro ssh_read_sshd_runtime_files ((type ARG1))
 	(call file_search_runtime (ARG1))

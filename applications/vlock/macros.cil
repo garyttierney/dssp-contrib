@@ -34,7 +34,7 @@
 	(call auto_subj_type_transition_pattern (ARG1 vlock.cmd_file ARG2)))
 
 (macro vlock_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 vlock.home_user_file read_file_perms))
 
 (macro vlock_read_inherited_home_files ((type ARG1))
@@ -42,15 +42,15 @@
 	(allow ARG1 vlock.home_user_file read_inherited_file_perms))
 
 (macro vlock_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 vlock.home_user_file manage_file_perms))
 
 (macro vlock_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 vlock.home_user_file relabel_file_perms))
 
 (macro vlock_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 vlock.home_user_file file ".vlockrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 vlock.home_user_file file ".vlockrc")))
 
 (macro vlock_use_fd_all_subj ((type ARG1))
 	(allow ARG1 vlock_subj_type (fd (use))))

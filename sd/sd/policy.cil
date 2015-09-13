@@ -270,8 +270,8 @@
 
 	(optional sd_optional_usersubj
 		(call sec_compute_relabel_context (subj))
-		(call usersubj_relabelto_ptys (subj))
-		(call usersubj_link_keyring_common_login_subj (subj)))
+		(call usersubj.relabelto_ptys (subj))
+		(call usersubj.link_keyring_common_login_subj (subj)))
 
 	(optional sd_optional_exempt
 		(call exempt_noatsecure (subj))
@@ -387,7 +387,7 @@
 
 (call udev_client_subj_type (sd_subj_type))
 
-(call usersubj_use_term (sd_subj_type))
+(call usersubj.use_term (sd_subj_type))
 
 (allow sd_daemon_adm_subj_type self (capability (kill sys_resource net_admin)))
 

@@ -19,7 +19,7 @@
 	(call manage_runtime (subj_type_attribute))
 	(call runtime_obj_type_transition_runtime (subj_type_attribute))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute "*"))
@@ -64,14 +64,14 @@
 	(call seutil_read_selinux_config_files (subj_type_attribute))
 	(call seutil_read_default_context_files (subj_type_attribute))
 
-	(call usersubj_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
-	(call usersubj_create_keyring_priv_subj (subj_type_attribute))
-	(call usersubj_home_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
-	(call usersubj_relabel_term (subj_type_attribute))
-	(call usersubj_send_signal_priv_subj (subj_type_attribute))
-	(call usersubj_setattr_term (subj_type_attribute))
-	(call usersubj_shell_manual_subj_type_transition_priv_subj (subj_type_attribute))
-	(call usersubj_use_term (subj_type_attribute))
+	(call usersubj.cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.create_keyring_priv_subj (subj_type_attribute))
+	(call usersubj.home_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.relabel_term (subj_type_attribute))
+	(call usersubj.send_signal_priv_subj (subj_type_attribute))
+	(call usersubj.setattr_term (subj_type_attribute))
+	(call usersubj.shell_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.use_term (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true

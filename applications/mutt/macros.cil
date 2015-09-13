@@ -37,23 +37,23 @@
 	(call auto_subj_type_transition_pattern (ARG1 mutt.cmd_file ARG2)))
 
 (macro mutt_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 mutt.home_user_file read_file_perms))
 
 (macro mutt_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 mutt.home_user_file manage_file_perms))
 
 (macro mutt_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 mutt.home_user_file relabel_file_perms))
 
 (macro mutt_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache"))
-	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache.gmail"))
-	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_certificates"))
-	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc"))
-	(call usersubj_home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc.gmail")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache"))
+	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache.gmail"))
+	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_certificates"))
+	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc"))
+	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc.gmail")))
 
 (macro mutt_search_tmpfs ((type ARG1))
 	(call file_search_runtime_user (ARG1))

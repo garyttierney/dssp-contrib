@@ -52,22 +52,22 @@
 	(allow ARG1 screen.config_file relabel_file_perms))
 
 (macro screen_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 screen.home_user_file read_file_perms))
 
 (macro screen_read_inherited_home_files ((type ARG1))
 	(allow ARG1 screen.home_user_file read_inherited_file_perms))
 
 (macro screen_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 screen.home_user_file manage_file_perms))
 
 (macro screen_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 screen.home_user_file relabel_file_perms))
 
 (macro screen_home_dir_obj_type_transition_home_files ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 screen.home_user_file file ".screenrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 screen.home_user_file file ".screenrc")))
 
 (macro screen_search_runtime ((type ARG1))
 	(call file_search_runtime (ARG1))

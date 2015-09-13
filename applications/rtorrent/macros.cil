@@ -13,53 +13,53 @@
 	(roleattributeset rtorrent_role ARG2))
 
 (macro rtorrent_search_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 rtorrent.home_user_file search_dir_perms))
 
 (macro rtorrent_list_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 rtorrent.home_user_file list_dir_perms))
 
 (macro rtorrent_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 rtorrent.home_user_file rtorrent.home_user_file)))
 
 (macro rtorrent_read_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 rtorrent.home_user_file rtorrent.home_user_file)))
 
 (macro rtorrent_read_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 rtorrent.home_user_file read_file_perms)
 	(allow ARG1 rtorrent.home_user_file list_dir_perms)
 	(allow ARG1 rtorrent.home_user_file read_lnk_file_perms))
 
 (macro rtorrent_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 rtorrent.home_user_file manage_file_perms)
 	(allow ARG1 rtorrent.home_user_file manage_dir_perms)
 	(allow ARG1 rtorrent.home_user_file manage_lnk_file_perms))
 
 (macro rtorrent_relabel_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 rtorrent.home_user_file relabel_file_perms)
 	(allow ARG1 rtorrent.home_user_file relabel_dir_perms)
 	(allow ARG1 rtorrent.home_user_file relabel_lnk_file_perms))
 
 (macro rtorrent_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 rtorrent.home_user_file dir ".rtorrent")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 rtorrent.home_user_file dir ".rtorrent")))
 
 (macro rtorrent_read_home_config_files ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 rtorrent.home_config_file read_file_perms))
 
 (macro rtorrent_manage_home_config_files ((type ARG1))
-	(call usersubj_rw_home_config_dirs (ARG1))
+	(call usersubj.rw_home_config_dirs (ARG1))
 	(allow ARG1 rtorrent.home_config_file manage_file_perms))
 
 (macro rtorrent_relabel_home_config_files ((type ARG1))
-	(call usersubj_search_home_config (ARG1))
+	(call usersubj.search_home_config (ARG1))
 	(allow ARG1 rtorrent.home_config_file relabel_file_perms))
 
 (macro rtorrent_home_config_obj_type_transition_home_config ((type ARG1))
-	(call usersubj_home_config_obj_type_transition (ARG1 rtorrent.home_config_file file "rtorrent.rc")))
+	(call usersubj.home_config_obj_type_transition (ARG1 rtorrent.home_config_file file "rtorrent.rc")))

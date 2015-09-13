@@ -3,7 +3,7 @@
 (block git_email
         (blockinherit app.application_cmd_obj_blk)
 
-        (blockinherit usersubj_home_user_obj_blk))
+        (blockinherit usersubj.home_user_obj_blk))
 
 (allow git_email_subj_type self rw_fifo_file_perms)
 
@@ -22,4 +22,4 @@
 
 (call smtp_tcp_connect_smtp_port (git_email_subj_type))
 
-(call usersubj_read_home_user_files (git_email_subj_type))
+(call usersubj.read_home_user_files (git_email_subj_type))

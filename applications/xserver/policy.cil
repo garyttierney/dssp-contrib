@@ -20,11 +20,11 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_home_data_obj_blk)
+	(blockinherit usersubj.home_data_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(allow subj self (capability (dac_override setgid setuid sys_admin sys_rawio ipc_owner)))
 	(allow subj self (process (getpgid setpgid)))
@@ -96,12 +96,12 @@
 
 	(call xauth_read_home_files (subj))
 
-	(call usersubj_create_home_data_dirs (subj))
-	(call usersubj_home_dir_add_obj_type_transition_home_data (subj))
+	(call usersubj.create_home_data_dirs (subj))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (subj))
 
-	(call usersubj_rw_inherited_tmpfs_user_files (subj))
-	(call usersubj_link_keyring_common_login_subj (subj))
-	(call usersubj_use_ttys (subj))
+	(call usersubj.rw_inherited_tmpfs_user_files (subj))
+	(call usersubj.link_keyring_common_login_subj (subj))
+	(call usersubj.use_ttys (subj))
 
 	(call xinit_read_all_subj_state (subj))
 	(call xinit_send_sigchld_all_subj (subj))
@@ -125,7 +125,7 @@
 
 (call fs_rw_inherited_tmpfs_files (xserver_tmpfs_client_subj_type))
 
-(call usersubj_search_home_config (xserver_client_subj_type))
+(call usersubj.search_home_config (xserver_client_subj_type))
 
 (call xserver_read_config (xserver_client_subj_type))
 (call xserver_stream_connect (xserver_client_subj_type))

@@ -5,20 +5,20 @@
 (typeattribute sduser_unit_obj_type)
 
 (block sduser
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(blockinherit usersubj_home_config_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk)
 
-	(blockinherit usersubj_home_data_obj_blk))
+	(blockinherit usersubj.home_data_obj_blk))
 
 (block sduser_private
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block sduser_unit
 	(blockinherit sduser_unit_obj_blk))
 
 (block sduser_unit_runtime
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block sduser_unit_user
 	(blockinherit sd_unit_obj_blk)
@@ -71,12 +71,12 @@
 (call systemctl_getattr_all_subj (sduser_subj_type))
 (call systemctl_read_all_subj_state (sduser_subj_type))
 
-(call usersubj_getattr_common_subj (sduser_subj_type))
-(call usersubj_create_home_config_dirs (sduser_subj_type))
-(call usersubj_create_home_data_dirs (sduser_subj_type))
-(call usersubj_home_dir_add_obj_type_transition_home_config (sduser_subj_type))
-(call usersubj_home_dir_add_obj_type_transition_home_data (sduser_subj_type))
-(call usersubj_read_common_subj_state (sduser_subj_type))
+(call usersubj.getattr_common_subj (sduser_subj_type))
+(call usersubj.create_home_config_dirs (sduser_subj_type))
+(call usersubj.create_home_data_dirs (sduser_subj_type))
+(call usersubj.home_dir_add_obj_type_transition_home_config (sduser_subj_type))
+(call usersubj.home_dir_add_obj_type_transition_home_data (sduser_subj_type))
+(call usersubj.read_common_subj_state (sduser_subj_type))
 
 (tunableif enable_rbacsep
 	(true

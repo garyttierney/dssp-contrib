@@ -5,9 +5,9 @@
 
 	(roletype rpmbuild_role subj)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(blockinherit usersubj_var_tmp_user_obj_blk)
+	(blockinherit usersubj.var_tmp_user_obj_blk)
 
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
@@ -47,12 +47,12 @@
 	(call seutil_read_selinux_config (subj))
 	(call seutil_read_file_context_files (subj))
 
-	(call usersubj_manage_home_user_dirs (subj))
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_relabel_home_user_files (subj))
-	(call usersubj_manage_home_user_lnk_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_dirs (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.manage_home_user_dirs (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.relabel_home_user_files (subj))
+	(call usersubj.manage_home_user_lnk_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional rpmbuild_optional_sd
 		(call sd_search_unit_runtime (subj)))

@@ -2,42 +2,42 @@
 	(typeattributeset gstreamer_client_subj_type ARG1))
 
 (macro gstreamer_search_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 gstreamer.home_cache_file search_dir_perms))
 
 (macro gstreamer_list_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 gstreamer.home_cache_file list_dir_perms))
 
 (macro gstreamer_read_home_cache_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_files_pattern (ARG1 gstreamer.home_cache_file gstreamer.home_cache_file)))
 
 (macro gstreamer_read_home_cache_lnk_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_lnk_files_pattern (ARG1 gstreamer.home_cache_file gstreamer.home_cache_file)))
 
 (macro gstreamer_manage_home_cache_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call manage_files_pattern (ARG1 gstreamer.home_cache_file gstreamer.home_cache_file)))
 
 (macro gstreamer_read_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 gstreamer.home_cache_file read_file_perms)
 	(allow ARG1 gstreamer.home_cache_file list_dir_perms)
 	(allow ARG1 gstreamer.home_cache_file read_lnk_file_perms))
 
 (macro gstreamer_manage_home_cache ((type ARG1))
-	(call usersubj_rw_home_cache_dirs (ARG1))
+	(call usersubj.rw_home_cache_dirs (ARG1))
 	(allow ARG1 gstreamer.home_cache_file manage_file_perms)
 	(allow ARG1 gstreamer.home_cache_file manage_dir_perms)
 	(allow ARG1 gstreamer.home_cache_file manage_lnk_file_perms))
 
 (macro gstreamer_relabel_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 gstreamer.home_cache_file relabel_file_perms)
 	(allow ARG1 gstreamer.home_cache_file relabel_dir_perms)
 	(allow ARG1 gstreamer.home_cache_file relabel_lnk_file_perms))
 
 (macro gstreamer_home_cache_obj_type_transition_home_cache ((type ARG1))
-	(call usersubj_home_cache_obj_type_transition (ARG1 gstreamer.home_cache_file dir "gstreamer-1.0")))
+	(call usersubj.home_cache_obj_type_transition (ARG1 gstreamer.home_cache_file dir "gstreamer-1.0")))

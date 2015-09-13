@@ -7,9 +7,9 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block mutt_helper
 	(blockinherit cmd_obj_blk))
@@ -38,10 +38,10 @@
 
 (call nss_client_subj_type (mutt_subj_type))
 
-(call usersubj_manage_home_user_files (mutt_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (mutt_subj_type))
-(call usersubj_rw_var_spool_user_files (mutt_subj_type))
-(call usersubj_setattr_var_spool_user_files (mutt_subj_type))
+(call usersubj.manage_home_user_files (mutt_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (mutt_subj_type))
+(call usersubj.rw_var_spool_user_files (mutt_subj_type))
+(call usersubj.setattr_var_spool_user_files (mutt_subj_type))
 
 (optional mutt_subj_type_optional_sd_journald
     (call sd_journald_client_subj_type (mutt_subj_type)))

@@ -7,7 +7,7 @@
 
 	(roletype xlock_role subj)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(allow subj self (process (setsched)))
 	(allow subj self rw_fifo_file_perms)
@@ -34,7 +34,7 @@
 
 	(call udev_client_subj_type (subj))
 
-	(call usersubj_read_home_user_files (subj))
+	(call usersubj.read_home_user_files (subj))
 
 	(call xserver_client_subj_type (subj))
 

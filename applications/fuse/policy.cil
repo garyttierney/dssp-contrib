@@ -24,8 +24,8 @@
 	(call fuse_read_fusermount_config_files (subj))
 	(call fuse_rw_inherited_unix_stream_sockets_all_sshfs_subj (subj))
 
-	(call usersubj_rw_home_user_dirs (subj))
-	(call usersubj_mounton_home_user_dirs (subj)))
+	(call usersubj.rw_home_user_dirs (subj))
+	(call usersubj.mounton_home_user_dirs (subj)))
 
 (block ulockmgr
 	(blockinherit app.application_blk)
@@ -47,5 +47,5 @@
 
 (call fuse_use_fusermount_fd (fuse_sshfs_subj_type))
 
-(call usersubj_list_home_user (fuse_sshfs_subj_type))
-(call usersubj_mounton_home_user_dirs (fuse_sshfs_subj_type))
+(call usersubj.list_home_user (fuse_sshfs_subj_type))
+(call usersubj.mounton_home_user_dirs (fuse_sshfs_subj_type))

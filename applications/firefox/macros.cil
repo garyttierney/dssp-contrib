@@ -45,88 +45,88 @@
 	(call auto_subj_type_transition_pattern (ARG1 firefox.cmd_file ARG2)))
 
 (macro firefox_search_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file search_dir_perms))
 
 (macro firefox_list_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file list_dir_perms))
 
 (macro firefox_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_files_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
 
 (macro firefox_read_home_lnk_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(call read_lnk_files_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
 
 (macro firefox_setattr_home_dirs ((type ARG1))
 	(allow ARG1 firefox.home_user_file (dir (setattr))))
 
 (macro firefox_create_home_dirs ((type ARG1))
-	(call usersubj_add_entry_home_dir (ARG1))
+	(call usersubj.add_entry_home_dir (ARG1))
 	(call create_dirs_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
 
 (macro firefox_read_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file read_file_perms)
 	(allow ARG1 firefox.home_user_file list_dir_perms)
 	(allow ARG1 firefox.home_user_file read_lnk_file_perms))
 
 (macro firefox_manage_home ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file manage_file_perms)
 	(allow ARG1 firefox.home_user_file manage_dir_perms)
 	(allow ARG1 firefox.home_user_file manage_lnk_file_perms))
 
 (macro firefox_relabel_home ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 firefox.home_user_file relabel_file_perms)
 	(allow ARG1 firefox.home_user_file relabel_dir_perms)
 	(allow ARG1 firefox.home_user_file relabel_lnk_file_perms))
 
 (macro firefox_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
 
 (macro firefox_home_dir_add_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_add_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
+	(call usersubj.home_dir_add_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
 
 (macro firefox_search_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 firefox.home_cache_file search_dir_perms))
 
 (macro firefox_list_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 firefox.home_cache_file list_dir_perms))
 
 (macro firefox_read_home_cache_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_files_pattern (ARG1 firefox.home_cache_file firefox.home_cache_file)))
 
 (macro firefox_read_home_cache_lnk_files ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(call read_lnk_files_pattern (ARG1 firefox.home_cache_file firefox.home_cache_file)))
 
 (macro firefox_read_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 firefox.home_cache_file read_file_perms)
 	(allow ARG1 firefox.home_cache_file list_dir_perms)
 	(allow ARG1 firefox.home_cache_file read_lnk_file_perms))
 
 (macro firefox_manage_home_cache ((type ARG1))
-	(call usersubj_rw_home_cache_dirs (ARG1))
+	(call usersubj.rw_home_cache_dirs (ARG1))
 	(allow ARG1 firefox.home_cache_file manage_file_perms)
 	(allow ARG1 firefox.home_cache_file manage_dir_perms)
 	(allow ARG1 firefox.home_cache_file manage_lnk_file_perms))
 
 (macro firefox_relabel_home_cache ((type ARG1))
-	(call usersubj_search_home_cache (ARG1))
+	(call usersubj.search_home_cache (ARG1))
 	(allow ARG1 firefox.home_cache_file relabel_file_perms)
 	(allow ARG1 firefox.home_cache_file relabel_dir_perms)
 	(allow ARG1 firefox.home_cache_file relabel_lnk_file_perms))
 
 (macro firefox_home_cache_obj_type_transition_home_cache ((type ARG1))
-	(call usersubj_home_cache_obj_type_transition (ARG1 firefox.home_cache_file dir "mozilla")))
+	(call usersubj.home_cache_obj_type_transition (ARG1 firefox.home_cache_file dir "mozilla")))
 
 (macro firefox_read_tmpfs_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))

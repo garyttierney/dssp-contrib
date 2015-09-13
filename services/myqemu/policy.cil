@@ -56,7 +56,7 @@
 
 	(blockinherit qemu_guest_pty_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(typeattributeset myqemu_obj_type tmpfs_user_file)
 
@@ -111,9 +111,9 @@
 	(call qemu_exec (subj))
 	(call qemu_read_config (subj))
 
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
-	(call usersubj_search_home_data (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.search_home_data (subj))
 
 	(optional myqemu_installer_optional_sd_machined
 		(call sd_machined_manage_var_lib_files (subj))))

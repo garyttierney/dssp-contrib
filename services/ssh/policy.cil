@@ -58,14 +58,14 @@
 
 	(call subj_entry (ssh_agent_subj_type cmd_file))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block ssh_client
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj_entry (ssh_client_subj_type cmd_file))
 
-	(blockinherit usersubj_home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk))
 
 (block ssh_helper
 	(blockinherit cmd_obj_blk))
@@ -93,8 +93,8 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call usersubj_manage_home_user (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user (subj)))
+	(call usersubj.manage_home_user (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user (subj)))
 
 (allow ssh_client_subj_type self (process (setfscreate signal)))
 (allow ssh_client_subj_type self rw_key_perms)
@@ -123,11 +123,11 @@
 (call ssh_stream_connect_agent_all_subj (ssh_client_subj_type))
 (call ssh_tcp_connect_sshd_port (ssh_client_subj_type))
 
-(call usersubj_manage_home_user_files (ssh_client_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (ssh_client_subj_type))
+(call usersubj.manage_home_user_files (ssh_client_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (ssh_client_subj_type))
 
-(call usersubj_manage_tmpfs_user_files (ssh_client_subj_type))
-(call usersubj_tmpfs_obj_type_transition_tmpfs_user_files (ssh_client_subj_type))
+(call usersubj.manage_tmpfs_user_files (ssh_client_subj_type))
+(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (ssh_client_subj_type))
 
 (optional ssh_client_subj_type_optional_analyze
 	(call analyze_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
@@ -203,12 +203,12 @@
 (call ssh_exec_sshd (ssh_sshd_subj_type))
 (call ssh_read_client_home_files (ssh_sshd_subj_type))
 
-(call usersubj_dontaudit_create_keyring_common_subj (ssh_sshd_subj_type))
-(call usersubj_dontaudit_dynamic_subj_type_transition_common_subj (ssh_sshd_subj_type))
-(call usersubj_dontaudit_manual_subj_type_transition_common_subj (ssh_sshd_subj_type))
-(call usersubj_relabel_ptys (ssh_sshd_subj_type))
-(call usersubj_setattr_ptys (ssh_sshd_subj_type))
-(call usersubj_use_ptys (ssh_sshd_subj_type))
+(call usersubj.dontaudit_create_keyring_common_subj (ssh_sshd_subj_type))
+(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj (ssh_sshd_subj_type))
+(call usersubj.dontaudit_manual_subj_type_transition_common_subj (ssh_sshd_subj_type))
+(call usersubj.relabel_ptys (ssh_sshd_subj_type))
+(call usersubj.setattr_ptys (ssh_sshd_subj_type))
+(call usersubj.use_ptys (ssh_sshd_subj_type))
 
 (booleanif ssh_priv_login
 	(true
@@ -223,14 +223,14 @@
 		(call sec_compute_user_contexts (ssh_priv_login_subj_type))
 		(call sec_validate_context (ssh_priv_login_subj_type))
 
-		(call usersubj_relabel_ptys (ssh_priv_login_subj_type))
-		(call usersubj_setattr_ptys (ssh_priv_login_subj_type))
+		(call usersubj.relabel_ptys (ssh_priv_login_subj_type))
+		(call usersubj.setattr_ptys (ssh_priv_login_subj_type))
 
-		(call usersubj_dynamic_subj_type_transition_common_login_subj (ssh_sshd_subj_type))
-		(call usersubj_shell_manual_subj_type_transition_common_login_subj (ssh_sshd_subj_type)))
+		(call usersubj.dynamic_subj_type_transition_common_login_subj (ssh_sshd_subj_type))
+		(call usersubj.shell_manual_subj_type_transition_common_login_subj (ssh_sshd_subj_type)))
 	(false
-		(call usersubj_dynamic_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))
-		(call usersubj_shell_manual_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))))
+		(call usersubj.dynamic_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))
+		(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (ssh_sshd_subj_type))))
 
 (call ssh_rw_all_sshd_inherited_tcp_sockets (ssh_login_subj_type))
 (call ssh_rw_all_sshd_inherited_unix_stream_sockets (ssh_login_subj_type))

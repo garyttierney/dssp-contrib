@@ -7,9 +7,9 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow rpmdev_subj_type self rw_fifo_file_perms)
 
@@ -44,7 +44,7 @@
 (call rpm_exec (rpmdev_subj_type))
 (call rpm_read_config (rpmdev_subj_type))
 
-(call usersubj_manage_home_user_dirs (rpmdev_subj_type))
-(call usersubj_manage_home_user_files (rpmdev_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_dirs (rpmdev_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (rpmdev_subj_type))
+(call usersubj.manage_home_user_dirs (rpmdev_subj_type))
+(call usersubj.manage_home_user_files (rpmdev_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_dirs (rpmdev_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (rpmdev_subj_type))

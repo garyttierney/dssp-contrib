@@ -13,16 +13,16 @@
 	(roleattributeset xutil_role ARG2))
 
 (macro xutil_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xutil.home_user_file read_file_perms))
 
 (macro xutil_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 xutil.home_user_file manage_file_perms))
 
 (macro xutil_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xutil.home_user_file relabel_file_perms))
 
 (macro xutil_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 xutil.home_user_file file ".Xresources")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 xutil.home_user_file file ".Xresources")))

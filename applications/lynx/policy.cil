@@ -7,9 +7,9 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow lynx_subj_type self (process (getsched setsched)))
 (allow lynx_subj_type self (unix_stream_socket (listen accept connectto)))
@@ -42,9 +42,9 @@
 
 (call nss_client_subj_type (lynx_subj_type))
 
-(call usersubj_manage_home_user_files (lynx_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (lynx_subj_type))
-(call usersubj_use_term (lynx_subj_type))
+(call usersubj.manage_home_user_files (lynx_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (lynx_subj_type))
+(call usersubj.use_term (lynx_subj_type))
 
 (optional lynx_subj_type_optional_nb
 	(call nb_rw_inherited_home_files (lynx_subj_type)))

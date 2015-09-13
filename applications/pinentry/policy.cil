@@ -5,7 +5,7 @@
 
 	(roletype pinentry_role subj)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(allow subj self rw_fifo_file_perms)
 
@@ -25,7 +25,7 @@
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_locale (subj))
 
-	(call usersubj_use_term (subj))
+	(call usersubj.use_term (subj))
 
 	(optional pinentry_optional_gpg_agent
 		(call gpg_agent_stream_connect_all_subj (subj)))

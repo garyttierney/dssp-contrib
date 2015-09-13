@@ -7,11 +7,11 @@
 
         (call subj_entry (git_subj_type cmd_file))
 
-        (blockinherit usersubj_home_user_obj_blk)
+        (blockinherit usersubj.home_user_obj_blk)
 
-        (blockinherit usersubj_home_config_obj_blk)
+        (blockinherit usersubj.home_config_obj_blk)
 
-        (blockinherit usersubj_tmpfs_user_obj_blk))
+        (blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow git_subj_type self rw_fifo_file_perms)
 
@@ -47,12 +47,12 @@
 
 (call nss_client_subj_type (git_subj_type))
 
-(call usersubj_manage_home_user_dirs (git_subj_type))
-(call usersubj_manage_home_user_files (git_subj_type))
-(call usersubj_manage_home_user_lnk_files (git_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_dirs (git_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (git_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_lnk_files (git_subj_type))
+(call usersubj.manage_home_user_dirs (git_subj_type))
+(call usersubj.manage_home_user_files (git_subj_type))
+(call usersubj.manage_home_user_lnk_files (git_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_dirs (git_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (git_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (git_subj_type))
 
 (optional git_subj_type_optional_http
 	(call http_tcp_connect_http_port (git_subj_type)))

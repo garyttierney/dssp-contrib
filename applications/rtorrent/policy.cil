@@ -5,9 +5,9 @@
 
 	(roletype rtorrent_role subj)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_home_config_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk)
 
 	(allow subj self (tcp_socket (listen accept)))
 
@@ -41,8 +41,8 @@
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_locale (subj))
 
-	(call usersubj_manage_home_user_dirs (subj))
-	(call usersubj_manage_home_user_files (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_dirs (subj))
-	(call usersubj_home_dir_obj_type_transition_home_user_files (subj))
-	(call usersubj_read_home_user_lnk_files (subj)))
+	(call usersubj.manage_home_user_dirs (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.read_home_user_lnk_files (subj)))

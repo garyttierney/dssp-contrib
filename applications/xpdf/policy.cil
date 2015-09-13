@@ -7,9 +7,9 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (allow xpdf_subj_type self rw_fifo_file_perms)
 
@@ -31,14 +31,14 @@
 (call miscfile_read_all_fonts (xpdf_subj_type))
 (call miscfile_read_locale (xpdf_subj_type))
 
-(call usersubj_dontaudit_getattr_all_home_user_files (xpdf_subj_type))
-(call usersubj_list_home_user (xpdf_subj_type))
-(call usersubj_create_home_data_dirs (xpdf_subj_type))
-(call usersubj_home_dir_add_obj_type_transition_home_data (xpdf_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (xpdf_subj_type))
-(call usersubj_manage_home_data_files (xpdf_subj_type))
-(call usersubj_manage_home_user_files (xpdf_subj_type))
-(call usersubj_read_home_user_lnk_files (xpdf_subj_type))
+(call usersubj.dontaudit_getattr_all_home_user_files (xpdf_subj_type))
+(call usersubj.list_home_user (xpdf_subj_type))
+(call usersubj.create_home_data_dirs (xpdf_subj_type))
+(call usersubj.home_dir_add_obj_type_transition_home_data (xpdf_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (xpdf_subj_type))
+(call usersubj.manage_home_data_files (xpdf_subj_type))
+(call usersubj.manage_home_user_files (xpdf_subj_type))
+(call usersubj.read_home_user_lnk_files (xpdf_subj_type))
 
 (call xserver_tmpfs_client (xpdf_subj_type xpdf.tmpfs_user_file))
 

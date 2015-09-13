@@ -7,13 +7,13 @@
 
 	(call subj_entry (firefox_subj_type cmd_file))
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_home_cache_obj_blk)
+	(blockinherit usersubj.home_cache_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(blockinherit usersubj_var_tmp_user_obj_blk)
+	(blockinherit usersubj.var_tmp_user_obj_blk)
 
 	(optional firefox_optional_pa
 		(call pa_tmpfs_client (firefox_subj_type tmpfs_user_file))))
@@ -77,23 +77,23 @@
 
 (call udev_client_subj_type (firefox_subj_type))
 
-(call usersubj_manage_home_data_files (firefox_subj_type))
-(call usersubj_create_home_data_dirs (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_data (firefox_subj_type))
+(call usersubj.manage_home_data_files (firefox_subj_type))
+(call usersubj.create_home_data_dirs (firefox_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_data (firefox_subj_type))
 
-(call usersubj_dontaudit_getattr_all_home_user_files (firefox_subj_type))
-(call usersubj_manage_home_user_files (firefox_subj_type))
-(call usersubj_manage_home_user_dirs (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_dirs (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (firefox_subj_type))
-(call usersubj_read_home_user_lnk_files (firefox_subj_type))
+(call usersubj.dontaudit_getattr_all_home_user_files (firefox_subj_type))
+(call usersubj.manage_home_user_files (firefox_subj_type))
+(call usersubj.manage_home_user_dirs (firefox_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_dirs (firefox_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (firefox_subj_type))
+(call usersubj.read_home_user_lnk_files (firefox_subj_type))
 
-(call usersubj_create_home_cache_dirs (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_cache (firefox_subj_type))
+(call usersubj.create_home_cache_dirs (firefox_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_cache (firefox_subj_type))
 
-(call usersubj_manage_home_fonts_cache (firefox_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_fonts_cache (firefox_subj_type))
-(call usersubj_home_cache_obj_type_transition_home_fonts_cache (firefox_subj_type))
+(call usersubj.manage_home_fonts_cache (firefox_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_fonts_cache (firefox_subj_type))
+(call usersubj.home_cache_obj_type_transition_home_fonts_cache (firefox_subj_type))
 
 (call xserver_tmpfs_client (firefox_subj_type firefox.tmpfs_user_file))
 

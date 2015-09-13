@@ -7,7 +7,7 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk))
 
 (allow irssi_subj_type self rw_fifo_file_perms)
 
@@ -34,5 +34,5 @@
 
 (call nss_client_subj_type (irssi_subj_type))
 
-(call usersubj_manage_home_user_files (irssi_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (irssi_subj_type))
+(call usersubj.manage_home_user_files (irssi_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (irssi_subj_type))

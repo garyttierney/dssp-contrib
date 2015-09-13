@@ -52,19 +52,19 @@
 	(allow ARG1 lynx.config_file relabel_file_perms))
 
 (macro lynx_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 lynx.home_user_file read_file_perms))
 
 (macro lynx_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 lynx.home_user_file manage_file_perms))
 
 (macro lynx_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 lynx.home_user_file relabel_file_perms))
 
 (macro lynx_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 lynx.home_user_file file ".lynxrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 lynx.home_user_file file ".lynxrc")))
 
 (macro lynx_read_tmpfs_files ((type ARG1))
 	(call file_search_runtime_user (ARG1))

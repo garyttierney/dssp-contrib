@@ -42,23 +42,23 @@
 	(call auto_subj_type_transition_pattern (ARG1 xinit.home_user_file ARG2)))
 
 (macro xinit_read_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xinit.home_user_file read_file_perms))
 
 (macro xinit_exec_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xinit.home_user_file exec_file_perms))
 
 (macro xinit_manage_home_files ((type ARG1))
-	(call usersubj_rw_home_dir (ARG1))
+	(call usersubj.rw_home_dir (ARG1))
 	(allow ARG1 xinit.home_user_file manage_file_perms))
 
 (macro xinit_relabel_home_files ((type ARG1))
-	(call usersubj_search_home_dir (ARG1))
+	(call usersubj.search_home_dir (ARG1))
 	(allow ARG1 xinit.home_user_file relabel_file_perms))
 
 (macro xinit_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj_home_dir_obj_type_transition (ARG1 xinit.home_user_file file ".xinitrc")))
+	(call usersubj.home_dir_obj_type_transition (ARG1 xinit.home_user_file file ".xinitrc")))
 
 (macro xinit_home_obj_entry_subj ((type ARG1))
         (call subj_entry (ARG1 xinit.home_user_file)))

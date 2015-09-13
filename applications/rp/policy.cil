@@ -6,7 +6,7 @@
 
         (call subj_entry (rp_subj_type cmd_file))
 
-        (blockinherit usersubj_home_user_obj_blk))
+        (blockinherit usersubj.home_user_obj_blk))
 
 (allow rp_subj_type self rw_fifo_file_perms)
 
@@ -23,12 +23,12 @@
 (call miscfile_read_all_fonts (rp_subj_type))
 (call miscfile_read_locale (rp_subj_type))
 
-(call usersubj_create_home_cache_dirs (rp_subj_type))
-(call usersubj_home_dir_add_obj_type_transition_home_cache (rp_subj_type))
+(call usersubj.create_home_cache_dirs (rp_subj_type))
+(call usersubj.home_dir_add_obj_type_transition_home_cache (rp_subj_type))
 
-(call usersubj_manage_home_fonts_cache (rp_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_fonts_cache (rp_subj_type))
-(call usersubj_home_cache_obj_type_transition_home_fonts_cache (rp_subj_type))
+(call usersubj.manage_home_fonts_cache (rp_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_fonts_cache (rp_subj_type))
+(call usersubj.home_cache_obj_type_transition_home_fonts_cache (rp_subj_type))
 
 (call xserver_client_subj_type (rp_subj_type))
 

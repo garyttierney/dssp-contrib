@@ -92,7 +92,7 @@
 		(call plymouth_use_fd_plymouthd (subj)))
 
 	(optional sd_journald_optional_usersubj
-		(call usersubj_write_term (subj))))
+		(call usersubj.write_term (subj))))
 
 (dontaudit sd_journald_client_subj_type self (capability (net_admin)))
 (allow sd_journald_client_subj_type self create_unix_stream_socket_perms)

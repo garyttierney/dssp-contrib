@@ -258,7 +258,7 @@
 	(call sduser_dontaudit_link_keyring_all_subj (sd_nspawn_container_subj_type)))
 
 (optional sd_nspawn_container_subj_type_optional_usersubj
-	(call usersubj_dontaudit_link_keyring_common_login_subj (sd_nspawn_container_subj_type)))
+	(call usersubj.dontaudit_link_keyring_common_login_subj (sd_nspawn_container_subj_type)))
 
 (allow sd_nspawn_adm_subj_type sd_nspawn_unit_obj_type (service (stop status disable enable reload start)))
 

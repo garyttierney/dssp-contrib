@@ -5,9 +5,9 @@
 
 	(blockinherit file_var_spool_obj_blk)
 
-	(blockinherit usersubj_home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj_tmpfs_user_obj_blk))
+	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block pdftex
 	(blockinherit app.application_blk)
@@ -35,7 +35,7 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call usersubj_read_home_user_files (subj))
+	(call usersubj.read_home_user_files (subj))
 
 	(optional pdftex_optional_fedpkg
 		(call fedpkg_append_inherited_fifo_files_all_subj (subj)))

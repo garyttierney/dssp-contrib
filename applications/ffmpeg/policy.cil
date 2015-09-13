@@ -5,7 +5,7 @@
 
 	(call subj_entry (ffmpeg_subj_type cmd_file))
 
-	(blockinherit usersubj_tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(optional ffmpeg_optional_pa
 		(call pa_tmpfs_client (ffmpeg_subj_type tmpfs_user_file))))
@@ -22,8 +22,8 @@
 
 (call miscfile_read_locale (ffmpeg_subj_type))
 
-(call usersubj_manage_home_user_files (ffmpeg_subj_type))
-(call usersubj_home_dir_obj_type_transition_home_user_files (ffmpeg_subj_type))
+(call usersubj.manage_home_user_files (ffmpeg_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (ffmpeg_subj_type))
 
 (optional ffmpeg_subj_type_optional_xserver
 	(call xserver_tmpfs_client (ffmpeg_subj_type ffmpeg.tmpfs_user_file)))

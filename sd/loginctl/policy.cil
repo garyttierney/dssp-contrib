@@ -23,8 +23,8 @@
 (call sd_nspawn_stream_connect_all_container_subj (loginctl_subj_type))
 (call sd_nspawn_read_state_all_container_subj (loginctl_subj_type))
 
-(call usersubj_home_dir_obj_type_transition_home_user_files (loginctl_subj_type))
-(call usersubj_manage_home_user_files (loginctl_subj_type))
+(call usersubj.home_dir_obj_type_transition_home_user_files (loginctl_subj_type))
+(call usersubj.manage_home_user_files (loginctl_subj_type))
 
 (allow loginctl_client_subj_type self rw_fifo_file_perms)
 

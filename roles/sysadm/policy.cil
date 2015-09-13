@@ -153,11 +153,11 @@
 		(call cpupower_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_curl
-		(call curl_run (sysadm_subj_type role))
-		(call curl_manage_config_files (subj))
-		(call curl_manage_home_files (subj))
-		(call curl_relabel_home_files (subj))
-		(call curl_home_dir_obj_type_transition_home (subj)))
+		(call curl.run (sysadm_subj_type role))
+		(call curl.manage_config_files (subj))
+		(call curl.manage_home_files (subj))
+		(call curl.relabel_home_files (subj))
+		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dd
 		(call dd_run (sysadm_subj_type role)))

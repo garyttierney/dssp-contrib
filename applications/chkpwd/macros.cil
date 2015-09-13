@@ -1,14 +1,8 @@
-(macro chkpwd_exec ((type ARG1))
-	(call can_exec (ARG1 chkpwd.cmd_file)))
+(in chkpwd
+	(blockinherit exec_blk)
 
-(macro chkpwd_auto_subj_type_transition ((type ARG1))
-	(call chkpwd_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 chkpwd.cmd_file chkpwd.subj))
-	(call miscfile_dontaudit_read_shadow (ARG1)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro chkpwd_send_signal ((type ARG1))
-	(allow ARG1 chkpwd.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro chkpwd_run ((type ARG1)(role ARG2))
-	(call chkpwd_auto_subj_type_transition (ARG1))
-	(roleattributeset chkpwd_role (ARG2)))
+	(blockinherit send_signal_blk))

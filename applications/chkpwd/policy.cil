@@ -1,11 +1,11 @@
-(roleattribute chkpwd_role)
-
 (block chkpwd
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset chkpwd_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-        (roletype chkpwd_role subj)
+        (roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override setuid)))
 

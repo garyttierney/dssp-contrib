@@ -7,21 +7,10 @@
 
 	(blockinherit send_signal_blk)
 
-	(macro read_config_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(allow ARG1 config_file read_file_perms))
-
-	(macro rw_config_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(allow ARG1 config_file rw_file_perms))
-
-	(macro manage_config_files ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
-		(allow ARG1 config_file manage_file_perms))
-
-	(macro relabel_config_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(allow ARG1 config_file relabel_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit rw_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk)
 
 	(blockinherit search_data_blk)
 	(blockinherit list_data_blk)

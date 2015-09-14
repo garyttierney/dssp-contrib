@@ -194,6 +194,12 @@
 			(call usersubj.rw_home_cache_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
 
+	(block relabel_home_cache_sock_files_blk
+		(blockabstract relabel_home_cache_sock_files_blk)
+		(macro relabel_home_cache_sock_files ((type ARG1))
+			(call usersubj.search_home_cache (ARG1))
+			(call relabel_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+
 	(block read_home_cache_blk
 		(blockabstract read_home_cache_blk)
 		(macro read_home_cache ((type ARG1))
@@ -337,6 +343,12 @@
 		(macro manage_home_config_sock_files ((type ARG1))
 			(call usersubj.rw_home_config_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 home_config_file home_config_file))))
+
+	(block relabel_home_config_sock_files_blk
+		(blockabstract relabel_home_config_sock_files_blk)
+		(macro relabel_home_config_sock_files ((type ARG1))
+			(call usersubj.search_home_config (ARG1))
+			(call relabel_sock_files_pattern (ARG1 home_config_file home_config_file))))
 
 	(block read_home_config_blk
 		(blockabstract read_home_config_blk)
@@ -482,6 +494,12 @@
 			(call usersubj.rw_home_data_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 home_data_file home_data_file))))
 
+	(block relabel_home_data_sock_files_blk
+		(blockabstract relabel_home_data_sock_files_blk)
+		(macro relabel_home_data_sock_files ((type ARG1))
+			(call usersubj.search_home_data (ARG1))
+			(call relabel_sock_files_pattern (ARG1 home_data_file home_data_file))))
+
 	(block read_home_data_blk
 		(blockabstract read_home_data_blk)
 		(macro read_home_data ((type ARG1))
@@ -626,6 +644,12 @@
 			(call usersubj.rw_home_dir (ARG1))
 			(call manage_sock_files_pattern (ARG1 home_user_file home_user_file))))
 
+	(block relabel_home_user_sock_files_blk
+		(blockabstract relabel_home_user_sock_files_blk)
+		(macro relabel_home_user_sock_files ((type ARG1))
+			(call usersubj.search_home_dir (ARG1))
+			(call relabel_sock_files_pattern (ARG1 home_user_file home_user_file))))
+
 	(block read_home_user_blk
 		(blockabstract read_home_user_blk)
 		(macro read_home_user ((type ARG1))
@@ -769,6 +793,12 @@
 		(macro manage_var_tmp_user_sock_files ((type ARG1))
 			(call file_rw_var_tmp_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+
+	(block relabel_var_tmp_user_sock_files_blk
+		(blockabstract relabel_var_tmp_user_sock_files_blk)
+		(macro relabel_var_tmp_user_sock_files ((type ARG1))
+			(call file_search_var_tmp (ARG1))
+			(call relabel_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_blk
 		(blockabstract read_var_tmp_user_blk)
@@ -926,6 +956,13 @@
 			(call file_search_runtime_user (ARG1))
 			(call fs_rw_tmpfs_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+
+	(block relabel_tmpfs_user_sock_files_blk
+		(blockabstract relabel_tmpfs_user_sock_files_blk)
+		(macro relabel_tmpfs_user_sock_files ((type ARG1))
+			(call file_search_runtime_user (ARG1))
+			(call fs_search_tmpfs (ARG1))
+			(call relabel_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_blk
 		(blockabstract read_tmpfs_user_blk)

@@ -65,36 +65,17 @@
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "sudo")))
 
-	(macro read_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
-		(allow ARG1 tmpfs_user_file read_file_perms))
-
-	(macro manage_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
-		(call fs_rw_tmpfs_dirs (ARG1))
-		(allow ARG1 tmpfs_user_file manage_file_perms))
-
-	(macro relabel_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
-		(allow ARG1 tmpfs_user_file relabel_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1)(name ARG2))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file ARG2)))
 
-	(macro send_sigchld_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (process (sigchld))))
-
-	(macro send_signal_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (process (signal))))
-
-	(macro use_fd_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (fd (use))))
-
-	(macro rw_inherited_fifo_files_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (fd (use)))
-		(allow ARG1 subj_type_attribute rw_inherited_fifo_file_perms)))
+	(blockinherit send_sigchld_all_blk)
+	(blockinherit send_signal_all_blk)
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_fifo_files_all_blk))
 
 (in visudo
 	(block subj_blk

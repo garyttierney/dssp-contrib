@@ -406,7 +406,7 @@
 
 	(optional sysadm_optional_quotaed
 		(call quotaed.run (sysadm_subj_type role))
-		(call quotaed.manage_tmpfs_files (subj)))
+		(call quotaed.manage_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_quotaon
 		(call quotaon.adm (subj role))
@@ -650,8 +650,8 @@
 		(call wpa_adm (subj role)))
 
 	(optional sysadm_optional_wpacli
-		(call wpacli.manage_tmpfs_sock_files (subj))
-		(call wpacli.relabel_tmpfs_sock_files (subj))
+		(call wpacli.manage_tmpfs_user_sock_files (subj))
+		(call wpacli.relabel_tmpfs_user_sock_files (subj))
 		(call wpacli.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_xauth

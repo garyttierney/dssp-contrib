@@ -7,17 +7,9 @@
 
 	(blockinherit send_signal_blk)
 
-	(macro read_home_user_files ((type ARG1))
-		(call usersubj.search_home_dir (ARG1))
-		(allow ARG1 home_user_file read_file_perms))
-
-	(macro manage_home_user_files ((type ARG1))
-		(call usersubj.rw_home_dir (ARG1))
-		(allow ARG1 home_user_file manage_file_perms))
-
-	(macro relabel_home_user_files ((type ARG1))
-		(call usersubj.search_home_dir (ARG1))
-		(allow ARG1 home_user_file relabel_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".bti"))

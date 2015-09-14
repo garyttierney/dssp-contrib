@@ -25,13 +25,13 @@
 		(call polkit_sysbus_chat_client_subj_type (subj)))
 
 	(optional timedatex_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
-		(call sd_status (subj))
-		(call sd_reload (subj))
-		(call sd_read_unit_files (subj))
+		(call sd.status (subj))
+		(call sd.reload (subj))
+		(call sd.read_unit_files (subj))
 
 		(allow timedatex_adm_subj_type unit_file (service (stop status disable enable reload start)))
 
@@ -39,7 +39,7 @@
 		(allow timedatex_adm_subj_type unit_file relabel_file_perms))
 
 	(optional timedatex_optional_sd_sysbus
-		(call sd_sysbus_chat_client_subj_type (subj)))
+		(call sd.sysbus_chat_client_subj_type (subj)))
 
 	(optional timedatex_optional_sysbus
 		(call sysbus_acquire_service (subj))

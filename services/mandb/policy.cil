@@ -35,9 +35,9 @@
 	(call miscfile_read_locale (subj))
 
 	(optional mandb_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset mandb_obj_type unit_file)
 

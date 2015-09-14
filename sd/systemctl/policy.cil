@@ -12,7 +12,7 @@
 
 	(roletype systemctl_role subj)
 
-	(call sd_daemon (subj cmd_file))
+	(call sd.daemon (subj cmd_file))
 
 	(optional systemctl_optional_rpm
 		(call rpm_script_client_subj_type (subj))))
@@ -34,15 +34,15 @@
 
 (call nss_client_subj_type (systemctl_subj_type))
 
-(call sd_all_unit_control (systemctl_subj_type))
-(call sd_getattr (systemctl_subj_type))
-(call sd_control (systemctl_subj_type))
-(call sd_getattr_forked_subj (systemctl_subj_type))
-(call sd_manage_all_unit (systemctl_subj_type))
-(call sd_read_state (systemctl_subj_type))
-(call sd_read_state_forked_subj (systemctl_subj_type))
-(call sd_stream_connect (systemctl_subj_type))
-(call sd_unit_transient_control (systemctl_subj_type))
+(call sd.control_all_unit (systemctl_subj_type))
+(call sd.getattr (systemctl_subj_type))
+(call sd.control (systemctl_subj_type))
+(call sd.getattr_forked_subj (systemctl_subj_type))
+(call sd.manage_all_unit (systemctl_subj_type))
+(call sd.read_state (systemctl_subj_type))
+(call sd.read_state_forked_subj (systemctl_subj_type))
+(call sd.stream_connect (systemctl_subj_type))
+(call sd.control_unit_transient (systemctl_subj_type))
 
 (call sd_logind_read_runtime (systemctl_subj_type))
 (call sd_logind_client_subj_type (systemctl_subj_type))
@@ -98,10 +98,10 @@
 (call miscfile_read_all_terminfo (systemctl_client_subj_type))
 (call miscfile_read_locale (systemctl_client_subj_type))
 
-(call sd_read_state_lnk_files (systemctl_client_subj_type))
-(call sd_search_unit_runtime (systemctl_client_subj_type))
-(call sd_sysbus_chat_client_subj_type (systemctl_client_subj_type))
-(call sd_use_fd (systemctl_client_subj_type))
+(call sd.read_state_lnk_files (systemctl_client_subj_type))
+(call sd.search_unit_runtime (systemctl_client_subj_type))
+(call sd.sysbus_chat_client_subj_type (systemctl_client_subj_type))
+(call sd.use_fd (systemctl_client_subj_type))
 
 (call sd_journald_read_var_log (systemctl_client_subj_type))
 

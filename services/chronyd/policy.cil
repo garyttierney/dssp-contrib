@@ -28,7 +28,7 @@
 		(call dhclient_read_var_lib (subj)))
 
 	(optional chronyc_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block chronyd
 	(blockinherit subj_common_blk)
@@ -105,11 +105,11 @@
 		(call dhclient_read_var_lib (subj)))
 
 	(optional chronyd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(call sd_daemon_pid_obj_type (runtime_file))
+		(call sd.daemon_pid_obj_type (runtime_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset chronyd_obj_type unit_file)
 
@@ -125,7 +125,7 @@
 	(blockinherit cmd_obj_blk)
 
 	(optional chronyd_helper_optional_sd
-		(call sd_daemon (chronyd.subj cmd_file))))
+		(call sd.daemon (chronyd.subj cmd_file))))
 
 (optional chronyd_enable_status_start_sd_unit_subj_type_optional_sd
 	(allow chronyd_enable_status_start_sd_unit_subj_type chronyd.unit_file (service (enable status start))))

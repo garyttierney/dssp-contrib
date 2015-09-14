@@ -28,41 +28,41 @@
 	(call file_config_obj_type_transition (ARG1 sd_machined.config_file file "machine-info")))
 
 (macro sd_machined_search_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_machined.runtime_file search_dir_perms))
 
 (macro sd_machined_list_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_machined.runtime_file list_dir_perms))
 
 (macro sd_machined_read_runtime_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call read_files_pattern (ARG1 sd_machined.runtime_file sd_machined.runtime_file)))
 
 (macro sd_machined_read_runtime_lnk_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_machined.runtime_file sd_machined.runtime_file)))
 
 (macro sd_machined_read_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_machined.runtime_file read_file_perms)
 	(allow ARG1 sd_machined.runtime_file list_dir_perms)
 	(allow ARG1 sd_machined.runtime_file read_lnk_file_perms))
 
 (macro sd_machined_manage_runtime ((type ARG1))
-	(call sd_rw_runtime_dirs (ARG1))
+	(call sd.rw_runtime_dirs (ARG1))
 	(allow ARG1 sd_machined.runtime_file manage_file_perms)
 	(allow ARG1 sd_machined.runtime_file manage_dir_perms)
 	(allow ARG1 sd_machined.runtime_file manage_lnk_file_perms))
 
 (macro sd_machined_relabel_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_machined.runtime_file relabel_file_perms)
 	(allow ARG1 sd_machined.runtime_file relabel_dir_perms)
 	(allow ARG1 sd_machined.runtime_file relabel_lnk_file_perms))
 
 (macro sd_machined_sd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call sd_runtime_obj_type_transition (ARG1 sd_machined.runtime_file dir "machines")))
+	(call sd.runtime_obj_type_transition (ARG1 sd_machined.runtime_file dir "machines")))
 
 (macro sd_machined_search_var_lib ((type ARG1))
 	(call file_search_var_lib (ARG1))
@@ -147,5 +147,5 @@
 
 (macro sd_machined_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_machined_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

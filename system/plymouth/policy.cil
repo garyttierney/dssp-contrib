@@ -26,7 +26,7 @@
 	(call term_use_console (subj))
 
 	(optional plymouth_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block plymouthd
 	(blockinherit subj_common_blk)
@@ -88,15 +88,15 @@
 	(call nss_client_subj_type (subj))
 
 	(optional plymouthd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset plymouth_obj_type unit_file)
 
 		(allow plymouth_adm_subj_type plymouthd.unit_file (service (stop status disable enable reload start)))
 
-		(call sd_send_signal (subj)))
+		(call sd.send_signal (subj)))
 
 	(optional plymouthd_optional_usersubj
 		(call usersubj.use_ttys (subj))))

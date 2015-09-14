@@ -39,9 +39,9 @@
 	(call tcs_tcp_bind_tcs_port (subj))
 
 	(optional tcsd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset tcsd_obj_type unit_file)
 

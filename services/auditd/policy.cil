@@ -42,11 +42,11 @@
 	(call audispd_auto_subj_type_transition (subj))
 
 	(optional auditd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(call sd_daemon_mls (subj cmd_file systemhigh systemhigh))
+		(call sd.daemon_mls (subj cmd_file systemhigh systemhigh))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset auditd_obj_type unit_file)
 
@@ -82,7 +82,7 @@
 	(roletype auditd_augenrules_role subj)
 
 	(optional augenrules_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block ausearch
 	(blockinherit app.application_blk)

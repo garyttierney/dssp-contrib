@@ -5,9 +5,9 @@
 (typeattribute sd_importd_obj_type)
 
 (block sd_importd
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_importd_obj_type unit_file)
 
@@ -32,8 +32,9 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call sd_bounded (subj))
-	(call sd_exec_sd_helper (subj))
+	(call sd.bounded (subj))
+
+	(call sd_helper.exec (subj))
 
 	(call sd_journald_client_subj_type (subj))
 
@@ -53,15 +54,15 @@
 	(allow sd_importd_all_sysbus_chat_client_subj_type sd_importd_sysbus_chat_client_subj_type (dbus (send_msg)))
 	(allow sd_importd_sysbus_chat_client_subj_type sd_importd_all_sysbus_chat_client_subj_type (dbus (send_msg))))
 
-(call sd_sysbus_chat_client_subj_type (sd_importd_sysbus_chat_client_subj_type))
+(call sd.sysbus_chat_client_subj_type (sd_importd_sysbus_chat_client_subj_type))
 
-(call sd_getattr (sd_importd_adm_subj_type))
-(call sd_ptrace (sd_importd_adm_subj_type))
-(call sd_send_signal (sd_importd_adm_subj_type))
-(call sd_send_signull (sd_importd_adm_subj_type))
-(call sd_send_sigkill (sd_importd_adm_subj_type))
-(call sd_send_sigstop (sd_importd_adm_subj_type))
-(call sd_read_state (sd_importd_adm_subj_type))
+(call sd.getattr (sd_importd_adm_subj_type))
+(call sd.ptrace (sd_importd_adm_subj_type))
+(call sd.send_signal (sd_importd_adm_subj_type))
+(call sd.send_signull (sd_importd_adm_subj_type))
+(call sd.send_sigkill (sd_importd_adm_subj_type))
+(call sd.send_sigstop (sd_importd_adm_subj_type))
+(call sd.read_state (sd_importd_adm_subj_type))
 
 (allow sd_importd_adm_subj_type sd_importd.unit_file (service (stop status disable enable reload start)))
 

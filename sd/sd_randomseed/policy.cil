@@ -5,15 +5,15 @@
 (typeattribute sd_randomseed_obj_type)
 
 (block sd_randomseed
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(call sd_daemon_mls (subj cmd_file systemhigh systemhigh))
+	(call sd.daemon_mls (subj cmd_file systemhigh systemhigh))
 
 	(call app.application_subj_type (subj))
 
 	(roletype sd_randomseed_role subj)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_randomseed_obj_type unit_file)
 
@@ -45,7 +45,7 @@
 (allow sd_randomseed_adm_subj_type sd_randomseed.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_randomseed_adm_subj_type sd_randomseed.subj))
 
-(call sd_search_var_lib (sd_randomseed_adm_subj_type))
+(call sd.search_var_lib (sd_randomseed_adm_subj_type))
 
 (allow sd_randomseed_adm_subj_type sd_randomseed_obj_type manage_file_perms)
 

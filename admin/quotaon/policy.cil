@@ -26,9 +26,9 @@
 	(call quotacheck.enable_db_files (subj))
 
 	(optional quotaon_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(allow adm_subj_type_attribute unit_file manage_file_perms)
 		(allow adm_subj_type_attribute unit_file relabel_file_perms)

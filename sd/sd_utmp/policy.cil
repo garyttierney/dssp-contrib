@@ -1,9 +1,9 @@
 (typeattribute sd_utmp_adm_subj_type)
 
 (block sd_utmp
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(call sys_audit_client_subj_type (subj))
 
@@ -19,9 +19,9 @@
 
 	(call sd_journald_client_subj_type (subj))
 
-	(call sd_status_unit (subj))
-	(call sd_status (subj))
-	(call sd_stream_connect (subj)))
+	(call sd.status_unit (subj))
+	(call sd.status (subj))
+	(call sd.stream_connect (subj)))
 
 (allow sd_utmp_adm_subj_type sd_utmp.unit_file (service (stop status disable enable reload start)))
 

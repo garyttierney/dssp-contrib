@@ -9,21 +9,21 @@
 	(allow ARG1 sd_quotacheck.subj (process (signal))))
 
 (macro sd_quotacheck_read_runtime_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_quotacheck.runtime_file read_file_perms))
 
 (macro sd_quotacheck_manage_runtime_files ((type ARG1))
-	(call sd_rw_runtime_dirs (ARG1))
+	(call sd.rw_runtime_dirs (ARG1))
 	(allow ARG1 sd_quotacheck.runtime_file manage_file_perms))
 
 (macro sd_quotacheck_relabel_runtime_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_quotacheck.runtime_file relabel_file_perms))
 
 (macro sd_quotacheck_sd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call sd_var_lib_obj_type_transition (ARG1 sd_quotacheck.runtime_file file "quotacheck")))
+	(call sd.var_lib_obj_type_transition (ARG1 sd_quotacheck.runtime_file file "quotacheck")))
 
 (macro sd_quotacheck_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_quotacheck_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

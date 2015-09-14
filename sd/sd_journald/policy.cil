@@ -4,15 +4,15 @@
 (typeattribute sd_journald_obj_type)
 
 (block sd_journald
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(call sd_daemon_mls (subj cmd_file systemhigh systemhigh))
+	(call sd.daemon_mls (subj cmd_file systemhigh systemhigh))
 
-	(call sd_netlink_socket_activated (subj netlink_audit_socket))
-	(call sd_unix_dgram_socket_activated (subj runtime_file))
-	(call sd_unix_stream_socket_activated (subj runtime_file))
+	(call sd.netlink_socket_activated (subj netlink_audit_socket))
+	(call sd.unix_dgram_socket_activated (subj runtime_file))
+	(call sd.unix_stream_socket_activated (subj runtime_file))
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_journald_obj_type unit_file)
 
@@ -84,7 +84,7 @@
 
 	(call sd_machined_read_config_files (subj))
 
-	(call sd_notify_subj_type (subj))
+	(call sd.notify_subj_type (subj))
 
 	(call udev_client_subj_type (subj))
 
@@ -109,7 +109,7 @@
 
 (call term_dontaudit_use_console (sd_journald_client_subj_type))
 
-(call sd_search_runtime (sd_journald_client_subj_type))
+(call sd.search_runtime (sd_journald_client_subj_type))
 
 (allow sd_journald_adm_subj_type sd_journald.unit_file (service (stop status disable enable reload start)))
 
@@ -118,8 +118,8 @@
 
 (call file_search_var_log (sd_journald_adm_subj_type))
 
-(call sd_search_runtime (sd_journald_adm_subj_type))
-(call sd_search_var_lib (sd_journald_adm_subj_type))
+(call sd.search_runtime (sd_journald_adm_subj_type))
+(call sd.search_var_lib (sd_journald_adm_subj_type))
 
 (allow sd_journald_adm_subj_type sd_journald_obj_type manage_file_perms)
 (allow sd_journald_adm_subj_type sd_journald_obj_type manage_dir_perms)

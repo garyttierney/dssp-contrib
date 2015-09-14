@@ -19,7 +19,7 @@
 	(call unbound_read_config (subj))
 
 	(optional unboundctl_optional_sd
-		(call sd_forked_subj_type (subj))))
+		(call sd.forked_subj_type (subj))))
 
 (block unboundcc
 	(roleattribute role_attribute)
@@ -37,4 +37,4 @@
 	(call unbound_read_runtime (subj))
 
 	(optional unboundcc_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))

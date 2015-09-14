@@ -9,43 +9,43 @@
 	(allow ARG1 sd_rfkill.subj (process (signal))))
 
 (macro sd_rfkill_search_var_lib ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file search_dir_perms))
 
 (macro sd_rfkill_list_var_lib ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file list_dir_perms))
 
 (macro sd_rfkill_read_var_lib_files ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(call read_files_pattern (ARG1 sd_rfkill.var_lib_file sd_rfkill.var_lib_file)))
 
 (macro sd_rfkill_read_var_lib_lnk_files ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_rfkill.var_lib_file sd_rfkill.var_lib_file)))
 
 (macro sd_rfkill_read_var_lib ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file read_file_perms)
 	(allow ARG1 sd_rfkill.var_lib_file list_dir_perms)
 	(allow ARG1 sd_rfkill.var_lib_file read_lnk_file_perms))
 
 (macro sd_rfkill_manage_var_lib ((type ARG1))
-	(call sd_rw_var_lib_dirs (ARG1))
+	(call sd.rw_var_lib_dirs (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file manage_file_perms)
 	(allow ARG1 sd_rfkill.var_lib_file manage_dir_perms)
 	(allow ARG1 sd_rfkill.var_lib_file manage_lnk_file_perms))
 
 (macro sd_rfkill_relabel_var_lib ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_rfkill.var_lib_file relabel_file_perms)
 	(allow ARG1 sd_rfkill.var_lib_file relabel_dir_perms)
 	(allow ARG1 sd_rfkill.var_lib_file relabel_lnk_file_perms))
 
 (macro sd_rfkill_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call sd_var_lib_obj_type_transition (ARG1 sd_rfkill.var_lib_file dir "rfkill")))
+	(call sd.var_lib_obj_type_transition (ARG1 sd_rfkill.var_lib_file dir "rfkill")))
 
 (macro sd_rfkill_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_rfkill_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

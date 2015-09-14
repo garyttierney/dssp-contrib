@@ -8,7 +8,7 @@
 
 	(call subj_entry (localectl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (call nss_client_subj_type (localectl_subj_type))
 
@@ -21,7 +21,7 @@
 
 (call localectl_client_subj_type (localectl_subj_type))
 
-(call sd_read_state (localectl_subj_type))
+(call sd.read_state (localectl_subj_type))
 
 (call usersubj.home_dir_obj_type_transition_home_user_files (localectl_subj_type))
 (call usersubj.manage_home_user_files (localectl_subj_type))

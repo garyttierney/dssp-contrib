@@ -9,40 +9,40 @@
 	(allow ARG1 sd_initctl.subj (process (signal))))
 
 (macro sd_initctl_search_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_initctl.runtime_file search_dir_perms))
 
 (macro sd_initctl_list_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_initctl.runtime_file list_dir_perms))
 
 (macro sd_initctl_read_runtime_fifo_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call read_fifo_files_pattern (ARG1 sd_initctl.runtime_file sd_initctl.runtime_file)))
 
 (macro sd_initctl_getattr_runtime_fifo_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call getattr_fifo_files_pattern (ARG1 sd_initctl.runtime_file sd_initctl.runtime_file)))
 
 (macro sd_initctl_read_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_initctl.runtime_file list_dir_perms)
 	(allow ARG1 sd_initctl.runtime_file read_fifo_file_perms))
 
 (macro sd_initctl_manage_runtime ((type ARG1))
-	(call sd_rw_runtime_dirs (ARG1))
+	(call sd.rw_runtime_dirs (ARG1))
 	(allow ARG1 sd_initctl.runtime_file manage_dir_perms)
 	(allow ARG1 sd_initctl.runtime_file manage_fifo_file_perms))
 
 (macro sd_initctl_relabel_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_initctl.runtime_file relabel_dir_perms)
 	(allow ARG1 sd_initctl.runtime_file relabel_fifo_file_perms))
 
 (macro sd_initctl_sd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call sd_runtime_obj_type_transition (ARG1 sd_initctl.runtime_file dir "initctl")))
+	(call sd.runtime_obj_type_transition (ARG1 sd_initctl.runtime_file dir "initctl")))
 
 (macro sd_initctl_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_initctl_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

@@ -71,11 +71,11 @@
 		(call sd_nspawn_rw_all_inherited_container_chr_files (subj)))
 
 	(optional sysbus_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(call sd_unix_stream_socket_activated (subj runtime_file))
+		(call sd.unix_stream_socket_activated (subj runtime_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset sysbus_obj_type unit_file)
 
@@ -105,7 +105,7 @@
 (call seutil_read_default_context_files (sysbus_dbus_subj_type))
 
 (optional sysbus_dbus_subj_type_optional_sd
-	(call sd_getattr_unit_runtime_dirs (sysbus_dbus_subj_type)))
+	(call sd.getattr_unit_runtime_dirs (sysbus_dbus_subj_type)))
 
 (optional sysbus_dbus_subj_type_optional_sd_journald
 	(call sd_journald_client_subj_type (sysbus_dbus_subj_type)))

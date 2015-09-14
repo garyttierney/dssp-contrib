@@ -1,12 +1,12 @@
 (typeattribute sd_udevd_adm_subj_type)
 
 (block sd_udevd
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(call sd_netlink_socket_activated (subj netlink_kobject_uevent_socket))
-	(call sd_unix_stream_socket_activated_subj_type (subj))
+	(call sd.netlink_socket_activated (subj netlink_kobject_uevent_socket))
+	(call sd.unix_stream_socket_activated_subj_type (subj))
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (dac_override chown sys_admin net_admin sys_rawio fsetid fowner)))
 	(allow subj self (capability2 (block_suspend)))
@@ -60,7 +60,7 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call sd_notify_subj_type (subj))
+	(call sd.notify_subj_type (subj))
 
 	(call sd_journald_client_subj_type (subj))
 

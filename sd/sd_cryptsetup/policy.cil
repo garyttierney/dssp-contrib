@@ -1,9 +1,9 @@
 (typeattribute sd_cryptsetup_adm_subj_type)
 
 (block sd_cryptsetup
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (net_admin sys_admin ipc_lock)))
 	(allow subj self (process (setfscreate)))

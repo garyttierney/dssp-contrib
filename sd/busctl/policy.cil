@@ -8,14 +8,14 @@
 
 	(call subj_entry (busctl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (allow busctl_subj_type self (capability (net_admin dac_override)))
 
 (call nss_client_subj_type (busctl_subj_type))
 
-(call sd_all_unit_control (busctl_subj_type))
-(call sd_control (busctl_subj_type))
+(call sd.control_all_unit (busctl_subj_type))
+(call sd.control (busctl_subj_type))
 
 (call sd_machined_read_runtime (busctl_subj_type))
 

@@ -26,12 +26,12 @@
 (block sd_nspawn_unit_obj_blk
 	(blockabstract sd_nspawn_unit_obj_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_nspawn_unit_obj_type unit_file))
 
 (macro sd_nspawn_unit_obj_type ((type ARG1))
-	(call sd_unit_obj_type (ARG1))
+	(call sd.unit_obj_type (ARG1))
 	(typeattributeset sd_nspawn_obj_type ARG1)
 	(typeattributeset sd_nspawn_unit_obj_type ARG1))
 
@@ -83,75 +83,75 @@
 	(roleattributeset sd_nspawn_role ARG2))
 
 (macro sd_nspawn_search_config ((type ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sd_nspawn.config_file search_dir_perms))
 
 (macro sd_nspawn_list_config ((type ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sd_nspawn.config_file list_dir_perms))
 
 (macro sd_nspawn_read_config_files ((type ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(call read_files_pattern (ARG1 sd_nspawn.config_file sd_nspawn.config_file)))
 
 (macro sd_nspawn_manage_config_files ((type ARG1))
-	(call sd_rw_config_dirs (ARG1))
+	(call sd.rw_config_dirs (ARG1))
 	(call manage_files_pattern (ARG1 sd_nspawn.config_file sd_nspawn.config_file)))
 
 (macro sd_nspawn_read_config ((type ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sd_nspawn.config_file read_file_perms)
 	(allow ARG1 sd_nspawn.config_file list_dir_perms)
 	(allow ARG1 sd_nspawn.config_file read_lnk_file_perms))
 
 (macro sd_nspawn_manage_config ((type ARG1))
-	(call sd_rw_config_dirs (ARG1))
+	(call sd.rw_config_dirs (ARG1))
 	(allow ARG1 sd_nspawn.config_file manage_file_perms)
 	(allow ARG1 sd_nspawn.config_file manage_dir_perms)
 	(allow ARG1 sd_nspawn.config_file manage_lnk_file_perms))
 
 (macro sd_nspawn_relabel_config ((type ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sd_nspawn.config_file relabel_file_perms)
 	(allow ARG1 sd_nspawn.config_file relabel_dir_perms)
 	(allow ARG1 sd_nspawn.config_file relabel_lnk_file_perms))
 
 (macro sd_nspawn_search_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file search_dir_perms))
 
 (macro sd_nspawn_list_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file list_dir_perms))
 
 (macro sd_nspawn_read_runtime_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call read_files_pattern (ARG1 sd_nspawn.runtime_file sd_nspawn.runtime_file)))
 
 (macro sd_nspawn_read_runtime_lnk_files ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_nspawn.runtime_file sd_nspawn.runtime_file)))
 
 (macro sd_nspawn_read_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file read_file_perms)
 	(allow ARG1 sd_nspawn.runtime_file list_dir_perms)
 	(allow ARG1 sd_nspawn.runtime_file read_lnk_file_perms))
 
 (macro sd_nspawn_manage_runtime ((type ARG1))
-	(call sd_rw_runtime_dirs (ARG1))
+	(call sd.rw_runtime_dirs (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file manage_file_perms)
 	(allow ARG1 sd_nspawn.runtime_file manage_dir_perms)
 	(allow ARG1 sd_nspawn.runtime_file manage_lnk_file_perms))
 
 (macro sd_nspawn_relabel_runtime ((type ARG1))
-	(call sd_search_runtime (ARG1))
+	(call sd.search_runtime (ARG1))
 	(allow ARG1 sd_nspawn.runtime_file relabel_file_perms)
 	(allow ARG1 sd_nspawn.runtime_file relabel_dir_perms)
 	(allow ARG1 sd_nspawn.runtime_file relabel_lnk_file_perms))
 
 (macro sd_nspawn_sd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call sd_runtime_obj_type_transition (ARG1 sd_nspawn.runtime_file dir "nspawn")))
+	(call sd.runtime_obj_type_transition (ARG1 sd_nspawn.runtime_file dir "nspawn")))
 
 (macro sd_nspawn_relabel_ptys ((type ARG1))
 	(call fs_search_devpts (ARG1))
@@ -339,27 +339,27 @@
 	(allow ARG1 sd_nspawn.subj (fd (use))))
 
 (macro sd_nspawn_start_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn.unit_file (service (start))))
 
 (macro sd_nspawn_status_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn.unit_file (service (status))))
 
 (macro sd_nspawn_stop_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn.unit_file (service (stop))))
 
 (macro sd_nspawn_start_all_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn_unit_obj_type (service (start))))
 
 (macro sd_nspawn_status_all_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn_unit_obj_type (service (status))))
 
 (macro sd_nspawn_stop_all_unit ((type ARG1))
-	(call sd_search_unit (ARG1))
+	(call sd.search_unit (ARG1))
 	(allow ARG1 sd_nspawn_unit_obj_type (service (stop))))
 
 (macro sd_nspawn_search_tmpfs ((type ARG1))
@@ -408,5 +408,5 @@
 
 (macro sd_nspawn_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_nspawn_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

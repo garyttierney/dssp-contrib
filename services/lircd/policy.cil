@@ -28,9 +28,9 @@
 	(call lircd_runtime_obj_type_transition_runtime (subj))
 
 	(optional lircd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset lircd_obj_type unit_file)
 
@@ -48,9 +48,9 @@
 	(roletype sys.role subj)
 
 	(optional lircmd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset lircd_obj_type unit_file)
 

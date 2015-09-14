@@ -8,7 +8,7 @@
 (block sduser_unit_obj_blk
 	(blockabstract sduser_unit_obj_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sduser_unit_obj_type unit_file))
 
@@ -74,7 +74,7 @@
 	(allow ARG1 ARG2 rw_inherited_unix_stream_socket_perms))
 
 (macro sduser_unit_obj_type ((type ARG1))
-	(call sd_unit_obj_type (ARG1))
+	(call sd.unit_obj_type (ARG1))
 	(typeattributeset sduser_unit_obj_type ARG1))
 
 (macro sduser_tcp_socket_activated_subj_pattern ((type ARG1)(type ARG2))
@@ -97,37 +97,37 @@
 
 (macro sduser_search_unit ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file list_dir_perms))
 
 (macro sduser_list_unit ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file list_dir_perms))
 
 (macro sduser_read_unit_files ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(call read_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 (macro sduser_read_unit_lnk_files ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(call read_lnk_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 (macro sduser_manage_unit_dirs ((type ARG1))
 	(call lib_rw_lib_dirs (ARG1))
-	(call sd_rw_config_dirs (ARG1))
+	(call sd.rw_config_dirs (ARG1))
 	(call manage_dirs_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 (macro sduser_manage_unit_files ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(call manage_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 (macro sduser_getattr_unit_dirs ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file (dir (getattr))))
 
 (macro sduser_relabelto_unit_dirs ((type ARG1))
@@ -136,26 +136,26 @@
 
 (macro sduser_rw_unit_dirs ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file rw_dir_perms))
 
 (macro sduser_read_unit ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file read_file_perms)
 	(allow ARG1 sduser_unit.unit_file list_dir_perms)
 	(allow ARG1 sduser_unit.unit_file read_lnk_file_perms))
 
 (macro sduser_manage_unit ((type ARG1))
 	(call lib_rw_lib_dirs (ARG1))
-	(call sd_rw_config_dirs (ARG1))
+	(call sd.rw_config_dirs (ARG1))
 	(allow ARG1 sduser_unit.unit_file manage_file_perms)
 	(allow ARG1 sduser_unit.unit_file manage_dir_perms)
 	(allow ARG1 sduser_unit.unit_file manage_lnk_file_perms))
 
 (macro sduser_relabel_unit ((type ARG1))
 	(call lib_search_lib (ARG1))
-	(call sd_search_config (ARG1))
+	(call sd.search_config (ARG1))
 	(allow ARG1 sduser_unit.unit_file relabel_file_perms)
 	(allow ARG1 sduser_unit.unit_file relabel_dir_perms)
 	(allow ARG1 sduser_unit.unit_file relabel_lnk_file_perms))

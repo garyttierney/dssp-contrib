@@ -35,9 +35,9 @@
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional ldconfig_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset ldconfig_obj_type unit_file)
 

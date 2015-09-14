@@ -1,5 +1,5 @@
 (block sd_cgagent
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
 	(allow subj self (capability (net_admin)))
 
@@ -11,8 +11,8 @@
 
 	(call term_use_console (subj))
 
-	(call sd_read_state (subj))
-	(call sd_stream_connect (subj))
+	(call sd.read_state (subj))
+	(call sd.stream_connect (subj))
 
 	(call sd_journald_client_subj_type (subj))
 

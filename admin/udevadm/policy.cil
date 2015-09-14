@@ -53,7 +53,7 @@
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional udevadm_optional_sd
-		(call sd_daemon (subj cmd_file)))
+		(call sd.daemon (subj cmd_file)))
 
 	(optional udevadm_optional_sd_networkd
 		(call sd_networkd_read_config (subj)))
@@ -63,7 +63,7 @@
 	(call udev_client_subj_type (client_subj_type_attribute))
 
 	(optional udevadm_client_subj_type_optional_sd
-		(call sd_search_runtime (client_subj_type_attribute)))
+		(call sd.search_runtime (client_subj_type_attribute)))
 
 	(optional udevadm_client_subj_type_optional_sd_udevd
 		(call sd_udevd_stream_connect (client_subj_type_attribute))))

@@ -8,7 +8,7 @@
 
 	(call subj_entry (machinectl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (allow machinectl_subj_type self (capability (dac_override net_admin sys_chroot sys_admin)))
 
@@ -18,7 +18,7 @@
 
 (call nss_client_subj_type (machinectl_subj_type))
 
-(call sd_sysbus_chat_client_subj_type (machinectl_subj_type))
+(call sd.sysbus_chat_client_subj_type (machinectl_subj_type))
 
 (call sd_importd_sysbus_chat_client_subj_type (machinectl_subj_type))
 

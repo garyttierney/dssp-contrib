@@ -69,6 +69,6 @@
 (macro bluetoothd_adm ((type ARG1)(role ARG2))
 	(typeattributeset bluetoothd_adm_subj_type ARG1)
 	(optional bluetoothd_adm_optional_sd
-		(call sd_daemon_adm_subj_type (ARG1)))
+		(call sd.daemon_adm_subj_type (ARG1)))
 	(optional bluetoothd_adm_optional_sd_askpwd
 		(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2))))

@@ -56,9 +56,9 @@
 	(call polkit_exec_polkit_helper (subj))
 
 	(optional polkit_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset polkit_obj_type unit_file)
 
@@ -132,7 +132,7 @@
 		(call plymouth_use_fd_plymouthd (subj)))
 
 	(optional polkit_tty_agent_optional_sd
-		(call sd_use_fd (subj))))
+		(call sd.use_fd (subj))))
 
 (allow polkit_exec_client_subj_type self (capability (dac_override setgid setuid net_admin)))
 (allow polkit_exec_client_subj_type self (process (setsched)))

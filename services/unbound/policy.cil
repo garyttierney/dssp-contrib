@@ -61,9 +61,9 @@
 	(call nss_client_subj_type (subj))
 
 	(optional unbound_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset unbound_obj_type unit_file)
 
@@ -93,7 +93,7 @@
 	(call unbound_manage_var_lib_files (subj))
 
 	(optional unboundanch_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block unboundcs
 	(blockinherit subj_common_blk)
@@ -129,7 +129,7 @@
 		(call openssl_exec (subj)))
 
 	(optional unboundcs_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block unbounddnsctl
 	(blockinherit net_unreserved_port_obj_blk))

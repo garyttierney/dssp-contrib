@@ -65,7 +65,7 @@
 		(call plymouth_exec_plymouth (subj)))
 
 	(optional login_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block sulogin
 	(blockinherit subj_common_blk)
@@ -118,15 +118,15 @@
 		(call plymouth_exec_plymouth (subj)))
 
 	(optional sulogin_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset login_obj_type unit_file)
 
 		(allow login_adm_subj_type unit_file (service (stop status disable enable reload start)))
 
-		(call sd_getpgid (subj))))
+		(call sd.getpgid (subj))))
 
 (allow login_adm_subj_type login_subj_type (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (login_adm_subj_type login_subj_type))

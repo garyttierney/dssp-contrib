@@ -3,13 +3,13 @@
 (typeattribute sd_sysctl_adm_subj_type)
 
 (block sd_sysctl
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
 	(call app.application_subj_type (subj))
 
 	(roletype sd_sysctl_role subj)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (net_admin)))
 

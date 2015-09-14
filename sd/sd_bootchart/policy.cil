@@ -3,9 +3,9 @@
 (typeattribute sd_bootchart_obj_type)
 
 (block sd_bootchart
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_bootchart_obj_type unit_file)
 
@@ -15,7 +15,7 @@
 
 	(call sd_bootchart_read_config (subj))
 
-	(call sd_auto_subj_type_transition (subj)))
+	(call sd.auto_subj_type_transition (subj)))
 
 (allow sd_bootchart_adm_subj_type sd_bootchart.unit_file (service (stop status disable enable reload start)))
 

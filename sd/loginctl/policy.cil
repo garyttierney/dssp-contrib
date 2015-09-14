@@ -8,7 +8,7 @@
 
 	(call subj_entry (loginctl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (allow loginctl_subj_type self (capability (dac_override net_admin)))
 

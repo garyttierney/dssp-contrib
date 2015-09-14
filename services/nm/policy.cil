@@ -102,9 +102,9 @@
 		(call dhclient_auto_subj_type_transition (subj)))
 
 	(optional nm_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset nm_obj_type unit_file)
 
@@ -170,7 +170,7 @@
 		(call dhclient_auto_subj_type_transition (subj)))
 
 	(optional nmdisp_optional_sd
-		(call sd_daemon (subj cmd_file)))
+		(call sd.daemon (subj cmd_file)))
 
 	(optional nm_disp_optional_sd_journald
 		(call sd_journald_client_subj_type (subj)))
@@ -209,7 +209,7 @@
 	(call nm_client_subj_type (subj))
 
 	(optional nm_online_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (optional nm_sysbus_chat_client_subj_type_optional_sysbus
 	(allow nm.subj nm_sysbus_chat_client_subj_type (dbus (send_msg)))

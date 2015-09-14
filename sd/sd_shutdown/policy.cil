@@ -3,7 +3,7 @@
 (typeattribute sd_shutdown_obj_type)
 
 (block sd_shutdown
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
 	(allow subj self (capability (sys_boot ipc_lock kill sys_admin sys_chroot dac_override)))
 	(allow subj self (process (setfscreate)))
@@ -64,8 +64,8 @@
 	(call mount_exec (subj))
 	(call mount_manage_runtime_files (subj))
 
-	(call sd_getattr_unit_dirs (subj))
-	(call sd_search_runtime (subj))
+	(call sd.getattr_unit_dirs (subj))
+	(call sd.search_runtime (subj))
 
 	(call udev_client_subj_type (subj))
 

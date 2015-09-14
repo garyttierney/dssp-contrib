@@ -11,12 +11,12 @@
 (block sd_nspawn
 	(blockinherit app.application_blk)
 
-	(call sd_daemon (subj cmd_file))
+	(call sd.daemon (subj cmd_file))
 
 	(roletype sd_nspawn_role subj)
 	(roletype sd_nspawn_role sd_nspawn_container_subj_type)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_nspawn_obj_type unit_file)
 	(typeattributeset sd_nspawn_unit_obj_type unit_file)
@@ -125,12 +125,12 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call sd_mmap_cmd_files (subj))
-	(call sd_notify_subj_type (subj))
-	(call sd_search_unit_runtime (subj))
-	(call sd_setattr_unix_stream_sockets (subj))
-	(call sd_stop (subj))
-	(call sd_status_unit_runtime (subj))
+	(call sd.mmap_cmd_files (subj))
+	(call sd.notify_subj_type (subj))
+	(call sd.search_unit_runtime (subj))
+	(call sd.setattr_unix_stream_sockets (subj))
+	(call sd.stop (subj))
+	(call sd.status_unit_runtime (subj))
 
 	(call sd_journald_manage_var_log_lnk_files (subj))
 	(call sd_journald_client_subj_type (subj))
@@ -244,7 +244,7 @@
 (call subj_mmap_low_type (sd_nspawn_container_subj_type))
 (call subj_ptrace_uncond_type (sd_nspawn_container_subj_type))
 
-(call sd_forked_subj_type (sd_nspawn_container_subj_type))
+(call sd.forked_subj_type (sd_nspawn_container_subj_type))
 
 (call sd_nspawn_dontaudit_audit_access_tmpfs_dirs (sd_nspawn_container_subj_type))
 (call sd_nspawn_list_tmpfs (sd_nspawn_container_subj_type))
@@ -265,7 +265,7 @@
 (allow sd_nspawn_adm_subj_type sd_nspawn.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_nspawn_adm_subj_type sd_nspawn.subj))
 
-(call sd_search_runtime (sd_nspawn_adm_subj_type))
+(call sd.search_runtime (sd_nspawn_adm_subj_type))
 
 (allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_file_perms)
 (allow sd_nspawn_adm_subj_type sd_nspawn_obj_type manage_dir_perms)

@@ -4,9 +4,9 @@
 (typeattribute sd_localed_obj_type)
 
 (block sd_localed
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_localed_obj_type unit_file)
 
@@ -31,7 +31,7 @@
 
 	(call term_use_console (subj))
 
-	(call sd_notify_subj_type (subj))
+	(call sd.notify_subj_type (subj))
 
 	(call sd_journald_client_subj_type (subj))
 

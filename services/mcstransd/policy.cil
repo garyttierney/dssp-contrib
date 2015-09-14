@@ -49,11 +49,11 @@
 	(call seutil_read_selinux_config (subj))
 
 	(optional msctransd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(call sd_daemon_pid_obj_type (runtime_file))
+		(call sd.daemon_pid_obj_type (runtime_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset mcstransd_obj_type unit_file)
 

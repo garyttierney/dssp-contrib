@@ -8,7 +8,7 @@
 
 	(call subj_entry (timedatectl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (allow timedatectl_subj_type self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
 

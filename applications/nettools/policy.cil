@@ -93,9 +93,9 @@
 	(roletype nettools_arp_role subj)
 
 	(optional arp_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(allow nettools_adm_subj_type unit_file (service (stop status disable enable reload start)))
 

@@ -40,9 +40,9 @@
 		(call iptables_dontaudit_rw_unix_stream_sockets (subj)))
 
 	(optional kmod_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset kmod_obj_type unit_file)
 

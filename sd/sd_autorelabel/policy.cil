@@ -3,9 +3,9 @@
 (typeattribute sd_autorelabel_obj_type)
 
 (block sd_autorelabel
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_autorelabel_obj_type unit_file)
 
@@ -43,7 +43,7 @@
 	(call seutil_auto_subj_type_transition_setfiles (subj))
 	(call seutil_read_selinux_config_files (subj))
 
-	(call sd_reboot (subj))
+	(call sd.reboot (subj))
 
 	(call systemctl_exec (subj))
 

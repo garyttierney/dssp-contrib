@@ -21,9 +21,9 @@
 	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block sduser_unit_user
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
-	(call sd_obj_type (unit_file)))
+	(call sd.obj_type (unit_file)))
 
 (call standard_user_exemption_target_subj_type (sduser_subj_type))
 
@@ -44,15 +44,15 @@
 (call app.send_sigkill (sduser_subj_type))
 (call app.send_sigstop (sduser_subj_type))
 
-(call sd_cmd_obj_entry_subj (sduser_subj_type))
-(call sd_forked_subj_type (sduser_subj_type))
-(call sd_notify_subj_type (sduser_subj_type))
-(call sd_obj_type (sduser_unit_obj_type))
-(call sd_read_all_unit (sduser_subj_type))
-(call sd_read_config (sduser_subj_type))
-(call sd_read_state (sduser_subj_type))
-(call sd_send_signal (sduser_subj_type))
-(call sd_subj_type (sduser_subj_type))
+(call sd.cmd_obj_entry_subj (sduser_subj_type))
+(call sd.forked_subj_type (sduser_subj_type))
+(call sd.notify_subj_type (sduser_subj_type))
+(call sd.obj_type (sduser_unit_obj_type))
+(call sd.read_all_unit (sduser_subj_type))
+(call sd.read_config (sduser_subj_type))
+(call sd.read_state (sduser_subj_type))
+(call sd.send_signal (sduser_subj_type))
+(call sd.subj_type (sduser_subj_type))
 
 (call sduser_home_config_obj_type_transition_home_config (sduser_subj_type))
 (call sduser_home_data_obj_type_transition_home_data (sduser_subj_type))

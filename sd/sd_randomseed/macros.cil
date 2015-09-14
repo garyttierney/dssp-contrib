@@ -16,21 +16,21 @@
 	(tunableif enable_mls (true (rangetransition ARG1 randomseed.cmd_file process (ARG2 ARG3)))))
 
 (macro sd_randomseed_read_var_lib_files ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_randomseed.var_lib_file read_file_perms))
 
 (macro sd_randomseed_manage_var_lib_files ((type ARG1))
-	(call sd_rw_var_lib_dirs (ARG1))
+	(call sd.rw_var_lib_dirs (ARG1))
 	(allow ARG1 sd_randomseed.var_lib_file manage_file_perms))
 
 (macro sd_randomseed_relabel_var_lib_files ((type ARG1))
-	(call sd_search_var_lib (ARG1))
+	(call sd.search_var_lib (ARG1))
 	(allow ARG1 sd_randomseed.var_lib_file relabel_file_perms))
 
 (macro sd_randomseed_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call sd_var_lib_obj_type_transition (ARG1 sd_randomseed.var_lib_file file "random-seed")))
+	(call sd.var_lib_obj_type_transition (ARG1 sd_randomseed.var_lib_file file "random-seed")))
 
 (macro sd_randomseed_adm ((type ARG1)(role ARG2))
 	(typeattributeset sd_randomseed_adm_subj_type ARG1)
-	(call sd_daemon_adm_subj_type (ARG1))
+	(call sd.daemon_adm_subj_type (ARG1))
 	(call sd_askpwd_run_sd_askpwd_agent (ARG1 ARG2)))

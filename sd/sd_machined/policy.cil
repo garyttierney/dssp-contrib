@@ -4,9 +4,9 @@
 (typeattribute sd_machined_obj_type)
 
 (block sd_machined
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_machined_obj_type unit_file)
 
@@ -54,14 +54,14 @@
 
 	(call term_use_console (subj))
 
-	(call sd_notify_subj_type (subj))
-	(call sd_start (subj))
-	(call sd_start_unit_runtime (subj))
-	(call sd_status (subj))
-	(call sd_status_unit_runtime (subj))
-	(call sd_stop (subj))
-	(call sd_stop_unit_runtime (subj))
-	(call sd_sysbus_chat_client_subj_type (subj))
+	(call sd.notify_subj_type (subj))
+	(call sd.start (subj))
+	(call sd.start_unit_runtime (subj))
+	(call sd.status (subj))
+	(call sd.status_unit_runtime (subj))
+	(call sd.stop (subj))
+	(call sd.stop_unit_runtime (subj))
+	(call sd.sysbus_chat_client_subj_type (subj))
 
 	(call sd_journald_client_subj_type (subj))
 
@@ -102,7 +102,7 @@
 (allow sd_machined_adm_subj_type sd_machined.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_machined_adm_subj_type sd_machined.subj))
 
-(call sd_search_runtime (sd_machined_adm_subj_type))
+(call sd.search_runtime (sd_machined_adm_subj_type))
 (call file_search_var_lib (sd_machined_adm_subj_type))
 
 (allow sd_machined_adm_subj_type sd_machined_obj_type manage_file_perms)

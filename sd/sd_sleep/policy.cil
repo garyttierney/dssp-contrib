@@ -3,9 +3,9 @@
 (typeattribute sd_sleep_obj_type)
 
 (block sd_sleep
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_sleep_obj_type unit_file)
 
@@ -39,4 +39,3 @@
 (allow sd_sleep_adm_subj_type sd_sleep_obj_type relabel_file_perms)
 (allow sd_sleep_adm_subj_type sd_sleep_obj_type relabel_dir_perms)
 (allow sd_sleep_adm_subj_type sd_sleep_obj_type relabel_lnk_file_perms)
-

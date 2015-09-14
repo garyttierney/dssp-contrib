@@ -102,11 +102,11 @@
 		(call sctl_read_config (subj)))
 
 	(optional dracut_optional_sd
-		(call sd_exec_sd (subj))
-		(call sd_read_config_files (subj))
-		(call sd_read_all_unit (subj))
-		(call sd_read_state (subj))
-		(call sd_stream_connect (subj)))
+		(call sd.exec (subj))
+		(call sd.read_config_files (subj))
+		(call sd.read_all_unit (subj))
+		(call sd.read_state (subj))
+		(call sd.stream_connect (subj)))
 
 	(optional dracut_optional_sd_journald
 		(call sd_journald_read_config_files (subj))

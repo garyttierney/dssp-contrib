@@ -47,11 +47,11 @@
 	(call nss_client_subj_type (subj))
 
 	(optional dnssec_triggerd_optional_sd
-		(call sd_daemon (subj cmd_file))
+		(call sd.daemon (subj cmd_file))
 
-		(call sd_daemon_pid_obj_type (runtime_file))
+		(call sd.daemon_pid_obj_type (runtime_file))
 
-		(blockinherit sd_unit_obj_blk)
+		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset dnssec_trigger_obj_type unit_file)
 
@@ -96,7 +96,7 @@
 		(call openssl_exec (subj)))
 
 	(optional dnssec_triggercs_optional_sd
-		(call sd_daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file))))
 
 (block dnssec_triggers
 	(blockinherit subj_common_blk)
@@ -141,7 +141,7 @@
 	(call nss_client_subj_type (subj))
 
 	(optional dnssec_triggers_optional_sd
-		(call sd_daemon (subj cmd_file)))
+		(call sd.daemon (subj cmd_file)))
 
 	(optional dnssec_triggers_optional_sysbus
 		(call sysbus_client_subj_type (subj)))

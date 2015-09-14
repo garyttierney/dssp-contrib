@@ -78,8 +78,8 @@
 			(call rbacsep_obj_role_change_exemption_subj_type (subj_type_attribute))))
 
 	(optional sudo_subj_type_optional_sd
-		(call sd_getpgid (subj_type_attribute))
-		(call sd_link_keyring (subj_type_attribute)))
+		(call sd.getpgid (subj_type_attribute))
+		(call sd.link_keyring (subj_type_attribute)))
 
 	(optional sudo_subj_type_optional_sd_initctl
 		(call sd_initctl_getattr_runtime_fifo_files (subj_type_attribute)))

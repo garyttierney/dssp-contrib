@@ -8,13 +8,13 @@
 
 	(call subj_entry (hostnamectl_subj_type cmd_file))
 
-	(call sd_daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file)))
 
 (allow hostnamectl_subj_type self (capability (net_admin)))
 
 (call nss_client_subj_type (hostnamectl_subj_type))
 
-(call sd_status (hostnamectl_subj_type))
+(call sd.status (hostnamectl_subj_type))
 
 (call sd_machined_read_runtime (hostnamectl_subj_type))
 

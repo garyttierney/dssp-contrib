@@ -5,9 +5,9 @@
 (typeattribute sd_logind_obj_type)
 
 (block sd_logind
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_logind_obj_type unit_file)
 
@@ -91,15 +91,15 @@
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 
-	(call sd_notify_subj_type (subj))
-	(call sd_start (subj))
-	(call sd_start_unit_power (subj))
-	(call sd_start_unit_runtime (subj))
-	(call sd_status (subj))
-	(call sd_status_unit_runtime (subj))
-	(call sd_stop (subj))
-	(call sd_stop_unit_runtime (subj))
-	(call sd_sysbus_chat_client_subj_type (subj))
+	(call sd.notify_subj_type (subj))
+	(call sd.start (subj))
+	(call sd.start_unit_power (subj))
+	(call sd.start_unit_runtime (subj))
+	(call sd.status (subj))
+	(call sd.status_unit_runtime (subj))
+	(call sd.stop (subj))
+	(call sd.stop_unit_runtime (subj))
+	(call sd.sysbus_chat_client_subj_type (subj))
 
 	(call sd_journald_client_subj_type (subj))
 
@@ -140,8 +140,8 @@
 (allow sd_logind_adm_subj_type sd_logind.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_logind_adm_subj_type sd_logind.subj))
 
-(call sd_search_runtime (sd_logind_adm_subj_type))
-(call sd_search_var_lib (sd_logind_adm_subj_type))
+(call sd.search_runtime (sd_logind_adm_subj_type))
+(call sd.search_var_lib (sd_logind_adm_subj_type))
 
 (allow sd_logind_adm_subj_type sd_logind_obj_type manage_file_perms)
 (allow sd_logind_adm_subj_type sd_logind_obj_type manage_dir_perms)

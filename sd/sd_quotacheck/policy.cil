@@ -3,9 +3,9 @@
 (typeattribute sd_quotacheck_obj_type)
 
 (block sd_quotacheck
-	(blockinherit sd_daemon_blk)
+	(blockinherit sd.daemon_blk)
 
-	(blockinherit sd_unit_obj_blk)
+	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset sd_quotacheck_obj_type unit_file)
 
@@ -23,7 +23,7 @@
 (allow sd_quotacheck_adm_subj_type sd_quotacheck.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_quotacheck_adm_subj_type sd_quotacheck.subj))
 
-(call sd_search_runtime (sd_quotacheck_adm_subj_type))
+(call sd.search_runtime (sd_quotacheck_adm_subj_type))
 
 (allow sd_quotacheck_adm_subj_type sd_quotacheck_obj_type manage_file_perms)
 

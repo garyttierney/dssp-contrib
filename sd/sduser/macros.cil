@@ -697,10 +697,7 @@
 	(blockinherit link_keyring_all_blk)
 	(blockinherit use_fd_all_blk)
 	(blockinherit rw_inherited_unix_stream_sockets_all_blk)
+	(blockinherit create_keyring_all_blk)
 
 	(macro dontaudit_link_keyring_all_subj ((type ARG1))
-		(dontaudit ARG1 subj_type_attribute link_key_perms))
-
-	(macro create_keyring_all_subj ((type ARG1))
-		(allow ARG1 self (process (setkeycreate)))
-		(allow ARG1 subj_type_attribute create_key_perms)))
+		(dontaudit ARG1 subj_type_attribute link_key_perms)))

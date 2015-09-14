@@ -24,8 +24,8 @@
 (call sd_nspawn_stream_connect_all_container_subj (busctl_subj_type))
 (call sd_nspawn_read_state_all_container_subj (busctl_subj_type))
 
-(call sduser_all_unit_control (busctl_subj_type))
-(call sduser_home_config_control (busctl_subj_type))
+(call sduser.control_all_unit (busctl_subj_type))
+(call sduser.control_home_config (busctl_subj_type))
 
 (call busctl_client_subj_type (busctl_subj_type))
 

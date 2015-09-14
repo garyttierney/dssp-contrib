@@ -255,7 +255,7 @@
 (call sd_nspawn_use_ptys (sd_nspawn_container_subj_type))
 
 (optional sd_nspawn_container_subj_type_optional_sduser
-	(call sduser_dontaudit_link_keyring_all_subj (sd_nspawn_container_subj_type)))
+	(call sduser.dontaudit_link_keyring_all_subj (sd_nspawn_container_subj_type)))
 
 (optional sd_nspawn_container_subj_type_optional_usersubj
 	(call usersubj.dontaudit_link_keyring_common_login_subj (sd_nspawn_container_subj_type)))

@@ -891,7 +891,7 @@
 		(call busctl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_busctl_optional_sysadm_sduser
-	(call sduser_control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))
+	(call sduser.control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))
 
 (optional sysadm_busctl_optional_sysadm_sessbus
 	(call sessbus_chat_all_client_subj (sysadm_busctl.subj))
@@ -1181,8 +1181,8 @@
 		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_run_optional_sysadm_sduser
-	(call sduser_control_pattern (sysadm_run.subj sysadm_sduser.subj))
-	(call sduser_stream_connect_pattern (sysadm_run.subj sysadm_sduser.subj)))
+	(call sduser.control_pattern (sysadm_run.subj sysadm_sduser.subj))
+	(call sduser.spec_stream_connect (sysadm_run.subj sysadm_sduser.subj)))
 
 (optional sysadm_run_optional_sysadm_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_run.subj sysadm_ssh_client.subj)))
@@ -1208,11 +1208,11 @@
 
 (optional sysadm_sduser_optional_sduser
 	(block sysadm_sduser
-		(blockinherit sduser_subj_blk)
+		(blockinherit sduser.subj_blk)
 
 		(typeattributeset sysadm_subj_type subj)
 
-		(call sduser_role_pattern (sysadm.role sysadm.subj subj))
+		(call sduser.role_pattern (sysadm.role sysadm.subj subj))
 
 		(allow subj self (capability (dac_override)))
 		(allow subj self (process (setpgid)))
@@ -1229,7 +1229,7 @@
 		(call usersubj.manage_home_user_files (subj))))
 
 (optional sysadm_sduser_optional_sysadm_sessbus
-	(call sduser_unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+	(call sduser.unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
 
 	(call sessbus_acquire_service_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
 	(call sessbus_client_pattern (sysadm_sduser.subj sysadm_sessbus.subj))

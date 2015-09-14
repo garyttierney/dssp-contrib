@@ -1,21 +1,90 @@
-(typeattribute sduser_subj_type)
-(typeattribute sduser_notify_all_subj_type)
-(typeattribute sduser_sysbus_chat_client_all_subj_type)
-
-(typeattribute sduser_unit_obj_type)
-
 (block sduser
+	(typeattribute subj_type_attribute)
+	(typeattribute notify_all_subj_type_attribute)
+	(typeattribute sysbus_chat_client_all_subj_type_attribute)
+
+	(typeattribute unit_obj_type_attribute)
+
 	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_private_tmpfs_sock_files (subj_type_attribute))
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call manage_unit_runtime (subj_type_attribute))
+
+	(call tmpfs_obj_type_transition_private_tmpfs (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_unit_runtime (subj_type_attribute))
 
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(blockinherit usersubj.home_data_obj_blk))
+	(call read_home_config_files (subj_type_attribute))
+	(call manage_home_config_dirs (subj_type_attribute))
+	(call manage_home_config_lnk_files (subj_type_attribute))
+
+	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call manage_home_data_files (subj_type_attribute))
+
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call standard_user_exemption_target_subj_type (subj_type_attribute))
+
+	(call dev_getattr_all (subj_type_attribute))
+
+	(call file_read_data (subj_type_attribute))
+
+	(call fs_dontaudit_audit_access_sysfs_dirs (subj_type_attribute))
+	(call fs_getattr_sysfs_fs (subj_type_attribute))
+	(call fs_getattr_tmpfs_fs (subj_type_attribute))
+
+	(call subj_interactive_fd_type (subj_type_attribute))
+
+	(call app.read_state (subj_type_attribute))
+	(call app.rw_inherited_unix_stream_sockets (subj_type_attribute))
+	(call app.send_signal (subj_type_attribute))
+	(call app.send_signull (subj_type_attribute))
+	(call app.send_sigkill (subj_type_attribute))
+	(call app.send_sigstop (subj_type_attribute))
+
+	(call sd.cmd_obj_entry_subj (subj_type_attribute))
+	(call sd.forked_subj_type (subj_type_attribute))
+	(call sd.notify_subj_type (subj_type_attribute))
+	(call sd.obj_type (subj_type_attribute))
+	(call sd.read_all_unit (subj_type_attribute))
+	(call sd.read_config (subj_type_attribute))
+	(call sd.read_state (subj_type_attribute))
+	(call sd.send_signal (subj_type_attribute))
+	(call sd.subj_type (subj_type_attribute))
+
+	(call systemctl_getattr_all_subj (subj_type_attribute))
+	(call systemctl_read_all_subj_state (subj_type_attribute))
+
+	(call usersubj.getattr_common_subj (subj_type_attribute))
+	(call usersubj.create_home_config_dirs (subj_type_attribute))
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+	(call usersubj.read_common_subj_state (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
+
+	(optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus
+		(allow subj_type_attribute sysbus_chat_client_all_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_all_subj_type_attribute subj_type_attribute (dbus (send_msg))))
+
+	(allow notify_all_subj_type_attribute self (unix_dgram_socket (sendto)))
+	(call dgram_send_notify_all_subj (notify_all_subj_type_attribute)))
 
 (block sduser_private
 	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block sduser_unit
-	(blockinherit sduser_unit_obj_blk))
+	(blockinherit sduser.unit_obj_blk))
 
 (block sduser_unit_runtime
 	(blockinherit usersubj.tmpfs_user_obj_blk))
@@ -24,67 +93,3 @@
 	(blockinherit sd.unit_obj_blk)
 
 	(call sd.obj_type (unit_file)))
-
-(call standard_user_exemption_target_subj_type (sduser_subj_type))
-
-(call dev_getattr_all (sduser_subj_type))
-
-(call file_read_data (sduser_subj_type))
-
-(call fs_dontaudit_audit_access_sysfs_dirs (sduser_subj_type))
-(call fs_getattr_sysfs_fs (sduser_subj_type))
-(call fs_getattr_tmpfs_fs (sduser_subj_type))
-
-(call subj_interactive_fd_type (sduser_subj_type))
-
-(call app.read_state (sduser_subj_type))
-(call app.rw_inherited_unix_stream_sockets (sduser_subj_type))
-(call app.send_signal (sduser_subj_type))
-(call app.send_signull (sduser_subj_type))
-(call app.send_sigkill (sduser_subj_type))
-(call app.send_sigstop (sduser_subj_type))
-
-(call sd.cmd_obj_entry_subj (sduser_subj_type))
-(call sd.forked_subj_type (sduser_subj_type))
-(call sd.notify_subj_type (sduser_subj_type))
-(call sd.obj_type (sduser_unit_obj_type))
-(call sd.read_all_unit (sduser_subj_type))
-(call sd.read_config (sduser_subj_type))
-(call sd.read_state (sduser_subj_type))
-(call sd.send_signal (sduser_subj_type))
-(call sd.subj_type (sduser_subj_type))
-
-(call sduser_home_config_obj_type_transition_home_config (sduser_subj_type))
-(call sduser_home_data_obj_type_transition_home_data (sduser_subj_type))
-(call sduser_manage_home_config_dirs (sduser_subj_type))
-(call sduser_manage_home_config_lnk_files (sduser_subj_type))
-(call sduser_manage_home_data_files (sduser_subj_type))
-(call sduser_manage_private_tmpfs_sock_files (sduser_subj_type))
-(call sduser_manage_tmpfs (sduser_subj_type))
-(call sduser_manage_unit_runtime (sduser_subj_type))
-(call sduser_read_home_config_files (sduser_subj_type))
-(call sduser_tmpfs_obj_type_transition_private_tmpfs (sduser_subj_type))
-(call sduser_tmpfs_obj_type_transition_tmpfs (sduser_subj_type))
-(call sduser_tmpfs_obj_type_transition_tmpfs_files (sduser_subj_type))
-(call sduser_tmpfs_obj_type_transition_unit_runtime (sduser_subj_type))
-
-(call systemctl_getattr_all_subj (sduser_subj_type))
-(call systemctl_read_all_subj_state (sduser_subj_type))
-
-(call usersubj.getattr_common_subj (sduser_subj_type))
-(call usersubj.create_home_config_dirs (sduser_subj_type))
-(call usersubj.create_home_data_dirs (sduser_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_config (sduser_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_data (sduser_subj_type))
-(call usersubj.read_common_subj_state (sduser_subj_type))
-
-(tunableif enable_rbacsep
-	(true
-		(call rbacsep_read_state_source_subj_type (sduser_subj_type))))
-
-(optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus
-	(allow sduser_subj_type sduser_sysbus_chat_client_all_subj_type (dbus (send_msg)))
-	(allow sduser_sysbus_chat_client_all_subj_type sduser_subj_type (dbus (send_msg))))
-
-(allow sduser_notify_all_subj_type self (unix_dgram_socket (sendto)))
-(call sduser_dgram_send_notify_all_subj (sduser_notify_all_subj_type))

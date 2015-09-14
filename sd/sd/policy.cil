@@ -226,11 +226,11 @@
 
 	(call sd_updated_getattr_flag_files (subj))
 
-	(call sduser_create_keyring_all_subj (subj))
-	(call sduser_noatsecure_all_subj (subj))
-	(call sduser_send_sigchld_all_subj (subj))
-	(call sduser_shell_manual_subj_type_transition_all_subj (subj))
-	(call sduser_sysbus_chat_client_all_subj_type (subj))
+	(call sduser.create_keyring_all_subj (subj))
+	(call sduser.noatsecure_all_subj (subj))
+	(call sduser.send_sigchld_all_subj (subj))
+	(call sduser.shell_manual_subj_type_transition_all_subj (subj))
+	(call sduser.sysbus_chat_client_all_subj_type (subj))
 
 	(tunableif enable_rbacsep
 		(true
@@ -362,9 +362,9 @@
 
 	(call control_all_unit (unconfined_subj_type_attribute))
 
-	(call sduser_all_unit_control (unconfined_subj_type_attribute))
-	(call sduser_unit_runtime_control (unconfined_subj_type_attribute))
-	(call sduser_home_config_control (unconfined_subj_type_attribute)))
+	(call sduser.control_all_unit (unconfined_subj_type_attribute))
+	(call sduser.control_unit_runtime (unconfined_subj_type_attribute))
+	(call sduser.control_home_config (unconfined_subj_type_attribute)))
 
 (block sd_unit
 	(blockinherit sd.unit_obj_blk)

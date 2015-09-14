@@ -90,7 +90,7 @@
 	(call sd_logind_client_subj_type (pam_login_prog_subj_type)))
 
 (optional pam_login_prog_subj_type_optional_sduser
-	(call sduser_link_keyring_all_subj (pam_login_prog_subj_type)))
+	(call sduser.link_keyring_all_subj (pam_login_prog_subj_type)))
 
 (optional pam_login_prog_subj_type_optional_usersubj
 	(call usersubj.create_keyring_common_login_subj (pam_login_prog_subj_type))

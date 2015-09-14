@@ -54,14 +54,14 @@
 (call sd_nspawn_stream_connect_all_container_subj (systemctl_subj_type))
 (call sd_nspawn_read_state_all_container_subj (systemctl_subj_type))
 
-(call sduser_control_all_subj (systemctl_subj_type))
-(call sduser_unit_transient_control_all_subj (systemctl_subj_type))
-(call sduser_home_config_control (systemctl_subj_type))
-(call sduser_all_unit_control (systemctl_subj_type))
-(call sduser_unit_runtime_control (systemctl_subj_type))
-(call sduser_stream_connect_all_subj (systemctl_subj_type))
-(call sduser_manage_home_config (systemctl_subj_type))
-(call sduser_home_config_obj_type_transition_home_config (systemctl_subj_type))
+(call sduser.control_all_subj (systemctl_subj_type))
+(call sduser.control_unit_transient_all_subj (systemctl_subj_type))
+(call sduser.control_home_config (systemctl_subj_type))
+(call sduser.control_all_unit (systemctl_subj_type))
+(call sduser.control_unit_runtime (systemctl_subj_type))
+(call sduser.stream_connect_all_subj (systemctl_subj_type))
+(call sduser.manage_home_config (systemctl_subj_type))
+(call sduser.home_config_obj_type_transition_home_config (systemctl_subj_type))
 
 (call systemctl_client_subj_type (systemctl_subj_type))
 

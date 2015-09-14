@@ -128,11 +128,8 @@
 
 	(blockinherit exec_blk)
 
-	(macro getattr_cmd_files ((type ARG1))
-		(allow ARG1 cmd_file (file (getattr))))
-
-	(macro mmap_cmd_files ((type ARG1))
-		(allow ARG1 cmd_file mmap_file_perms))
+	(blockinherit getattr_cmd_files_blk)
+	(blockinherit mmap_cmd_files_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
 
@@ -141,8 +138,7 @@
 	(macro mls ((type ARG1)(level ARG2)(level ARG3))
 		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
 
-	(macro cmd_obj_entry_subj ((type ARG1))
-		(call subj_entry (ARG1 cmd_file)))
+	(blockinherit cmd_obj_entry_subj_blk)
 
 	(macro forked_subj_type ((type ARG1))
 		(typeattributeset forked_subj_type_attribute ARG1))
@@ -162,8 +158,7 @@
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
-	(macro bounded ((type ARG1))
-		(typebounds subj ARG1))
+	(blockinherit bounded_blk)
 
 	(macro daemon ((type ARG1)(type ARG2))
 		(call subj_common_type (ARG1))
@@ -484,12 +479,7 @@
 		(dontaudit ARG1 subj read_lnk_file_perms))
 
 	(blockinherit read_state_blk)
-
-	(macro rw_unix_stream_sockets ((type ARG1))
-		(allow ARG1 subj rw_unix_stream_socket_perms))
-
 	(blockinherit use_fd_blk)
-
 	(blockinherit rw_unix_stream_sockets_blk)
 	(blockinherit rw_inherited_unix_stream_sockets_blk)
 

@@ -1,16 +1,16 @@
-(roleattribute dirmngr_role)
-
 (block dirmngr
+	(rolattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype dirmngr_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(allow subj self create_unix_stream_stream_socket_perms)
+	(call manage_home_user (subj))
+	(call gpg_home_obj_type_transition_home (subj))
 
-	(call dirmngr_manage_home (subj))
-	(call dirmngr_gpg_home_obj_type_transition_home (subj))
+	(allow subj self create_unix_stream_stream_socket_perms)
 
 	(call sys_read_crypto_sysctl_files (subj))
 

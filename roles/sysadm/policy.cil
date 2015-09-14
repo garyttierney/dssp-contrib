@@ -168,10 +168,10 @@
 		(call dhclient_manage_var_lib (subj)))
 
 	(optional sysadm_optional_dirmngr
-		(call dirmngr_run (sysadm_subj_type role))
-		(call dirmngr_manage_home (subj))
-		(call dirmngr_relabel_home (subj))
-		(call dirmngr_gpg_home_obj_type_transition_home (subj)))
+		(call dirmngr.run (sysadm_subj_type role))
+		(call dirmngr.manage_home_user (subj))
+		(call dirmngr.relabel_home_user (subj))
+		(call dirmngr.gpg_home_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dm
 		(call dm_run_dmcrypt (sysadm_subj_type role))

@@ -61,9 +61,7 @@
 	(macro home_dir_add_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_add_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
 
-	(macro home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call usersubj.search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4))))
+	(blockinherit usersubj.home_user_obj_type_transition_blk))
 
 (in gpg_helper
 	(blockinherit exec_blk))

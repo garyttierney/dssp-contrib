@@ -171,7 +171,7 @@
 		(call dirmngr.run (sysadm_subj_type role))
 		(call dirmngr.manage_home_user (subj))
 		(call dirmngr.relabel_home_user (subj))
-		(call dirmngr.gpg_home_obj_type_transition_home (subj)))
+		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dm
 		(call dm_run_dmcrypt (sysadm_subj_type role))
@@ -451,12 +451,12 @@
 		(call rtorrent_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_scdaemon
-		(call scdaemon_run (sysadm_subj_type role))
-		(call scdaemon_manage_home (subj))
-		(call scdaemon_relabel_home (subj))
-		(call scdaemon_gpg_home_obj_type_transition_home (subj))
-		(call scdaemon_manage_tmpfs (subj))
-		(call scdaemon_relabel_tmpfs (subj)))
+		(call scdaemon.run (sysadm_subj_type role))
+		(call scdaemon.manage_home_user (subj))
+		(call scdaemon.relabel_home_user (subj))
+		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
+		(call scdaemon.manage_tmpfs_user (subj))
+		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional sysadm_optional_sctl
 		(call sctl_manage_config (subj))

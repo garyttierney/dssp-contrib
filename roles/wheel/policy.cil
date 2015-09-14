@@ -32,7 +32,7 @@
 		(call dirmngr.run (wheel_subj_type role))
 		(call dirmngr.manage_home_user (subj))
 		(call dirmngr.relabel_home_user (subj))
-		(call dirmngr.gpg_home_obj_type_transition_home (subj)))
+		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_dmenu
 		(call dmenu.run (wheel_subj_type role)))
@@ -135,12 +135,12 @@
 		(call run_exec (subj)))
 
 	(optional wheel_optional_scdaemon
-		(call scdaemon_run (wheel_subj_type role))
-		(call scdaemon_manage_home (subj))
-		(call scdaemon_relabel_home (subj))
-		(call scdaemon_gpg_home_obj_type_transition_home (subj))
-		(call scdaemon_manage_tmpfs (subj))
-		(call scdaemon_relabel_tmpfs (subj)))
+		(call scdaemon.run (wheel_subj_type role))
+		(call scdaemon.manage_home_user (subj))
+		(call scdaemon.relabel_home_user (subj))
+		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
+		(call scdaemon.manage_tmpfs_user (subj))
+		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional wheel_optional_sd_stdio
 		(call sd_stdio_run (wheel_subj_type role)))

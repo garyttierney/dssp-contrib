@@ -1,35 +1,35 @@
-(typeattribute dunst_subj_type)
-(typeattribute dunst_sessbus_chat_client_subj_type)
-
 (block dunst
+	(typeattribute subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (dunst_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(blockinherit usersubj.tmpfs_user_obj_blk))
+	(call read_home_config (subj_type_attribute))
 
-(allow dunst_subj_type self rw_fifo_file_perms)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call dunst_read_home_config (dunst_subj_type))
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call dunst_manage_tmpfs_files (dunst_subj_type))
-(call dunst_tmpfs_obj_type_transition_tmpfs (dunst_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call file_read_data (dunst_subj_type))
+	(call file_read_data (subj_type_attribute))
 
-(call fs_getattr_fs (dunst_subj_type))
+	(call fs_getattr_fs (subj_type_attribute))
 
-(call miscfile_read_all_fonts (dunst_subj_type))
-(call miscfile_read_locale (dunst_subj_type))
+	(call miscfile_read_all_fonts (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call xserver_tmpfs_client (dunst_subj_type dunst.tmpfs_user_file))
+	(call xserver_tmpfs_client (subj_type_attribute tmpfs_user_file))
 
-(optional dunst_subj_type_optional_sessbus
-	(call sessbus_acquire_service_all_subj (dunst_subj_type))
-	(call sessbus_client_all_subj (dunst_subj_type)))
+	(optional dunst_subj_type_optional_sessbus
+		(call sessbus_acquire_service_all_subj (subj_type_attribute))
+		(call sessbus_client_all_subj (subj_type_attribute)))
 
-(optional dunst_sessbus_chat_client_subj_type_optional_sessbus
-	(allow dunst_sessbus_chat_client_subj_type dunst_subj_type (dbus (send_msg)))
-	(allow dunst_subj_type dunst_sessbus_chat_client_subj_type (dbus (send_msg))))
+	(optional dunst_sessbus_chat_client_subj_type_optional_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj_type_attribute (dbus (send_msg)))
+		(allow subj_type_attribute sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

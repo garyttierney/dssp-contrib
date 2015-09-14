@@ -732,9 +732,9 @@
 
 (optional sysadm_dunst_optional_dunst
 	(block sysadm_dunst
-		(blockinherit dunst_subj_blk)
+		(blockinherit dunst.subj_blk)
 
-		(call dunst_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call dunst.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1251,7 +1251,7 @@
 	(call atspi_sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
 
 (optional sysadm_sessbus_optional_sysadm_dunst
-	(call dunst_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_dunst.subj)))
+	(call dunst.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_dunst.subj)))
 
 (optional sysadm_sessbus_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))

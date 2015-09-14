@@ -1,95 +1,64 @@
-(block dunst_subj_blk
-	(blockabstract dunst_subj_blk)
+(in dunst
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset dunst_subj_type subj))
+		(typeattributeset dunst.subj_type_attribute subj))
 
-(macro dunst_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset dunst_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro dunst_sessbus_chat_client_subj_type ((type ARG1))
-	(typeattributeset dunst_sessbus_chat_client_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro dunst_exec ((type ARG1))
-	(call can_exec (ARG1 dunst.cmd_file)))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro dunst_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 dunst.cmd_file ARG3))
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call dunst_manage_home_config (ARG2))
-	(call dunst_relabel_home_config (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call dunst_home_config_obj_type_transition_home_config (ARG2))
+		(call manage_home_config (ARG2))
+		(call relabel_home_config (ARG2))
 
-	(call dunst_manage_tmpfs_files (ARG2))
-	(call dunst_relabel_tmpfs_files (ARG2))
+		(call home_config_obj_type_transition_home_config (ARG2))
 
-	(optional dunst_role_pattern_optional_dmenu
-		(call dmenu.run (ARG3 ARG1))))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
 
-(macro dunst_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 dunst.cmd_file ARG2)))
+		(optional dunst_role_pattern_optional_dmenu
+			(call dmenu.run (ARG3 ARG1))))
 
-(macro dunst_search_home_config ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(allow ARG1 dunst.home_config_file search_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro dunst_list_home_config ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(allow ARG1 dunst.home_config_file list_dir_perms))
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.create_home_config_dirs_blk)
+	(blockinherit usersubj.delete_home_config_dirs_blk)
+	(blockinherit usersubj.rw_home_config_dirs_blk)
+	(blockinherit usersubj.manage_home_config_dirs_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
 
-(macro dunst_read_home_config_files ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(call read_files_pattern (ARG1 dunst.home_config_file dunst.home_config_file)))
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "dunst")))
 
-(macro dunst_read_home_config_lnk_files ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 dunst.home_config_file dunst.home_config_file)))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro dunst_read_home_config ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(allow ARG1 dunst.home_config_file read_file_perms)
-	(allow ARG1 dunst.home_config_file list_dir_perms)
-	(allow ARG1 dunst.home_config_file read_lnk_file_perms))
-
-(macro dunst_manage_home_config ((type ARG1))
-	(call usersubj.rw_home_config_dirs (ARG1))
-	(allow ARG1 dunst.home_config_file manage_file_perms)
-	(allow ARG1 dunst.home_config_file manage_dir_perms)
-	(allow ARG1 dunst.home_config_file manage_lnk_file_perms))
-
-(macro dunst_relabel_home_config ((type ARG1))
-	(call usersubj.search_home_config (ARG1))
-	(allow ARG1 dunst.home_config_file relabel_file_perms)
-	(allow ARG1 dunst.home_config_file relabel_dir_perms)
-	(allow ARG1 dunst.home_config_file relabel_lnk_file_perms))
-
-(macro dunst_home_config_obj_type_transition_home_config ((type ARG1))
-	(call usersubj.home_config_obj_type_transition (ARG1 dunst.home_config_file dir "dunst")))
-
-(macro dunst_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 dunst.tmpfs_user_file read_file_perms))
-
-(macro dunst_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 dunst.tmpfs_user_file manage_file_perms))
-
-(macro dunst_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 dunst.tmpfs_user_file relabel_file_perms))
-
-(macro dunst_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 dunst.tmpfs_user_file file "*")))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

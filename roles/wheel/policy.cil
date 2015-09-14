@@ -264,9 +264,9 @@
 
 (optional wheel_dunst_optional_dunst
 	(block wheel_dunst
-		(blockinherit dunst_subj_blk)
+		(blockinherit dunst.subj_blk)
 
-		(call dunst_role_pattern (wheel.role wheel_subj_type subj))
+		(call dunst.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -718,7 +718,7 @@
 	(call atspi_sessbus_launch.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_atspi_sessbus_launch.subj)))
 
 (optional wheel_sessbus_optional_wheel_dunst
-	(call dunst_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_dunst.subj)))
+	(call dunst.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_dunst.subj)))
 
 (optional wheel_sessbus_optional_wheel_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_sessbus_launch.subj)))

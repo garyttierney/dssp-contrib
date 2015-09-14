@@ -202,9 +202,9 @@
 
 (optional user_dunst_optional_dunst
 	(block user_dunst
-		(blockinherit dunst_subj_blk)
+		(blockinherit dunst.subj_blk)
 
-		(call dunst_role_pattern (user.role user_subj_type subj))
+		(call dunst.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -563,7 +563,7 @@
 	(call atspi_sessbus_launch.spec_auto_subj_type_transition (user_sessbus.subj user_atspi_sessbus_launch.subj)))
 
 (optional user_sessbus_optional_user_dunst
-	(call dunst_auto_subj_type_transition_pattern (user_sessbus.subj user_dunst.subj)))
+	(call dunst.spec_auto_subj_type_transition (user_sessbus.subj user_dunst.subj)))
 
 (optional user_sessbus_optional_user_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (user_sessbus.subj user_sessbus_launch.subj)))

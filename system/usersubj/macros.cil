@@ -857,7 +857,7 @@
 	(block var_tmp_user_obj_type_transition_blk
 		(blockabstract var_tmp_user_obj_type_transition_blk)
 		(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-			(call usersubj.search_var_tmp_user (ARG1))
+			(call file_search_var_tmp (ARG1))
 			(call obj_type_transition_pattern (ARG1 var_tmp_user_file ARG2 ARG3 ARG4))))
 
 	(block tmpfs_user_obj_blk
@@ -1030,7 +1030,8 @@
 	(block tmpfs_user_obj_type_transition_blk
 		(blockabstract tmpfs_user_obj_type_transition_blk)
 		(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-			(call usersubj.search_tmpfs_user (ARG1))
+			(call file_search_runtime_user (ARG1))
+			(call fs_search_tmpfs (ARG1))
 			(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4))))
 
 	(macro type ((type ARG1))

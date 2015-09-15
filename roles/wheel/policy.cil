@@ -509,7 +509,7 @@
 		(call livestreamer.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_livestreamer_optional_wheel_mplayer
-	(call mplayer_auto_subj_type_transition_pattern (wheel_livestreamer.subj wheel_mplayer.subj)))
+	(call mplayer.spec_auto_subj_type_transition (wheel_livestreamer.subj wheel_mplayer.subj)))
 
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
@@ -592,9 +592,9 @@
 
 (optional wheel_mplayer_optional_mplayer
 	(block wheel_mplayer
-		(blockinherit mplayer_subj_blk)
+		(blockinherit mplayer.subj_blk)
 
-		(call mplayer_role_pattern (wheel.role wheel_subj_type subj))))
+		(call mplayer.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_mplayer_optional_wheel_pa
 	(call pa_auto_subj_type_transition_pattern (wheel_mplayer.subj wheel_pa.subj)))
@@ -616,7 +616,7 @@
 	(call lynx.spec_auto_subj_type_transition (wheel_nb.subj wheel_lynx.subj)))
 
 (optional wheel_nb_optional_wheel_mplayer
-	(call mplayer_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mplayer.subj)))
+	(call mplayer.spec_auto_subj_type_transition (wheel_nb.subj wheel_mplayer.subj)))
 
 (optional wheel_nb_optional_wheel_mutt
 	(call mutt_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mutt.subj)))
@@ -824,7 +824,7 @@
 
 (optional wheel_tor_socks_optional_wheel_mplayer
 	(call tor_socks_client_subj_type (wheel_mplayer.subj))
-	(call mplayer_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_mplayer.subj)))
+	(call mplayer.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_mplayer.subj)))
 
 (optional wheel_tor_socks_optional_wheel_mutt
 	(call tor_socks_client_subj_type (wheel_mutt.subj))

@@ -1,52 +1,52 @@
-(typeattribute mplayer_subj_type)
-
 (block mplayer
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (mplayer_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj_type_attribute))
+
 	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(call dev_rw_dri (subj_type_attribute))
+
+	(call file_read_config_files (subj_type_attribute))
+	(call file_read_data_files (subj_type_attribute))
+	(call file_search_mnt (subj_type_attribute))
+
+	(call fs_read_fuse_subj_type (subj_type_attribute))
+
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(call nss_client_subj_type (subj_type_attribute))
+
+	(call udev_client_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+
+	(optional mplayer_subj_type_optional_http
+		(call http_tcp_connect_http_port (subj_type_attribute)))
+
+	(optional mplayer_subj_type_optional_icecast
+		(call icecast_tcp_connect_icecast_port (subj_type_attribute)))
+
+	(optional mplayer_subj_type_optional_lircd
+		(call lircd_stream_connect (subj_type_attribute)))
+
+	(optional mplayer_subj_type_optional_xserver
+		(call xserver_tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
 	(optional mplayer_optional_pa
-		(call pa_tmpfs_client (mplayer_subj_type tmpfs_user_file))))
-
-(call mplayer_read_config (mplayer_subj_type))
-
-(call mplayer_manage_home (mplayer_subj_type))
-(call mplayer_home_dir_obj_type_transition_home (mplayer_subj_type))
-
-(call mplayer_manage_tmpfs_files (mplayer_subj_type))
-(call mplayer_tmpfs_obj_type_transition_tmpfs (mplayer_subj_type))
-
-(call dev_rw_dri (mplayer_subj_type))
-
-(call file_read_config_files (mplayer_subj_type))
-(call file_read_data_files (mplayer_subj_type))
-(call file_search_mnt (mplayer_subj_type))
-
-(call fs_read_fuse_subj_type (mplayer_subj_type))
-
-(call miscfile_read_locale (mplayer_subj_type))
-
-(call nss_client_subj_type (mplayer_subj_type))
-
-(call udev_client_subj_type (mplayer_subj_type))
-
-(call usersubj.manage_home_user_files (mplayer_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (mplayer_subj_type))
-
-(optional mplayer_subj_type_optional_http
-	(call http_tcp_connect_http_port (mplayer_subj_type)))
-
-(optional mplayer_subj_type_optional_icecast
-	(call icecast_tcp_connect_icecast_port (mplayer_subj_type)))
-
-(optional mplayer_subj_type_optional_lircd
-	(call lircd_stream_connect (mplayer_subj_type)))
-
-(optional mplayer_subj_type_optional_xserver
-	(call xserver_tmpfs_client (mplayer_subj_type mplayer.tmpfs_user_file)))
+		(call pa_tmpfs_client (subj_type_attribute tmpfs_user_file))))

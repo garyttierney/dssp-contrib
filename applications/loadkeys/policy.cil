@@ -1,11 +1,11 @@
-(roleattribute loadkeys_role)
-
 (block loadkeys
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset loadkeys_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype loadkeys_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (sys_tty_config)))
 	(allow subj self rw_fifo_file_perms)

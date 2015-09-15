@@ -956,11 +956,11 @@
 
 (optional sysadm_irssi_optional_irssi
 	(block sysadm_irssi
-		(blockinherit irssi_subj_blk)
+		(blockinherit irssi.subj_blk)
 
-		(call irssi_manage_config_files (sysadm.subj))
+		(call irssi.manage_config_files (sysadm.subj))
 
-		(call irssi_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call irssi.role_pattern (sysadm.role sysadm_subj_type subj))
 
                 (call cmd_shell_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1023,7 +1023,7 @@
 	(call gpg.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_gpg.subj)))
 
 (optional sysadm_lynx_optional_sysadm_irssi
-	(call irssi_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_irssi.subj)))
+	(call irssi.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_irssi.subj)))
 
 (optional sysadm_lynx_optional_sysadm_mutt
 	(call mutt_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_mutt.subj)))
@@ -1351,7 +1351,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_irssi
 	(call tor_socks_client_subj_type (sysadm_irssi.subj))
-	(call irssi_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_irssi.subj)))
+	(call irssi.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_irssi.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_livestreamer
 	(call tor_socks_client_subj_type (sysadm_livestreamer.subj))

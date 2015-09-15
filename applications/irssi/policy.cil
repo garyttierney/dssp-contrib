@@ -1,38 +1,38 @@
-(typeattribute irssi_subj_type)
-
 (block irssi
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (irssi_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj.home_user_obj_blk))
+	(call read_config_files (subj_type_attribute))
 
-(allow irssi_subj_type self rw_fifo_file_perms)
+	(blockinherit usersubj.home_user_obj_blk)
 
-(call irssi_read_config_files (irssi_subj_type))
+	(call manage_home_user (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
-(call irssi_manage_home (irssi_subj_type))
-(call irssi_home_dir_obj_type_transition_home (irssi_subj_type))
+	(call exec (subj_type_attribute))
 
-(call irssi_exec (irssi_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_read_crypto_sysctl_files (irssi_subj_type))
+	(call sys_read_crypto_sysctl_files (subj_type_attribute))
 
-(call dev_read_random (irssi_subj_type))
-(call dev_read_urandom (irssi_subj_type))
+	(call dev_read_random (subj_type_attribute))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_config_files (irssi_subj_type))
-(call file_read_data (irssi_subj_type))
+	(call file_read_config_files (subj_type_attribute))
+	(call file_read_data (subj_type_attribute))
 
-(call irc_tcp_connect_irc_port (irssi_subj_type))
+	(call irc_tcp_connect_irc_port (subj_type_attribute))
 
-(call miscfile_read_all_cert (irssi_subj_type))
-(call miscfile_read_all_terminfo (irssi_subj_type))
-(call miscfile_read_locale (irssi_subj_type))
+	(call miscfile_read_all_cert (subj_type_attribute))
+	(call miscfile_read_all_terminfo (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call nss_client_subj_type (irssi_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call usersubj.manage_home_user_files (irssi_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (irssi_subj_type))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute)))

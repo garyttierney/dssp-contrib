@@ -379,9 +379,9 @@
 
 (optional user_irssi_optional_irssi
 	(block user_irssi
-		(blockinherit irssi_subj_blk)
+		(blockinherit irssi.subj_blk)
 
-		(call irssi_role_pattern (user.role user_subj_type subj))
+		(call irssi.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))))
 
@@ -418,7 +418,7 @@
 	(call gpg.spec_auto_subj_type_transition (user_lynx.subj user_gpg.subj)))
 
 (optional user_lynx_optional_user_irssi
-	(call irssi_auto_subj_type_transition_pattern (user_lynx.subj user_irssi.subj)))
+	(call irssi.spec_auto_subj_type_transition (user_lynx.subj user_irssi.subj)))
 
 (optional user_lynx_optional_user_mutt
 	(call mutt_auto_subj_type_transition_pattern (user_lynx.subj user_mutt.subj)))

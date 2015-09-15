@@ -481,9 +481,9 @@
 
 (optional wheel_irssi_optional_irssi
 	(block wheel_irssi
-		(blockinherit irssi_subj_blk)
+		(blockinherit irssi.subj_blk)
 
-		(call irssi_role_pattern (wheel.role wheel_subj_type subj))
+		(call irssi.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))))
 
@@ -544,7 +544,7 @@
 	(call gpg.spec_auto_subj_type_transition (wheel_lynx.subj wheel_gpg.subj)))
 
 (optional wheel_lynx_optional_wheel_irssi
-	(call irssi_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_irssi.subj)))
+	(call irssi.spec_auto_subj_type_transition (wheel_lynx.subj wheel_irssi.subj)))
 
 (optional wheel_lynx_optional_wheel_mutt
 	(call mutt_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_mutt.subj)))
@@ -812,7 +812,7 @@
 
 (optional wheel_tor_socks_optional_wheel_irssi
 	(call tor_socks_client_subj_type (wheel_irssi.subj))
-	(call irssi_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_irssi.subj)))
+	(call irssi.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_irssi.subj)))
 
 (optional wheel_tor_socks_optional_wheel_livestreamer
 	(call tor_socks_client_subj_type (wheel_livestreamer.subj))

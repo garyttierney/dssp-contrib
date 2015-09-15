@@ -1,28 +1,15 @@
-(macro openssl_exec ((type ARG1))
-	(call can_exec (ARG1 openssl.cmd_file)))
+(in openssl
+	(blockinherit exec_blk)
 
-(macro openssl_auto_subj_type_transition ((type ARG1))
-	(call openssl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 openssl.cmd_file openssl.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro openssl_send_signal ((type ARG1))
-	(allow ARG1 openssl.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro openssl_run ((type ARG1)(role ARG2))
-	(call openssl_auto_subj_type_transition (ARG1))
-	(roleattributeset openssl_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro openssl_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 openssl.home_user_file read_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro openssl_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 openssl.home_user_file manage_file_perms))
-
-(macro openssl_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 openssl.home_user_file relabel_file_perms))
-
-(macro openssl_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 openssl.home_user_file file ".rnd")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".rnd"))))

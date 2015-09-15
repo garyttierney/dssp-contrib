@@ -308,12 +308,12 @@
 
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
-		(blockinherit fuse_sshfs_subj_blk)
+		(blockinherit sshfs.subj_blk)
 
-		(call fuse_sshfs_role_pattern (user.role user_subj_type subj)))
+		(call sshfs.role_pattern (user.role user_subj_type subj)))
 
-	(call fuse_run_fusermount (user.subj user.role))
-	(call fuse_run_ulockmgr (user.subj user.role)))
+	(call fusermount.run (user.subj user.role))
+	(call ulockmgr.run (user.subj user.role)))
 
 (optional user_fuse_optional_user_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_fuse_sshfs.subj user_ssh_client.subj)))

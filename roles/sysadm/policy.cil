@@ -807,13 +807,13 @@
 
 (optional sysadm_fuse_optional_fuse
 	(block sysadm_fuse_sshfs
-		(blockinherit fuse_sshfs_subj_blk)
+		(blockinherit sshfs.subj_blk)
 
-		(call fuse_sshfs_role_pattern (sysadm.role sysadm_subj_type subj)))
+		(call sshfs.role_pattern (sysadm.role sysadm_subj_type subj)))
 
-	(call fuse_manage_fusermount_config_files (sysadm.subj))
-	(call fuse_run_fusermount (sysadm.subj sysadm.role))
-	(call fuse_run_ulockmgr (sysadm.subj sysadm.role)))
+	(call fusermount.manage_config_files (sysadm.subj))
+	(call fusermount.run (sysadm.subj sysadm.role))
+	(call ulockmgr.run (sysadm.subj sysadm.role)))
 
 (optional sysadm_fuse_optional_sysadm_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_fuse_sshfs.subj sysadm_ssh_client.subj)))

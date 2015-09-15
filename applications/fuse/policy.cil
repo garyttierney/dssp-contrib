@@ -1,13 +1,13 @@
-(roleattribute fuse_role)
-
-(typeattribute fuse_sshfs_subj_type)
-
 (block fusermount
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype fuse_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
+
+	(call read_config_files (subj))
 
 	(allow subj self (capability (dac_override sys_admin)))
 
@@ -21,31 +21,34 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call fuse_read_fusermount_config_files (subj))
-	(call fuse_rw_inherited_unix_stream_sockets_all_sshfs_subj (subj))
+	(call sshfs.rw_inherited_unix_stream_sockets_all_subj (subj))
 
 	(call usersubj.rw_home_user_dirs (subj))
 	(call usersubj.mounton_home_user_dirs (subj)))
 
 (block ulockmgr
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype fuse_role subj))
+	(roletype role_attribute subj))
 
 (block sshfs
+	(typeattribute subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (fuse_sshfs_subj_type cmd_file)))
+        (call subj_entry (subj_type_attribute cmd_file))
 
-(allow fuse_sshfs_subj_type self create_unix_stream_socket_perms)
+	(allow subj_type_attribute self create_unix_stream_socket_perms)
 
-(call sys_request_load_module (fuse_sshfs_subj_type))
+	(call sys_request_load_module (subj_type_attribute))
 
-(call fs_read_sysfs_files (fuse_sshfs_subj_type))
+	(call fs_read_sysfs_files (subj_type_attribute))
 
-(call storage_rw_fuse (fuse_sshfs_subj_type))
+	(call storage_rw_fuse (subj_type_attribute))
 
-(call fuse_use_fusermount_fd (fuse_sshfs_subj_type))
+	(call fusermount.use_fd (subj_type_attribute))
 
-(call usersubj.list_home_user (fuse_sshfs_subj_type))
-(call usersubj.mounton_home_user_dirs (fuse_sshfs_subj_type))
+	(call usersubj.list_home_user (subj_type_attribute))
+	(call usersubj.mounton_home_user_dirs (subj_type_attribute)))

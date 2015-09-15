@@ -346,12 +346,12 @@
 
 (optional wheel_fuse_optional_fuse
 	(block wheel_fuse_sshfs
-		(blockinherit fuse_sshfs_subj_blk)
+		(blockinherit sshfs.subj_blk)
 
-		(call fuse_sshfs_role_pattern (wheel.role wheel_subj_type subj)))
+		(call sshfs.role_pattern (wheel.role wheel_subj_type subj)))
 
-	(call fuse_run_fusermount (wheel.subj wheel.role))
-	(call fuse_run_ulockmgr (wheel.subj wheel.role)))
+	(call fusermount.run (wheel.subj wheel.role))
+	(call ulockmgr.run (wheel.subj wheel.role)))
 
 (optional wheel_fuse_optional_wheel_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_fuse_sshfs.subj wheel_ssh_client.subj)))

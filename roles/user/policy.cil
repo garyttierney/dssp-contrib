@@ -241,7 +241,7 @@
 	(call gpg.spec_auto_subj_type_transition (user_emacs.subj user_gpg.subj)))
 
 (optional user_emacs_optional_user_lynx
-	(call lynx_auto_subj_type_transition_pattern (user_emacs.subj user_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (user_emacs.subj user_lynx.subj)))
 
 (optional user_emacs_optional_user_mutt
 	(call mutt_auto_subj_type_transition_pattern (user_emacs.subj user_mutt.subj)))
@@ -405,9 +405,9 @@
 
 (optional user_lynx_optional_lynx
 	(block user_lynx
-		(blockinherit lynx_subj_blk)
+		(blockinherit lynx.subj_blk)
 
-		(call lynx_role_pattern (user.role user_subj_type subj))
+		(call lynx.role_pattern (user.role user_subj_type subj))
 
                 (call cmd_auto_subj_type_transition (subj user.subj))
                 (call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -478,7 +478,7 @@
 	(call firefox.spec_auto_subj_type_transition (user_nb.subj user_firefox.subj)))
 
 (optional user_nb_optional_user_lynx
-	(call lynx_auto_subj_type_transition_pattern (user_nb.subj user_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (user_nb.subj user_lynx.subj)))
 
 (optional user_nb_optional_user_mplayer
 	(call mplayer_auto_subj_type_transition_pattern (user_nb.subj user_mplayer.subj)))

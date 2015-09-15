@@ -772,7 +772,7 @@
 	(call gpg.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_gpg.subj)))
 
 (optional sysadm_emacs_optional_sysadm_lynx
-	(call lynx_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_lynx.subj)))
 
 (optional sysadm_emacs_optional_sysadm_mutt
 	(call mutt_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_mutt.subj)))
@@ -1009,11 +1009,11 @@
 
 (optional sysadm_lynx_optional_lynx
 	(block sysadm_lynx
-		(blockinherit lynx_subj_blk)
+		(blockinherit lynx.subj_blk)
 
-		(call lynx_manage_config_files (sysadm.subj))
+		(call lynx.manage_config_files (sysadm.subj))
 
-		(call lynx_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call lynx.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1095,7 +1095,7 @@
 	(call firefox.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_firefox.subj)))
 
 (optional sysadm_nb_optional_sysadm_lynx
-	(call lynx_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_lynx.subj)))
 
 (optional sysadm_nb_optional_sysadm_mplayer
 	(call mplayer_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_mplayer.subj)))
@@ -1360,7 +1360,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_lynx
 	(call tor_socks_client_subj_type (sysadm_lynx.subj))
-	(call lynx_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_lynx.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_mplayer
 	(call tor_socks_client_subj_type (sysadm_mplayer.subj))

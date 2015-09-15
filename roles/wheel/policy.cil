@@ -303,7 +303,7 @@
 	(call gpg.spec_auto_subj_type_transition (wheel_emacs.subj wheel_gpg.subj)))
 
 (optional wheel_emacs_optional_wheel_lynx
-	(call lynx_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (wheel_emacs.subj wheel_lynx.subj)))
 
 (optional wheel_emacs_optional_wheel_mutt
 	(call mutt_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_mutt.subj)))
@@ -531,9 +531,9 @@
 
 (optional wheel_lynx_optional_lynx
 	(block wheel_lynx
-		(blockinherit lynx_subj_blk)
+		(blockinherit lynx.subj_blk)
 
-		(call lynx_role_pattern (wheel.role wheel_subj_type subj))
+		(call lynx.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -613,7 +613,7 @@
 	(call firefox.spec_auto_subj_type_transition (wheel_nb.subj wheel_firefox.subj)))
 
 (optional wheel_nb_optional_wheel_lynx
-	(call lynx_auto_subj_type_transition_pattern (wheel_nb.subj wheel_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (wheel_nb.subj wheel_lynx.subj)))
 
 (optional wheel_nb_optional_wheel_mplayer
 	(call mplayer_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mplayer.subj)))
@@ -820,7 +820,7 @@
 
 (optional wheel_tor_socks_optional_wheel_lynx
 	(call tor_socks_client_subj_type (wheel_lynx.subj))
-	(call lynx_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_lynx.subj)))
+	(call lynx.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_lynx.subj)))
 
 (optional wheel_tor_socks_optional_wheel_mplayer
 	(call tor_socks_client_subj_type (wheel_mplayer.subj))

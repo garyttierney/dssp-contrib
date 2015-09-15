@@ -1,8 +1,8 @@
-(roleattribute pwgen_role)
-
 (block pwgen
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype pwgen_role subj)
+	(roletype role_attribute subj)
 
 	(call dev_read_urandom (subj)))

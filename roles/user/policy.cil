@@ -87,7 +87,7 @@
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional user_optional_pwgen
-		(call pwgen_run (user_subj_type role)))
+		(call pwgen.run (user_subj_type role)))
 
 	(optional user_optional_qiv
 		(call qiv_manage_tmpfs_files (subj))

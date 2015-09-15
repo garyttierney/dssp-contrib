@@ -1,27 +1,17 @@
-(macro lirc_exec_lirc ((type ARG1))
-	(call can_exec (ARG1 lirc.cmd_file)))
+(in lirc
+	(blockinherit exec_blk)
 
-(macro lirc_auto_subj_type_transition_lirc ((type ARG1))
-	(call lirc_send_signal_lirc (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 lirc.cmd_file lirc.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro lirc_send_signal_lirc ((type ARG1))
-	(allow ARG1 lirc.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro lirc_run_lirc ((type ARG1)(role ARG2))
-	(call lirc_auto_subj_type_transition_lirc (ARG1))
-	(roleattributeset lirc_role ARG2))
+	(blockinherit send_signal_blk))
 
-(macro lirc_exec_lirc_lsplugin ((type ARG1))
-	(call can_exec (ARG1 lirc_lsplugin.cmd_file)))
+(in lirc_lsplugins
+	(blockinherit exec_blk)
 
-(macro lirc_auto_subj_type_transition_lirc_lsplugins ((type ARG1))
-	(call lirc_send_signal_lirc_lsplugins (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 lirc_lsplugins.cmd_file lirc_lsplugins.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro lirc_send_signal_lirc_lsplugins ((type ARG1))
-	(allow ARG1 lirc_lsplugins.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro lirc_run_lirc_lsplugins ((type ARG1)(role ARG2))
-	(call lirc_auto_subj_type_transition_lirc_lsplugins (ARG1))
-	(roleattributeset lirc_role ARG2))
+	(blockinherit send_signal_blk))

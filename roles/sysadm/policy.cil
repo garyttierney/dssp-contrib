@@ -270,8 +270,8 @@
 		(call ldconfig_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_lirc
-		(call lirc_run_lirc (sysadm_subj_type role))
-		(call lirc_run_lirc_lsplugins (sysadm_subj_type role)))
+		(call lirc.run (sysadm_subj_type role))
+		(call lirc_lsplugins.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_lircd
 		(call lircd_adm (subj role)))

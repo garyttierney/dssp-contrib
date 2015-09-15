@@ -1,9 +1,9 @@
-(roleattribute tor_resolve_role)
-
 (block tor_resolve
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype tor_resolve_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self create_tcp_socket_perms)
 

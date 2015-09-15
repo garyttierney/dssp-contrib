@@ -919,7 +919,7 @@
 		(call firefox.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_firefox_optional_sysadm_firefox_plugins
-	(call firefox_plugins_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
+	(call firefox_plugins.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
 
 (optional sysadm_firefox_optional_sysadm_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_xremotec.subj)))
@@ -932,9 +932,9 @@
 
 (optional sysadm_firefox_plugins_optional_firefox_plugins
 	(block sysadm_firefox_plugins
-		(blockinherit firefox_plugins_subj_blk)
+		(blockinherit firefox_plugins.subj_blk)
 
-		(call firefox_plugins_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call firefox_plugins.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_firefox_plugins_optional_sysadm_pa
 	(call pa_auto_subj_type_transition_pattern (sysadm_firefox_plugins.subj sysadm_pa.subj)))

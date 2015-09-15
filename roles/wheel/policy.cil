@@ -444,7 +444,7 @@
 		(call firefox.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_firefox_optional_wheel_firefox_plugins
-	(call firefox_plugins_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_plugins.subj)))
+	(call firefox_plugins.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_plugins.subj)))
 
 (optional wheel_firefox_optional_wheel_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_xremotec.subj)))
@@ -457,9 +457,9 @@
 
 (optional wheel_firefox_plugins_optional_firefox_plugins
 	(block wheel_firefox_plugins
-		(blockinherit firefox_plugins_subj_blk)
+		(blockinherit firefox_plugins.subj_blk)
 
-		(call firefox_plugins_role_pattern (wheel.role wheel_subj_type subj))))
+		(call firefox_plugins.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_firefox_plugins_optional_wheel_pa
 	(call pa_auto_subj_type_transition_pattern (wheel_firefox_plugins.subj wheel_pa.subj)))

@@ -262,7 +262,7 @@
 		(call firefox.role_pattern (user.role user_subj_type subj))))
 
 (optional user_firefox_optional_user_firefox_plugins
-	(call firefox_plugins_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_plugins.subj)))
+	(call firefox_plugins.spec_auto_subj_type_transition (user_firefox.subj user_firefox_plugins.subj)))
 
 (optional user_firefox_optional_user_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_xremotec.subj)))
@@ -275,9 +275,9 @@
 
 (optional user_firefox_plugins_optional_firefox_plugins
 	(block user_firefox_plugins
-		(blockinherit firefox_plugins_subj_blk)
+		(blockinherit firefox_plugins.subj_blk)
 
-		(call firefox_plugins_role_pattern (user.role user_subj_type subj))))
+		(call firefox_plugins.role_pattern (user.role user_subj_type subj))))
 
 (optional user_firefox_plugins_optional_user_pa
 	(call pa_auto_subj_type_transition_pattern (user_firefox_plugins.subj user_pa.subj)))

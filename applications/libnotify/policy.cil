@@ -1,17 +1,17 @@
-(typeattribute libnotify_subj_type)
-
 (block libnotify
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (libnotify_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(allow libnotify_subj_type self rw_fifo_file_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(optional libnotify_subj_type_optional_dunst
-	(call dunst.sessbus_chat_client_subj_type (libnotify_subj_type)))
+	(optional libnotify_subj_type_optional_dunst
+		(call dunst.sessbus_chat_client_subj_type (subj_type_attribute)))
 
-(optional libnotify_subj_type_optional_sd_machined
-	(call sd_machined_read_config_files (libnotify_subj_type)))
+	(optional libnotify_subj_type_optional_sd_machined
+		(call sd_machined_read_config_files (subj_type_attribute)))
 
-(optional libnotify_subj_type_optional_sessbus
-	(call sessbus_client_all_subj (libnotify_subj_type)))
+	(optional libnotify_subj_type_optional_sessbus
+		(call sessbus_client_all_subj (subj_type_attribute))))

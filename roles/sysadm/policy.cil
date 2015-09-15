@@ -973,9 +973,9 @@
 
 (optional sysadm_libnotify_optional_libnotify
 	(block sysadm_libnotify
-		(blockinherit libnotify_subj_blk)
+		(blockinherit libnotify.subj_blk)
 
-		(call libnotify_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call libnotify.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_libnotify_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_libnotify.subj sysadm_sessbus_launch.subj)))

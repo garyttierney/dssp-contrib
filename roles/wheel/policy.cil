@@ -319,9 +319,9 @@
 
 (optional wheel_fedpkg_optional_fedpkg
 	(block wheel_fedpkg
-		(blockinherit fedpkg_subj_blk)
+		(blockinherit fedpkg.subj_blk)
 
-		(call fedpkg_role_pattern (wheel.role wheel_subj_type subj))))
+		(call fedpkg.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_fedpkg_optional_wheel_git
 	(call git_auto_subj_type_transition_pattern (wheel_fedpkg.subj wheel_git.subj)))

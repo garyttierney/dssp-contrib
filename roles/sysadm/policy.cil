@@ -902,12 +902,12 @@
 
 (optional sysadm_fedpkg_optional_fedpkg
 	(block sysadm_fedpkg
-		(blockinherit fedpkg_subj_blk)
+		(blockinherit fedpkg.subj_blk)
 
-		(call fedpkg_manage_config (sysadm.subj))
-		(call fedpkg_relabel_config (sysadm.subj))
+		(call fedpkg.manage_config (sysadm.subj))
+		(call fedpkg.relabel_config (sysadm.subj))
 
-		(call fedpkg_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call fedpkg.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_fedpkg_optional_sysadm_git
 	(call git_auto_subj_type_transition_pattern (sysadm_fedpkg.subj sysadm_git.subj)))

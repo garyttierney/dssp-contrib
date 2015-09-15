@@ -1,72 +1,44 @@
-(block fedpkg_subj_blk
-	(blockabstract fedpkg_subj_blk)
+(in fedpkg
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset fedpkg_subj_type subj))
+		(typeattributeset fedpkg.subj_type_attribute subj))
 
-(macro fedpkg_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset fedpkg_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro fedpkg_exec ((type ARG1))
-	(call can_exec (ARG1 fedpkg.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro fedpkg_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 fedpkg.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
-	(allow ARG2 ARG3 (fifo_file (write)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
+		(allow ARG2 ARG3 (fifo_file (write)))
 
-	(call curl.run (ARG3 ARG1))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call rpmbuild_run (ARG3 ARG1)))
+		(call curl.run (ARG3 ARG1))
 
-(macro fedpkg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 fedpkg.cmd_file ARG2)))
+		(call rpmbuild_run (ARG3 ARG1)))
 
-(macro fedpkg_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 fedpkg.config_file search_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro fedpkg_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 fedpkg.config_file list_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro fedpkg_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 fedpkg.config_file fedpkg.config_file)))
-
-(macro fedpkg_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 fedpkg.config_file fedpkg.config_file)))
-
-(macro fedpkg_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 fedpkg.config_file read_file_perms)
-	(allow ARG1 fedpkg.config_file list_dir_perms)
-	(allow ARG1 fedpkg.config_file read_lnk_file_perms))
-
-(macro fedpkg_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 fedpkg.config_file manage_file_perms)
-	(allow ARG1 fedpkg.config_file manage_dir_perms)
-	(allow ARG1 fedpkg.config_file manage_lnk_file_perms))
-
-(macro fedpkg_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 fedpkg.config_file relabel_file_perms)
-	(allow ARG1 fedpkg.config_file relabel_dir_perms)
-	(allow ARG1 fedpkg.config_file relabel_lnk_file_perms))
-
-(macro fedpkg_use_fd_all_subj ((type ARG1))
-	(allow ARG1 fedpkg_subj_type (fd (use))))
-
-(macro fedpkg_append_inherited_fifo_files_all_subj ((type ARG1))
-	(call fedpkg_use_fd_all_subj (ARG1))
-	(allow ARG1 fedpkg_subj_type append_inherited_fifo_file_perms))
+	(blockinherit use_fd_all_blk)
+	(blockinherit append_inherited_fifo_files_all_blk))

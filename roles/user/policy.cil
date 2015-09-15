@@ -453,13 +453,13 @@
 	(call firefox_xremotec.spec_auto_subj_type_transition (user_mutt.subj user_firefox_xremotec.subj)))
 
 (optional user_mutt_optional_user_mutt_pgp_ewrap
-	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (user_mutt.subj user_mutt_pgp_ewrap.subj)))
+	(call mutt_pgp_ewrap.spec_auto_subj_type_transition (user_mutt.subj user_mutt_pgp_ewrap.subj)))
 
 (optional user_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
 	(block user_mutt_pgp_ewrap
-		(blockinherit mutt_pgp_ewrap_subj_blk)
+		(blockinherit mutt_pgp_ewrap.subj_blk)
 
-		(call mutt_pgp_ewrap_role_pattern (user.role user_subj_type subj))))
+		(call mutt_pgp_ewrap.role_pattern (user.role user_subj_type subj))))
 
 (optional user_mutt_pgp_ewrap_optional_user_gpg
 	(call gpg.spec_auto_subj_type_transition (user_mutt_pgp_ewrap.subj user_gpg.subj)))

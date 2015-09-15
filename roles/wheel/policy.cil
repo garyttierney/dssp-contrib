@@ -669,9 +669,9 @@
 
 (optional wheel_rpmdev_optional_rpmdev
 	(block wheel_rpmdev
-		(blockinherit rpmdev_subj_blk)
+		(blockinherit rpmdev.subj_blk)
 
-		(call rpmdev_role_pattern (wheel.role wheel_subj_type subj))))
+		(call rpmdev.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_rpmdev_optional_wheel_gpg
 	(call gpg.spec_auto_subj_type_transition (wheel_rpmdev.subj wheel_gpg.subj)))

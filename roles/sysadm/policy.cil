@@ -1167,12 +1167,12 @@
 
 (optional sysadm_rpmdev_optional_rpmdev
 	(block sysadm_rpmdev
-                (blockinherit rpmdev_subj_blk)
+                (blockinherit rpmdev.subj_blk)
 
-		(call rpmdev_manage_config (sysadm.subj))
-		(call rpmdev_relabel_config (sysadm.subj))
+		(call rpmdev.manage_config (sysadm.subj))
+		(call rpmdev.relabel_config (sysadm.subj))
 
-		(call rpmdev_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call rpmdev.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_rpmdev_optional_sysadm_gpg
 	(call gpg.spec_auto_subj_type_transition (sysadm_rpmdev.subj sysadm_gpg.subj)))

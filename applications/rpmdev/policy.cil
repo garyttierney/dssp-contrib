@@ -1,50 +1,50 @@
-(typeattribute rpmdev_subj_type)
-
 (block rpmdev
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (rpmdev_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj_type_attribute))
+
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj.tmpfs_user_obj_blk))
+	(call manage_home_user_files (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
-(allow rpmdev_subj_type self rw_fifo_file_perms)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call rpmdev_exec (rpmdev_subj_type))
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call rpmdev_read_config (rpmdev_subj_type))
+	(call exec (subj_type_attribute))
 
-(call rpmdev_manage_home_files (rpmdev_subj_type))
-(call rpmdev_home_dir_obj_type_transition_home (rpmdev_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call rpmdev_manage_tmpfs_files (rpmdev_subj_type))
-(call rpmdev_tmpfs_obj_type_transition_tmpfs (rpmdev_subj_type))
+	(call sys_read_cpu_online_sysfs_files (subj_type_attribute))
 
-(call sys_read_cpu_online_sysfs_files (rpmdev_subj_type))
+	(call cmd_list_cmd (subj_type_attribute))
+	(call cmd_exec_cmd (subj_type_attribute))
+	(call cmd_exec_shell (subj_type_attribute))
 
-(call cmd_list_cmd (rpmdev_subj_type))
-(call cmd_exec_cmd (rpmdev_subj_type))
-(call cmd_exec_shell (rpmdev_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call dev_read_urandom (rpmdev_subj_type))
+	(call file_list_var_tmp (subj_type_attribute))
+	(call file_read_config (subj_type_attribute))
+	(call file_read_data (subj_type_attribute))
 
-(call file_list_var_tmp (rpmdev_subj_type))
-(call file_read_config (rpmdev_subj_type))
-(call file_read_data (rpmdev_subj_type))
+	(call fs_getattr_tmpfs_fs (subj_type_attribute))
 
-(call fs_getattr_tmpfs_fs (rpmdev_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call miscfile_read_locale (rpmdev_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call nss_client_subj_type (rpmdev_subj_type))
+	(call rpm_exec (subj_type_attribute))
+	(call rpm_read_config (subj_type_attribute))
 
-(call rpm_exec (rpmdev_subj_type))
-(call rpm_read_config (rpmdev_subj_type))
-
-(call usersubj.manage_home_user_dirs (rpmdev_subj_type))
-(call usersubj.manage_home_user_files (rpmdev_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_dirs (rpmdev_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (rpmdev_subj_type))
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute)))

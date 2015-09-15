@@ -1,101 +1,58 @@
-(block rpmdev_subj_blk
-	(blockabstract rpmdev_subj_blk)
+(in rpmdev
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset rpmdev_subj_type subj))
+		(typeattributeset rpmdev.subj_type_attribute subj))
 
-(macro rpmdev_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset rpmdev_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro rpmdev_exec ((type ARG1))
-	(call can_exec (ARG1 rpmdev.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro rpmdev_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 rpmdev.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call rpmdev_manage_tmpfs_files (ARG2))
-	(call rpmdev_relabel_tmpfs_files (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call rpmdev_manage_home_files (ARG2))
-	(call rpmdev_relabel_home_files (ARG2))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
 
-	(call rpmdev_home_dir_obj_type_transition_home (ARG2)))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
 
-(macro rpmdev_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 rpmdev.cmd_file ARG2)))
+		(call home_dir_obj_type_transition_home (ARG2)))
 
-(macro rpmdev_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 rpmdev.config_file search_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro rpmdev_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 rpmdev.config_file list_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro rpmdev_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 rpmdev.config_file rpmdev.config_file)))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro rpmdev_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 rpmdev.config_file rpmdev.config_file)))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+        	(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".rpmmacros")))
 
-(macro rpmdev_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 rpmdev.config_file read_file_perms)
-	(allow ARG1 rpmdev.config_file list_dir_perms)
-	(allow ARG1 rpmdev.config_file read_lnk_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro rpmdev_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 rpmdev.config_file manage_file_perms)
-	(allow ARG1 rpmdev.config_file manage_dir_perms)
-	(allow ARG1 rpmdev.config_file manage_lnk_file_perms))
-
-(macro rpmdev_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 rpmdev.config_file relabel_file_perms)
-	(allow ARG1 rpmdev.config_file relabel_dir_perms)
-	(allow ARG1 rpmdev.config_file relabel_lnk_file_perms))
-
-(macro rpmdev_read_home_files ((type ARG1))
-        (call usersubj.search_home_dir (ARG1))
-        (allow ARG1 rpmdev.home_user_file read_file_perms))
-
-(macro rpmdev_manage_home_files ((type ARG1))
-        (call usersubj.rw_home_dir (ARG1))
-        (allow ARG1 rpmdev.home_user_file manage_file_perms))
-
-(macro rpmdev_relabel_home_files ((type ARG1))
-        (call usersubj.search_home_dir (ARG1))
-        (allow ARG1 rpmdev.home_user_file relabel_file_perms))
-
-(macro rpmdev_home_dir_obj_type_transition_home ((type ARG1))
-        (call usersubj.home_dir_obj_type_transition (ARG1 rpmdev.home_user_file file ".rpmmacros")))
-
-(macro rpmdev_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 rpmdev.tmpfs_user_file read_file_perms))
-
-(macro rpmdev_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 rpmdev.tmpfs_user_file manage_file_perms))
-
-(macro rpmdev_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 rpmdev.tmpfs_user_file relabel_file_perms))
-
-(macro rpmdev_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 rpmdev.tmpfs_user_file file "*")))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

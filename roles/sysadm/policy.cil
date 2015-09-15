@@ -836,7 +836,7 @@
 	(call gpg.spec_auto_subj_type_transition (sysadm_git.subj sysadm_gpg.subj)))
 
 (optional sysadm_git_optional_sysadm_git_email
-	(call git_email_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_git_email.subj)))
+	(call git_email.spec_auto_subj_type_transition (sysadm_git.subj sysadm_git_email.subj)))
 
 (optional sysadm_git_optional_sysadm_tor_socks
 	(call tor_socks_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_tor_socks.subj)))
@@ -846,9 +846,9 @@
 
 (optional sysadm_git_email_optional_git_email
 	(block sysadm_git_email
-		(blockinherit git_email_subj_blk)
+		(blockinherit git_email.subj_blk)
 
-		(call git_email_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call git_email.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1347,7 +1347,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_git_email
 	(call tor_socks_client_subj_type (sysadm_git_email.subj))
-	(call git_email_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_git_email.subj)))
+	(call git_email.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_git_email.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_irssi
 	(call tor_socks_client_subj_type (sysadm_irssi.subj))

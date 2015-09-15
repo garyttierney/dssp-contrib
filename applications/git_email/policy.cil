@@ -1,25 +1,25 @@
-(typeattribute git_email_subj_type)
-
 (block git_email
+	(typeattribute subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
 
-        (blockinherit usersubj.home_user_obj_blk))
+        (blockinherit usersubj.home_user_obj_blk)
 
-(allow git_email_subj_type self rw_fifo_file_perms)
+	(call manage_home_user_files (subj_type_attribute))
+	(call git_home_user_obj_type_transition_home (subj_type_attribute))
 
-(call git_email_manage_home_files (git_email_subj_type))
-(call git_email_git_home_obj_type_transition_home (git_email_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call dev_read_urandom (git_email_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_data (git_email_subj_type))
-(call file_read_config_files (git_email_subj_type))
+	(call file_read_data (subj_type_attribute))
+	(call file_read_config_files (subj_type_attribute))
 
-(call miscfile_read_all_cert (git_email_subj_type))
-(call miscfile_read_locale (git_email_subj_type))
+	(call miscfile_read_all_cert (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call nss_client_subj_type (git_email_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call smtp_tcp_connect_smtp_port (git_email_subj_type))
+	(call smtp_tcp_connect_smtp_port (subj_type_attribute))
 
-(call usersubj.read_home_user_files (git_email_subj_type))
+	(call usersubj.read_home_user_files (subj_type_attribute)))

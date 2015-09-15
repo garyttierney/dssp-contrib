@@ -1,44 +1,38 @@
-(block git_email_subj_blk
-	(blockabstract git_email_subj_blk)
+(in git_email
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset git_email_subj_type subj))
+		(typeattributeset git_email.subj_type_attribute subj))
 
-(macro git_email_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset git_email_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro git_email_exec ((type ARG1))
-	(call can_exec (ARG1 git_email.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro git_email_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 git_email.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call git_email_manage_home_files (ARG2))
-	(call git_email_relabel_home_files (ARG2)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro git_email_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 git_email.cmd_file ARG2)))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2)))
 
-(macro git_email_read_home_files ((type ARG1))
-	(call git.search_home_user (ARG1))
-	(allow ARG1 git_email.home_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro git_email_manage_home_files ((type ARG1))
-	(call git.rw_home_user_dirs (ARG1))
-	(allow ARG1 git_email.home_user_file manage_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro git_email_relabel_home_files ((type ARG1))
-	(call git.search_home_user (ARG1))
-	(allow ARG1 git_email.home_user_file relabel_file_perms))
-
-(macro git_email_git_home_obj_type_transition_home ((type ARG1))
-	(call git.home_user_obj_type_transition (ARG1 git_email.home_user_file file "*")))
+	(macro git_home_user_obj_type_transition_home ((type ARG1))
+		(call git.home_user_obj_type_transition (ARG1 home_user_file file "*"))))

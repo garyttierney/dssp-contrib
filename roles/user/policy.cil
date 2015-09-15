@@ -512,9 +512,9 @@
 
 (optional user_rp_optional_rp
 	(block user_rp
-		(blockinherit rp_subj_blk)
+		(blockinherit rp.subj_blk)
 
-		(call rp_role_pattern (user.role user_subj_type subj))
+		(call rp.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -644,7 +644,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xinit_optional_user_rp
-	(call rp_auto_subj_type_transition_pattern (user_xinit.subj user_rp.subj)))
+	(call rp.spec_auto_subj_type_transition (user_xinit.subj user_rp.subj)))
 
 (optional user_xinit_optional_user_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (user_xinit.subj user_sessbus_launch.subj)))

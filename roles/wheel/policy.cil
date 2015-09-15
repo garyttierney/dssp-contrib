@@ -658,9 +658,9 @@
 
 (optional wheel_rp_optional_rp
 	(block wheel_rp
-		(blockinherit rp_subj_blk)
+		(blockinherit rp.subj_blk)
 
-		(call rp_role_pattern (wheel.role wheel_subj_type subj))
+		(call rp.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -870,7 +870,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_xinit_optional_wheel_rp
-	(call rp_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_rp.subj)))
+	(call rp.spec_auto_subj_type_transition (wheel_xinit.subj wheel_rp.subj)))
 
 (optional wheel_xinit_optional_wheel_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_sessbus_launch.subj)))

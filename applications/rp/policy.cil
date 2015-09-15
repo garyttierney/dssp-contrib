@@ -1,38 +1,37 @@
-(typeattribute rp_subj_type)
-(typeattribute rp_client_subj_type)
-
 (block rp
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (rp_subj_type cmd_file))
+        (call subj_entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.home_user_obj_blk))
+        (blockinherit usersubj.home_user_obj_blk)
 
-(allow rp_subj_type self rw_fifo_file_perms)
+	(call manage_home_user_files (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
-(allow rp_subj_type rp_client_subj_type (process (getsession)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call rp_manage_home_files (rp_subj_type))
-(call rp_home_dir_obj_type_transition_home (rp_subj_type))
+	(allow subj_type_attribute client_subj_type_attribute (process (getsession)))
 
-(call file_read_data (rp_subj_type))
+	(call file_read_data (subj_type_attribute))
 
-(call fs_getattr_fs (rp_subj_type))
+	(call fs_getattr_fs (subj_type_attribute))
 
-(call miscfile_dontaudit_setattr_fonts_var_cache_dirs (rp_subj_type))
-(call miscfile_read_all_fonts (rp_subj_type))
-(call miscfile_read_locale (rp_subj_type))
+	(call miscfile_dontaudit_setattr_fonts_var_cache_dirs (subj_type_attribute))
+	(call miscfile_read_all_fonts (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call usersubj.create_home_cache_dirs (rp_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_cache (rp_subj_type))
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
-(call usersubj.manage_home_fonts_cache (rp_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_fonts_cache (rp_subj_type))
-(call usersubj.home_cache_obj_type_transition_home_fonts_cache (rp_subj_type))
+	(call xserver_client_subj_type (subj_type_attribute))
 
-(call xserver_client_subj_type (rp_subj_type))
+	(optional rp_subj_type_optional_unconfinedsubj
+		(call unconfinedsubj_getsession (subj_type_attribute)))
 
-(optional rp_subj_type_optional_unconfinedsubj
-	(call unconfinedsubj_getsession (rp_subj_type)))
-
-(allow rp_client_subj_type rp_subj_type (process (sigchld)))
+	(allow client_subj_type_attribute subj_type_attribute (process (sigchld))))

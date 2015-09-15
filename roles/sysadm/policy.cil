@@ -1156,9 +1156,9 @@
 
 (optional sysadm_rp_optional_rp
 	(block sysadm_rp
-		(blockinherit rp_subj_blk)
+		(blockinherit rp.subj_blk)
 
-		(call rp_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call rp.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1422,7 +1422,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xinit_optional_sysadm_rp
-	(call rp_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_rp.subj)))
+	(call rp.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_rp.subj)))
 
 (optional sysadm_xinit_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_sessbus_launch.subj)))

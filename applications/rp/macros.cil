@@ -1,50 +1,44 @@
-(block rp_subj_blk
-	(blockabstract rp_subj_blk)
+(in rp
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset rp_subj_type subj))
+		(typeattributeset rp.subj_type_attribute subj))
 
-(macro rp_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset rp_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro rp_client_subj_type ((type ARG1))
-	(typeattributeset rp_client_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro rp_exec ((type ARG1))
-	(call can_exec (ARG1 rp.cmd_file)))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro rp_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 rp.cmd_file ARG3))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call rp_manage_home_files (ARG2))
-	(call rp_relabel_home_files (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call rp_home_dir_obj_type_transition_home (ARG2)))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
 
-(macro rp_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 rp.cmd_file ARG2)))
+		(call home_dir_obj_type_transition_home (ARG2)))
 
-(macro rp_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 rp.home_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro rp_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 rp.home_user_file manage_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro rp_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 rp.home_user_file relabel_file_perms))
-
-(macro rp_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 rp.home_user_file file ".ratpoisonrc"))
-	(call usersubj.home_dir_obj_type_transition (ARG1 rp.home_user_file file ".ratpoison_history")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".ratpoisonrc"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".ratpoison_history"))))

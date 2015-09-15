@@ -1,12 +1,12 @@
-(typeattribute firefox_xremotec_subj_type)
-
 (block firefox_xremotec
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (firefox_xremotec_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(call file_read_config_files (firefox_xremotec_subj_type))
+	(call file_read_config_files (subj_type_attribute))
 
-(call usersubj.read_home_user_files (firefox_xremotec_subj_type))
+	(call usersubj.read_home_user_files (subj_type_attribute))
 
-(call xserver_client_subj_type (firefox_xremotec_subj_type))
+	(call xserver_client_subj_type (subj_type_attribute)))

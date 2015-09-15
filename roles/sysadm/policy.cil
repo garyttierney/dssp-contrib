@@ -922,7 +922,7 @@
 	(call firefox_plugins.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
 
 (optional sysadm_firefox_optional_sysadm_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_xremotec.subj)))
 
 (optional sysadm_firefox_optional_sysadm_pa
 	(call pa_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_pa.subj)))
@@ -941,9 +941,9 @@
 
 (optional sysadm_firefox_xremotec_optional_firefox_xremotec
 	(block sysadm_firefox_xremotec
-		(blockinherit firefox_xremotec_subj_blk)
+		(blockinherit firefox_xremotec.subj_blk)
 
-		(call firefox_xremotec_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call firefox_xremotec.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_hostnamectl_optional_hostnamectl
 	(block sysadm_hostnamectl
@@ -1066,7 +1066,7 @@
 	(call firefox.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_firefox.subj)))
 
 (optional sysadm_mutt_optional_sysadm_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
 
 (optional sysadm_mutt_optional_sysadm_mutt_pgp_ewrap
 	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_mutt_pgp_ewrap.subj)))

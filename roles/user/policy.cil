@@ -265,7 +265,7 @@
 	(call firefox_plugins.spec_auto_subj_type_transition (user_firefox.subj user_firefox_plugins.subj)))
 
 (optional user_firefox_optional_user_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (user_firefox.subj user_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (user_firefox.subj user_firefox_xremotec.subj)))
 
 (optional user_firefox_optional_user_pa
 	(call pa_auto_subj_type_transition_pattern (user_firefox.subj user_pa.subj)))
@@ -284,9 +284,9 @@
 
 (optional user_firefox_xremotec_optional_firefox_xremotec
 	(block user_firefox_xremotec
-		(blockinherit firefox_xremotec_subj_blk)
+		(blockinherit firefox_xremotec.subj_blk)
 
-		(call firefox_xremotec_role_pattern (user.role user_subj_type subj))))
+		(call firefox_xremotec.role_pattern (user.role user_subj_type subj))))
 
 (optional user_festival_optional_festival
 	(block user_festival
@@ -450,7 +450,7 @@
 	(call firefox.spec_auto_subj_type_transition (user_mutt.subj user_firefox.subj)))
 
 (optional user_mutt_optional_user_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (user_mutt.subj user_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (user_mutt.subj user_firefox_xremotec.subj)))
 
 (optional user_mutt_optional_user_mutt_pgp_ewrap
 	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (user_mutt.subj user_mutt_pgp_ewrap.subj)))

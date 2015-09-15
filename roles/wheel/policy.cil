@@ -447,7 +447,7 @@
 	(call firefox_plugins.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_plugins.subj)))
 
 (optional wheel_firefox_optional_wheel_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_xremotec.subj)))
 
 (optional wheel_firefox_optional_wheel_pa
 	(call pa_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_pa.subj)))
@@ -466,9 +466,9 @@
 
 (optional wheel_firefox_xremotec_optional_firefox_xremotec
 	(block wheel_firefox_xremotec
-		(blockinherit firefox_xremotec_subj_blk)
+		(blockinherit firefox_xremotec.subj_blk)
 
-		(call firefox_xremotec_role_pattern (wheel.role wheel_subj_type subj))))
+		(call firefox_xremotec.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_hostnamectl
 	(block wheel_hostnamectl
@@ -567,7 +567,7 @@
 	(call firefox.spec_auto_subj_type_transition (wheel_mutt.subj wheel_firefox.subj)))
 
 (optional wheel_mutt_optional_wheel_firefox_xremotec
-	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox_xremotec.subj)))
+	(call firefox_xremotec.spec_auto_subj_type_transition (wheel_mutt.subj wheel_firefox_xremotec.subj)))
 
 (optional wheel_mutt_optional_wheel_mutt_pgp_ewrap
 	(call mutt_pgp_ewrap_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_mutt_pgp_ewrap.subj)))

@@ -55,11 +55,11 @@
 		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional user_optional_java
-		(call java_manage_tmpfs (subj))
-		(call java_relabel_tmpfs (subj))
-		(call java_manage_home (subj))
-		(call java_relabel_home (subj))
-		(call java_home_dir_obj_type_transition_home (subj)))
+		(call java.manage_tmpfs_user (subj))
+		(call java.relabel_tmpfs_user (subj))
+		(call java.manage_home_user (subj))
+		(call java.relabel_home_user (subj))
+		(call java.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_journalctl
 		(call journalctl_exec (subj)))

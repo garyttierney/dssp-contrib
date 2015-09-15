@@ -1,121 +1,77 @@
-(block screen_subj_blk
-	(blockabstract screen_subj_blk)
+(in screen
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset screen_subj_type subj))
+		(typeattributeset screen.subj_type_attribute subj))
 
-(macro screen_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset screen_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro screen_exec ((type ARG1))
-	(call can_exec (ARG1 screen.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro screen_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 screen.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call screen_manage_home_files (ARG2))
-	(call screen_relabel_home_files (ARG2))
-	(call screen_home_dir_obj_type_transition_home_files (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call screen_manage_tmpfs_files (ARG2))
-	(call screen_relabel_tmpfs_files (ARG2))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
+		(call home_dir_obj_type_transition_home_files (ARG2))
 
-	(call chkpwd.run (ARG3 ARG1))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
 
-	(call utempter_run (ARG3 ARG1))
+		(call chkpwd.run (ARG3 ARG1))
 
-	(optional screen_role_pattern_optional_mysysstat
-		(call mysysstat.run (ARG3 ARG1))))
+		(call utempter_run (ARG3 ARG1))
 
-(macro screen_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 screen.cmd_file ARG2)))
+		(optional screen_role_pattern_optional_mysysstat
+			(call mysysstat.run (ARG3 ARG1))))
 
-(macro screen_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 screen.config_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro screen_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 screen.config_file manage_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk)
 
-(macro screen_relabel_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 screen.config_file relabel_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro screen_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 screen.home_user_file read_file_perms))
+	(macro read_inherited_home_user_files ((type ARG1))
+		(allow ARG1 home_user_file read_inherited_file_perms))
 
-(macro screen_read_inherited_home_files ((type ARG1))
-	(allow ARG1 screen.home_user_file read_inherited_file_perms))
+	(macro home_dir_obj_type_transition_home_files ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".screenrc")))
 
-(macro screen_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 screen.home_user_file manage_file_perms))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro screen_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 screen.home_user_file relabel_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "screen")))
 
-(macro screen_home_dir_obj_type_transition_home_files ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 screen.home_user_file file ".screenrc")))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro screen_search_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 screen.runtime_file search_dir_perms))
+	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-(macro screen_list_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 screen.runtime_file list_dir_perms))
-
-(macro screen_read_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 screen.runtime_file list_dir_perms)
-	(allow ARG1 screen.runtime_file read_sock_file_perms))
-
-(macro screen_manage_runtime ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 screen.runtime_file manage_dir_perms)
-	(allow ARG1 screen.runtime_file manage_sock_file_perms))
-
-(macro screen_relabel_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 screen.runtime_file relabel_dir_perms)
-	(allow ARG1 screen.runtime_file relabel_sock_file_perms))
-
-(macro screen_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 screen.runtime_file dir "screen")))
-
-(macro screen_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 screen.tmpfs_user_file read_file_perms))
-
-(macro screen_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 screen.tmpfs_user_file manage_file_perms))
-
-(macro screen_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 screen.tmpfs_user_file relabel_file_perms))
-
-(macro screen_tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 screen.tmpfs_user_file file "*")))
-
-(macro screen_use_fd_all_subj ((type ARG1))
-	(allow ARG1 screen_subj_type (fd (use))))
-
-(macro screen_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call screen_use_fd_all_subj (ARG1))
-	(allow ARG1 screen_subj_type rw_inherited_unix_stream_socket_perms))
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_unix_stream_sockets_all_blk))

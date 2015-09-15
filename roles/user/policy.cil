@@ -523,9 +523,9 @@
 
 (optional user_screen_optional_screen
 	(block user_screen
-		(blockinherit screen_subj_blk)
+		(blockinherit screen.subj_blk)
 
-		(call screen_role_pattern (user.role user_subj_type subj))
+		(call screen.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -664,4 +664,4 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_xterm_optional_user_screen
-	(call screen_auto_subj_type_transition_pattern (user_xterm.subj user_screen.subj)))
+	(call screen.spec_auto_subj_type_transition (user_xterm.subj user_screen.subj)))

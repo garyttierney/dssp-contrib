@@ -1,51 +1,49 @@
-(roleattribute screen_role)
-
-(typeattribute screen_subj_type)
-
 (block screen
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (screen_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config_files (subj_type_attribute))
+
 	(blockinherit file_runtime_obj_blk)
+
+	(call manage_runtime (subj_type_attribute))
+	(call runtime_obj_type_transition_runtime (subj_type_attribute))
 
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(blockinherit usersubj.tmpfs_user_obj_blk))
+	(call read_home_user_files (subj_type_attribute))
 
-(allow screen_subj_type self (unix_stream_socket (listen accept connectto)))
-(allow screen_subj_type self rw_fifo_file_perms)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call screen_read_config_files (screen_subj_type))
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
 
-(call screen_read_home_files (screen_subj_type))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call screen_manage_runtime (screen_subj_type))
-(call screen_runtime_obj_type_transition_runtime (screen_subj_type))
+	(call sys_audit_client_subj_type (subj_type_attribute))
+	(call sys_read_crypto_sysctl_files (subj_type_attribute))
 
-(call screen_manage_tmpfs_files (screen_subj_type))
-(call screen_tmpfs_obj_type_transition_tmpfs_files (screen_subj_type))
+	(call file_read_config_files (subj_type_attribute))
 
-(call sys_audit_client_subj_type (screen_subj_type))
-(call sys_read_crypto_sysctl_files (screen_subj_type))
+	(call subj_interactive_fd_type (subj_type_attribute))
 
-(call file_read_config_files (screen_subj_type))
+	(call miscfile_read_all_terminfo (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
+	(call miscfile_rw_utmp_runtime_files (subj_type_attribute))
 
-(call subj_interactive_fd_type (screen_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call miscfile_read_all_terminfo (screen_subj_type))
-(call miscfile_read_locale (screen_subj_type))
-(call miscfile_rw_utmp_runtime_files (screen_subj_type))
+	(call pam_read_config (subj_type_attribute))
 
-(call nss_client_subj_type (screen_subj_type))
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.setattr_term (subj_type_attribute))
+	(call usersubj.use_term (subj_type_attribute))
 
-(call pam_read_config (screen_subj_type))
-
-(call usersubj.create_ptys (screen_subj_type))
-(call usersubj.setattr_term (screen_subj_type))
-(call usersubj.use_term (screen_subj_type))
-
-(optional screen_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (screen_subj_type)))
+	(optional screen_subj_type_optional_sd_journald
+		(call sd_journald_client_subj_type (subj_type_attribute))))

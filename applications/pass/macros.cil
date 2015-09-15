@@ -1,44 +1,16 @@
-(macro pass_search_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 pass.home_user_file search_dir_perms))
+(in pass
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro pass_list_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 pass.home_user_file search_dir_perms))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".password-store")))
 
-(macro pass_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_files_pattern (ARG1 pass.home_user_file pass.home_user_file)))
-
-(macro pass_manage_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call manage_files_pattern (ARG1 pass.home_user_file pass.home_user_file)))
-
-(macro pass_read_home_lnk_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_lnk_files_pattern (ARG1 pass.home_user_file pass.home_user_file)))
-
-(macro pass_read_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 pass.home_user_file read_file_perms)
-	(allow ARG1 pass.home_user_file list_dir_perms)
-	(allow ARG1 pass.home_user_file read_lnk_file_perms))
-
-(macro pass_manage_home ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 pass.home_user_file manage_file_perms)
-	(allow ARG1 pass.home_user_file manage_dir_perms)
-	(allow ARG1 pass.home_user_file manage_lnk_file_perms))
-
-(macro pass_relabel_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 pass.home_user_file relabel_file_perms)
-	(allow ARG1 pass.home_user_file relabel_dir_perms)
-	(allow ARG1 pass.home_user_file relabel_lnk_file_perms))
-
-(macro pass_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 pass.home_user_file dir ".password-store")))
-
-(macro pass_home_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-	(call usersubj.search_home_dir (ARG1))
-	(call obj_type_transition_pattern (ARG1 pass.home_user_file ARG2 ARG3 ARG4)))
+	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call usersubj.search_home_dir (ARG1))
+		(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4))))

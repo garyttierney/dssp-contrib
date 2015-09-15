@@ -349,9 +349,9 @@
 		(call openssl.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_pass
-		(call pass_manage_home (subj))
-		(call pass_relabel_home (subj))
-		(call pass_home_dir_obj_type_transition_home (subj)))
+		(call pass.manage_home_user (subj))
+		(call pass.relabel_home_user (subj))
+		(call pass.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_pcitools
 		(call pcitools.run (sysadm_subj_type role)))

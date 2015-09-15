@@ -1,40 +1,40 @@
-(typeattribute gpg_agent_subj_type)
-
 (block gpg_agent
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (gpg_agent_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
-	(blockinherit usersubj.home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk)
 
-(allow gpg_agent_subj_type self create_unix_stream_stream_socket_perms)
-(allow gpg_agent_subj_type self (unix_stream_socket (connectto)))
-(allow gpg_agent_subj_type self rw_fifo_file_perms)
+	(call manage_home_user (subj_type_attribute))
+	(call gpg_home_user_obj_type_transition_home (subj_type_attribute))
 
-(call gpg_agent_manage_home (gpg_agent_subj_type))
-(call gpg_agent_gpg_home_obj_type_transition_home (gpg_agent_subj_type))
+	(allow subj_type_attribute self create_unix_stream_stream_socket_perms)
+	(allow subj_type_attribute self (unix_stream_socket (connectto)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_read_crypto_sysctl_files (gpg_agent_subj_type))
+	(call sys_read_crypto_sysctl_files (subj_type_attribute))
 
-(call dev_read_random (gpg_agent_subj_type))
-(call dev_read_urandom (gpg_agent_subj_type))
+	(call dev_read_random (subj_type_attribute))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_data_files (gpg_agent_subj_type))
+	(call file_read_data_files (subj_type_attribute))
 
-(call fs_list_devtmpfs (gpg_agent_subj_type))
-(call fs_search_tmpfs (gpg_agent_subj_type))
+	(call fs_list_devtmpfs (subj_type_attribute))
+	(call fs_search_tmpfs (subj_type_attribute))
 
-(call gpg.manage_home_user_dirs (gpg_agent_subj_type))
-(call gpg.home_dir_obj_type_transition_home (gpg_agent_subj_type))
+	(call gpg.manage_home_user_dirs (subj_type_attribute))
+	(call gpg.home_dir_obj_type_transition_home (subj_type_attribute))
 
-(call miscfile_read_locale (gpg_agent_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call usersubj.use_term (gpg_agent_subj_type))
+	(call usersubj.use_term (subj_type_attribute))
 
-(optional gpg_agent_subj_type_optional_tor
-	(call tor_read_config_files (gpg_agent_subj_type)))
+	(optional gpg_agent_subj_type_optional_tor
+		(call tor_read_config_files (subj_type_attribute)))
 
-(optional gpg_agent_subj_type_optional_scdaemon
-	(call scdaemon.stream_connect (gpg_agent_subj_type)))
+	(optional gpg_agent_subj_type_optional_scdaemon
+		(call scdaemon.stream_connect (subj_type_attribute))))

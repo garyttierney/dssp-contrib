@@ -28,7 +28,7 @@
 	(call usersubj.use_term (subj))
 
 	(optional pinentry_optional_gpg_agent
-		(call gpg_agent_stream_connect_all_subj (subj)))
+		(call gpg_agent.stream_connect_all_subj (subj)))
 
 	(optional pinentry_optional_xserver
 		(call xserver_tmpfs_client (subj tmpfs_user_file)))

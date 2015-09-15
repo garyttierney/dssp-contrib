@@ -1,89 +1,61 @@
-(block gpg_agent_subj_blk
-	(blockabstract gpg_agent_subj_blk)
+(in gpg_agent
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset gpg_agent_subj_type subj))
+		(typeattributeset gpg_agent.subj_type_attribute subj))
 
-(macro gpg_agent_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset gpg_agent_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro gpg_agent_exec ((type ARG1))
-	(call can_exec (ARG1 gpg_agent.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro gpg_agent_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 gpg_agent.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call gpg_agent_manage_home (ARG2))
-	(call gpg_agent_relabel_home (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call gpg_agent_gpg_home_obj_type_transition_home (ARG2))
+		(call manage_home_user (ARG2))
+		(call relabel_home_user (ARG2))
 
-	(optional gpg_agent_role_pattern_optional_pinentry
-		(call pinentry_run (ARG3 ARG1)))
+		(call gpg_home_user_obj_type_transition_home (ARG2))
 
-	(optional gpg_agent_role_pattern_optional_scdaemon
-		(call scdaemon.run (ARG3 ARG1))))
+		(optional gpg_agent_role_pattern_optional_pinentry
+			(call pinentry_run (ARG3 ARG1)))
 
-(macro gpg_agent_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 gpg_agent.cmd_file ARG2)))
+		(optional gpg_agent_role_pattern_optional_scdaemon
+			(call scdaemon.run (ARG3 ARG1))))
 
-(macro gpg_agent_search_home ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(allow ARG1 gpg_agent.home_user_file search_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro gpg_agent_list_home ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(allow ARG1 gpg_agent.home_user_file list_dir_perms))
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro gpg_agent_read_home_files ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(call read_files_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file)))
+	(macro gpg_home_user_obj_type_transition_home ((type ARG1))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.conf"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.log"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "sshcontrol"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file dir "private-keys-v1.d"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent.ssh")))
 
-(macro gpg_agent_read_home_lnk_files ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(call read_lnk_files_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file)))
+	(macro stream_connect_all_subj ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(call stream_connect_pattern (ARG1 home_user_file home_user_file subj_type_attribute)))
 
-(macro gpg_agent_read_home ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(allow ARG1 gpg_agent.home_user_file read_file_perms)
-	(allow ARG1 gpg_agent.home_user_file list_dir_perms)
-	(allow ARG1 gpg_agent.home_user_file read_lnk_file_perms)
-	(allow ARG1 gpg_agent.home_user_file read_sock_file_perms))
-
-(macro gpg_agent_manage_home ((type ARG1))
-	(call gpg.rw_home_user_dirs (ARG1))
-	(allow ARG1 gpg_agent.home_user_file manage_file_perms)
-	(allow ARG1 gpg_agent.home_user_file manage_dir_perms)
-	(allow ARG1 gpg_agent.home_user_file manage_lnk_file_perms)
-	(allow ARG1 gpg_agent.home_user_file manage_sock_file_perms))
-
-(macro gpg_agent_relabel_home ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(allow ARG1 gpg_agent.home_user_file relabel_file_perms)
-	(allow ARG1 gpg_agent.home_user_file relabel_dir_perms)
-	(allow ARG1 gpg_agent.home_user_file relabel_lnk_file_perms)
-	(allow ARG1 gpg_agent.home_user_file relabel_sock_file_perms))
-
-(macro gpg_agent_gpg_home_obj_type_transition_home ((type ARG1))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file file "gpg-agent.conf"))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file file "gpg-agent.log"))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file file "sshcontrol"))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file dir "private-keys-v1.d"))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file sock_file "S.gpg-agent"))
-	(call gpg.home_user_obj_type_transition (ARG1 gpg_agent.home_user_file sock_file "S.gpg-agent.ssh")))
-
-(macro gpg_agent_stream_connect_all_subj ((type ARG1))
-	(call gpg.search_home_user (ARG1))
-	(call stream_connect_pattern (ARG1 gpg_agent.home_user_file gpg_agent.home_user_file gpg_agent_subj_type)))
-
-(macro gpg_agent_send_signal_all_subj ((type ARG1))
-	(allow ARG1 gpg_agent_subj_type (process (signal))))
+	(blockinherit send_signal_all_blk))

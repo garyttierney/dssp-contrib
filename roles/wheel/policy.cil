@@ -297,7 +297,7 @@
 	(call firefox.spec_auto_subj_type_transition (wheel_emacs.subj wheel_firefox.subj)))
 
 (optional wheel_emacs_optional_wheel_git
-	(call git_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_git.subj)))
+	(call git.spec_auto_subj_type_transition (wheel_emacs.subj wheel_git.subj)))
 
 (optional wheel_emacs_optional_wheel_gpg
 	(call gpg.spec_auto_subj_type_transition (wheel_emacs.subj wheel_gpg.subj)))
@@ -324,7 +324,7 @@
 		(call fedpkg.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_fedpkg_optional_wheel_git
-	(call git_auto_subj_type_transition_pattern (wheel_fedpkg.subj wheel_git.subj)))
+	(call git.spec_auto_subj_type_transition (wheel_fedpkg.subj wheel_git.subj)))
 
 (optional wheel_festival_optional_festival
 	(block wheel_festival
@@ -358,17 +358,17 @@
 
 (optional wheel_git_optional_git
 	(block wheel_git
-		(blockinherit git_subj_blk)
+		(blockinherit git.subj_blk)
 
-		(call git_role_pattern (wheel.role wheel_subj_type subj))
+		(call git.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))
 
-		(call git_home_obj_entry_subj (wheel.subj))
-		(call git_home_auto_subj_type_transition_pattern (subj wheel.subj))))
+		(call git.home_user_obj_entry_subj (wheel.subj))
+		(call git.spec_home_user_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_git_optional_wheel_gpg
 	(call gpg.spec_auto_subj_type_transition (wheel_git.subj wheel_gpg.subj)))
@@ -394,7 +394,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_git_email_optional_wheel_git
-	(call git_auto_subj_type_transition_pattern (wheel_git_email.subj wheel_git.subj)))
+	(call git.spec_auto_subj_type_transition (wheel_git_email.subj wheel_git.subj)))
 
 (optional wheel_gpg_optional_gpg
 	(block wheel_gpg
@@ -804,7 +804,7 @@
 
 (optional wheel_tor_socks_optional_wheel_git
 	(call tor_socks_client_subj_type (wheel_git.subj))
-	(call git_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_git.subj)))
+	(call git.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_git.subj)))
 
 (optional wheel_tor_socks_optional_wheel_git_email
 	(call tor_socks_client_subj_type (wheel_git_email.subj))

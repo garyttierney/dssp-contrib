@@ -1,65 +1,66 @@
-(typeattribute git_subj_type)
-
 (block git
+	(typeattribute subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
+
+        (call subj_entry (subj_type_attribute cmd_file))
 
         (blockinherit net_unreserved_port_obj_blk)
 
-        (call subj_entry (git_subj_type cmd_file))
+	(call tcp_connect_port (subj_type_attribute))
 
         (blockinherit usersubj.home_user_obj_blk)
 
+	(call manage_home_user (subj_type_attribute))
+	(call home_user_obj_type_transition_home (subj_type_attribute))
+
         (blockinherit usersubj.home_config_obj_blk)
 
-        (blockinherit usersubj.tmpfs_user_obj_blk))
+	(call read_home_config (subj_type_attribute))
 
-(allow git_subj_type self rw_fifo_file_perms)
+        (blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call git_read_home_config (git_subj_type))
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call git_manage_home (git_subj_type))
-(call git_home_user_obj_type_transition_home (git_subj_type))
+	(call exec (subj_type_attribute))
 
-(call git_manage_tmpfs_files (git_subj_type))
-(call git_tmpfs_obj_type_transition_tmpfs (git_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call git_exec (git_subj_type))
-(call git_tcp_connect_git_port (git_subj_type))
+	(call sys_read_cpu_sysfs_files (subj_type_attribute))
 
-(call sys_read_cpu_sysfs_files (git_subj_type))
+	(call cmd_list_cmd (subj_type_attribute))
 
-(call cmd_list_cmd (git_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call dev_read_urandom (git_subj_type))
+	(call file_dontaudit_audit_access_var_tmp_dirs (subj_type_attribute))
+	(call file_list_var_tmp (subj_type_attribute))
+	(call file_read_data (subj_type_attribute))
+	(call file_search_mnt (subj_type_attribute))
 
-(call file_dontaudit_audit_access_var_tmp_dirs (git_subj_type))
-(call file_list_var_tmp (git_subj_type))
-(call file_read_data (git_subj_type))
-(call file_search_mnt (git_subj_type))
+	(call fs_getattr_tmpfs_fs (subj_type_attribute))
+	(call fs_list_tmpfs (subj_type_attribute))
+	(call fs_read_sysfs (subj_type_attribute))
 
-(call fs_getattr_tmpfs_fs (git_subj_type))
-(call fs_list_tmpfs (git_subj_type))
-(call fs_read_sysfs (git_subj_type))
+	(call miscfile_read_all_cert (subj_type_attribute))
+	(call miscfile_read_all_terminfo (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call miscfile_read_all_cert (git_subj_type))
-(call miscfile_read_all_terminfo (git_subj_type))
-(call miscfile_read_locale (git_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call nss_client_subj_type (git_subj_type))
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.manage_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (subj_type_attribute))
 
-(call usersubj.manage_home_user_dirs (git_subj_type))
-(call usersubj.manage_home_user_files (git_subj_type))
-(call usersubj.manage_home_user_lnk_files (git_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_dirs (git_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (git_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (git_subj_type))
+	(optional git_subj_type_optional_http
+		(call http_tcp_connect_http_port (subj_type_attribute)))
 
-(optional git_subj_type_optional_http
-	(call http_tcp_connect_http_port (git_subj_type)))
+	(optional git_subj_type_optional_mutt
+		(call mutt_read_tmpfs_files (subj_type_attribute)))
 
-(optional git_subj_type_optional_mutt
-	(call mutt_read_tmpfs_files (git_subj_type)))
-
-(optional git_subj_type_optional_pass
-	(call pass_manage_home (git_subj_type))
-	(call pass_home_obj_type_transition (git_subj_type git.home_user_file dir ".git")))
+	(optional git_subj_type_optional_pass
+		(call pass_manage_home (subj_type_attribute))
+		(call pass_home_obj_type_transition (subj_type_attribute home_user_file dir ".git"))))

@@ -29,16 +29,16 @@
 	(call auto_subj_type_transition_pattern (ARG1 git_email.cmd_file ARG2)))
 
 (macro git_email_read_home_files ((type ARG1))
-	(call git_search_home (ARG1))
+	(call git.search_home_user (ARG1))
 	(allow ARG1 git_email.home_user_file read_file_perms))
 
 (macro git_email_manage_home_files ((type ARG1))
-	(call git_rw_home_dirs (ARG1))
+	(call git.rw_home_user_dirs (ARG1))
 	(allow ARG1 git_email.home_user_file manage_file_perms))
 
 (macro git_email_relabel_home_files ((type ARG1))
-	(call git_search_home (ARG1))
+	(call git.search_home_user (ARG1))
 	(allow ARG1 git_email.home_user_file relabel_file_perms))
 
 (macro git_email_git_home_obj_type_transition_home ((type ARG1))
-	(call git_home_obj_type_transition (ARG1 git_email.home_user_file file "*")))
+	(call git.home_user_obj_type_transition (ARG1 git_email.home_user_file file "*")))

@@ -235,7 +235,7 @@
 	(call firefox.spec_auto_subj_type_transition (user_emacs.subj user_firefox.subj)))
 
 (optional user_emacs_optional_user_git
-	(call git_auto_subj_type_transition_pattern (user_emacs.subj user_git.subj)))
+	(call git.spec_auto_subj_type_transition (user_emacs.subj user_git.subj)))
 
 (optional user_emacs_optional_user_gpg
 	(call gpg.spec_auto_subj_type_transition (user_emacs.subj user_gpg.subj)))
@@ -320,17 +320,17 @@
 
 (optional user_git_optional_git
 	(block user_git
-		(blockinherit git_subj_blk)
+		(blockinherit git.subj_blk)
 
-		(call git_role_pattern (user.role user_subj_type subj))
+		(call git.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))
 
-		(call git_home_obj_entry_subj (user.subj))
-		(call git_home_auto_subj_type_transition_pattern (subj user.subj))))
+		(call git.home_user_obj_entry_subj (user.subj))
+		(call git.spec_home_user_auto_subj_type_transition (subj user.subj))))
 
 (optional user_git_optional_user_gpg
 	(call gpg.spec_auto_subj_type_transition (user_git.subj user_gpg.subj)))
@@ -353,7 +353,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
 
 (optional user_git_email_optional_user_git
-	(call git_auto_subj_type_transition_pattern (user_git_email.subj user_git.subj)))
+	(call git.spec_auto_subj_type_transition (user_git_email.subj user_git.subj)))
 
 (optional user_gpg_optional_gpg
 	(block user_gpg

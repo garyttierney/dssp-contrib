@@ -43,7 +43,7 @@
 	(call usersubj.use_term (subj_type_attribute))
 
 	(optional gpg_subj_type_optional_git
-		(call git_read_tmpfs_files (subj_type_attribute)))
+		(call git.read_tmpfs_user_files (subj_type_attribute)))
 
 	(optional gpg_subj_type_optional_mutt
 		(call mutt_read_home_files (subj_type_attribute))

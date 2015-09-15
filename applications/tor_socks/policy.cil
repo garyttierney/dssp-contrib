@@ -1,31 +1,29 @@
 (boolean tor_socks_use true)
 
-(roleattribute tor_socks_role)
-
-(typeattribute tor_socks_subj_type)
-(typeattribute tor_socks_client_subj_type)
-
 (block tor_socks
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (tor_socks_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit net_unreserved_port_obj_blk))
+	(blockinherit net_unreserved_port_obj_blk)
+
+	(call exec (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(allow subj_type_attribute client_subj_type_attribute (process (noatsecure)))
+
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(call tor_read_config_files (client_subj_type_attribute)))
 
 (block tor_socks_use
-	(blockinherit sec_bool_obj_blk))
+	(blockinherit sec_bool_obj_blk)
 
-(allow tor_socks_subj_type self rw_fifo_file_perms)
-
-(allow tor_socks_subj_type tor_socks_client_subj_type (process (noatsecure)))
-
-(call miscfile_read_locale (tor_socks_subj_type))
-
-(call tor_socks_exec (tor_socks_subj_type))
-
-(call tor_read_config_files (tor_socks_client_subj_type))
-
-(booleanif tor_socks_use
-	(true
-		(allow tor_socks_client_subj_type self create_tcp_socket_perms)
-		(call tor_socks_tcp_connect_tor_socks_port (tor_socks_client_subj_type))))
+	(booleanif tor_socks_use
+		(true
+			(allow tor_socks.client_subj_type_attribute self create_tcp_socket_perms)
+			(call tor_socks.tcp_connect_port (tor_socks.client_subj_type_attribute)))))

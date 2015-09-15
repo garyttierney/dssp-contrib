@@ -840,7 +840,7 @@
 	(call git_email.spec_auto_subj_type_transition (sysadm_git.subj sysadm_git_email.subj)))
 
 (optional sysadm_git_optional_sysadm_tor_socks
-	(call tor_socks_auto_subj_type_transition_pattern (sysadm_git.subj sysadm_tor_socks.subj)))
+	(call tor_socks.spec_auto_subj_type_transition (sysadm_git.subj sysadm_tor_socks.subj)))
 
 (optional sysadm_git_optional_sysadm_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_git.subj sysadm_ssh_client.subj)))
@@ -1331,9 +1331,9 @@
 
 (optional sysadm_tor_socks_optional_tor_socks
 	(block sysadm_tor_socks
-		(blockinherit tor_socks_subj_blk)
+		(blockinherit tor_socks.subj_blk)
 
-		(call tor_socks_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call tor_socks.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1341,39 +1341,39 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_tor_socks_optional_sysadm_firefox
-	(call tor_socks_client_subj_type (sysadm_firefox.subj))
+	(call tor_socks.client_subj_type (sysadm_firefox.subj))
 	(call firefox.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_firefox.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_git
-	(call tor_socks_client_subj_type (sysadm_git.subj))
+	(call tor_socks.client_subj_type (sysadm_git.subj))
 	(call git.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_git.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_git_email
-	(call tor_socks_client_subj_type (sysadm_git_email.subj))
+	(call tor_socks.client_subj_type (sysadm_git_email.subj))
 	(call git_email.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_git_email.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_irssi
-	(call tor_socks_client_subj_type (sysadm_irssi.subj))
+	(call tor_socks.client_subj_type (sysadm_irssi.subj))
 	(call irssi.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_irssi.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_livestreamer
-	(call tor_socks_client_subj_type (sysadm_livestreamer.subj))
+	(call tor_socks.client_subj_type (sysadm_livestreamer.subj))
 	(call livestreamer.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_livestreamer.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_lynx
-	(call tor_socks_client_subj_type (sysadm_lynx.subj))
+	(call tor_socks.client_subj_type (sysadm_lynx.subj))
 	(call lynx.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_lynx.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_mplayer
-	(call tor_socks_client_subj_type (sysadm_mplayer.subj))
+	(call tor_socks.client_subj_type (sysadm_mplayer.subj))
 	(call mplayer.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_mplayer.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_mutt
-	(call tor_socks_client_subj_type (sysadm_mutt.subj))
+	(call tor_socks.client_subj_type (sysadm_mutt.subj))
 	(call mutt.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_mutt.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
-	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))
+	(call tor_socks.client_subj_type (sysadm_ssh_client.subj))
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_visudo_optional_visudo

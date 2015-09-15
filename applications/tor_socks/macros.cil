@@ -1,51 +1,51 @@
-(block tor_socks_subj_blk
-	(blockabstract tor_socks_subj_blk)
+(in tor_socks
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset tor_socks_subj_type subj))
+		(typeattributeset tor_socks.subj_type_attribute subj))
 
-(macro tor_socks_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset tor_socks_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro tor_socks_client_subj_type ((type ARG1))
-	(typeattributeset tor_socks_client_subj_type ARG1))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro tor_socks_exec ((type ARG1))
-	(call tor_socks_client_subj_type (ARG1))
-	(call can_exec (ARG1 tor_socks.cmd_file)))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro tor_socks_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 tor_socks.cmd_file ARG3))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG2 tor_socks_client_subj_type (process (noatsecure)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal noatsecure)))
+		(allow ARG2 client_subj_type_attribute (process (noatsecure)))
 
-	(call tor_read_config (ARG2))
+		(allow ARG3 ARG2 (process (signal noatsecure)))
 
-	(optional tor_socks_role_pattern_optional_bti
-		(call bti.run (ARG3 ARG1)))
+		(call tor_read_config (ARG2))
 
-	(optional tor_sock_role_pattern_optional_curl
-		(call curl.run (ARG3 ARG1))))
+		(optional tor_socks_role_pattern_optional_bti
+			(call bti.run (ARG3 ARG1)))
 
-(macro tor_socks_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 tor_socks.cmd_file ARG2)))
+		(optional tor_sock_role_pattern_optional_curl
+			(call curl.run (ARG3 ARG1))))
 
-(macro tor_socks_tcp_bind_tor_socks_port ((type ARG1))
-	(allow ARG1 tor_socks.port (tcp_socket (name_bind))))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro tor_socks_tcp_connect_tor_socks_port ((type ARG1))
-	(allow ARG1 tor_socks.port (tcp_socket (name_connect))))
+	(blockinherit tcp_bind_unreserved_port_blk)
+	(blockinherit tcp_connect_port_blk)
 
-(macro tor_socks_set_use_boolean ((type ARG1))
-	(call sec_set_spec_boolean (ARG1 tor_socks_use.bool))
-	(optional tor_socks_set_use_boolean_optional_seutil
-		(call seutil_exec_setsebool (ARG1))))
+	(macro set_use_boolean ((type ARG1))
+		(call sec_set_spec_boolean (ARG1 tor_socks_use.bool))
+		(optional tor_socks_set_use_boolean_optional_seutil
+			(call seutil_exec_setsebool (ARG1)))))

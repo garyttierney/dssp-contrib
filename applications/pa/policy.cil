@@ -1,112 +1,111 @@
-(roleattribute pa_role)
-
-(typeattribute pa_subj_type)
-(typeattribute pa_client_subj_type)
-
-(typeattribute pa_tmpfs_obj_type)
-
 (block pa
+	(roleattribute role_attribute)
+
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(typeattribute tmpfs_obj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (pa_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
+
+	(call read_config (client_subj_type_attribute))
 
 	(blockinherit file_var_lib_obj_blk)
 
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call manage_home_user_files (client_subj_type_attribute))
+	(call home_dir_obj_type_transition_home (client_subj_type_attribute))
+
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(blockinherit usersubj.tmpfs_user_obj_blk))
+	(call manage_home_config (client_subj_type_attribute))
+	(call home_config_obj_type_transition_home_config (client_subj_type_attribute))
 
-(allow pa_subj_type self (process (setcap setsched setrlimit)))
-(allow pa_subj_type self (unix_stream_socket (listen accept)))
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call pa_mmap_tmpfs_files (pa_subj_type))
-(call pa_tmpfs_obj_type_transition_tmpfs (pa_subj_type))
-(call fs_tmpfs_obj_type_transition (pa_subj_type pa.tmpfs_user_file dir "*"))
-(call pa_tmpfs_obj_type_transition_tmpfs_files (pa_subj_type))
+	(call manage_tmpfs_user (client_subj_type_attribute))
+	(call mmap_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (client_subj_type_attribute))
+	(call fs_tmpfs_obj_type_transition (subj_type_attribute tmpfs_user_file dir "*"))
+	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
 
-(call dev_rw_sound (pa_subj_type))
+	(call exec (subj_type_attribute))
 
-(call file_read_data (pa_subj_type))
+	(call client_subj_type (subj_type_attribute))
 
-(call fs_getattr_proc_fs (pa_subj_type))
-(call fs_list_devtmpfs (pa_subj_type))
+	(allow subj_type_attribute self (process (setcap setsched setrlimit)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-(call miscfile_read_locale (pa_subj_type))
+	(call dev_rw_sound (subj_type_attribute))
 
-(call pa_exec (pa_subj_type))
-(call pa_client_subj_type (pa_subj_type))
+	(call file_read_data (subj_type_attribute))
 
-(call rtkitd_client_subj_type (pa_subj_type))
+	(call fs_getattr_proc_fs (subj_type_attribute))
+	(call fs_list_devtmpfs (subj_type_attribute))
 
-(call udev_client_subj_type (pa_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(optional pa_subj_type_optional_livestreamer
-	(call livestreamer.use_fd_all_subj (pa_subj_type)))
+	(call rtkitd_client_subj_type (subj_type_attribute))
 
-(optional pa_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (pa_subj_type)))
+	(call udev_client_subj_type (subj_type_attribute))
 
-(optional pa_subj_type_optional_sd_logind
-	(call sd_logind_read_runtime (pa_subj_type)))
+	(optional pa_subj_type_optional_livestreamer
+		(call livestreamer.use_fd_all_subj (subj_type_attribute)))
 
-(optional pa_subj_type_optional_sessbus
-	(call sessbus_acquire_service_all_subj (pa_subj_type))
-	(call sessbus_client_all_subj (pa_subj_type)))
+	(optional pa_subj_type_optional_sd_journald
+		(call sd_journald_client_subj_type (subj_type_attribute)))
 
-(optional pa_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (pa_subj_type)))
+	(optional pa_subj_type_optional_sd_logind
+		(call sd_logind_read_runtime (subj_type_attribute)))
 
-(optional pa_subj_type_optional_xbindkeys
-	(call xbindkeys_use_fd_all_subj (pa_subj_type)))
+	(optional pa_subj_type_optional_sessbus
+		(call sessbus_acquire_service_all_subj (subj_type_attribute))
+		(call sessbus_client_all_subj (subj_type_attribute)))
 
-(optional pa_subj_type_optional_xserver
-	(call xserver_client_subj_type (pa_subj_type)))
+	(optional pa_subj_type_optional_sysbus
+		(call sysbus_client_subj_type (subj_type_attribute)))
 
-(allow pa_client_subj_type self (process (getsched)))
-(allow pa_client_subj_type self rw_fifo_file_perms)
+	(optional pa_subj_type_optional_xbindkeys
+		(call xbindkeys_use_fd_all_subj (subj_type_attribute)))
 
-(allow pa_client_subj_type pa_client_subj_type (process (signal signull)))
+	(optional pa_subj_type_optional_xserver
+		(call xserver_client_subj_type (subj_type_attribute)))
 
-(allow pa_client_subj_type pa_tmpfs_obj_type delete_file_perms)
-(allow pa_client_subj_type pa_tmpfs_obj_type read_file_perms)
+	(allow client_subj_type_attribute self (process (getsched)))
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-(allow pa_client_subj_type pa_subj_type (fd (use)))
-(allow pa_client_subj_type pa_subj_type (unix_stream_socket (connectto)))
+	(allow client_subj_type_attribute client_subj_type_attribute (process (signal signull)))
 
-(call sys_list_cpu_sysfs (pa_client_subj_type))
-(call sys_read_cpu_sysfs_files (pa_client_subj_type))
+	(allow client_subj_type_attribute tmpfs_obj_type_attribute delete_file_perms)
+	(allow client_subj_type_attribute tmpfs_obj_type_attribute read_file_perms)
 
-(call dev_read_urandom (pa_client_subj_type))
+	(allow client_subj_type_attribute subj_type_attribute (fd (use)))
+	(allow client_subj_type_attribute subj_type_attribute (unix_stream_socket (connectto)))
 
-(call fs_getattr_tmpfs_fs (pa_client_subj_type))
-(call fs_read_sysfs (pa_client_subj_type))
+	(call sys_list_cpu_sysfs (client_subj_type_attribute))
+	(call sys_read_cpu_sysfs_files (client_subj_type_attribute))
 
-(call alsactl_read_config (pa_client_subj_type))
+	(call dev_read_urandom (client_subj_type_attribute))
 
-(call usersubj.create_home_config_dirs (pa_client_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_config (pa_client_subj_type))
+	(call fs_getattr_tmpfs_fs (client_subj_type_attribute))
+	(call fs_read_sysfs (client_subj_type_attribute))
 
-(call pa_manage_home_files (pa_client_subj_type))
-(call pa_home_dir_obj_type_transition_home (pa_client_subj_type))
+	(call alsactl_read_config (client_subj_type_attribute))
 
-(call pa_manage_home_config (pa_client_subj_type))
-(call pa_home_config_obj_type_transition_home_config (pa_client_subj_type))
+	(call usersubj.create_home_config_dirs (client_subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (client_subj_type_attribute))
 
-(call pa_manage_tmpfs (pa_client_subj_type))
-(call pa_tmpfs_obj_type_transition_tmpfs (pa_client_subj_type))
+	(call usersubj.delete_tmpfs_user_files (client_subj_type_attribute))
+	(call usersubj.read_tmpfs_user_files (client_subj_type_attribute))
 
-(call pa_read_config (pa_client_subj_type))
+	(optional pa_client_subj_type_optional_sd_machined
+		(call sd_machined_read_config_files (client_subj_type_attribute)))
 
-(call usersubj.delete_tmpfs_user_files (pa_client_subj_type))
-(call usersubj.read_tmpfs_user_files (pa_client_subj_type))
-
-(optional pa_client_subj_type_optional_sd_machined
-	(call sd_machined_read_config_files (pa_client_subj_type)))
-
-(optional pa_client_subj_type_optional_unconfinedsubj
-	(call unconfinedsubj_send_signal (pa_client_subj_type))
-	(call unconfinedsubj_send_signull (pa_client_subj_type)))
+	(optional pa_client_subj_type_optional_unconfinedsubj
+		(call unconfinedsubj_send_signal (client_subj_type_attribute))
+		(call unconfinedsubj_send_signull (client_subj_type_attribute))))

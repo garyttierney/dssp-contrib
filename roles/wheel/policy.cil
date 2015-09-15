@@ -229,7 +229,7 @@
 		(call alsautil.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_alsautil_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_alsautil.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_alsautil.subj wheel_pa.subj)))
 
 (optional wheel_analyze_optional_analyze
 	(block wheel_analyze
@@ -333,7 +333,7 @@
 		(call festival.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_festival_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_festival.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_festival.subj wheel_pa.subj)))
 
 (optional wheel_ffmpeg_optional_ffmpeg
 	(block wheel_ffmpeg
@@ -342,7 +342,7 @@
 		(call ffmpeg.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_ffmpeg_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_ffmpeg.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_ffmpeg.subj wheel_pa.subj)))
 
 (optional wheel_fuse_optional_fuse
 	(block wheel_fuse_sshfs
@@ -450,7 +450,7 @@
 	(call firefox_xremotec.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_xremotec.subj)))
 
 (optional wheel_firefox_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_firefox.subj wheel_pa.subj)))
 
 (optional wheel_firefox_optional_wheel_xpdf
 	(call xpdf_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_xpdf.subj)))
@@ -462,7 +462,7 @@
 		(call firefox_plugins.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_firefox_plugins_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_firefox_plugins.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_firefox_plugins.subj wheel_pa.subj)))
 
 (optional wheel_firefox_xremotec_optional_firefox_xremotec
 	(block wheel_firefox_xremotec
@@ -597,7 +597,7 @@
 		(call mplayer.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_mplayer_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_mplayer.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_mplayer.subj wheel_pa.subj)))
 
 (optional wheel_nb_optional_nb
 	(block wheel_nb
@@ -623,9 +623,9 @@
 
 (optional wheel_pa_optional_pa
 	(block wheel_pa
-		(blockinherit pa_subj_blk)
+		(blockinherit pa.subj_blk)
 
-		(call pa_role_pattern (wheel.role wheel_subj_type subj))))
+		(call pa.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pa_optional_wheel_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_pa.subj wheel_sessbus_launch.subj)))
@@ -637,7 +637,7 @@
 		(call pactl_role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pactl_optional_wheel_pa
-	(call pa_auto_subj_type_transition_pattern (wheel_pactl.subj wheel_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (wheel_pactl.subj wheel_pa.subj)))
 
 (optional wheel_passwd_optional_passwd
 	(block wheel_passwd

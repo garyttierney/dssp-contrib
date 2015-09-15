@@ -7,11 +7,10 @@
 
 (call miscfile_read_locale (pactl_subj_type))
 
-(call pa_mmap_tmpfs_files (pactl_subj_type))
-(call pa_tmpfs_obj_type_transition_tmpfs_files (pactl_subj_type))
-
-(call pa_client_subj_type (pactl_subj_type))
-(call pa_read_all_subj_state (pactl_subj_type))
+(call pa.mmap_tmpfs_user_files (pactl_subj_type))
+(call pa.tmpfs_obj_type_transition_tmpfs_files (pactl_subj_type))
+(call pa.client_subj_type (pactl_subj_type))
+(call pa.read_state_all_subj (pactl_subj_type))
 
 (optional pactl_subj_type_optional_xserver
 	(call xserver_client_subj_type (pactl_subj_type)))

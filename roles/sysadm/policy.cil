@@ -698,7 +698,7 @@
 		(call alsautil.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_alsautil_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_alsautil.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_alsautil.subj sysadm_pa.subj)))
 
 (optional sysadm_analyze_optional_analyze
 	(block sysadm_analyze
@@ -795,7 +795,7 @@
 		(call festival.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_festival_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_festival.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_festival.subj sysadm_pa.subj)))
 
 (optional sysadm_ffmpeg_optional_ffmpeg
 	(block sysadm_ffmpeg
@@ -804,7 +804,7 @@
 		(call ffmpeg.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_ffmpeg_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_ffmpeg.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_ffmpeg.subj sysadm_pa.subj)))
 
 (optional sysadm_fuse_optional_fuse
 	(block sysadm_fuse_sshfs
@@ -926,7 +926,7 @@
 	(call firefox_xremotec.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_xremotec.subj)))
 
 (optional sysadm_firefox_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_pa.subj)))
 
 (optional sysadm_firefox_optional_sysadm_xpdf
 	(call xpdf_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_xpdf.subj)))
@@ -938,7 +938,7 @@
 		(call firefox_plugins.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_firefox_plugins_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_firefox_plugins.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_firefox_plugins.subj sysadm_pa.subj)))
 
 (optional sysadm_firefox_xremotec_optional_firefox_xremotec
 	(block sysadm_firefox_xremotec
@@ -1047,7 +1047,7 @@
 		(call mplayer.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_mplayer_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_mplayer.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_mplayer.subj sysadm_pa.subj)))
 
 (optional sysadm_mutt_optional_mutt
 	(block sysadm_mutt
@@ -1118,12 +1118,12 @@
 
 (optional sysadm_pa_optional_pa
 	(block sysadm_pa
-		(blockinherit pa_subj_blk)
+		(blockinherit pa.subj_blk)
 
-		(call pa_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call pa.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call pa_manage_config (sysadm.subj))
-		(call pa_manage_var_lib (sysadm.subj))))
+		(call pa.manage_config (sysadm.subj))
+		(call pa.manage_var_lib (sysadm.subj))))
 
 (optional sysadm_pa_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_pa.subj sysadm_sessbus_launch.subj)))
@@ -1135,7 +1135,7 @@
 		(call pactl_role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_pactl_optional_sysadm_pa
-	(call pa_auto_subj_type_transition_pattern (sysadm_pactl.subj sysadm_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (sysadm_pactl.subj sysadm_pa.subj)))
 
 (optional sysadm_passwd_optional_passwd
 	(block sysadm_passwd

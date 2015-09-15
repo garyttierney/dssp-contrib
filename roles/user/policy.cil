@@ -183,7 +183,7 @@
 		(call alsautil.role_pattern (user.role user_subj_type user_alsautil.subj))))
 
 (optional user_alsautil_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_alsautil.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_alsautil.subj user_pa.subj)))
 
 (optional user_atspi_sessbus_launch_optional_atspi_sessbus_launch
 	(block user_atspi_sessbus_launch
@@ -268,7 +268,7 @@
 	(call firefox_xremotec.spec_auto_subj_type_transition (user_firefox.subj user_firefox_xremotec.subj)))
 
 (optional user_firefox_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_firefox.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_firefox.subj user_pa.subj)))
 
 (optional user_firefox_optional_user_xpdf
 	(call xpdf_auto_subj_type_transition_pattern (user_firefox.subj user_xpdf.subj)))
@@ -280,7 +280,7 @@
 		(call firefox_plugins.role_pattern (user.role user_subj_type subj))))
 
 (optional user_firefox_plugins_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_firefox_plugins.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_firefox_plugins.subj user_pa.subj)))
 
 (optional user_firefox_xremotec_optional_firefox_xremotec
 	(block user_firefox_xremotec
@@ -295,7 +295,7 @@
 		(call festival.role_pattern (user.role user_subj_type subj))))
 
 (optional user_festival_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_festival.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_festival.subj user_pa.subj)))
 
 (optional user_ffmpeg_optional_ffmpeg
 	(block user_ffmpeg
@@ -304,7 +304,7 @@
 		(call ffmpeg.role_pattern (user.role user_subj_type subj))))
 
 (optional user_ffmpeg_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_ffmpeg.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_ffmpeg.subj user_pa.subj)))
 
 (optional user_fuse_optional_fuse
 	(block user_fuse_sshfs
@@ -430,7 +430,7 @@
 		(call mplayer.role_pattern (user.role user_subj_type subj))))
 
 (optional user_mplayer_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_mplayer.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_mplayer.subj user_pa.subj)))
 
 (optional user_mutt_optional_mutt
 	(block user_mutt
@@ -488,9 +488,9 @@
 
 (optional user_pa_optional_pa
 	(block user_pa
-		(blockinherit pa_subj_blk)
+		(blockinherit pa.subj_blk)
 
-		(call pa_role_pattern (user.role user_subj_type subj))))
+		(call pa.role_pattern (user.role user_subj_type subj))))
 
 (optional user_pa_optional_user_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (user_pa.subj user_sessbus_launch.subj)))
@@ -502,7 +502,7 @@
 		(call pactl_role_pattern (user.role user_subj_type subj))))
 
 (optional user_pactl_optional_user_pa
-	(call pa_auto_subj_type_transition_pattern (user_pactl.subj user_pa.subj)))
+	(call pa.spec_auto_subj_type_transition (user_pactl.subj user_pa.subj)))
 
 (optional user_passwd_optional_passwd
 	(block user_passwd

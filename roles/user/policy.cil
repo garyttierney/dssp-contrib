@@ -131,12 +131,12 @@
 		(call systemctl_exec (subj)))
 
 	(optional user_optional_tetex
-		(call tetex_manage_home (subj))
-		(call tetex_relabel_home (subj))
-		(call tetex_home_dir_obj_type_transition_home (subj))
-		(call tetex_manage_tmpfs (subj))
-		(call tetex_relabel_tmpfs (subj))
-		(call tetex_run_pdftex (user_subj_type role)))
+		(call tetex.manage_home_user (subj))
+		(call tetex.relabel_home_user (subj))
+		(call tetex.home_dir_obj_type_transition_home (subj))
+		(call tetex.manage_tmpfs_user (subj))
+		(call tetex.relabel_tmpfs_user (subj))
+		(call pdftex.run (user_subj_type role)))
 
 	(optional user_optional_tor
 		(call tor_manage_home (subj))

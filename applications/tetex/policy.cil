@@ -1,5 +1,3 @@
-(roleattribute tetex_role)
-
 (block tetex
 	(blockinherit file_var_lib_obj_blk)
 
@@ -10,19 +8,13 @@
 	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block pdftex
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype tetex_role subj)
+	(roletype role_attribute subj)
 
-	(call tetex_exec_pdftex (subj))
-
-	(call tetex_manage_home (subj))
-	(call tetex_home_dir_obj_type_transition_home (subj))
-
-	(call tetex_manage_tmpfs (subj))
-	(call tetex_tmpfs_obj_type_transition_tmpfs (subj))
-
-	(call tetex_read_var_lib_files (subj))
+	(call exec (subj))
 
 	(allow subj self rw_fifo_file_perms)
 
@@ -34,6 +26,14 @@
 	(call file_read_data (subj))
 
 	(call miscfile_read_locale (subj))
+
+	(call tetex.manage_home_user (subj))
+	(call tetex.home_dir_obj_type_transition_home (subj))
+
+	(call tetex.manage_tmpfs_user (subj))
+	(call tetex.tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call tetex.read_var_lib_files (subj))
 
 	(call usersubj.read_home_user_files (subj))
 

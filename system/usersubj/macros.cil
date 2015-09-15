@@ -134,11 +134,23 @@
 			(call usersubj.del_entry_home_cache (ARG1))
 			(call delete_files_pattern (ARG1 home_cache_file home_cache_file))))
 
+	(block create_home_cache_files_blk
+		(blockabstract create_home_cache_files_blk)
+		(macro create_home_cache_files ((type ARG1))
+			(call usersubj.add_entry_home_cache (ARG1))
+			(call create_files_pattern (ARG1 home_cache_file home_cache_file))))
+
 	(block read_home_cache_files_blk
 		(blockabstract read_home_cache_files_blk)
 		(macro read_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
 			(call read_files_pattern (ARG1 home_cache_file home_cache_file))))
+
+	(block write_home_cache_files_blk
+		(blockabstract write_home_cache_files_blk)
+		(macro write_home_cache_files ((type ARG1))
+			(call usersubj.search_home_cache (ARG1))
+			(call write_files_pattern (ARG1 home_cache_file home_cache_file))))
 
 	(block manage_home_cache_files_blk
 		(blockabstract manage_home_cache_files_blk)
@@ -151,6 +163,12 @@
 		(macro relabel_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
 			(call relabel_files_pattern (ARG1 home_cache_file home_cache_file))))
+
+	(block setattr_home_cache_files_blk
+		(blockabstract setattr_home_cache_files_blk)
+		(macro setattr_home_cache_files ((type ARG1))
+			(call usersubj.search_home_cache (ARG1))
+			(call setattr_files_pattern (ARG1 home_cache_file home_cache_file))))
 
 	(block read_home_cache_fifo_files_blk
 		(blockabstract read_home_cache_fifo_files_blk)
@@ -290,11 +308,23 @@
 			(call usersubj.del_entry_home_config (ARG1))
 			(call delete_files_pattern (ARG1 home_config_file home_config_file))))
 
+	(block create_home_config_files_blk
+		(blockabstract create_home_config_files_blk)
+		(macro create_home_config_files ((type ARG1))
+			(call usersubj.add_entry_home_config (ARG1))
+			(call create_files_pattern (ARG1 home_config_file home_config_file))))
+
 	(block read_home_config_files_blk
 		(blockabstract read_home_config_files_blk)
 		(macro read_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
 			(call read_files_pattern (ARG1 home_config_file home_config_file))))
+
+	(block write_home_config_files_blk
+		(blockabstract write_home_config_files_blk)
+		(macro write_home_config_files ((type ARG1))
+			(call usersubj.search_home_config (ARG1))
+			(call write_files_pattern (ARG1 home_config_file home_config_file))))
 
 	(block manage_home_config_files_blk
 		(blockabstract manage_home_config_files_blk)
@@ -307,6 +337,12 @@
 		(macro relabel_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
 			(call relabel_files_pattern (ARG1 home_config_file home_config_file))))
+
+	(block setattr_home_config_files_blk
+		(blockabstract setattr_home_config_files_blk)
+		(macro setattr_home_config_files ((type ARG1))
+			(call usersubj.search_home_config (ARG1))
+			(call setattr_files_pattern (ARG1 home_config_file home_config_file))))
 
 	(block read_home_config_fifo_files_blk
 		(blockabstract read_home_config_fifo_files_blk)
@@ -446,11 +482,23 @@
 			(call usersubj.del_entry_home_data (ARG1))
 			(call delete_files_pattern (ARG1 home_data_file home_data_file))))
 
+	(block create_home_data_files_blk
+		(blockabstract create_home_data_files_blk)
+		(macro create_home_data_files ((type ARG1))
+			(call usersubj.add_entry_home_data (ARG1))
+			(call create_files_pattern (ARG1 home_data_file home_data_file))))
+
 	(block read_home_data_files_blk
 		(blockabstract read_home_data_files_blk)
 		(macro read_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
 			(call read_files_pattern (ARG1 home_data_file home_data_file))))
+
+	(block write_home_data_files_blk
+		(blockabstract write_home_data_files_blk)
+		(macro write_home_data_files ((type ARG1))
+			(call usersubj.search_home_data (ARG1))
+			(call write_files_pattern (ARG1 home_data_file home_data_file))))
 
 	(block manage_home_data_files_blk
 		(blockabstract manage_home_data_files_blk)
@@ -463,6 +511,12 @@
 		(macro relabel_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
 			(call relabel_files_pattern (ARG1 home_data_file home_data_file))))
+
+	(block setattr_home_data_files_blk
+		(blockabstract setattr_home_data_files_blk)
+		(macro setattr_home_data_files ((type ARG1))
+			(call usersubj.search_home_data (ARG1))
+			(call setattr_files_pattern (ARG1 home_data_file home_data_file))))
 
 	(block read_home_data_fifo_files_blk
 		(blockabstract read_home_data_fifo_files_blk)
@@ -602,11 +656,23 @@
 			(call usersubj.del_entry_home_dir (ARG1))
 			(call delete_files_pattern (ARG1 home_user_file home_user_file))))
 
+	(block create_home_user_files_blk
+		(blockabstract create_home_user_files_blk)
+		(macro create_home_user_files ((type ARG1))
+			(call usersubj.add_entry_home_dir (ARG1))
+			(call create_files_pattern (ARG1 home_user_file home_user_file))))
+
 	(block read_home_user_files_blk
 		(blockabstract read_home_user_files_blk)
 		(macro read_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
 			(call read_files_pattern (ARG1 home_user_file home_user_file))))
+
+	(block write_home_user_files_blk
+		(blockabstract write_home_user_files_blk)
+		(macro write_home_user_files ((type ARG1))
+			(call usersubj.search_home_dir (ARG1))
+			(call write_files_pattern (ARG1 home_user_file home_user_file))))
 
 	(block manage_home_user_files_blk
 		(blockabstract manage_home_user_files_blk)
@@ -619,6 +685,12 @@
 		(macro relabel_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
 			(call relabel_files_pattern (ARG1 home_user_file home_user_file))))
+
+	(block setattr_home_user_files_blk
+		(blockabstract setattr_home_user_files_blk)
+		(macro setattr_home_user_files ((type ARG1))
+			(call usersubj.search_home_dir (ARG1))
+			(call setattr_files_pattern (ARG1 home_user_file home_user_file))))
 
 	(block read_home_user_fifo_files_blk
 		(blockabstract read_home_user_fifo_files_blk)
@@ -758,11 +830,23 @@
 			(call file_del_entry_var_tmp (ARG1))
 			(call delete_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
+	(block create_var_tmp_user_files_blk
+		(blockabstract create_var_tmp_user_files_blk)
+		(macro create_var_tmp_user_files ((type ARG1))
+			(call file_add_entry_var_tmp (ARG1))
+			(call create_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+
 	(block read_var_tmp_user_files_blk
 		(blockabstract read_var_tmp_user_files_blk)
 		(macro read_var_tmp_user_files ((type ARG1))
 			(call file_search_var_tmp (ARG1))
 			(call read_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+
+	(block write_var_tmp_user_files_blk
+		(blockabstract write_var_tmp_user_files_blk)
+		(macro write_var_tmp_user_files ((type ARG1))
+			(call file_search_var_tmp (ARG1))
+			(call write_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block manage_var_tmp_user_files_blk
 		(blockabstract manage_var_tmp_user_files_blk)
@@ -775,6 +859,12 @@
 		(macro relabel_var_tmp_user_files ((type ARG1))
 			(call file_search_var_tmp (ARG1))
 			(call relabel_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+
+	(block setattr_var_tmp_user_files_blk
+		(blockabstract setattr_var_tmp_user_files_blk)
+		(macro setattr_var_tmp_user_files ((type ARG1))
+			(call file_search_var_tmp (ARG1))
+			(call setattr_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_fifo_files_blk
 		(blockabstract read_var_tmp_user_fifo_files_blk)
@@ -917,12 +1007,26 @@
 			(call fs_del_entry_tmpfs (ARG1))
 			(call delete_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
+	(block create_tmpfs_user_files_blk
+		(blockabstract create_tmpfs_user_files_blk)
+		(macro create_tmpfs_user_files ((type ARG1))
+			(call file_search_runtime_user (ARG1))
+			(call fs_add_entry_tmpfs (ARG1))
+			(call create_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+
 	(block read_tmpfs_user_files_blk
 		(blockabstract read_tmpfs_user_files_blk)
 		(macro read_tmpfs_user_files ((type ARG1))
 			(call file_search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call read_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+
+	(block write_tmpfs_user_files_blk
+		(blockabstract write_tmpfs_user_files_blk)
+		(macro write_tmpfs_user_files ((type ARG1))
+			(call file_search_runtime_user (ARG1))
+			(call fs_search_tmpfs (ARG1))
+			(call write_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block manage_tmpfs_user_files_blk
 		(blockabstract manage_tmpfs_user_files_blk)
@@ -937,6 +1041,13 @@
 			(call file_search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call relabel_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+
+	(block setattr_tmpfs_user_files_blk
+		(blockabstract setattr_tmpfs_user_files_blk)
+		(macro setattr_tmpfs_user_files ((type ARG1))
+			(call file_search_runtime_user (ARG1))
+			(call fs_search_tmpfs (ARG1))
+			(call setattr_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_fifo_files_blk
 		(blockabstract read_tmpfs_user_fifo_files_blk)

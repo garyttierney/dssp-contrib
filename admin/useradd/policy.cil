@@ -90,9 +90,9 @@
 	(call usersubj.var_spool_obj_type_transition_var_spool_user (subj "*"))
 
 	(optional useradd_optional_emacs
-		(call emacs_create_home_files (subj))
-		(call emacs_setattr_home_files (subj))
-		(call emacs_write_home_files (subj)))
+		(call emacs.create_home_user_files (subj))
+		(call emacs.setattr_home_user_files (subj))
+		(call emacs.write_home_user_files (subj)))
 
 	(optional useradd_optional_firefox
 		(call firefox_create_home_dirs (subj))

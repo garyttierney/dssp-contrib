@@ -749,9 +749,9 @@
 
 (optional sysadm_emacs_optional_emacs
 	(block sysadm_emacs
-		(blockinherit emacs_subj_blk)
+		(blockinherit emacs.subj_blk)
 
-		(call emacs_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call emacs.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -781,9 +781,9 @@
 
 (optional sysadm_emacsclient_optional_emacsclient
 	(block sysadm_emacsclient
-		(blockinherit emacsclient_subj_blk)
+		(blockinherit emacsclient.subj_blk)
 
-		(call emacsclient_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call emacsclient.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_festival_optional_festival
 	(block sysadm_festival
@@ -1060,7 +1060,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_mutt_optional_sysadm_emacsclient
-	(call emacsclient_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_emacsclient.subj)))
+	(call emacsclient.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_emacsclient.subj)))
 
 (optional sysadm_mutt_optional_sysadm_firefox
 	(call firefox_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox.subj)))

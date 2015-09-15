@@ -281,9 +281,9 @@
 
 (optional wheel_emacs_optional_emacs
 	(block wheel_emacs
-		(blockinherit emacs_subj_blk)
+		(blockinherit emacs.subj_blk)
 
-		(call emacs_role_pattern (wheel.role wheel_subj_type subj))
+		(call emacs.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -313,9 +313,9 @@
 
 (optional wheel_emacsclient_optional_emacsclient
 	(block wheel_emacsclient
-		(blockinherit emacsclient_subj_blk)
+		(blockinherit emacsclient.subj_blk)
 
-		(call emacsclient_role_pattern (wheel.role wheel_subj_type subj))))
+		(call emacsclient.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_fedpkg_optional_fedpkg
 	(block wheel_fedpkg
@@ -561,7 +561,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_mutt_optional_wheel_emacsclient
-	(call emacsclient_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_emacsclient.subj)))
+	(call emacsclient.spec_auto_subj_type_transition (wheel_mutt.subj wheel_emacsclient.subj)))
 
 (optional wheel_mutt_optional_wheel_firefox
 	(call firefox_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox.subj)))

@@ -1,16 +1,16 @@
-(typeattribute pactl_subj_type)
-
 (block pactl
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (pactl_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(call miscfile_read_locale (pactl_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call pa.mmap_tmpfs_user_files (pactl_subj_type))
-(call pa.tmpfs_obj_type_transition_tmpfs_files (pactl_subj_type))
-(call pa.client_subj_type (pactl_subj_type))
-(call pa.read_state_all_subj (pactl_subj_type))
+	(call pa.mmap_tmpfs_user_files (subj_type_attribute))
+	(call pa.tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
+	(call pa.client_subj_type (subj_type_attribute))
+	(call pa.read_state_all_subj (subj_type_attribute))
 
-(optional pactl_subj_type_optional_xserver
-	(call xserver_client_subj_type (pactl_subj_type)))
+	(optional pactl_subj_type_optional_xserver
+		(call xserver_client_subj_type (subj_type_attribute))))

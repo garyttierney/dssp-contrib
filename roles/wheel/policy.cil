@@ -632,9 +632,9 @@
 
 (optional wheel_pactl_optional_pactl
 	(block wheel_pactl
-		(blockinherit pactl_subj_blk)
+		(blockinherit pactl.subj_blk)
 
-		(call pactl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call pactl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pactl_optional_wheel_pa
 	(call pa.spec_auto_subj_type_transition (wheel_pactl.subj wheel_pa.subj)))
@@ -855,7 +855,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_xbindkeys_optional_wheel_pactl
-	(call pactl_auto_subj_type_transition_pattern (wheel_xbindkeys.subj wheel_pactl.subj)))
+	(call pactl.spec_auto_subj_type_transition (wheel_xbindkeys.subj wheel_pactl.subj)))
 
 (optional wheel_xinit_optional_xinit
 	(block wheel_xinit

@@ -1130,9 +1130,9 @@
 
 (optional sysadm_pactl_optional_pactl
 	(block sysadm_pactl
-		(blockinherit pactl_subj_blk)
+		(blockinherit pactl.subj_blk)
 
-		(call pactl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call pactl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_pactl_optional_sysadm_pa
 	(call pa.spec_auto_subj_type_transition (sysadm_pactl.subj sysadm_pa.subj)))
@@ -1407,7 +1407,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_xbindkeys_optional_sysadm_pactl
-	(call pactl_auto_subj_type_transition_pattern (sysadm_xbindkeys.subj sysadm_pactl.subj)))
+	(call pactl.spec_auto_subj_type_transition (sysadm_xbindkeys.subj sysadm_pactl.subj)))
 
 (optional sysadm_xinit_optional_xinit
 	(block sysadm_xinit

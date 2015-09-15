@@ -274,7 +274,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_dunst_optional_wheel_firefox
-	(call firefox_auto_subj_type_transition_pattern (wheel_dunst.subj wheel_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (wheel_dunst.subj wheel_firefox.subj)))
 
 (optional wheel_dunst_optional_wheel_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_dunst.subj wheel_sessbus_launch.subj)))
@@ -294,7 +294,7 @@
 	(call dbus_send.spec_auto_subj_type_transition (wheel_emacs.subj wheel_dbus_send.subj)))
 
 (optional wheel_emacs_optional_wheel_firefox
-	(call firefox_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (wheel_emacs.subj wheel_firefox.subj)))
 
 (optional wheel_emacs_optional_wheel_git
 	(call git_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_git.subj)))
@@ -439,9 +439,9 @@
 
 (optional wheel_firefox_optional_firefox
 	(block wheel_firefox
-		(blockinherit firefox_subj_blk)
+		(blockinherit firefox.subj_blk)
 
-		(call firefox_role_pattern (wheel.role wheel_subj_type subj))))
+		(call firefox.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_firefox_optional_wheel_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (wheel_firefox.subj wheel_firefox_plugins.subj)))
@@ -564,7 +564,7 @@
 	(call emacsclient.spec_auto_subj_type_transition (wheel_mutt.subj wheel_emacsclient.subj)))
 
 (optional wheel_mutt_optional_wheel_firefox
-	(call firefox_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (wheel_mutt.subj wheel_firefox.subj)))
 
 (optional wheel_mutt_optional_wheel_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (wheel_mutt.subj wheel_firefox_xremotec.subj)))
@@ -610,7 +610,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_nb_optional_wheel_firefox
-	(call firefox_auto_subj_type_transition_pattern (wheel_nb.subj wheel_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (wheel_nb.subj wheel_firefox.subj)))
 
 (optional wheel_nb_optional_wheel_lynx
 	(call lynx_auto_subj_type_transition_pattern (wheel_nb.subj wheel_lynx.subj)))
@@ -800,7 +800,7 @@
 
 (optional wheel_tor_socks_optional_wheel_firefox
 	(call tor_socks_client_subj_type (wheel_firefox.subj))
-	(call firefox_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_firefox.subj)))
 
 (optional wheel_tor_socks_optional_wheel_git
 	(call tor_socks_client_subj_type (wheel_git.subj))

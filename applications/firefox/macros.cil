@@ -1,174 +1,98 @@
-(block firefox_subj_blk
-	(blockabstract firefox_subj_blk)
+(in firefox
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset firefox_subj_type subj))
+		(typeattributeset firefox.subj_type_attribute subj))
 
-(macro firefox_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset firefox_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro firefox_exec ((type ARG1))
-	(call can_exec (ARG1 firefox.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro firefox_mmap_cmd_files ((type ARG1))
-	(allow ARG1 firefox.cmd_file mmap_file_perms))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro firefox_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 firefox.cmd_file ARG3))
+	(blockinherit mmap_cmd_files_blk)
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call firefox_manage_home (ARG2))
-	(call firefox_relabel_home (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call firefox_home_dir_obj_type_transition_home (ARG2))
+		(call manage_home_user (ARG2))
+		(call relabel_home_user (ARG2))
 
-	(call firefox_manage_home_cache (ARG2))
-	(call firefox_relabel_home_cache (ARG2))
+		(call home_dir_obj_type_transition_home (ARG2))
 
-	(call firefox_home_cache_obj_type_transition_home_cache (ARG2))
+		(call manage_home_cache (ARG2))
+		(call relabel_home_cache (ARG2))
 
-	(call firefox_manage_tmpfs_files (ARG2))
-	(call firefox_relabel_tmpfs_files (ARG2))
+		(call home_cache_obj_type_transition_home_cache (ARG2))
 
-	(call firefox_manage_var_tmp_files (ARG2))
-	(call firefox_relabel_var_tmp_files (ARG2)))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
 
-(macro firefox_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 firefox.cmd_file ARG2)))
+		(call manage_var_tmp_user_files (ARG2))
+		(call relabel_var_tmp_user_files (ARG2)))
 
-(macro firefox_search_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 firefox.home_user_file search_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro firefox_list_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 firefox.home_user_file list_dir_perms))
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.setattr_home_user_dirs_blk)
+	(blockinherit usersubj.create_home_user_dirs_blk)
+	(blockinherit usersubj.delete_home_user_dirs_blk)
+	(blockinherit usersubj.rw_home_user_dirs_blk)
+	(blockinherit usersubj.manage_home_user_dirs_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro firefox_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_files_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".mozilla")))
 
-(macro firefox_read_home_lnk_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_lnk_files_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
+	(macro home_dir_add_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_add_obj_type_transition (ARG1 home_user_file dir ".mozilla")))
 
-(macro firefox_setattr_home_dirs ((type ARG1))
-	(allow ARG1 firefox.home_user_file (dir (setattr))))
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
 
-(macro firefox_create_home_dirs ((type ARG1))
-	(call usersubj.add_entry_home_dir (ARG1))
-	(call create_dirs_pattern (ARG1 firefox.home_user_file firefox.home_user_file)))
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "mozilla")))
 
-(macro firefox_read_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 firefox.home_user_file read_file_perms)
-	(allow ARG1 firefox.home_user_file list_dir_perms)
-	(allow ARG1 firefox.home_user_file read_lnk_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro firefox_manage_home ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 firefox.home_user_file manage_file_perms)
-	(allow ARG1 firefox.home_user_file manage_dir_perms)
-	(allow ARG1 firefox.home_user_file manage_lnk_file_perms))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-(macro firefox_relabel_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 firefox.home_user_file relabel_file_perms)
-	(allow ARG1 firefox.home_user_file relabel_dir_perms)
-	(allow ARG1 firefox.home_user_file relabel_lnk_file_perms))
+	(blockinherit usersubj.read_var_tmp_user_files_blk)
+	(blockinherit usersubj.manage_var_tmp_user_files_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_files_blk)
 
-(macro firefox_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
+	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
+		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user_file file "*")))
 
-(macro firefox_home_dir_add_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_add_obj_type_transition (ARG1 firefox.home_user_file dir ".mozilla")))
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_unix_stream_sockets_all_blk)
 
-(macro firefox_search_home_cache ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(allow ARG1 firefox.home_cache_file search_dir_perms))
-
-(macro firefox_list_home_cache ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(allow ARG1 firefox.home_cache_file list_dir_perms))
-
-(macro firefox_read_home_cache_files ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(call read_files_pattern (ARG1 firefox.home_cache_file firefox.home_cache_file)))
-
-(macro firefox_read_home_cache_lnk_files ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(call read_lnk_files_pattern (ARG1 firefox.home_cache_file firefox.home_cache_file)))
-
-(macro firefox_read_home_cache ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(allow ARG1 firefox.home_cache_file read_file_perms)
-	(allow ARG1 firefox.home_cache_file list_dir_perms)
-	(allow ARG1 firefox.home_cache_file read_lnk_file_perms))
-
-(macro firefox_manage_home_cache ((type ARG1))
-	(call usersubj.rw_home_cache_dirs (ARG1))
-	(allow ARG1 firefox.home_cache_file manage_file_perms)
-	(allow ARG1 firefox.home_cache_file manage_dir_perms)
-	(allow ARG1 firefox.home_cache_file manage_lnk_file_perms))
-
-(macro firefox_relabel_home_cache ((type ARG1))
-	(call usersubj.search_home_cache (ARG1))
-	(allow ARG1 firefox.home_cache_file relabel_file_perms)
-	(allow ARG1 firefox.home_cache_file relabel_dir_perms)
-	(allow ARG1 firefox.home_cache_file relabel_lnk_file_perms))
-
-(macro firefox_home_cache_obj_type_transition_home_cache ((type ARG1))
-	(call usersubj.home_cache_obj_type_transition (ARG1 firefox.home_cache_file dir "mozilla")))
-
-(macro firefox_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 firefox.tmpfs_user_file read_file_perms))
-
-(macro firefox_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 firefox.tmpfs_user_file manage_file_perms))
-
-(macro firefox_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 firefox.tmpfs_user_file relabel_file_perms))
-
-(macro firefox_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 firefox.tmpfs_user_file file "*")))
-
-(macro firefox_read_var_tmp_files ((type ARG1))
-	(call file_search_var_tmp (ARG1))
-	(allow ARG1 firefox.var_tmp_user_file read_file_perms))
-
-(macro firefox_manage_var_tmp_files ((type ARG1))
-	(call file_rw_var_tmp_dirs (ARG1))
-	(allow ARG1 firefox.var_tmp_user_file manage_file_perms))
-
-(macro firefox_relabel_var_tmp_files ((type ARG1))
-	(call file_search_var_tmp (ARG1))
-	(allow ARG1 firefox.var_tmp_user_file relabel_file_perms))
-
-(macro firefox_var_tmp_obj_type_transition_var_tmp ((type ARG1))
-	(call file_var_tmp_obj_type_transition (ARG1 firefox.var_tmp_user_file file "*")))
-
-(macro firefox_use_fd_all_subj ((type ARG1))
-	(allow ARG1 firefox_subj_type (fd (use))))
-
-(macro firefox_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call firefox_use_fd_all_subj (ARG1))
-	(allow ARG1 firefox_subj_type rw_inherited_unix_stream_socket_perms))
-
-(macro firefox_set_use_webcam_boolean ((type ARG1))
-	(call sec_set_spec_boolean (ARG1 firefox_use_webcam.bool))
-	(optional firefox_set_use_webcam_boolean_optional_seutil
-		(call seutil_exec_setsebool (ARG1))))
+	(macro set_use_webcam_boolean ((type ARG1))
+		(call sec_set_spec_boolean (ARG1 firefox_use_webcam.bool))
+		(optional firefox_set_use_webcam_boolean_optional_seutil
+			(call seutil_exec_setsebool (ARG1)))))

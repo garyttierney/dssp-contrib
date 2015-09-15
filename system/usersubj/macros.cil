@@ -128,6 +128,12 @@
 			(call usersubj.search_home_cache (ARG1))
 			(call relabel_dirs_pattern (ARG1 home_cache_file home_cache_file))))
 
+	(block setattr_home_cache_dirs_blk
+		(blockabstract setattr_home_cache_dirs_blk)
+		(macro setattr_home_cache_dirs ((type ARG1))
+			(call usersubj.search_home_cache (ARG1))
+			(call setattr_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+
 	(block delete_home_cache_files_blk
 		(blockabstract delete_home_cache_files_blk)
 		(macro delete_home_cache_files ((type ARG1))
@@ -301,6 +307,12 @@
 		(macro relabel_home_config_dirs ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
 			(call relabel_dirs_pattern (ARG1 home_config_file home_config_file))))
+
+	(block setattr_home_config_dirs_blk
+		(blockabstract setattr_home_config_dirs_blk)
+		(macro setattr_home_config_dirs ((type ARG1))
+			(call usersubj.search_home_config (ARG1))
+			(call setattr_dirs_pattern (ARG1 home_config_file home_config_file))))
 
 	(block delete_home_config_files_blk
 		(blockabstract delete_home_config_files_blk)
@@ -476,6 +488,12 @@
 			(call usersubj.search_home_data (ARG1))
 			(call relabel_dirs_pattern (ARG1 home_cache_file home_cache_file))))
 
+	(block setattr_home_data_dirs_blk
+		(blockabstract setattr_home_data_dirs_blk)
+		(macro setattr_home_data_dirs ((type ARG1))
+			(call usersubj.search_home_data (ARG1))
+			(call setattr_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+
 	(block delete_home_data_files_blk
 		(blockabstract delete_home_data_files_blk)
 		(macro delete_home_data_files ((type ARG1))
@@ -650,6 +668,12 @@
 			(call usersubj.search_home_dir (ARG1))
 			(call relabel_dirs_pattern (ARG1 home_user_file home_user_file))))
 
+	(block setattr_home_user_dirs_blk
+		(blockabstract setattr_home_user_dirs_blk)
+		(macro setattr_home_user_dirs ((type ARG1))
+			(call usersubj.search_home_dir (ARG1))
+			(call setattr_dirs_pattern (ARG1 home_user_file home_user_file))))
+
 	(block delete_home_user_files_blk
 		(blockabstract delete_home_user_files_blk)
 		(macro delete_home_user_files ((type ARG1))
@@ -823,6 +847,12 @@
 		(macro relabel_var_tmp_user_dirs ((type ARG1))
 			(call file_search_var_tmp (ARG1))
 			(call relabel_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+
+	(block setattr_var_tmp_user_dirs_blk
+		(blockabstract setattr_var_tmp_user_dirs_blk)
+		(macro setattr_var_tmp_user_dirs ((type ARG1))
+			(call file_search_var_tmp (ARG1))
+			(call setattr_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block delete_var_tmp_user_files_blk
 		(blockabstract delete_var_tmp_user_files_blk)
@@ -999,6 +1029,12 @@
 		(macro relabel_tmpfs_user_dirs ((type ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call relabel_dirs_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+
+	(block setattr_tmpfs_user_dirs_blk
+		(blockabstract setattr_tmpfs_user_dirs_blk)
+		(macro setattr_tmpfs_user_dirs ((type ARG1))
+			(call fs_search_tmpfs (ARG1))
+			(call setattr_dirs_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block delete_tmpfs_user_files_blk
 		(blockabstract delete_tmpfs_user_files_blk)

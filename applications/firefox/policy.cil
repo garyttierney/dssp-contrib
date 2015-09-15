@@ -1,130 +1,127 @@
 (boolean firefox_use_webcam true)
 
-(typeattribute firefox_subj_type)
+(block firefox_use_webcam
+	(blockinherit sec_bool_obj_blk)
+
+	(booleanif firefox_use_webcam
+		(true
+			(call dev_rw_v4l (firefox.subj_type_attribute)))))
 
 (block firefox
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (firefox_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call manage_home_user (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
+
 	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
+	(call manage_var_tmp_user_files (subj_type_attribute))
+	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute))
+
+	(call exec (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setsched getsched ptrace)))
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+	(allow subj_type_attribute self create_rawip_socket_perms)
+
+	(call sys_read_crypto_sysctl_files (subj_type_attribute))
+
+	(call cmd_exec_cmd (subj_type_attribute))
+	(call cmd_exec_shell (subj_type_attribute))
+
+	(call dev_read_urandom (subj_type_attribute))
+	(call dev_rw_dri (subj_type_attribute))
+
+	(call file_read_config (subj_type_attribute))
+	(call file_read_data (subj_type_attribute))
+	(call file_list_mnt (subj_type_attribute))
+
+	(call fs_getattr_fs (subj_type_attribute))
+	(call fs_manage_fuse_subj_type (subj_type_attribute))
+	(call fs_read_devtmpfs_lnk_files (subj_type_attribute))
+	(call fs_read_sysfs (subj_type_attribute))
+
+	(call net_udp_bind_generic_node (subj_type_attribute))
+	(call net_tcp_bind_generic_node (subj_type_attribute))
+
+	(call storage_getattr_all (subj_type_attribute))
+
+	(call subj_dontaudit_read_common_subj_state (subj_type_attribute))
+	(call subj_execmem_uncond_type (subj_type_attribute))
+	(call subj_read_common_subj_state (subj_type_attribute))
+
+	(call firefox_plugins_rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))
+
+	(call http_tcp_connect_http_port (subj_type_attribute))
+
+	(call miscfile_read_all_cert (subj_type_attribute))
+	(call miscfile_read_all_fonts (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(call nss_client_subj_type (subj_type_attribute))
+
+	(call udev_client_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_data_files (subj_type_attribute))
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_data (subj_type_attribute))
+	(call usersubj.dontaudit_getattr_all_home_user_files (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_cache (subj_type_attribute))
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
+
+	(call xserver_tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
+
+	(optional firefox_subj_type_optional_atspi_sessbus_launch
+		(call atspi_sessbus_launch.sessbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_gstreamer
+		(call gstreamer_client_subj_type (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_mutt
+		(call mutt_rw_tmpfs_files (subj_type_attribute)))
+
+	(optional firefox_subject_type_optional_nm
+		(call nm_sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_sd
+		(call sd.read_state (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed_sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_sd_machined
+		(call sd_machined_read_config_files (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_sessbus
+		(call sessbus_client_all_subj (subj_type_attribute)))
+
 	(optional firefox_optional_pa
-		(call pa_tmpfs_client (firefox_subj_type tmpfs_user_file))))
-
-(block firefox_use_webcam
-	(blockinherit sec_bool_obj_blk))
-
-(allow firefox_subj_type self (process (setsched getsched ptrace)))
-(allow firefox_subj_type self create_unix_dgram_socket_perms)
-(allow firefox_subj_type self create_rawip_socket_perms)
-
-(call firefox_manage_home (firefox_subj_type))
-(call firefox_home_dir_obj_type_transition_home (firefox_subj_type))
-
-(call firefox_manage_home_cache (firefox_subj_type))
-(call firefox_home_cache_obj_type_transition_home_cache (firefox_subj_type))
-
-(call firefox_manage_tmpfs_files (firefox_subj_type))
-(call firefox_tmpfs_obj_type_transition_tmpfs (firefox_subj_type))
-
-(call firefox_manage_var_tmp_files (firefox_subj_type))
-(call firefox_var_tmp_obj_type_transition_var_tmp (firefox_subj_type))
-
-(call firefox_exec (firefox_subj_type))
-
-(call sys_read_crypto_sysctl_files (firefox_subj_type))
-
-(call cmd_exec_cmd (firefox_subj_type))
-(call cmd_exec_shell (firefox_subj_type))
-
-(call dev_read_urandom (firefox_subj_type))
-(call dev_rw_dri (firefox_subj_type))
-
-(call file_read_config (firefox_subj_type))
-(call file_read_data (firefox_subj_type))
-(call file_list_mnt (firefox_subj_type))
-
-(call fs_getattr_fs (firefox_subj_type))
-(call fs_manage_fuse_subj_type (firefox_subj_type))
-(call fs_read_devtmpfs_lnk_files (firefox_subj_type))
-(call fs_read_sysfs (firefox_subj_type))
-
-(call net_udp_bind_generic_node (firefox_subj_type))
-(call net_tcp_bind_generic_node (firefox_subj_type))
-
-(call storage_getattr_all (firefox_subj_type))
-
-(call subj_dontaudit_read_common_subj_state (firefox_subj_type))
-(call subj_execmem_uncond_type (firefox_subj_type))
-(call subj_read_common_subj_state (firefox_subj_type))
-
-(call firefox_plugins_rw_inherited_unix_stream_sockets_all_subj (firefox_subj_type))
-
-(call http_tcp_connect_http_port (firefox_subj_type))
-
-(call miscfile_read_all_cert (firefox_subj_type))
-(call miscfile_read_all_fonts (firefox_subj_type))
-(call miscfile_read_locale (firefox_subj_type))
-
-(call nss_client_subj_type (firefox_subj_type))
-
-(call udev_client_subj_type (firefox_subj_type))
-
-(call usersubj.manage_home_data_files (firefox_subj_type))
-(call usersubj.create_home_data_dirs (firefox_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_data (firefox_subj_type))
-
-(call usersubj.dontaudit_getattr_all_home_user_files (firefox_subj_type))
-(call usersubj.manage_home_user_files (firefox_subj_type))
-(call usersubj.manage_home_user_dirs (firefox_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_dirs (firefox_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (firefox_subj_type))
-(call usersubj.read_home_user_lnk_files (firefox_subj_type))
-
-(call usersubj.create_home_cache_dirs (firefox_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_cache (firefox_subj_type))
-
-(call usersubj.manage_home_fonts_cache (firefox_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_fonts_cache (firefox_subj_type))
-(call usersubj.home_cache_obj_type_transition_home_fonts_cache (firefox_subj_type))
-
-(call xserver_tmpfs_client (firefox_subj_type firefox.tmpfs_user_file))
-
-(booleanif firefox_use_webcam
-	(true
-		(call dev_rw_v4l (firefox_subj_type))))
-
-(tunableif enable_rbacsep
-	(true
-		(call rbacsep_read_state_source_subj_type (firefox_subj_type))))
-
-(optional firefox_subj_type_optional_atspi_sessbus_launch
-	(call atspi_sessbus_launch.sessbus_chat_client_subj_type (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_gstreamer
-	(call gstreamer_client_subj_type (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_mutt
-	(call mutt_rw_tmpfs_files (firefox_subj_type)))
-
-(optional firefox_subject_type_optional_nm
-	(call nm_sysbus_chat_client_subj_type (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_sd
-	(call sd.read_state (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_sd_hostnamed
-	(call sd_hostnamed_sysbus_chat_client_subj_type (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_sd_machined
-	(call sd_machined_read_config_files (firefox_subj_type)))
-
-(optional firefox_subj_type_optional_sessbus
-	(call sessbus_client_all_subj (firefox_subj_type)))
+		(call pa_tmpfs_client (subj_type_attribute tmpfs_user_file))))

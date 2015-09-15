@@ -742,7 +742,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_dunst_optional_sysadm_firefox
-	(call firefox_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (sysadm_dunst.subj sysadm_firefox.subj)))
 
 (optional sysadm_dunst_optional_sysadm_sessbus_launch
 	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_sessbus_launch.subj)))
@@ -762,7 +762,7 @@
 	(call dbus_send.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_dbus_send.subj)))
 
 (optional sysadm_emacs_optional_sysadm_firefox
-	(call firefox_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_firefox.subj)))
 
 (optional sysadm_emacs_optional_sysadm_git
 	(call git_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_git.subj)))
@@ -914,9 +914,9 @@
 
 (optional sysadm_firefox_optional_firefox
 	(block sysadm_firefox
-		(blockinherit firefox_subj_blk)
+		(blockinherit firefox.subj_blk)
 
-		(call firefox_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call firefox.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_firefox_optional_sysadm_firefox_plugins
 	(call firefox_plugins_auto_subj_type_transition_pattern (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
@@ -1063,7 +1063,7 @@
 	(call emacsclient.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_emacsclient.subj)))
 
 (optional sysadm_mutt_optional_sysadm_firefox
-	(call firefox_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_firefox.subj)))
 
 (optional sysadm_mutt_optional_sysadm_firefox_xremotec
 	(call firefox_xremotec_auto_subj_type_transition_pattern (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
@@ -1091,7 +1091,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_nb_optional_sysadm_firefox
-	(call firefox_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_firefox.subj)))
 
 (optional sysadm_nb_optional_sysadm_lynx
 	(call lynx_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_lynx.subj)))
@@ -1339,7 +1339,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_firefox
 	(call tor_socks_client_subj_type (sysadm_firefox.subj))
-	(call firefox_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_firefox.subj)))
+	(call firefox.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_firefox.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_git
 	(call tor_socks_client_subj_type (sysadm_git.subj))

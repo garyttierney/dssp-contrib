@@ -1,18 +1,18 @@
-(roleattribute pinentry_role)
-
 (block pinentry
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype pinentry_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call exec (subj))
+
 	(allow subj self rw_fifo_file_perms)
-
-	(call pinentry_manage_tmpfs_files (subj))
-	(call pinentry_tmpfs_obj_type_transition_tmpfs (subj))
-
-	(call pinentry_exec (subj))
 
 	(call cmd_exec_cmd (subj))
 	(call cmd_audit_read_access_shell_files (subj))

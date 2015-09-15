@@ -95,9 +95,9 @@
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
         (optional wheel_optional_pinentry
-		(call pinentry_run (wheel_subj_type role))
-		(call pinentry_manage_tmpfs_files (subj))
-		(call pinentry_relabel_tmpfs_files (subj)))
+		(call pinentry.run (wheel_subj_type role))
+		(call pinentry.manage_tmpfs_user_files (subj))
+		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional wheel_optional_pwgen
 		(call pwgen_run (wheel_subj_type role)))

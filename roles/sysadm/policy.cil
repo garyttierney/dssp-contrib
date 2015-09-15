@@ -360,9 +360,9 @@
 		(call pcscd_adm (subj role)))
 
 	(optional sysadm_optional_pinentry
-		(call pinentry_run (sysadm_subj_type role))
-		(call pinentry_manage_tmpfs_files (subj))
-		(call pinentry_relabel_tmpfs_files (subj)))
+		(call pinentry.run (sysadm_subj_type role))
+		(call pinentry.manage_tmpfs_user_files (subj))
+		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_plymouth
 		(call plymouth_adm (subj role))

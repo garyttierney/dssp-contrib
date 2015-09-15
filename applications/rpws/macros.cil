@@ -1,31 +1,15 @@
-(macro rpws_exec ((type ARG1))
-	(call can_exec (ARG1 rpws.cmd_file)))
+(in rpws
+	(blockinherit exec_blk)
 
-(macro rpws_auto_subj_type_transition ((type ARG1))
-	(call rpws_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 rpws.cmd_file rpws.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro rpws_send_signal ((type ARG1))
-	(allow ARG1 rpws.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro rpws_run ((type ARG1)(role ARG2))
-	(call rpws_auto_subj_type_transition (ARG1))
-	(roleattributeset rpws_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro rpws_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 rpws.tmpfs_user_file read_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro rpws_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 rpws.tmpfs_user_file manage_file_perms))
-
-(macro rpws_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 rpws.tmpfs_user_file relabel_file_perms))
-
-(macro rpws_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 rpws.tmpfs_user_file file "*")))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

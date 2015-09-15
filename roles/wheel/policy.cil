@@ -118,9 +118,9 @@
 		(call rpmbuild.run (wheel_subj_type role)))
 
 	(optional wheel_optional_rpws
-		(call rpws_run (wheel_subj_type role))
-		(call rpws_manage_tmpfs_files (subj))
-		(call rpws_relabel_tmpfs_files (subj)))
+		(call rpws.run (wheel_subj_type role))
+		(call rpws.manage_tmpfs_user_files (subj))
+		(call rpws.relabel_tmpfs_user_files (subj)))
 
 	(optional wheel_optional_rtorrent
 		(call rtorrent_manage_home (subj))

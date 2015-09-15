@@ -1,16 +1,16 @@
-(roleattribute rpws_role)
-
 (block rpws
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype rpws_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(allow subj self rw_fifo_file_perms)
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
 
-	(call rpws_manage_tmpfs_files (subj))
-	(call rpws_tmpfs_obj_type_transition_tmpfs (subj))
+	(allow subj self rw_fifo_file_perms)
 
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))

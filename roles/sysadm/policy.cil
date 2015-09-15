@@ -432,9 +432,9 @@
 		(call rpmbuild.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpws
-		(call rpws_run (sysadm_subj_type role))
-		(call rpws_manage_tmpfs_files (subj))
-		(call rpws_relabel_tmpfs_files (subj)))
+		(call rpws.run (sysadm_subj_type role))
+		(call rpws.manage_tmpfs_user_files (subj))
+		(call rpws.relabel_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_rtkitctl
 		(call rtkitctl.run (sysadm_subj_type role)))

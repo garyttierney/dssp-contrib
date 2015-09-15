@@ -327,11 +327,11 @@
 		(call nethogs.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_nettools
-		(call nettools_adm (subj role))
-		(call nettools_run_arp (sysadm_subj_type role))
-		(call nettools_run_nettools (sysadm_subj_type role))
-		(call nettools_run_ping (sysadm_subj_type role))
-		(call nettools_run_traceroute (sysadm_subj_type role)))
+		(call arp.adm (subj role))
+		(call arp.run (sysadm_subj_type role))
+		(call nettools.run (sysadm_subj_type role))
+		(call ping.run (sysadm_subj_type role))
+		(call traceroute.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_nmcli
 		(call nmcli_run (sysadm_subj_type role)))

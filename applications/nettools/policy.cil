@@ -1,16 +1,11 @@
-(roleattribute nettools_arp_role)
-(roleattribute nettools_role)
-(roleattribute nettools_ping_role)
-(roleattribute nettools_traceroute_role)
-
-(typeattribute nettools_adm_subj_type)
-
 (block nettools
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset nettools_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype nettools_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override net_raw net_admin setgid setuid)))
 	(allow subj self (process (getcap setcap)))
@@ -43,11 +38,13 @@
 	(call nss_client_subj_type (subj)))
 
 (block ping
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset nettools_ping_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype nettools_ping_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (net_raw)))
 	(allow subj self (process (getcap setcap)))
@@ -58,11 +55,13 @@
 	(call nss_client_subj_type (subj)))
 
 (block traceroute
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset nettools_traceroute_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype nettools_traceroute_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override net_raw net_admin)))
 	(allow subj self (capability2 (block_suspend)))
@@ -86,21 +85,25 @@
 	(call nss_client_subj_type (subj)))
 
 (block arp
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset nettools_arp_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype nettools_arp_role subj)
+	(roletype role_attribute subj)
 
 	(optional arp_optional_sd
 		(call sd.daemon (subj cmd_file))
 
 		(blockinherit sd.unit_obj_blk)
 
-		(allow nettools_adm_subj_type unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-		(allow nettools_adm_subj_type unit_file manage_file_perms)
-		(allow nettools_adm_subj_type unit_file relabel_file_perms)))
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
 
-(allow nettools_adm_subj_type arp.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (nettools_adm_subj_type arp.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

@@ -90,9 +90,9 @@
 		(call pwgen.run (user_subj_type role)))
 
 	(optional user_optional_qiv
-		(call qiv_manage_tmpfs_files (subj))
-		(call qiv_relabel_tmpfs_files (subj))
-		(call qiv_run (user_subj_type role)))
+		(call qiv.manage_tmpfs_user_files (subj))
+		(call qiv.relabel_tmpfs_user_files (subj))
+		(call qiv.run (user_subj_type role)))
 
 	(optional user_optional_quota
 		(call quota_exec (user_subj_type)))

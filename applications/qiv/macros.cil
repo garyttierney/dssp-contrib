@@ -1,31 +1,15 @@
-(macro qiv_exec ((type ARG1))
-	(call can_exec (ARG1 qiv.cmd_file)))
+(in qiv
+	(blockinherit exec_blk)
 
-(macro qiv_auto_subj_type_transition ((type ARG1))
-	(call qiv_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 qiv.cmd_file qiv.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro qiv_send_signal ((type ARG1))
-	(allow ARG1 qiv.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro qiv_run ((type ARG1)(role ARG2))
-	(call qiv_auto_subj_type_transition (ARG1))
-	(roleattributeset qiv_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro qiv_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 qiv.tmpfs_user_file read_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro qiv_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 qiv.tmpfs_user_file manage_file_perms))
-
-(macro qiv_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 qiv.tmpfs_user_file relabel_file_perms))
-
-(macro qiv_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 qiv.tmpfs_user_file file "*")))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

@@ -398,9 +398,9 @@
 		(call qemu_guest_agent_adm (subj role)))
 
 	(optional sysadm_optional_qiv
-		(call qiv_manage_tmpfs_files (subj))
-		(call qiv_relabel_tmpfs_files (subj))
-		(call qiv_run (sysadm_subj_type role)))
+		(call qiv.manage_tmpfs_user_files (subj))
+		(call qiv.relabel_tmpfs_user_files (subj))
+		(call qiv.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_quota
 		(call quota_run (sysadm_subj_type role)))

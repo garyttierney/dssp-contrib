@@ -111,11 +111,11 @@
 		(call quota.exec (wheel_subj_type)))
 
 	(optional wheel_optional_rpmbuild
-		(call rpmbuild_manage_tmpfs (subj))
-		(call rpmbuild_relabel_tmpfs (subj))
-		(call rpmbuild_manage_var_tmp (subj))
-		(call rpmbuild_relabel_var_tmp (subj))
-		(call rpmbuild_run (wheel_subj_type role)))
+		(call rpmbuild.manage_tmpfs_user (subj))
+		(call rpmbuild.relabel_tmpfs_user (subj))
+		(call rpmbuild.manage_var_tmp_user (subj))
+		(call rpmbuild.relabel_var_tmp_user (subj))
+		(call rpmbuild.run (wheel_subj_type role)))
 
 	(optional wheel_optional_rpws
 		(call rpws_run (wheel_subj_type role))

@@ -1,22 +1,22 @@
-(roleattribute rpmbuild_role)
-
 (block rpmbuild
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype rpmbuild_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
 	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(call manage_var_tmp_user (subj))
+	(call var_tmp_obj_type_transition_var_tmp (subj))
 
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call rpmbuild_manage_tmpfs (subj))
-	(call rpmbuild_tmpfs_obj_type_transition_tmpfs (subj))
-
-	(call rpmbuild_manage_var_tmp (subj))
-	(call rpmbuild_var_tmp_obj_type_transition_var_tmp (subj))
 
 	(call sys_read_cpu_online_sysfs_files (subj))
 
@@ -58,4 +58,4 @@
 		(call sd.search_unit_runtime (subj)))
 
 	(optional rpmbuild_optiona_tetex
-		(call tetex_run_pdftex (subj rpmbuild_role))))
+		(call tetex_run_pdftex (subj role_attribute))))

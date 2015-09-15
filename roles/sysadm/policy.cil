@@ -425,11 +425,11 @@
 		(call rpm_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpmbuild
-		(call rpmbuild_manage_tmpfs (subj))
-		(call rpmbuild_relabel_tmpfs (subj))
-		(call rpmbuild_manage_var_tmp (subj))
-		(call rpmbuild_relabel_var_tmp (subj))
-		(call rpmbuild_run (sysadm_subj_type role)))
+		(call rpmbuild.manage_tmpfs_user (subj))
+		(call rpmbuild.relabel_tmpfs_user (subj))
+		(call rpmbuild.manage_var_tmp_user (subj))
+		(call rpmbuild.relabel_var_tmp_user (subj))
+		(call rpmbuild.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpws
 		(call rpws_run (sysadm_subj_type role))

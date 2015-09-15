@@ -982,9 +982,9 @@
 
 (optional sysadm_livestreamer_optional_livestreamer
 	(block sysadm_livestreamer
-		(blockinherit livestreamer_subj_blk)
+		(blockinherit livestreamer.subj_blk)
 
-		(call livestreamer_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call livestreamer.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_livestreamer_optional_sysadm_mplayer
 	(call mplayer_auto_subj_type_transition_pattern (sysadm_livestreamer.subj sysadm_mplayer.subj)))
@@ -1356,7 +1356,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_livestreamer
 	(call tor_socks_client_subj_type (sysadm_livestreamer.subj))
-	(call livestreamer_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_livestreamer.subj)))
+	(call livestreamer.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_livestreamer.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_lynx
 	(call tor_socks_client_subj_type (sysadm_lynx.subj))

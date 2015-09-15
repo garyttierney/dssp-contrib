@@ -504,9 +504,9 @@
 
 (optional wheel_livestreamer_optional_livestreamer
 	(block wheel_livestreamer
-		(blockinherit livestreamer_subj_blk)
+		(blockinherit livestreamer.subj_blk)
 
-		(call livestreamer_role_pattern (wheel.role wheel_subj_type subj))))
+		(call livestreamer.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_livestreamer_optional_wheel_mplayer
 	(call mplayer_auto_subj_type_transition_pattern (wheel_livestreamer.subj wheel_mplayer.subj)))
@@ -816,7 +816,7 @@
 
 (optional wheel_tor_socks_optional_wheel_livestreamer
 	(call tor_socks_client_subj_type (wheel_livestreamer.subj))
-	(call livestreamer_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_livestreamer.subj)))
+	(call livestreamer.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_livestreamer.subj)))
 
 (optional wheel_tor_socks_optional_wheel_lynx
 	(call tor_socks_client_subj_type (wheel_lynx.subj))

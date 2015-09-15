@@ -1,50 +1,50 @@
-(typeattribute livestreamer_subj_type)
-
 (block livestreamer
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (livestreamer_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.home_cache_obj_blk)
 
+	(call manage_home_cache (subj_type_attribute))
+	(dontaudit subj_type_attribute livestreamer.home_cache_file relabel_file_perms)
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(blockinherit usersubj.tmpfs_user_obj_blk))
+	(call read_home_config (subj_type_attribute))
 
-(allow livestreamer_subj_type self rw_fifo_file_perms)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call livestreamer_read_home_config (livestreamer_subj_type))
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(dontaudit subj_type_attribute tmpfs_user_file relabel_file_perms)
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call livestreamer_manage_home_cache (livestreamer_subj_type))
-(dontaudit livestreamer_subj_type livestreamer.home_cache_file relabel_file_perms)
-(call livestreamer_home_cache_obj_type_transition_home_cache (livestreamer_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call livestreamer_manage_tmpfs_files (livestreamer_subj_type))
-(dontaudit livestreamer_subj_type livestreamer.tmpfs_user_file relabel_file_perms)
-(call livestreamer_tmpfs_obj_type_transition_tmpfs (livestreamer_subj_type))
+	(call cmd_list_cmd (subj_type_attribute))
+	(call cmd_exec_cmd (subj_type_attribute))
+	(call cmd_exec_shell (subj_type_attribute))
 
-(call cmd_list_cmd (livestreamer_subj_type))
-(call cmd_exec_cmd (livestreamer_subj_type))
-(call cmd_exec_shell (livestreamer_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call dev_read_urandom (livestreamer_subj_type))
+	(call file_read_config_files (subj_type_attribute))
 
-(call file_read_config_files (livestreamer_subj_type))
+	(call http_tcp_connect_http_port (subj_type_attribute))
 
-(call http_tcp_connect_http_port (livestreamer_subj_type))
+	(call ldconfig_exec (subj_type_attribute))
 
-(call ldconfig_exec (livestreamer_subj_type))
+	(call miscfile_read_all_cert (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call miscfile_read_all_cert (livestreamer_subj_type))
-(call miscfile_read_locale (livestreamer_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call nss_client_subj_type (livestreamer_subj_type))
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
 
-(call usersubj.create_home_cache_dirs (livestreamer_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_cache (livestreamer_subj_type))
+	(optional livestreamer_subj_type_optional_firefox
+		(call firefox.mmap_cmd_files (subj_type_attribute)))
 
-(optional livestreamer_subj_type_optional_firefox
-	(call firefox.mmap_cmd_files (livestreamer_subj_type)))
-
-(optional livestreamer_subj_type_optional_lynx
-	(call lynx_mmap_cmd_files (livestreamer_subj_type)))
+	(optional livestreamer_subj_type_optional_lynx
+		(call lynx_mmap_cmd_files (subj_type_attribute))))

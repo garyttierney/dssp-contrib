@@ -1,58 +1,22 @@
-(macro fop_exec ((type ARG1))
-	(call can_exec (ARG1 fop.cmd_file)))
+(in fop
+	(blockinherit exec_blk)
 
-(macro fop_auto_subj_type_transition ((type ARG1))
-	(call fop_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 fop.cmd_file fop.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro fop_send_signal ((type ARG1))
-	(allow ARG1 fop.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro fop_run ((type ARG1)(role ARG2))
-	(call fop_auto_subj_type_transition (ARG1))
-	(roleattributeset fop_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro fop_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 fop.config_file read_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
 
-(macro fop_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 fop.config_file manage_file_perms))
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro fop_search_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 fop.home_user_file search_dir_perms))
-
-(macro fop_list_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 fop.home_user_file list_dir_perms))
-
-(macro fop_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_files_pattern (ARG1 fop.home_user_file fop.home_user_file)))
-
-(macro fop_read_home_lnk_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_lnk_files_pattern (ARG1 fop.home_user_file fop.home_user_file)))
-
-(macro fop_read_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 fop.home_user_file read_file_perms)
-	(allow ARG1 fop.home_user_file list_dir_perms)
-	(allow ARG1 fop.home_user_file read_lnk_file_perms))
-
-(macro fop_manage_home ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 fop.home_user_file manage_file_perms)
-	(allow ARG1 fop.home_user_file manage_dir_perms)
-	(allow ARG1 fop.home_user_file manage_lnk_file_perms))
-
-(macro fop_relabel_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 fop.home_user_file relabel_file_perms)
-	(allow ARG1 fop.home_user_file relabel_dir_perms)
-	(allow ARG1 fop.home_user_file relabel_lnk_file_perms))
-
-(macro fop_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 fop.home_user_file dir ".fop")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".fop"))))

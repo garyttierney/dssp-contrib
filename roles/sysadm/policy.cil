@@ -205,11 +205,11 @@
 		(call dracut_initramfs_adm (subj role)))
 
 	(optional sysadm_optional_fop
-		(call fop_run (sysadm_subj_type role))
-		(call fop_manage_config_files (subj))
-		(call fop_manage_home (subj))
-		(call fop_relabel_home (subj))
-		(call fop_home_dir_obj_type_transition_home (subj)))
+		(call fop.run (sysadm_subj_type role))
+		(call fop.manage_config_files (subj))
+		(call fop.manage_home_user (subj))
+		(call fop.relabel_home_user (subj))
+		(call fop.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_fpaste
 		(call fpaste_run (sysadm_subj_type role))

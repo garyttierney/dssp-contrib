@@ -1,20 +1,20 @@
-(roleattribute fop_role)
-
 (block fop
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype fop_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config_files (subj))
+
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call manage_home_user (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
 	(allow subj self rw_fifo_file_perms)
-
-	(call fop_read_config_files (subj))
-
-	(call fop_manage_home (subj))
-	(call fop_home_dir_obj_type_transition_home (subj))
 
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))

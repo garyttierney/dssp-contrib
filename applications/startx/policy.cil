@@ -1,34 +1,34 @@
-(typeattribute startx_subj_type)
-
 (block startx
+	(typeattribute subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (startx_subj_type cmd_file))
+        (call subj_entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.tmpfs_user_obj_blk))
+        (blockinherit usersubj.tmpfs_user_obj_blk)
 
-(allow startx_subj_type self rw_fifo_file_perms)
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(call startx_manage_tmpfs_files (startx_subj_type))
-(call startx_tmpfs_obj_type_transition_tmpfs (startx_subj_type))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_read_net_proc_files (startx_subj_type))
+	(call sys_read_net_proc_files (subj_type_attribute))
 
-(call cmd_exec_cmd (startx_subj_type))
-(call cmd_audit_read_access_shell_files (startx_subj_type))
+	(call cmd_exec_cmd (subj_type_attribute))
+	(call cmd_audit_read_access_shell_files (subj_type_attribute))
 
-(call dev_read_urandom (startx_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call fs_getattr_tmpfs_fs (startx_subj_type))
+	(call fs_getattr_tmpfs_fs (subj_type_attribute))
 
-(call miscfile_read_locale (startx_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call usersubj.use_ttys (startx_subj_type))
+	(call usersubj.use_ttys (subj_type_attribute))
 
-(call xauth_delete_home_files (startx_subj_type))
+	(call xauth_delete_home_files (subj_type_attribute))
 
-(call xserver_read_home_files (startx_subj_type))
-(call xserver_read_tmpfs_files (startx_subj_type))
-(call xserver_stream_connect (startx_subj_type))
+	(call xserver_read_home_files (subj_type_attribute))
+	(call xserver_read_tmpfs_files (subj_type_attribute))
+	(call xserver_stream_connect (subj_type_attribute))
 
-(call xinit_read_home_files (startx_subj_type))
+	(call xinit_read_home_files (subj_type_attribute)))

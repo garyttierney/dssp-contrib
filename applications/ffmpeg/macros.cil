@@ -1,47 +1,38 @@
-(block ffmpeg_subj_blk
-	(blockabstract ffmpeg_subj_blk)
+(in ffmpeg
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset ffmpeg_subj_type subj))
+		(typeattributeset ffmpeg.subj_type_attribute subj))
 
-(macro ffmpeg_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset ffmpeg_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro ffmpeg_exec ((type ARG1))
-	(call can_exec (ARG1 ffmpeg.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro ffmpeg_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 ffmpeg.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call ffmpeg_manage_tmpfs_files (ARG2))
-	(call ffmpeg_relabel_tmpfs_files (ARG2)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro ffmpeg_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 ffmpeg.cmd_file ARG2)))
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2)))
 
-(macro ffmpeg_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ffmpeg.tmpfs_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro ffmpeg_manage_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 ffmpeg.tmpfs_user_file manage_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro ffmpeg_relabel_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ffmpeg.tmpfs_user_file relabel_file_perms))
-
-(macro ffmpeg_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 ffmpeg.tmpfs_user_file file "*")))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

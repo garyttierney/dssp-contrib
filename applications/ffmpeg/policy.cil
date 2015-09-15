@@ -1,29 +1,29 @@
-(typeattribute ffmpeg_subj_type)
-
 (block ffmpeg
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (ffmpeg_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setsched)))
+
+	(call file_read_data (subj_type_attribute))
+	(call file_search_mnt (subj_type_attribute))
+
+	(call fs_manage_fuse_subj_type (subj_type_attribute))
+
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+
+	(optional ffmpeg_subj_type_optional_xserver
+		(call xserver_tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
 	(optional ffmpeg_optional_pa
-		(call pa_tmpfs_client (ffmpeg_subj_type tmpfs_user_file))))
-
-(allow ffmpeg_subj_type self (process (setsched)))
-
-(call ffmpeg_manage_tmpfs_files (ffmpeg_subj_type))
-(call ffmpeg_tmpfs_obj_type_transition_tmpfs (ffmpeg_subj_type))
-
-(call file_read_data (ffmpeg_subj_type))
-(call file_search_mnt (ffmpeg_subj_type))
-
-(call fs_manage_fuse_subj_type (ffmpeg_subj_type))
-
-(call miscfile_read_locale (ffmpeg_subj_type))
-
-(call usersubj.manage_home_user_files (ffmpeg_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (ffmpeg_subj_type))
-
-(optional ffmpeg_subj_type_optional_xserver
-	(call xserver_tmpfs_client (ffmpeg_subj_type ffmpeg.tmpfs_user_file)))
+		(call pa_tmpfs_client (subj_type_attribute tmpfs_user_file))))

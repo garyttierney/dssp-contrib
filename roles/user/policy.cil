@@ -299,9 +299,9 @@
 
 (optional user_ffmpeg_optional_ffmpeg
 	(block user_ffmpeg
-		(blockinherit ffmpeg_subj_blk)
+		(blockinherit ffmpeg.subj_blk)
 
-		(call ffmpeg_role_pattern (user.role user_subj_type subj))))
+		(call ffmpeg.role_pattern (user.role user_subj_type subj))))
 
 (optional user_ffmpeg_optional_user_pa
 	(call pa_auto_subj_type_transition_pattern (user_ffmpeg.subj user_pa.subj)))

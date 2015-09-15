@@ -787,11 +787,11 @@
 
 (optional sysadm_festival_optional_festival
 	(block sysadm_festival
-		(blockinherit festival_subj_blk)
+		(blockinherit festival.subj_blk)
 
-		(call festival_manage_config (sysadm.subj))
+		(call festival.manage_config (sysadm.subj))
 
-		(call festival_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call festival.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_festival_optional_sysadm_pa
 	(call pa_auto_subj_type_transition_pattern (sysadm_festival.subj sysadm_pa.subj)))

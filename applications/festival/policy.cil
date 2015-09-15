@@ -1,36 +1,36 @@
-(typeattribute festival_subj_type)
-
 (block festival
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (festival_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj_type_attribute))
+
 	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(call exec (subj_type_attribute))
+
+	(call cmd_exec_cmd (subj_type_attribute))
+	(call cmd_exec_shell (subj_type_attribute))
+
+	(call file_read_data (subj_type_attribute))
+
+	(call miscfile_read_all_terminfo (subj_type_attribute))
+	(call miscfile_read_locale (subj_type_attribute))
+
+	(optional festival_subj_type_optional_xserver
+		(call xserver_client_subj_type (subj_type_attribute)))
+
 	(optional festival_optional_pa
-		(call pa_tmpfs_client (festival_subj_type tmpfs_user_file))))
-
-(call festival_read_config (festival_subj_type))
-
-(call festival_manage_home_files (festival_subj_type))
-(call festival_home_dir_obj_type_transition_home (festival_subj_type))
-
-(call festival_manage_tmpfs_files (festival_subj_type))
-(call festival_tmpfs_obj_type_transition_tmpfs (festival_subj_type))
-
-(call festival_exec (festival_subj_type))
-
-(call cmd_exec_cmd (festival_subj_type))
-(call cmd_exec_shell (festival_subj_type))
-
-(call file_read_data (festival_subj_type))
-
-(call miscfile_read_all_terminfo (festival_subj_type))
-(call miscfile_read_locale (festival_subj_type))
-
-(optional festival_subj_type_optional_xserver
-	(call xserver_client_subj_type (festival_subj_type)))
+		(call pa_tmpfs_client (subj_type_attribute tmpfs_user_file))))

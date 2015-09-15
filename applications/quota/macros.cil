@@ -1,17 +1,14 @@
-(macro quota_client_subj_type ((type ARG1))
-	(typeattributeset quota_client_subj_type ARG1))
+(in quota
 
-(macro quota_exec ((type ARG1))
-	(call quota_client_subj_type (ARG1))
-	(call can_exec (ARG1 quota.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro quota_auto_subj_type_transition ((type ARG1))
-	(call quota_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 quota.cmd_file quota.subj)))
+	(blockinherit run_blk)
 
-(macro quota_send_signal ((type ARG1))
-	(allow ARG1 quota.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro quota_run ((type ARG1)(role ARG2))
-	(call quota_auto_subj_type_transition (ARG1))
-	(roleattributeset quota_role ARG2))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))

@@ -1,9 +1,9 @@
-(roleattribute mysysstat_role)
-
 (block mysysstat
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype mysysstat_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self rw_fifo_file_perms)
 

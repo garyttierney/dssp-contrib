@@ -1,9 +1,9 @@
-(roleattribute nmcli_role)
-
 (block nmcli
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype nmcli_role subj)
+	(roletype role_attribute subj)
 
 	(call dev_read_urandom (subj))
 

@@ -244,7 +244,7 @@
 	(call lynx.spec_auto_subj_type_transition (user_emacs.subj user_lynx.subj)))
 
 (optional user_emacs_optional_user_mutt
-	(call mutt_auto_subj_type_transition_pattern (user_emacs.subj user_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (user_emacs.subj user_mutt.subj)))
 
 (optional user_emacs_optional_user_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_emacs.subj user_ssh_client.subj)))
@@ -421,7 +421,7 @@
 	(call irssi.spec_auto_subj_type_transition (user_lynx.subj user_irssi.subj)))
 
 (optional user_lynx_optional_user_mutt
-	(call mutt_auto_subj_type_transition_pattern (user_lynx.subj user_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (user_lynx.subj user_mutt.subj)))
 
 (optional user_mplayer_optional_mplayer
 	(block user_mplayer
@@ -434,9 +434,9 @@
 
 (optional user_mutt_optional_mutt
 	(block user_mutt
-		(blockinherit mutt_subj_blk)
+		(blockinherit mutt.subj_blk)
 
-		(call mutt_role_pattern (user.role user_subj_type subj))
+		(call mutt.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -484,7 +484,7 @@
 	(call mplayer.spec_auto_subj_type_transition (user_nb.subj user_mplayer.subj)))
 
 (optional user_nb_optional_user_mutt
-	(call mutt_auto_subj_type_transition_pattern (user_nb.subj user_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (user_nb.subj user_mutt.subj)))
 
 (optional user_pa_optional_pa
 	(block user_pa

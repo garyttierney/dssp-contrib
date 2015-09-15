@@ -1,131 +1,79 @@
-(block mutt_subj_blk
-	(blockabstract mutt_subj_blk)
+(in mutt
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset mutt_subj_type subj))
+		(typeattributeset mutt.subj_type_attribute subj))
 
-(macro mutt_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset mutt_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro mutt_exec ((type ARG1))
-	(call can_exec (ARG1 mutt.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro mutt_exec_mutt_helper ((type ARG1))
-	(call can_exec (ARG1 mutt_helper.cmd_file)))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro mutt_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 mutt.cmd_file ARG3))
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(roletype ARG1 ARG3)
+		(roletype ARG1 ARG3)
 
-	(allow ARG2 ARG3 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call mutt_manage_home_files (ARG2))
-	(call mutt_relabel_home_files (ARG2))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
 
-	(call mutt_home_dir_obj_type_transition_home (ARG2))
+		(call home_dir_obj_type_transition_home (ARG2))
 
-	(call mutt_manage_tmpfs (ARG2))
-	(call mutt_relabel_tmpfs (ARG2)))
+		(call manage_tmpfs_user (ARG2))
+		(call relabel_tmpfs_user (ARG2)))
 
-(macro mutt_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 mutt.cmd_file ARG2)))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro mutt_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 mutt.home_user_file read_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk)
 
-(macro mutt_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 mutt.home_user_file manage_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro mutt_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 mutt.home_user_file relabel_file_perms))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_cache"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_cache.gmail"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_certificates"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".muttrc"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".muttrc.gmail")))
 
-(macro mutt_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache"))
-	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_cache.gmail"))
-	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".mutt_certificates"))
-	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc"))
-	(call usersubj.home_dir_obj_type_transition (ARG1 mutt.home_user_file file ".muttrc.gmail")))
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.rw_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
-(macro mutt_search_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file search_dir_perms))
+	(macro read_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file read_inherited_file_perms))
 
-(macro mutt_list_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file list_dir_perms))
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
-(macro mutt_read_inherited_tmpfs_files ((type ARG1))
-	(call mutt_use_fd_all_subj (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file read_inherited_file_perms))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-(macro mutt_rw_inherited_tmpfs_files ((type ARG1))
-	(call mutt_use_fd_all_subj (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file rw_inherited_file_perms))
+	(blockinherit send_sigchld_all_blk)
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_fifo_files_all_blk))
 
-(macro mutt_rw_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(call rw_files_pattern (ARG1 mutt.tmpfs_user_file mutt.tmpfs_user_file)))
-
-(macro mutt_read_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(call read_files_pattern (ARG1 mutt.tmpfs_user_file mutt.tmpfs_user_file)))
-
-(macro mutt_read_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file read_file_perms)
-	(allow ARG1 mutt.tmpfs_user_file list_dir_perms)
-	(allow ARG1 mutt.tmpfs_user_file read_lnk_file_perms))
-
-(macro mutt_manage_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file manage_file_perms)
-	(allow ARG1 mutt.tmpfs_user_file manage_dir_perms)
-	(allow ARG1 mutt.tmpfs_user_file manage_lnk_file_perms))
-
-(macro mutt_relabel_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 mutt.tmpfs_user_file relabel_file_perms)
-	(allow ARG1 mutt.tmpfs_user_file relabel_dir_perms)
-	(allow ARG1 mutt.tmpfs_user_file relabel_lnk_file_perms))
-
-(macro mutt_tmpfs_obj_type_transition_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 mutt.tmpfs_user_file dir "*"))
-	(call fs_tmpfs_obj_type_transition (ARG1 mutt.tmpfs_user_file file "*")))
-
-(macro mutt_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 mutt.config_file read_file_perms))
-
-(macro mutt_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 mutt.config_file manage_file_perms))
-
-(macro mutt_relabel_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 mutt.config_file relabel_file_perms))
-
-(macro mutt_send_sigchld_all_subj ((type ARG1))
-	(allow ARG1 mutt_subj_type (process (sigchld))))
-
-(macro mutt_use_fd_all_subj ((type ARG1))
-	(allow ARG1 mutt_subj_type (fd (use))))
-
-(macro mutt_rw_inherited_fifo_files_all_subj ((type ARG1))
-	(call mutt_use_fd_all_subj (ARG1))
-	(allow ARG1 mutt_subj_type rw_inherited_fifo_file_perms))
+(in mutt_helper
+	(blockinherit exec_blk))

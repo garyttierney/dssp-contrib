@@ -46,10 +46,10 @@
 		(call git.read_tmpfs_user_files (subj_type_attribute)))
 
 	(optional gpg_subj_type_optional_mutt
-		(call mutt_read_home_files (subj_type_attribute))
-		(call mutt_rw_inherited_fifo_files_all_subj (subj_type_attribute))
-		(call mutt_rw_tmpfs_files (subj_type_attribute))
-		(call mutt_send_sigchld_all_subj (subj_type_attribute)))
+		(call mutt.read_home_user_files (subj_type_attribute))
+		(call mutt.rw_inherited_fifo_files_all_subj (subj_type_attribute))
+		(call mutt.rw_tmpfs_user_files (subj_type_attribute))
+		(call mutt.send_sigchld_all_subj (subj_type_attribute)))
 
 	(optional gpg_subj_type_optional_pass
 		(call pass_manage_home_files (subj_type_attribute)))

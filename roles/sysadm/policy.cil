@@ -775,7 +775,7 @@
 	(call lynx.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_lynx.subj)))
 
 (optional sysadm_emacs_optional_sysadm_mutt
-	(call mutt_auto_subj_type_transition_pattern (sysadm_emacs.subj sysadm_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_mutt.subj)))
 
 (optional sysadm_emacs_optional_sysadm_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_emacs.subj sysadm_ssh_client.subj)))
@@ -1027,7 +1027,7 @@
 	(call irssi.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_irssi.subj)))
 
 (optional sysadm_lynx_optional_sysadm_mutt
-	(call mutt_auto_subj_type_transition_pattern (sysadm_lynx.subj sysadm_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_mutt.subj)))
 
 (optional sysadm_machinectl_optional_machinectl
 	(block sysadm_machinectl
@@ -1051,11 +1051,11 @@
 
 (optional sysadm_mutt_optional_mutt
 	(block sysadm_mutt
-		(blockinherit mutt_subj_blk)
+		(blockinherit mutt.subj_blk)
 
-		(call mutt_manage_config_files (sysadm.subj))
+		(call mutt.manage_config_files (sysadm.subj))
 
-		(call mutt_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call mutt.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1103,7 +1103,7 @@
 	(call mplayer.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_mplayer.subj)))
 
 (optional sysadm_nb_optional_sysadm_mutt
-	(call mutt_auto_subj_type_transition_pattern (sysadm_nb.subj sysadm_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_mutt.subj)))
 
 (optional sysadm_numactl_optional_numactl
 	(block sysadm_numactl
@@ -1370,7 +1370,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_mutt
 	(call tor_socks_client_subj_type (sysadm_mutt.subj))
-	(call mutt_auto_subj_type_transition_pattern (sysadm_tor_socks.subj sysadm_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_mutt.subj)))
 
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
 	(call tor_socks_client_subj_type (sysadm_ssh_client.subj))

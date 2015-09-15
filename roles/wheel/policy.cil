@@ -306,7 +306,7 @@
 	(call lynx.spec_auto_subj_type_transition (wheel_emacs.subj wheel_lynx.subj)))
 
 (optional wheel_emacs_optional_wheel_mutt
-	(call mutt_auto_subj_type_transition_pattern (wheel_emacs.subj wheel_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (wheel_emacs.subj wheel_mutt.subj)))
 
 (optional wheel_emacs_optional_wheel_ssh_client
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_emacs.subj wheel_ssh_client.subj)))
@@ -547,13 +547,13 @@
 	(call irssi.spec_auto_subj_type_transition (wheel_lynx.subj wheel_irssi.subj)))
 
 (optional wheel_lynx_optional_wheel_mutt
-	(call mutt_auto_subj_type_transition_pattern (wheel_lynx.subj wheel_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (wheel_lynx.subj wheel_mutt.subj)))
 
 (optional wheel_mutt_optional_mutt
 	(block wheel_mutt
-		(blockinherit mutt_subj_blk)
+		(blockinherit mutt.subj_blk)
 
-		(call mutt_role_pattern (wheel.role wheel_subj_type subj))
+		(call mutt.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -619,7 +619,7 @@
 	(call mplayer.spec_auto_subj_type_transition (wheel_nb.subj wheel_mplayer.subj)))
 
 (optional wheel_nb_optional_wheel_mutt
-	(call mutt_auto_subj_type_transition_pattern (wheel_nb.subj wheel_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (wheel_nb.subj wheel_mutt.subj)))
 
 (optional wheel_pa_optional_pa
 	(block wheel_pa
@@ -828,7 +828,7 @@
 
 (optional wheel_tor_socks_optional_wheel_mutt
 	(call tor_socks_client_subj_type (wheel_mutt.subj))
-	(call mutt_auto_subj_type_transition_pattern (wheel_tor_socks.subj wheel_mutt.subj)))
+	(call mutt.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_mutt.subj)))
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks_client_subj_type (wheel_ssh_client.subj))

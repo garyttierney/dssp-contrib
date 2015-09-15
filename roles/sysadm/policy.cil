@@ -746,7 +746,7 @@
 	(call firefox.spec_auto_subj_type_transition (sysadm_dunst.subj sysadm_firefox.subj)))
 
 (optional sysadm_dunst_optional_sysadm_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_dunst.subj sysadm_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_dunst.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_emacs_optional_emacs
 	(block sysadm_emacs
@@ -978,7 +978,7 @@
 		(call libnotify.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_libnotify_optional_sysadm_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_libnotify.subj sysadm_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_libnotify.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_livestreamer_optional_livestreamer
 	(block sysadm_livestreamer
@@ -1126,7 +1126,7 @@
 		(call pa.manage_var_lib (sysadm.subj))))
 
 (optional sysadm_pa_optional_sysadm_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_pa.subj sysadm_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_pa.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_pactl_optional_pactl
 	(block sysadm_pactl
@@ -1257,13 +1257,13 @@
 	(call dunst.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_dunst.subj)))
 
 (optional sysadm_sessbus_optional_sysadm_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_sessbus_launch_optional_sessbus_launch
 	(block sysadm_sessbus_launch
-		(blockinherit sessbus_launch_subj_blk)
+		(blockinherit sessbus_launch.subj_blk)
 
-		(call sessbus_launch_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_sessbus_launch_optional_sysadm_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (sysadm_sessbus_launch.subj sysadm_sessbus.subj)))
@@ -1425,7 +1425,7 @@
 	(call rp.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_rp.subj)))
 
 (optional sysadm_xinit_optional_sysadm_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_sessbus_launch.subj)))
 
 (optional sysadm_xinit_optional_sysadm_systemctl
 	(allow sysadm_xinit.subj sysadm_systemctl.subj (process (noatsecure)))

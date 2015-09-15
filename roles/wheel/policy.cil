@@ -277,7 +277,7 @@
 	(call firefox.spec_auto_subj_type_transition (wheel_dunst.subj wheel_firefox.subj)))
 
 (optional wheel_dunst_optional_wheel_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_dunst.subj wheel_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (wheel_dunst.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_emacs_optional_emacs
 	(block wheel_emacs
@@ -500,7 +500,7 @@
 		(call libnotify.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_libnotify_optional_wheel_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_libnotify.subj wheel_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (wheel_libnotify.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_livestreamer_optional_livestreamer
 	(block wheel_livestreamer
@@ -628,7 +628,7 @@
 		(call pa.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_pa_optional_wheel_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_pa.subj wheel_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (wheel_pa.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_pactl_optional_pactl
 	(block wheel_pactl
@@ -721,13 +721,13 @@
 	(call dunst.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_dunst.subj)))
 
 (optional wheel_sessbus_optional_wheel_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_sessbus.subj wheel_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_sessbus_launch_optional_sessbus_launch
 	(block wheel_sessbus_launch
-		(blockinherit sessbus_launch_subj_blk)
+		(blockinherit sessbus_launch.subj_blk)
 
-		(call sessbus_launch_role_pattern (wheel.role wheel_subj_type subj))))
+		(call sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_sessbus_launch_optional_wheel_sessbus
 	(call sessbus_auto_subj_type_transition_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj)))
@@ -873,7 +873,7 @@
 	(call rp.spec_auto_subj_type_transition (wheel_xinit.subj wheel_rp.subj)))
 
 (optional wheel_xinit_optional_wheel_sessbus_launch
-	(call sessbus_launch_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_sessbus_launch.subj)))
+	(call sessbus_launch.spec_auto_subj_type_transition (wheel_xinit.subj wheel_sessbus_launch.subj)))
 
 (optional wheel_xinit_optional_wheel_systemctl
 	(allow wheel_xinit.subj wheel_systemctl.subj (process (noatsecure)))

@@ -1,14 +1,13 @@
-(macro xserver_wrap_exec ((type ARG1))
-	(call can_exec (ARG1 xserver_wrap.cmd_file)))
+(in xserver_wrap
+	(blockinherit exec_blk)
 
-(macro xserver_wrap_auto_subj_type_transition ((type ARG1))
-	(call xserver_wrap_send_signal (ARG1))
-	(allow ARG1 xserver_wrap.subj (process (siginh)))
-	(call auto_subj_type_transition_pattern (ARG1 xserver_wrap.cmd_file xserver_wrap.subj)))
+	(blockinherit send_signal_blk)
 
-(macro xserver_wrap_send_signal ((type ARG1))
-	(allow ARG1 xserver_wrap.subj (process (signal))))
+	(macro auto_subj_type_transition ((type ARG1))
+		(call send_signal (ARG1))
+		(allow ARG1 xserver_wrap.subj (process (siginh)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
 
-(macro xserver_wrap_run ((type ARG1)(role ARG2))
-	(call xserver_wrap_auto_subj_type_transition (ARG1))
-	(roleattributeset xserver_wrap_role ARG2))
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2)))

@@ -271,7 +271,7 @@
 	(call pa.spec_auto_subj_type_transition (user_firefox.subj user_pa.subj)))
 
 (optional user_firefox_optional_user_xpdf
-	(call xpdf_auto_subj_type_transition_pattern (user_firefox.subj user_xpdf.subj)))
+	(call xpdf.spec_auto_subj_type_transition (user_firefox.subj user_xpdf.subj)))
 
 (optional user_firefox_plugins_optional_firefox_plugins
 	(block user_firefox_plugins
@@ -630,9 +630,9 @@
 
 (optional user_xpdf_optional_xpdf
 	(block user_xpdf
-		(blockinherit xpdf_subj_blk)
+		(blockinherit xpdf.subj_blk)
 
-		(call xpdf_role_pattern (user.role user_subj_type subj))))
+		(call xpdf.role_pattern (user.role user_subj_type subj))))
 
 (optional user_xinit_optional_xinit
 	(block user_xinit

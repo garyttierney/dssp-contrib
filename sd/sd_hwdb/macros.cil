@@ -1,18 +1,13 @@
-(macro sd_hwdb_exec ((type ARG1))
-	(call can_exec (ARG1 sd_hwdb.cmd_file)))
+(in sd_hwdb
+	(blockinherit exec_blk)
 
-(macro sd_hwdb_auto_subj_type_transition ((type ARG1))
-	(call sd_hwdb_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_hwdb.cmd_file sd_hwdb.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_hwdb_send_signal ((type ARG1))
-	(allow ARG1 sd_hwdb.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro sd_hwdb_run ((type ARG1)(role ARG2))
-	(call sd_hwdb_auto_subj_type_transition (ARG1))
-	(roleattributeset sd_hwdb_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro sd_hwdb_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_hwdb_adm_subj_type ARG1)
-	(call sd.daemon_adm_subj_type (ARG1))
-	(call sd_askpwd_agent.run (ARG1 ARG2)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))

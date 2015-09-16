@@ -10,7 +10,7 @@
 
 		(optional java_client_subj_type_optional_xserver
 			(call tmpfs_obj_type_transition_tmpfs (ARG1 file "*"))
-			(call xserver_tmpfs_client (ARG1 tmpfs_user_file))))
+			(call xserver.tmpfs_client (ARG1 tmpfs_user_file))))
 
 	(macro tmpfs_client ((type ARG1)(type ARG2))
 		(call client_subj_type (ARG1))
@@ -18,7 +18,7 @@
 
 		(optional java_tmpfs_client_optional_xserver
 			(call fs_tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
-			(call xserver_tmpfs_client (ARG1 ARG2))))
+			(call xserver.tmpfs_client (ARG1 ARG2))))
 
 	(blockinherit search_config_blk)
 	(blockinherit list_config_blk)

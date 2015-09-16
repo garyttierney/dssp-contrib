@@ -1,65 +1,64 @@
-(roleattribute xserver_role)
-
-(typeattribute xserver_client_subj_type)
-(typeattribute xserver_tmpfs_client_subj_type)
-
-(typeattribute xserver_tmpfs_client_obj_type)
-
 (block xserver
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+	(typeattribute tmpfs_client_subj_type_attribute)
+
+	(typeattribute tmpfs_client_obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset xserver_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype xserver_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit net_unreserved_port_obj_blk)
 
+	(call tcp_bind_unreserved_port (subj))
+
 	(blockinherit file_config_obj_blk)
+
+	(call read_config (subj))
 
 	(blockinherit file_var_log_obj_blk)
 
+	(call manage_var_log_files (subj))
+	(call var_log_obj_type_transition_var_log (subj))
+
 	(blockinherit file_var_lib_obj_blk)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call read_home_user_files (subj))
+
 	(blockinherit usersubj.home_data_obj_blk)
 
+	(call manage_home_data (subj))
+	(call home_data_obj_type_transition_home_data (subj))
+
 	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call manage_tmpfs_user_sock_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self (capability (dac_override setgid setuid sys_admin sys_rawio ipc_owner)))
 	(allow subj self (process (getpgid setpgid)))
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self (unix_stream_socket (accept listen)))
 
-	(call xserver_read_config (subj))
+	(allow subj client_subj_type_attribute (process (signal)))
+	(allow subj client_subj_type_attribute rw_shm_perms)
 
-	(call xserver_manage_var_log_files (subj))
-	(call xserver_var_log_obj_type_transition_var_log (subj))
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
-	(call xserver_manage_var_lib (subj))
-	(call xserver_var_lib_obj_type_transition_var_lib (subj))
-
-	(call xserver_read_home_files (subj))
-
-	(call xserver_manage_home_data (subj))
-	(call xserver_home_data_obj_type_transition_home_data (subj))
-
-	(call xserver_manage_tmpfs_files (subj))
-	(call xserver_manage_tmpfs_sock_files (subj))
-	(call xserver_tmpfs_obj_type_transition_tmpfs (subj))
-
-	(call xserver_tcp_bind_xserver_port (subj))
-
-	(allow subj xserver_client_subj_type (process (signal)))
-	(allow subj xserver_client_subj_type rw_shm_perms)
-
-	(allow subj xserver_client_subj_type read_file_perms)
-	(allow subj xserver_client_subj_type list_dir_perms)
-	(allow subj xserver_client_subj_type read_lnk_file_perms)
-
-	(allow subj xserver_tmpfs_client_subj_type (fd (use)))
-
-	(allow subj xserver_tmpfs_client_obj_type (file (read write)))
+	(allow subj tmpfs_client_subj_type_attribute (fd (use)))
+	(allow subj tmpfs_client_obj_type_attribute (file (read write)))
 
 	(call sys_read_cpuinfo_proc_files (subj))
 	(call sys_write_mtrr_proc_files (subj))
@@ -107,9 +106,9 @@
 	(call xinit.send_sigchld_all_subj (subj))
 	(call xinit.send_signal_all_subj (subj))
 
-	(call xserver_wrap_run (subj xserver_role))
+	(call xserver_wrap_run (subj role_attribute))
 
-	(call xserver_backlight_helper_run (subj xserver_role))
+	(call xserver_backlight_helper_run (subj role_attribute))
 
 	(optional xserver_optional_sd_logind
 		(call sd_logind_client_subj_type (subj)))
@@ -119,22 +118,22 @@
 
 	(optional xserver_optional_unconfinedsubj
 		(call unconfinedsubj_rw_shm (subj))
-		(call unconfinedsubj_read_state (subj))))
+		(call unconfinedsubj_read_state (subj)))
 
-(allow xserver_tmpfs_client_subj_type self create_shm_perms)
+	(allow tmpfs_client_subj_type_attribute self create_shm_perms)
 
-(call fs_rw_inherited_tmpfs_files (xserver_tmpfs_client_subj_type))
+	(call fs_rw_inherited_tmpfs_files (tmpfs_client_subj_type_attribute))
 
-(call usersubj.search_home_config (xserver_client_subj_type))
+	(call usersubj.search_home_config (client_subj_type_attribute))
 
-(call xserver_read_config (xserver_client_subj_type))
-(call xserver_stream_connect (xserver_client_subj_type))
-(call xserver_tcp_connect_xserver_port (xserver_client_subj_type))
-(call xserver_use_fd (xserver_client_subj_type))
+	(call read_config (client_subj_type_attribute))
+	(call stream_connect (client_subj_type_attribute))
+	(call tcp_connect_port (client_subj_type_attribute))
+	(call use_fd (client_subj_type_attribute))
 
-(call xauth.read_home_user_files (xserver_client_subj_type))
+	(call xauth.read_home_user_files (client_subj_type_attribute))
 
-(call xinit.use_fd_all_subj (xserver_client_subj_type))
+	(call xinit.use_fd_all_subj (client_subj_type_attribute))
 
-(optional xserver_client_subj_type_optional_rp
-	(call rp.client_subj_type (xserver_client_subj_type)))
+	(optional xserver_client_subj_type_optional_rp
+		(call rp.client_subj_type (client_subj_type_attribute))))

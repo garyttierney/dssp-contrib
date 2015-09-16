@@ -144,9 +144,9 @@
 		(call tor_home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_xauth
-		(call xauth_run (user_subj_type role))
-		(call xauth_manage_home_files (subj))
-		(call xauth_relabel_home_files (subj)))
+		(call xauth.run (user_subj_type role))
+		(call xauth.manage_home_user_files (subj))
+		(call xauth.relabel_home_user_files (subj)))
 
 	(optional user_optional_xlock
 		(call xlock_manage_home_files (subj))

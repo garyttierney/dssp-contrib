@@ -1,16 +1,16 @@
-(roleattribute xauth_role)
-
 (block xauth
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype xauth_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(allow subj self create_unix_dgram_socket_perms)
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home (subj))
 
-	(call xauth_manage_home_files (subj))
-	(call xauth_home_dir_obj_type_transition_home (subj))
+	(allow subj self create_unix_dgram_socket_perms)
 
 	(call fs_getattr_fs (subj))
 	(call fs_read_sysfs (subj))

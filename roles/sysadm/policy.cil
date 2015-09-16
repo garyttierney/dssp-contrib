@@ -659,9 +659,9 @@
 		(call wpacli.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_xauth
-		(call xauth_run (sysadm_subj_type role))
-		(call xauth_manage_home_files (subj))
-		(call xauth_relabel_home_files (subj)))
+		(call xauth.run (sysadm_subj_type role))
+		(call xauth.manage_home_user_files (subj))
+		(call xauth.relabel_home_user_files (subj)))
 
 	(optional sysadm_optional_xlock
 		(call xlock_manage_home_files (subj))

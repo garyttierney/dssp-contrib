@@ -1401,9 +1401,9 @@
 
 (optional sysadm_xbindkeys_optional_xbindkeys
 	(block sysadm_xbindkeys
-		(blockinherit xbindkeys_subj_blk)
+		(blockinherit xbindkeys.subj_blk)
 
-		(call xbindkeys_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call xbindkeys.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
@@ -1435,7 +1435,7 @@
 	(call systemctl_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_systemctl.subj)))
 
 (optional sysadm_xinit_optional_sysadm_xbindkeys
-	(call xbindkeys_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_xbindkeys.subj)))
+	(call xbindkeys.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_xbindkeys.subj)))
 
 (optional sysadm_xpdf_optional_xpdf
 	(block sysadm_xpdf

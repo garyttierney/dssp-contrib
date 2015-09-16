@@ -1,26 +1,26 @@
-(typeattribute xbindkeys_subj_type)
-
 (block xbindkeys
+	(typeattribute subj_type_attribute)
+
         (blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (xbindkeys_subj_type cmd_file))
+        (call subj_entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.home_user_obj_blk))
+        (blockinherit usersubj.home_user_obj_blk)
 
-(call xbindkeys_manage_home_files (xbindkeys_subj_type))
-(call xbindkeys_home_dir_obj_type_transition_home (xbindkeys_subj_type))
+	(call manage_home_user_files (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
-(allow xbindkeys_subj_type self (process (getsched)))
-(allow xbindkeys_subj_type self rw_fifo_file_perms)
+	(allow subj_type_attribute self (process (getsched)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call cmd_exec_shell (xbindkeys_subj_type))
+	(call cmd_exec_shell (subj_type_attribute))
 
-(call dev_read_urandom (xbindkeys_subj_type))
+	(call dev_read_urandom (subj_type_attribute))
 
-(call file_read_data_files (xbindkeys_subj_type))
+	(call file_read_data_files (subj_type_attribute))
 
-(call miscfile_read_locale (xbindkeys_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
 
-(call xserver_client_subj_type (xbindkeys_subj_type))
+	(call xserver_client_subj_type (subj_type_attribute))
 
-(call usersubj.use_term (xbindkeys_subj_type))
+	(call usersubj.use_term (subj_type_attribute)))

@@ -846,9 +846,9 @@
 
 (optional wheel_xbindkeys_optional_xbindkeys
 	(block wheel_xbindkeys
-		(blockinherit xbindkeys_subj_blk)
+		(blockinherit xbindkeys.subj_blk)
 
-		(call xbindkeys_role_pattern (wheel.role wheel_subj_type subj))
+		(call xbindkeys.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 
@@ -880,7 +880,7 @@
 	(call systemctl_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_systemctl.subj)))
 
 (optional wheel_xinit_optional_wheel_xbindkeys
-	(call xbindkeys_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_xbindkeys.subj)))
+	(call xbindkeys.spec_auto_subj_type_transition (wheel_xinit.subj wheel_xbindkeys.subj)))
 
 (optional wheel_xpdf_optional_xpdf
 	(block wheel_xpdf

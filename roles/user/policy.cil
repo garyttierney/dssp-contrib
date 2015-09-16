@@ -614,9 +614,9 @@
 
 (optional user_xbindkeys_optional_xbindkeys
 	(block user_xbindkeys
-		(blockinherit xbindkeys_subj_blk)
+		(blockinherit xbindkeys.subj_blk)
 
-		(call xbindkeys_role_pattern (user.role user_subj_type subj))
+		(call xbindkeys.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
@@ -650,7 +650,7 @@
 	(call sessbus_launch.spec_auto_subj_type_transition (user_xinit.subj user_sessbus_launch.subj)))
 
 (optional user_xinit_optional_user_xbindkeys
-	(call xbindkeys_auto_subj_type_transition_pattern (user_xinit.subj user_xbindkeys.subj)))
+	(call xbindkeys.spec_auto_subj_type_transition (user_xinit.subj user_xbindkeys.subj)))
 
 (optional user_xterm_optional_xterm
 	(block user_xterm

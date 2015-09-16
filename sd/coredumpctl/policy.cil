@@ -1,9 +1,9 @@
-(roleattribute coredumpctl_role)
-
 (block coredumpctl
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype networkctl_role subj)
+	(roletype role_attribute subj)
 
 	(call sd.daemon (subj cmd_file))
 

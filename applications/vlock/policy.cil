@@ -1,27 +1,27 @@
-(typeattribute vlock_subj_type)
-
 (block vlock
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (vlock_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit usersubj.home_user_obj_blk))
+	(blockinherit usersubj.home_user_obj_blk)
 
-(allow vlock_subj_type self (capability (setuid)))
-(allow vlock_subj_type self rw_fifo_file_perms)
+	(call read_home_user_files (subj_type_attribute))
 
-(call vlock_read_home_files (vlock_subj_type))
+	(allow subj_type_attribute self (capability (setuid)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_audit_client_subj_type (vlock_subj_type))
+	(call sys_audit_client_subj_type (subj_type_attribute))
 
-(call file_read_config_files (vlock_subj_type))
+	(call file_read_config_files (subj_type_attribute))
 
-(call miscfile_read_locale (vlock_subj_type))
-(call miscfile_read_utmp_runtime_files (vlock_subj_type))
+	(call miscfile_read_locale (subj_type_attribute))
+	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
 
-(call nss_client_subj_type (vlock_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call pam_read_config (vlock_subj_type))
+	(call pam_read_config (subj_type_attribute))
 
-(optional vlock_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (vlock_subj_type)))
+	(optional vlock_subj_type_optional_sd_journald
+		(call sd_journald_client_subj_type (subj_type_attribute))))

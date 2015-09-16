@@ -1,56 +1,49 @@
-(block vlock_subj_blk
-	(blockabstract vlock_subj_blk)
+(in vlock
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset vlock_subj_type subj))
+		(typeattributeset vlock.subj_type_attribute subj))
 
-(macro vlock_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset vlock_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro vlock_exec ((type ARG1))
-	(call can_exec (ARG1 vlock.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro vlock_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 vlock.cmd_file ARG3))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call vlock_manage_home_files (ARG2))
-	(call vlock_relabel_home_files (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call vlock_home_dir_obj_type_transition_home (ARG2))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
 
-	(optional vlock_role_pattern_optional_chkpwd
-		(call chkpwd.run (ARG3 ARG1))))
+		(call home_dir_obj_type_transition_home (ARG2))
 
-(macro vlock_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 vlock.cmd_file ARG2)))
+		(optional vlock_role_pattern_optional_chkpwd
+			(call chkpwd.run (ARG3 ARG1))))
 
-(macro vlock_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 vlock.home_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro vlock_read_inherited_home_files ((type ARG1))
-	(call vlock_use_fd_all_subj (subj))
-	(allow ARG1 vlock.home_user_file read_inherited_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro vlock_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 vlock.home_user_file manage_file_perms))
+	(macro read_inherited_home_user_files ((type ARG1))
+		(call use_fd_all_subj (subj))
+		(allow ARG1 home_user_file read_inherited_file_perms))
 
-(macro vlock_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 vlock.home_user_file relabel_file_perms))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".vlockrc")))
 
-(macro vlock_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 vlock.home_user_file file ".vlockrc")))
-
-(macro vlock_use_fd_all_subj ((type ARG1))
-	(allow ARG1 vlock_subj_type (fd (use))))
+	(blockinherit use_fd_all_blk))

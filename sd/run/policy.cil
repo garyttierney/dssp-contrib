@@ -1,34 +1,34 @@
-(typeattribute run_subj_type)
-
 (block run
+	(typeattribute subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (run_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-(allow run_subj_type self (capability (net_admin sys_chroot setgid setuid sys_admin)))
+	(allow subj_type_attribute self (capability (net_admin sys_chroot setgid setuid sys_admin)))
 
-(call cmd_audit_exec_access_all_cmd_files (run_subj_type))
-(call cmd_audit_exec_access_shell_files (run_subj_type))
+	(call cmd_audit_exec_access_all_cmd_files (subj_type_attribute))
+	(call cmd_audit_exec_access_shell_files (subj_type_attribute))
 
-(call sd.start_unit_runtime (run_subj_type))
-(call sd.start (run_subj_type))
-(call sd.stream_connect (run_subj_type))
-(call sd.sysbus_chat_client_subj_type (run_subj_type))
+	(call sd.start_unit_runtime (subj_type_attribute))
+	(call sd.start (subj_type_attribute))
+	(call sd.stream_connect (subj_type_attribute))
+	(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 
-(call usersubj.create_ptys (run_subj_type))
+	(call usersubj.create_ptys (subj_type_attribute))
 
-(optional run_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (run_subj_type)))
+	(optional run_subj_type_optional_sysbus
+		(call sysbus_client_subj_type (subj_type_attribute)))
 
-(optional run_subj_type_optional_sd_machined
-	(call sd_machined_read_runtime (run_subj_type)))
+	(optional run_subj_type_optional_sd_machined
+		(call sd_machined_read_runtime (subj_type_attribute)))
 
-(optional run_subj_type_optional_sd_nspawn
-	(call sd_nspawn_list_container (run_subj_type))
-	(call sd_nspawn_read_container_lnk_files (run_subj_type))
-	(call sd_nspawn_read_container_files (run_subj_type))
-	(call sd_nspawn_read_state_all_container_subj (run_subj_type))
-	(call sd_nspawn_stream_connect_all_container_subj (run_subj_type)))
+	(optional run_subj_type_optional_sd_nspawn
+		(call sd_nspawn_list_container (subj_type_attribute))
+		(call sd_nspawn_read_container_lnk_files (subj_type_attribute))
+		(call sd_nspawn_read_container_files (subj_type_attribute))
+		(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
+		(call sd_nspawn_stream_connect_all_container_subj (subj_type_attribute)))
 
-(optional run_subj_type_optional_sduser
-	(call sduser.start_unit_runtime (run_subj_type)))
+	(optional run_subj_type_optional_sduser
+		(call sduser.start_unit_runtime (subj_type_attribute))))

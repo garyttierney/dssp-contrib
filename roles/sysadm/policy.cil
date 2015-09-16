@@ -1182,9 +1182,9 @@
 
 (optional sysadm_run_optional_run
 	(block sysadm_run
-		(blockinherit run_subj_blk)
+		(blockinherit run.subj_blk)
 
-		(call run_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call run.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_run_optional_sysadm_sduser
 	(call sduser.control_pattern (sysadm_run.subj sysadm_sduser.subj))

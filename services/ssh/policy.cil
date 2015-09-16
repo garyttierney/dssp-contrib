@@ -244,7 +244,7 @@
 	(call sd_journald.client_subj_type (ssh_priv_login_subj_type)))
 
 (optional ssh_priv_login_subj_optional_sd_logind
-	(call sd_logind_client_subj_type (ssh_priv_login_subj_type)))
+	(call sd_logind.client_subj_type (ssh_priv_login_subj_type)))
 
 (allow ssh_sshd_net_subj_type self (capability (sys_chroot setuid setgid)))
 (allow ssh_sshd_net_subj_type self (process (setrlimit)))

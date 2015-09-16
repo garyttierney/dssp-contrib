@@ -62,7 +62,7 @@
 	(call sysbus_read_state_unconfined_subj (subj))
 
 	(optional sysbus_optional_sd_logind
-		(call sd_logind_write_inherited_runtime_fifo_files (subj)))
+		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
 
 	(optional sysbus_optional_sd_machined
 		(call sd_machined_use_fd (subj)))
@@ -111,7 +111,7 @@
 	(call sd_journald.client_subj_type (sysbus_dbus_subj_type)))
 
 (optional sysbus_dbus_subj_type_optional_sd_logind
-	(call sd_logind_read_runtime (sysbus_dbus_subj_type)))
+	(call sd_logind.read_runtime (sysbus_dbus_subj_type)))
 
 (call sysbus_acquire_service (sysbus_daemon_subj_type))
 (call sysbus_client_subj_type (sysbus_daemon_subj_type))

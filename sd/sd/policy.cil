@@ -212,8 +212,8 @@
 	(call sd_journald.relabelto_var_log_files (subj))
 	(call sd_journald.use_fd (subj))
 
-	(call sd_logind_read_runtime (subj))
-	(call sd_logind_write_inherited_runtime_fifo_files (subj))
+	(call sd_logind.read_runtime (subj))
+	(call sd_logind.write_inherited_runtime_fifo_files (subj))
 
 	(call sd_machined_manage_var_lib (subj))
 	(call sd_machined_setattr_login_ptys (subj))

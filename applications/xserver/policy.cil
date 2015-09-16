@@ -111,7 +111,7 @@
 	(call xserver_backlight_helper.run (subj role_attribute))
 
 	(optional xserver_optional_sd_logind
-		(call sd_logind_client_subj_type (subj)))
+		(call sd_logind.client_subj_type (subj)))
 
 	(optional xserver_optional_pkexec
 		(call polkit_exec_polkit_exec (subj)))

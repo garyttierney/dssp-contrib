@@ -117,8 +117,8 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional nm_optional_sd_logind
-		(call sd_logind_client_subj_type (subj))
-		(call sd_logind_read_runtime (subj)))
+		(call sd_logind.client_subj_type (subj))
+		(call sd_logind.read_runtime (subj)))
 
 	(optional nm_optional_sd_resolved
 		(call sd_resolved_manage_runtime_files (subj)))

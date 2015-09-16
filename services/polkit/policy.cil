@@ -68,7 +68,7 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional polkit_optional_sd_logind
-		(call sd_logind_read_runtime (subj)))
+		(call sd_logind.read_runtime (subj)))
 
 	(optional polkit_optional_sysbus
 		(call sysbus_acquire_service (subj))
@@ -157,7 +157,7 @@
 	(call sd_journald.client_subj_type (polkit_exec_client_subj_type)))
 
 (optional polkit_exec_subj_type_optional_sd_logind
-	(call sd_logind_client_subj_type (polkit_exec_client_subj_type)))
+	(call sd_logind.client_subj_type (polkit_exec_client_subj_type)))
 
 (call polkit_exec_client_subj_type (polkit_exec_subj_type))
 

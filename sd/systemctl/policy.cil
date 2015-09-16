@@ -44,8 +44,8 @@
 (call sd.stream_connect (systemctl_subj_type))
 (call sd.control_unit_transient (systemctl_subj_type))
 
-(call sd_logind_read_runtime (systemctl_subj_type))
-(call sd_logind_client_subj_type (systemctl_subj_type))
+(call sd_logind.read_runtime (systemctl_subj_type))
+(call sd_logind.client_subj_type (systemctl_subj_type))
 
 (call sd_machined_read_runtime (systemctl_subj_type))
 

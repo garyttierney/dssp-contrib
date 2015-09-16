@@ -1,11 +1,16 @@
 (in xserver
 	(blockinherit exec_blk)
 
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit run_blk)
-
 	(blockinherit send_signal_blk)
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call send_signal (ARG1))
+		(allow ARG1 subj (process (siginh)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
+
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2))
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))

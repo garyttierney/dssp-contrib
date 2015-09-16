@@ -1,28 +1,15 @@
-(macro xutil_exec ((type ARG1))
-	(call can_exec (ARG1 xutil.cmd_file)))
+(in xutil
+	(blockinherit exec_blk)
 
-(macro xutil_auto_subj_type_transition ((type ARG1))
-	(call xutil_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 xutil.cmd_file xutil.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro xutil_send_signal ((type ARG1))
-	(allow ARG1 xutil.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro xutil_run ((type ARG1)(role ARG2))
-	(call xutil_auto_subj_type_transition (ARG1))
-	(roleattributeset xutil_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro xutil_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xutil.home_user_file read_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro xutil_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 xutil.home_user_file manage_file_perms))
-
-(macro xutil_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xutil.home_user_file relabel_file_perms))
-
-(macro xutil_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 xutil.home_user_file file ".Xresources")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".Xresources"))))

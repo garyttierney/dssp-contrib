@@ -79,7 +79,7 @@
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional powertop_optional_xutil
-		(call xutil_run (subj role_attribute)))
+		(call xutil.run (subj role_attribute)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

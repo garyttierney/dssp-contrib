@@ -1,16 +1,16 @@
-(roleattribute xutil_role)
-
 (block xutil
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype xutil_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call read_home_user_files (subj))
+
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call xutil_read_home_files (subj))
 
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))

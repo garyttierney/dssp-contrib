@@ -1,43 +1,39 @@
-(block journalctl_subj_blk
-	(blockabstract journalctl_subj_blk)
+(in journalctl
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset journalctl_subj_type subj))
+		(typeattributeset journalctl.subj_type_attribute subj))
 
-(macro journalctl_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset journalctl_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro journalctl_client_subj_type ((type ARG1))
-	(typeattributeset journalctl_client_subj_type ARG1))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro journalctl_exec ((type ARG1))
-	(call journalctl_client_subj_type (ARG1))
-	(call can_exec (ARG1 journalctl.cmd_file)))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro journalctl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 journalctl.cmd_file ARG3))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro journalctl_auto_subj_type_transition ((type ARG1))
-	(call journalctl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 journalctl.cmd_file journalctl.subj)))
+		(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
-(macro journalctl_auto_subj_type_transtion_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 journalct.cmd_file ARG2)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro journalctl_send_signal ((type ARG1))
-	(allow ARG1 journalctl.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro journalctl_run ((type ARG1)(role ARG2))
-	(call journalctl_auto_subj_type_transition (ARG1))
-	(roleattributeset journalctl_role ARG2))
+	(macro spec_auto_subj_type_transtion ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

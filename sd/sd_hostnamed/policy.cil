@@ -1,7 +1,7 @@
-(typeattribute sd_hostnamed_adm_subj_type)
-(typeattribute sd_hostnamed_sysbus_chat_client_subj_type)
-
 (block sd_hostnamed
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -39,17 +39,17 @@
 	(optional sd_hostnamed_optional_sysbus
 		(call sysbus_acquire_service (subj))
 		(call sysbus_client_subj_type (subj))
-		(call sysbus_read_config_files (subj))))
+		(call sysbus_read_config_files (subj)))
 
-(optional sd_hostnamed_chat_client_subj_type_optional_sysbus
-        (allow sd_hostnamed.subj sd_hostnamed_sysbus_chat_client_subj_type (dbus (send_msg)))
-        (allow sd_hostnamed_sysbus_chat_client_subj_type sd_hostnamed.subj (dbus (send_msg))))
+	(optional sd_hostnamed_chat_client_subj_type_optional_sysbus
+        	(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+        	(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
-(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_hostnamed_adm_subj_type sd_hostnamed.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_hostnamed_adm_subj_type sd_hostnamed.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_hostnamed_adm_subj_type sd_hostnamed.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

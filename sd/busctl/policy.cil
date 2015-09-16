@@ -1,42 +1,42 @@
-(typeattribute busctl_subj_type)
-(typeattribute busctl_client_subj_type)
-
 (block busctl
-	(blockinherit busctl_subj_blk)
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit subj_blk)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (busctl_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(call sd.daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file))
 
-(allow busctl_subj_type self (capability (net_admin dac_override)))
+	(allow subj_type_attribute self (capability (net_admin dac_override)))
 
-(call nss_client_subj_type (busctl_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call sd.control_all_unit (busctl_subj_type))
-(call sd.control (busctl_subj_type))
+	(call sd.control_all_unit (subj_type_attribute))
+	(call sd.control (subj_type_attribute))
 
-(call sd_machined_read_runtime (busctl_subj_type))
+	(call sd_machined_read_runtime (subj_type_attribute))
 
-(call sd_nspawn_list_all_container (busctl_subj_type))
-(call sd_nspawn_read_all_container_lnk_files (busctl_subj_type))
-(call sd_nspawn_stream_connect_all_container_subj (busctl_subj_type))
-(call sd_nspawn_read_state_all_container_subj (busctl_subj_type))
+	(call sd_nspawn_list_all_container (subj_type_attribute))
+	(call sd_nspawn_read_all_container_lnk_files (subj_type_attribute))
+	(call sd_nspawn_stream_connect_all_container_subj (subj_type_attribute))
+	(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
 
-(call sduser.control_all_unit (busctl_subj_type))
-(call sduser.control_home_config (busctl_subj_type))
+	(call sduser.control_all_unit (subj_type_attribute))
+	(call sduser.control_home_config (subj_type_attribute))
 
-(call busctl_client_subj_type (busctl_subj_type))
+	(call client_subj_type (subj_type_attribute))
 
-(optional busctl_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (busctl_subj_type))
-	(call sysbus_chat_unconfined_subj (busctl_subj_type))
-	(call sysbus_chat_client_subj (busctl_subj_type)))
+	(optional busctl_subj_type_optional_sysbus
+		(call sysbus_client_subj_type (subj_type_attribute))
+		(call sysbus_chat_unconfined_subj (subj_type_attribute))
+		(call sysbus_chat_client_subj (subj_type_attribute)))
 
-(allow busctl_client_subj_type self rw_fifo_file_perms)
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-(call miscfile_read_all_terminfo (busctl_client_subj_type))
-(call miscfile_read_locale (busctl_client_subj_type))
+	(call miscfile_read_all_terminfo (client_subj_type_attribute))
+	(call miscfile_read_locale (client_subj_type_attribute))
 
-(call sd_machined_read_config_files (busctl_client_subj_type))
+	(call sd_machined_read_config_files (client_subj_type_attribute)))

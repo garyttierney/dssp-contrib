@@ -890,9 +890,9 @@
 
 (optional sysadm_busctl_optional_busctl
 	(block sysadm_busctl
-		(blockinherit busctl_subj_blk)
+		(blockinherit busctl.subj_blk)
 
-		(call busctl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call busctl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_busctl_optional_sysadm_sduser
 	(call sduser.control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))

@@ -423,9 +423,9 @@
 
 (optional wheel_busctl_optional_busctl
 	(block wheel_busctl
-		(blockinherit busctl_subj_blk)
+		(blockinherit busctl.subj_blk)
 
-		(call busctl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call busctl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_busctl_optional_wheel_sduser
 	(call sduser.control_pattern (wheel_busctl.subj wheel_sduser.subj)))

@@ -65,7 +65,7 @@
 		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
 
 	(optional sysbus_optional_sd_machined
-		(call sd_machined_use_fd (subj)))
+		(call sd_machined.use_fd (subj)))
 
 	(optional sysbus_optional_sd_nspawn
 		(call sd_nspawn_rw_all_inherited_container_chr_files (subj)))

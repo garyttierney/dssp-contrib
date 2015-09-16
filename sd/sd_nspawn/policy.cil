@@ -135,9 +135,9 @@
 	(call sd_journald.manage_var_log_lnk_files (subj))
 	(call sd_journald.client_subj_type (subj))
 
-	(call sd_machined_manage_var_lib_files (subj))
-	(call sd_machined_read_config_files (subj))
-	(call sd_machined_sysbus_chat_client_subj_type (subj))
+	(call sd_machined.manage_var_lib_files (subj))
+	(call sd_machined.read_config_files (subj))
+	(call sd_machined.sysbus_chat_client_subj_type (subj))
 
 	(call udev_read_config_files (subj))
 
@@ -278,7 +278,7 @@
 (allow sd_nspawn_adm_subj_type sd_nspawn_container_subj_type (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (sd_nspawn_adm_subj_type sd_nspawn_container_subj_type))
 
-(call sd_machined_search_var_lib (sd_nspawn_adm_subj_type))
+(call sd_machined.search_var_lib (sd_nspawn_adm_subj_type))
 
 (allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_file_perms)
 (allow sd_nspawn_adm_subj_type sd_nspawn_container_obj_type manage_dir_perms)

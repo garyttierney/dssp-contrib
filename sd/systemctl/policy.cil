@@ -47,7 +47,7 @@
 (call sd_logind.read_runtime (systemctl_subj_type))
 (call sd_logind.client_subj_type (systemctl_subj_type))
 
-(call sd_machined_read_runtime (systemctl_subj_type))
+(call sd_machined.read_runtime (systemctl_subj_type))
 
 (call sd_nspawn_list_all_container (systemctl_subj_type))
 (call sd_nspawn_read_all_container_lnk_files (systemctl_subj_type))
@@ -105,7 +105,7 @@
 
 (call sd_journald.read_var_log (systemctl_client_subj_type))
 
-(call sd_machined_read_config_files (systemctl_client_subj_type))
+(call sd_machined.read_config_files (systemctl_client_subj_type))
 
 (optional systemctl_client_subj_type_optional_sysbus
 	(call sysbus_client_subj_type (systemctl_client_subj_type)))

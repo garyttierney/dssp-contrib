@@ -1,28 +1,36 @@
-(typeattribute sd_machined_adm_subj_type)
-(typeattribute sd_machined_sysbus_chat_client_subj_type)
-
-(typeattribute sd_machined_obj_type)
-
 (block sd_machined
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_machined_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_machined_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_machined_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
 	(call sys_mountpoint_obj_type (var_lib_file))
 
-	(typeattributeset sd_machined_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit term_login_pty_obj_blk)
 
@@ -32,14 +40,6 @@
 	(allow subj self (capability (sys_chroot setgid sys_admin dac_override)))
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self (process (setfscreate)))
-
-	(call sd_machined_read_config_files (subj))
-
-	(call sd_machined_manage_runtime (subj))
-	(call sd_machined_sd_runtime_obj_type_transition_runtime (subj))
-
-	(call sd_machined_manage_var_lib (subj))
-	(call sd_machined_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -91,32 +91,32 @@
 		(call sysbus_read_config_files (subj)))
 
 	(optional sd_machined_optional_usersubj
-		(call usersubj.getattr_ptys (subj))))
+		(call usersubj.getattr_ptys (subj)))
 
-(optional sd_machined_sysbus_chat_client_subj_type_optional_sysbus
-        (allow sd_machined.subj sd_machined_sysbus_chat_client_subj_type (dbus (send_msg)))
-        (allow sd_machined_sysbus_chat_client_subj_type sd_machined.subj (dbus (send_msg))))
+	(optional sd_machined_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
-(allow sd_machined_adm_subj_type sd_machined.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_machined_adm_subj_type sd_machined.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_machined_adm_subj_type sd_machined.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call sd.search_runtime (sd_machined_adm_subj_type))
-(call file_search_var_lib (sd_machined_adm_subj_type))
+	(call sd.search_runtime (adm_subj_type_attribute))
+	(call file_search_var_lib (adm_subj_type_attribute))
 
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_dir_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_fifo_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_lnk_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_sock_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_blk_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type manage_chr_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_chr_file_perms)
 
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_dir_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_fifo_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_lnk_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_sock_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_blk_file_perms)
-(allow sd_machined_adm_subj_type sd_machined_obj_type relabel_chr_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_chr_file_perms))

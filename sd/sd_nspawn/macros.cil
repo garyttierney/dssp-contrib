@@ -173,37 +173,37 @@
 	(allow ARG1 sd_nspawn.pty_dev rw_inherited_term_perms))
 
 (macro sd_nspawn_search_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container.file search_dir_perms))
 
 (macro sd_nspawn_dontaudit_list_container ((type ARG1))
 	(dontaudit ARG1 sd_nspawn_container.file list_dir_perms))
 
 (macro sd_nspawn_list_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container.file list_dir_perms))
 
 (macro sd_nspawn_delete_container_dirs ((type ARG1))
-	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call sd_machined.rw_var_lib_dirs (ARG1))
 	(call delete_dirs_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
 
 (macro sd_nspawn_rw_container_chr_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call rw_chr_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
 
 (macro sd_nspawn_rw_inherited_container_chr_files ((type ARG1))
 	(allow ARG1 sd_nspawn_container.file rw_inherited_chr_file_perms))
 
 (macro sd_nspawn_read_container_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call read_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
 
 (macro sd_nspawn_read_container_lnk_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_nspawn_container.file sd_nspawn_container.file)))
 
 (macro sd_nspawn_read_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container.file read_file_perms)
 	(allow ARG1 sd_nspawn_container.file list_dir_perms)
 	(allow ARG1 sd_nspawn_container.file read_fifo_file_perms)
@@ -213,7 +213,7 @@
 	(allow ARG1 sd_nspawn_container.file read_chr_file_perms))
 
 (macro sd_nspawn_relabelto_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container.file relabelto_file_perms)
 	(allow ARG1 sd_nspawn_container.file relabelto_dir_perms)
 	(allow ARG1 sd_nspawn_container.file relabelto_fifo_file_perms)
@@ -223,7 +223,7 @@
 	(allow ARG1 sd_nspawn_container.file relabelto_chr_file_perms))
 
 (macro sd_nspawn_manage_container ((type ARG1))
-	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call sd_machined.rw_var_lib_dirs (ARG1))
 	(allow ARG1 sd_nspawn_container.file manage_file_perms)
 	(allow ARG1 sd_nspawn_container.file manage_dir_perms)
 	(allow ARG1 sd_nspawn_container.file manage_fifo_file_perms)
@@ -233,37 +233,37 @@
 	(allow ARG1 sd_nspawn_container.file manage_chr_file_perms))
 
 (macro sd_nspawn_search_all_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type search_dir_perms))
 
 (macro sd_nspawn_dontaudit_list_all_container ((type ARG1))
 	(dontaudit ARG1 sd_nspawn_container_obj_type list_dir_perms))
 
 (macro sd_nspawn_list_all_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type list_dir_perms))
 
 (macro sd_nspawn_delete_all_container_dirs ((type ARG1))
-	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call sd_machined.rw_var_lib_dirs (ARG1))
 	(call delete_dirs_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
 
 (macro sd_nspawn_rw_all_container_chr_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call rw_chr_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
 
 (macro sd_nspawn_rw_all_inherited_container_chr_files ((type ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type rw_inherited_chr_file_perms))
 
 (macro sd_nspawn_read_all_container_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call read_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
 
 (macro sd_nspawn_read_all_container_lnk_files ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call read_lnk_files_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type)))
 
 (macro sd_nspawn_read_all_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type read_file_perms)
 	(allow ARG1 sd_nspawn_container_obj_type list_dir_perms)
 	(allow ARG1 sd_nspawn_container_obj_type read_fifo_file_perms)
@@ -273,7 +273,7 @@
 	(allow ARG1 sd_nspawn_container_obj_type read_chr_file_perms))
 
 (macro sd_nspawn_relabelto_all_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type relabelto_file_perms)
 	(allow ARG1 sd_nspawn_container_obj_type relabelto_dir_perms)
 	(allow ARG1 sd_nspawn_container_obj_type relabelto_fifo_file_perms)
@@ -283,7 +283,7 @@
 	(allow ARG1 sd_nspawn_container_obj_type relabelto_chr_file_perms))
 
 (macro sd_nspawn_manage_all_container ((type ARG1))
-	(call sd_machined_rw_var_lib_dirs (ARG1))
+	(call sd_machined.rw_var_lib_dirs (ARG1))
 	(allow ARG1 sd_nspawn_container_obj_type manage_file_perms)
 	(allow ARG1 sd_nspawn_container_obj_type manage_dir_perms)
 	(allow ARG1 sd_nspawn_container_obj_type manage_fifo_file_perms)
@@ -305,7 +305,7 @@
 	(allow ARG1 sd_nspawn_container.obj (filesystem (getattr))))
 
 (macro sd_nspawn_stream_connect_container ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call stream_connect_pattern (ARG1 sd_nspawn_container.obj sd_nspawn_container.obj sd_nspawn_container.subj)))
 
 (macro sd_nspawn_send_signal_all_container_subj ((type ARG1))
@@ -321,12 +321,12 @@
 	(allow ARG1 sd_nspawn_container_obj_type (filesystem (getattr))))
 
 (macro sd_nspawn_stream_connect_all_container_subj ((type ARG1))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call stream_connect_pattern (ARG1 sd_nspawn_container_obj_type sd_nspawn_container_obj_type
 		sd_nspawn_container_subj_type)))
 
 (macro sd_nspawn_stream_connect_container_pattern ((type ARG1)(type ARG2)(type ARG3))
-	(call sd_machined_search_var_lib (ARG1))
+	(call sd_machined.search_var_lib (ARG1))
 	(call stream_connect_pattern (ARG1 ARG2 ARG2 ARG3)))
 
 (macro sd_nspawn_read_state ((type ARG1))

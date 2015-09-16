@@ -22,7 +22,7 @@
 
 	(call sd_importd.sysbus_chat_client_subj_type (subj_type_attribute))
 
-	(call sd_machined_read_runtime (subj_type_attribute))
+	(call sd_machined.read_runtime (subj_type_attribute))
 
 	(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
 	(call sd_nspawn_manage_all_container (subj_type_attribute))
@@ -58,9 +58,9 @@
 
 	(call sd_nspawn_read_state (client_subj_type_attribute))
 
-	(call sd_machined_read_config_files (client_subj_type_attribute))
-	(call sd_machined_sysbus_chat_client_subj_type (client_subj_type_attribute))
-	(call sd_machined_use_fd (client_subj_type_attribute))
+	(call sd_machined.read_config_files (client_subj_type_attribute))
+	(call sd_machined.sysbus_chat_client_subj_type (client_subj_type_attribute))
+	(call sd_machined.use_fd (client_subj_type_attribute))
 
 	(optional machinectl_client_subj_type_optional_sysbus
 		(call sysbus_client_subj_type (client_subj_type_attribute))))

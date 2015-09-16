@@ -1,28 +1,15 @@
-(macro xlock_exec ((type ARG1))
-	(call can_exec (ARG1 xlock.cmd_file)))
+(in xlock
+	(blockinherit exec_blk)
 
-(macro xlock_auto_subj_type_transition ((type ARG1))
-	(call xlock_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 xlock.cmd_file xlock.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro xlock_send_signal ((type ARG1))
-	(allow ARG1 xlock.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro xlock_run ((type ARG1)(role ARG2))
-	(call xlock_auto_subj_type_transition (ARG1))
-	(roleattributeset xlock_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro xlock_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xlock.home_user_file read_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro xlock_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 xlock.home_user_file manage_file_perms))
-
-(macro xlock_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xlock.home_user_file relabel_file_perms))
-
-(macro xlock_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 xlock.home_user_file file ".xlockrc")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xlockrc"))))

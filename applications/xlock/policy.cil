@@ -1,18 +1,18 @@
-(roleattribute xlock_role)
-
 (block xlock
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset xlock_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype xlock_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit usersubj.home_user_obj_blk)
 
+	(call read_home_user_files (subj))
+
 	(allow subj self (process (setsched)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call xlock_read_home_files (subj))
 
 	(call sys_audit_client_subj_type (subj))
 
@@ -23,7 +23,7 @@
 
 	(call fs_read_sysfs (subj))
 
-	(call chkpwd.run (subj xlock_role))
+	(call chkpwd.run (subj role_attribute))
 
 	(call miscfile_read_locale (subj))
 	(call miscfile_read_utmp_runtime_files (subj))

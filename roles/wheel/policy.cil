@@ -195,10 +195,10 @@
 		(call xauth.relabel_home_user_files (subj)))
 
 	(optional wheel_optional_xlock
-		(call xlock_manage_home_files (subj))
-		(call xlock_relabel_home_files (subj))
-		(call xlock_home_dir_obj_type_transition_home (subj))
-		(call xlock_run (wheel_subj_type role)))
+		(call xlock.manage_home_user_files (subj))
+		(call xlock.relabel_home_user_files (subj))
+		(call xlock.home_dir_obj_type_transition_home (subj))
+		(call xlock.run (wheel_subj_type role)))
 
 	(optional wheel_optional_xserver
 		(call xserver_run (wheel_subj_type role))

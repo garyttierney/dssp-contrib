@@ -522,9 +522,9 @@
 
 (optional wheel_loginctl_optional_loginctl
 	(block wheel_loginctl
-		(blockinherit loginctl_subj_blk)
+		(blockinherit loginctl.subj_blk)
 
-		(call loginctl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call loginctl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_loginctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_loginctl.subj wheel_ssh_client.subj)))

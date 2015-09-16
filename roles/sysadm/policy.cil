@@ -1003,9 +1003,9 @@
 
 (optional sysadm_loginctl_optional_loginctl
 	(block sysadm_loginctl
-		(blockinherit loginctl_subj_blk)
+		(blockinherit loginctl.subj_blk)
 
-		(call loginctl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call loginctl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_loginctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))

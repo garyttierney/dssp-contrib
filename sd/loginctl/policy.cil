@@ -1,45 +1,45 @@
-(typeattribute loginctl_subj_type)
-(typeattribute loginctl_client_subj_type)
-
 (block loginctl
-	(blockinherit loginctl_subj_blk)
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit subj_blk)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (loginctl_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(call sd.daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file))
 
-(allow loginctl_subj_type self (capability (dac_override net_admin)))
+	(allow subj_type_attribute self (capability (dac_override net_admin)))
 
-(call loginctl_client_subj_type (loginctl_subj_type))
+	(call client_subj_type (subj_type_attribute))
 
-(call nss_client_subj_type (loginctl_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call sd_machined_read_runtime (loginctl_subj_type))
+	(call sd_machined_read_runtime (subj_type_attribute))
 
-(call sd_nspawn_list_all_container (loginctl_subj_type))
-(call sd_nspawn_read_all_container_lnk_files (loginctl_subj_type))
-(call sd_nspawn_stream_connect_all_container_subj (loginctl_subj_type))
-(call sd_nspawn_read_state_all_container_subj (loginctl_subj_type))
+	(call sd_nspawn_list_all_container (subj_type_attribute))
+	(call sd_nspawn_read_all_container_lnk_files (subj_type_attribute))
+	(call sd_nspawn_stream_connect_all_container_subj (subj_type_attribute))
+	(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
 
-(call usersubj.home_dir_obj_type_transition_home_user_files (loginctl_subj_type))
-(call usersubj.manage_home_user_files (loginctl_subj_type))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
 
-(allow loginctl_client_subj_type self rw_fifo_file_perms)
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-(call cmd_exec_cmd (loginctl_client_subj_type))
+	(call cmd_exec_cmd (client_subj_type_attribute))
 
-(call file_read_config_files (loginctl_client_subj_type))
+	(call file_read_config_files (client_subj_type_attribute))
 
-(call fs_getattr_fs (loginctl_client_subj_type))
+	(call fs_getattr_fs (client_subj_type_attribute))
 
-(call miscfile_read_all_terminfo (loginctl_client_subj_type))
-(call miscfile_read_locale (loginctl_client_subj_type))
+	(call miscfile_read_all_terminfo (client_subj_type_attribute))
+	(call miscfile_read_locale (client_subj_type_attribute))
 
-(call sd_logind_sysbus_chat_client_subj_type (loginctl_client_subj_type))
+	(call sd_logind_sysbus_chat_client_subj_type (client_subj_type_attribute))
 
-(call sd_machined_read_config_files (loginctl_client_subj_type))
+	(call sd_machined_read_config_files (client_subj_type_attribute))
 
-(optional loginctl_client_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (loginctl_client_subj_type)))
+	(optional loginctl_client_subj_type_optional_sysbus
+		(call sysbus_client_subj_type (client_subj_type_attribute))))

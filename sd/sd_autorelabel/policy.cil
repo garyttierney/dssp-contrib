@@ -1,23 +1,23 @@
-(typeattribute sd_autorelabel_adm_subj_type)
-
-(typeattribute sd_autorelabel_obj_type)
-
 (block sd_autorelabel
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_autorelabel_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_boot_flag_obj_blk)
 
-	(typeattributeset sd_autorelabel_obj_type boot_flag_file)
+	(typeattributeset obj_type_attribute boot_flag_file)
+
+	(call manage_boot_flag_files (subj))
+	(call rootfs_obj_type_transition_boot_flag (subj))
 
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
-
-	(call sd_autorelabel_manage_boot_flag_files (subj))
-	(call sd_autorelabel_rootfs_obj_type_transition_boot_flag (subj))
 
 	(call cmd_exec_cmd (subj))
 
@@ -48,15 +48,15 @@
 	(call systemctl_exec (subj))
 
 	(optional sd_autorelabel_optional_plymouth
-		(call plymouth_exec_plymouth (subj))))
+		(call plymouth_exec_plymouth (subj)))
 
-(allow sd_autorelabel_adm_subj_type sd_autorelabel.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_autorelabel_adm_subj_type sd_autorelabel.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_autorelabel_adm_subj_type sd_autorelabel.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_autorelabel_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_autorelabel_adm_subj_type sd_autorelabel_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow sd_autorelabel_adm_subj_type sd_autorelabel_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

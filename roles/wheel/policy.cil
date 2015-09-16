@@ -513,9 +513,9 @@
 
 (optional wheel_localectl_optional_localectl
 	(block wheel_localectl
-		(blockinherit localectl_subj_blk)
+		(blockinherit localectl.subj_blk)
 
-		(call localectl_role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
+		(call localectl.role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
 
 (optional wheel_localectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_localectl.subj wheel_ssh_client.subj)))

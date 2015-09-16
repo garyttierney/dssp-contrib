@@ -994,9 +994,9 @@
 
 (optional sysadm_localectl_optional_localectl
 	(block sysadm_localectl
-		(blockinherit localectl_subj_blk)
+		(blockinherit localectl.subj_blk)
 
-		(call localectl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call localectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_localectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_localectl.subj sysadm_ssh_client.subj)))

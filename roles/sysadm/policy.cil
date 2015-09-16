@@ -1034,9 +1034,9 @@
 
 (optional sysadm_machinectl_optional_machinectl
 	(block sysadm_machinectl
-		(blockinherit machinectl_subj_blk)
+		(blockinherit machinectl.subj_blk)
 
-		(call machinectl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call machinectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_machinectl_optional_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))

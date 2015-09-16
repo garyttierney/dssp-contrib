@@ -1,66 +1,66 @@
-(typeattribute machinectl_subj_type)
-(typeattribute machinectl_client_subj_type)
-
 (block machinectl
-	(blockinherit machinectl_subj_blk)
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit subj_blk)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (machinectl_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(call sd.daemon (subj cmd_file)))
+	(call sd.daemon (subj cmd_file))
 
-(allow machinectl_subj_type self (capability (dac_override net_admin sys_chroot sys_admin)))
+	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin)))
 
-(call dev_rw_inherited_ptmx (machinectl_subj_type))
+	(call dev_rw_inherited_ptmx (subj_type_attribute))
 
-(call machinectl_client_subj_type (machinectl_subj_type))
+	(call client_subj_type (subj_type_attribute))
 
-(call nss_client_subj_type (machinectl_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call sd.sysbus_chat_client_subj_type (machinectl_subj_type))
+	(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 
-(call sd_importd_sysbus_chat_client_subj_type (machinectl_subj_type))
+	(call sd_importd_sysbus_chat_client_subj_type (subj_type_attribute))
 
-(call sd_machined_read_runtime (machinectl_subj_type))
+	(call sd_machined_read_runtime (subj_type_attribute))
 
-(call sd_nspawn_read_state_all_container_subj (machinectl_subj_type))
-(call sd_nspawn_manage_all_container (machinectl_subj_type))
-(call sd_nspawn_status_all_unit (machinectl_subj_type))
-(call sd_nspawn_start_all_unit (machinectl_subj_type))
-(call sd_nspawn_stop_all_unit (machinectl_subj_type))
+	(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
+	(call sd_nspawn_manage_all_container (subj_type_attribute))
+	(call sd_nspawn_status_all_unit (subj_type_attribute))
+	(call sd_nspawn_start_all_unit (subj_type_attribute))
+	(call sd_nspawn_stop_all_unit (subj_type_attribute))
 
-(call usersubj.home_dir_obj_type_transition_home_user (machinectl_subj_type))
-(call usersubj.manage_home_user (machinectl_subj_type))
-(call usersubj.manage_tmpfs_user (machinectl_subj_type))
-(call usersubj.manage_var_tmp_user (machinectl_subj_type))
-(call usersubj.tmpfs_obj_type_transition_tmpfs_user (machinectl_subj_type))
-(call usersubj.var_tmp_obj_type_transition_var_tmp_user (machinectl_subj_type))
+	(call usersubj.home_dir_obj_type_transition_home_user (subj_type_attribute))
+	(call usersubj.manage_home_user (subj_type_attribute))
+	(call usersubj.manage_tmpfs_user (subj_type_attribute))
+	(call usersubj.manage_var_tmp_user (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+	(call usersubj.var_tmp_obj_type_transition_var_tmp_user (subj_type_attribute))
 
-(allow machinectl_client_subj_type self create_unix_dgram_socket_perms)
-(allow machinectl_client_subj_type self rw_fifo_file_perms)
+	(allow client_subj_type_attribute self create_unix_dgram_socket_perms)
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_read_crypto_sysctl_files (machinectl_client_subj_type))
-(call sys_read_kernel_sysctl_files (machinectl_client_subj_type))
-(call sys_read_net_proc_files (machinectl_client_subj_type))
+	(call sys_read_crypto_sysctl_files (client_subj_type_attribute))
+	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
+	(call sys_read_net_proc_files (client_subj_type_attribute))
 
-(call cmd_exec_cmd (machinectl_client_subj_type))
+	(call cmd_exec_cmd (client_subj_type_attribute))
 
-(call file_read_config_files (machinectl_client_subj_type))
+	(call file_read_config_files (client_subj_type_attribute))
 
-(call fs_getattr_fs (machinectl_client_subj_type))
-(call fs_read_cgroup (machinectl_client_subj_type))
+	(call fs_getattr_fs (client_subj_type_attribute))
+	(call fs_read_cgroup (client_subj_type_attribute))
 
-(call miscfile_read_all_terminfo (machinectl_client_subj_type))
-(call miscfile_read_locale (machinectl_client_subj_type))
+	(call miscfile_read_all_terminfo (client_subj_type_attribute))
+	(call miscfile_read_locale (client_subj_type_attribute))
 
-(call sd_journald_read_var_log (machinectl_client_subj_type))
+	(call sd_journald_read_var_log (client_subj_type_attribute))
 
-(call sd_nspawn_read_state (machinectl_client_subj_type))
+	(call sd_nspawn_read_state (client_subj_type_attribute))
 
-(call sd_machined_read_config_files (machinectl_client_subj_type))
-(call sd_machined_sysbus_chat_client_subj_type (machinectl_client_subj_type))
-(call sd_machined_use_fd (machinectl_client_subj_type))
+	(call sd_machined_read_config_files (client_subj_type_attribute))
+	(call sd_machined_sysbus_chat_client_subj_type (client_subj_type_attribute))
+	(call sd_machined_use_fd (client_subj_type_attribute))
 
-(optional machinectl_client_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (machinectl_client_subj_type)))
+	(optional machinectl_client_subj_type_optional_sysbus
+		(call sysbus_client_subj_type (client_subj_type_attribute))))

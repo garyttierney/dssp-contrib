@@ -1,22 +1,22 @@
-(typeattribute sd_fsck_adm_subj_type)
-
-(typeattribute sd_fsck_obj_type)
-
 (block sd_fsck
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_fsck_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_fsck_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self rw_fifo_file_perms)
-
-	(call sd_fsck_manage_runtime (subj))
-	(call sd_fsck_runtime_obj_type_transition_runtime (subj))
 
 	(call fs_read_sysfs (subj))
 
@@ -33,19 +33,19 @@
 	(call udev_client_subj_type (subj))
 
 	(optional sd_fsck_optional_plymouth
-		(call plymouth_read_plymouthd_runtime_files (subj))))
+		(call plymouth_read_plymouthd_runtime_files (subj)))
 
-(allow sd_fsck_adm_subj_type sd_fsck.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_fsck_adm_subj_type sd_fsck.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_fsck_adm_subj_type sd_fsck.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_fsck_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type manage_file_perms)
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type manage_dir_perms)
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type relabel_file_perms)
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type relabel_dir_perms)
-(allow sd_fsck_adm_subj_type sd_fsck_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

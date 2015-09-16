@@ -1,11 +1,11 @@
-(roleattribute utempter_role)
-
 (block utempter
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset utempter_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype utempter_role subj)
+	(roletype role_attribute subj)
 
 	(call dev_rw_inherited_ptmx (subj))
 

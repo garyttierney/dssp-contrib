@@ -1,13 +1,8 @@
-(macro utempter_exec ((type ARG1))
-	(call can_exec (ARG1 utempter.cmd_file)))
+(in utempter
+	(blockinherit exec_blk)
 
-(macro utempter_auto_subject_type_transition ((type ARG1))
-	(call utempter_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 utempter.cmd_file utempter.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro utempter_send_signal ((type ARG1))
-	(allow ARG1 utempter.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro utempter_run ((type ARG1)(role ARG2))
-	(call utempter_auto_subject_type_transition (ARG1))
-	(roleattributeset utempter_role (ARG2)))
+	(blockinherit send_signal_blk))

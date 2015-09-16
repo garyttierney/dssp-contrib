@@ -58,7 +58,7 @@
 		(call sd.daemon (subj cmd_file)))
 
 	(optional dmsetup_optional_sd_cryptsetup
-		(call sd_cryptsetup_rw_sem (subj)))
+		(call sd_cryptsetup.rw_sem (subj)))
 
 	(optional dmsetup_optional_sd_udevd
 		(call sd_udevd_rw_inherited_udp_sockets (subj)))

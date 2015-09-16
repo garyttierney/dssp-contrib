@@ -1,6 +1,6 @@
-(typeattribute sd_cryptsetup_adm_subj_type)
-
 (block sd_cryptsetup
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -32,20 +32,19 @@
 
 	(call miscfile_read_fstab (subj))
 
-	(call sd_askpwd.manage_runtime_files (subj))
-	(call sd_askpwd.manage_runtime_sock_files (subj))
+	(call sd_askpwd.client_subj_type (subj))
 
 	(call sd_journald_client_subj_type (subj))
 
 	(call seutil_search_selinux_config (subj))
 
-	(call udev_client_subj_type (subj)))
+	(call udev_client_subj_type (subj))
 
-(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_cryptsetup_adm_subj_type sd_cryptsetup.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_cryptsetup_adm_subj_type sd_cryptsetup.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

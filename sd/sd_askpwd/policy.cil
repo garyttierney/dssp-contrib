@@ -2,6 +2,7 @@
 	(roleattribute role_attribute)
 
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -67,12 +68,18 @@
 
 	(call sd_askpwd.manage_runtime (subj))
 
-	(call sd_cryptsetup_dgram_send (subj))
-	(call sd_cryptsetup_read_state (subj))
-
 	(call sd_journald_client_subj_type (subj))
 
 	(call usersubj.use_inherited_term (subj))
+
+	(allow subj sd_askpwd.client_subj_type_attribute (unix_dgram_socket (sendto)))
+
+	(allow subj sd_askpwd.client_subj_type_attribute read_file_perms)
+	(allow subj sd_askpwd.client_subj_type_attribute list_dir_perms)
+	(allow subj sd_askpwd.client_subj_type_attribute read_lnk_file_perms)
+
+	(call sd_askpwd.manage_runtime_files (sd_askpwd.client_subj_type_attribute))
+	(call sd_askpwd.manage_runtime_sock_files (sd_askpwd.client_subj_type_attribute))
 
 	(optional sd_askpwd_agent_optional_plymouth
 		(call plymouth_stream_connect_plymouthd (subj)))

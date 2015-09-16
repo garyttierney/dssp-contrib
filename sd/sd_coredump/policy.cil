@@ -3,15 +3,15 @@
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj))
+
 	(blockinherit file_var_lib_obj_blk)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (setuid setgid setpcap dac_override)))
 	(allow subj self (process (getcap setcap setfscreate)))
-
-	(call sd_coredump_read_config (subj))
-
-	(call sd_coredump_manage_var_lib (subj))
-	(call sd_coredump_sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 

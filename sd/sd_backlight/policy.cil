@@ -1,20 +1,20 @@
-(typeattribute sd_backlight_adm_subj_type)
-
-(typeattribute sd_backlight_obj_type)
-
 (block sd_backlight
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_backlight_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset sd_backlight_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
 
-	(call sd_backlight_manage_var_lib (subj))
-	(call sd_backlight_sd_var_lib_obj_type_transition_var_lib (subj))
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call dev_write_kmsg (subj))
 
@@ -26,19 +26,19 @@
 
 	(call sd_journald_client_subj_type (subj))
 
-	(call udev_client_subj_type (subj)))
+	(call udev_client_subj_type (subj))
 
-(allow sd_backlight_adm_subj_type sd_backlight.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_backlight_adm_subj_type sd_backlight.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_backlight_adm_subj_type sd_backlight.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_backlight_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_file_perms)
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_dir_perms)
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_file_perms)
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_dir_perms)
-(allow sd_backlight_adm_subj_type sd_backlight_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

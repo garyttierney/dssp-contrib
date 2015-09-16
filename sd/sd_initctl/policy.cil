@@ -1,34 +1,34 @@
-(typeattribute sd_initctl_adm_subj_type)
-
-(typeattribute sd_initctl_obj_type)
-
 (block sd_initctl
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(call sd.fifo_file_activated_obj_type (runtime_file))
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_initctl_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_runtime_obj_blk)
 
 	(call mls_trusted_obj_type (runtime_file))
 
-	(typeattributeset sd_initctl_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
 
-	(call sd_initctl_manage_runtime (subj))
-	(call sd_initctl_sd_runtime_obj_type_transition_runtime (subj)))
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
 
-(allow sd_initctl_adm_subj_type sd_initctl.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_initctl_adm_subj_type sd_initctl.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_initctl_adm_subj_type sd_initctl.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call sd.search_runtime (sd_initctl_adm_subj_type))
+	(call sd.search_runtime (adm_subj_type_attribute))
 
-(allow sd_initctl_adm_subj_type sd_initctl_obj_type manage_dir_perms)
-(allow sd_initctl_adm_subj_type sd_initctl_obj_type manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
 
-(allow sd_initctl_adm_subj_type sd_initctl_obj_type relabel_dir_perms)
-(allow sd_initctl_adm_subj_type sd_initctl_obj_type relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms))

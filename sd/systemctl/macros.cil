@@ -29,7 +29,7 @@
 	(allow ARG3 ARG2 list_dir_perms)
 	(allow ARG3 ARG2 read_lnk_file_perms)
 
-	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+	(call sd_askpwd_agent.run (ARG3 ARG1)))
 
 (macro systemctl_auto_subj_type_transition ((type ARG1))
 	(allow ARG1 systemctl.subj (process (noatsecure signal)))

@@ -1,46 +1,60 @@
-(roleattribute sd_askpwd_role)
-(roleattribute sd_askpwd_agent_role)
-
-(typeattribute sd_askpwd_adm_subj_type)
-
-(typeattribute sd_askpwd_obj_type)
-
 (block sd_askpwd
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
 	(call sd.daemon (subj cmd_file))
 
-	(roletype sd_askpwd_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_askpwd_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
 
-	(call sd_askpwd_manage_runtime (subj))
-	(call sd_askpwd_sd_runtime_obj_type_transition_runtime (subj)))
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block sd_askpwd_agent
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
 	(call sd.daemon (subj cmd_file))
 
-	(roletype sd_askpwd_agent_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_askpwd_obj_type unit_file)
+	(typeattributeset sd_askpwd.obj_type_attribute unit_file)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_askpwd_obj_type runtime_file)
+	(typeattributeset sd_askpwd.obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (net_admin)))
 	(allow subj self (process (setfscreate)))
-
-	(call sd_askpwd_manage_agent_runtime (subj))
-	(call sd_askpwd_agent_sd_runtime_obj_type_transition_runtime (subj))
-
-	(call sd_askpwd_manage_runtime (subj))
 
 	(call dev_write_kmsg (subj))
 
@@ -51,6 +65,8 @@
 
 	(call sd.use_fd (subj))
 
+	(call sd_askpwd.manage_runtime (subj))
+
 	(call sd_cryptsetup_dgram_send (subj))
 	(call sd_cryptsetup_read_state (subj))
 
@@ -59,24 +75,9 @@
 	(call usersubj.use_inherited_term (subj))
 
 	(optional sd_askpwd_agent_optional_plymouth
-		(call plymouth_stream_connect_plymouthd (subj))))
+		(call plymouth_stream_connect_plymouthd (subj)))
 
-(allow sd_askpwd_adm_subj_type sd_askpwd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_askpwd_adm_subj_type sd_askpwd.subj))
+	(allow sd_askpwd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_askpwd_adm_subj_type sd_askpwd_agent.unit_file (service (stop status disable enable reload start)))
-
-(allow sd_askpwd_adm_subj_type sd_askpwd_agent.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_askpwd_adm_subj_type sd_askpwd_agent.subj))
-
-(call sd.search_runtime (sd_askpwd_adm_subj_type))
-
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_dir_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_file_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_fifo_file_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type manage_sock_file_perms)
-
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_dir_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_file_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_fifo_file_perms)
-(allow sd_askpwd_adm_subj_type sd_askpwd_obj_type relabel_sock_file_perms)
+	(allow sd_askpwd.adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (sd_askpwd.adm_subj_type_attribute subj)))

@@ -1,12 +1,9 @@
-(macro sd_cgagent_exec ((type ARG1))
-	(call can_exec (ARG1 sd_cgagent.cmd_file)))
+(in sd_cgagent
+	(blockinherit exec_blk)
 
-(macro sd_cgagent_auto_subj_type_transition ((type ARG1))
-	(call sd_cgagent_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_cgagent.cmd_file sd_cgagent.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_cgagent_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 sd_cgagent.cmd_file process (ARG2 ARG3)))))
+	(blockinherit send_signal_blk)
 
-(macro sd_cgagent_send_signal ((type ARG1))
-	(allow ARG1 sd_cgagent.subj (process (signal))))
+	(macro mls ((type ARG1)(level ARG2)(level ARG3))
+		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3))))))

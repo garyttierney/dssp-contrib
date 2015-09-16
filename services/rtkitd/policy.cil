@@ -32,7 +32,7 @@
 		(allow rtkitd_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional rtkitd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj)))
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional rtkitd_optional_sysbus
 		(call sysbus_acquire_service (subj))

@@ -109,9 +109,9 @@
 		(call sd.stream_connect (subj)))
 
 	(optional dracut_optional_sd_journald
-		(call sd_journald_read_config_files (subj))
-		(call sd_journald_status_unit (subj))
-		(call sd_journald_client_subj_type (subj)))
+		(call sd_journald.read_config_files (subj))
+		(call sd_journald.status_unit (subj))
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional dracut_optional_sd_loadmodules
 		(call sd_loadmodules_read_config (subj)))

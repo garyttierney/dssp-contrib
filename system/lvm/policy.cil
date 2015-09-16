@@ -80,7 +80,7 @@
 		(allow lvm_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional lvm_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))
+		(call sd_journald.client_subj_type (subj))
 
 		(call dev_write_kmsg (subj))
 		(call term_use_console (subj))))

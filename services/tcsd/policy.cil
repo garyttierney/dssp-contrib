@@ -48,7 +48,7 @@
 		(allow tcsd_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional tcsd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj))))
 
 (allow tcsd_adm_subj_type tcsd.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (tcsd_adm_subj_type tcsd.subj))

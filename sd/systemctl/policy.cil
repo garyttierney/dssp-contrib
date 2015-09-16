@@ -103,7 +103,7 @@
 (call sd.sysbus_chat_client_subj_type (systemctl_client_subj_type))
 (call sd.use_fd (systemctl_client_subj_type))
 
-(call sd_journald_read_var_log (systemctl_client_subj_type))
+(call sd_journald.read_var_log (systemctl_client_subj_type))
 
 (call sd_machined_read_config_files (systemctl_client_subj_type))
 

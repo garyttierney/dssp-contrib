@@ -58,7 +58,7 @@
 		(allow dnssec_trigger_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional dnssec_triggerd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj))))
 
 (block dnssec_triggercs
 	(blockinherit subj_common_blk)

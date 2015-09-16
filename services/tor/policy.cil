@@ -78,7 +78,7 @@
 		(call http_tcp_connect_http_port (subj)))
 
 	(optional tor_optional_sd_journald
-		(call sd_journald_client_subj_type (subj)))
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional tor_optional_sd
 		(call sd.daemon (subj cmd_file))

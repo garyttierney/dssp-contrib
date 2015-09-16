@@ -55,7 +55,7 @@
 		(allow getty_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional getty_optional_sd_journald
-		(call sd_journald_client_subj_type (subj)))
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional getty_optional_sd_machined
 		(call sd_machined_setattr_login_ptys (subj))

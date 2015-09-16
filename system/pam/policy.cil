@@ -119,7 +119,7 @@
 (call nss_client_subj_type (pam_client_subj_type))
 
 (optional pam_client_subj_type_optional_sd_journald
-	(call sd_journald_client_subj_type (pam_client_subj_type)))
+	(call sd_journald.client_subj_type (pam_client_subj_type)))
 
 (allow pam_adm_subj_type self (passwd (passwd chfn chsh rootok crontab)))
 

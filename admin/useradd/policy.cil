@@ -32,7 +32,7 @@
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional groupadd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj))))
 
 (block useradd
 	(roleattribute role_attribute)
@@ -102,4 +102,4 @@
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional useradd_optional_sd_journald
-		(call sd_journald_client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj))))

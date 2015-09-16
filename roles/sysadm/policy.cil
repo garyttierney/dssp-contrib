@@ -1306,7 +1306,7 @@
 		(call startx.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_startx_optional_sysadm_xinit
-	(call xinit_auto_subj_type_transition_pattern (sysadm_startx.subj sysadm_xinit.subj)))
+	(call xinit.spec_auto_subj_type_transition (sysadm_startx.subj sysadm_xinit.subj)))
 
 (optional sysadm_sudo_optional_sudo
 	(block sysadm_sudo
@@ -1414,11 +1414,11 @@
 
 (optional sysadm_xinit_optional_xinit
 	(block sysadm_xinit
-		(blockinherit xinit_subj_blk)
+		(blockinherit xinit.subj_blk)
 
-		(call xinit_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call xinit.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call xinit_home_auto_subj_type_transition_pattern (subj sysadm.subj))
+		(call xinit.home_user_auto_subj_type_transition_pattern (subj sysadm.subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 

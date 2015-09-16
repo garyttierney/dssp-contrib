@@ -758,7 +758,7 @@
 		(call startx.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_startx_optional_wheel_xinit
-	(call xinit_auto_subj_type_transition_pattern (wheel_startx.subj wheel_xinit.subj)))
+	(call xinit.spec_auto_subj_type_transition (wheel_startx.subj wheel_xinit.subj)))
 
 (optional wheel_sudo_optional_sudo
 	(block wheel_sudo
@@ -859,11 +859,11 @@
 
 (optional wheel_xinit_optional_xinit
 	(block wheel_xinit
-		(blockinherit xinit_subj_blk)
+		(blockinherit xinit.subj_blk)
 
-		(call xinit_role_pattern (wheel.role wheel_subj_type subj))
+		(call xinit.role_pattern (wheel.role wheel_subj_type subj))
 
-		(call xinit_home_auto_subj_type_transition_pattern (subj wheel.subj))
+		(call xinit.home_user_auto_subj_type_transition_pattern (subj wheel.subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 

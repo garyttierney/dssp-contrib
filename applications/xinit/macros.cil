@@ -1,79 +1,66 @@
-(block xinit_subj_blk
-	(blockabstract xinit_subj_blk)
+(in xinit
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset xinit_subj_type subj))
+		(typeattributeset xinit.subj_type_attribute subj))
 
-(macro xinit_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset xinit_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro xinit_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 xinit.cmd_file ARG3))
+	(blockinherit send_signal_blk)
 
-	(roletype ARG1 ARG3)
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(allow ARG2 ARG3 (process (signal)))
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG3 ARG2 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(call xinit_exec_home_files (ARG2))
-	(call xinit_home_obj_entry_subj (ARG2))
-	(call xinit_manage_home_files (ARG2))
-	(call xinit_relabel_home_files (ARG2))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call xinit_home_dir_obj_type_transition_home (ARG2))
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call xserver_wrap_run (ARG3 ARG1))
+		(call exec_home_user_files (ARG2))
+		(call home_user_obj_entry_subj (ARG2))
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
 
-	(optional xinit_pattern_optional_rp
-		(call rpws.run (ARG3 ARG1)))
+		(call home_dir_obj_type_transition_home (ARG2))
 
-	(optional xinit_optional_xutil
-		(call xutil_run (ARG3 ARG1))))
+		(call xserver_wrap_run (ARG3 ARG1))
 
-(macro xinit_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 xinit.cmd_file ARG2)))
+		(optional xinit_pattern_optional_rp
+			(call rpws.run (ARG3 ARG1)))
 
-(macro xinit_home_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 xinit.home_user_file ARG2)))
+		(optional xinit_optional_xutil
+			(call xutil_run (ARG3 ARG1))))
 
-(macro xinit_read_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xinit.home_user_file read_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro xinit_exec_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xinit.home_user_file exec_file_perms))
+	(macro home_user_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 home_user_file ARG2)))
 
-(macro xinit_manage_home_files ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 xinit.home_user_file manage_file_perms))
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
 
-(macro xinit_relabel_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 xinit.home_user_file relabel_file_perms))
+	(macro exec_home_user_files ((type ARG1))
+		(call usersubj.search_home_dir (ARG1))
+		(allow ARG1 home_user_file exec_file_perms))
 
-(macro xinit_home_dir_obj_type_transition_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 xinit.home_user_file file ".xinitrc")))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xinitrc")))
 
-(macro xinit_home_obj_entry_subj ((type ARG1))
-        (call subj_entry (ARG1 xinit.home_user_file)))
+	(macro home_user_obj_entry_subj ((type ARG1))
+        	(call subj_entry (ARG1 home_user_file)))
 
-(macro xinit_use_fd_all_subj ((type ARG1))
-	(allow ARG1 xinit_subj_type (fd (use))))
-
-(macro xinit_read_all_subj_state ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 xinit_subj_type read_file_perms)
-	(allow ARG1 xinit_subj_type list_dir_perms)
-	(allow ARG1 xinit_subj_type read_lnk_file_perms))
-
-(macro xinit_send_sigchld_all_subj ((type ARG1))
-	(allow ARG1 xinit_subj_type (process (sigchld))))
-
-(macro xinit_send_signal_all_subj ((type ARG1))
-	(allow ARG1 xinit_subj_type (process (signal))))
+	(blockinherit use_fd_all_blk)
+	(blockinherit read_state_all_blk)
+	(blockinherit send_sigchld_all_blk)
+	(blockinherit send_signal_all_blk))

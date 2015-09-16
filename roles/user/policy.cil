@@ -602,6 +602,9 @@
 
 		(call startx.role_pattern (user.role user_subj_type subj))))
 
+(optional user_startx_optional_user_xinit
+	(call xinit.spec_auto_subj_type_transition (user_startx.subj user_xinit.subj)))
+
 (optional user_vlock_optional_vlock
 	(block user_vlock
 		(blockinherit vlock.subj_blk)
@@ -633,11 +636,11 @@
 
 (optional user_xinit_optional_xinit
 	(block user_xinit
-		(blockinherit xinit_subj_blk)
+		(blockinherit xinit.subj_blk)
 
-		(call xinit_role_pattern (user.role user_subj_type subj))
+		(call xinit.role_pattern (user.role user_subj_type subj))
 
-		(call xinit_home_auto_subj_type_transition_pattern (subj user.subj))
+		(call xinit.home_user_auto_subj_type_transition_pattern (subj user.subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 

@@ -103,9 +103,9 @@
 	(call usersubj.link_keyring_common_login_subj (subj))
 	(call usersubj.use_ttys (subj))
 
-	(call xinit_read_all_subj_state (subj))
-	(call xinit_send_sigchld_all_subj (subj))
-	(call xinit_send_signal_all_subj (subj))
+	(call xinit.read_state_all_subj (subj))
+	(call xinit.send_sigchld_all_subj (subj))
+	(call xinit.send_signal_all_subj (subj))
 
 	(call xserver_wrap_run (subj xserver_role))
 
@@ -134,7 +134,7 @@
 
 (call xauth.read_home_user_files (xserver_client_subj_type))
 
-(call xinit_use_fd_all_subj (xserver_client_subj_type))
+(call xinit.use_fd_all_subj (xserver_client_subj_type))
 
 (optional xserver_client_subj_type_optional_rp
 	(call rp.client_subj_type (xserver_client_subj_type)))

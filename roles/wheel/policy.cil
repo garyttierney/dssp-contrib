@@ -472,9 +472,9 @@
 
 (optional wheel_hostnamectl_optional_hostnamectl
 	(block wheel_hostnamectl
-		(blockinherit hostnamectl_subj_blk)
+		(blockinherit hostnamectl.subj_blk)
 
-		(call hostnamectl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call hostnamectl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_hostnamectl.subj wheel_ssh_client.subj)))

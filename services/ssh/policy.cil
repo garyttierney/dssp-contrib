@@ -142,7 +142,7 @@
 	(call gpg_agent.stream_connect_all_subj (ssh_client_subj_type)))
 
 (optional ssh_client_subj_type_optional_hostnamectl
-	(call hostnamectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
+	(call hostnamectl.rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))
 
 (optional ssh_client_subj_type_optional_localectl
 	(call localectl_rw_inherited_unix_stream_sockets_all_subj (ssh_client_subj_type)))

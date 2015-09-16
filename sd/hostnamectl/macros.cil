@@ -1,46 +1,42 @@
-(block hostnamectl_subj_blk
-	(blockabstract hostnamectl_subj_blk)
+(in hostnamectl
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset hostnamectl_subj_type subj))
+		(typeattributeset hostnamectl.subj_type_attribute subj))
 
-(macro hostnamectl_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset hostnamectl_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro hostnamectl_client_subj_type ((type ARG1))
-	(typeattributeset hostnamectl_client_subj_type ARG1))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro hostnamectl_exec ((type ARG1))
-	(call hostnamectl_client_subj_type (ARG1))
-	(call can_exec (ARG1 hostnamectl.cmd_file)))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro hostnamectl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 hostnamectl.cmd_file ARG3))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (signal)))
 
-	(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro hostnamectl_auto_subj_type_transition ((type ARG1))
-	(call hostnamectl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 hostnamectl.cmd_file hostnamectl.subj)))
+		(call sd_askpwd_run_sd_askpwd_agent (ARG3 ARG1)))
 
-(macro hostnamectl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 hostnamectl.cmd_file ARG2)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro hostnamectl_send_signal ((type ARG1))
-	(allow ARG1 hostnamectl.subj (process (signal))))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro hostnamectl_use_fd_all_subj ((type ARG1))
-	(allow ARG1 hostnamectl_subj_type (fd (use))))
+	(blockinherit send_signal_blk)
 
-(macro hostnamectl_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call hostnamectl_use_fd_all_subj (ARG1))
-	(allow ARG1 hostnamectl_subj_type rw_inherited_unix_stream_socket_perms))
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_unix_stream_sockets_all_blk))

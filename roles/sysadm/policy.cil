@@ -951,9 +951,9 @@
 
 (optional sysadm_hostnamectl_optional_hostnamectl
 	(block sysadm_hostnamectl
-		(blockinherit hostnamectl_subj_blk)
+		(blockinherit hostnamectl.subj_blk)
 
-		(call hostnamectl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call hostnamectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_hostnamectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))

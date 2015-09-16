@@ -56,7 +56,7 @@
 		(call sd.daemon (subj cmd_file)))
 
 	(optional udevadm_optional_sd_networkd
-		(call sd_networkd_read_config (subj)))
+		(call sd_networkd.read_config (subj)))
 
 	(call dev_read_urandom (client_subj_type_attribute))
 

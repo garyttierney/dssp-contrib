@@ -53,7 +53,7 @@
 
 	(call sd_journald.client_subj_type (subj))
 
-	(call sd_networkd_read_runtime (subj))
+	(call sd_networkd.read_runtime (subj))
 
 	(optional sd_resolved_optional_sysbus
 		(call sysbus_acquire_service (subj))

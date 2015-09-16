@@ -1,6 +1,6 @@
-(typeattribute sd_importstate_adm_subj_type)
-
 (block sd_importstate
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -30,13 +30,13 @@
 
 	(optional sd_importstate_optional_dhclient
 		(call dhclient_read_var_lib (subj))
-		(call dhclient_setattr_var_lib (subj))))
+		(call dhclient_setattr_var_lib (subj)))
 
-(allow sd_importstate_adm_subj_type sd_importstate.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_importstate_adm_subj_type sd_importstate.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_importstate_adm_subj_type sd_importstate.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_importstate_adm_subj_type sd_importstate.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_importstate_adm_subj_type sd_importstate.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

@@ -1,22 +1,22 @@
-(typeattribute sd_localed_adm_subj_type)
-(typeattribute sd_localed_sysbus_chat_client_subj_type)
-
-(typeattribute sd_localed_obj_type)
-
 (block sd_localed
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_localed_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_localed_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(allow subj self (process (setfscreate)))
-
-	(call sd_localed_read_config_files (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -40,26 +40,26 @@
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 
-(optional sd_localed_optional_polkit
-	(call polkit_sysbus_chat_client_subj_type (subj)))
+	(optional sd_localed_optional_polkit
+		(call polkit_sysbus_chat_client_subj_type (subj)))
 
-(optional sd_localed_optional_sysbus
-	(call sysbus_acquire_service (subj))
-	(call sysbus_client_subj_type (subj))
-	(call sysbus_read_config_files (subj)))
+	(optional sd_localed_optional_sysbus
+		(call sysbus_acquire_service (subj))
+		(call sysbus_client_subj_type (subj))
+		(call sysbus_read_config_files (subj)))
 
-(optional sd_localed_optional_xserver
-	(call xserver.manage_config_files (subj))))
+	(optional sd_localed_optional_xserver
+		(call xserver.manage_config_files (subj)))
 
-(optional sd_localed_sysbus_chat_client_subj_type_optional_sysbus
-	(allow sd_localed.subj sd_localed_sysbus_chat_client_subj_type (dbus (send_msg)))
-	(allow sd_localed_sysbus_chat_client_subj_type sd_localed.subj (dbus (send_msg))))
+	(optional sd_localed_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
-(allow sd_localed_adm_subj_type sd_localed.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_localed_adm_subj_type sd_localed.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_localed_adm_subj_type sd_localed.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_localed_adm_subj_type sd_localed_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow sd_localed_adm_subj_type sd_localed_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

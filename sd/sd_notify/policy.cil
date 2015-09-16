@@ -1,13 +1,13 @@
-(roleattribute sd_notify_role)
-
 (block sd_notify
+	(roleattribute role_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
 
-	(roleattributeset sd_notify_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype sd_notify_role subj)
+	(roletype role_attribute subj)
 
 	(call subj_entry (subj cmd_file))
 

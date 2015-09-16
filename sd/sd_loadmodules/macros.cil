@@ -1,48 +1,19 @@
-(macro sd_loadmodules_exec ((type ARG1))
-	(call can_exec (ARG1 sd_loadmodules.cmd_file)))
+(in sd_loadmodules
+	(blockinherit exec_blk)
 
-(macro sd_loadmodules_auto_subj_type_transition ((type ARG1))
-	(call sd_loadmodules_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_loadmodules.cmd_file sd_loadmodules.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_loadmodules_send_signal ((type ARG1))
-	(allow ARG1 sd_loadmodules.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro sd_loadmodules_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sd_loadmodules.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro sd_loadmodules_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sd_loadmodules.config_file list_dir_perms))
-
-(macro sd_loadmodules_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 sd_loadmodules.config_file sd_loadmodules.config_file)))
-
-(macro sd_loadmodules_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 sd_loadmodules.config_file sd_loadmodules.config_file)))
-
-(macro sd_loadmodules_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sd_loadmodules.config_file read_file_perms)
-	(allow ARG1 sd_loadmodules.config_file list_dir_perms)
-	(allow ARG1 sd_loadmodules.config_file read_lnk_file_perms))
-
-(macro sd_loadmodules_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 sd_loadmodules.config_file manage_file_perms)
-	(allow ARG1 sd_loadmodules.config_file manage_dir_perms)
-	(allow ARG1 sd_loadmodules.config_file manage_lnk_file_perms))
-
-(macro sd_loadmodules_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sd_loadmodules.config_file relabel_file_perms)
-	(allow ARG1 sd_loadmodules.config_file relabel_dir_perms)
-	(allow ARG1 sd_loadmodules.config_file relabel_lnk_file_perms))
-
-(macro sd_loadmodules_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_loadmodules_adm_subj_type ARG1)
-	(call sd.daemon_adm_subj_type (ARG1))
-	(call sd_askpwd_agent.run (ARG1 ARG2)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))

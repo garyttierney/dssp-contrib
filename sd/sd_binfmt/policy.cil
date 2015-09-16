@@ -1,38 +1,38 @@
-(typeattribute sd_binfmt_adm_subj_type)
-
-(typeattribute sd_binfmt_obj_type)
-
 (block sd_binfmt
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_binfmt_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_binfmt_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
 
-	(call sd_binfmt_read_config (subj))
+	(call read_config (subj))
 
 	(call dev_read_urandom (subj))
 	(call dev_write_kmsg (subj))
 
 	(call term_use_console (subj))
 
-	(call sd_journald_client_subj_type (subj)))
+	(call sd_journald_client_subj_type (subj))
 
-(allow sd_binfmt_adm_subj_type sd_binfmt.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_binfmt_adm_subj_type sd_binfmt.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_binfmt_adm_subj_type sd_binfmt.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_binfmt_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type manage_file_perms)
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type manage_dir_perms)
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type relabel_file_perms)
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type relabel_dir_perms)
-(allow sd_binfmt_adm_subj_type sd_binfmt_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

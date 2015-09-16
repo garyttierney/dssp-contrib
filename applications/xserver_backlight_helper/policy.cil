@@ -1,9 +1,9 @@
-(roleattribute xserver_backlight_helper_role)
-
 (block xserver_backlight_helper
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype xserver_backlight_helper_role subj)
+	(roletype role_attribute subj)
 
 	(call fs_list_sysfs (subj))
 	(call fs_rw_sysfs_files (subj))

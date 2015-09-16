@@ -1,13 +1,8 @@
-(macro xserver_backlight_helper_exec ((type ARG1))
-	(call can_exec (ARG1 xserver_backlight_helper.cmd_file)))
+(in xserver_backlight_helper
+	(blockinherit exec_blk)
 
-(macro xserver_backlight_helper_auto_subj_type_transition ((type ARG1))
-	(call xserver_backlight_helper_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 xserver_backlight_helper.cmd_file xserver_backlight_helper.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro xserver_backlight_helper_send_signal ((type ARG1))
-    (allow ARG1 xserver_backlight_helper.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro xserver_backlight_helper_run ((type ARG1)(role ARG2))
-	(call xserver_backlight_helper_auto_subj_type_transition (ARG1))
-	(roleattributeset xserver_backlight_helper_role ARG2))
+	(blockinherit send_signal_blk))

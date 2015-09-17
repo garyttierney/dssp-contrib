@@ -1,22 +1,22 @@
-(typeattribute sd_vconsole_adm_subj_type)
-
-(typeattribute sd_vconsole_obj_type)
-
 (block sd_vconsole
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_vconsole_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_vconsole_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(allow subj self (capability (sys_tty_config sys_admin)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call sd_vconsole_read_config_files (subj))
 
 	(call sys_use_fd (subj))
 
@@ -44,13 +44,13 @@
 	    (call loadkeys.auto_subj_type_transition (subj)))
 
 	(optional sd_vconsole_optional_plymouth
-	    (call plymouth_use_fd_plymouthd (subj))))
+	    (call plymouth_use_fd_plymouthd (subj)))
 
-(allow sd_vconsole_adm_subj_type sd_vconsole.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_vconsole_adm_subj_type sd_vconsole.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_vconsole_adm_subj_type sd_vconsole.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_vconsole_adm_subj_type sd_vconsole_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow sd_vconsole_adm_subj_type sd_vconsole_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

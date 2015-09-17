@@ -552,8 +552,8 @@
 		(call sd_stdio.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_sd_sysctl
-		(call sd_sysctl_run (sysadm_subj_type role))
-		(call sd_sysctl_adm (subj role)))
+		(call sd_sysctl.run (sysadm_subj_type role))
+		(call sd_sysctl.adm (subj role)))
 
 	(optional sysadm_optional_sd_sysusers
 		(call sd_sysusers_adm (subj role)))

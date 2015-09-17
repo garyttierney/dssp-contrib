@@ -1,13 +1,13 @@
-(roleattribute sd_sysctl_role)
-
-(typeattribute sd_sysctl_adm_subj_type)
-
 (block sd_sysctl
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(call app.application_subj_type (subj))
 
-	(roletype sd_sysctl_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit sd.unit_obj_blk)
 
@@ -29,13 +29,13 @@
 	(call sd_udevd_rw_inherited_udp_sockets (subj))
 
 	(optional sd_sysctl_optional_rpm
-		(call rpm_script_client_subj_type (subj))))
+		(call rpm_script_client_subj_type (subj)))
 
-(allow sd_sysctl_adm_subj_type sd_sysctl.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_sysctl_adm_subj_type sd_sysctl.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_sysctl_adm_subj_type sd_sysctl.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_sysctl_adm_subj_type sd_sysctl.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_sysctl_adm_subj_type sd_sysctl.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

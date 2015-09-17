@@ -1,30 +1,30 @@
-(typeattribute sd_quotacheck_adm_subj_type)
-
-(typeattribute sd_quotacheck_obj_type)
-
 (block sd_quotacheck
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_quotacheck_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_quotacheck_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
 
-	(call sd_quotacheck_manage_runtime_files (subj))
-	(call sd_quotacheck_sd_runtime_obj_type_transition_runtime (subj))
+	(call manage_runtime_files (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(call sd_journald.client_subj_type (subj)))
+	(call sd_journald.client_subj_type (subj))
 
-(allow sd_quotacheck_adm_subj_type sd_quotacheck.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_quotacheck_adm_subj_type sd_quotacheck.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_quotacheck_adm_subj_type sd_quotacheck.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call sd.search_runtime (sd_quotacheck_adm_subj_type))
+	(call sd.search_runtime (adm_subj_type_attribute))
 
-(allow sd_quotacheck_adm_subj_type sd_quotacheck_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow sd_quotacheck_adm_subj_type sd_quotacheck_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

@@ -1,34 +1,34 @@
-(roleattribute sd_sysusers_role)
-
-(typeattribute sd_sysusers_adm_subj_type)
-
-(typeattribute sd_sysusers_obj_type)
-
 (block sd_sysusers
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype sd_sysusers_role subj)
+	(roletype role_attribute subj)
 
 	(call sd.daemon (subj cmd_file))
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_sysusers_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_sysusers_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_sysusers_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (process (setfscreate)))
-
-	(call sd_sysusers_read_config (subj))
-
-	(call sd_sysusers_manage_runtime (subj))
-	(call sd_sysusers_runtime_obj_type_transition_runtime (subj))
 
 	(call dev_read_urandom (subj))
 	(call dev_write_kmsg (subj))
@@ -43,19 +43,19 @@
 	(call sd_journald.client_subj_type (subj))
 
 	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj)))
+	(call seutil_read_file_context_files (subj))
 
-(allow sd_sysusers_adm_subj_type sd_sysusers.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_sysusers_adm_subj_type sd_sysusers.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_sysusers_adm_subj_type sd_sysusers.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_sysusers_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type manage_file_perms)
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type manage_dir_perms)
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type relabel_file_perms)
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type relabel_dir_perms)
-(allow sd_sysusers_adm_subj_type sd_sysusers_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

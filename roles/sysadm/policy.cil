@@ -556,7 +556,8 @@
 		(call sd_sysctl.adm (subj role)))
 
 	(optional sysadm_optional_sd_sysusers
-		(call sd_sysusers_adm (subj role)))
+		(call sd_sysusers.run (sysadm_subj_type role))
+		(call sd_sysusers.adm (subj role)))
 
 	(optional sysadm_optional_sd_timedated
 		(call sd_timedated_adm (subj role)))

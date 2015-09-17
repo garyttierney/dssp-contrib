@@ -1,42 +1,42 @@
-(roleattribute sd_tmpfiles_role)
-
-(typeattribute sd_tmpfiles_obj_type)
-
-(typeattribute sd_tmpfiles_manageable_obj_type)
-(typeattribute sd_tmpfiles_manageable_obj_exception_type)
-
-(typeattribute sd_tmpfiles_relabelable_obj_type)
-(typeattribute sd_tmpfiles_relabelable_obj_exception_type)
-
-(typeattribute sd_tmpfiles_adm_subj_type)
-
 (block sd_tmpfiles
+	(roleattribute role_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(typeattribute manageable_obj_type_attribute)
+	(typeattribute manageable_obj_exception_type_attribute)
+
+	(typeattribute relabelable_obj_type_attribute)
+	(typeattribute relabelable_obj_exception_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
 	(call sd.daemon (subj cmd_file))
 
-	(roletype sd_tmpfiles_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_tmpfiles_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_tmpfiles_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset sd_tmpfiles_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (fowner fsetid dac_override chown)))
 	(allow subj self (process (getcap setfscreate)))
 	(allow subj self create_unix_stream_socket_perms)
-
-	(call sd_tmpfiles_read_config (subj))
-
-	(call sd_tmpfiles_manage_runtime (subj))
-	(call sd_tmpfiles_runtime_obj_type_transition_runtime (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 	(call sys_read_net_proc_files (subj))
@@ -65,37 +65,37 @@
 	(call sd_journald.client_subj_type (subj))
 
 	(optional sd_tmpfiles_optional_rpm
-		(call rpm_script_client_subj_type (subj))))
+		(call rpm_script_client_subj_type (subj)))
 
-(call file_spec_exception (sd_tmpfiles_manageable_obj_type sd_tmpfiles_manageable_obj_exception_type))
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_dir_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_fifo_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_lnk_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_sock_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_blk_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type manage_chr_file_perms)
+	(call file_spec_exception (manageable_obj_type_attribute manageable_obj_exception_type_attribute))
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_dir_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_fifo_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_lnk_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_sock_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_blk_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_chr_file_perms)
 
-(call file_spec_exception (sd_tmpfiles_relabelable_obj_type sd_tmpfiles_relabelable_obj_exception_type))
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_dir_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_fifo_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_lnk_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_sock_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_blk_file_perms)
-(allow sd_tmpfiles.subj sd_tmpfiles_manageable_obj_type relabel_chr_file_perms)
+	(call file_spec_exception (relabelable_obj_type_attribute relabelable_obj_exception_type_attribute))
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_dir_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_fifo_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_lnk_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_sock_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_blk_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_chr_file_perms)
 
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_tmpfiles_adm_subj_type sd_tmpfiles.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_tmpfiles_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type manage_file_perms)
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type manage_dir_perms)
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type relabel_file_perms)
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type relabel_dir_perms)
-(allow sd_tmpfiles_adm_subj_type sd_tmpfiles_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

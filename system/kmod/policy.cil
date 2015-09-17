@@ -49,7 +49,7 @@
 		(allow kmod_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional kmod_optional_sd_tmpfiles
-		(call sd_tmpfiles_manage_runtime_files (subj))))
+		(call sd_tmpfiles.manage_runtime_files (subj))))
 
 (allow kmod_adm_subj_type kmod.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (kmod_adm_subj_type kmod.subj))

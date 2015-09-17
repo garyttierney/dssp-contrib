@@ -102,7 +102,7 @@
 	(call seutil_read_selinux_config_files (common_login_type_attribute))
 
 	(optional usersubj_optional_sd_tmpfiles
-		(call sd_tmpfiles_obj_exception_type (home_user_obj_type_attribute)))
+		(call sd_tmpfiles.obj_exception_type (home_user_obj_type_attribute)))
 
 	(typeattributeset unpriv_type_attribute (and (common_type_attribute) (not (priv_type_attribute))))
 	(typeattributeset unpriv_login_type_attribute (and (common_login_type_attribute) (not (priv_login_type_attribute)))))

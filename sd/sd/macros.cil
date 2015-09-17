@@ -41,36 +41,43 @@
 	(block stop_unit_blk
 		(blockabstract stop_unit_blk)
 		(macro stop_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (stop)))))
 
 	(block status_unit_blk
 		(blockabstract status_unit_blk)
 		(macro status_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (status)))))
 
 	(block disable_unit_blk
 		(blockabstract disable_unit_blk)
 		(macro disable_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (disable)))))
 
 	(block enable_unit_blk
 		(blockabstract enable_unit_blk)
 		(macro enable_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (enable)))))
 
 	(block reload_unit_blk
 		(blockabstract reload_unit_blk)
 		(macro reload_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (reload)))))
 
 	(block start_unit_blk
 		(blockabstract start_unit_blk)
 		(macro start_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (start)))))
 
 	(block control_unit_blk
 		(blockabstract control_unit_blk)
 		(macro control_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_file (service (stop status disable enable reload start)))))
 
 	(block read_all_unit_files_blk
@@ -94,36 +101,43 @@
 	(block stop_all_unit_blk
 		(blockabstract stop_all_unit_blk)
 		(macro stop_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (stop)))))
 
 	(block status_all_unit_blk
 		(blockabstract status_all_unit_blk)
 		(macro status_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (status)))))
 
 	(block disable_all_unit_blk
 		(blockabstract disable_all_unit_blk)
 		(macro disable_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (disable)))))
 
 	(block enable_all_unit_blk
 		(blockabstract enable_all_unit_blk)
 		(macro enable_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (enable)))))
 
 	(block reload_all_unit_blk
 		(blockabstract reload_all_unit_blk)
 		(macro reload_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (reload)))))
 
 	(block start_all_unit_blk
 		(blockabstract start_all_unit_blk)
 		(macro start_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (start)))))
 
 	(block control_all_unit_blk
 		(blockabstract control_all_unit_blk)
 		(macro control_all_unit ((type ARG1))
+			(call sd.search_unit (ARG1))
 			(allow ARG1 unit_obj_type_attribute (service (stop status disable enable reload start)))))
 
 	(blockinherit exec_blk)

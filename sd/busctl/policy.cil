@@ -19,10 +19,10 @@
 
 	(call sd_machined.read_runtime (subj_type_attribute))
 
-	(call sd_nspawn_list_all_container (subj_type_attribute))
-	(call sd_nspawn_read_all_container_lnk_files (subj_type_attribute))
-	(call sd_nspawn_stream_connect_all_container_subj (subj_type_attribute))
-	(call sd_nspawn_read_state_all_container_subj (subj_type_attribute))
+	(call sd_nspawn_container.list_all (subj_type_attribute))
+	(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
+	(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
+	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
 
 	(call sduser.control_all_unit (subj_type_attribute))
 	(call sduser.control_home_config (subj_type_attribute))

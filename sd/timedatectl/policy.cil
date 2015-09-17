@@ -16,10 +16,10 @@
 
 (call sd_machined.read_runtime (timedatectl_subj_type))
 
-(call sd_nspawn_list_all_container (timedatectl_subj_type))
-(call sd_nspawn_read_all_container_lnk_files (timedatectl_subj_type))
-(call sd_nspawn_stream_connect_all_container_subj (timedatectl_subj_type))
-(call sd_nspawn_read_state_all_container_subj (timedatectl_subj_type))
+(call sd_nspawn_container.list_all (timedatectl_subj_type))
+(call sd_nspawn_container.read_all_lnk_files (timedatectl_subj_type))
+(call sd_nspawn_container.stream_connect_all_subj (timedatectl_subj_type))
+(call sd_nspawn_container.read_state_all_subj (timedatectl_subj_type))
 
 (call timedatectl_client_subj_type (timedatectl_subj_type))
 

@@ -49,10 +49,10 @@
 
 (call sd_machined.read_runtime (systemctl_subj_type))
 
-(call sd_nspawn_list_all_container (systemctl_subj_type))
-(call sd_nspawn_read_all_container_lnk_files (systemctl_subj_type))
-(call sd_nspawn_stream_connect_all_container_subj (systemctl_subj_type))
-(call sd_nspawn_read_state_all_container_subj (systemctl_subj_type))
+(call sd_nspawn_container.list_all (systemctl_subj_type))
+(call sd_nspawn_container.read_all_lnk_files (systemctl_subj_type))
+(call sd_nspawn_container.stream_connect_all_subj (systemctl_subj_type))
+(call sd_nspawn_container.read_state_all_subj (systemctl_subj_type))
 
 (call sduser.control_all_subj (systemctl_subj_type))
 (call sduser.control_unit_transient_all_subj (systemctl_subj_type))

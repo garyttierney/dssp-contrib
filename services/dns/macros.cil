@@ -12,7 +12,11 @@
 
 (macro dns_manage_resolv_config_files ((type ARG1))
 	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 resolv.config_file manage_file_perms))
+	(allow ARG1 resolv.config_file manage_file_perms)
+	(optional dns_manage_resolv_config_files_optional_sd_resolved
+		(call sd_resolved.manage_runtime_files (ARG1)))
+	(optional dns_manage_resolv_config_files_optional_nm
+		(call nm_manage_runtime_files (ARG1))))
 
 (macro dns_relabelto_resolv_config_files ((type ARG1))
 	(call file_read_config_lnk_files (ARG1))
@@ -26,7 +30,7 @@
 	(call file_read_config_lnk_files (ARG1))
 	(allow ARG1 resolv.config_file read_file_perms)
 	(optional dns_read_resolv_config_files_optional_sd_resolved
-		(call sd_resolved_read_runtime_files (ARG1)))
+		(call sd_resolved.read_runtime_files (ARG1)))
 	(optional dns_read_resolv_config_files_optional_nm
 		(call nm_read_runtime_files (ARG1))))
 

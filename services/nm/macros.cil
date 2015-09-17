@@ -87,6 +87,10 @@
 	(call file_search_runtime (ARG1))
 	(call read_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
 
+(macro nm_manage_runtime_files ((type ARG1))
+	(call file_search_runtime (ARG1))
+	(call manage_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
+
 (macro nm_read_runtime_sock_files ((type ARG1))
 	(call file_search_runtime (ARG1))
 	(call read_sock_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))

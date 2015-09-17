@@ -1,6 +1,6 @@
-(typeattribute sd_utmp_adm_subj_type)
-
 (block sd_utmp
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -21,13 +21,13 @@
 
 	(call sd.status_unit (subj))
 	(call sd.status (subj))
-	(call sd.stream_connect (subj)))
+	(call sd.stream_connect (subj))
 
-(allow sd_utmp_adm_subj_type sd_utmp.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_utmp_adm_subj_type sd_utmp.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_utmp_adm_subj_type sd_utmp.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_utmp_adm_subj_type sd_utmp.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_utmp_adm_subj_type sd_utmp.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

@@ -126,7 +126,7 @@
 		(call sd_vconsole.read_config_files (subj)))
 
 	(optional dracut_optional_systemctl
-		(call systemctl_exec (subj)))
+		(call systemctl.exec (subj)))
 
 	(optional dracut_optional_udevadm
 		(call udevadm.exec (subj))))

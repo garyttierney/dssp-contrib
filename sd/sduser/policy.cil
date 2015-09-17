@@ -59,8 +59,8 @@
 	(call sd.send_signal (subj_type_attribute))
 	(call sd.subj_type (subj_type_attribute))
 
-	(call systemctl_getattr_all_subj (subj_type_attribute))
-	(call systemctl_read_all_subj_state (subj_type_attribute))
+	(call systemctl.getattr_all_subj (subj_type_attribute))
+	(call systemctl.read_state_all_subj (subj_type_attribute))
 
 	(call usersubj.getattr_common_subj (subj_type_attribute))
 	(call usersubj.create_home_config_dirs (subj_type_attribute))

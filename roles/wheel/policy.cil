@@ -771,9 +771,9 @@
 
 (optional wheel_systemctl_optional_systemctl
 	(block wheel_systemctl
-		(blockinherit systemctl_subj_blk)
+		(blockinherit systemctl.subj_blk)
 
-		(call systemctl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call systemctl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_systemctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_systemctl.subj wheel_ssh_client.subj)))
@@ -877,7 +877,7 @@
 
 (optional wheel_xinit_optional_wheel_systemctl
 	(allow wheel_xinit.subj wheel_systemctl.subj (process (noatsecure)))
-	(call systemctl_auto_subj_type_transition_pattern (wheel_xinit.subj wheel_systemctl.subj)))
+	(call systemctl.spec_auto_subj_type_transition (wheel_xinit.subj wheel_systemctl.subj)))
 
 (optional wheel_xinit_optional_wheel_xbindkeys
 	(call xbindkeys.spec_auto_subj_type_transition (wheel_xinit.subj wheel_xbindkeys.subj)))

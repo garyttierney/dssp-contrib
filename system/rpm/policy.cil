@@ -137,7 +137,7 @@
 	(call sysbus_unconfined_subj_type (rpm_subj_type)))
 
 (optional rpm_script_optional_systemctl
-	(call systemctl_run (rpm_script_t rpm_role)))
+	(call systemctl.run (rpm_script_t rpm_role)))
 
 (optional rpm_script_optional_udevadm
 	(call udevadm.run (rpm_script_t rpm_role)))

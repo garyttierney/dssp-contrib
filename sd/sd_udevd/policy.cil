@@ -69,7 +69,7 @@
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))
 
-	(call systemctl_exec (subj))
+	(call systemctl.exec (subj))
 
 	(call udev_exec_udev_helper (subj))
 	(call udev_read_config (subj))

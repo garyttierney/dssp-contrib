@@ -1317,9 +1317,9 @@
 
 (optional sysadm_systemctl_optional_systemctl
 	(block sysadm_systemctl
-		(blockinherit systemctl_subj_blk)
+		(blockinherit systemctl.subj_blk)
 
-		(call systemctl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call systemctl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_systemctl.subj sysadm_ssh_client.subj)))
@@ -1433,7 +1433,7 @@
 
 (optional sysadm_xinit_optional_sysadm_systemctl
 	(allow sysadm_xinit.subj sysadm_systemctl.subj (process (noatsecure)))
-	(call systemctl_auto_subj_type_transition_pattern (sysadm_xinit.subj sysadm_systemctl.subj)))
+	(call systemctl.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_systemctl.subj)))
 
 (optional sysadm_xinit_optional_sysadm_xbindkeys
 	(call xbindkeys.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_xbindkeys.subj)))

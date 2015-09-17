@@ -1,111 +1,111 @@
-(roleattribute systemctl_role)
-
-(typeattribute systemctl_subj_type)
-(typeattribute systemctl_client_subj_type)
-
 (block systemctl
-	(blockinherit systemctl_subj_blk)
+	(roleattribute role_attribute)
+
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit subj_blk)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (systemctl_subj_type cmd_file))
+	(call subj_entry (subj_type_attribute cmd_file))
 
-	(roletype systemctl_role subj)
+	(roletype role_attribute subj)
 
 	(call sd.daemon (subj cmd_file))
 
 	(optional systemctl_optional_rpm
-		(call rpm_script_client_subj_type (subj))))
+		(call rpm_script_client_subj_type (subj)))
 
-(allow systemctl_subj_type self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
-(allow systemctl_subj_type self (process (setfscreate)))
+	(allow subj_type_attribute self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
+	(allow subj_type_attribute self (process (setfscreate)))
 
-(call sys_read_state_files (systemctl_subj_type))
+	(call sys_read_state_files (subj_type_attribute))
 
-(call fs_getattr_tmpfs_fs (systemctl_subj_type))
-(call fs_write_inherited_devpts_chr_files (systemctl_subj_type))
+	(call fs_getattr_tmpfs_fs (subj_type_attribute))
+	(call fs_write_inherited_devpts_chr_files (subj_type_attribute))
 
-(call term_use_inherited_console (systemctl_subj_type))
+	(call term_use_inherited_console (subj_type_attribute))
 
-(call app.getattr (systemctl_subj_type))
-(call app.read_state (systemctl_subj_type))
+	(call app.getattr (subj_type_attribute))
+	(call app.read_state (subj_type_attribute))
 
-(call miscfile_read_utmp_runtime_files (systemctl_subj_type))
+	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
 
-(call nss_client_subj_type (systemctl_subj_type))
+	(call nss_client_subj_type (subj_type_attribute))
 
-(call sd.control_all_unit (systemctl_subj_type))
-(call sd.getattr (systemctl_subj_type))
-(call sd.control (systemctl_subj_type))
-(call sd.getattr_forked_subj (systemctl_subj_type))
-(call sd.manage_all_unit (systemctl_subj_type))
-(call sd.read_state (systemctl_subj_type))
-(call sd.read_state_forked_subj (systemctl_subj_type))
-(call sd.stream_connect (systemctl_subj_type))
-(call sd.control_unit_transient (systemctl_subj_type))
+	(call sd.control_all_unit (subj_type_attribute))
+	(call sd.getattr (subj_type_attribute))
+	(call sd.control (subj_type_attribute))
+	(call sd.getattr_forked_subj (subj_type_attribute))
+	(call sd.manage_all_unit (subj_type_attribute))
+	(call sd.read_state (subj_type_attribute))
+	(call sd.read_state_forked_subj (subj_type_attribute))
+	(call sd.stream_connect (subj_type_attribute))
+	(call sd.control_unit_transient (subj_type_attribute))
 
-(call sd_logind.read_runtime (systemctl_subj_type))
-(call sd_logind.client_subj_type (systemctl_subj_type))
+	(call sd_logind.read_runtime (subj_type_attribute))
+	(call sd_logind.client_subj_type (subj_type_attribute))
 
-(call sd_machined.read_runtime (systemctl_subj_type))
+	(call sd_machined.read_runtime (subj_type_attribute))
 
-(call sd_nspawn_container.list_all (systemctl_subj_type))
-(call sd_nspawn_container.read_all_lnk_files (systemctl_subj_type))
-(call sd_nspawn_container.stream_connect_all_subj (systemctl_subj_type))
-(call sd_nspawn_container.read_state_all_subj (systemctl_subj_type))
+	(call sd_nspawn_container.list_all (subj_type_attribute))
+	(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
+	(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
+	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
 
-(call sduser.control_all_subj (systemctl_subj_type))
-(call sduser.control_unit_transient_all_subj (systemctl_subj_type))
-(call sduser.control_home_config (systemctl_subj_type))
-(call sduser.control_all_unit (systemctl_subj_type))
-(call sduser.control_unit_runtime (systemctl_subj_type))
-(call sduser.stream_connect_all_subj (systemctl_subj_type))
-(call sduser.manage_home_config (systemctl_subj_type))
-(call sduser.home_config_obj_type_transition_home_config (systemctl_subj_type))
+	(call sduser.control_all_subj (subj_type_attribute))
+	(call sduser.control_unit_transient_all_subj (subj_type_attribute))
+	(call sduser.control_home_config (subj_type_attribute))
+	(call sduser.control_all_unit (subj_type_attribute))
+	(call sduser.control_unit_runtime (subj_type_attribute))
+	(call sduser.stream_connect_all_subj (subj_type_attribute))
+	(call sduser.manage_home_config (subj_type_attribute))
+	(call sduser.home_config_obj_type_transition_home_config (subj_type_attribute))
 
-(call systemctl_client_subj_type (systemctl_subj_type))
+	(call client_subj_type (subj_type_attribute))
 
-(call usersubj.create_home_config_dirs (systemctl_subj_type))
-(call usersubj.home_dir_add_obj_type_transition_home_config (systemctl_subj_type))
-(call usersubj.home_dir_obj_type_transition_home_user_files (systemctl_subj_type))
-(call usersubj.manage_home_user_files (systemctl_subj_type))
+	(call usersubj.create_home_config_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
 
-(tunableif enable_rbacsep
-	(true
-		(call rbacsep_read_state_source_subj_type (systemctl_subj_type))))
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
 
-(optional systemctl_subj_type_optional_plymouth
-	(call plymouth_use_fd_plymouthd (systemctl_subj_type)))
+	(optional subj_type_attribute_optional_plymouth
+		(call plymouth_use_fd_plymouthd (subj_type_attribute)))
 
-(allow systemctl_client_subj_type self (capability (ipc_lock)))
-(allow systemctl_client_subj_type self (process (setrlimit)))
-(allow systemctl_client_subj_type self rw_fifo_file_perms)
+	(allow client_subj_type_attribute self (capability (ipc_lock)))
+	(allow client_subj_type_attribute self (process (setrlimit)))
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-(call sys_read_crypto_sysctl_files (systemctl_client_subj_type))
-(call sys_read_kernel_sysctl_files (systemctl_client_subj_type))
-(call sys_use_fd (systemctl_client_subj_type))
+	(call sys_read_crypto_sysctl_files (client_subj_type_attribute))
+	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
+	(call sys_use_fd (client_subj_type_attribute))
 
-(call cmd_exec_cmd (systemctl_client_subj_type))
+	(call cmd_exec_cmd (client_subj_type_attribute))
 
-(call dev_read_urandom (systemctl_client_subj_type))
+	(call dev_read_urandom (client_subj_type_attribute))
 
-(call file_read_config_files (systemctl_client_subj_type))
+	(call file_read_config_files (client_subj_type_attribute))
 
-(call fs_getattr_fs (systemctl_client_subj_type))
-(call fs_read_sysfs_files (systemctl_client_subj_type))
-(call fs_read_cgroup (systemctl_client_subj_type))
+	(call fs_getattr_fs (client_subj_type_attribute))
+	(call fs_read_sysfs_files (client_subj_type_attribute))
+	(call fs_read_cgroup (client_subj_type_attribute))
 
-(call miscfile_read_all_terminfo (systemctl_client_subj_type))
-(call miscfile_read_locale (systemctl_client_subj_type))
+	(call miscfile_read_all_terminfo (client_subj_type_attribute))
+	(call miscfile_read_locale (client_subj_type_attribute))
 
-(call sd.read_state_lnk_files (systemctl_client_subj_type))
-(call sd.search_unit_runtime (systemctl_client_subj_type))
-(call sd.sysbus_chat_client_subj_type (systemctl_client_subj_type))
-(call sd.use_fd (systemctl_client_subj_type))
+	(call sd.read_state_lnk_files (client_subj_type_attribute))
+	(call sd.search_unit_runtime (client_subj_type_attribute))
+	(call sd.sysbus_chat_client_subj_type (client_subj_type_attribute))
+	(call sd.use_fd (client_subj_type_attribute))
 
-(call sd_journald.read_var_log (systemctl_client_subj_type))
+	(call sd_journald.read_var_log (client_subj_type_attribute))
 
-(call sd_machined.read_config_files (systemctl_client_subj_type))
+	(call sd_machined.read_config_files (client_subj_type_attribute))
 
-(optional systemctl_client_subj_type_optional_sysbus
-	(call sysbus_client_subj_type (systemctl_client_subj_type)))
+	(optional client_subj_type_attribute_optional_sysbus
+		(call sysbus_client_subj_type (client_subj_type_attribute))))

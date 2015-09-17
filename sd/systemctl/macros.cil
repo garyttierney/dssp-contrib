@@ -1,69 +1,60 @@
-(block systemctl_subj_blk
-	(blockabstract systemctl_subj_blk)
+(in systemctl
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(blockinherit app.application_subj_blk)
+		(blockinherit app.application_subj_blk)
 
-	(typeattributeset systemctl_subj_type subj))
+		(typeattributeset systemctl.subj_type_attribute subj))
 
-(macro systemctl_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset systemctl_subj_type ARG1))
+	(blockinherit send_signal_blk)
 
-(macro systemctl_client_subj_type ((type ARG1))
-	(typeattributeset systemctl_client_subj_type ARG1))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro systemctl_exec ((type ARG1))
-	(call systemctl_client_subj_type (ARG1))
-	(call can_exec (ARG1 systemctl.cmd_file)))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro systemctl_role_pattern ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 systemctl.cmd_file ARG3))
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
 
-	(roletype ARG1 ARG3)
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG2 ARG3 (process (noatsecure signal)))
+		(roletype ARG1 ARG3)
 
-	(allow ARG3 ARG2 (process (signal)))
+		(allow ARG2 ARG3 (process (noatsecure signal)))
 
-	(allow ARG3 ARG2 read_file_perms)
-	(allow ARG3 ARG2 list_dir_perms)
-	(allow ARG3 ARG2 read_lnk_file_perms)
+		(allow ARG3 ARG2 (process (signal)))
 
-	(call sd_askpwd_agent.run (ARG3 ARG1)))
+		(allow ARG3 ARG2 read_file_perms)
+		(allow ARG3 ARG2 list_dir_perms)
+		(allow ARG3 ARG2 read_lnk_file_perms)
 
-(macro systemctl_auto_subj_type_transition ((type ARG1))
-	(allow ARG1 systemctl.subj (process (noatsecure signal)))
-	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file systemctl.subj)))
+		(call sd_askpwd_agent.run (ARG3 ARG1)))
 
-(macro systemctl_auto_subj_type_transition_pattern ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
+	(macro auto_subj_type_transition ((type ARG1))
+		(allow ARG1 subj (process (noatsecure signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
 
-	(allow systemctl.subj ARG1 read_file_perms)
-	(allow systemctl.subj ARG1 list_dir_perms)
-	(allow systemctl.subj ARG1 read_lnk_file_perms)
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
 
-	(call auto_subj_type_transition_pattern (ARG1 systemctl.cmd_file ARG2)))
+		(allow ARG2 ARG1 read_file_perms)
+		(allow ARG2 ARG1 list_dir_perms)
+		(allow ARG2 ARG1 read_lnk_file_perms)
 
-(macro systemctl_send_signal ((type ARG1))
-	(allow ARG1 systemctl.subj (process (signal))))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro systemctl_run ((type ARG1)(role ARG2))
-	(call systemctl_auto_subj_type_transition (ARG1))
+	(blockinherit send_signal_blk)
 
-	(roleattributeset systemctl_role ARG2))
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
 
-(macro systemctl_getattr_all_subj ((type ARG1))
-	(allow ARG1 systemctl_subj_type (process (getattr))))
+		(roleattributeset role_attribute ARG2))
 
-(macro systemctl_read_all_subj_state ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 systemctl_subj_type read_file_perms)
-	(allow ARG1 systemctl_subj_type list_dir_perms)
-	(allow ARG1 systemctl_subj_type read_lnk_file_perms))
-
-(macro systemctl_use_fd_all_subj ((type ARG1))
-	(allow ARG1 systemctl_subj_type (fd (use))))
-
-(macro systemctl_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
-	(call systemctl_use_fd_all_subj (ARG1))
-	(allow ARG1 systemctl_subj_type rw_inherited_unix_stream_socket_perms))
+	(blockinherit getattr_all_blk)
+	(blockinherit read_state_all_blk)
+	(blockinherit use_fd_all_blk)
+	(blockinherit rw_inherited_unix_stream_sockets_all_blk))

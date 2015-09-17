@@ -1,120 +1,48 @@
-(macro alsactl_exec ((type ARG1))
-	(call can_exec (ARG1 alsactl.cmd_file)))
+(in alsactl
+	(blockinherit exec_blk)
 
-(macro alsactl_auto_subj_type_transition ((type ARG1))
-	(call alsactl_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 alsactl.cmd_file alsactl.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro alsactl_send_signal ((type ARG1))
-	(allow ARG1 alsactl.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro alsactl_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 alsactl.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro alsactl_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 alsactl.config_file list_dir_perms))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro alsactl_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 alsactl.config_file alsactl.config_file)))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "alsa")))
 
-(macro alsactl_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 alsactl.config_file alsactl.config_file)))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro alsactl_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 alsactl.config_file read_file_perms)
-	(allow ARG1 alsactl.config_file list_dir_perms)
-	(allow ARG1 alsactl.config_file read_lnk_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "alsactl.pid")))
 
-(macro alsactl_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 alsactl.config_file manage_file_perms)
-	(allow ARG1 alsactl.config_file manage_dir_perms)
-	(allow ARG1 alsactl.config_file manage_lnk_file_perms))
+	(blockinherit read_runtime_lock_files_blk)
+	(blockinherit manage_runtime_lock_files_blk)
+	(blockinherit relabel_runtime_lock_files_blk)
 
-(macro alsactl_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 alsactl.config_file relabel_file_perms)
-	(allow ARG1 alsactl.config_file relabel_dir_perms)
-	(allow ARG1 alsactl.config_file relabel_lnk_file_perms))
+	(macro runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
+		(call file_runtime_lock_obj_type_transition (ARG1 runtime_lock_file file "asound.state.lock")))
 
-(macro alsactl_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 alsactl.var_lib_file search_dir_perms))
+	(blockinherit send_sigkill_blk)
 
-(macro alsactl_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 alsactl.var_lib_file list_dir_perms))
-
-(macro alsactl_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 alsactl.var_lib_file alsactl.var_lib_file)))
-
-(macro alsactl_read_var_lib_lnk_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_lnk_files_pattern (ARG1 alsactl.var_lib_file alsactl.var_lib_file)))
-
-(macro alsactl_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 alsactl.var_lib_file read_file_perms)
-	(allow ARG1 alsactl.var_lib_file list_dir_perms)
-	(allow ARG1 alsactl.var_lib_file read_lnk_file_perms))
-
-(macro alsactl_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 alsactl.var_lib_file manage_file_perms)
-	(allow ARG1 alsactl.var_lib_file manage_dir_perms)
-	(allow ARG1 alsactl.var_lib_file manage_lnk_file_perms))
-
-(macro alsactl_relabel_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 alsactl.var_lib_file relabel_file_perms)
-	(allow ARG1 alsactl.var_lib_file relabel_dir_perms)
-	(allow ARG1 alsactl.var_lib_file relabel_lnk_file_perms))
-
-(macro alsactl_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 alsactl.var_lib_file dir "alsa")))
-
-(macro alsactl_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 alsactl.runtime_file read_file_perms))
-
-(macro alsactl_manage_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 alsactl.runtime_file manage_file_perms))
-
-(macro alsactl_relabel_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 alsactl.runtime_file relabel_file_perms))
-
-(macro alsactl_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 alsactl.runtime_file file "alsactl.pid")))
-
-(macro alsactl_read_runtime_lock_files ((type ARG1))
-	(call file_search_runtime_lock (ARG1))
-	(allow ARG1 alsactl.runtime_lock_file read_file_perms))
-
-(macro alsactl_manage_runtime_lock_files ((type ARG1))
-	(call file_rw_runtime_lock_dirs (ARG1))
-	(allow ARG1 alsactl.runtime_lock_file manage_file_perms))
-
-(macro alsactl_relabel_runtime_lock_files ((type ARG1))
-	(call file_search_runtime_lock (ARG1))
-	(allow ARG1 alsactl.runtime_lock_file relabel_file_perms))
-
-(macro alsactl_runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
-	(call file_runtime_lock_obj_type_transition (ARG1 alsactl.runtime_lock_file file "asound.state.lock")))
-
-(macro alsactl_send_sigkill ((type ARG1))
-	(allow ARG1 alsactl.subj (process (sigkill))))
-
-(macro alsactl_adm ((type ARG1)(role ARG2))
-	(typeattributeset alsactl_adm_subj_type ARG1)
-	(optional alsactl_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional alsactl_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional alsactl_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional alsactl_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

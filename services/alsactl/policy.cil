@@ -1,8 +1,8 @@
-(typeattribute alsactl_adm_subj_type)
-
-(typeattribute alsactl_obj_type)
-
 (block alsactl
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -13,33 +13,33 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset alsactl_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset alsactl_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file_runtime_lock_obj_blk)
 
-	(typeattributeset alsactl_obj_type runtime_lock_file)
+	(typeattributeset obj_type_attribute runtime_lock_file)
+
+	(call manage_runtime_lock_files (subj))
+	(call runtime_lock_obj_type_transition_runtime_lock (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset alsactl_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(dontaudit subj self (capability (sys_tty_config)))
 	(allow subj self (process (getsched setsched)))
-
-	(call alsactl_read_config (subj))
-
-	(call alsactl_manage_runtime_files (subj))
-	(call alsactl_runtime_obj_type_transition_runtime (subj))
-
-	(call alsactl_manage_runtime_lock_files (subj))
-	(call alsactl_runtime_lock_obj_type_transition_runtime_lock (subj))
-
-	(call alsactl_manage_var_lib (subj))
-	(call alsactl_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_use_fd (subj))
 
@@ -55,26 +55,26 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset alsactl_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow alsactl_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional alsactl_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional alsactl_optional_sd_udevd
-		(call sd_udevd.rw_inherited_udp_sockets (subj))))
+		(call sd_udevd.rw_inherited_udp_sockets (subj)))
 
-(allow alsactl_adm_subj_type alsactl.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (alsactl_adm_subj_type alsactl.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime_lock (alsactl_adm_subj_type))
-(call file_search_var_lib (alsactl_adm_subj_type))
+	(call file_search_runtime_lock (adm_subj_type_attribute))
+	(call file_search_var_lib (adm_subj_type_attribute))
 
-(allow alsactl_adm_subj_type alsactl_obj_type manage_file_perms)
-(allow alsactl_adm_subj_type alsactl_obj_type manage_dir_perms)
-(allow alsactl_adm_subj_type alsactl_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow alsactl_adm_subj_type alsactl_obj_type relabel_file_perms)
-(allow alsactl_adm_subj_type alsactl_obj_type relabel_dir_perms)
-(allow alsactl_adm_subj_type alsactl_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

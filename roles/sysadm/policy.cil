@@ -73,9 +73,9 @@
 				(call auditctl.run (sysadm_subj_type role)))
 
 			(optional sysadm_optional_auditd
-				(call auditd_adm (subj role))
-				(call auditd_run_augenrules (sysadm_subj_type role))
-				(call auditd_run_ausearch (sysadm_subj_type role)))
+				(call auditd.adm (subj role))
+				(call augenrules.run (sysadm_subj_type role))
+				(call ausearch.run (sysadm_subj_type role)))
 
 			(optional sysadm_optional_authconfig
 				(call authconfig.manage_config_files (subj))

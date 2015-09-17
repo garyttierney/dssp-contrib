@@ -59,10 +59,10 @@
 	(call seutil_relabel_policy_config (subj))
 
 	(optional rpm_optional_auditd
-		(call auditd_manage_config (subj))
-		(call auditd_relabel_config (subj))
-		(call auditd_manage_var_log (subj))
-		(call auditd_relabel_var_log (subj)))
+		(call auditd.manage_config (subj))
+		(call auditd.relabel_config (subj))
+		(call auditd.manage_var_log (subj))
+		(call auditd.relabel_var_log (subj)))
 
 	(optional rpm_optional_audispd
 		(call audispd.manage_config (subj))

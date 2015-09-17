@@ -20,10 +20,10 @@
 	(call audispd.relabel_config (unconfinedsubj_type)))
 
 (optional unconfinedsubj_type_optional_auditd
-	(call auditd_manage_config (unconfinedsubj_type))
-	(call auditd_relabel_config (unconfinedsubj_type))
-	(call auditd_manage_var_log (unconfinedsubj_type))
-	(call auditd_relabel_var_log (unconfinedsubj_type)))
+	(call auditd.manage_config (unconfinedsubj_type))
+	(call auditd.relabel_config (unconfinedsubj_type))
+	(call auditd.manage_var_log (unconfinedsubj_type))
+	(call auditd.relabel_var_log (unconfinedsubj_type)))
 
 (optional unconfinedsubj_type_optional_pam
 	(call pam_unconfined_subj_type (unconfinedsubj_type)))

@@ -17,7 +17,7 @@
 	(call pam_read_config_files (subj))
 
 	(optional auditctl_optional_auditd
-		(call auditd_read_config (subj)))
+		(call auditd.read_config (subj)))
 
 	(optional audit_optional_sd
 		(call sd.daemon (subj cmd_file))))

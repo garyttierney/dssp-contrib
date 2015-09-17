@@ -24,8 +24,8 @@
 	(call seutil_read_policy_config (subj))
 
 	(optional quotacheck_optional_auditd
-		(call auditd_read_config (subj))
-		(call auditd_read_var_log (subj)))
+		(call auditd.read_config (subj))
+		(call auditd.read_var_log (subj)))
 
 	(optional quotacheck_optional_audispd
 		(call audispd.read_config (subj))))

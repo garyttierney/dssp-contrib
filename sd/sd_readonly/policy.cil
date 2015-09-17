@@ -1,6 +1,6 @@
-(typeattribute sd_readonly_adm_subj_type)
-
 (block sd_readonly
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -18,15 +18,15 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call nss_client_subj_type (subj)))
+	(call nss_client_subj_type (subj))
 
-(allow sd_readonly_adm_subj_type sd_readonly.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_readonly_adm_subj_type sd_readonly.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_readonly_adm_subj_type sd_readonly.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (sd_readonly_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow sd_readonly_adm_subj_type sd_readonly.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_readonly_adm_subj_type sd_readonly.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

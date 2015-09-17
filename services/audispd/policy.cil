@@ -1,6 +1,6 @@
-(typeattribute audispd_plugin_subj_type)
-
 (block audispd
+	(typeattribute plugin_subj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -12,12 +12,12 @@
 	(allow subj self (process (setsched)))
 	(allow subj self (capability (sys_nice)))
 
-	(allow subj audispd_plugin_subj_type (process (signal signull sigkill sigstop)))
+	(allow subj plugin_subj_type_attribute (process (signal signull sigkill sigstop)))
 
-	(call audispd_read_config (subj))
+	(call read_config (subj))
 
-	(call audispd_manage_runtime_sock_files (subj))
-	(call audispd_runtime_obj_type_transition_runtime (subj))
+	(call manage_runtime_sock_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(call cmd_exec_shell (subj))
 

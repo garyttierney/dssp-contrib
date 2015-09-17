@@ -100,8 +100,8 @@
 		(call auditd_relabel_runtime_sock_files (subj)))
 
 	(optional setfiles_optional_audispd
-		(call audispd_relabel_config (subj))
-		(call audispd_relabel_runtime_sock_files (subj)))
+		(call audispd.relabel_config (subj))
+		(call audispd.relabel_runtime_sock_files (subj)))
 
 	(optional setfiles_optional_sd
 		(call sd.forked_subj_type (subj))))

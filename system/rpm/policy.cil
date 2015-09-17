@@ -65,8 +65,8 @@
 		(call auditd_relabel_var_log (subj)))
 
 	(optional rpm_optional_audispd
-		(call audispd_manage_config (subj))
-		(call audispd_relabel_config (subj)))
+		(call audispd.manage_config (subj))
+		(call audispd.relabel_config (subj)))
 
 	(optional rpm_optional_sd
 		(call sd.daemon (subj cmd_file))

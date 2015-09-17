@@ -1,14 +1,11 @@
-(macro sd_sessions_exec ((type ARG1))
-	(call can_exec (ARG1 sd_sessions.cmd_file)))
+(in sd_sessions
+	(blockinherit exec_blk)
 
-(macro sd_sessions_auto_subj_type_transition ((type ARG1))
-	(call sd_sessions_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_sessions.cmd_file sd_sessions.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_sessions_send_signal ((type ARG1))
-	(allow ARG1 sd_sessions.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro sd_sessions_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_sessions_adm_subj_type ARG1)
-	(call sd.daemon_adm_subj_type (ARG1))
-	(call sd_askpwd_agent.run (ARG1 ARG2)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))

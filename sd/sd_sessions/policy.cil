@@ -1,6 +1,6 @@
-(typeattribute sd_sessions_adm_subj_type)
-
 (block sd_sessions
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
@@ -14,13 +14,13 @@
 	(call miscfile_manage_nologin_runtime_files (subj))
 	(call miscfile_runtime_obj_type_transition_nologin_runtime (subj))
 
-	(call sd_journald.client_subj_type (subj)))
+	(call sd_journald.client_subj_type (subj))
 
-(allow sd_sessions_adm_subj_type sd_sessions.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_sessions_adm_subj_type sd_sessions.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_sessions_adm_subj_type sd_sessions.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow sd_sessions_adm_subj_type sd_sessions.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_sessions_adm_subj_type sd_sessions.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

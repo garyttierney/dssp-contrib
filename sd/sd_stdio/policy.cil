@@ -1,9 +1,9 @@
-(roleattribute sd_stdio_role)
-
 (block sd_stdio
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype sd_stdio_role subj)
+	(roletype role_attribute subj)
 
 	(call sd_hostnamed.sysbus_chat_client_subj_type (subj))
 

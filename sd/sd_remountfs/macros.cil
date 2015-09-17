@@ -1,9 +1,6 @@
-(macro sd_remountfs_cmd ((type ARG1))
-	(call can_exec (ARG1 sd_remountfs.cmd_file)))
+(in sd_remountfs
+	(blockinherit exec_blk)
 
-(macro sd_remountfs_auto_subj_type_transition ((type ARG1))
-	(call sd_remountfs_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_remountfs.cmd_file sd_remountfs.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_remountfs_send_signal ((type ARG1))
-	(allow ARG1 sd_remountfs.subj (process (signal))))
+	(blockinherit send_signal_blk))

@@ -1,28 +1,28 @@
-(roleattribute sd_randomseed_role)
-
-(typeattribute sd_randomseed_adm_subj_type)
-
-(typeattribute sd_randomseed_obj_type)
-
 (block sd_randomseed
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(call sd.daemon_mls (subj cmd_file systemhigh systemhigh))
 
 	(call app.application_subj_type (subj))
 
-	(roletype sd_randomseed_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_randomseed_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset sd_randomseed_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
 
-	(call sd_randomseed_manage_var_lib_files (subj))
-	(call sd_randomseed_sd_var_lib_obj_type_transition_var_lib (subj))
+	(call manage_var_lib_files (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -38,15 +38,15 @@
 	(call sd_journald.client_subj_type (subj))
 
 	(optional sd_randomseed_optional_rpm
-		(call rpm_script_client_subj_type (subj))))
+		(call rpm_script_client_subj_type (subj)))
 
-(allow sd_randomseed_adm_subj_type sd_randomseed.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_randomseed_adm_subj_type sd_randomseed.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_randomseed_adm_subj_type sd_randomseed.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call sd.search_var_lib (sd_randomseed_adm_subj_type))
+	(call sd.search_var_lib (adm_subj_type_attribute))
 
-(allow sd_randomseed_adm_subj_type sd_randomseed_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow sd_randomseed_adm_subj_type sd_randomseed_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

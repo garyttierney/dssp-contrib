@@ -1,36 +1,31 @@
-(macro sd_randomseed_exec ((type ARG1))
-	(call can_exec (ARG1 sd_randomseed.cmd_file)))
+(in sd_randomseed
+	(blockinherit exec_blk)
 
-(macro sd_randomseed_auto_subj_type_transition ((type ARG1))
-	(call sd_randomseed_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_randomseed.cmd_file sd_randomseed.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_randomseed_send_signal ((type ARG1))
-	(allow ARG1 sd_randomseed.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro sd_randomseed_run ((type ARG1)(role ARG2))
-	(call sd_randomseed_auto_subj_type_transition (ARG1))
-	(roleattributeset sd_randomseed_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro sd_randomseed_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 randomseed.cmd_file process (ARG2 ARG3)))))
+	(macro mls ((type ARG1)(level ARG2)(level ARG3))
+		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
 
-(macro sd_randomseed_read_var_lib_files ((type ARG1))
-	(call sd.search_var_lib (ARG1))
-	(allow ARG1 sd_randomseed.var_lib_file read_file_perms))
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms))
 
-(macro sd_randomseed_manage_var_lib_files ((type ARG1))
-	(call sd.rw_var_lib_dirs (ARG1))
-	(allow ARG1 sd_randomseed.var_lib_file manage_file_perms))
+	(macro manage_var_lib_files ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms))
 
-(macro sd_randomseed_relabel_var_lib_files ((type ARG1))
-	(call sd.search_var_lib (ARG1))
-	(allow ARG1 sd_randomseed.var_lib_file relabel_file_perms))
+	(macro relabel_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms))
 
-(macro sd_randomseed_sd_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call sd.var_lib_obj_type_transition (ARG1 sd_randomseed.var_lib_file file "random-seed")))
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file file "random-seed")))
 
-(macro sd_randomseed_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_randomseed_adm_subj_type ARG1)
-	(call sd.daemon_adm_subj_type (ARG1))
-	(call sd_askpwd_agent.run (ARG1 ARG2)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))

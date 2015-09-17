@@ -1,29 +1,29 @@
-(typeattribute sd_timesyncd_adm_subj_type)
-
-(typeattribute sd_timesyncd_obj_type)
-
 (block sd_timesyncd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset sd_timesyncd_obj_type unit_file)
+	(typeattributeset obj_type_attribute unit_file)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset sd_timesyncd_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset sd_timesyncd_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib_files (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (chown fowner setuid setgid setpcap dac_override sys_time)))
 	(allow subj self (process (getcap setcap setrlimit)))
-
-	(call sd_timesyncd_read_config (subj))
-
-	(call sd_timesyncd_manage_var_lib_files (subj))
-	(call sd_timesyncd_sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -41,19 +41,19 @@
 
 	(call sd_networkd.read_runtime (subj))
 
-	(call sd_journald.client_subj_type (subj)))
+	(call sd_journald.client_subj_type (subj))
 
-(allow sd_timesyncd_adm_subj_type sd_timesyncd.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_timesyncd_adm_subj_type sd_timesyncd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_timesyncd_adm_subj_type sd_timesyncd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call sd.search_runtime (sd_timesyncd_adm_subj_type))
+	(call sd.search_runtime (adm_subj_type_attribute))
 
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_file_perms)
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_dir_perms)
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_file_perms)
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_dir_perms)
-(allow sd_timesyncd_adm_subj_type sd_timesyncd_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

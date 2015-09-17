@@ -1,28 +1,24 @@
-(macro sd_udevd_exec_sd_udevd ((type ARG1))
-	(call can_exec (ARG1 sd_udevd.cmd_file)))
+(in sd_udevd
+	(blockinherit exec_blk)
 
-(macro sd_udevd_auto_subj_type_transition_sd_udevd ((type ARG1))
-	(call sd_udevd_send_signal_sd_udevd (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sd_udevd.cmd_file sd_udevd.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro sd_udevd_send_signal_sd_udevd ((type ARG1))
-	(allow ARG1 sd_udevd.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro sd_udevd_rw_inherited_udp_sockets ((type ARG1))
-	(allow ARG1 sd_udevd.subj (udp_socket (read write))))
+	(macro rw_inherited_udp_sockets ((type ARG1))
+		(allow ARG1 subj (udp_socket (read write))))
 
-(macro sd_udevd_use_fd ((type ARG1))
-	(allow ARG1 sd_udevd.subj (fd (use))))
+	(blockinherit use_fd_blk)
 
-(macro sd_udevd_write_inherited_fifo_files ((type ARG1))
-	(call sd_udevd_use_fd (ARG1))
-	(allow ARG1 sd_udevd.subj (fifo_file (write))))
+	(macro write_inherited_fifo_files ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 subj (fifo_file (write))))
 
-(macro sd_udevd_stream_connect ((type ARG1))
-	(allow ARG1 sd_udevd.subj (unix_stream_socket (connectto)))
-	(call udev_write_runtime_sock_files (ARG1)))
+	(macro stream_connect ((type ARG1))
+		(allow ARG1 subj (unix_stream_socket (connectto)))
+		(call udev_write_runtime_sock_files (ARG1)))
 
-(macro sd_udevd_adm ((type ARG1)(role ARG2))
-	(typeattributeset sd_udevd_adm_subj_type ARG1)
-	(call sd.daemon_adm_subj_type (ARG1))
-	(call sd_askpwd_agent.run (ARG1 ARG2)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))

@@ -63,7 +63,7 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional alsactl_optional_sd_udevd
-		(call sd_udevd_rw_inherited_udp_sockets (subj))))
+		(call sd_udevd.rw_inherited_udp_sockets (subj))))
 
 (allow alsactl_adm_subj_type alsactl.subj (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (alsactl_adm_subj_type alsactl.subj))

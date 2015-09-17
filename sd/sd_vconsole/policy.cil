@@ -38,7 +38,7 @@
 
 	(call sd_journald.client_subj_type (subj))
 
-	(call sd_udevd_rw_inherited_udp_sockets (subj))
+	(call sd_udevd.rw_inherited_udp_sockets (subj))
 
 	(optional sd_vconsole_optional_loadkeys
 	    (call loadkeys.auto_subj_type_transition (subj)))

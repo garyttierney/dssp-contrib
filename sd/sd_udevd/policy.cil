@@ -1,6 +1,6 @@
-(typeattribute sd_udevd_adm_subj_type)
-
 (block sd_udevd
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(call sd.netlink_socket_activated (subj netlink_kobject_uevent_socket))
@@ -94,18 +94,18 @@
 		(call sd_sysctl.auto_subj_type_transition (subj)))
 
 	(optional sd_udevd_optional_sd_vconsole
-		(call sd_vconsole_auto_subj_type_transition (subj))))
+		(call sd_vconsole_auto_subj_type_transition (subj)))
 
-(allow sd_udevd_adm_subj_type sd_udevd.unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-(allow sd_udevd_adm_subj_type sd_udevd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (sd_udevd_adm_subj_type sd_udevd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call udev_manage_config (sd_udevd_adm_subj_type))
-(call udev_relabel_config (sd_udevd_adm_subj_type))
-(call udev_manage_runtime (sd_udevd_adm_subj_type))
-(call udev_relabel_runtime (sd_udevd_adm_subj_type))
+	(call udev_manage_config (adm_subj_type_attribute))
+	(call udev_relabel_config (adm_subj_type_attribute))
+	(call udev_manage_runtime (adm_subj_type_attribute))
+	(call udev_relabel_runtime (adm_subj_type_attribute))
 
-(allow sd_udevd_adm_subj_type sd_udevd.unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
-(allow sd_udevd_adm_subj_type sd_udevd.unit_file relabel_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

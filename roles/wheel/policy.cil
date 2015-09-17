@@ -780,9 +780,9 @@
 
 (optional wheel_timedatectl_optional_timedatectl
 	(block wheel_timedatectl
-		(blockinherit timedatectl_subj_blk)
+		(blockinherit timedatectl.subj_blk)
 
-		(call timedatectl_role_pattern (wheel.role wheel_subj_type subj))))
+		(call timedatectl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_timedatectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_timedatectl.subj wheel_ssh_client.subj)))

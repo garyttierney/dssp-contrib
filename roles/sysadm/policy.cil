@@ -1326,9 +1326,9 @@
 
 (optional sysadm_timedatectl_optional_timedatectl
 	(block sysadm_timedatectl
-		(blockinherit timedatectl_subj_blk)
+		(blockinherit timedatectl.subj_blk)
 
-		(call timedatectl_role_pattern (sysadm.role sysadm_subj_type subj))))
+		(call timedatectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_timedatectl_optional_ssh
 		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))

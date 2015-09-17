@@ -1,141 +1,64 @@
-(macro chronyd_enable_status_start_sd_unit_subj_type ((type ARG1))
-	(typeattributeset chronyd_enable_status_start_sd_unit_subj_type ARG1))
+(in chronyd
+	(blockinherit exec_blk)
 
-(macro chronyd_exec_chronyc ((type ARG1))
-	(call can_exec (ARG1 chronyc.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro chronyd_auto_subj_type_transition_chronyc ((type ARG1))
-	(call chronyd_send_signal_chronyc (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 chronyc.cmd_file chronyc.subj)))
+	(blockinherit send_signal_blk)
 
-(macro chronyd_send_signal_chronyc ((type ARG1))
-	(allow ARG1 chronyc.subj (process (signal))))
+	(macro enable_status_start_sd_unit_subj_type ((type ARG1))
+		(typeattributeset enable_status_start_sd_unit_subj_type_attribute ARG1))
 
-(macro chronyd_run_chronyc ((type ARG1)(role ARG2))
-	(call chronyd_auto_subj_type_transition_chronyc (ARG1))
-	(roleattributeset chronyd_chronyc_role ARG2))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk)
 
-(macro chronyd_exec_chronyd ((type ARG1))
-	(call can_exec (ARG1 chronyd.cmd_file)))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro chronyd_auto_subj_type_transition_chronyd ((type ARG1))
-	(call chronyd_send_signal_chronyd (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 chronyd.cmd_file chronyd.subj)))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "chrony")))
 
-(macro chronyd_send_signal_chronyd ((type ARG1))
-	(allow ARG1 chronyd.subj (process (signal))))
+	(blockinherit search_var_log_blk)
+	(blockinherit list_var_log_blk)
+	(blockinherit read_var_log_files_blk)
+	(blockinherit read_var_log_lnk_files_blk)
+	(blockinherit read_var_log_blk)
+	(blockinherit manage_var_log_blk)
+	(blockinherit relabel_var_log_blk)
 
-(macro chronyd_exec_chronyd_helper ((type ARG1))
-	(call can_exec (ARG1 chronyd_helper.cmd_file)))
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file_var_log_obj_type_transition (ARG1 var_log_file dir "chrony")))
 
-(macro chronyd_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 chronyd.config_file read_file_perms))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro chronyd_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 chronyd.config_file manage_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "chronyd.pid")))
 
-(macro chronyd_relabel_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 chronyd.config_file relabel_file_perms))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional chronyd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional chronyd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro chronyd_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 chronyd.var_lib_file search_dir_perms))
+(in chronyc
+	(blockinherit exec_blk)
 
-(macro chronyd_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 chronyd.var_lib_file list_dir_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro chronyd_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 chronyd.var_lib_file chronyd.var_lib_file)))
+	(blockinherit run_blk)
 
-(macro chronyd_read_var_lib_lnk_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_lnk_files_pattern (ARG1 chronyd.var_lib_file chronyd.var_lib_file)))
+	(blockinherit send_signal_blk))
 
-(macro chronyd_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 chronyd.var_lib_file read_file_perms)
-	(allow ARG1 chronyd.var_lib_file list_dir_perms)
-	(allow ARG1 chronyd.var_lib_file read_lnk_file_perms))
+(in chronyd_helper
+	(blockinherit exec_blk))
 
-(macro chronyd_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 chronyd.var_lib_file manage_file_perms)
-	(allow ARG1 chronyd.var_lib_file manage_dir_perms)
-	(allow ARG1 chronyd.var_lib_file manage_lnk_file_perms))
-
-(macro chronyd_relabel_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 chronyd.var_lib_file relabel_file_perms)
-	(allow ARG1 chronyd.var_lib_file relabel_dir_perms)
-	(allow ARG1 chronyd.var_lib_file relabel_lnk_file_perms))
-
-(macro chronyd_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 chronyd.var_lib_file dir "chrony")))
-
-(macro chronyd_search_var_log ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 chronyd.var_log_file search_dir_perms))
-
-(macro chronyd_list_var_log ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 chronyd.var_log_file list_dir_perms))
-
-(macro chronyd_read_var_log_files ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(call read_files_pattern (ARG1 chronyd.var_log_file chronyd.var_log_file)))
-
-(macro chronyd_read_var_log_lnk_files ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(call read_lnk_files_pattern (ARG1 chronyd.var_log_file chronyd.var_log_file)))
-
-(macro chronyd_read_var_log ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 chronyd.var_log_file read_file_perms)
-	(allow ARG1 chronyd.var_log_file list_dir_perms)
-	(allow ARG1 chronyd.var_log_file read_lnk_file_perms))
-
-(macro chronyd_manage_var_log ((type ARG1))
-	(call file_rw_var_log_dirs (ARG1))
-	(allow ARG1 chronyd.var_log_file manage_file_perms)
-	(allow ARG1 chronyd.var_log_file manage_dir_perms)
-	(allow ARG1 chronyd.var_log_file manage_lnk_file_perms))
-
-(macro chronyd_relabel_var_log ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 chronyd.var_log_file relabel_file_perms)
-	(allow ARG1 chronyd.var_log_file relabel_dir_perms)
-	(allow ARG1 chronyd.var_log_file relabel_lnk_file_perms))
-
-(macro chronyd_var_log_obj_type_transition_var_log ((type ARG1))
-	(call file_var_log_obj_type_transition (ARG1 chronyd.var_log_file dir "chrony")))
-
-(macro chronyd_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 chronyd.runtime_file read_file_perms))
-
-(macro chronyd_manage_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 chronyd.runtime_file manage_file_perms))
-
-(macro chronyd_relabel_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 chronyd.runtime_file relabel_file_perms))
-
-(macro chronyd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 chronyd.runtime_file file "chronyd.pid")))
-
-(macro chronyd_udp_bind_chrony_cmdmon_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 chrony_cmdmon.port (udp_socket (name_bind))))
-
-(macro chronyd_adm ((type ARG1)(role ARG2))
-	(typeattributeset chronyd_adm_subj_type ARG1)
-	(optional chronyd_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional chronyd_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+(in chrony_cmdmon
+	(blockinherit udp_bind_reserved_port_blk))

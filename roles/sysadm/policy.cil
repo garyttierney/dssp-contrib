@@ -136,8 +136,8 @@
 		(call chkpwd.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_chronyd
-		(call chronyd_adm (subj role))
-		(call chronyd_run_chronyc (sysadm_subj_type role)))
+		(call chronyd.adm (subj role))
+		(call chronyc.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_conntrack
 		(call conntrack_run_conntrack (sysadm_subj_type role))

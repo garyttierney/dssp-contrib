@@ -42,7 +42,7 @@
 	(call nss_client_subj_type (subj))
 
 	(optional logrotate_optional_chronyd
-		(call chronyd_auto_subj_type_transition_chronyc (subj)))
+		(call chronyc.auto_subj_type_transition (subj)))
 
 	(optional logrotate_optional_sd
 		(call sd.daemon (subj cmd_file))

@@ -15,7 +15,7 @@
 (call nss_read_config_files (nss_client_subj_type))
 
 (optional nss_client_subj_type_optional_llmnr
-	(call llmnr_tcp_connect_llmnr_port (nss_client_subj_type)))
+	(call llmnr.tcp_connect_port (nss_client_subj_type)))
 
 (optional nss_client_subj_type_optional_mdns
 	(call mdns_tcp_connect_mdns_port (nss_client_subj_type)))

@@ -1,8 +1,4 @@
-(macro llmnr_tcp_connect_llmnr_port ((type ARG1))
-	(allow ARG1 llmnr.port (tcp_socket (name_connect))))
-
-(macro llmnr_tcp_bind_llmnr_port ((type ARG1))
-	(allow ARG1 llmnr.port (tcp_socket (name_bind))))
-
-(macro llmnr_udp_bind_llmnr_port ((type ARG1))
-	(allow ARG1 llmnr.port (udp_socket (name_bind))))
+(in llmnr
+	(blockinherit tcp_bind_unreserved_port_blk)
+	(blockinherit tcp_connect_port_blk)
+	(blockinherit udp_bind_unreserved_port_blk))

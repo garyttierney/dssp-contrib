@@ -717,7 +717,7 @@
 		(call atspi_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
-	(call sessbus_auto_subj_type_transition_pattern (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
+	(call sessbus.spec_sysbus_auto_subj_type_transition (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
 
 (optional sysadm_chfn_optional_chfn
 	(block sysadm_chfn
@@ -732,8 +732,8 @@
 		(call dbus_send.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_dbus_send_optional_sysadm_sessbus
-	(call sessbus_chat_all_client_subj (sysadm_dbus_send.subj))
-	(call sessbus_client_pattern (sysadm_dbus_send.subj sysadm_sessbus.subj)))
+	(call sessbus.chat_all_client_subj (sysadm_dbus_send.subj))
+	(call sessbus.client_pattern (sysadm_dbus_send.subj sysadm_sessbus.subj)))
 
 (optional sysadm_dunst_optional_dunst
 	(block sysadm_dunst
@@ -899,8 +899,8 @@
 	(call sduser.control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))
 
 (optional sysadm_busctl_optional_sysadm_sessbus
-	(call sessbus_chat_all_client_subj (sysadm_busctl.subj))
-	(call sessbus_client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))
+	(call sessbus.chat_all_client_subj (sysadm_busctl.subj))
+	(call sessbus.client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))
 
 (optional sysadm_busctl_optional_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
@@ -1238,17 +1238,17 @@
 (optional sysadm_sduser_optional_sysadm_sessbus
 	(call sduser.unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
 
-	(call sessbus_acquire_service_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
-	(call sessbus_client_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+	(call sessbus.acquire_service_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+	(call sessbus.client_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
 
-	(call sessbus_manage_tmpfs (sysadm_sduser.subj))
-	(call sessbus_tmpfs_obj_type_transition_tmpfs (sysadm_sduser.subj)))
+	(call sessbus.manage_tmpfs_user (sysadm_sduser.subj))
+	(call sessbus.tmpfs_obj_type_transition_tmpfs (sysadm_sduser.subj)))
 
 (optional sysadm_sessbus_optional_sessbus
 	(block sysadm_sessbus
-		(blockinherit sessbus_subj_blk)
+		(blockinherit sessbus.subj_blk)
 
-		(call sessbus_role_pattern (sysadm.role sysadm_subj_type subj))
+		(call sessbus.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 
@@ -1270,7 +1270,7 @@
 		(call sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_sessbus_launch_optional_sysadm_sessbus
-	(call sessbus_auto_subj_type_transition_pattern (sysadm_sessbus_launch.subj sysadm_sessbus.subj)))
+	(call sessbus.spec_sysbus_auto_subj_type_transition (sysadm_sessbus_launch.subj sysadm_sessbus.subj)))
 
 (optional sysadm_ssh_agent_optional_ssh
 	(block sysadm_ssh_agent

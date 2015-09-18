@@ -244,7 +244,7 @@
 		(call atspi_sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
-	(call sessbus_auto_subj_type_transition_pattern (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
+	(call sessbus.spec_sysbus_auto_subj_type_transition (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
 
 (optional wheel_chfn_optional_chfn
 	(block wheel_chfn
@@ -259,8 +259,8 @@
 		(call dbus_send.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_dbus_send_optional_wheel_sessbus
-	(call sessbus_chat_all_client_subj (wheel_dbus_send.subj))
-	(call sessbus_client_pattern (wheel_dbus_send.subj wheel_sessbus.subj)))
+	(call sessbus.chat_all_client_subj (wheel_dbus_send.subj))
+	(call sessbus.client_pattern (wheel_dbus_send.subj wheel_sessbus.subj)))
 
 (optional wheel_dunst_optional_dunst
 	(block wheel_dunst
@@ -431,8 +431,8 @@
 	(call sduser.control_pattern (wheel_busctl.subj wheel_sduser.subj)))
 
 (optional wheel_busctl_optional_wheel_sessbus
-	(call sessbus_chat_all_client_subj (wheel_busctl.subj))
-	(call sessbus_client_pattern (wheel_busctl.subj wheel_sessbus.subj)))
+	(call sessbus.chat_all_client_subj (wheel_busctl.subj))
+	(call sessbus.client_pattern (wheel_busctl.subj wheel_sessbus.subj)))
 
 (optional wheel_busctl_optional_ssh
 	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))
@@ -698,17 +698,17 @@
 (optional wheel_sduser_optional_wheel_sessbus
 	(call sduser.unix_stream_socket_activated_subj_pattern (wheel_sduser.subj wheel_sessbus.subj))
 
-	(call sessbus_acquire_service_pattern (wheel_sduser.subj wheel_sessbus.subj))
-	(call sessbus_client_pattern (wheel_sduser.subj wheel_sessbus.subj))
+	(call sessbus.acquire_service_pattern (wheel_sduser.subj wheel_sessbus.subj))
+	(call sessbus.client_pattern (wheel_sduser.subj wheel_sessbus.subj))
 
-	(call sessbus_manage_tmpfs (wheel_sduser.subj))
-	(call sessbus_tmpfs_obj_type_transition_tmpfs (wheel_sduser.subj)))
+	(call sessbus.manage_tmpfs_user (wheel_sduser.subj))
+	(call sessbus.tmpfs_obj_type_transition_tmpfs (wheel_sduser.subj)))
 
 (optional wheel_sessbus_optional_sessbus
 	(block wheel_sessbus
-		(blockinherit sessbus_subj_blk)
+		(blockinherit sessbus.subj_blk)
 
-		(call sessbus_role_pattern (wheel.role wheel_subj_type subj))
+		(call sessbus.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 
@@ -730,7 +730,7 @@
 		(call sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_sessbus_launch_optional_wheel_sessbus
-	(call sessbus_auto_subj_type_transition_pattern (wheel_sessbus_launch.subj wheel_sessbus.subj)))
+	(call sessbus.spec_sysbus_auto_subj_type_transition (wheel_sessbus_launch.subj wheel_sessbus.subj)))
 
 (optional wheel_ssh_agent_optional_ssh
 	(block wheel_ssh_agent

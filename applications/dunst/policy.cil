@@ -27,8 +27,8 @@
 	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
 
 	(optional dunst_subj_type_optional_sessbus
-		(call sessbus_acquire_service_all_subj (subj_type_attribute))
-		(call sessbus_client_all_subj (subj_type_attribute)))
+		(call sessbus.acquire_service_all_subj (subj_type_attribute))
+		(call sessbus.client_all_subj (subj_type_attribute)))
 
 	(optional dunst_sessbus_chat_client_subj_type_optional_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj_type_attribute (dbus (send_msg)))

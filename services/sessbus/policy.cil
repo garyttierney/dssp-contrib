@@ -1,30 +1,31 @@
-(typeattribute sessbus_subj_type)
-(typeattribute sessbus_client_subj_type)
-
 (block sessbus
-        (blockinherit usersubj.tmpfs_user_obj_blk))
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute daemon_subj_type_attribute)
 
-(allow sessbus_subj_type self rw_fifo_file_perms)
+        (blockinherit usersubj.tmpfs_user_obj_blk)
 
-(call sessbus_manage_tmpfs (sessbus_subj_type))
-(call sessbus_tmpfs_obj_type_transition_tmpfs (sessbus_subj_type))
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-(allow sessbus_subj_type sessbus_client_subj_type read_file_perms)
-(allow sessbus_subj_type sessbus_client_subj_type list_dir_perms)
-(allow sessbus_subj_type sessbus_client_subj_type read_lnk_file_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-(allow sessbus_subj_type sessbus_client_subj_type (process (signal signull sigkill sigstop)))
+	(allow subj_type_attribute client_subj_type_attribute read_file_perms)
+	(allow subj_type_attribute client_subj_type_attribute list_dir_perms)
+	(allow subj_type_attribute client_subj_type_attribute read_lnk_file_perms)
 
-(call sysbus_cmd_obj_entry_subj (sessbus_subj_type))
-(call sysbus_dbus_subj_type (sessbus_subj_type))
-(call sysbus_read_config (sessbus_subj_type))
+	(allow subj_type_attribute client_subj_type_attribute (process (signal signull sigkill sigstop)))
 
-(optional sessbus_subj_type_optional_sessbus_launch
-	(call sessbus_launch.write_inherited_fifo_files_client_subj (sessbus_subj_type)))
+	(call sysbus_cmd_obj_entry_subj (subj_type_attribute))
+	(call sysbus_dbus_subj_type (subj_type_attribute))
+	(call sysbus_read_config (subj_type_attribute))
 
-(allow sessbus_client_subj_type self (dbus (send_msg)))
+	(optional subj_type_attribute_optional_sessbus_launch
+		(call sessbus_launch.write_inherited_fifo_files_client_subj (subj_type_attribute)))
 
-(call sysbus_read_var_lib_files (sessbus_client_subj_type))
+	(allow client_subj_type_attribute self (dbus (send_msg)))
 
-(optional sessbus_client_subj_type_optional_sessbus_launch
-	(call sessbus_launch.use_fd_all_subj (sessbus_client_subj_type)))
+	(call sysbus_read_var_lib_files (client_subj_type_attribute))
+
+	(optional client_subj_type_attribute_optional_sessbus_launch
+		(call sessbus_launch.use_fd_all_subj (client_subj_type_attribute))))

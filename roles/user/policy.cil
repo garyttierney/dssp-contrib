@@ -192,7 +192,7 @@
 		(call atspi_sessbus_launch.role_pattern (user.role user_subj_type subj))))
 
 (optional user_atspi_sessbus_launch_optional_user_sessbus
-        (call sessbus_auto_subj_type_transition_pattern (user_atspi_sessbus_launch.subj user_sessbus.subj)))
+        (call sessbus.spec_sysbus_auto_subj_type_transition (user_atspi_sessbus_launch.subj user_sessbus.subj)))
 
 (optional user_chfn_optional_chfn
 	(block user_chfn
@@ -543,17 +543,17 @@
 (optional user_sduser_optional_user_sessbus
 	(call sduser.unix_stream_socket_activated_subj_pattern (user_sduser.subj user_sessbus.subj))
 
-	(call sessbus_acquire_service_pattern (user_sduser.subj user_sessbus.subj))
-	(call sessbus_client_pattern (user_sduser.subj user_sessbus.subj))
+	(call sessbus.acquire_service_pattern (user_sduser.subj user_sessbus.subj))
+	(call sessbus.client_pattern (user_sduser.subj user_sessbus.subj))
 
-	(call sessbus_manage_tmpfs (user_sduser.subj))
-	(call sessbus_tmpfs_obj_type_transition_tmpfs (user_sduser.subj)))
+	(call sessbus.manage_tmpfs_user (user_sduser.subj))
+	(call sessbus.tmpfs_obj_type_transition_tmpfs (user_sduser.subj)))
 
 (optional user_sessbus_optional_sessbus
 	(block user_sessbus
-		(blockinherit sessbus_subj_blk)
+		(blockinherit sessbus.subj_blk)
 
-		(call sessbus_role_pattern (user.role user_subj_type subj))
+		(call sessbus.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 
@@ -575,7 +575,7 @@
 		(call sessbus_launch.role_pattern (user.role user_subj_type subj))))
 
 (optional user_sessbus_launch_optional_user_sessbus
-	(call sessbus_auto_subj_type_transition_pattern (user_sessbus_launch.subj user_sessbus.subj)))
+	(call sessbus.spec_sysbus_auto_subj_type_transition (user_sessbus_launch.subj user_sessbus.subj)))
 
 (optional user_ssh_agent_optional_ssh
 	(block user_ssh_agent

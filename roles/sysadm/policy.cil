@@ -91,8 +91,8 @@
 				(call cracklib.manage_var_cache (subj)))
 
 			(optional sysadm_optional_iptables
-				(call iptables_adm (subj role))
-				(call iptables_run (sysadm_subj_type role)))
+				(call iptables.adm (subj role))
+				(call iptables.run (sysadm_subj_type role)))
 
 			(optional sysadm_optional_mcstransd
 				(call mcstransd_adm (subj role)))

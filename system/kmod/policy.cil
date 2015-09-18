@@ -36,8 +36,8 @@
 	(call nss_client_subj_type (subj))
 
 	(optional kmod_optional_iptables
-		(call iptables_dontaudit_rw_rawip_sockets (subj))
-		(call iptables_dontaudit_rw_unix_stream_sockets (subj)))
+		(call iptables.dontaudit_rw_rawip_sockets (subj))
+		(call iptables.dontaudit_rw_unix_stream_sockets (subj)))
 
 	(optional kmod_optional_sd
 		(call sd.daemon (subj cmd_file))

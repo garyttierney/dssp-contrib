@@ -1,21 +1,16 @@
-(macro fstrim_exec ((type ARG1))
-	(call can_exec (ARG1 fstrim.cmd_file)))
+(in fstrim
+	(blockinherit exec_blk)
 
-(macro fstrim_auto_subj_type_transition ((type ARG1))
-	(call fstrim_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 fstrim.cmd_file fstrim.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro fstrim_send_signal ((type ARG1))
-	(allow ARG1 fstrim.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro fstrim_run ((type ARG1)(role ARG2))
-	(call fstrim_auto_subj_type_transition (ARG1))
-	(roleattributeset fstrim_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro fstrim_adm ((type ARG1)(role ARG2))
-	(typeattributeset fstrim_adm_subj_type ARG1)
-	(optional fstrim_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional fstrim_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional fstrim_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional fstrim_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 

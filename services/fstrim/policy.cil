@@ -1,13 +1,13 @@
-(roleattribute fstrim_role)
-
-(typeattribute fstrim_adm_subj_type)
-
 (block fstrim
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset fstrim_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype fstrim_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (sys_admin)))
 
@@ -25,10 +25,10 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(allow fstrim_adm_subj_type unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-		(allow fstrim_adm_subj_type unit_file manage_file_perms)
-		(allow fstrim_adm_subj_type unit_file relabel_file_perms)))
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
 
-(allow fstrim_adm_subj_type fstrim.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (fstrim_adm_subj_type fstrim.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

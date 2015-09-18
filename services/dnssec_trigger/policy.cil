@@ -125,9 +125,9 @@
 
 	(call fs_list_tmpfs (subj))
 
-	(call dns_config_obj_type_transition_config (subj))
-	(call dns_manage_resolv_config_files (subj))
-	(call dns_relabel_resolv_config_files (subj))
+	(call resolv.config_obj_type_transition_config (subj))
+	(call resolv.manage_config_files (subj))
+	(call resolv.relabel_config_files (subj))
 
 	(call dnssec_trigger_read_config_files (subj))
 	(call dnssec_trigger_manage_dnssec_triggerd_runtime_files (subj))

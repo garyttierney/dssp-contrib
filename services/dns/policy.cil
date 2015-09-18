@@ -1,18 +1,18 @@
-(typeattribute dns_resolv_client_subj_type)
-
 (block dns
-	(blockinherit net_reserved_port_obj_blk))
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit net_reserved_port_obj_blk)
+
+	(allow client_subj_type_attribute self r_netlink_route_socket_perms)
+	(allow client_subj_type_attribute self create_tcp_socket_perms)
+	(allow client_subj_type_attribute self create_udp_socket_perms)
+
+	(call resolv.read_config_files (client_subj_type_attribute))
+	(call tcp_connect_port (client_subj_type_attribute))
+
+	(call dnssec_tcp_connect_dnssec_port (client_subj_type_attribute)))
 
 (block resolv
 	(blockinherit file_config_obj_blk)
 
 	(call fs_associate_tmpfs (config_file)))
-
-(allow dns_resolv_client_subj_type self r_netlink_route_socket_perms)
-(allow dns_resolv_client_subj_type self create_tcp_socket_perms)
-(allow dns_resolv_client_subj_type self create_udp_socket_perms)
-
-(call dns_read_resolv_config_files (dns_resolv_client_subj_type))
-(call dns_tcp_connect_dns_port (dns_resolv_client_subj_type))
-
-(call dnssec_tcp_connect_dnssec_port (dns_resolv_client_subj_type))

@@ -52,8 +52,8 @@
 	(call net_udp_bind_all_unreserved_ports (subj))
 	(call net_udp_bind_ephemeral_port (subj))
 
-	(call dns_tcp_bind_dns_port (subj))
-	(call dns_udp_bind_dns_port (subj))
+	(call dns.tcp_bind_reserved_port (subj))
+	(call dns.udp_bind_reserved_port (subj))
 
 	(call miscfile_read_cert (subj))
 	(call miscfile_read_locale (subj))

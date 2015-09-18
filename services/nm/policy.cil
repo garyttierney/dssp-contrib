@@ -66,8 +66,8 @@
 	(call fs_read_sysfs (subj))
 	(call fs_read_cgroup_files (subj))
 
-	(call dns_manage_resolv_config_files (subj))
-	(call dns_config_obj_type_transition_config (subj))
+	(call resolv.manage_config_files (subj))
+	(call resolv.config_obj_type_transition_config (subj))
 
 	(call hostname_read_config_files (subj))
 

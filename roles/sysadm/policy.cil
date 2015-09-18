@@ -190,7 +190,7 @@
 		(call dmidecode.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dns
-		(call dns_manage_resolv_config_files (subj)))
+		(call resolv.manage_config_files (subj)))
 
 	(optional sysadm_optional_dnssec_trigger
 		(call dnssec_trigger_adm (subj role)))

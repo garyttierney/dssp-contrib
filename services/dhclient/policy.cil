@@ -48,10 +48,10 @@
 		(call chronyd_helper.exec (subj)))
 
 	(optional dhclient_optional_nm
-		(call nm_exec_nm_helper (subj))
-		(call nm_read_config_files (subj))
-		(call nm_manage_var_lib_files (subj))
-		(call nm_stream_connect (subj)))
+		(call nm_helper.exec (subj))
+		(call nm.read_config_files (subj))
+		(call nm.manage_var_lib_files (subj))
+		(call nm.stream_connect (subj)))
 
 	(optional dhclient_optional_sd
 		(call sd.daemon (subj cmd_file)))

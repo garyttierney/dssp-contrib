@@ -22,7 +22,7 @@
 		(optional dns_manage_resolv_config_files_optional_sd_resolved
 			(call sd_resolved.manage_runtime_files (ARG1)))
 		(optional dns_manage_resolv_config_files_optional_nm
-			(call nm_manage_runtime_files (ARG1))))
+			(call nm.manage_runtime_files (ARG1))))
 
 	(macro relabelto_config_files ((type ARG1))
 		(call file_read_config_lnk_files (ARG1))
@@ -38,4 +38,4 @@
 		(optional dns_read_resolv_config_files_optional_sd_resolved
 			(call sd_resolved.read_runtime_files (ARG1)))
 		(optional dns_read_resolv_config_files_optional_nm
-			(call nm_read_runtime_files (ARG1)))))
+			(call nm.read_runtime_files (ARG1)))))

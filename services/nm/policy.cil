@@ -1,14 +1,14 @@
-(typeattribute nm_adm_subj_type)
-(typeattribute nm_client_subj_type)
-(typeattribute nm_subj_type)
-(typeattribute nm_sysbus_chat_client_subj_type)
-
-(typeattribute nm_obj_type)
-
 (block nm
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
-	(typeattributeset nm_subj_type subj)
+	(typeattributeset subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -18,15 +18,23 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset nm_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset nm_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset nm_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (net_admin net_raw sys_admin dac_override)))
 	(allow subj self (process (setpgid)))
@@ -35,14 +43,6 @@
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_rawip_socket_perms)
 	(allow subj self rw_fifo_file_perms)
-
-	(call nm_read_config (subj))
-
-	(call nm_manage_runtime (subj))
-	(call nm_runtime_obj_type_transition_runtime (subj))
-
-	(call nm_manage_var_lib (subj))
-	(call nm_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_load_kernel_module_subj_type (subj))
 	(call sys_read_net_proc_files (subj))
@@ -83,10 +83,9 @@
 
 	(call nettools.auto_subj_type_transition (subj))
 
-	(call nm_exec_nm_helper (subj))
-	(call nm_getattr_client_subj (subj))
-	(call nm_read_state_client_subj (subj))
-	(call nm_read_state_nm_online (subj))
+	(call nm_helper.exec (subj))
+
+	(call nm_online.read_state (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -106,9 +105,9 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset nm_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow nm_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional nm_optinal_polkit
 		(call polkit_sysbus_chat_client_subj_type (subj)))
@@ -128,12 +127,41 @@
 		(call sysbus_read_config_files (subj)))
 
 	(optional nm_optional_unconfinedsubj
-		(call unconfinedsubj_read_state (subj))))
+		(call unconfinedsubj_read_state (subj)))
+
+	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+        (allow subj client_subj_type_attribute (process (getattr)))
+
+        (allow subj client_subj_type_attribute read_file_perms)
+        (allow subj client_subj_type_attribute list_dir_perms)
+        (allow subj client_subj_type_attribute read_lnk_file_perms)
+
+	(call stream_connect (client_subj_type_attribute))
+	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call file_search_runtime (adm_subj_type_attribute))
+	(call file_search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block nm_disp
 	(blockinherit subj_common_blk)
 
-	(typeattributeset nm_subj_type subj)
+	(typeattributeset nm.subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -154,10 +182,12 @@
 	(call iptools_exec (subj))
 	(call iptools_read_config_files (subj))
 
-	(call nm_client_subj_type (subj))
-	(call nm_exec_nm_helper (subj))
-	(call nm_read_config (subj))
-	(call nm_read_runtime (subj))
+	(call nm.client_subj_type (subj))
+
+	(call nm_helper.exec (subj))
+
+	(call nm.read_config (subj))
+	(call nm.read_runtime (subj))
 
 	(call mount_exec (subj))
 
@@ -189,7 +219,7 @@
 (block nm_online
 	(blockinherit subj_common_blk)
 
-	(typeattributeset nm_subj_type subj)
+	(typeattributeset nm.subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -206,30 +236,7 @@
 	(call miscfile_read_locale (subj))
 	(call miscfile_read_passwords (subj))
 
-	(call nm_client_subj_type (subj))
+	(call nm.client_subj_type (subj))
 
 	(optional nm_online_optional_sd
 		(call sd.daemon (subj cmd_file))))
-
-(optional nm_sysbus_chat_client_subj_type_optional_sysbus
-	(allow nm.subj nm_sysbus_chat_client_subj_type (dbus (send_msg)))
-	(allow nm_sysbus_chat_client_subj_type nm.subj (dbus (send_msg))))
-
-(call nm_stream_connect (nm_client_subj_type))
-(call nm_sysbus_chat_client_subj_type (nm_client_subj_type))
-
-(allow nm_adm_subj_type nm_subj_type (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (nm_adm_subj_type nm_subj_type))
-
-(call file_search_runtime (nm_adm_subj_type))
-(call file_search_var_lib (nm_adm_subj_type))
-
-(allow nm_adm_subj_type nm_obj_type manage_file_perms)
-(allow nm_adm_subj_type nm_obj_type manage_dir_perms)
-(allow nm_adm_subj_type nm_obj_type manage_lnk_file_perms)
-(allow nm_adm_subj_type nm_obj_type manage_sock_file_perms)
-
-(allow nm_adm_subj_type nm_obj_type relabel_file_perms)
-(allow nm_adm_subj_type nm_obj_type relabel_dir_perms)
-(allow nm_adm_subj_type nm_obj_type relabel_lnk_file_perms)
-(allow nm_adm_subj_type nm_obj_type relabel_sock_file_perms)

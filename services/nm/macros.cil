@@ -1,192 +1,77 @@
-(macro nm_client_subj_type ((type ARG1))
-	(typeattributeset nm_client_subj_type ARG1))
+(in nm
+	(blockinherit exec_blk)
 
-(macro nm_sysbus_chat_client_subj_type ((type ARG1))
-	(typeattributeset nm_sysbus_chat_client_subj_type ARG1))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro nm_exec_nm ((type ARG1))
-	(call can_exec (ARG1 nm.cmd_file)))
+	(blockinherit send_signal_blk)
 
-(macro nm_auto_subj_type_transition_nm ((type ARG1))
-	(call nm_send_signal_nm (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 nm.cmd_file nm.subj)))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro nm_send_signal_nm ((type ARG1))
-	(allow ARG1 nm.subj (process (signal))))
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
-(macro nm_exec_nm_disp ((type ARG1))
-	(call can_exec (ARG1 nm_disp.cmd_file)))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro nm_auto_subj_type_transition_nm_disp ((type ARG1))
-	(call nm_send_signal_nm_disp (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 nm_disp.cmd_file nm_disp.subj)))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit read_runtime_sock_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro nm_send_signal_nm_disp ((type ARG1))
-	(allow ARG1 nm_disp.subj (process (signal))))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "NetworkManager"))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "netreport")))
 
-(macro nm_exec_nm_helper ((type ARG1))
-	(call can_exec (ARG1 nm_helper.cmd_file)))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit manage_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro nm_exec_nm_online ((type ARG1))
-	(call can_exec (ARG1 nm_online.cmd_file)))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "NetworkManager")))
 
-(macro nm_auto_subj_type_transition_nm_online ((type ARG1))
-	(call nm_send_signal_nm_online (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 nm_online.cmd_file nm_online.subj)))
+	(macro stream_connect ((type ARG1))
+		(call file_search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
 
-(macro nm_send_signal_nm_online ((type ARG1))
-	(allow ARG1 nm_online.subj (process (signal))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional nm_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional nm_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro nm_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nm.config_file search_dir_perms))
+(in nm_disp
+	(blockinherit exec_blk)
 
-(macro nm_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nm.config_file list_dir_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro nm_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 nm.config_file nm.config_file)))
+	(blockinherit send_signal_blk))
 
-(macro nm_manage_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call manage_files_pattern (ARG1 nm.config_file nm.config_file)))
+(in nm_helper
+	(blockinherit exec_blk))
 
-(macro nm_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 nm.config_file nm.config_file)))
+(in nm_online
+	(blockinherit exec_blk)
 
-(macro nm_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nm.config_file read_file_perms)
-	(allow ARG1 nm.config_file list_dir_perms)
-	(allow ARG1 nm.config_file read_lnk_file_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro nm_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 nm.config_file manage_file_perms)
-	(allow ARG1 nm.config_file manage_dir_perms)
-	(allow ARG1 nm.config_file manage_lnk_file_perms))
+	(blockinherit send_signal_blk)
 
-(macro nm_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nm.config_file relabel_file_perms)
-	(allow ARG1 nm.config_file relabel_dir_perms)
-	(allow ARG1 nm.config_file relabel_lnk_file_perms))
-
-(macro nm_search_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 nm.runtime_file search_dir_perms))
-
-(macro nm_list_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 nm.runtime_file list_dir_perms))
-
-(macro nm_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
-
-(macro nm_manage_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call manage_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
-
-(macro nm_read_runtime_sock_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_sock_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
-
-(macro nm_read_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_lnk_files_pattern (ARG1 nm.runtime_file nm.runtime_file)))
-
-(macro nm_read_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 nm.runtime_file read_file_perms)
-	(allow ARG1 nm.runtime_file list_dir_perms)
-	(allow ARG1 nm.runtime_file read_sock_file_perms)
-	(allow ARG1 nm.runtime_file read_lnk_file_perms))
-
-(macro nm_manage_runtime ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 nm.runtime_file manage_file_perms)
-	(allow ARG1 nm.runtime_file manage_dir_perms)
-	(allow ARG1 nm.runtime_file manage_sock_file_perms)
-	(allow ARG1 nm.runtime_file manage_lnk_file_perms))
-
-(macro nm_relabel_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 nm.runtime_file relabel_file_perms)
-	(allow ARG1 nm.runtime_file relabel_dir_perms)
-	(allow ARG1 nm.runtime_file relabel_sock_file_perms)
-	(allow ARG1 nm.runtime_file relabel_lnk_file_perms))
-
-(macro nm_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 nm.runtime_file dir "NetworkManager"))
-	(call file_runtime_obj_type_transition (ARG1 nm.runtime_file dir "netreport")))
-
-(macro nm_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 nm.var_lib_file search_dir_perms))
-
-(macro nm_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 nm.var_lib_file list_dir_perms))
-
-(macro nm_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 nm.var_lib_file nm.var_lib_file)))
-
-(macro nm_manage_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call manage_files_pattern (ARG1 nm.var_lib_file nm.var_lib_file)))
-
-(macro nm_read_var_lib_lnk_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_lnk_files_pattern (ARG1 nm.var_lib_file nm.var_lib_file)))
-
-(macro nm_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 nm.var_lib_file read_file_perms)
-	(allow ARG1 nm.var_lib_file list_dir_perms)
-	(allow ARG1 nm.var_lib_file read_lnk_file_perms))
-
-(macro nm_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 nm.var_lib_file manage_file_perms)
-	(allow ARG1 nm.var_lib_file manage_dir_perms)
-	(allow ARG1 nm.var_lib_file manage_lnk_file_perms))
-
-(macro nm_relabel_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 nm.var_lib_file relabel_file_perms)
-	(allow ARG1 nm.var_lib_file relabel_dir_perms)
-	(allow ARG1 nm.var_lib_file relabel_lnk_file_perms))
-
-(macro nm_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 nm.var_lib_file dir "NetworkManager")))
-
-(macro nm_stream_connect ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call stream_connect_pattern (ARG1 nm.runtime_file nm.runtime_file nm.subj)))
-
-(macro nm_getattr_client_subj ((type ARG1))
-	(allow ARG1 nm_client_subj_type (process (getattr))))
-
-(macro nm_read_state_client_subj ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 nm_client_subj_type read_file_perms)
-	(allow ARG1 nm_client_subj_type list_dir_perms)
-	(allow ARG1 nm_client_subj_type read_lnk_file_perms))
-
-(macro nm_read_state_nm_online ((type ARG1))
-	(call fs_search_proc (ARG1))
-	(allow ARG1 nm_online.subj read_file_perms)
-	(allow ARG1 nm_online.subj list_dir_perms)
-	(allow ARG1 nm_online.subj read_lnk_file_perms))
-
-(macro nm_adm ((type ARG1)(role ARG2))
-	(typeattributeset nm_adm_subj_type ARG1)
-	(optional nm_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional nm_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(blockinherit read_state_blk))

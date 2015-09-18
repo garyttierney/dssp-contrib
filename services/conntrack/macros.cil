@@ -1,122 +1,68 @@
-(macro conntrack_exec_conntrack ((type ARG1))
-	(call can_exec (ARG1 conntrack.cmd_file)))
+(in conntrack
+	(blockinherit exec_blk)
 
-(macro conntrack_auto_subj_type_transition_conntrack ((type ARG1))
-	(call conntrack_send_signal_conntrack (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 conntrack.cmd_file conntrack.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro conntrack_send_signal_conntrack ((type ARG1))
-	(allow ARG1 conntrack.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro conntrack_run_conntrack ((type ARG1)(role ARG2))
-	(call conntrack_auto_subj_type_transition_conntrack (ARG1))
-	(roleattributeset conntrack_role ARG2))
+	(blockinherit send_signal_blk))
 
-(macro conntrack_exec_conntrackd ((type ARG1))
-	(call can_exec (ARG1 conntrackd.cmd_file)))
+(in conntrackd
+	(blockinherit exec_blk)
 
-(macro conntrack_auto_subj_type_transition_conntrackd ((type ARG1))
-	(call conntrack_send_signal_conntrackd (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 conntrackd.cmd_file conntrackd.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro conntrack_send_signal_conntrackd ((type ARG1))
-	(allow ARG1 conntrackd.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro conntrack_run_conntrackd ((type ARG1)(role ARG2))
-	(call conntrack_auto_subj_type_transition_conntrackd (ARG1))
-	(roleattributeset conntrack_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro conntrack_exec_nfct ((type ARG1))
-	(call can_exec (ARG1 nfct.cmd_file)))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro conntrack_auto_subj_type_transition_nfct ((type ARG1))
-	(call conntrack_send_signal_nfct (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 nfct.cmd_file nfct.subj)))
+	(blockinherit read_var_log_files_blk)
+	(blockinherit manage_var_log_files_blk)
+	(blockinherit relabel_var_log_files_blk)
 
-(macro conntrack_send_signal_nfct ((type ARG1))
-	(allow ARG1 nfct.subj (process (signal))))
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file_var_log_obj_type_transition (ARG1 var_log_file file "conntrackd.log")))
 
-(macro conntrack_run_nfct ((type ARG1)(role ARG2))
-	(call conntrack_auto_subj_type_transition_nfct (ARG1))
-	(roleattributeset conntrack_role ARG2))
+	(blockinherit read_runtime_sock_files_blk)
+	(blockinherit manage_runtime_sock_files_blk)
+	(blockinherit relabel_runtime_sock_files_blk)
 
-(macro conntrack_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 conntrackd.config_file search_dir_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file sock_file "conntrackd.ctl")))
 
-(macro conntrack_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 conntrackd.config_file list_dir_perms))
+	(blockinherit read_runtime_lock_files_blk)
+	(blockinherit manage_runtime_lock_files_blk)
+	(blockinherit relabel_runtime_lock_files_blk)
 
-(macro conntrack_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 conntrackd.config_file conntrackd.config_file)))
+	(macro runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
+		(call file_runtime_lock_obj_type_transition (ARG1 runtime_lock_file file "conntrack.lock")))
 
-(macro conntrack_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 conntrackd.config_file conntrackd.config_file)))
+	(macro stream_connect ((type ARG1))
+		(call file_search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
 
-(macro conntrack_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 conntrackd.config_file read_file_perms)
-	(allow ARG1 conntrackd.config_file list_dir_perms)
-	(allow ARG1 conntrackd.config_file read_lnk_file_perms))
+	(blockinherit udp_bind_unreserved_port_blk)
 
-(macro conntrack_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 conntrackd.config_file manage_file_perms)
-	(allow ARG1 conntrackd.config_file manage_dir_perms)
-	(allow ARG1 conntrackd.config_file manage_lnk_file_perms))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional conntrack_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional conntrack_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro conntrack_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 conntrackd.config_file relabel_file_perms)
-	(allow ARG1 conntrackd.config_file relabel_dir_perms)
-	(allow ARG1 conntrackd.config_file relabel_lnk_file_perms))
+(in nfct
+	(blockinherit exec_blk)
 
-(macro conntrack_read_conntrackd_var_log_files ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 conntrackd.var_log_file read_file_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro conntrack_manage_conntrackd_var_log_files ((type ARG1))
-	(call file_rw_var_log_dirs (ARG1))
-	(allow ARG1 conntrackd.var_log_file manage_file_perms))
+	(blockinherit run_blk)
 
-(macro conntrack_var_log_obj_type_transition_conntrackd_var_log ((type ARG1))
-	(call file_var_log_obj_type_transition (ARG1 conntrackd.var_log_file file "conntrackd.log")))
-
-(macro conntrack_read_conntrackd_runtime_sock_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 conntrackd.runtime_file read_sock_file_perms))
-
-(macro conntrack_manage_conntrackd_runtime_sock_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 conntrackd.runtime_file manage_sock_file_perms))
-
-(macro conntrack_stream_connect_conntrackd ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call stream_connect_pattern (ARG1 conntrackd.runtime_file conntrackd.runtime_file conntrackd.subj)))
-
-(macro conntrack_runtime_obj_type_transition_conntrackd_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 conntrackd.runtime_file sock_file "conntrackd.ctl")))
-
-(macro conntrack_read_conntrackd_runtime_lock_files ((type ARG1))
-	(call file_search_runtime_lock (ARG1))
-	(allow ARG1 conntrackd.runtime_lock_file read_file_perms))
-
-(macro conntrack_manage_conntrackd_runtime_lock_files ((type ARG1))
-	(call file_rw_runtime_lock_dirs (ARG1))
-	(allow ARG1 conntrackd.runtime_lock_file manage_file_perms))
-
-(macro conntrack_runtime_lock_obj_type_transition_conntrackd_runtime_lock ((type ARG1))
-	(call file_runtime_lock_obj_type_transition (ARG1 conntrackd.runtime_lock_file file "conntrack.lock")))
-
-(macro conntrack_udp_bind_conntrackd_port ((type ARG1))
-	(allow ARG1 conntrackd.port (udp_socket (name_bind))))
-
-(macro conntrack_adm ((type ARG1)(role ARG2))
-	(typeattributeset conntrack_adm_subj_type ARG1)
-	(optional conntrack_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional conntrack_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(blockinherit send_signal_blk))

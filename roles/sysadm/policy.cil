@@ -140,10 +140,10 @@
 		(call chronyc.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_conntrack
-		(call conntrack_run_conntrack (sysadm_subj_type role))
-		(call conntrack_run_conntrackd (sysadm_subj_type role))
-		(call conntrack_run_nfct (sysadm_subj_type role))
-		(call conntrack_adm (subj role)))
+		(call conntrack.run (sysadm_subj_type role))
+		(call conntrackd.run (sysadm_subj_type role))
+		(call nfct.run (sysadm_subj_type role))
+		(call conntrackd.adm (subj role)))
 
 	(optional sysadm_optional_coredumpctl
 		(call coredumpctl.run (sysadm_subj_type role)))

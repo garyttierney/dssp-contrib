@@ -9,22 +9,19 @@
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj))
+
 	(blockinherit file_runtime_obj_blk)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file_runtime_lock_obj_blk)
 
+	(call manage_runtime_lock (subj))
+	(call runtime_lock_obj_type_transition_runtime_lock (subj))
+
 	(blockinherit file_var_log_obj_blk)
-
-	(optional pppd_optional_logrotate
-		(call logrotate.var_log_obj_type (var_log_file)))
-
-	(call pppd_read_config (subj))
-
-	(call pppd_manage_runtime (subj))
-	(call pppd_runtime_obj_type_transition_runtime (subj))
-
-	(call pppd_manage_runtime_lock (subj))
-	(call pppd_runtime_lock_obj_type_transition_runtime_lock (subj))
 
 	(allow subj var_log_file manage_dir_perms)
 	(allow subj var_log_file (file (setattr)))
@@ -32,4 +29,7 @@
 	(allow subj var_log_file create_file_perms)
 	(allow subj var_log_file read_file_perms)
 
-	(call pppd_var_log_obj_type_transition_var_log (subj)))
+	(call var_log_obj_type_transition_var_log (subj))
+
+	(optional pppd_optional_logrotate
+		(call logrotate.var_log_obj_type (var_log_file))))

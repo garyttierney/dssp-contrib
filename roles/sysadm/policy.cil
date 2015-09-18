@@ -378,10 +378,10 @@
 		(call powertop.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_pppd
-		(call pppd_manage_config (subj))
-		(call pppd_manage_runtime_lock (subj))
-		(call pppd_manage_runtime (subj))
-		(call pppd_manage_var_log (subj)))
+		(call pppd.manage_config (subj))
+		(call pppd.manage_runtime_lock (subj))
+		(call pppd.manage_runtime (subj))
+		(call pppd.manage_var_log (subj)))
 
 	(optional sysadm_optional_ppputil
 		(call ppputil.run (sysadm_subj_type role)))

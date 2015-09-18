@@ -1,7 +1,7 @@
-(typeattribute timedatex_adm_subj_type)
-(typeattribute timedatex_sysbus_chat_client_subj_type)
-
 (block timedatex
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -33,21 +33,21 @@
 		(call sd.reload (subj))
 		(call sd.read_unit_files (subj))
 
-		(allow timedatex_adm_subj_type unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-		(allow timedatex_adm_subj_type unit_file manage_file_perms)
-		(allow timedatex_adm_subj_type unit_file relabel_file_perms))
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
 
 	(optional timedatex_optional_sd_sysbus
 		(call sd.sysbus_chat_client_subj_type (subj)))
 
 	(optional timedatex_optional_sysbus
 		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj))))
+		(call sysbus.read_config_files (subj)))
 
-(optional timedatex_sysbus_chat_client_subj_type_optional_sysbus
-	(allow timedatex.subj timedatex_sysbus_chat_client_subj_type (dbus (send_msg)))
-	(allow timedatex_sysbus_chat_client_subj_type timedatex.subj (dbus (send_msg))))
+	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
-(allow timedatex_adm_subj_type timedatex.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (timedatex_adm_subj_type timedatex.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

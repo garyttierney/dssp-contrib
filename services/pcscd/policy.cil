@@ -1,9 +1,9 @@
-(typeattribute pcscd_adm_subj_type)
-(typeattribute pcscd_client_subj_type)
-
-(typeattribute pcscd_obj_type)
-
 (block pcscd
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -14,19 +14,19 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset pcscd_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset pcscd_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call pcscd_read_config (subj))
-
-	(call pcscd_manage_runtime (subj))
-	(call pcscd_runtime_obj_type_transition_runtime (subj))
 
 	(call dev_rw_usb (subj))
 
@@ -45,31 +45,31 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset pcscd_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow pcscd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional pcscd_optional_sysbus
 		(call sysbus_client_subj_type (subj)))
 
 	(optional pcscd_optional_unconfinedsubj
-		(call unconfinedsubj_read_state (subj))))
+		(call unconfinedsubj_read_state (subj)))
 
-(allow pcscd.subj pcscd_client_subj_type read_file_perms)
-(allow pcscd.subj pcscd_client_subj_type list_dir_perms)
-(allow pcscd.subj pcscd_client_subj_type read_lnk_file_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
-(call pcscd_stream_connect (pcscd_client_subj_type))
+	(call stream_connect (client_subj_type_attribute))
 
-(allow pcscd_adm_subj_type pcscd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (pcscd_adm_subj_type pcscd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow pcscd_adm_subj_type pcscd_obj_type manage_file_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type manage_dir_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type manage_lnk_file_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
 
-(allow pcscd_adm_subj_type pcscd_obj_type relabel_file_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type relabel_dir_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type relabel_lnk_file_perms)
-(allow pcscd_adm_subj_type pcscd_obj_type relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))

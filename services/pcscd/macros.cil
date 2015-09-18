@@ -1,101 +1,40 @@
-(macro pcscd_client_subj_type ((type ARG1))
-	(typeattributeset pcscd_client_subj_type ARG1))
+(in pcscd
+	(blockinherit exec_blk)
 
-(macro pcscd_exec ((type ARG1))
-	(call can_exec (ARG1 pcscd.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro pcscd_auto_subj_type_transition ((type ARG1))
-	(call pcscd_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 pcscd.cmd_file pcscd.subj)))
+	(blockinherit send_signal_blk)
 
-(macro pcscd_send_signal ((type ARG1))
-	(allow ARG1 pcscd.subj (process (signal))))
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro pcscd_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 pcscd.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro pcscd_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 pcscd.config_file list_dir_perms))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit read_runtime_sock_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro pcscd_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 pcscd.config_file pcscd.config_file)))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "pcscd")))
 
-(macro pcscd_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 pcscd.config_file pcscd.config_file)))
+	(macro stream_connect ((type ARG1))
+		(call file_search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
 
-(macro pcscd_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 pcscd.config_file read_file_perms)
-	(allow ARG1 pcscd.config_file list_dir_perms)
-	(allow ARG1 pcscd.config_file read_lnk_file_perms))
-
-(macro pcscd_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 pcscd.config_file manage_file_perms)
-	(allow ARG1 pcscd.config_file manage_dir_perms)
-	(allow ARG1 pcscd.config_file manage_lnk_file_perms))
-
-(macro pcscd_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 pcscd.config_file relabel_file_perms)
-	(allow ARG1 pcscd.config_file relabel_dir_perms)
-	(allow ARG1 pcscd.config_file relabel_lnk_file_perms))
-
-(macro pcscd_search_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 pcscd.runtime_file search_dir_perms))
-
-(macro pcscd_list_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 pcscd.runtime_file list_dir_perms))
-
-(macro pcscd_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_files_pattern (ARG1 pcscd.runtime_file pcscd.runtime_file)))
-
-(macro pcscd_read_runtime_sock_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_sock_files_pattern (ARG1 pcscd.runtime_file pcscd.runtime_file)))
-
-(macro pcscd_read_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_lnk_files_pattern (ARG1 pcscd.runtime_file pcscd.runtime_file)))
-
-(macro pcscd_read_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 pcscd.runtime_file read_file_perms)
-	(allow ARG1 pcscd.runtime_file list_dir_perms)
-	(allow ARG1 pcscd.runtime_file read_sock_file_perms)
-	(allow ARG1 pcscd.runtime_file read_lnk_file_perms))
-
-(macro pcscd_manage_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 pcscd.runtime_file manage_file_perms)
-	(allow ARG1 pcscd.runtime_file manage_dir_perms)
-	(allow ARG1 pcscd.runtime_file manage_sock_file_perms)
-	(allow ARG1 pcscd.runtime_file manage_lnk_file_perms))
-
-(macro pcscd_relabel_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 pcscd.runtime_file relabel_file_perms)
-	(allow ARG1 pcscd.runtime_file relabel_dir_perms)
-	(allow ARG1 pcscd.runtime_file relabel_sock_file_perms)
-	(allow ARG1 pcscd.runtime_file relabel_lnk_file_perms))
-
-(macro pcscd_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 pcscd.runtime_file dir "pcscd")))
-
-(macro pcscd_stream_connect ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call stream_connect_pattern (ARG1 pcscd.runtime_file pcscd.runtime_file pcscd.subj)))
-
-(macro pcscd_adm ((type ARG1)(role ARG2))
-	(typeattributeset pcscd_adm_subj_type ARG1)
-	(optional pcscd_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional pcscd_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional pcscd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional pcscd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

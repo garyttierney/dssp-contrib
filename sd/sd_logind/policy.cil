@@ -116,7 +116,7 @@
 	(call usersubj.use_term (subj))
 
 	(optional sd_logind_optional_polkit
-		(call polkit_sysbus_chat_client_subj_type (subj)))
+		(call polkit.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_logind_optional_sysbus
 		(call sysbus_acquire_service (subj))

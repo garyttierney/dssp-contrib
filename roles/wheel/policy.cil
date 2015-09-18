@@ -647,9 +647,9 @@
 
 (optional wheel_polkit_exec_optional_polkit
 	(block wheel_polkit_exec
-		(blockinherit polkit_exec_subj_blk)
+		(blockinherit polkit_exec.subj_blk)
 
-		(call polkit_role_pattern_polkit_exec (wheel.role wheel_subj_type subj))
+		(call polkit_exec.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))

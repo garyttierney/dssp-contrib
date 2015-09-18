@@ -369,9 +369,9 @@
 		(call plymouth_run_plymouth (sysadm_subj_type role)))
 
 	(optional sysadm_optional_polkit
-		(call polkit_adm (subj role))
-		(call polkit_run_polkit_agent (sysadm_subj_type role))
-		(call polkit_run_polkit_tty_agent (sysadm_subj_type role)))
+		(call polkit.adm (subj role))
+		(call polkit_agent.run (sysadm_subj_type role))
+		(call polkit_tty_agent.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_powertop
 		(call powertop.adm (subj role))
@@ -1149,9 +1149,9 @@
 
 (optional sysadm_polkit_exec_optional_polkit
 	(block sysadm_polkit_exec
-		(blockinherit polkit_exec_subj_blk)
+		(blockinherit polkit_exec.subj_blk)
 
-		(call polkit_role_pattern_polkit_exec (sysadm.role sysadm_subj_type subj))
+		(call polkit_exec.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))

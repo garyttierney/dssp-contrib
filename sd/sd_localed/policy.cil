@@ -41,7 +41,7 @@
 	(call seutil_read_file_context_files (subj))
 
 	(optional sd_localed_optional_polkit
-		(call polkit_sysbus_chat_client_subj_type (subj)))
+		(call polkit.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_localed_optional_sysbus
 		(call sysbus_acquire_service (subj))

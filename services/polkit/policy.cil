@@ -1,15 +1,9 @@
-(roleattribute polkit_agent_role)
-(roleattribute polkit_tty_agent_role)
-
-(typeattribute polkit_adm_subj_type)
-(typeattribute polkit_exec_subj_type)
-(typeattribute polkit_exec_client_subj_type)
-(typeattribute polkit_sysbus_chat_client_subj_type)
-(typeattribute polkit_tty_agent_client_subj_type)
-
-(typeattribute polkit_obj_type)
-
 (block polkit
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -20,20 +14,20 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset polkit_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset polkit_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (process (getsched setsched)))
 	(allow subj self (capability (setuid setgid)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call polkit_read_config (subj))
-
-	(call polkit_manage_var_lib (subj))
-	(call polkit_var_lib_obj_type_transition_var_lib (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 	(call sys_read_cpu_sysfs_files (subj))
@@ -53,16 +47,16 @@
 
 	(call pam_read_config_files (subj))
 
-	(call polkit_exec_polkit_helper (subj))
+	(call polkit_helper.exec (subj))
 
 	(optional polkit_optional_sd
 		(call sd.daemon (subj cmd_file))
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset polkit_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow polkit_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional polkit_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
@@ -72,12 +66,31 @@
 
 	(optional polkit_optional_sysbus
 		(call sysbus_acquire_service (subj))
-		(call sysbus_read_config_files (subj))))
+		(call sysbus_read_config_files (subj)))
+
+	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file_search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
 
 (block polkit_agent
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype polkit_agent_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (setuid)))
 	(allow subj self rw_fifo_file_perms)
@@ -89,7 +102,7 @@
 	(call fs_list_devtmpfs (subj))
 	(call fs_search_devpts (subj))
 
-	(call chkpwd.run (subj polkit_agent_role))
+	(call chkpwd.run (subj role_attribute))
 
 	(call miscfile_read_locale (subj))
 
@@ -97,83 +110,73 @@
 
 	(call pam_read_config (subj))
 
-	(call polkit_sysbus_chat_client_subj_type (subj))
+	(call polkit.sysbus_chat_client_subj_type (subj))
 
 	(optional polkit_agent_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))))
 
 (block polkit_exec
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (polkit_exec_subj_type cmd_file)))
+	(call subj_entry (subj_type_attribute cmd_file))
+
+	(allow client_subj_type_attribute self (capability (dac_override setgid setuid net_admin)))
+	(allow client_subj_type_attribute self (process (setsched)))
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys_audit_set_params (client_subj_type_attribute))
+	(call sys_link_keyring (client_subj_type_attribute))
+	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
+
+	(call file_read_config_files (client_subj_type_attribute))
+
+	(call miscfile_read_locale (client_subj_type_attribute))
+	(call miscfile_read_utmp_runtime_files (client_subj_type_attribute))
+
+	(call nss_client_subj_type (client_subj_type_attribute))
+
+	(call pam_read_config (client_subj_type_attribute))
+
+	(call polkit.sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(optional polkit_exec_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (client_subj_type_attribute)))
+
+	(optional polkit_exec_subj_type_optional_sd_logind
+		(call sd_logind.client_subj_type (client_subj_type_attribute)))
+
+	(call client_subj_type (subj_type_attribute)))
 
 (block polkit_helper
 	(blockinherit cmd_obj_blk))
 
 (block polkit_tty_agent
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roletype polkit_tty_agent_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self rw_fifo_file_perms)
 
-	(allow subj polkit_tty_agent_client_subj_type read_file_perms)
-	(allow subj polkit_tty_agent_client_subj_type list_dir_perms)
-	(allow subj polkit_tty_agent_client_subj_type read_lnk_file_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
 	(call term_use_inherited_console (subj))
 
 	(call nss_client_subj_type (subj))
 
-	(call polkit_run_polkit_agent (subj polkit_tty_agent_role))
-	(call polkit_sysbus_chat_client_subj_type (subj))
+	(call polkit_agent.run (subj role_attribute))
+	(call polkit.sysbus_chat_client_subj_type (subj))
 
 	(optional polkit_tty_agent_optional_plymouth
 		(call plymouth_use_fd_plymouthd (subj)))
 
 	(optional polkit_tty_agent_optional_sd
 		(call sd.use_fd (subj))))
-
-(allow polkit_exec_client_subj_type self (capability (dac_override setgid setuid net_admin)))
-(allow polkit_exec_client_subj_type self (process (setsched)))
-(allow polkit_exec_client_subj_type self rw_fifo_file_perms)
-
-(call sys_audit_set_params (polkit_exec_client_subj_type))
-(call sys_link_keyring (polkit_exec_client_subj_type))
-(call sys_read_kernel_sysctl_files (polkit_exec_client_subj_type))
-
-(call file_read_config_files (polkit_exec_client_subj_type))
-
-(call miscfile_read_locale (polkit_exec_client_subj_type))
-(call miscfile_read_utmp_runtime_files (polkit_exec_client_subj_type))
-
-(call nss_client_subj_type (polkit_exec_client_subj_type))
-
-(call pam_read_config (polkit_exec_client_subj_type))
-
-(call polkit_sysbus_chat_client_subj_type (polkit_exec_client_subj_type))
-
-(optional polkit_exec_client_subj_type_optional_sd_journald
-	(call sd_journald.client_subj_type (polkit_exec_client_subj_type)))
-
-(optional polkit_exec_subj_type_optional_sd_logind
-	(call sd_logind.client_subj_type (polkit_exec_client_subj_type)))
-
-(call polkit_exec_client_subj_type (polkit_exec_subj_type))
-
-(optional polkit_sysbus_chat_client_subj_type_optional_sysbus
-	(allow polkit.subj polkit_sysbus_chat_client_subj_type (dbus (send_msg)))
-	(allow polkit_sysbus_chat_client_subj_type polkit.subj (dbus (send_msg))))
-
-(allow polkit_adm_subj_type polkit.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (polkit_adm_subj_type polkit.subj))
-
-(call file_search_var_lib (polkit_adm_subj_type))
-
-(allow polkit_adm_subj_type polkit_obj_type manage_file_perms)
-(allow polkit_adm_subj_type polkit_obj_type manage_dir_perms)
-(allow polkit_adm_subj_type polkit_obj_type manage_lnk_file_perms)
-
-(allow polkit_adm_subj_type polkit_obj_type relabel_file_perms)
-(allow polkit_adm_subj_type polkit_obj_type relabel_dir_perms)
-(allow polkit_adm_subj_type polkit_obj_type relabel_lnk_file_perms)

@@ -114,7 +114,7 @@
 		(call sd_logind.client_subj_type (subj)))
 
 	(optional xserver_optional_pkexec
-		(call polkit_exec_polkit_exec (subj)))
+		(call polkit_exec.exec (subj)))
 
 	(optional xserver_optional_unconfinedsubj
 		(call unconfinedsubj_rw_shm (subj))

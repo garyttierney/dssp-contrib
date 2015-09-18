@@ -87,7 +87,7 @@
 		(call auto_subj_type_transition (ARG1))
 		(roleattributeset role_attribute ARG2)
 		(optional sd_askpwd_run_sd_askpwd_agent_optional_polkit
-			(call polkit_run_polkit_tty_agent (ARG1 ARG2))))
+			(call polkit_tty_agent.run (ARG1 ARG2))))
 
 	(macro search_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))

@@ -1,181 +1,73 @@
-(macro unbound_exec ((type ARG1))
-	(call can_exec (ARG1 unbound.cmd_file)))
+(in unbound
+	(blockinherit exec_blk)
 
-(macro unbound_auto_subj_type_transition ((type ARG1))
-	(call unbound_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 unbound.cmd_file unbound.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro unbound_send_signal ((type ARG1))
-	(allow ARG1 unbound.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro unbound_exec_unboundanch ((type ARG1))
-	(call can_exec (ARG1 unboundanch.cmd_file)))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro unbound_auto_subj_type_transition_unboundanch ((type ARG1))
-	(call unbound_send_signal_unboundanch (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 unboundanch.cmd_file unboundanch.subj)))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro unbound_send_signal_unboundanch ((type ARG1))
-	(allow ARG1 unboundanch.subj (process (signal))))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "unbound.pid"))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "unbound")))
 
-(macro unbound_exec_unboundcs ((type ARG1))
-	(call can_exec (ARG1 unboundcs.cmd_file)))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit manage_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro unbound_auto_subj_type_transition_unboundcs ((type ARG1))
-	(call unbound_send_signal_unboundcs (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 unboundcs.cmd_file unboundcs.subj)))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "unbound")))
 
-(macro unbound_send_signal_unboundcs ((type ARG1))
-	(allow ARG1 unboundcs.subj (process (signal))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional unbound_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional unbound_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro unbound_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 unbound.config_file search_dir_perms))
+(in unboundanch
+	(blockinherit exec_blk)
 
-(macro unbound_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 unbound.config_file list_dir_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro unbound_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 unbound.config_file unbound.config_file)))
+	(blockinherit send_signal_blk))
 
-(macro unbound_manage_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call manage_files_pattern (ARG1 unbound.config_file unbound.config_file)))
+(in unboundcs
+	(blockinherit exec_blk)
 
-(macro unbound_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 unbound.config_file unbound.config_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro unbound_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 unbound.config_file read_file_perms)
-	(allow ARG1 unbound.config_file list_dir_perms)
-	(allow ARG1 unbound.config_file read_lnk_file_perms))
+	(blockinherit send_signal_blk)
 
-(macro unbound_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 unbound.config_file manage_file_perms)
-	(allow ARG1 unbound.config_file manage_dir_perms)
-	(allow ARG1 unbound.config_file manage_lnk_file_perms))
+	(blockinherit read_tmpfs_files_blk)
+	(blockinherit manage_tmpfs_files_blk)
+	(blockinherit relabel_tmpfs_files_blk)
 
-(macro unbound_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 unbound.config_file relabel_file_perms)
-	(allow ARG1 unbound.config_file relabel_dir_perms)
-	(allow ARG1 unbound.config_file relabel_lnk_file_perms))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))))
 
-(macro unbound_search_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 unbound.runtime_file search_dir_perms))
-
-(macro unbound_list_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 unbound.runtime_file list_dir_perms))
-
-(macro unbound_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_files_pattern (ARG1 unbound.runtime_file unbound.runtime_file)))
-
-(macro unbound_manage_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call manage_files_pattern (ARG1 unbound.runtime_file unbound.runtime_file)))
-
-(macro unbound_read_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_lnk_files_pattern (ARG1 unbound.runtime_file unbound.runtime_file)))
-
-(macro unbound_read_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 unbound.runtime_file read_file_perms)
-	(allow ARG1 unbound.runtime_file list_dir_perms)
-	(allow ARG1 unbound.runtime_file read_lnk_file_perms))
-
-(macro unbound_manage_runtime ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 unbound.runtime_file manage_file_perms)
-	(allow ARG1 unbound.runtime_file manage_dir_perms)
-	(allow ARG1 unbound.runtime_file manage_lnk_file_perms))
-
-(macro unbound_relabel_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 unbound.runtime_file relabel_file_perms)
-	(allow ARG1 unbound.runtime_file relabel_dir_perms)
-	(allow ARG1 unbound.runtime_file relabel_lnk_file_perms))
-
-(macro unbound_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 unbound.runtime_file file "unbound.pid"))
-	(call file_runtime_obj_type_transition (ARG1 unbound.runtime_file dir "unbound")))
-
-(macro unbound_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 unbound.var_lib_file search_dir_perms))
-
-(macro unbound_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 unbound.var_lib_file list_dir_perms))
-
-(macro unbound_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 unbound.var_lib_file unbound.var_lib_file)))
-
-(macro unbound_manage_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call manage_files_pattern (ARG1 unbound.var_lib_file unbound.var_lib_file)))
-
-(macro unbound_read_var_lib_lnk_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_lnk_files_pattern (ARG1 unbound.var_lib_file unbound.var_lib_file)))
-
-(macro unbound_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 unbound.var_lib_file read_file_perms)
-	(allow ARG1 unbound.var_lib_file list_dir_perms)
-	(allow ARG1 unbound.var_lib_file read_lnk_file_perms))
-
-(macro unbound_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 unbound.var_lib_file manage_file_perms)
-	(allow ARG1 unbound.var_lib_file manage_dir_perms)
-	(allow ARG1 unbound.var_lib_file manage_lnk_file_perms))
-
-(macro unbound_relabel_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 unbound.var_lib_file relabel_file_perms)
-	(allow ARG1 unbound.var_lib_file relabel_dir_perms)
-	(allow ARG1 unbound.var_lib_file relabel_lnk_file_perms))
-
-(macro unbound_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 unbound.var_lib_file dir "unbound")))
-
-(macro unbound_read_unboundcs_tmpfs_files ((type ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 unboundcs.tmpfs_file read_file_perms))
-
-(macro unbound_manage_unboundcs_tmpfs_files ((type ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 unboundcs.tmpfs_file manage_file_perms))
-
-(macro unbound_relabel_unboundcs_tmpfs_files ((type ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 unboundcs.tmpfs_file relabel_file_perms))
-
-(macro unbound_tmpfs_obj_type_transition_unboundcs_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 unboundcs.tmpfs_file file "*")))
-
-(macro unbound_tcp_connect_unbounddnsctl_port ((type ARG1))
-	(allow ARG1 unbounddnsctl.port (tcp_socket (name_connect))))
-
-(macro unbound_tcp_bind_unbounddnsctl_port ((type ARG1))
-	(allow ARG1 unbounddnsctl.port (tcp_socket (name_bind))))
-
-(macro unbound_udp_bind_unbounddnsctl_port ((type ARG1))
-	(allow ARG1 unbounddnsctl.port (udp_socket (name_bind))))
-
-(macro unbound_adm ((type ARG1)(role ARG2))
-	(typeattributeset unbound_adm_subj_type ARG1)
-	(optional unbound_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional unbound_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+(in unbounddnsctl
+	(blockinherit tcp_bind_unreserved_port_blk)
+	(blockinherit tcp_connect_port_blk)
+	(blockinherit udp_bind_unreserved_port_blk))

@@ -15,8 +15,9 @@
 
 	(call miscfile_read_locale (subj))
 
-	(call unbound_tcp_connect_unbounddnsctl_port (subj))
-	(call unbound_read_config (subj))
+	(call unbound.read_config (subj))
+
+	(call unbounddnsctl.tcp_connect_port (subj))
 
 	(optional unboundctl_optional_sd
 		(call sd.forked_subj_type (subj))))
@@ -32,9 +33,9 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call unbound_read_config (subj))
-	(call unbound_read_var_lib (subj))
-	(call unbound_read_runtime (subj))
+	(call unbound.read_config (subj))
+	(call unbound.read_var_lib (subj))
+	(call unbound.read_runtime (subj))
 
 	(optional unboundcc_optional_sd
 		(call sd.daemon (subj cmd_file))))

@@ -34,7 +34,7 @@
 	(call usersubj.use_term (subj_type_attribute))
 
 	(optional gpg_agent_subj_type_optional_tor
-		(call tor_read_config_files (subj_type_attribute)))
+		(call tor.read_config_files (subj_type_attribute)))
 
 	(optional gpg_agent_subj_type_optional_scdaemon
 		(call scdaemon.stream_connect (subj_type_attribute))))

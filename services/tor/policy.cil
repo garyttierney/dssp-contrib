@@ -1,40 +1,32 @@
-(roleattribute tor_role)
-
-(typeattribute tor_adm_subj_type)
-
-(typeattribute tor_obj_type)
-
 (block tor
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset tor_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype tor_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset tor_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset tor_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit file_var_log_obj_blk)
 
-	(typeattributeset tor_obj_type var_log_file)
-
-	(optional tor_var_log_optional_logrotate
-		(call logrotate.var_log_obj_type (var_log_file)))
-
-	(blockinherit usersubj.home_user_obj_blk)
-
-	(allow subj self (capability (setgid setuid)))
-	(allow subj self create_tcp_stream_socket_perms)
-
-	(call tor_read_config (subj))
-
-	(call tor_manage_var_lib (subj))
-	(call tor_var_lib_obj_type_transition_var_lib (subj))
+	(typeattributeset obj_type_attribute var_log_file)
 
 	(allow subj var_log_file manage_dir_perms)
 	(allow subj var_log_file (file (setattr)))
@@ -42,16 +34,18 @@
 	(allow subj var_log_file create_file_perms)
 	(allow subj var_log_file read_file_perms)
 
-	(call tor_var_log_obj_type_transition_var_log (subj))
+	(call var_log_obj_type_transition_var_log (subj))
 
-	(call tor_manage_home (subj))
-	(call tor_home_dir_obj_type_transition_home (subj))
+	(optional tor_var_log_optional_logrotate
+		(call logrotate.var_log_obj_type (var_log_file)))
 
-	(call tor_tcp_bind_tor_control_port (subj))
-	(call tor_tcp_bind_tor_trans_port (subj))
+	(blockinherit usersubj.home_user_obj_blk)
 
-	(call tor_tcp_connect_tor_dir_port (subj))
-	(call tor_tcp_connect_tor_or_port (subj))
+	(call manage_home_user (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
+	(allow subj self (capability (setgid setuid)))
+	(allow subj self create_tcp_stream_socket_perms)
 
 	(call sys_list_cpu_sysfs (subj))
 	(call sys_read_cpu_sysfs_files (subj))
@@ -72,6 +66,12 @@
 
 	(call nss_client_subj_type (subj))
 
+	(call tor_control.tcp_bind_unreserved_port (subj))
+	(call tor_trans.tcp_bind_unreserved_port (subj))
+
+	(call tor_dir.tcp_connect_port (subj))
+	(call tor_or.tcp_connect_port (subj))
+
 	(call tor_socks.tcp_bind_unreserved_port (subj))
 
 	(optional tor_optional_http
@@ -85,12 +85,26 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset tor_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
 		(call sd.daemon_rwdir_obj_type (var_log_file))
 		(call sd.daemon_rwdir_obj_type (var_lib_file))
 
-		(allow tor_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file_search_var_lib (adm_subj_type_attribute))
+	(call file_search_var_log (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
 
 (block tor_control
 	(blockinherit net_unreserved_port_obj_blk))
@@ -103,17 +117,3 @@
 
 (block tor_trans
 	(blockinherit net_unreserved_port_obj_blk))
-
-(allow tor_adm_subj_type tor.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (tor_adm_subj_type tor.subj))
-
-(call file_search_var_lib (tor_adm_subj_type))
-(call file_search_var_log (tor_adm_subj_type))
-
-(allow tor_adm_subj_type tor_obj_type manage_file_perms)
-(allow tor_adm_subj_type tor_obj_type manage_dir_perms)
-(allow tor_adm_subj_type tor_obj_type manage_lnk_file_perms)
-
-(allow tor_adm_subj_type tor_obj_type relabel_file_perms)
-(allow tor_adm_subj_type tor_obj_type relabel_dir_perms)
-(allow tor_adm_subj_type tor_obj_type relabel_lnk_file_perms)

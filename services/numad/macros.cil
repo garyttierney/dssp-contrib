@@ -1,46 +1,27 @@
-(macro numad_exec ((type ARG1))
-	(call can_exec (ARG1 numad.cmd_file)))
+(in numad
+	(blockinherit exec_blk)
 
-(macro numad_auto_subj_type_transition ((type ARG1))
-	(call numad_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 numad.cmd_file numad.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro numad_send_signal ((type ARG1))
-	(allow ARG1 numad.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro numad_read_var_log_files ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 numad.var_log_file read_file_perms))
+	(blockinherit read_var_log_files_blk)
+	(blockinherit manage_var_log_files_blk)
+	(blockinherit relabel_var_log_files_blk)
 
-(macro numad_manage_var_log_files ((type ARG1))
-	(call file_rw_var_log_dirs (ARG1))
-	(allow ARG1 numad.var_log_file manage_file_perms))
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file_var_log_obj_type_transition (ARG1 var_log_file file "numad")))
 
-(macro numad_relabel_var_log_files ((type ARG1))
-	(call file_search_var_log (ARG1))
-	(allow ARG1 numad.var_log_file relabel_file_perms))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro numad_var_log_obj_type_transition_var_log ((type ARG1))
-	(call file_var_log_obj_type_transition (ARG1 numad.var_log_file file "numad")))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "numad.pid")))
 
-(macro numad_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 numad.runtime_file read_file_perms))
-
-(macro numad_manage_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 numad.runtime_file manage_file_perms))
-
-(macro numad_relabel_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 numad.runtime_file relabel_file_perms))
-
-(macro numad_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 numad.runtime_file file "numad.pid")))
-
-(macro numad_adm ((type ARG1)(role ARG2))
-	(typeattributeset numad_adm_subj_type ARG1)
-	(optional numad_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional numad_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional numad_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional numad_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

@@ -1,8 +1,4 @@
-(macro torrent_tcp_connect_torrent_port ((type ARG1))
-	(allow ARG1 torrent.port (tcp_socket (name_connect))))
-
-(macro torrent_tcp_bind_torrent_port ((type ARG1))
-	(allow ARG1 torrent.port (tcp_socket (name_bind))))
-
-(macro torrent_udp_bind_torrent_port ((type ARG1))
-	(allow ARG1 torrent.port (udp_socket (name_bind))))
+(in torrent
+	(blockinherit tcp_bind_unreserved_port_blk)
+	(blockinherit tcp_connect_port_blk)
+	(blockinherit udp_bind_unreserved_port_blk))

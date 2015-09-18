@@ -19,7 +19,7 @@
 	(call nss_client_subj_type (subj))
 
 	(optional chronyc_optional_dhclient
-		(call dhclient_read_var_lib (subj)))
+		(call dhclient.read_var_lib (subj)))
 
 	(optional chronyc_optional_sd
 		(call sd.daemon (subj cmd_file))))
@@ -102,7 +102,7 @@
 	(call ntp_udp_bind_ntp_port (subj))
 
 	(optional chronyd_optional_dhclient
-		(call dhclient_read_var_lib (subj)))
+		(call dhclient.read_var_lib (subj)))
 
 	(optional chronyd_optional_sd
 		(call sd.daemon (subj cmd_file))

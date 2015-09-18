@@ -95,11 +95,11 @@
 	(call udev_client_subj_type (subj))
 
 	(optional nm_optional_dhclient
-		(call dhclient_delete_runtime_files (subj))
-		(call dhclient_read_config_files (subj))
-		(call dhclient_read_var_lib_files (subj))
-		(call dhclient_send_sigkill (subj))
-		(call dhclient_auto_subj_type_transition (subj)))
+		(call dhclient.delete_runtime_files (subj))
+		(call dhclient.read_config_files (subj))
+		(call dhclient.read_var_lib_files (subj))
+		(call dhclient.send_sigkill (subj))
+		(call dhclient.auto_subj_type_transition (subj)))
 
 	(optional nm_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -167,7 +167,7 @@
 		(call chronyc.auto_subj_type_transition (subj)))
 
 	(optional nm_disp_optional_dhclient
-		(call dhclient_auto_subj_type_transition (subj)))
+		(call dhclient.auto_subj_type_transition (subj)))
 
 	(optional nmdisp_optional_sd
 		(call sd.daemon (subj cmd_file)))

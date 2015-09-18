@@ -163,9 +163,9 @@
 		(call dd_run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dhclient
-		(call dhclient_manage_config (subj))
-		(call dhclient_manage_runtime_files (subj))
-		(call dhclient_manage_var_lib (subj)))
+		(call dhclient.manage_config (subj))
+		(call dhclient.manage_runtime_files (subj))
+		(call dhclient.manage_var_lib (subj)))
 
 	(optional sysadm_optional_dirmngr
 		(call dirmngr.run (sysadm_subj_type role))

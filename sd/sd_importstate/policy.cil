@@ -29,8 +29,8 @@
 	(call seutil_auto_subj_type_transition_setfiles (subj))
 
 	(optional sd_importstate_optional_dhclient
-		(call dhclient_read_var_lib (subj))
-		(call dhclient_setattr_var_lib (subj)))
+		(call dhclient.read_var_lib (subj))
+		(call dhclient.setattr_var_lib (subj)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

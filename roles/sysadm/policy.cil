@@ -585,10 +585,10 @@
 		(call setools.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_ssh
-		(call ssh_adm (sysadm_subj_type role))
-		(call ssh_run_ssh_sftpserver (sysadm_subj_type role))
-		(call ssh_run_ssh_keygen (sysadm_subj_type role))
-		(call ssh_priv_login_subj_type (subj)))
+		(call ssh.adm (sysadm_subj_type role))
+		(call ssh_sftpserver.run (sysadm_subj_type role))
+		(call ssh_keygen.run (sysadm_subj_type role))
+		(call ssh.priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_sysbus
 		(call sysbus_adm (subj role)))
@@ -782,7 +782,7 @@
 	(call mutt.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_mutt.subj)))
 
 (optional sysadm_emacs_optional_sysadm_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_emacs.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_emacsclient_optional_emacsclient
 	(block sysadm_emacsclient
@@ -821,7 +821,7 @@
 	(call ulockmgr.run (sysadm.subj sysadm.role)))
 
 (optional sysadm_fuse_optional_sysadm_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_fuse_sshfs.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_fuse_sshfs.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_git_optional_git
 	(block sysadm_git
@@ -847,7 +847,7 @@
 	(call tor_socks.spec_auto_subj_type_transition (sysadm_git.subj sysadm_tor_socks.subj)))
 
 (optional sysadm_git_optional_sysadm_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_git.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_git.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_git_email_optional_git_email
 	(block sysadm_git_email
@@ -887,7 +887,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_analyze_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_analyze.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_analyze.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_busctl_optional_busctl
 	(block sysadm_busctl
@@ -903,7 +903,7 @@
 	(call sessbus.client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))
 
 (optional sysadm_busctl_optional_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_busctl.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_busctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_fedpkg_optional_fedpkg
 	(block sysadm_fedpkg
@@ -957,7 +957,7 @@
 		(call hostnamectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_hostnamectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_irssi_optional_irssi
 	(block sysadm_irssi
@@ -1000,7 +1000,7 @@
 		(call localectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_localectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_localectl.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_localectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_loginctl_optional_loginctl
 	(block sysadm_loginctl
@@ -1009,7 +1009,7 @@
 		(call loginctl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_loginctl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_loginctl.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_loginctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_lynx_optional_lynx
 	(block sysadm_lynx
@@ -1040,7 +1040,7 @@
 		(call machinectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_machinectl_optional_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_machinectl.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_machinectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_mplayer_optional_mplayer
 	(block sysadm_mplayer
@@ -1192,7 +1192,7 @@
 	(call sduser.spec_stream_connect (sysadm_run.subj sysadm_sduser.subj)))
 
 (optional sysadm_run_optional_sysadm_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_run.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_run.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_screen_optional_screen
 	(block sysadm_screen
@@ -1274,9 +1274,9 @@
 
 (optional sysadm_ssh_agent_optional_ssh
 	(block sysadm_ssh_agent
-		(blockinherit ssh_agent_subj_blk)
+		(blockinherit ssh_agent.subj_blk)
 
-		(call ssh_role_pattern_ssh_agent (sysadm.role sysadm_subj_type subj))
+		(call ssh_agent.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj sysadm.subj))
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
@@ -1285,11 +1285,11 @@
 
 (optional sysadm_ssh_client_optional_ssh
 	(block sysadm_ssh_client
-		(blockinherit ssh_client_subj_blk)
+		(blockinherit ssh_client.subj_blk)
 
 		(allow subj self (capability (setuid setgid dac_override net_admin)))
 
-		(call ssh_role_pattern_ssh_client (sysadm.role sysadm_subj_type subj))
+		(call ssh_client.role_pattern (sysadm.role sysadm_subj_type subj))
 
 		(call standard_obj_id_change_exemption_subj_type (subj))
 
@@ -1322,7 +1322,7 @@
 		(call systemctl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_systemctl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_systemctl.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_systemctl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_timedatectl_optional_timedatectl
 	(block sysadm_timedatectl
@@ -1331,7 +1331,7 @@
 		(call timedatectl.role_pattern (sysadm.role sysadm_subj_type subj))))
 
 (optional sysadm_timedatectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_tor_socks_optional_tor_socks
 	(block sysadm_tor_socks
@@ -1378,7 +1378,7 @@
 
 (optional sysadm_tor_socks_optional_sysadm_ssh_client
 	(call tor_socks.client_subj_type (sysadm_ssh_client.subj))
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
 
 (optional sysadm_visudo_optional_visudo
 	(block sysadm_visudo

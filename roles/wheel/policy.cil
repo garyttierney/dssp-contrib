@@ -149,9 +149,9 @@
 		(call setools.exec (subj)))
 
 	(optional wheel_optional_ssh
-		(call ssh_run_ssh_sftpserver (wheel_subj_type role))
-		(call ssh_run_ssh_keygen (wheel_subj_type role))
-		(call ssh_login_subj_type (subj)))
+		(call ssh_sftpserver.run (wheel_subj_type role))
+		(call ssh_keygen.run (wheel_subj_type role))
+		(call ssh.login_subj_type (subj)))
 
 	(optional wheel_optional_sysadm
 		(call sysadm_roleallow (role))
@@ -309,7 +309,7 @@
 	(call mutt.spec_auto_subj_type_transition (wheel_emacs.subj wheel_mutt.subj)))
 
 (optional wheel_emacs_optional_wheel_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_emacs.subj wheel_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (wheel_emacs.subj wheel_ssh_client.subj)))
 
 (optional wheel_emacsclient_optional_emacsclient
 	(block wheel_emacsclient
@@ -354,7 +354,7 @@
 	(call ulockmgr.run (wheel.subj wheel.role)))
 
 (optional wheel_fuse_optional_wheel_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_fuse_sshfs.subj wheel_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (wheel_fuse_sshfs.subj wheel_ssh_client.subj)))
 
 (optional wheel_git_optional_git
 	(block wheel_git
@@ -380,7 +380,7 @@
 	(call tor_socks.spec_auto_subj_type_transition (wheel_git.subj wheel_tor_socks.subj)))
 
 (optional wheel_git_optional_wheel_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_git.subj wheel_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (wheel_git.subj wheel_ssh_client.subj)))
 
 (optional wheel_git_email_optional_git_email
 	(block wheel_git_email
@@ -419,7 +419,7 @@
 		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
 
 (optional wheel_analyze_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_analyze.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_analyze.subj wheel_ssh_client.subj)))
 
 (optional wheel_busctl_optional_busctl
 	(block wheel_busctl
@@ -435,7 +435,7 @@
 	(call sessbus.client_pattern (wheel_busctl.subj wheel_sessbus.subj)))
 
 (optional wheel_busctl_optional_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_busctl.subj wheel_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (wheel_busctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_firefox_optional_firefox
 	(block wheel_firefox
@@ -477,7 +477,7 @@
 		(call hostnamectl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_hostnamectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_hostnamectl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_hostnamectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_irssi_optional_irssi
 	(block wheel_irssi
@@ -518,7 +518,7 @@
 		(call localectl.role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
 
 (optional wheel_localectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_localectl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_localectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_loginctl_optional_loginctl
 	(block wheel_loginctl
@@ -527,7 +527,7 @@
 		(call loginctl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_loginctl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_loginctl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_loginctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_lynx_optional_lynx
 	(block wheel_lynx
@@ -588,7 +588,7 @@
 		(call machinectl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_machinectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_machinectl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_machinectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_mplayer_optional_mplayer
 	(block wheel_mplayer
@@ -734,9 +734,9 @@
 
 (optional wheel_ssh_agent_optional_ssh
 	(block wheel_ssh_agent
-		(blockinherit ssh_agent_subj_blk)
+		(blockinherit ssh_agent.subj_blk)
 
-		(call ssh_role_pattern_ssh_agent (wheel.role wheel_subj_type subj))
+		(call ssh_agent.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj wheel.subj))
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))
@@ -745,9 +745,9 @@
 
 (optional wheel_ssh_client_optional_ssh
 	(block wheel_ssh_client
-		(blockinherit ssh_client_subj_blk)
+		(blockinherit ssh_client.subj_blk)
 
-		(call ssh_role_pattern_ssh_client (wheel.role wheel_subj_type subj))
+		(call ssh_client.role_pattern (wheel.role wheel_subj_type subj))
 
 		(call cmd_shell_auto_subj_type_transition (subj wheel.subj))))
 
@@ -776,7 +776,7 @@
 		(call systemctl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_systemctl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_systemctl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_systemctl.subj wheel_ssh_client.subj)))
 
 (optional wheel_timedatectl_optional_timedatectl
 	(block wheel_timedatectl
@@ -785,7 +785,7 @@
 		(call timedatectl.role_pattern (wheel.role wheel_subj_type subj))))
 
 (optional wheel_timedatectl_optional_ssh
-		(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_timedatectl.subj wheel_ssh_client.subj)))
+		(call ssh_client.spec_auto_subj_type_transition (wheel_timedatectl.subj wheel_ssh_client.subj)))
 
 (optional wheel_tor_socks_optional_tor_socks
 	(block wheel_tor_socks
@@ -832,7 +832,7 @@
 
 (optional wheel_tor_socks_optional_wheel_ssh_client
 	(call tor_socks.client_subj_type (wheel_ssh_client.subj))
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (wheel_tor_socks.subj wheel_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_ssh_client.subj)))
 
 (optional wheel_vlock_optional_vlock
 	(block wheel_vlock

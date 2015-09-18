@@ -1,493 +1,325 @@
-(block ssh_sshd_blk
-	(blockabstract ssh_sshd_blk)
+(in ssh
+	(macro login_subj_type ((type ARG1))
+		(typeattributeset login_subj_type_attribute ARG1))
 
-	(blockinherit subj_common_blk)
+	(macro priv_login_subj_type ((type ARG1))
+		(typeattributeset priv_login_subj_type_attribute ARG1))
 
-	(typeattributeset ssh_sshd_subj_type subj)
+	(macro set_priv_login_boolean ((type ARG1))
+		(call sec_set_spec_boolean (ARG1 ssh_priv_login.bool))
+		(optional ssh_set_priv_login_boolean_optional_seutil
+			(call seutil_exec_setsebool (ARG1))))
 
-	(blockinherit cmd_obj_blk)
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset ssh.adm_subj_type_attribute ARG1)
+		(optional ssh_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional ssh_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-	(call subj_entry (subj cmd_file))
+(in sshd
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(roletype sys.role subj)
+		(blockinherit subj_common_blk)
 
-	(blockinherit net_reserved_port_obj_blk)
+		(typeattributeset sshd.subj_type_attribute subj)
 
-	(typeattributeset ssh_sshd_port_obj_type port)
+		(blockinherit cmd_obj_blk)
 
-	(blockinherit file_config_obj_blk)
+		(call subj_entry (subj cmd_file))
 
-	(typeattributeset ssh_sshd_obj_type config_file)
-	(typeattributeset ssh_sshd_config_obj_type config_file)
+		(roletype sys.role subj)
 
-	(blockinherit file_runtime_obj_blk)
+		(blockinherit net_reserved_port_obj_blk)
 
-	(typeattributeset ssh_sshd_obj_type runtime_file)
-	(typeattributeset ssh_sshd_runtime_obj_type runtime_file)
+		(typeattributeset sshd.port_obj_type_attribute port)
 
-	(blockinherit term_login_pty_obj_blk)
+		(blockinherit file_config_obj_blk)
 
-	(allow subj runtime_file manage_file_perms)
-	(call file_runtime_obj_type_transition (subj runtime_file file "*"))
+		(typeattributeset sshd.obj_type_attribute config_file)
+		(typeattributeset sshd.config_obj_type_attribute config_file)
 
-	(allow subj login_pty_dev rw_term_perms)
-	(allow subj login_pty_dev (chr_file (setattr)))
-	(allow subj login_pty_dev relabelfrom_chr_file_perms)
-	(call term_create_pty (subj login_pty_dev))
+		(blockinherit file_runtime_obj_blk)
 
-	(call read_files_pattern (subj config_file config_file))
+		(typeattributeset sshd.obj_type_attribute runtime_file)
+		(typeattributeset sshd.runtime_obj_type_attribute runtime_file)
 
-	(allow subj port (tcp_socket (name_bind)))
+		(blockinherit term_login_pty_obj_blk)
 
-	(optional ssh_sshd_blk_optional_sd
-		(call sd.daemon (subj cmd_file))
+		(allow subj runtime_file manage_file_perms)
+		(call file_runtime_obj_type_transition (subj runtime_file file "*"))
 
-		(blockinherit sd.unit_obj_blk)
+		(allow subj login_pty_dev rw_term_perms)
+		(allow subj login_pty_dev (chr_file (setattr)))
+		(allow subj login_pty_dev relabelfrom_chr_file_perms)
+		(call term_create_pty (subj login_pty_dev))
 
-		(typeattributeset ssh_sshd_obj_type unit_file)
+		(call read_files_pattern (subj config_file config_file))
 
-		(allow ssh_adm_subj_type sshd.unit_file (service (stop status disable enable reload start)))))
+		(allow subj port (tcp_socket (name_bind)))
 
-(block ssh_sshd_key_blk
-	(blockabstract ssh_sshd_key_blk)
+		(optional ssh_sshd_blk_optional_sd
+			(call sd.daemon (subj cmd_file))
 
-	(blockinherit file_obj_blk)
+			(blockinherit sd.unit_obj_blk)
 
-	(typeattributeset ssh_sshd_key_obj_type file))
+			(typeattributeset sshd.obj_type_attribute unit_file)
 
-(block ssh_sshd_keygen_blk
-	(blockabstract ssh_sshd_keygen_blk)
+			(allow ssh.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
 
-	(blockinherit subj_common_blk)
+	(blockinherit exec_blk)
 
-	(typeattributeset ssh_sshd_keygen_subj_type subj)
+	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit send_signal_blk)
 
-	(call subj_entry (subj cmd_file))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit rw_config_dirs_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-	(roletype sys.role subj)
+	(blockinherit search_all_config_blk)
+	(blockinherit list_all_config_blk)
+	(blockinherit rw_all_config_dirs_blk)
+	(blockinherit read_all_config_files_blk)
+	(blockinherit read_all_config_lnk_files_blk)
+	(blockinherit read_all_config_blk)
+	(blockinherit manage_all_config_blk)
+	(blockinherit relabel_all_config_blk)
 
-	(optional ssh_sshd_keygen_optional_sd
-		(call sd.daemon (subj cmd_file))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-		(blockinherit sd.unit_obj_blk)
+	(blockinherit read_all_runtime_files_blk)
+	(blockinherit manage_all_runtime_files_blk)
+	(blockinherit relabel_all_runtime_files_blk)
 
-		(typeattributeset ssh_sshd_obj_type unit_file)
+	(blockinherit tcp_connect_port_blk)
+	(blockinherit tcp_bind_reserved_port_blk)
+	(blockinherit udp_bind_reserved_port_blk)
 
-		(allow ssh_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+	(macro tcp_connect_all_port ((type ARG1))
+		(allow ARG1 sshd.port_obj_type_attribute (tcp_socket (name_connect))))
 
-(block ssh_sshd_net_blk
-	(blockabstract ssh_sshd_net_blk)
+	(macro tcp_bind_all_reserved_port ((type ARG1))
+		(allow ARG1 self (capability (net_bind_service)))
+		(allow ARG1 sshd.port_obj_type_attribute (tcp_socket (name_bind))))
 
-	(blockinherit subj_common_blk)
+	(macro udp_bind_all_reserved_port ((type ARG1))
+		(allow ARG1 self (capability (net_bind_service)))
+		(allow ARG1 sshd.port_obj_type_attribute (udp_socket (name_bind))))
 
-	(typeattributeset ssh_sshd_net_subj_type subj)
+	(blockinherit use_fd_blk)
+	(blockinherit use_fd_all_blk)
 
-	(roletype sys.role subj))
+	(blockinherit rw_inherited_unix_stream_sockets_blk)
+	(blockinherit rw_inherited_unix_dgram_sockets_blk)
 
-(block ssh_client_subj_blk
-	(blockabstract ssh_client_subj_blk)
+	(macro rw_inherited_tcp_sockets ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 subj (tcp_socket (read write getopt setopt getattr))))
 
-	(blockinherit app.application_subj_blk)
+	(blockinherit rw_inherited_fifo_files_blk)
 
-	(typeattributeset ssh_client_subj_type subj))
+	(blockinherit rw_inherited_unix_stream_sockets_all_blk)
+	(blockinherit rw_inherited_unix_dgram_sockets_all_blk)
 
-(block ssh_agent_subj_blk
-	(blockabstract ssh_agent_subj_blk)
+	(macro rw_inherited_tcp_sockets_all_subj ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 sshd.subj_type_attribute (tcp_socket (read write getopt setopt getattr))))
 
-	(blockinherit app.application_subj_blk)
+	(blockinherit rw_inherited_fifo_files_all_blk))
 
-	(typeattributeset ssh_agent_subj_type subj))
+(in sshd_key
+	(block obj_blk
+		(blockabstract obj_blk)
 
-(macro ssh_login_subj_type ((type ARG1))
-	(typeattributeset ssh_login_subj_type ARG1))
+		(blockinherit file_obj_blk)
 
-(macro ssh_priv_login_subj_type ((type ARG1))
-	(typeattributeset ssh_priv_login_subj_type ARG1))
+		(typeattributeset sshd_key.obj_type_attribute file))
 
-(macro ssh_exec_ssh_client ((type ARG1))
-	(call can_exec (ARG1 ssh_client.cmd_file)))
+	(macro read_files ((type ARG1))
+		(call sshd.search_config (ARG1))
+		(allow ARG1 sshd_key.file read_file_perms))
 
-(macro ssh_exec_ssh_sftpserver ((type ARG1))
-	(call can_exec (ARG1 ssh_sftpserver.cmd_file)))
+	(macro manage_files ((type ARG1))
+		(call sshd.rw_config_dirs (ARG1))
+		(allow ARG1 sshd_key.file manage_file_perms))
 
-(macro ssh_auto_subj_type_transition_ssh_sftpserver ((type ARG1))
-	(call ssh_send_signal_ssh_sftpserver (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 ssh_sftpserver.cmd_file ssh_sftpserver.subj)))
+	(macro relabel_files ((type ARG1))
+		(call sshd.search_config (ARG1))
+		(allow ARG1 sshd_key.file relabel_file_perms))
 
-(macro ssh_send_signal_ssh_sftpserver ((type ARG1))
-	(allow ARG1 ssh_sftpserver.subj (process (signal))))
+	(macro read_all_files ((type ARG1))
+		(call sshd.search_all_config (ARG1))
+		(allow ARG1 sshd_key.obj_type_attribute read_file_perms))
 
-(macro ssh_run_ssh_sftpserver ((type ARG1)(role ARG2))
-	(call ssh_auto_subj_type_transition_ssh_sftpserver (ARG1))
-	(roleattributeset ssh_sftpserver_role ARG2))
+	(macro manage_all_files ((type ARG1))
+		(call sshd.rw_all_config_dirs (ARG1))
+		(allow ARG1 sshd_key.obj_type_attribute manage_file_perms))
 
-(macro ssh_exec_ssh_agent ((type ARG1))
-	(call can_exec (ARG1 ssh_agent.cmd_file)))
+	(macro relabel_all_files ((type ARG1))
+		(call sshd.search_all_config (ARG1))
+		(allow ARG1 sshd_key.obj_type_attribute relabel_file_perms)))
 
-(macro ssh_exec_ssh_keygen ((type ARG1))
-	(call can_exec (ARG1 ssh_keygen.cmd_file)))
+(in sshd_keygen
+	(block subj_blk
+		(blockabstract subj_blk)
 
-(macro ssh_auto_subj_type_transition_ssh_keygen ((type ARG1))
-	(call ssh_send_signal_ssh_keygen (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 ssh_keygen.cmd_file ssh_keygen.subj)))
+		(blockinherit subj_common_blk)
 
-(macro ssh_send_signal_ssh_keygen ((type ARG1))
-	(allow ARG1 ssh_keygen.subj (process (signal))))
+		(typeattributeset sshd_keygen.subj_type_attribute subj)
 
-(macro ssh_run_ssh_keygen ((type ARG1)(role ARG2))
-	(call ssh_auto_subj_type_transition_ssh_keygen (ARG1))
-	(roleattributeset ssh_keygen_role ARG2))
+		(blockinherit cmd_obj_blk)
 
-(macro ssh_exec_ssh_helper ((type ARG1))
-	(call can_exec (ARG1 ssh_helper.cmd_file)))
+		(call subj_entry (subj cmd_file))
 
-(macro ssh_exec_sshd ((type ARG1))
-	(call can_exec (ARG1 sshd.cmd_file)))
+		(roletype sys.role subj)
 
-(macro ssh_auto_subj_type_transition_sshd ((type ARG1))
-	(call ssh_send_signal_sshd (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sshd.cmd_file sshd.subj)))
+		(optional ssh_sshd_keygen_optional_sd
+			(call sd.daemon (subj cmd_file))
 
-(macro ssh_send_signal_sshd ((type ARG1))
-	(allow ARG1 sshd.subj (process (signal))))
+			(blockinherit sd.unit_obj_blk)
 
-(macro ssh_exec_sshd_keygen ((type ARG1))
-	(call can_exec (ARG1 sshd_keygen.cmd_file)))
+			(typeattributeset sshd.obj_type_attribute unit_file)
 
-(macro ssh_auto_subj_type_transition_sshd_keygen ((type ARG1))
-	(call ssh_send_signal_sshd_keygen (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sshd_keygen.cmd_file sshd_keygen.subj)))
+			(allow ssh.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
 
-(macro ssh_send_signal_sshd_keygen ((type ARG1))
-	(allow ARG1 sshd_keygen.subj (process (signal))))
+	(blockinherit exec_blk)
 
-(macro ssh_client_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset ssh_client_subj_type ARG1))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro ssh_role_pattern_ssh_client ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 ssh_client.cmd_file ARG3))
+	(blockinherit send_signal_blk))
 
-	(roletype ARG1 ARG3)
+(in sshd_net
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(allow ARG2 ARG3 (process (signal)))
+		(blockinherit subj_common_blk)
 
-	(allow ARG3 ARG2 (process (signal)))
-	(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
-	(allow ARG3 self rw_key_perms)
+		(typeattributeset sshd_net.subj_type_attribute subj)
 
-	(call ssh_manage_client_home (ARG2))
-	(call ssh_relabel_client_home (ARG2))
+		(roletype sys.role subj)))
+(in ssh_agent
+	(block subj_blk
+		(blockabstract subj_blk)
 
-	(call ssh_home_dir_obj_type_transition_client_home (ARG2)))
+		(blockinherit app.application_subj_blk)
 
-(macro ssh_auto_subj_type_transition_pattern_ssh_client ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 ssh_client.cmd_file ARG2)))
+		(typeattributeset ssh_agent.subj_type_attribute subj))
 
-(macro ssh_agent_subj_type ((type ARG1))
-	(call app.application_subj_type (ARG1))
-	(typeattributeset ssh_agent_subj_type ARG1))
+	(blockinherit exec_blk)
 
-(macro ssh_role_pattern_ssh_agent ((role ARG1)(type ARG2)(type ARG3))
-	(call auto_subj_type_transition_pattern (ARG2 ssh_agent.cmd_file ARG3))
+	(blockinherit send_signal_blk)
 
-	(roletype ARG1 ARG3)
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(allow ARG2 ARG3 (process (signal)))
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-	(allow ARG3 ARG2 (process (signal)))
+		(roletype ARG1 ARG3)
 
-	(call ssh_manage_ssh_agent_tmpfs (ARG2))
-	(call ssh_relabel_ssh_agent_tmpfs (ARG2)))
+		(allow ARG2 ARG3 (process (signal)))
 
-(macro ssh_auto_subj_type_transition_pattern_ssh_agent ((type ARG1)(type ARG2))
-	(allow ARG1 ARG2 (process (signal)))
-	(call auto_subj_type_transition_pattern (ARG1 ssh_agent.cmd_file ARG2)))
+		(allow ARG3 ARG2 (process (signal)))
 
-(macro ssh_search_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sshd.config_file search_dir_perms))
+		(call manage_tmpfs_user (ARG2))
+		(call relabel_tmpfs_user (ARG2)))
 
-(macro ssh_list_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sshd.config_file list_dir_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro ssh_rw_sshd_config_dirs ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sshd.config_file rw_dir_perms))
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
-(macro ssh_read_sshd_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 sshd.config_file ssh.config_file)))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file_search_runtime_user (ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*")))
 
-(macro ssh_read_sshd_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 sshd.config_file sshd.config_file)))
+	(macro stream_connect_all_subj ((type ARG1))
+		(call file_search_runtime_user (ARG1))
+		(call fs_search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ssh_agent.subj_type_attribute))))
 
-(macro ssh_read_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sshd.config_file read_file_perms)
-	(allow ARG1 sshd.config_file list_dir_perms)
-	(allow ARG1 sshd.config_file read_lnk_file_perms))
+(in ssh_client
+	(block subj_blk
+		(blockabstract subj_blk)
 
-(macro ssh_manage_sshd_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 sshd.config_file manage_file_perms)
-	(allow ARG1 sshd.config_file manage_dir_perms)
-	(allow ARG1 sshd.config_file manage_lnk_file_perms))
+		(blockinherit app.application_subj_blk)
 
-(macro ssh_relabel_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 sshd.config_file relabel_file_perms)
-	(allow ARG1 sshd.config_file relabel_dir_perms)
-	(allow ARG1 sshd.config_file relabel_lnk_file_perms))
+		(typeattributeset ssh_client.subj_type_attribute subj))
 
-(macro ssh_search_all_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type search_dir_perms))
+	(blockinherit exec_blk)
 
-(macro ssh_list_all_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type list_dir_perms))
+	(blockinherit send_signal_blk)
 
-(macro ssh_rw_all_sshd_config_dirs ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type rw_dir_perms))
-
-(macro ssh_read_all_sshd_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 ssh_sshd_config_obj_type ssh_sshd_config_obj_type)))
-
-(macro ssh_read_all_sshd_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 ssh_sshd_config_obj_type ssh_sshd_config_obj_type)))
-
-(macro ssh_read_all_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type read_file_perms)
-	(allow ARG1 ssh_sshd_config_obj_type list_dir_perms)
-	(allow ARG1 ssh_sshd_config_obj_type read_lnk_file_perms))
-
-(macro ssh_manage_all_sshd_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type manage_file_perms)
-	(allow ARG1 ssh_sshd_config_obj_type manage_dir_perms)
-	(allow ARG1 ssh_sshd_config_obj_type manage_lnk_file_perms))
-
-(macro ssh_relabel_all_sshd_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 ssh_sshd_config_obj_type relabel_file_perms)
-	(allow ARG1 ssh_sshd_config_obj_type relabel_dir_perms)
-	(allow ARG1 ssh_sshd_config_obj_type relabel_lnk_file_perms))
-
-(macro ssh_search_client_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 ssh_client.home_user_file search_dir_perms))
-
-(macro ssh_list_client_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 ssh_client.home_user_file list_dir_perms))
-
-(macro ssh_read_client_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
-
-(macro ssh_manage_client_home_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call manage_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
-
-(macro ssh_read_client_home_lnk_files ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(call read_lnk_files_pattern (ARG1 ssh_client.home_user_file ssh_client.home_user_file)))
-
-(macro ssh_read_client_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 ssh_client.home_user_file read_file_perms)
-	(allow ARG1 ssh_client.home_user_file list_dir_perms)
-	(allow ARG1 ssh_client.home_user_file read_lnk_file_perms))
-
-(macro ssh_manage_client_home ((type ARG1))
-	(call usersubj.rw_home_dir (ARG1))
-	(allow ARG1 ssh_client.home_user_file manage_file_perms)
-	(allow ARG1 ssh_client.home_user_file manage_dir_perms)
-	(allow ARG1 ssh_client.home_user_file manage_lnk_file_perms))
-
-(macro ssh_relabel_client_home ((type ARG1))
-	(call usersubj.search_home_dir (ARG1))
-	(allow ARG1 ssh_client.home_user_file relabel_file_perms)
-	(allow ARG1 ssh_client.home_user_file relabel_dir_perms)
-	(allow ARG1 ssh_client.home_user_file relabel_lnk_file_perms))
-
-(macro ssh_search_ssh_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ssh_agent.tmpfs_user_file search_dir_perms))
-
-(macro ssh_list_ssh_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ssh_agent.tmpfs_user_file list_dir_perms))
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro ssh_read_ssh_agent_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(call read_files_pattern (ARG1 ssh_agent.tmpfs_user_file ssh_agent.tmpfs_user_file)))
-
-(macro ssh_read_ssh_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ssh_agent.tmpfs_user_file read_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file list_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file read_lnk_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file read_sock_file_perms))
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
-(macro ssh_manage_ssh_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 ssh_agent.tmpfs_user_file manage_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file manage_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file manage_lnk_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file manage_sock_file_perms))
+		(roletype ARG1 ARG3)
 
-(macro ssh_relabel_ssh_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 ssh_agent.tmpfs_user_file relabel_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file relabel_dir_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file relabel_lnk_file_perms)
-	(allow ARG1 ssh_agent.tmpfs_user_file relabel_sock_file_perms))
+		(allow ARG2 ARG3 (process (signal)))
 
-(macro ssh_tmpfs_obj_type_transition_agent_tmpfs ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 ssh_agent.tmpfs_user_file dir "*")))
+		(allow ARG3 ARG2 (process (signal)))
+		(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
+		(allow ARG3 self rw_key_perms)
 
-(macro ssh_home_dir_obj_type_transition_client_home ((type ARG1))
-	(call usersubj.home_dir_obj_type_transition (ARG1 ssh_client.home_user_file dir ".ssh")))
+		(call manage_home_user (ARG2))
+		(call relabel_home_user (ARG2))
 
-(macro ssh_read_sshd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 sshd.runtime_file read_file_perms))
+		(call home_dir_obj_type_transition_home (ARG2)))
 
-(macro ssh_manage_sshd_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 sshd.runtime_file manage_file_perms))
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-(macro ssh_relabel_sshd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 sshd.runtime_file relabel_file_perms))
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
-(macro ssh_read_all_sshd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 ssh_sshd_runtime_obj_type read_file_perms))
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".ssh"))))
 
-(macro ssh_manage_all_sshd_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 ssh_sshd_runtime_obj_type manage_file_perms))
+(in ssh_sftpserver
+	(blockinherit exec_blk)
 
-(macro ssh_relabel_all_sshd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 ssh_sshd_runtime_obj_type relabel_file_perms))
-
-(macro ssh_read_sshd_key_files ((type ARG1))
-	(call ssh_search_sshd_config (ARG1))
-	(allow ARG1 sshd_key.file read_file_perms))
-
-(macro ssh_manage_sshd_key_files ((type ARG1))
-	(call ssh_rw_sshd_config_dirs (ARG1))
-	(allow ARG1 sshd_key.file manage_file_perms))
-
-(macro ssh_relabel_sshd_key_files ((type ARG1))
-	(call ssh_search_sshd_config (ARG1))
-	(allow ARG1 sshd_key.file relabel_file_perms))
-
-(macro ssh_read_all_sshd_key_files ((type ARG1))
-	(call ssh_search_all_sshd_config (ARG1))
-	(allow ARG1 ssh_sshd_key_obj_type read_file_perms))
-
-(macro ssh_manage_all_sshd_key_files ((type ARG1))
-	(call ssh_rw_all_sshd_config_dirs (ARG1))
-	(allow ARG1 ssh_sshd_key_obj_type manage_file_perms))
-
-(macro ssh_relabel_all_sshd_key_files ((type ARG1))
-	(call ssh_search_all_sshd_config (ARG1))
-	(allow ARG1 ssh_sshd_key_obj_type relabel_file_perms))
-
-(macro ssh_tcp_connect_sshd_port ((type ARG1))
-	(allow ARG1 sshd.port (tcp_socket (name_connect))))
-
-(macro ssh_tcp_bind_sshd_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 sshd.port (tcp_socket (name_bind))))
-
-(macro ssh_udp_bind_sshd_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 sshd.port (udp_socket (name_bind))))
-
-(macro ssh_tcp_connect_all_sshd_port ((type ARG1))
-	(allow ARG1 ssh_sshd_port_obj_type (tcp_socket (name_connect))))
-
-(macro ssh_tcp_bind_all_sshd_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 ssh_sshd_port_obj_type (tcp_socket (name_bind))))
-
-(macro ssh_udp_bind_all_sshd_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 ssh_sshd_port_obj_type (udp_socket (name_bind))))
-
-(macro ssh_use_fd_sshd ((type ARG1))
-	(allow ARG1 sshd.subj (fd (use))))
-
-(macro ssh_use_fd_all_sshd ((type ARG1))
-	(allow ARG1 ssh_sshd_subj_type (fd (use))))
-
-(macro ssh_rw_sshd_inherited_unix_stream_sockets ((type ARG1))
-	(call ssh_use_fd_sshd (ARG1))
-	(allow ARG1 sshd.subj rw_inherited_unix_stream_socket_perms))
-
-(macro ssh_rw_sshd_inherited_unix_dgram_sockets ((type ARG1))
-	(call ssh_use_fd_sshd (ARG1))
-	(allow ARG1 sshd.subj rw_inherited_unix_dgram_socket_perms))
-
-(macro ssh_rw_sshd_inherited_tcp_sockets ((type ARG1))
-	(call ssh_use_fd_sshd (ARG1))
-	(allow ARG1 sshd.subj (tcp_socket (read write getopt setopt getattr))))
-
-(macro ssh_rw_sshd_inherited_fifo_files ((type ARG1))
-	(call ssh_use_fd_sshd (ARG1))
-	(allow ARG1 sshd.subj rw_inherited_fifo_file_perms))
-
-(macro ssh_rw_all_sshd_inherited_unix_stream_sockets ((type ARG1))
-	(call ssh_use_fd_all_sshd (ARG1))
-	(allow ARG1 ssh_sshd_subj_type rw_inherited_unix_stream_socket_perms))
-
-(macro ssh_rw_all_sshd_inherited_unix_dgram_sockets ((type ARG1))
-	(call ssh_use_fd_all_sshd (ARG1))
-	(allow ARG1 ssh_sshd_subj_type rw_inherited_unix_dgram_socket_perms))
-
-(macro ssh_rw_all_sshd_inherited_tcp_sockets ((type ARG1))
-	(call ssh_use_fd_all_sshd (ARG1))
-	(allow ARG1 ssh_sshd_subj_type (tcp_socket (read write getopt setopt getattr))))
-
-(macro ssh_rw_all_sshd_inherited_fifo_files ((type ARG1))
-	(call ssh_use_fd_all_sshd (ARG1))
-	(allow ARG1 ssh_sshd_subj_type rw_inherited_fifo_file_perms))
-
-(macro ssh_stream_connect_agent_all_subj ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(call stream_connect_pattern (ARG1 ssh_agent.tmpfs_user_file ssh_agent.tmpfs_user_file ssh_agent_subj_type)))
-
-(macro ssh_set_priv_login_boolean ((type ARG1))
-	(call sec_set_spec_boolean (ARG1 ssh_priv_login.bool))
-	(optional ssh_set_priv_login_boolean_optional_seutil
-		(call seutil_exec_setsebool (ARG1))))
-
-(macro ssh_adm ((type ARG1)(role ARG2))
-	(typeattributeset ssh_adm_subj_type ARG1)
-	(optional ssh_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional ssh_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit send_signal_blk))
+
+(in ssh_keygen
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit send_signal_blk))
+
+(in ssh_helper
+	(blockinherit exec_blk))

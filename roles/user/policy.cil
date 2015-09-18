@@ -123,9 +123,9 @@
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional user_optional_ssh
-		(call ssh_run_ssh_sftpserver (user_subj_type role))
-		(call ssh_run_ssh_keygen (user_subj_type role))
-		(call ssh_login_subj_type (subj)))
+		(call ssh_sftpserver.run (user_subj_type role))
+		(call ssh_keygen.run (user_subj_type role))
+		(call ssh.login_subj_type (subj)))
 
 	(optional user_optional_systemctl
 		(call systemctl.exec (subj)))
@@ -247,7 +247,7 @@
 	(call mutt.spec_auto_subj_type_transition (user_emacs.subj user_mutt.subj)))
 
 (optional user_emacs_optional_user_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_emacs.subj user_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (user_emacs.subj user_ssh_client.subj)))
 
 (optional user_emacsclient_optional_emacsclient
 	(block user_emacsclient
@@ -316,7 +316,7 @@
 	(call ulockmgr.run (user.subj user.role)))
 
 (optional user_fuse_optional_user_ssh
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_fuse_sshfs.subj user_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (user_fuse_sshfs.subj user_ssh_client.subj)))
 
 (optional user_git_optional_git
 	(block user_git
@@ -339,7 +339,7 @@
 	(call git_email.spec_auto_subj_type_transition (user_git.subj user_git_email.subj)))
 
 (optional user_git_optional_user_ssh_client
-	(call ssh_auto_subj_type_transition_pattern_ssh_client (user_git.subj user_ssh_client.subj)))
+	(call ssh_client.spec_auto_subj_type_transition (user_git.subj user_ssh_client.subj)))
 
 (optional user_git_email_optional_git_email
 	(block user_git_email
@@ -579,9 +579,9 @@
 
 (optional user_ssh_agent_optional_ssh
 	(block user_ssh_agent
-		(blockinherit ssh_agent_subj_blk)
+		(blockinherit ssh_agent.subj_blk)
 
-		(call ssh_role_pattern_ssh_agent (user.role user_subj_type subj))
+		(call ssh_agent.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_auto_subj_type_transition (subj user.subj))
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))
@@ -590,9 +590,9 @@
 
 (optional user_ssh_client_optional_ssh
 	(block user_ssh_client
-		(blockinherit ssh_client_subj_blk)
+		(blockinherit ssh_client.subj_blk)
 
-		(call ssh_role_pattern_ssh_client (user.role user_subj_type subj))
+		(call ssh_client.role_pattern (user.role user_subj_type subj))
 
 		(call cmd_shell_auto_subj_type_transition (subj user.subj))))
 

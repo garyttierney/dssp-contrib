@@ -1,31 +1,31 @@
-(roleattribute mandb_role)
-
-(typeattribute mandb_adm_subj_type)
-
-(typeattribute mandb_obj_type)
-
 (block mandb
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset mandb_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype mandb_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset mandb_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(blockinherit file_var_cache_obj_blk)
 
-	(typeattributeset mandb_obj_type var_cache_file)
+	(typeattributeset obj_type_attribute var_cache_file)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj))
 
 	(allow subj self (capability (fsetid)))
-	(allow subj  self rw_fifo_file_perms)
-
-	(call mandb_read_config_files (subj))
-
-	(call mandb_manage_var_cache (subj))
-	(call mandb_var_cache_obj_type_transition_var_cache (subj))
+	(allow subj self rw_fifo_file_perms)
 
 	(call file_read_config (subj))
 
@@ -39,19 +39,19 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset mandb_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow mandb_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow mandb_adm_subj_type mandb.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (mandb_adm_subj_type mandb.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_var_cache (mandb_adm_subj_type))
+	(call file_search_var_cache (adm_subj_type_attribute))
 
-(allow mandb_adm_subj_type mandb_obj_type manage_file_perms)
-(allow mandb_adm_subj_type mandb_obj_type manage_dir_perms)
-(allow mandb_adm_subj_type mandb_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow mandb_adm_subj_type mandb_obj_type relabel_file_perms)
-(allow mandb_adm_subj_type mandb_obj_type relabel_dir_perms)
-(allow mandb_adm_subj_type mandb_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

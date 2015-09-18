@@ -1,32 +1,32 @@
-(roleattribute logrotate_role)
-
-(typeattribute logrotate_adm_subj_type)
-
-(typeattribute logrotate_obj_type)
-(typeattribute logrotate_var_log_obj_type)
-
 (block logrotate
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+	(typeattribute var_log_obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset logrotate_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype logrotate_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset logrotate_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset logrotate_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (process (setfscreate)))
 	(allow subj self (capability (chown fsetid dac_override)))
-
-	(call logrotate_read_config (subj))
-
-	(call logrotate_manage_var_lib (subj))
-	(call logrotate_var_lib_obj_type_transition_var_lib (subj))
 
 	(call standard_obj_sys_change_exemption_subj_type (subj))
 
@@ -49,22 +49,22 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset logrotate_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow logrotate_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow logrotate.subj logrotate_var_log_obj_type rw_dir_perms)
-(allow logrotate.subj logrotate_var_log_obj_type manage_file_perms)
+	(allow subj var_log_obj_type_attribute rw_dir_perms)
+	(allow subj var_log_obj_type_attribute manage_file_perms)
 
-(allow logrotate_adm_subj_type logrotate.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (logrotate_adm_subj_type logrotate.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_var_lib (logrotate_adm_subj_type))
+	(call file_search_var_lib (adm_subj_type_attribute))
 
-(allow logrotate_adm_subj_type logrotate_obj_type manage_file_perms)
-(allow logrotate_adm_subj_type logrotate_obj_type manage_dir_perms)
-(allow logrotate_adm_subj_type logrotate_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow logrotate_adm_subj_type logrotate_obj_type relabel_file_perms)
-(allow logrotate_adm_subj_type logrotate_obj_type relabel_dir_perms)
-(allow logrotate_adm_subj_type logrotate_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

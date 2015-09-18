@@ -24,7 +24,7 @@
 	(typeattributeset rpm_obj_type var_cache_file)
 
 	(optional rpm_var_cache_optional_logrotate
-		(call logrotate_var_log_obj_type (var_cache_file)))
+		(call logrotate.var_log_obj_type (var_cache_file)))
 
 	(blockinherit file_var_lib_obj_blk)
 
@@ -35,7 +35,7 @@
 	(typeattributeset rpm_obj_type var_log_file)
 
 	(optional rpm_var_log_optional_logrotate
-		(call logrotate_var_log_obj_type (var_log_file)))
+		(call logrotate.var_log_obj_type (var_log_file)))
 
 	(blockinherit file_var_tmp_obj_blk)
 

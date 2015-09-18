@@ -1,89 +1,39 @@
-(macro logrotate_var_log_obj_type ((type ARG1))
-	(typeattributeset logrotate_var_log_obj_type ARG1))
+(in logrotate
+	(blockinherit exec_blk)
 
-(macro logrotate_exec ((type ARG1))
-	(call can_exec (ARG1 logrotate.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro logrotate_auto_subj_type_transition ((type ARG1))
-	(call logrotate_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 logrotate.cmd_file logrotate.subj)))
+	(blockinherit run_blk)
 
-(macro logrotate_send_signal ((type ARG1))
-	(allow ARG1 logrotate.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro logrotate_run ((type ARG1)(role ARG2))
-	(call logrotate_auto_subj_type_transition (ARG1))
-	(roleattributeset logrotate_role ARG2))
+	(macro var_log_obj_type ((type ARG1))
+		(typeattributeset var_log_obj_type_attribute ARG1))
 
-(macro logrotate_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 logrotate.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro logrotate_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 logrotate.config_file list_dir_perms))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit manage_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro logrotate_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 logrotate.config_file logrotate.config_file)))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "logrotate"))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file file "logrotate.status")))
 
-(macro logrotate_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 logrotate.config_file logrotate.config_file)))
-
-(macro logrotate_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 logrotate.config_file read_file_perms)
-	(allow ARG1 logrotate.config_file list_dir_perms)
-	(allow ARG1 logrotate.config_file read_lnk_file_perms))
-
-(macro logrotate_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 logrotate.config_file manage_file_perms)
-	(allow ARG1 logrotate.config_file manage_dir_perms)
-	(allow ARG1 logrotate.config_file manage_lnk_file_perms))
-
-(macro logrotate_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 logrotate.config_file relabel_file_perms)
-	(allow ARG1 logrotate.config_file relabel_dir_perms)
-	(allow ARG1 logrotate.config_file relabel_lnk_file_perms))
-
-(macro logrotate_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 logrotate.var_lib_file search_dir_perms))
-
-(macro logrotate_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 logrotate.var_lib_file list_dir_perms))
-
-(macro logrotate_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 logrotate.var_lib_file logrotate.var_lib_file)))
-
-(macro logrotate_manage_var_lib_files ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(call manage_files_pattern (ARG1 logrotate.var_lib_file logrotate.var_lib_file)))
-
-(macro logrotate_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 logrotate.var_lib_file list_dir_perms)
-	(allow ARG1 logrotate.var_lib_file read_file_perms)
-	(allow ARG1 logrotate.var_lib_file read_lnk_file_perms))
-
-(macro logrotate_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 logrotate.var_lib_file manage_dir_perms)
-	(allow ARG1 logrotate.var_lib_file manage_file_perms)
-	(allow ARG1 logrotate.var_lib_file manage_lnk_file_perms))
-
-(macro logrotate_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 logrotate.var_lib_file dir "logrotate"))
-	(call file_var_lib_obj_type_transition (ARG1 logrotate.var_lib_file file "logrotate.status")))
-
-(macro logrotate_adm ((type ARG1)(role ARG2))
-	(typeattributeset logrotate_adm_subj_type ARG1)
-	(optional logrotate_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional logrotate_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional logrotate_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional logrotate_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

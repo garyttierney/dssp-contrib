@@ -25,7 +25,7 @@
 	(typeattributeset wpa_obj_type var_log_file)
 
 	(optional wpa_optional_logrotate
-		(call logrotate_var_log_obj_type (var_log_file)))
+		(call logrotate.var_log_obj_type (var_log_file)))
 
 	(allow subj self (capability (chown fsetid net_raw net_admin dac_override)))
 	(allow subj self create_unix_dgram_socket_perms)

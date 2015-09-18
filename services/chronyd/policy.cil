@@ -76,7 +76,7 @@
 	(call var_log_obj_type_transition_var_log (subj))
 
 	(optional chronyd_optional_logrotate
-		(call logrotate_var_log_obj_type (var_log_file)))
+		(call logrotate.var_log_obj_type (var_log_file)))
 
 	(allow subj self (capability (sys_time setuid setgid fsetid)))
 	(allow subj self (process (setcap)))

@@ -1,8 +1,8 @@
-(typeattribute tcsd_adm_subj_type)
-
-(typeattribute tcsd_obj_type)
-
 (block tcsd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -13,19 +13,19 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset tcsd_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset tcsd_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (dac_override setuid)))
 	(allow subj self create_tcp_stream_socket_perms)
-
-	(call tcsd_read_config_files (subj))
-
-	(call tcsd_manage_var_lib (subj))
-	(call tcsd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call net_tcp_bind_generic_node (subj))
 
@@ -43,22 +43,22 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset tcsd_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow tcsd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional tcsd_optional_sd_journald
-		(call sd_journald.client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj)))
 
-(allow tcsd_adm_subj_type tcsd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (tcsd_adm_subj_type tcsd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_var_lib (tcsd_adm_subj_type))
+	(call file_search_var_lib (adm_subj_type_attribute))
 
-(allow tcsd_adm_subj_type tcsd_obj_type manage_file_perms)
-(allow tcsd_adm_subj_type tcsd_obj_type manage_dir_perms)
-(allow tcsd_adm_subj_type tcsd_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow tcsd_adm_subj_type tcsd_obj_type relabel_file_perms)
-(allow tcsd_adm_subj_type tcsd_obj_type relabel_dir_perms)
-(allow tcsd_adm_subj_type tcsd_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

@@ -1,65 +1,28 @@
-(macro tcsd_exec ((type ARG1))
-	(call can_exec (ARG1 tcsd.cmd_file)))
+(in tcsd
+	(blockinherit exec_blk)
 
-(macro tcsd_auto_subj_type_transition ((type ARG1))
-	(call tcsd_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 tcsd.cmd_file tcsd.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro tcsd_send_signal ((type ARG1))
-	(allow ARG1 tcsd.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro tcsd_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 tcsd.config_file read_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk)
 
-(macro tcsd_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 tcsd.config_file manage_file_perms))
+	(blockinherit search_var_lib_blk)
+	(blockinherit list_var_lib_blk)
+	(blockinherit read_var_lib_files_blk)
+	(blockinherit read_var_lib_lnk_files_blk)
+	(blockinherit read_var_lib_blk)
+	(blockinherit manage_var_lib_blk)
+	(blockinherit relabel_var_lib_blk)
 
-(macro tcsd_relabel_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 tcsd.config_file relabel_file_perms))
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "tpm")))
 
-(macro tcsd_search_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 tcsd.var_lib_file search_dir_perms))
-
-(macro tcsd_list_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 tcsd.var_lib_file list_dir_perms))
-
-(macro tcsd_read_var_lib_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_files_pattern (ARG1 tcsd.var_lib_file tcsd.var_lib_file)))
-
-(macro tcsd_read_var_lib_lnk_files ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(call read_lnk_files_pattern (ARG1 tcsd.var_lib_file tcsd.var_lib_file)))
-
-(macro tcsd_read_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 tcsd.var_lib_file read_file_perms)
-	(allow ARG1 tcsd.var_lib_file list_dir_perms)
-	(allow ARG1 tcsd.var_lib_file read_lnk_file_perms))
-
-(macro tcsd_manage_var_lib ((type ARG1))
-	(call file_rw_var_lib_dirs (ARG1))
-	(allow ARG1 tcsd.var_lib_file manage_file_perms)
-	(allow ARG1 tcsd.var_lib_file manage_dir_perms)
-	(allow ARG1 tcsd.var_lib_file manage_lnk_file_perms))
-
-(macro tcsd_relabel_var_lib ((type ARG1))
-	(call file_search_var_lib (ARG1))
-	(allow ARG1 tcsd.var_lib_file relabel_file_perms)
-	(allow ARG1 tcsd.var_lib_file relabel_dir_perms)
-	(allow ARG1 tcsd.var_lib_file relabel_lnk_file_perms))
-
-(macro tcsd_var_lib_obj_type_transition_var_lib ((type ARG1))
-	(call file_var_lib_obj_type_transition (ARG1 tcsd.var_lib_file dir "tpm")))
-
-(macro tcsd_adm ((type ARG1)(role ARG2))
-	(typeattributeset tcsd_adm_subj_type ARG1)
-	(optional tcsd_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional tcsd_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional tcsd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional tcsd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

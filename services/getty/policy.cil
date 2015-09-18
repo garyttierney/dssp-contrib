@@ -1,9 +1,9 @@
-(typeattribute getty_adm_subj_type)
-(typeattribute getty_start_sd_unit_subj_type)
-
-(typeattribute getty_obj_type)
-
 (block getty
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute start_sd_unit_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -14,7 +14,10 @@
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset getty_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (chown fsetid sys_tty_config sys_admin)))
 	(allow subj self create_unix_stream_socket_perms)
@@ -23,9 +26,6 @@
 	(call term_use_unallocated_ttys (subj))
 
 	(call file_read_config_files (subj))
-
-	(call getty_manage_runtime_files (subj))
-	(call getty_runtime_obj_type_transition_runtime (subj))
 
 	(call miscfile_read_locale (subj))
 	(call miscfile_rw_utmp_runtime_files (subj))
@@ -50,26 +50,26 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset getty_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow getty_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional getty_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional getty_optional_sd_machined
 		(call sd_machined.setattr_login_ptys (subj))
-		(call sd_machined.use_login_ptys (subj))))
+		(call sd_machined.use_login_ptys (subj)))
 
-(allow getty_adm_subj_type getty.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (getty_adm_subj_type getty.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (getty_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow getty_adm_subj_type getty_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow getty_adm_subj_type getty_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 
-(optional getty_start_sd_unit_subj_type_optional_sd
-	(allow getty_start_sd_unit_subj_type getty.unit_file (service (start)))
-        (call sd.search_unit (getty_start_sd_unit_subj_type)))
+	(optional start_sd_unit_subj_type_attribute_optional_sd
+		(allow start_sd_unit_subj_type_attribute unit_file (service (start)))
+        	(call sd.search_unit (start_sd_unit_subj_type_attribute))))

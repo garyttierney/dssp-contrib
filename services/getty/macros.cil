@@ -1,30 +1,23 @@
-(macro getty_exec ((type ARG1))
-	(call can_exec (ARG1 getty.cmd_file)))
+(in getty
+	(blockinherit exec_blk)
 
-(macro getty_auto_subj_type_transition ((type ARG1))
-	(call getty_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 getty.cmd_file getty.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro getty_send_signal ((type ARG1))
-	(allow ARG1 getty.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro getty_start_sd_unit_subj_type ((type ARG1))
-	(typeattributeset getty_start_sd_unit_subj_type ARG1))
+	(macro start_sd_unit_subj_type ((type ARG1))
+		(typeattributeset start_sd_unit_subj_type_attribute ARG1))
 
-(macro getty_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 getty.runtime_file read_file_perms))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro getty_manage_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 getty.runtime_file manage_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "agetty.reload")))
 
-(macro getty_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 getty.runtime_file file "agetty.reload")))
-
-(macro getty_adm ((type ARG1)(role ARG2))
-	(typeattributeset getty_adm_subj_type ARG1)
-	(optional getty_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional getty_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional getty_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional getty_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

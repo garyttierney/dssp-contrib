@@ -1,8 +1,8 @@
-(typeattribute qemu_guest_agent_adm_subj_type)
-
-(typeattribute qemu_guest_agent_obj_type)
-
 (block qemu_guest_agent
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -13,10 +13,10 @@
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset qemu_guest_agent_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
 
-	(call qemu_guest_agent_manage_runtime_files (subj))
-	(call qemu_guest_agent_runtime_obj_type_transition_runtime (subj))
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(call fs_getattr_tmpfs_fs (subj))
 	(call fs_read_devtmpfs_lnk_files (subj))
@@ -31,9 +31,9 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset qemu_guest_agent_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow qemu_guest_agent_adm_subj_type unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
 		(call sd.start_unit_power (subj))
 		(call sd.stream_connect (subj)))
@@ -45,13 +45,13 @@
 		(call sd_logind.client_subj_type (subj)))
 
 	(optional qemu_guest_agent_optional_systemctl
-		(call systemctl.exec (subj))))
+		(call systemctl.exec (subj)))
 
-(allow qemu_guest_agent_adm_subj_type qemu_guest_agent.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (qemu_guest_agent_adm_subj_type qemu_guest_agent.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (qemu_guest_agent_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow qemu_guest_agent_adm_subj_type qemu_guest_agent_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow qemu_guest_agent_adm_subj_type qemu_guest_agent_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

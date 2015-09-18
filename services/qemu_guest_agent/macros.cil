@@ -1,31 +1,20 @@
-(macro qemu_guest_agent_exec ((type ARG1))
-	(call can_exec (ARG1 qemu_guest_agent.cmd_file)))
+(in qemu_guest_agent
+	(blockinherit exec_blk)
 
-(macro qemu_guest_agent_auto_subj_type_transition ((type ARG1))
-	(call qemu_guest_agent_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 qemu_guest_agent.cmd_file qemu_guest_agent.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro qemu_guest_agent_send_signal ((type ARG1))
-	(allow ARG1 qemu_guest_agent.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro qemu_guest_agent_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 qemu_guest_agent.runtime_file read_file_perms))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro qemu_guest_agent_manage_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 qemu_guest_agent.runtime_file manage_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "*")))
 
-(macro qemu_guest_agent_relabel_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 qemu_guest_agent.runtime_file relabel_file_perms))
-
-(macro qemu_guest_agent_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 qemu_guest_agent.runtime_file file "*")))
-
-(macro qemu_guest_agent_adm ((type ARG1)(role ARG2))
-	(typeattributeset qemu_guest_agent_adm_subj_type ARG1)
-	(optional qemu_guest_agent_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional qemu_guest_agent_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional qemu_guest_agent_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional qemu_guest_agent_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

@@ -1,19 +1,29 @@
-(roleattribute myqemu_installer_role)
-(roleattribute myqemu_runner_role)
+(block myqemu
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
 
-(typeattribute myqemu_adm_subj_type)
-(typeattribute myqemu_subj_type)
+	(typeattribute obj_type_attribute)
 
-(typeattribute myqemu_obj_type)
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call file_search_runtime_user (adm_subj_type_attribute))
+	(call fs_search_tmpfs (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow subj_type_attribute obj_type_attribute relabel_file_perms))
 
 (block myqemu_runner
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(typeattributeset myqemu_subj_type subj)
+	(typeattributeset myqemu.subj_type_attribute subj)
 
-	(roleattributeset myqemu_runner_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype myqemu_runner_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (setexec)))
@@ -31,7 +41,7 @@
 	(call nss_client_subj_type (subj))
 
 	(call qemu_relabel_all_guest_obj_files (subj))
-	(call qemu_run_all_qemu_guest (subj myqemu_runner_role))
+	(call qemu_run_all_qemu_guest (subj role_attribute))
 
 	(call seutil_exec_setfiles (subj))
 
@@ -40,34 +50,36 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset myqemu_obj_type unit_file)
+		(typeattributeset myqemu.obj_type_attribute unit_file)
 
-		(allow myqemu_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow myqemu.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional myqemu_runner_optional_sd_machined
 		(call sd_machined.relabelfrom_var_lib_files (subj))))
 
 (block myqemu_installer
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(typeattributeset myqemu_subj_type subj)
+	(typeattributeset myqemu.subj_type_attribute subj)
 
-	(roletype myqemu_installer_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit qemu_guest_pty_obj_blk)
 
+	(call use_ptys (subj))
+
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(typeattributeset myqemu_obj_type tmpfs_user_file)
+	(typeattributeset myqemu.obj_type_attribute tmpfs_user_file)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self (capability (net_admin dac_override)))
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call myqemu_manage_installer_tmpfs_files (subj))
-	(call myqemu_tmpfs_obj_type_transition_installer_tmpfs (subj))
-
-	(call myqemu_use_installer_ptys (subj))
 
 	(call sys_list_cpu_sysfs (subj))
 	(call sys_list_node_sysfs (subj))
@@ -119,11 +131,11 @@
 		(call sd_machined.manage_var_lib_files (subj))))
 
 (block myqemu_shutdown
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(typeattributeset myqemu_subj_type subj)
-
-	(roletype myqemu_runner_role subj)
+	(typeattributeset myqemu.subj_type_attribute subj)
 
 	(allow subj self rw_fifo_file_perms)
 
@@ -139,13 +151,3 @@
 
 	(optional mqemu_shutdown_optional_sd
 		(call sd.daemon (subj cmd_file))))
-
-(allow myqemu_adm_subj_type myqemu_subj_type (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (myqemu_adm_subj_type myqemu_subj_type))
-
-(call file_search_runtime_user (myqemu_adm_subj_type))
-(call fs_search_tmpfs (myqemu_adm_subj_type))
-
-(allow myqemu_adm_subj_type myqemu_obj_type manage_file_perms)
-
-(allow myqemu_adm_subj_type myqemu_obj_type relabel_file_perms)

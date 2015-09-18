@@ -1,80 +1,55 @@
-(macro myqemu_exec_installer ((type ARG1))
-	(call can_exec (ARG1 myqemu_installer.cmd_file)))
+(in myqemu
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional myqemu_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional myqemu_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro myqemu_read_installer_cmd_files ((type ARG1))
-	(allow ARG1 myqemu_installer.cmd_file read_file_perms))
+(in myqemu_installer
+	(blockinherit exec_blk)
 
-(macro myqemu_auto_subj_type_transition_installer ((type ARG1))
-	(call myqemu_send_signal_installer (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 myqemu_installer.cmd_file myqemu_installer.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro myqemu_send_signal_installer ((type ARG1))
-	(allow ARG1 myqemu_installer.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro myqemu_run_installer ((type ARG1)(role ARG2))
-	(call myqemu_auto_subj_type_transition_installer (ARG1))
-	(allow ARG1 myqemu_installer.subj (process (noatsecure)))
-	(roleattributeset myqemu_installer_role ARG2))
+	(macro read_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file read_file_perms))
 
-(macro myqemu_exec_runner ((type ARG1))
-	(call can_exec (ARG1 myqemu_runner.cmd_file)))
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(allow ARG1 subj (process (noatsecure)))
+		(roleattributeset role_attribute ARG2))
 
-(macro myqemu_read_runner_cmd_files ((type ARG1))
-	(allow ARG1 myqemu_runner.cmd_file read_file_perms))
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
-(macro myqemu_auto_subj_type_transition_runner ((type ARG1))
-	(call myqemu_send_signal_runner (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 myqemu_runner.cmd_file myqemu_runner.subj)))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-(macro myqemu_send_signal_runner ((type ARG1))
-	(allow ARG1 myqemu_runner.subj (process (signal))))
+	(blockinherit use_ptys_blk))
 
-(macro myqemu_run_runner ((type ARG1)(role ARG2))
-	(call myqemu_auto_subj_type_transition_runner (ARG1))
-	(roleattributeset myqemu_runner_role ARG2))
+(in myqemu_runner
+	(blockinherit exec_blk)
 
-(macro myqemu_exec_shutdown ((type ARG1))
-	(call can_exec (ARG1 myqemu_shutdown.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro myqemu_read_shutdown_cmd_files ((type ARG1))
-	(allow ARG1 myqemu_shutdown.cmd_file read_file_perms))
+	(blockinherit run_blk)
 
-(macro myqemu_auto_subj_type_transition_shutdown ((type ARG1))
-	(call myqemu_send_signal_shutdown (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 myqemu_shutdown.cmd_file myqemu_shutdown.subj)))
+	(blockinherit send_signal_blk)
 
-(macro myqemu_send_signal_shutdown ((type ARG1))
-	(allow ARG1 myqemu_shutdown.subj (process (signal))))
+	(macro read_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file read_file_perms)))
 
-(macro myqemu_run_shutdown ((type ARG1)(role ARG2))
-	(call myqemu_auto_subj_type_transition_shutdown (ARG1))
-	(roleattributeset myqemu_runner_role ARG2))
+(in myqemu_shutdown
+	(blockinherit exec_blk)
 
-(macro myqemu_read_installer_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 myqemu_installer.tmpfs_user_file read_file_perms))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro myqemu_manage_installer_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 myqemu_installer.tmpfs_user_file manage_file_perms))
+	(blockinherit run_blk)
 
-(macro myqemu_relabel_installer_tmpfs_files ((type ARG1))
-	(call file_search_runtime_user (ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 myqemu_installer.tmpfs_user_file relabel_file_perms))
+	(blockinherit send_signal_blk)
 
-(macro myqemu_tmpfs_obj_type_transition_installer_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 myqemu_installer.tmpfs_user_file file "*")))
-
-(macro myqemu_use_installer_ptys ((type ARG1))
-	(call fs_search_devpts (ARG1))
-	(allow ARG1 myqemu_installer.pty_dev rw_term_perms))
-
-(macro myqemu_adm ((type ARG1)(role ARG2))
-	(typeattributeset myqemu_adm_subj_type ARG1)
-	(optional myqemu_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional myqemu_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro read_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file read_file_perms)))

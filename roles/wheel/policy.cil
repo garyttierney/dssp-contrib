@@ -70,9 +70,9 @@
 		(call lirc.run (wheel_subj_type role)))
 
 	(optional wheel_optional_myqemu
-		(call myqemu_read_installer_cmd_files (subj))
-		(call myqemu_read_runner_cmd_files (subj))
-		(call myqemu_read_shutdown_cmd_files (subj)))
+		(call myqemu_installer.read_cmd_files (subj))
+		(call myqemu_runner.read_cmd_files (subj))
+		(call myqemu_shutdown.read_cmd_files (subj)))
 
 	(optional wheel_optional_mysysstat
 		(call mysysstat.run (wheel_subj_type role)))

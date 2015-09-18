@@ -1,45 +1,14 @@
-(macro dhcp_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dhcp.config_file search_dir_perms))
+(in dhcp
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit rw_config_dirs_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro dhcp_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dhcp.config_file list_dir_perms))
+	(blockinherit udp_bind_reserved_port_blk))
 
-(macro dhcp_rw_config_dirs ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dhcp.config_file rw_dir_perms))
-
-(macro dhcp_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 dhcp.config_file dhcp.config_file)))
-
-(macro dhcp_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 dhcp.config_file dhcp.config_file)))
-
-(macro dhcp_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dhcp.config_file read_file_perms)
-	(allow ARG1 dhcp.config_file list_dir_perms)
-	(allow ARG1 dhcp.config_file read_lnk_file_perms))
-
-(macro dhcp_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 dhcp.config_file manage_file_perms)
-	(allow ARG1 dhcp.config_file manage_dir_perms)
-	(allow ARG1 dhcp.config_file manage_lnk_file_perms))
-
-(macro dhcp_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dhcp.config_file relabel_file_perms)
-	(allow ARG1 dhcp.config_file relabel_dir_perms)
-	(allow ARG1 dhcp.config_file relabel_lnk_file_perms))
-
-(macro dhcp_udp_bind_dhcp_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 dhcp.port (udp_socket (name_bind))))
-
-(macro dhcp_udp_bind_dhcpv6_client_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 dhcpv6_client.port (udp_socket (name_bind))))
+(in dhcpv6_client
+	(blockinherit udp_bind_reserved_port_blk))

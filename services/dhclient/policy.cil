@@ -36,7 +36,7 @@
 	(call net_udp_bind_all_unreserved_ports (subj))
 	(call net_udp_bind_generic_node (subj))
 
-	(call dhcp_udp_bind_dhcp_port (subj))
+	(call dhcp.udp_bind_reserved_port (subj))
 
 	(call miscfile_read_cert (subj))
 	(call miscfile_read_locale (subj))

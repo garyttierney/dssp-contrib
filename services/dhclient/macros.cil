@@ -7,35 +7,35 @@
 	(blockinherit send_sigkill_blk)
 
 	(macro search_config ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(allow ARG1 config_file search_dir_perms))
 
 	(macro list_config ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(allow ARG1 config_file list_dir_perms))
 
 	(macro read_config_files ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(call read_files_pattern (ARG1 config_file config_file)))
 
 	(macro read_config_lnk_files ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 config_file config_file)))
 
 	(macro read_config ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(allow ARG1 config_file read_file_perms)
 		(allow ARG1 config_file list_dir_perms)
 		(allow ARG1 config_file read_lnk_file_perms))
 
 	(macro manage_config ((type ARG1))
-		(call dhcp_rw_config_dirs (ARG1))
+		(call dhcp.rw_config_dirs (ARG1))
 		(allow ARG1 config_file manage_file_perms)
 		(allow ARG1 config_file manage_dir_perms)
 		(allow ARG1 config_file manage_lnk_file_perms))
 
 	(macro relabel_config ((type ARG1))
-		(call dhcp_search_config (ARG1))
+		(call dhcp.search_config (ARG1))
 		(allow ARG1 config_file relabel_file_perms)
 		(allow ARG1 config_file relabel_dir_perms)
 		(allow ARG1 config_file relabel_lnk_file_perms))

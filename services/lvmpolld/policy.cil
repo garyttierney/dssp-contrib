@@ -1,8 +1,8 @@
-(typeattribute lvmpolld_adm_subj_type)
-
-(typeattribute lvmpolld_obj_type)
-
 (block lvmpolld
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -13,7 +13,13 @@
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset lvmpolld_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(call manage_runtime_sock_files (subj))
+	(call lvm_runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (process (setfscreate)))
 	(allow subj self create_unix_stream_stream_socket_perms)
@@ -21,15 +27,8 @@
 	(call sec_get_enforce_mode (subj))
 
 	(call lvm_audit_access_cmd_files (subj))
-
 	(call lvm_manage_runtime_dirs (subj))
 	(call lvm_runtime_obj_type_transition_runtime (subj))
-
-	(call lvmpolld_manage_runtime_files (subj))
-	(call lvmpolld_runtime_obj_type_transition_runtime (subj))
-
-	(call lvmpolld_manage_runtime_sock_files (subj))
-	(call lvmpolld_lvm_runtime_obj_type_transition_lvmpolld_runtime (subj))
 
 	(call miscfile_read_locale (subj))
 
@@ -44,17 +43,17 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset lvmpolld_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow lvmpolld_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow lvmpolld_adm_subj_type lvmpolld.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (lvmpolld_adm_subj_type lvmpolld.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call lvm_search_runtime (lvmpolld_adm_subj_type))
+	(call lvm_search_runtime (adm_subj_type_attribute))
 
-(allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_file_perms)
-(allow lvmpolld_adm_subj_type lvmpolld_obj_type manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
 
-(allow lvmpolld_adm_subj_type lvmpolld_obj_type relabel_file_perms)
-(allow lvmpolld_adm_subj_type lvmpolld_obj_type relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))

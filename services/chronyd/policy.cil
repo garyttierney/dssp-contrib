@@ -25,6 +25,7 @@
 		(call sd.daemon (subj cmd_file))))
 
 (block chronyd
+	(typeattribute subj_type_attribute)
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute enable_status_start_sd_unit_subj_type_attribute)
 
@@ -120,8 +121,8 @@
 	(optional enable_status_start_sd_unit_subj_type_attribute_optional_sd
 		(allow enable_status_start_sd_unit_subj_type_attribute unit_file (service (enable status start))))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (adm_subj_type_attribute subj))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file_search_runtime (adm_subj_type_attribute))
 

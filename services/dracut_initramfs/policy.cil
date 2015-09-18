@@ -1,8 +1,8 @@
-(typeattribute dracut_initramfs_adm_subj_type)
-
-(typeattribute dracut_initramfs_obj_type)
-
 (block dracut_initramfs
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(blockinherit cmd_obj_blk)
@@ -13,19 +13,19 @@
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset dracut_initramfs_obj_type var_lib_file)
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset dracut_initramfs_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self rw_fifo_file_perms)
-
-	(call dracut_initramfs_manage_var_lib (subj))
-	(call dracut_initramfs_var_lib_obj_type_transition_var_lib (subj))
-
-	(call dracut_initramfs_manage_runtime (subj))
-	(call dracut_initramfs_runtime_obj_type_transition_runtime (subj))
 
 	(call sys_read_invalid_files (subj))
 
@@ -47,31 +47,31 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset dracut_initramfs_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow dracut_initramfs_adm_subj_type dracut_initramfs.unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute dracut_initramfs.unit_file (service (stop status disable enable reload start))))
 
 	(optional dracut_initramfs_optional_sd_machined
-		(call sd_machined.read_config_files (subj))))
+		(call sd_machined.read_config_files (subj)))
 
-(allow dracut_initramfs_adm_subj_type dracut_initramfs.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (dracut_initramfs_adm_subj_type dracut_initramfs.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (dracut_initramfs_adm_subj_type))
-(call file_search_var_lib (dracut_initramfs_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
+	(call file_search_var_lib (adm_subj_type_attribute))
 
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_dir_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_fifo_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_lnk_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_sock_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_blk_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type manage_chr_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_chr_file_perms)
 
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_dir_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_fifo_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_lnk_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_sock_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_blk_file_perms)
-(allow dracut_initramfs_adm_subj_type dracut_initramfs_obj_type relabel_chr_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_chr_file_perms))

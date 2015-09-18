@@ -66,8 +66,8 @@
 	(call udev_client_subj_type (subj))
 
 	(optional sd_shutdown_optional_dracut_initramfs
-		(call dracut_initramfs_exec_runtime_files (subj))
-		(call dracut_initramfs_manage_runtime (subj)))
+		(call dracut_initramfs.exec_runtime_files (subj))
+		(call dracut_initramfs.manage_runtime (subj)))
 
 	(optional sd_shutdown_optional_lvm
 		(call lvm_exec (subj)))

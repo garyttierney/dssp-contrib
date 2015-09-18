@@ -39,7 +39,7 @@
 
 	(call net_tcp_bind_generic_node (subj))
 
-	(call dnssec_tcp_bind_dnssec_port (subj))
+	(call dnssec.tcp_bind_unreserved_port (subj))
 
 	(call dnssec_trigger_read_config (subj))
 	(call dnssec_trigger_auto_subj_type_transition_dnssec_triggers (subj))

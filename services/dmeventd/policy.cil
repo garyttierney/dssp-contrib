@@ -1,8 +1,8 @@
-(typeattribute dmeventd_adm_subj_type)
-
-(typeattribute dmeventd_obj_type)
-
 (block dmeventd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
         (blockinherit subj_blk)
 
         (blockinherit cmd_obj_blk)
@@ -13,7 +13,12 @@
 
         (blockinherit file_runtime_obj_blk)
 
-        (typeattributeset dmeventd_obj_type runtime_file)
+        (typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call manage_runtime_fifo_files (subj))
+
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(optional dmeventd_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -21,17 +26,17 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset dmeventd_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow dmeventd_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow dmeventd_adm_subj_type dmeventd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (dmeventd_adm_subj_type dmeventd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (dmeventd_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow dmeventd_adm_subj_type dmeventd_obj_type manage_file_perms)
-(allow dmeventd_adm_subj_type dmeventd_obj_type manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
 
-(allow dmeventd_adm_subj_type dmeventd_obj_type relabel_file_perms)
-(allow dmeventd_adm_subj_type dmeventd_obj_type relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms))

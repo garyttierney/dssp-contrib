@@ -1,139 +1,59 @@
-(macro dnssec_trigger_exec_dnssec_triggercs ((type ARG1))
-	(call can_exec (ARG1 dnssec_triggercs.cmd_file)))
+(in dnssec_trigger
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro dnssec_trigger_auto_subj_type_transition_dnssec_triggercs ((type ARG1))
-	(call dnssec_trigger_send_signal_dnssec_triggercs (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dnssec_triggercs.cmd_file dnssec_triggercs.subj)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional dnssec_trigger_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional dnssec_trigger_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro dnssec_trigger_send_signal_dnssec_triggercs ((type ARG1))
-	(allow ARG1 dnssec_triggercs.subj (process (signal))))
+(in dnssec_triggercs
+	(blockinherit exec_blk)
 
-(macro dnssec_trigger_exec_dnssec_triggerd ((type ARG1))
-	(call can_exec (ARG1 dnssec_triggerd.cmd_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dnssec_trigger_auto_subj_type_transition_dnssec_triggerd ((type ARG1))
-	(call dnssec_trigger_send_signal_dnssec_triggerd (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dnssec_triggerd.cmd_file dnssec_triggerd.subj)))
+	(blockinherit send_signal_blk)
 
-(macro dnssec_trigger_send_signal_dnssec_triggerd ((type ARG1))
-	(allow ARG1 dnssec_triggerd.subj (process (signal))))
+	(blockinherit read_tmpfs_files_blk)
+	(blockinherit manage_tmpfs_files_blk)
+	(blockinherit relabel_tmpfs_files_blk)
 
-(macro dnssec_trigger_exec_dnssec_triggers ((type ARG1))
-	(call can_exec (ARG1 dnssec_triggers.cmd_file)))
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))))
 
-(macro dnssec_trigger_auto_subj_type_transition_dnssec_triggers ((type ARG1))
-	(call dnssec_trigger_send_signal_dnssec_triggers (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dnssec_triggers.cmd_file dnssec_triggers.subj)))
+(in dnssec_triggerd
+	(blockinherit exec_blk)
 
-(macro dnssec_trigger_send_signal_dnssec_triggers ((type ARG1))
-	(allow ARG1 dnssec_triggers.subj (process (signal))))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dnssec_trigger_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dnssec_trigger.config_file search_dir_perms))
+	(blockinherit send_signal_blk)
 
-(macro dnssec_trigger_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dnssec_trigger.config_file list_dir_perms))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit manage_runtime_lnk_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro dnssec_trigger_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 dnssec_trigger.config_file dnssec_trigger.config_file)))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "dnssec-trigger"))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "dnssec-triggerd.pid"))))
 
-(macro dnssec_trigger_manage_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call manage_files_pattern (ARG1 dnssec_trigger.config_file dnssec_trigger.config_file)))
+(in dnssec_triggers
+	(blockinherit exec_blk)
 
-(macro dnssec_trigger_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 dnssec_trigger.config_file dnssec_trigger.config_file)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dnssec_trigger_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dnssec_trigger.config_file read_file_perms)
-	(allow ARG1 dnssec_trigger.config_file list_dir_perms)
-	(allow ARG1 dnssec_trigger.config_file read_lnk_file_perms))
-
-(macro dnssec_trigger_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 dnssec_trigger.config_file manage_file_perms)
-	(allow ARG1 dnssec_trigger.config_file manage_dir_perms)
-	(allow ARG1 dnssec_trigger.config_file manage_lnk_file_perms))
-
-(macro dnssec_trigger_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 dnssec_trigger.config_file relabel_file_perms)
-	(allow ARG1 dnssec_trigger.config_file relabel_dir_perms)
-	(allow ARG1 dnssec_trigger.config_file relabel_lnk_file_perms))
-
-(macro dnssec_trigger_search_dnssec_triggerd_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 dnssec_triggerd.runtime_file search_dir_perms))
-
-(macro dnssec_trigger_list_dnssec_triggerd_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 dnssec_triggerd.runtime_file list_dir_perms))
-
-(macro dnssec_trigger_read_dnssec_triggerd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_files_pattern (ARG1 dnssec_triggerd.runtime_file dnssec_triggerd.runtime_file)))
-
-(macro dnssec_trigger_relabel_dnssec_triggerd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call relabel_files_pattern (ARG1 dnssec_triggerd.runtime_file dnssec_triggerd.runtime_file)))
-
-(macro dnssec_trigger_manage_dnssec_triggerd_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call manage_files_pattern (ARG1 dnssec_triggerd.runtime_file dnssec_triggerd.runtime_file)))
-
-(macro dnssec_trigger_read_dnssec_triggerd_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_lnk_files_pattern (ARG1 dnssec_triggerd.runtime_file dnssec_triggerd.runtime_file)))
-
-(macro dnssec_trigger_manage_dnssec_triggerd_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call manage_lnk_files_pattern (ARG1 dnssec_triggerd.runtime_file dnssec_triggerd.runtime_file)))
-
-(macro dnssec_trigger_read_dnssec_triggerd_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 dnssec_triggerd.runtime_file read_file_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file list_dir_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file read_lnk_file_perms))
-
-(macro dnssec_trigger_manage_dnssec_triggerd_runtime ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 dnssec_triggerd.runtime_file manage_file_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file manage_dir_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file manage_lnk_file_perms))
-
-(macro dnssec_trigger_relabel_dnssec_triggerd_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 dnssec_triggerd.runtime_file relabel_file_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file relabel_dir_perms)
-	(allow ARG1 dnssec_triggerd.runtime_file relabel_lnk_file_perms))
-
-(macro dnssec_trigger_runtime_obj_type_transition_dnssec_triggerd_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 dnssec_triggerd.runtime_file dir "dnssec-trigger"))
-	(call file_runtime_obj_type_transition (ARG1 dnssec_triggerd.runtime_file file "dnssec-triggerd.pid")))
-
-(macro dnssec_trigger_read_dnssec_triggercs_tmpfs_files ((type ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 dnssec_triggercs.tmpfs_file read_file_perms))
-
-(macro dnssec_trigger_manage_dnssec_triggercs_tmpfs_files ((type ARG1))
-	(call fs_rw_tmpfs_dirs (ARG1))
-	(allow ARG1 dnssec_triggercs.tmpfs_file manage_file_perms))
-
-(macro dnssec_trigger_relabel_dnssec_triggercs_tmpfs_files ((type ARG1))
-	(call fs_search_tmpfs (ARG1))
-	(allow ARG1 dnssec_triggercs.tmpfs_file relabel_file_perms))
-
-(macro dnssec_trigger_tmpfs_obj_type_transition_dnssec_triggercs_tmpfs ((type ARG1))
-	(call fs_tmpfs_obj_type_transition (ARG1 dnssec_triggercs.tmpfs_file file "*")))
-
-(macro dnssec_trigger_adm ((type ARG1)(role ARG2))
-	(typeattributeset dnssec_trigger_adm_subj_type ARG1)
-	(optional dnssec_trigger_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional dnssec_trigger_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(blockinherit send_signal_blk))

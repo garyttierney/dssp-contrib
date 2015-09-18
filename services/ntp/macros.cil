@@ -1,3 +1,2 @@
-(macro ntp_udp_bind_ntp_port ((type ARG1))
-	(allow ARG1 self (capability (net_bind_service)))
-	(allow ARG1 ntp.port (udp_socket (name_bind))))
+(in ntp
+	(blockinherit udp_bind_reserved_port_blk))

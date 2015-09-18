@@ -99,7 +99,7 @@
 
 	(call nss_client_subj_type (subj))
 
-	(call ntp_udp_bind_ntp_port (subj))
+	(call ntp.udp_bind_reserved_port (subj))
 
 	(optional chronyd_optional_dhclient
 		(call dhclient.read_var_lib (subj)))

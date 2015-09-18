@@ -119,8 +119,8 @@
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_logind_optional_sysbus
-		(call sysbus_acquire_service (subj))
-		(call sysbus_read_config_files (subj)))
+		(call sysbus.acquire_service (subj))
+		(call sysbus.read_config_files (subj)))
 
 	(optional sd_logind_optional_unconfinedsubj
 		(call unconfinedsubj_read_state (subj)))
@@ -130,7 +130,7 @@
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
 	(optional sd_logind_client_subj_type_optional_sysbus
-		(call sysbus_client_subj_type (client_subj_type_attribute)))
+		(call sysbus.client_subj_type (client_subj_type_attribute)))
 
 	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 	(call write_inherited_runtime_fifo_files (client_subj_type_attribute))

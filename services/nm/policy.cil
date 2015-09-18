@@ -123,8 +123,8 @@
 		(call sd_resolved.manage_runtime_files (subj)))
 
 	(optional nm_optional_sysbus
-		(call sysbus_acquire_service (subj))
-		(call sysbus_read_config_files (subj)))
+		(call sysbus.acquire_service (subj))
+		(call sysbus.read_config_files (subj)))
 
 	(optional nm_optional_unconfinedsubj
 		(call unconfinedsubj_read_state (subj)))
@@ -206,9 +206,9 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional nm_disp_optional_sysbus
-		(call sysbus_acquire_service (subj))
-		(call sysbus_read_config_files (subj))
-		(call sysbus_client_subj_type (subj)))
+		(call sysbus.acquire_service (subj))
+		(call sysbus.read_config_files (subj))
+		(call sysbus.client_subj_type (subj)))
 
 	(optional nm_disp_optional_systemctl
 		(call systemctl.exec (subj))))

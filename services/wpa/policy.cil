@@ -75,9 +75,9 @@
 		(allow wpa_adm_subj_type unit_file (service (stop status disable enable reload start))))
 
 	(optional wpa_optional_sysbus
-		(call sysbus_acquire_service (subj))
-		(call sysbus_client_subj_type (subj))
-		(call sysbus_read_config_files (subj))))
+		(call sysbus.acquire_service (subj))
+		(call sysbus.client_subj_type (subj))
+		(call sysbus.read_config_files (subj))))
 
 (optional wpa_sysbus_chat_client_subj_type_optional_sysbus
 	(allow wpa.subj wpa_sysbus_chat_client_subj_type (dbus (send_msg)))

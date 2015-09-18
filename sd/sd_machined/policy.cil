@@ -86,9 +86,9 @@
 		(call qemu_getattr_all_guest_ptys (subj)))
 
 	(optional sd_machined_optional_sysbus
-		(call sysbus_acquire_service (subj))
-		(call sysbus_client_subj_type (subj))
-		(call sysbus_read_config_files (subj)))
+		(call sysbus.acquire_service (subj))
+		(call sysbus.client_subj_type (subj))
+		(call sysbus.read_config_files (subj)))
 
 	(optional sd_machined_optional_usersubj
 		(call usersubj.getattr_ptys (subj)))

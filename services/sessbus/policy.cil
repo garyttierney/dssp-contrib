@@ -16,16 +16,16 @@
 
 	(allow subj_type_attribute client_subj_type_attribute (process (signal signull sigkill sigstop)))
 
-	(call sysbus_cmd_obj_entry_subj (subj_type_attribute))
-	(call sysbus_dbus_subj_type (subj_type_attribute))
-	(call sysbus_read_config (subj_type_attribute))
+	(call sysbus.cmd_obj_entry_subj (subj_type_attribute))
+	(call sysbus.dbus_subj_type (subj_type_attribute))
+	(call sysbus.read_config (subj_type_attribute))
 
 	(optional subj_type_attribute_optional_sessbus_launch
 		(call sessbus_launch.write_inherited_fifo_files_client_subj (subj_type_attribute)))
 
 	(allow client_subj_type_attribute self (dbus (send_msg)))
 
-	(call sysbus_read_var_lib_files (client_subj_type_attribute))
+	(call sysbus.read_var_lib_files (client_subj_type_attribute))
 
 	(optional client_subj_type_attribute_optional_sessbus_launch
 		(call sessbus_launch.use_fd_all_subj (client_subj_type_attribute))))

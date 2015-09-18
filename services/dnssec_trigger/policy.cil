@@ -158,7 +158,7 @@
 		(call sd.daemon (subj cmd_file)))
 
 	(optional dnssec_triggers_optional_sysbus
-		(call sysbus_client_subj_type (subj)))
+		(call sysbus.client_subj_type (subj)))
 
 	(optional dnssec_triggers_optional_unbound
 		(call unboundctl.auto_subj_type_transition (subj)))

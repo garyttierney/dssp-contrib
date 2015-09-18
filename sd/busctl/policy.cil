@@ -30,9 +30,9 @@
 	(call client_subj_type (subj_type_attribute))
 
 	(optional busctl_subj_type_optional_sysbus
-		(call sysbus_client_subj_type (subj_type_attribute))
-		(call sysbus_chat_unconfined_subj (subj_type_attribute))
-		(call sysbus_chat_client_subj (subj_type_attribute)))
+		(call sysbus.client_subj_type (subj_type_attribute))
+		(call sysbus.chat_unconfined_subj (subj_type_attribute))
+		(call sysbus.chat_client_subj (subj_type_attribute)))
 
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 

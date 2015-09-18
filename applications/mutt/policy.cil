@@ -44,7 +44,7 @@
 		(call sd_journald.client_subj_type (subj_type_attribute)))
 
 	(optional mutt_subj_type_optional_sysbus
-		(call sysbus_read_var_lib_files (subj_type_attribute))))
+		(call sysbus.read_var_lib_files (subj_type_attribute))))
 
 (block mutt_helper
 	(blockinherit cmd_obj_blk))

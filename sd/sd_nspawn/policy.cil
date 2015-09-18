@@ -139,7 +139,7 @@
 	(call udev_read_config_files (subj))
 
 	(optional sd_nspawn_optional_sysbus
-		(call sysbus_client_subj_type (subj)))
+		(call sysbus.client_subj_type (subj)))
 
 	(allow adm_subj_type_attribute unit_obj_type_attribute (service (stop status disable enable reload start)))
 

@@ -1,9 +1,9 @@
-(typeattribute mcstransd_adm_subj_type)
-(typeattribute mcstransd_client_subj_type)
-
-(typeattribute mcstransd_obj_type)
-
 (block mcstransd
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
 	(call mls_trusted_obj_type (subj))
@@ -16,23 +16,23 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset mcstransd_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
 	(call mls_trusted_obj_type (runtime_file))
 
-	(typeattributeset mcstransd_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (sys_resource)))
 	(allow subj self (process (setrlimit getcap setcap)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_netlink_selinux_socket_perms)
-
-	(call mcstransd_read_config (subj))
-
-	(call mcstransd_manage_runtime (subj))
-	(call mcstransd_runtime_obj_type_transition_runtime (subj))
 
 	(call sys_read_kernel_sysctl_files (subj))
 
@@ -55,26 +55,26 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset mcstransd_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow mcstransd_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional mcstransd_optional_sd_journald
-		(call sd_journald.client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj)))
 
-(call mcstransd_stream_connect (mcstransd_client_subj_type))
+	(call stream_connect (client_subj_type_attribute))
 
-(allow mcstransd_adm_subj_type mcstransd.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (mcstransd_adm_subj_type mcstransd.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(call file_search_runtime (mcstransd_adm_subj_type))
+	(call file_search_runtime (adm_subj_type_attribute))
 
-(allow mcstransd_adm_subj_type mcstransd_obj_type manage_file_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type manage_dir_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type manage_lnk_file_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
 
-(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_file_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_dir_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_lnk_file_perms)
-(allow mcstransd_adm_subj_type mcstransd_obj_type relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))

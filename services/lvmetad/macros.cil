@@ -1,54 +1,43 @@
-(macro lvmetad_exec ((type ARG1))
-	(call can_exec (ARG1 lvmetad.cmd_file)))
+(in lvmetad
+	(blockinherit exec_blk)
 
-(macro lvmetad_auto_subj_type_transition ((type ARG1))
-	(call lvmetad_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 lvmetad.cmd_file lvmetad.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro lvmetad_send_signal ((type ARG1))
-	(allow ARG1 lvmetad.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro lvmetad_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 lvmetad.runtime_file read_file_perms))
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit relabel_runtime_files_blk)
 
-(macro lvmetad_manage_runtime_files ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 lvmetad.runtime_file manage_file_perms))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file file "lvmetad.pid")))
 
-(macro lvmetad_relabel_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 lvmetad.runtime_file relabel_file_perms))
+	(macro lvm_runtime_obj_type_transition_runtime ((type ARG1))
+		(call lvm_runtime_obj_object_type_transition (ARG1 runtime_file sock_file "lvmetad.socket")))
 
-(macro lvmetad_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 lvmetad.runtime_file file "lvmetad.pid")))
+	(macro read_runtime_sock_files ((type ARG1))
+		(call lvm_search_runtime (ARG1))
+		(allow ARG1 runtime_file read_sock_file_perms))
 
-(macro lvmetad_lvm_runtime_obj_type_transition_lvmetad_runtime ((type ARG1))
-	(call lvm_runtime_obj_object_type_transition (ARG1 lvmetad.runtime_file sock_file "lvmetad.socket")))
+	(macro manage_runtime_sock_files ((type ARG1))
+		(call lvm_rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_sock_file_perms))
 
-(macro lvmetad_read_runtime_sock_files ((type ARG1))
-	(call lvm_search_runtime (ARG1))
-	(allow ARG1 lvmetad.runtime_file read_sock_file_perms))
+	(macro relabel_runtime_sock_files ((type ARG1))
+		(call lvm_search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_sock_file_perms))
 
-(macro lvmetad_manage_runtime_sock_files ((type ARG1))
-	(call lvm_rw_runtime_dirs (ARG1))
-	(allow ARG1 lvmetad.runtime_file manage_sock_file_perms))
+	(macro write_runtime_sock_files ((type ARG1))
+		(call lvm_search_runtime (ARG1))
+		(allow ARG1 runtime_file write_sock_file_perms))
 
-(macro lvmetad_relabel_runtime_sock_files ((type ARG1))
-	(call lvm_search_runtime (ARG1))
-	(allow ARG1 lvmetad.runtime_file relabel_sock_file_perms))
+	(macro stream_connect ((type ARG1))
+		(call write_runtime_sock_files (ARG1))
+		(allow ARG1 subj (unix_stream_socket (connectto))))
 
-(macro lvmetad_write_runtime_sock_files ((type ARG1))
-	(call lvm_search_runtime (ARG1))
-	(allow ARG1 lvmetad.runtime_file write_sock_file_perms))
-
-(macro lvmetad_stream_connect ((type ARG1))
-	(call lvmetad_write_runtime_sock_files (ARG1))
-	(allow ARG1 lvmetad.subj (unix_stream_socket (connectto))))
-
-(macro lvmetad_adm ((type ARG1)(role ARG2))
-	(typeattributeset lvmetad_adm_subj_type ARG1)
-	(optional lvmetad_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional lvmetad_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional lvmetad_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional lvmetad_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

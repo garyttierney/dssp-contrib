@@ -58,7 +58,7 @@
 
 	(call dnssec_triggers.auto_subj_type_transition (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(optional dnssec_triggerd_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -104,7 +104,7 @@
 	(call cert.read (subj))
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(optional dnssec_triggercs_optional_openssl
 		(call openssl.exec (subj)))
@@ -152,7 +152,7 @@
 
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(optional dnssec_triggers_optional_sd
 		(call sd.daemon (subj cmd_file)))

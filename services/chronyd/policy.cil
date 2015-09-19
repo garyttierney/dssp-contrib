@@ -16,7 +16,7 @@
 	(call terminfo.read_all (subj))
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(optional chronyc_optional_dhclient
 		(call dhclient.read_var_lib (subj)))
@@ -97,7 +97,7 @@
 	(call locale.read (subj))
 	(call network.read_config (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call ntp.udp_bind_reserved_port (subj))
 

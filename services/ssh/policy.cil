@@ -174,7 +174,7 @@
 
 	(call cert.read_all (subj_type_attribute))
 
-	(call nss_client_subj_type (subj_type_attribute))
+	(call nss.client_subj_type (subj_type_attribute))
 
 	(call ssh_client.read_home_user (subj_type_attribute)))
 
@@ -207,7 +207,7 @@
 	(call cert.read_all (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
-	(call nss_client_subj_type (subj_type_attribute))
+	(call nss.client_subj_type (subj_type_attribute))
 
 	(call ssh_client.exec (subj_type_attribute))
 	(call sshd.read_all_config_files (subj_type_attribute))
@@ -270,7 +270,7 @@
 
 	(call cert.read_all (subj))
 
-	(call nss_client_subj_type (subj)))
+	(call nss.client_subj_type (subj)))
 
 (block ssh_sftpserver
 	(roleattribute role_attribute)
@@ -281,7 +281,7 @@
 
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call usersubj.manage_home_user (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user (subj)))

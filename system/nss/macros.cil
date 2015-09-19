@@ -1,14 +1,7 @@
-(macro nss_client_subj_type ((type ARG1))
-	(typeattributeset nss_client_subj_type ARG1))
+(in nss
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
 
-(macro nss_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nss.config_file read_file_perms))
-
-(macro nss_manage_config_files ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 nss.config_file manage_file_perms))
-
-(macro nss_relabel_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 nss.config_file relabel_file_perms))
+	(blockinherit read_config_files_blk)
+	(blockinherit manage_config_files_blk)
+	(blockinherit relabel_config_files_blk))

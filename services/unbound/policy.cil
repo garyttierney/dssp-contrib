@@ -56,7 +56,7 @@
 	(call cert.read (subj))
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call unbounddnsctl.tcp_bind_unreserved_port (subj))
 
@@ -135,7 +135,7 @@
 	(call cert.read (subj))
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call unbound.manage_config_files (subj))
 

@@ -38,7 +38,7 @@
 
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call qemu_relabel_all_guest_obj_files (subj))
 	(call qemu_run_all_qemu_guest (subj role_attribute))
@@ -114,7 +114,7 @@
 	(call cert.read (subj))
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call openssl.exec (subj))
 	(call openssl.manage_home_user_files (subj))
@@ -144,7 +144,7 @@
 
 	(call locale.read (subj))
 
-	(call nss_client_subj_type (subj))
+	(call nss.client_subj_type (subj))
 
 	(call qemu_stream_connect_all_guest_subj (subj))
 	(call qemu_manage_all_guest_runtime_obj_sock_files (subj))

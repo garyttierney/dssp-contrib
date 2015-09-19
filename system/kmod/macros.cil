@@ -1,57 +1,26 @@
-(macro kmod_exec ((type ARG1))
-	(call can_exec (ARG1 kmod.cmd_file)))
+(in kmod
+	(blockinherit exec_blk)
 
-(macro kmod_auto_subj_type_transition ((type ARG1))
-	(call kmod_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 kmod.cmd_file kmod.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro kmod_run ((type ARG1)(role ARG2))
-	(call kmod_auto_subj_type_transition (ARG1))
-	(roleattributeset kmod_role (ARG2)))
+	(blockinherit run_blk)
 
-(macro kmod_send_signal ((type ARG1))
-	(allow ARG1 kmod.subj (process (signal))))
+	(blockinherit send_signal_blk)
 
-(macro kmod_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 kmod.cmd_file process (ARG2 ARG3)))))
+	(macro mls ((type ARG1)(level ARG2)(level ARG3))
+		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
 
-(macro kmod_search_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 kmod.config_file search_dir_perms))
+	(blockinherit search_config_blk)
+	(blockinherit list_config_blk)
+	(blockinherit read_config_files_blk)
+	(blockinherit read_config_lnk_files_blk)
+	(blockinherit read_config_blk)
+	(blockinherit manage_config_blk)
+	(blockinherit relabel_config_blk)
 
-(macro kmod_list_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 kmod.config_file list_dir_perms))
-
-(macro kmod_read_config_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_files_pattern (ARG1 kmod.config_file kmod.config_file)))
-
-(macro kmod_read_config_lnk_files ((type ARG1))
-	(call file_search_config (ARG1))
-	(call read_lnk_files_pattern (ARG1 kmod.config_file kmod.config_file)))
-
-(macro kmod_read_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 kmod.config_file read_file_perms)
-	(allow ARG1 kmod.config_file list_dir_perms)
-	(allow ARG1 kmod.config_file read_lnk_file_perms))
-
-(macro kmod_manage_config ((type ARG1))
-	(call file_rw_config_dirs (ARG1))
-	(allow ARG1 kmod.config_file manage_file_perms)
-	(allow ARG1 kmod.config_file manage_dir_perms)
-	(allow ARG1 kmod.config_file manage_lnk_file_perms))
-
-(macro kmod_relabel_config ((type ARG1))
-	(call file_search_config (ARG1))
-	(allow ARG1 kmod.config_file relabel_file_perms)
-	(allow ARG1 kmod.config_file relabel_dir_perms)
-	(allow ARG1 kmod.config_file relabel_lnk_file_perms))
-
-(macro kmod_adm ((type ARG1)(role ARG2))
-	(typeattributeset kmod_adm_subj_type ARG1)
-	(optional kmod_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional kmod_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional kmod_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional kmod_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

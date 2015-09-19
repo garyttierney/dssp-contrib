@@ -1,19 +1,21 @@
-(roleattribute kmod_role)
-
-(typeattribute kmod_obj_type)
-
-(typeattribute kmod_adm_subj_type)
-
 (block kmod
+	(roleattribute role_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset kmod_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype kmod_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset kmod_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(allow subj self (capability (dac_override)))
 
@@ -29,8 +31,6 @@
 	(call fs_read_sysfs (subj))
 	(call fs_trace_client_subj_type (subj))
 
-	(call kmod_read_config (subj))
-
 	(call miscfile_read_modules (subj))
 
 	(call nss_client_subj_type (subj))
@@ -44,20 +44,20 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset kmod_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow kmod_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional kmod_optional_sd_tmpfiles
-		(call sd_tmpfiles.manage_runtime_files (subj))))
+		(call sd_tmpfiles.manage_runtime_files (subj)))
 
-(allow kmod_adm_subj_type kmod.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (kmod_adm_subj_type kmod.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow kmod_adm_subj_type kmod_obj_type manage_file_perms)
-(allow kmod_adm_subj_type kmod_obj_type manage_dir_perms)
-(allow kmod_adm_subj_type kmod_obj_type manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
 
-(allow kmod_adm_subj_type kmod_obj_type relabel_file_perms)
-(allow kmod_adm_subj_type kmod_obj_type relabel_dir_perms)
-(allow kmod_adm_subj_type kmod_obj_type relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))

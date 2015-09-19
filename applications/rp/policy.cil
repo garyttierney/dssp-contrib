@@ -32,6 +32,6 @@
 	(call xserver.client_subj_type (subj_type_attribute))
 
 	(optional rp_subj_type_optional_unconfinedsubj
-		(call unconfinedsubj_getsession (subj_type_attribute)))
+		(call unconfinedsubj.getsession_all_subj (subj_type_attribute)))
 
 	(allow client_subj_type_attribute subj_type_attribute (process (sigchld))))

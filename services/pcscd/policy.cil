@@ -53,7 +53,7 @@
 		(call sysbus.client_subj_type (subj)))
 
 	(optional pcscd_optional_unconfinedsubj
-		(call unconfinedsubj_read_state (subj)))
+		(call unconfinedsubj.read_state_all_subj (subj)))
 
 	(allow subj client_subj_type_attribute read_file_perms)
 	(allow subj client_subj_type_attribute list_dir_perms)

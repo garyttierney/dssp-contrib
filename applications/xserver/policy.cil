@@ -117,8 +117,8 @@
 		(call polkit_exec.exec (subj)))
 
 	(optional xserver_optional_unconfinedsubj
-		(call unconfinedsubj_rw_shm (subj))
-		(call unconfinedsubj_read_state (subj)))
+		(call unconfinedsubj.rw_shm_all_subj (subj))
+		(call unconfinedsubj.read_state_all_subj (subj)))
 
 	(allow tmpfs_client_subj_type_attribute self create_shm_perms)
 

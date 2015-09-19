@@ -238,7 +238,8 @@
 		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional sysadm_optional_hostname
-		(call hostname_manage_config_files (subj)))
+		(call hostname.manage_config_files (subj))
+		(call hostname.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_hwclock
 		(call hwclock_manage_config_files (subj))
@@ -1230,8 +1231,6 @@
 
 		(call file_list_config (subj))
 		(call file_search_var_spool (subj))
-
-		(call hostname_exec (subj))
 
 		(call usersubj.pty_template (subj))
 		(call usersubj.home_dir_obj_type_transition_home_user_files (subj))

@@ -1,17 +1,17 @@
-(roleattribute hostname_role)
-
 (block hostname
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset hostname_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype hostname_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(allow subj self create_unix_dgram_socket_perms)
+	(call read_config_files (subj))
 
-	(call hostname_read_config_files (subj))
+	(allow subj self create_unix_dgram_socket_perms)
 
 	(call sys_read_net_proc_files (subj))
 

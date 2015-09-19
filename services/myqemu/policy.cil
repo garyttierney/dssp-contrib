@@ -40,8 +40,8 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call qemu_relabel_all_guest_obj_files (subj))
-	(call qemu_run_all_qemu_guest (subj role_attribute))
+	(call qemu_guest.relabel_all_files (subj))
+	(call qemu_guest.run_all (subj role_attribute))
 
 	(call seutil_exec_setfiles (subj))
 
@@ -66,7 +66,7 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit qemu_guest_pty_obj_blk)
+	(blockinherit qemu_guest.pty_obj_blk)
 
 	(call use_ptys (subj))
 
@@ -120,8 +120,8 @@
 	(call openssl.manage_home_user_files (subj))
 	(call openssl.home_dir_obj_type_transition_home (subj))
 
-	(call qemu_exec (subj))
-	(call qemu_read_config (subj))
+	(call qemu.exec (subj))
+	(call qemu.read_config (subj))
 
 	(call usersubj.manage_home_user_files (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
@@ -146,8 +146,8 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call qemu_stream_connect_all_guest_subj (subj))
-	(call qemu_manage_all_guest_runtime_obj_sock_files (subj))
+	(call qemu_guest.stream_connect_all_subj (subj))
+	(call qemu_guest.manage_all_runtime_sock_files (subj))
 
 	(optional mqemu_shutdown_optional_sd
 		(call sd.daemon (subj cmd_file))))

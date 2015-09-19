@@ -17,7 +17,7 @@
 	(call nss.client_subj_type (subj))
 
 	(optional utempter_optional_qemu
-		(call qemu_use_all_inherited_guest_ptys (subj)))
+		(call qemu_guest.use_all_inherited_ptys (subj)))
 
 	(optional utempter_optional_screen
 		(call screen.rw_inherited_unix_stream_sockets_all_subj (subj))

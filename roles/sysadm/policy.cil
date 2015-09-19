@@ -393,9 +393,9 @@
 		(call pwgen.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_qemu
-		(call qemu_manage_all_guest_files (subj))
-		(call qemu_manage_all_guest_runtime_obj_sock_files (subj))
-		(call qemu_manage_config (subj)))
+		(call qemu_guest.manage_all_files (subj))
+		(call qemu_guest.manage_all_runtime_sock_files (subj))
+		(call qemu.manage_config (subj)))
 
 	(optional sysadm_optional_qemu_guest_agent
 		(call qemu_guest_agent.adm (subj role)))
@@ -1214,7 +1214,7 @@
 		(call screen.manage_runtime (sysadm.subj))))
 
 (optional sysadm_screen_optional_qemu
-	(call qemu_use_all_guest_ptys (sysadm_screen.subj)))
+	(call qemu_guest.use_all_ptys (sysadm_screen.subj)))
 
 (optional sysadm_sduser_optional_sduser
 	(block sysadm_sduser

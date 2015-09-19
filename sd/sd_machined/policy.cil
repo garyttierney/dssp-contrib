@@ -83,7 +83,7 @@
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_machined_optional_qemu
-		(call qemu_getattr_all_guest_ptys (subj)))
+		(call qemu_guest.getattr_all_ptys (subj)))
 
 	(optional sd_machined_optional_sysbus
 		(call sysbus.acquire_service (subj))

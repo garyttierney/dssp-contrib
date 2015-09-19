@@ -20,7 +20,7 @@
 	(call nss.client_subj_type (subj))
 
 	(optional tunctl_optional_qemu
-		(call qemu_relabelfrom_all_guest_subj_tun_socket (subj)))
+		(call qemu_guest.relabelfrom_all_tun_socket (subj)))
 
 	(optional tunctl_optional_sd
 		(call sd.forked_subj_type (subj))))

@@ -1,82 +1,82 @@
 (boolean qemu_use_hugepages true)
 
-(roleattribute qemu_guest_role)
-
-(typeattribute qemu_guest_subj_type)
-(typeattribute qemu_guest_obj_type)
-(typeattribute qemu_guest_runtime_obj_type)
-(typeattribute qemu_guest_pty_obj_type)
-
 (block qemu
 	(blockinherit app.application_cmd_obj_blk)
 
 	(blockinherit file_config_obj_blk)
 
-	(call subj_entry (qemu_guest_subj_type cmd_file)))
+	(call subj_entry (qemu_guest.subj_type_attribute cmd_file)))
 
 (block qemu_guest
-	(blockinherit qemu_guest_blk))
+	(blockinherit guest_blk)
+
+	(roleattribute role_attribute)
+
+	(typeattribute subj_type_attribute)
+	(typeattribute obj_type_attribute)
+	(typeattribute runtime_obj_type_attribute)
+	(typeattribute pty_obj_type_attribute)
+
+	(roleattributeset role_attribute sys.role)
+
+	(allow subj_type_attribute self (capability (setuid setgid net_admin)))
+	(allow subj_type_attribute self (process (getsched)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self create_unix_stream_stream_socket_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self create_tun_socket_perms)
+	(allow subj_type_attribute self (tun_socket (relabelto relabelfrom)))
+
+	(allow subj_type_attribute subj (tun_socket (relabelfrom)))
+
+	(call sys_list_cpu_sysfs (subj_type_attribute))
+	(call sys_list_node_sysfs (subj_type_attribute))
+	(call sys_request_load_module (subj_type_attribute))
+	(call sys_read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys_read_cpu_sysfs_files (subj_type_attribute))
+	(call sys_read_kernel_sysctl_files (subj_type_attribute))
+	(call sys_read_net_proc_files (subj_type_attribute))
+	(call sys_read_node_sysfs_files (subj_type_attribute))
+
+	(call mcs_constrained_subj_type (subj_type_attribute))
+
+	(call dev_read_urandom (subj_type_attribute))
+	(call dev_rw_kvm (subj_type_attribute))
+	(call dev_rw_tun_tap (subj_type_attribute))
+
+	(call file_read_data (subj_type_attribute))
+	(call file_read_config_files (subj_type_attribute))
+
+	(call fs_getattr_fs (subj_type_attribute))
+
+	(call subj_use_interactive_fd_type (subj_type_attribute))
+
+	(call net_tcp_bind_generic_node (subj_type_attribute))
+	(call net_udp_bind_generic_node (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call qemu.audit_access_cmd_files (subj_type_attribute))
+	(call qemu.read_config (subj_type_attribute))
+
+	(optional qemu_guest_subj_type_optional_sd
+		(call sd.forked_subj_type (subj_type_attribute)))
+
+	(optional qemu_guest_subj_type_optional_sd_machined
+		(call sd_machined.search_var_lib (subj_type_attribute)))
+
+	(optional qemu_guest_subj_type_optional_sd_networkd
+		(call sd_networkd.relabelfrom_tun_socket (subj_type_attribute)))
+
+	(optional qemu_guest_subj_type_optional_tunctl
+		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
 
 (block qemu_use_hugepages
-	(blockinherit sec_bool_obj_blk))
+	(blockinherit sec_bool_obj_blk)
 
-(roleattributeset qemu_guest_role sys.role)
-
-(allow qemu_guest_subj_type self (capability (setuid setgid net_admin)))
-(allow qemu_guest_subj_type self (process (getsched)))
-(allow qemu_guest_subj_type self rw_fifo_file_perms)
-(allow qemu_guest_subj_type self create_unix_stream_stream_socket_perms)
-(allow qemu_guest_subj_type self (tcp_socket (listen accept)))
-(allow qemu_guest_subj_type self create_tun_socket_perms)
-(allow qemu_guest_subj_type self (tun_socket (relabelto relabelfrom)))
-
-(allow qemu_guest_subj_type qemu_guest.subj (tun_socket (relabelfrom)))
-
-(call sys_list_cpu_sysfs (qemu_guest_subj_type))
-(call sys_list_node_sysfs (qemu_guest_subj_type))
-(call sys_request_load_module (qemu_guest_subj_type))
-(call sys_read_cpuinfo_proc_files (qemu_guest_subj_type))
-(call sys_read_cpu_sysfs_files (qemu_guest_subj_type))
-(call sys_read_kernel_sysctl_files (qemu_guest_subj_type))
-(call sys_read_net_proc_files (qemu_guest_subj_type))
-(call sys_read_node_sysfs_files (qemu_guest_subj_type))
-
-(call mcs_constrained_subj_type (qemu_guest_subj_type))
-
-(call dev_read_urandom (qemu_guest_subj_type))
-(call dev_rw_kvm (qemu_guest_subj_type))
-(call dev_rw_tun_tap (qemu_guest_subj_type))
-
-(call file_read_data (qemu_guest_subj_type))
-(call file_read_config_files (qemu_guest_subj_type))
-
-(call fs_getattr_fs (qemu_guest_subj_type))
-
-(call subj_use_interactive_fd_type (qemu_guest_subj_type))
-
-(call net_tcp_bind_generic_node (qemu_guest_subj_type))
-(call net_udp_bind_generic_node (qemu_guest_subj_type))
-
-(call locale.read (qemu_guest_subj_type))
-
-(call nss.client_subj_type (qemu_guest_subj_type))
-
-(call qemu_audit_access_cmd_files (qemu_guest_subj_type))
-(call qemu_read_config (qemu_guest_subj_type))
-
-(booleanif qemu_use_hugepages
-	(true
-		(call fs_getattr_hugetlbfs_fs (qemu_guest_subj_type))
-		(call fs_manage_hugetlbfs_files (qemu_guest_subj_type))))
-
-(optional qemu_guest_subj_type_optional_sd
-	(call sd.forked_subj_type (qemu_guest_subj_type)))
-
-(optional qemu_guest_subj_type_optional_sd_machined
-	(call sd_machined.search_var_lib (qemu_guest_subj_type)))
-
-(optional qemu_guest_subj_type_optional_sd_networkd
-	(call sd_networkd.relabelfrom_tun_socket (qemu_guest_subj_type)))
-
-(optional qemu_guest_subj_type_optional_tunctl
-	(call tunctl.relabelfrom_tun_socket (qemu_guest_subj_type)))
+	(booleanif qemu_use_hugepages
+		(true
+			(call fs_getattr_hugetlbfs_fs (qemu_guest.subj_type_attribute))
+			(call fs_manage_hugetlbfs_files (qemu_guest.subj_type_attribute)))))

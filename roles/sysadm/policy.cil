@@ -424,8 +424,8 @@
 		(call rfkill.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpm
-		(call rpm_adm (subj role))
-		(call rpm_run (sysadm_subj_type role)))
+		(call rpm.adm (subj role))
+		(call rpm.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_rpmbuild
 		(call rpmbuild.manage_tmpfs_user (subj))

@@ -1,30 +1,20 @@
-(macro dm_exec_dmcrypt ((type ARG1))
-	(call can_exec (ARG1 dmsetup.cmd_file)))
+(in dmcrypt
+	(blockinherit exec_blk)
 
-(macro dm_auto_subj_type_transition_dmcrypt ((type ARG1))
-	(call dm_send_signal_dmcrypt (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dmcrypt.cmd_file dmcrypt.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dm_send_signal_dmcrypt ((type ARG1))
-	(allow ARG1 dmcrypt.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro dm_run_dmcrypt ((type ARG1)(role ARG2))
-	(call dm_auto_subj_type_transition_dmcrypt (ARG1))
-	(roleattributeset dm_dmcrypt_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro dm_rw_dmcrypt_sem ((type ARG1))
-	(allow ARG1 dmcrypt.subj rw_sem_perms))
+	(macro rw_sem ((type ARG1))
+		(allow ARG1 subj rw_sem_perms)))
 
-(macro dm_exec_dmsetup ((type ARG1))
-	(call can_exec (ARG1 dmsetup.cmd_file)))
+(in dmsetup
+	(blockinherit exec_blk)
 
-(macro dm_auto_subj_type_transition_dmsetup ((type ARG1))
-	(call dm_send_signal_dmsetup (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dmsetup.cmd_file dmsetup.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dm_send_signal_dmsetup ((type ARG1))
-	(allow ARG1 dmsetup.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro dm_run_dmsetup ((type ARG1)(role ARG2))
-	(call dm_auto_subj_type_transition_dmsetup (ARG1))
-	(roleattributeset dm_dmsetup_role ARG2))
+	(blockinherit send_signal_blk))

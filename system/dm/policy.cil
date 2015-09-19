@@ -1,12 +1,11 @@
-(roleattribute dm_dmcrypt_role)
-(roleattribute dm_dmsetup_role)
-
 (block dmcrypt
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset dm_dmcrypt_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype dm_dmcrypt_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (ipc_lock sys_admin sys_nice)))
 	(allow subj self (process (setsched)))
@@ -35,11 +34,13 @@
 	(call udev_client_subj_type (subj)))
 
 (block dmsetup
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset dm_dmsetup_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype dm_dmsetup_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (sys_admin)))
 
@@ -47,7 +48,7 @@
 
 	(call dev_rw_lvm_control (subj))
 
-	(call dm_rw_dmcrypt_sem (subj))
+	(call dmcrypt.rw_sem (subj))
 
 	(call udev_client_subj_type (subj))
 

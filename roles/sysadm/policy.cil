@@ -174,8 +174,8 @@
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dm
-		(call dm_run_dmcrypt (sysadm_subj_type role))
-		(call dm_run_dmsetup (sysadm_subj_type role)))
+		(call dmcrypt.run (sysadm_subj_type role))
+		(call dmsetup.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dmenu
 		(call dmenu.run (sysadm_subj_type role)))

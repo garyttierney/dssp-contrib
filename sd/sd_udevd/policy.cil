@@ -82,7 +82,7 @@
 		(call alsactl.send_sigkill (subj)))
 
 	(optional sd_udevd_optional_dm
-		(call dm_auto_subj_type_transition_dmsetup (subj)))
+		(call dmsetup.auto_subj_type_transition (subj)))
 
 	(optional sd_udevd_optional_lvm
 		(call lvm_auto_subj_type_transition (subj)))

@@ -80,7 +80,7 @@
 	(call udev_read_config_files (subj))
 
 	(optional dracut_optional_dm
-		(call dm_exec_dmsetup (subj)))
+		(call dmsetup.exec (subj)))
 
 	(optional dracut_optional_lvm
 		(call lvm_manage_runtime_lock_files (subj))

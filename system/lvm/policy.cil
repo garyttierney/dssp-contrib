@@ -1,36 +1,43 @@
-(roleattribute lvm_role)
-
-(typeattribute lvm_obj_type)
-
-(typeattribute lvm_adm_subj_type)
-(typeattribute lvm_client_subj_type)
-
 (block lvm
+	(roleattribute role_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset lvm_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype lvm_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset lvm_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file_runtime_lock_obj_blk)
 
-	(typeattributeset lvm_obj_type runtime_lock_file)
+	(typeattributeset obj_type_attribute runtime_lock_file)
+
+	(call manage_runtime_lock (subj))
+	(call runtime_lock_obj_type_transition_runtime_lock (subj))
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset lvm_obj_type runtime_file)
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call lvm_metadata.manage_config (subj))
 
 	(allow subj self (capability (ipc_lock sys_nice sys_admin)))
 	(allow subj self (process (setfscreate setsched)))
 	(allow subj self create_sem_perms)
 
-	(allow subj lvm_client_subj_type read_file_perms)
-	(allow subj lvm_client_subj_type list_dir_perms)
-	(allow subj lvm_client_subj_type read_lnk_file_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
 	(call sys_get_sysvipc_info (subj))
 	(call sys_getattr_core_if (subj))
@@ -53,11 +60,6 @@
 
 	(call storage_manage_all (subj))
 
-	(call lvm_read_config (subj))
-	(call lvm_manage_metadata (subj))
-	(call lvm_manage_runtime_lock (subj))
-	(call lvm_runtime_lock_obj_type_transition_runtime_lock (subj))
-
 	(call lvmetad.stream_connect (subj))
 
 	(call miscfile_read_locale (subj))
@@ -75,33 +77,33 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset lvm_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow lvm_adm_subj_type unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional lvm_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))
 
 		(call dev_write_kmsg (subj))
-		(call term_use_console (subj))))
+		(call term_use_console (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file_search_runtime (adm_subj_type_attribute))
+	(call file_search_runtime_lock (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block lvm_metadata
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset lvm_obj_type config_file))
-
-(allow lvm_adm_subj_type lvm.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (lvm_adm_subj_type lvm.subj))
-
-(call file_search_runtime (lvm_adm_subj_type))
-(call file_search_runtime_lock (lvm_adm_subj_type))
-
-(allow lvm_adm_subj_type lvm_obj_type manage_file_perms)
-(allow lvm_adm_subj_type lvm_obj_type manage_dir_perms)
-(allow lvm_adm_subj_type lvm_obj_type manage_lnk_file_perms)
-(allow lvm_adm_subj_type lvm_obj_type manage_sock_file_perms)
-
-(allow lvm_adm_subj_type lvm_obj_type relabel_file_perms)
-(allow lvm_adm_subj_type lvm_obj_type relabel_dir_perms)
-(allow lvm_adm_subj_type lvm_obj_type relabel_lnk_file_perms)
-(allow lvm_adm_subj_type lvm_obj_type relabel_sock_file_perms)
+	(typeattributeset lvm.obj_type_attribute config_file))

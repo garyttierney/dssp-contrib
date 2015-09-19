@@ -53,7 +53,7 @@
 	(call udev_client_subj_type (subj))
 
 	(optional dmsetup_optional_lvm
-		(call lvm_rw_sem (subj)))
+		(call lvm.rw_sem (subj)))
 
 	(optional dmsetup_optional_sd
 		(call sd.daemon (subj cmd_file)))

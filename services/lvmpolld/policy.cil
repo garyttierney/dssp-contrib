@@ -26,9 +26,9 @@
 
 	(call sec_get_enforce_mode (subj))
 
-	(call lvm_audit_access_cmd_files (subj))
-	(call lvm_manage_runtime_dirs (subj))
-	(call lvm_runtime_obj_type_transition_runtime (subj))
+	(call lvm.audit_access_cmd_files (subj))
+	(call lvm.manage_runtime_dirs (subj))
+	(call lvm.runtime_obj_type_transition_runtime (subj))
 
 	(call miscfile_read_locale (subj))
 
@@ -50,7 +50,7 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call lvm_search_runtime (adm_subj_type_attribute))
+	(call lvm.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)

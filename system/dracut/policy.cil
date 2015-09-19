@@ -84,11 +84,11 @@
 		(call dmsetup.exec (subj)))
 
 	(optional dracut_optional_lvm
-		(call lvm_manage_runtime_lock_files (subj))
-		(call lvm_read_config (subj))
-		(call lvm_read_metadata (subj))
-		(call lvm_read_runtime (subj))
-		(call lvm_exec (subj)))
+		(call lvm.manage_runtime_lock_files (subj))
+		(call lvm.read_config (subj))
+		(call lvm_metadata.read_config (subj))
+		(call lvm.read_runtime (subj))
+		(call lvm.exec (subj)))
 
 	(optional dracut_optional_lvmetad
 		(call lvmetad.stream_connect (subj)))

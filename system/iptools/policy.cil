@@ -1,13 +1,15 @@
-(roleattribute iptools_role)
-
 (block iptools
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset iptools_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype iptools_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
+
+	(call read_config (subj))
 
 	(allow subj self (capability (net_admin)))
 	(allow subj self create_udp_socket_perms)
@@ -21,8 +23,6 @@
 	(call sys_request_load_module (subj))
 
 	(call file_read_config_files (subj))
-
-	(call iptools_read_config (subj))
 
 	(call miscfile_read_locale (subj))
 

@@ -71,10 +71,10 @@
 
 	(call systemctl.exec (subj))
 
-	(call udev_exec_udev_helper (subj))
-	(call udev_read_config (subj))
-	(call udev_manage_runtime (subj))
-	(call udev_runtime_obj_type_transition_runtime (subj))
+	(call udev_helper.exec (subj))
+	(call udev.read_config (subj))
+	(call udev.manage_runtime (subj))
+	(call udev.runtime_obj_type_transition_runtime (subj))
 
 	(optional sd_udevd_optional_alsactl
 		(call alsactl.auto_subj_type_transition (subj))
@@ -101,10 +101,10 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call udev_manage_config (adm_subj_type_attribute))
-	(call udev_relabel_config (adm_subj_type_attribute))
-	(call udev_manage_runtime (adm_subj_type_attribute))
-	(call udev_relabel_runtime (adm_subj_type_attribute))
+	(call udev.manage_config (adm_subj_type_attribute))
+	(call udev.relabel_config (adm_subj_type_attribute))
+	(call udev.manage_runtime (adm_subj_type_attribute))
+	(call udev.relabel_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute unit_file manage_file_perms)
 

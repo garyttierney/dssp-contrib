@@ -16,7 +16,7 @@
 
 	(macro stream_connect ((type ARG1))
 		(allow ARG1 subj (unix_stream_socket (connectto)))
-		(call udev_write_runtime_sock_files (ARG1)))
+		(call udev.write_runtime_sock_files (ARG1)))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

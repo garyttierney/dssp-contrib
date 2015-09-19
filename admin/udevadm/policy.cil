@@ -46,8 +46,8 @@
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 
-	(call udev_manage_config (subj))
-	(call udev_manage_runtime (subj))
+	(call udev.manage_config (subj))
+	(call udev.manage_runtime (subj))
 
 	(optional udevdadm_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
@@ -60,7 +60,7 @@
 
 	(call dev_read_urandom (client_subj_type_attribute))
 
-	(call udev_client_subj_type (client_subj_type_attribute))
+	(call udev.client_subj_type (client_subj_type_attribute))
 
 	(optional udevadm_client_subj_type_optional_sd
 		(call sd.search_runtime (client_subj_type_attribute)))

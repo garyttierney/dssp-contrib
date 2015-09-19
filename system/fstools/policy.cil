@@ -51,7 +51,7 @@
 	(call file_context.read_config_files (subj))
 	(call selinux_config.read_config_files (subj))
 
-	(call udev_client_subj_type (subj))
+	(call udev.client_subj_type (subj))
 
 	(optional fstools_optional_mount
 		(booleanif (mount_any_file) (true

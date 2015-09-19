@@ -31,7 +31,7 @@
 
 	(call locale.read (subj))
 
-	(call udev_client_subj_type (subj)))
+	(call udev.client_subj_type (subj)))
 
 (block dmsetup
 	(roleattribute role_attribute)
@@ -50,7 +50,7 @@
 
 	(call dmcrypt.rw_sem (subj))
 
-	(call udev_client_subj_type (subj))
+	(call udev.client_subj_type (subj))
 
 	(optional dmsetup_optional_lvm
 		(call lvm.rw_sem (subj)))

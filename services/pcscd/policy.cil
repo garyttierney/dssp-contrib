@@ -33,7 +33,7 @@
 	(call fs_list_devtmpfs (subj))
 	(call fs_read_sysfs (subj))
 
-	(call udev_client_subj_type (subj))
+	(call udev.client_subj_type (subj))
 
 	(optional pcscd_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))

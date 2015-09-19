@@ -1,38 +1,52 @@
-(roleattribute md_mdadm_role)
+(block md
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
 
-(typeattribute md_obj_type)
+	(typeattribute obj_type_attribute)
 
-(typeattribute md_adm_subj_type)
-(typeattribute md_subj_type)
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call file_search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
 
 (block mdadm
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset md_mdadm_role sys.role)
-	(typeattributeset md_subj_type subj)
+	(roleattributeset role_attribute sys.role)
+	(typeattributeset md.subj_type_attribute subj)
 
-	(roletype md_mdadm_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset md_obj_type runtime_file)
+	(typeattributeset md.obj_type_attribute runtime_file)
 
-	(call md_manage_mdadm_runtime (subj))
-	(call md_runtime_obj_type_transition_mdadm_runtime (subj))
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(optional mdadm_optional_sd
 		(call sd.daemon (subj cmd_file))
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset md_obj_type unit_file)
+		(typeattributeset md.obj_type_attribute unit_file)
 
-		(allow md_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow md.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
 
 (block mdmon
 	(blockinherit subj_common_blk)
 
-	(typeattributeset md_subj_type subj)
+	(typeattributeset md.subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -45,19 +59,6 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset md_obj_type unit_file)
+		(typeattributeset md.obj_type_attribute unit_file)
 
-		(allow md_adm_subj_type unit_file (service (all)))))
-
-(allow md_adm_subj_type md_subj_type (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (md_adm_subj_type md_subj_type))
-
-(call file_search_runtime (md_adm_subj_type))
-
-(allow md_adm_subj_type md_obj_type manage_file_perms)
-(allow md_adm_subj_type md_obj_type manage_dir_perms)
-(allow md_adm_subj_type md_obj_type manage_lnk_file_perms)
-
-(allow md_adm_subj_type md_obj_type relabel_file_perms)
-(allow md_adm_subj_type md_obj_type relabel_dir_perms)
-(allow md_adm_subj_type md_obj_type relabel_lnk_file_perms)
+		(allow md.adm_subj_type_attribute unit_file (service (all)))))

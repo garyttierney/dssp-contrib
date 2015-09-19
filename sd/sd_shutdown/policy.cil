@@ -73,8 +73,8 @@
 		(call lvm.exec (subj)))
 
 	(optional sd_shutdown_optional_md
-		(call md_exec_mdadm (subj))
-		(call md_manage_mdadm_runtime_files (subj)))
+		(call mdadm.exec (subj))
+		(call mdadm.manage_runtime_files (subj)))
 
 	(optional sd_shutdown_optional_plymouth
 		(call plymouth_exec_plymouth (subj))

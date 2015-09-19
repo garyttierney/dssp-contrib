@@ -463,8 +463,8 @@
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional sysadm_optional_sctl
-		(call sctl_manage_config (subj))
-		(call sctl_run (sysadm_subj_type role)))
+		(call sctl.manage_config (subj))
+		(call sctl.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_sd
 		(call sd.adm (subj role)))

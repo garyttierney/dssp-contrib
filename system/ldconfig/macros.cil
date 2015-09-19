@@ -1,57 +1,26 @@
-(macro ldconfig_exec ((type ARG1))
-	(call can_exec (ARG1 ldconfig.cmd_file)))
+(in ldconfig
+	(blockinherit exec_blk)
 
-(macro ldconfig_auto_subj_type_transition ((type ARG1))
-	(call ldconfig_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 ldconfig.cmd_file ldconfig.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro ldconfig_send_signal ((type ARG1))
-	(allow ARG1 ldconfig.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro ldconfig_run ((type ARG1)(role ARG2))
-	(call ldconfig_auto_subj_type_transition (ARG1))
-	(roleattributeset ldconfig_role (ARG2)))
+	(blockinherit send_signal_blk)
 
-(macro ldconfig_search_var_cache ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(allow ARG1 ldconfig.var_cache_file search_dir_perms))
+	(blockinherit search_var_cache_blk)
+	(blockinherit list_var_cache_blk)
+	(blockinherit read_var_cache_files_blk)
+	(blockinherit read_var_cache_lnk_files_blk)
+	(blockinherit read_var_cache_blk)
+	(blockinherit manage_var_cache_blk)
+	(blockinherit relabel_var_cache_blk)
 
-(macro ldconfig_list_var_cache ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(allow ARG1 ldconfig.var_cache_file list_dir_perms))
+	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
+		(call file_var_cache_obj_type_transition (ARG1 var_cache_file dir "ldconfig")))
 
-(macro ldconfig_read_var_cache_files ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(call read_files_pattern (ARG1 ldconfig.var_cache_file ldconfig.var_cache_file)))
-
-(macro ldconfig_read_var_cache_lnk_files ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(call read_lnk_files_pattern (ARG1 ldconfig.var_cache_file ldconfig.var_cache_file)))
-
-(macro ldconfig_read_var_cache ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(allow ARG1 ldconfig.var_cache_file read_file_perms)
-	(allow ARG1 ldconfig.var_cache_file list_dir_perms)
-	(allow ARG1 ldconfig.var_cache_file read_lnk_file_perms))
-
-(macro ldconfig_manage_var_cache ((type ARG1))
-	(call file_rw_var_cache_dirs (ARG1))
-	(allow ARG1 ldconfig.var_cache_file manage_file_perms)
-	(allow ARG1 ldconfig.var_cache_file manage_dir_perms)
-	(allow ARG1 ldconfig.var_cache_file manage_lnk_file_perms))
-
-(macro ldconfig_relabel_var_cache ((type ARG1))
-	(call file_search_var_cache (ARG1))
-	(allow ARG1 ldconfig.var_cache_file relabel_file_perms)
-	(allow ARG1 ldconfig.var_cache_file relabel_dir_perms)
-	(allow ARG1 ldconfig.var_cache_file relabel_lnk_file_perms))
-
-(macro ldconfig_var_cache_obj_type_transition_var_cache ((type ARG1))
-	(call file_var_cache_obj_type_transition (ARG1 ldconfig.var_cache_file dir "ldconfig")))
-
-(macro ldconfig_adm ((type ARG1)(role ARG2))
-	(typeattributeset ldconfig_adm_subj_type ARG1)
-	(optional ld_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional ld_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional ld_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional ld_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

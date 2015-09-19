@@ -46,8 +46,8 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
 
 	(call sd.notify_subj_type (subj))
 

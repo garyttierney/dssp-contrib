@@ -21,8 +21,8 @@
 	(call shadow.manage (subj))
 	(call locale.read (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
 
 	(optional chage_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))))

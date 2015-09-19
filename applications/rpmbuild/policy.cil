@@ -44,8 +44,8 @@
 
 	(call rpmdev.read_home_user_files (subj))
 
-	(call seutil_read_selinux_config (subj))
-	(call seutil_read_file_context_files (subj))
+	(call selinux_config.read_config (subj))
+	(call file_context.read_config_files (subj))
 
 	(call usersubj.manage_home_user_dirs (subj))
 	(call usersubj.manage_home_user_files (subj))

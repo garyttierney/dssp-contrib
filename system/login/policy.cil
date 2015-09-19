@@ -115,8 +115,8 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_default_context_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call default_context.read_config_files (subj))
 
 	(call usersubj.search_home_dir (subj))
 	(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj))

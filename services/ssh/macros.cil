@@ -8,7 +8,7 @@
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec_set_spec_boolean (ARG1 ssh_priv_login.bool))
 		(optional ssh_set_priv_login_boolean_optional_seutil
-			(call seutil_exec_setsebool (ARG1))))
+			(call setsebool.exec (ARG1))))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset ssh.adm_subj_type_attribute ARG1)

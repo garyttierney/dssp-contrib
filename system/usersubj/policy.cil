@@ -96,10 +96,10 @@
 	(call passwords.read (common_login_type_attribute))
 	(call man.read (common_login_type_attribute))
 
-	(call seutil_exec_setfiles (common_login_type_attribute))
-	(call seutil_read_default_context_files (common_login_type_attribute))
-	(call seutil_read_file_context_files (common_login_type_attribute))
-	(call seutil_read_selinux_config_files (common_login_type_attribute))
+	(call setfiles.exec (common_login_type_attribute))
+	(call default_context.read_config_files (common_login_type_attribute))
+	(call file_context.read_config_files (common_login_type_attribute))
+	(call selinux_config.read_config_files (common_login_type_attribute))
 
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type (home_user_obj_type_attribute)))

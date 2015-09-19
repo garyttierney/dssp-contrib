@@ -95,4 +95,4 @@
 	(macro set_use_webcam_boolean ((type ARG1))
 		(call sec_set_spec_boolean (ARG1 firefox_use_webcam.bool))
 		(optional firefox_set_use_webcam_boolean_optional_seutil
-			(call seutil_exec_setsebool (ARG1)))))
+			(call setsebool.exec (ARG1)))))

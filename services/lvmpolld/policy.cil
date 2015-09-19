@@ -32,9 +32,9 @@
 
 	(call locale.read (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj))
-	(call seutil_read_default_context_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+	(call default_context.read_config_files (subj))
 
 	(optional lvmpolld_optional_sd
 		(call sd.daemon (subj cmd_file))

@@ -63,8 +63,8 @@
 	(call locale.read (login_prog_subj_type_attribute))
 	(call utmp.rw_runtime_files (login_prog_subj_type_attribute))
 
-	(call seutil_read_selinux_config_files (login_prog_subj_type_attribute))
-	(call seutil_read_default_context_files (login_prog_subj_type_attribute))
+	(call selinux_config.read_config_files (login_prog_subj_type_attribute))
+	(call default_context.read_config_files (login_prog_subj_type_attribute))
 
 	(optional pam_login_prog_subj_type_optional_sd_logind
 		(allow login_prog_subj_type_attribute self (capability (dac_override dac_read_search)))

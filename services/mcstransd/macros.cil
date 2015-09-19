@@ -9,43 +9,43 @@
 		(typeattributeset client_subj_type_attribute ARG1))
 
 	(macro search_config ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(allow ARG1 config_file search_dir_perms))
 
 	(macro list_config ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(allow ARG1 config_file list_dir_perms))
 
 	(macro read_config_files ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(call read_files_pattern (ARG1 config_file config_file)))
 
 	(macro read_config_lnk_files ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 config_file config_file)))
 
 	(macro read_config ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(allow ARG1 config_file read_file_perms)
 		(allow ARG1 config_file list_dir_perms)
 		(allow ARG1 config_file read_lnk_file_perms))
 
 	(macro manage_config ((type ARG1))
-		(call seutil_rw_selinux_config_dirs (ARG1))
+		(call selinux_config.rw_config_dirs (ARG1))
 		(allow ARG1 config_file manage_file_perms)
 		(allow ARG1 config_file manage_dir_perms)
 		(allow ARG1 config_file manage_lnk_file_perms))
 
 	(macro relabel_config ((type ARG1))
-		(call seutil_search_selinux_config (ARG1))
+		(call selinux_config.search_config (ARG1))
 		(allow ARG1 config_file relabel_file_perms)
 		(allow ARG1 config_file relabel_dir_perms)
 		(allow ARG1 config_file relabel_lnk_file_perms))
 
 	(macro selinux_config_obj_type_transition_config ((type ARG1))
-		(call seutil_config_obj_type_transition (ARG1 config_file dir "setrans.d"))
-		(call seutil_config_obj_type_transition (ARG1 config_file file "secolor.conf"))
-		(call seutil_config_obj_type_transition (ARG1 config_file file "setrans.conf")))
+		(call selinux_config.config_obj_type_transition (ARG1 config_file dir "setrans.d"))
+		(call selinux_config.config_obj_type_transition (ARG1 config_file file "secolor.conf"))
+		(call selinux_config.config_obj_type_transition (ARG1 config_file file "setrans.conf")))
 
 	(blockinherit search_runtime_blk)
 	(blockinherit list_runtime_blk)

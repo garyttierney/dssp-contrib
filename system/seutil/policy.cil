@@ -1,32 +1,34 @@
-(roleattribute seutil_load_policy_role)
-(roleattribute seutil_matchpathcon_role)
-(roleattribute seutil_setfiles_role)
-(roleattribute seutil_setenforce_role)
-(roleattribute seutil_setsebool_role)
+(block seutil
+	(typeattribute libselinux_linked_client_subj_type_attribute)
 
-(typeattribute seutil_libselinux_linked_client_subj_type)
-(typeattribute seutil_setsebool_client_subj_type)
+	(call sec_getattr_fs (libselinux_linked_client_subj_type_attribute))
+
+	(call selinux_config.search_config (libselinux_linked_client_subj_type_attribute)))
 
 (block load_policy
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset seutil_load_policy_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype seutil_load_policy_role subj)
+	(roletype role_attribute subj)
 
 	(call sec_load_policy_subj_type (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_policy_config_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call policy_config.read_files (subj))
 
 	(call locale.read (subj)))
 
 (block matchpathcon
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset seutil_matchpathcon_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype seutil_matchpathcon_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self create_unix_stream_socket_perms)
 
@@ -43,15 +45,17 @@
 
 	(call sec_validate_context (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj)))
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj)))
 
 (block setfiles
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset seutil_setfiles_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype seutil_setfiles_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override fowner)))
 	(allow subj self create_unix_stream_socket_perms)
@@ -89,10 +93,10 @@
 	(call locale.read (subj))
 	(call shadow.relabel (subj))
 
-	(call seutil_read_default_context_files (subj))
-	(call seutil_read_file_context_files (subj))
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_relabel_policy_config (subj))
+	(call default_context.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call policy_config.relabel (subj))
 
 	(optional setfiles_optional_auditd
 		(call auditd.relabel_config (subj))
@@ -107,26 +111,43 @@
 		(call sd.forked_subj_type (subj))))
 
 (block setsebool
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset seutil_setsebool_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype seutil_setsebool_role subj)
+	(roletype role_attribute subj)
 
 	(call sec_set_all_booleans (subj))
 
-	(call seutil_setsebool_client_subj_type (subj)))
+	(call client_subj_type (subj))
+
+	(call sec_list_fs (client_subj_type_attribute))
+
+	(call selinux_config.read_config_files (client_subj_type_attribute))
+
+	(call locale.read (client_subj_type_attribute))
+
+	(call nss.client_subj_type (client_subj_type_attribute))
+
+	(optional setsebool_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (client_subj_type_attribute))))
 
 (block setenforce
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset seutil_setenforce_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype seutil_setenforce_role subj)
+	(roletype role_attribute subj)
 
 	(call sec_set_enforce_mode (subj))
 
-	(call seutil_read_selinux_config_files (subj)))
+	(call selinux_config.read_config_files (subj)))
 
 (block default_context
 	(blockinherit file_config_obj_blk))
@@ -135,39 +156,24 @@
 	(blockinherit file_config_obj_blk))
 
 (block policy_config
-	(blockinherit file_sec_obj_blk))
+	(blockinherit file_sec_obj_blk)
+
+	(typeattribute relabelto_subj_type_attribute)
+	(typeattribute not_relabelto_subj_type_attribute)
+
+	(typeattributeset not_relabelto_subj_type_attribute (not (relabelto_subj_type_attribute)))
+
+	(neverallow not_relabelto_subj_type_attribute sec_file (file (relabelto)))
+
+	(typeattribute write_subj_type_attribute)
+	(typeattribute not_write_subj_type_attribute)
+
+	(typeattributeset not_write_subj_type_attribute (not (write_subj_type_attribute)))
+
+	(neverallow not_write_subj_type_attribute sec_file (file (create write))))
 
 (block policy_src
 	(blockinherit file_config_obj_blk))
 
 (block selinux_config
 	(blockinherit file_config_obj_blk))
-
-(typeattribute seutil_relabelto_binary_policy_subj_type)
-(typeattribute seutil_not_relabelto_binary_policy_subj_type)
-
-(typeattributeset seutil_not_relabelto_binary_policy_subj_type (not (seutil_relabelto_binary_policy_subj_type)))
-
-(neverallow seutil_not_relabelto_binary_policy_subj_type policy_config.sec_file (file (relabelto)))
-
-(typeattribute seutil_write_binary_policy_subj_type)
-(typeattribute seutil_not_write_binary_policy_subj_type)
-
-(typeattributeset seutil_not_write_binary_policy_subj_type (not (seutil_write_binary_policy_subj_type)))
-
-(neverallow seutil_not_write_binary_policy_subj_type policy_config.sec_file (file (create write)))
-
-(call sec_list_fs (seutil_setsebool_client_subj_type))
-
-(call seutil_read_selinux_config_files (seutil_setsebool_client_subj_type))
-
-(call locale.read (seutil_setsebool_client_subj_type))
-
-(call nss.client_subj_type (seutil_setsebool_client_subj_type))
-
-(optional setsebool_optional_sd_journald
-	(call sd_journald.client_subj_type (seutil_setsebool_client_subj_type)))
-
-(call sec_getattr_fs (seutil_libselinux_linked_client_subj_type))
-
-(call seutil_search_selinux_config (seutil_libselinux_linked_client_subj_type))

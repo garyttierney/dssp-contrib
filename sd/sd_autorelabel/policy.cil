@@ -39,9 +39,9 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call seutil_dontaudit_audit_access_load_policy_cmd_files (subj))
-	(call seutil_auto_subj_type_transition_setfiles (subj))
-	(call seutil_read_selinux_config_files (subj))
+	(call load_policy.dontaudit_audit_access_cmd_files (subj))
+	(call setfiles.auto_subj_type_transition (subj))
+	(call selinux_config.read_config_files (subj))
 
 	(call sd.reboot (subj))
 

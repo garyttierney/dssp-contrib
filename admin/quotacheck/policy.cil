@@ -21,7 +21,7 @@
 
 	(call shadow.read (subj))
 
-	(call seutil_read_policy_config (subj))
+	(call selinux_config.read_config (subj))
 
 	(optional quotacheck_optional_auditd
 		(call auditd.read_config (subj))

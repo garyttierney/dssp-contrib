@@ -37,8 +37,8 @@
 
 	(call sd_vconsole.manage_config_files (subj))
 
-	(call seutil_read_selinux_config_files (subj))
-	(call seutil_read_file_context_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
 
 	(optional sd_localed_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))

@@ -49,21 +49,21 @@
 
 	(tunableif enable_mls
 		(false
-			(call seutil_default_context_obj_type_transition_file_context (subj))
-			(call seutil_selinux_config_obj_type_transition_policy_config (subj))
-			(call seutil_selinux_config_obj_type_transition_default_context (subj))
-			(call seutil_selinux_config_obj_type_transition_policy_src (subj))
-			(call seutil_config_obj_type_transition_selinux_config (subj))
-			(call seutil_manage_default_context (subj))
-			(call seutil_manage_file_context (subj))
-			(call seutil_manage_policy_config (subj))
-			(call seutil_manage_policy_src (subj))
-			(call seutil_manage_selinux_config (subj))
-			(call seutil_run_load_policy (sysadm_subj_type role))
-			(call seutil_run_matchpathcon (sysadm_subj_type role))
-			(call seutil_run_setenforce (sysadm_subj_type role))
-			(call seutil_run_setfiles (sysadm_subj_type role))
-			(call seutil_run_setsebool (sysadm_subj_type role))
+			(call file_context.default_context_obj_type_transition_config (subj))
+			(call policy_config.selinux_config_obj_type_transition_policy_config (subj))
+			(call default_context.selinux_config_obj_type_transition_config (subj))
+			(call policy_src.selinux_config_obj_type_transition_config (subj))
+			(call selinux_config.config_obj_type_transition_config (subj))
+			(call default_context.manage_config (subj))
+			(call file_context.manage_config (subj))
+			(call policy_config.manage (subj))
+			(call policy_src.manage_config (subj))
+			(call selinux_config.manage_config (subj))
+			(call load_policy.run (sysadm_subj_type role))
+			(call matchpathcon.run (sysadm_subj_type role))
+			(call setenforce.run (sysadm_subj_type role))
+			(call setfiles.run (sysadm_subj_type role))
+			(call setsebool.run (sysadm_subj_type role))
 
 			(optional sysadm_optional_audispd
 				(call audispd.manage_config (subj))
@@ -1298,8 +1298,8 @@
 
 		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
 
-		(call seutil_read_selinux_config_files (subj))
-		(call seutil_read_file_context_files (subj))))
+		(call selinux_config.read_config_files (subj))
+		(call file_context.read_config_files (subj))))
 
 (optional sysadm_startx_optional_startx
 	(block sysadm_startx

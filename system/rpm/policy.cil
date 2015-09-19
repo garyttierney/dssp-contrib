@@ -59,8 +59,8 @@
 	(call shadow.manage (subj))
 	(call shadow.relabel (subj))
 
-	(call seutil_manage_policy_config (subj))
-	(call seutil_relabel_policy_config (subj))
+	(call policy_config.manage (subj))
+	(call policy_config.relabel (subj))
 
 	(optional rpm_optional_auditd
 		(call auditd.manage_config (subj))

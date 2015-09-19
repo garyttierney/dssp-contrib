@@ -61,8 +61,8 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call seutil_read_selinux_config_files (subj_type_attribute))
-	(call seutil_read_default_context_files (subj_type_attribute))
+	(call selinux_config.read_config_files (subj_type_attribute))
+	(call default_context.read_config_files (subj_type_attribute))
 
 	(call usersubj.cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
 	(call usersubj.create_keyring_priv_subj (subj_type_attribute))

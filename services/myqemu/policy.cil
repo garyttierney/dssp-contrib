@@ -43,7 +43,7 @@
 	(call qemu_guest.relabel_all_files (subj))
 	(call qemu_guest.run_all (subj role_attribute))
 
-	(call seutil_exec_setfiles (subj))
+	(call setfiles.exec (subj))
 
 	(optional mqemu_runner_optional_sd
 		(call sd.daemon (subj cmd_file))

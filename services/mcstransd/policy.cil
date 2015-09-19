@@ -46,7 +46,7 @@
 
 	(call locale.read (subj))
 
-	(call seutil_read_selinux_config (subj))
+	(call selinux_config.read_config (subj))
 
 	(optional msctransd_optional_sd
 		(call sd.daemon (subj cmd_file))

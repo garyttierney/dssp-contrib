@@ -1,32 +1,55 @@
-(roleattribute plymouth_role)
-
-(typeattribute plymouth_adm_subj_type)
-(typeattribute plymouth_client_subj_type)
-
-(typeattribute plymouth_obj_type)
-
 (block plymouth
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset plymouth_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype plymouth_role subj)
+	(roletype role_attribute subj)
+
+	(typeattributeset subj_type_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset plymouth_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(call client_subj_type (subj))
 
 	(allow subj self (capability2 (block_suspend)))
-
-	(call plymouth_client_subj_type (subj))
-	(call plymouth_read_config (subj))
 
 	(call sys_unix_stream_connectto (subj))
 
 	(call term_use_console (subj))
 
 	(optional plymouth_optional_sd
-		(call sd.daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file)))
+
+	(call plymouthd.stream_connect (client_subj_type_attribute))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call file_search_runtime (adm_subj_type_attribute))
+	(call file_search_var_lib (adm_subj_type_attribute))
+	(call file_search_var_spool (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block plymouthd
 	(blockinherit subj_common_blk)
@@ -37,33 +60,33 @@
 
 	(roletype sys.role subj)
 
+	(typeattributeset plymouth.subj_type_attribute subj)
+
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset plymouth_obj_type runtime_file)
+	(typeattributeset plymouth.obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file_var_lib_obj_blk)
 
-	(typeattributeset plymouth_obj_type var_lib_file)
+	(typeattributeset plymouth.obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit file_var_spool_obj_blk)
 
-	(typeattributeset plymouth_obj_type var_spool_file)
+	(typeattributeset plymouth.obj_type_attribute var_spool_file)
+
+	(call manage_var_spool (subj))
+	(call var_spool_obj_type_transition_var_spool (subj))
 
 	(allow subj self (capability (sys_tty_config sys_admin dac_override)))
 	(allow subj self (capability2 (syslog block_suspend)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
-
-	(call plymouth_read_config (subj))
-
-	(call plymouth_manage_plymouthd_runtime (subj))
-	(call plymouth_runtime_obj_type_transition_plymouthd_runtime (subj))
-
-	(call plymouth_manage_plymouthd_var_lib (subj))
-	(call plymouth_var_lib_obj_type_transition_plymouthd_var_lib (subj))
-
-	(call plymouth_manage_plymouthd_var_spool (subj))
-	(call plymouth_var_spool_obj_type_transition_plymouthd_var_spool (subj))
 
 	(call sys_change_ring_buffer_level (subj))
 	(call sys_manage_invalid_files (subj))
@@ -87,35 +110,18 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call plymouth.read_config (subj))
+
 	(optional plymouthd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset plymouth_obj_type unit_file)
+		(typeattributeset plymouth.obj_type_attribute unit_file)
 
-		(allow plymouth_adm_subj_type plymouthd.unit_file (service (stop status disable enable reload start)))
+		(allow plymouth.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
 		(call sd.send_signal (subj)))
 
 	(optional plymouthd_optional_usersubj
 		(call usersubj.use_ttys (subj))))
-
-(call plymouth_stream_connect_plymouthd (plymouth_client_subj_type))
-
-(allow plymouth_adm_subj_type plymouth.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (plymouth_adm_subj_type plymouth.subj))
-
-(call file_search_runtime (plymouth_adm_subj_type))
-(call file_search_var_lib (plymouth_adm_subj_type))
-(call file_search_var_spool (plymouth_adm_subj_type))
-
-(allow plymouth_adm_subj_type plymouth_obj_type manage_file_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type manage_dir_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type manage_lnk_file_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type manage_sock_file_perms)
-
-(allow plymouth_adm_subj_type plymouth_obj_type relabel_file_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type relabel_dir_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type relabel_lnk_file_perms)
-(allow plymouth_adm_subj_type plymouth_obj_type relabel_sock_file_perms)

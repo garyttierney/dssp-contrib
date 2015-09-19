@@ -94,8 +94,8 @@
 		(call lvmetad.stream_connect (subj)))
 
 	(optional dracut_optional_plymouth
-		(call plymouth_read_config_files (subj))
-		(call plymouth_exec_plymouth (subj)))
+		(call plymouth.read_config_files (subj))
+		(call plymouth.exec (subj)))
 
 	(optional dracut_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

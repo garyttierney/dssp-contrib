@@ -82,7 +82,7 @@
 	(call sd_askpwd.manage_runtime_sock_files (sd_askpwd.client_subj_type_attribute))
 
 	(optional sd_askpwd_agent_optional_plymouth
-		(call plymouth_stream_connect_plymouthd (subj)))
+		(call plymouthd.stream_connect (subj)))
 
 	(allow sd_askpwd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

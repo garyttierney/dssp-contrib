@@ -33,7 +33,7 @@
 	(call udev_client_subj_type (subj))
 
 	(optional sd_fsck_optional_plymouth
-		(call plymouth_read_plymouthd_runtime_files (subj)))
+		(call plymouthd.read_runtime_files (subj)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

@@ -44,7 +44,7 @@
 	    (call loadkeys.auto_subj_type_transition (subj)))
 
 	(optional sd_vconsole_optional_plymouth
-	    (call plymouth_use_fd_plymouthd (subj)))
+	    (call plymouthd.use_fd (subj)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

@@ -176,7 +176,7 @@
 	(call polkit.sysbus_chat_client_subj_type (subj))
 
 	(optional polkit_tty_agent_optional_plymouth
-		(call plymouth_use_fd_plymouthd (subj)))
+		(call plymouthd.use_fd (subj)))
 
 	(optional polkit_tty_agent_optional_sd
 		(call sd.use_fd (subj))))

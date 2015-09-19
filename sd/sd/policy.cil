@@ -256,9 +256,9 @@
 		(call numactl.exec (subj)))
 
 	(optional sd_optional_plymouth
-		(call plymouth_exec_plymouth (subj))
-		(call plymouth_read_plymouthd_runtime (subj))
-		(call plymouth_use_fd_plymouthd (subj)))
+		(call plymouth.exec (subj))
+		(call plymouthd.read_runtime (subj))
+		(call plymouthd.use_fd (subj)))
 
 	(optional sd_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))

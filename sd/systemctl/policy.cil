@@ -75,7 +75,7 @@
 			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
 
 	(optional subj_type_attribute_optional_plymouth
-		(call plymouth_use_fd_plymouthd (subj_type_attribute)))
+		(call plymouthd.use_fd (subj_type_attribute)))
 
 	(allow client_subj_type_attribute self (capability (ipc_lock)))
 	(allow client_subj_type_attribute self (process (setrlimit)))

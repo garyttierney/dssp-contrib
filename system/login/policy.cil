@@ -62,7 +62,7 @@
 		(call sysbus.client_subj_type (subj)))
 
 	(optional login_optional_plymouth
-		(call plymouth_exec_plymouth (subj)))
+		(call plymouth.exec (subj)))
 
 	(optional login_optional_sd
 		(call sd.daemon (subj cmd_file)))
@@ -122,7 +122,7 @@
 	(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj))
 
 	(optional sulogin_optional_plymouth
-		(call plymouth_exec_plymouth (subj)))
+		(call plymouth.exec (subj)))
 
 	(optional sulogin_optional_sd
 		(call sd.daemon (subj cmd_file))

@@ -368,8 +368,8 @@
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_plymouth
-		(call plymouth_adm (subj role))
-		(call plymouth_run_plymouth (sysadm_subj_type role)))
+		(call plymouth.adm (subj role))
+		(call plymouth.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_polkit
 		(call polkit.adm (subj role))

@@ -48,7 +48,7 @@
 	(call systemctl.exec (subj))
 
 	(optional sd_autorelabel_optional_plymouth
-		(call plymouth_exec_plymouth (subj)))
+		(call plymouth.exec (subj)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

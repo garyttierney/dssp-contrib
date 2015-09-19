@@ -33,7 +33,7 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call pam_read_config (subj_type_attribute))
+	(call pam.read_config (subj_type_attribute))
 
 	(optional passwd_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute))))

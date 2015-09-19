@@ -106,8 +106,8 @@
 
 	(call cert.read (subj_type_attribute))
 
-	(call pam_login_prog_subj_type (subj_type_attribute))
-	(call pam_read_config_files (subj_type_attribute))
+	(call pam.login_prog_subj_type (subj_type_attribute))
+	(call pam.read_config_files (subj_type_attribute))
 
 	(call sshd.exec (subj_type_attribute))
 	(call ssh_client.read_home_user_files (subj_type_attribute))

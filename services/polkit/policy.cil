@@ -45,7 +45,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call pam_read_config_files (subj))
+	(call pam.read_config_files (subj))
 
 	(call polkit_helper.exec (subj))
 
@@ -108,7 +108,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call pam_read_config (subj))
+	(call pam.read_config (subj))
 
 	(call polkit.sysbus_chat_client_subj_type (subj))
 
@@ -138,7 +138,7 @@
 
 	(call nss.client_subj_type (client_subj_type_attribute))
 
-	(call pam_read_config (client_subj_type_attribute))
+	(call pam.read_config (client_subj_type_attribute))
 
 	(call polkit.sysbus_chat_client_subj_type (client_subj_type_attribute))
 

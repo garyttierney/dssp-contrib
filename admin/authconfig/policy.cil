@@ -49,8 +49,8 @@
 	(call nss.relabel_config_files (subj))
 	(call nss.client_subj_type (subj))
 
-	(call pam_manage_config (subj))
-	(call pam_relabel_config (subj))
+	(call pam.manage_config (subj))
+	(call pam.relabel_config (subj))
 
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))

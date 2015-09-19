@@ -1,19 +1,11 @@
-(typeattribute pam_obj_type)
-
-(typeattribute pam_adm_subj_type)
-(typeattribute pam_client_subj_type)
-(typeattribute pam_login_prog_subj_type)
-(typeattribute pam_subj_type)
-(typeattribute pam_unconfined_subj_type)
-
 (block faillog
 	(blockinherit file_var_log_obj_blk)
 
-	(typeattributeset pam_obj_type var_log_file)
+	(typeattributeset pam.obj_type_attribute var_log_file)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset pam_obj_type runtime_file)
+	(typeattributeset pam.obj_type_attribute runtime_file)
 
 	(optional faillog_optional_logrotate
 		(call logrotate.var_log_obj_type (var_log_file))))
@@ -21,12 +13,20 @@
 (block lastlog
 	(blockinherit file_var_log_obj_blk)
 
-	(typeattributeset pam_obj_type var_log_file))
+	(typeattributeset pam.obj_type_attribute var_log_file))
 
 (block pam
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute login_prog_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+	(typeattribute unconfined_subj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
-	(typeattributeset pam_subj_type subj)
+	(typeattributeset subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -36,16 +36,96 @@
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset pam_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset pam_obj_type runtime_file))
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(allow login_prog_subj_type_attribute self (capability (setuid setgid chown)))
+	(allow login_prog_subj_type_attribute self (process (setexec setsched)))
+	(allow login_prog_subj_type_attribute self write_key_perms)
+
+	(call standard_id_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard_role_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard_obj_change_exemption_subj_type (login_prog_subj_type_attribute))
+
+	(call sec_compute_user_contexts (login_prog_subj_type_attribute))
+	(call sec_compute_relabel_context (login_prog_subj_type_attribute))
+	(call sec_validate_context (login_prog_subj_type_attribute))
+
+	(call subj_interactive_fd_type (login_prog_subj_type_attribute))
+
+	(call app.send_signal (login_prog_subj_type_attribute))
+
+	(call client_subj_type (login_prog_subj_type_attribute))
+
+	(call locale.read (login_prog_subj_type_attribute))
+	(call utmp.rw_runtime_files (login_prog_subj_type_attribute))
+
+	(call seutil_read_selinux_config_files (login_prog_subj_type_attribute))
+	(call seutil_read_default_context_files (login_prog_subj_type_attribute))
+
+	(optional pam_login_prog_subj_type_optional_sd_logind
+		(allow login_prog_subj_type_attribute self (capability (dac_override dac_read_search)))
+
+		(call file_search_runtime_user (login_prog_subj_type_attribute))
+		(call fs_search_tmpfs (login_prog_subj_type_attribute))
+
+		(call sd_logind.client_subj_type (login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_sduser
+		(call sduser.link_keyring_all_subj (login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_usersubj
+		(call usersubj.create_keyring_common_login_subj (login_prog_subj_type_attribute))
+		(call usersubj.send_signal_common_login_subj (login_prog_subj_type_attribute)))
+
+	(call sys_audit_client_subj_type (client_subj_type_attribute))
+
+	(call chkpwd.auto_subj_type_transition (client_subj_type_attribute))
+	(call updpwd.auto_subj_type_transition (client_subj_type_attribute))
+
+	(call exec (client_subj_type_attribute))
+	(call read_config (client_subj_type_attribute))
+
+	(call faillog.create_var_log_files (client_subj_type_attribute))
+	(call faillog.rw_var_log_files (client_subj_type_attribute))
+	(call faillog.var_log_obj_type_transition_var_log (client_subj_type_attribute))
+
+	(call lastlog.create_var_log_files (client_subj_type_attribute))
+	(call lastlog.rw_var_log_files (client_subj_type_attribute))
+	(call lastlog.var_log_obj_type_transition_var_log (client_subj_type_attribute))
+
+	(call wtmp.append_var_log_files (client_subj_type_attribute))
+	(call wtmp.read_var_log_files (client_subj_type_attribute))
+	(call wtmp.dontaudit_write_var_log_files (client_subj_type_attribute))
+
+	(call nss.client_subj_type (client_subj_type_attribute))
+
+	(optional pam_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (client_subj_type_attribute)))
+
+	(allow adm_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab)))
+
+	(call file_search_config (adm_subj_type_attribute))
+	(call file_search_runtime (adm_subj_type_attribute))
+	(call file_search_var_log (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+
+	(allow unconfined_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab))))
 
 (block pam_console
 	(blockinherit subj_common_blk)
 
-	(typeattributeset pam_subj_type subj)
+	(typeattributeset pam.subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -55,84 +135,4 @@
 
 	(blockinherit file_runtime_obj_blk)
 
-	(typeattributeset pam_obj_type runtime_file))
-
-(allow pam_login_prog_subj_type self (capability (setuid setgid chown)))
-(allow pam_login_prog_subj_type self (process (setexec setsched)))
-(allow pam_login_prog_subj_type self write_key_perms)
-
-(call standard_id_change_exemption_subj_type (pam_login_prog_subj_type))
-(call standard_role_change_exemption_subj_type (pam_login_prog_subj_type))
-(call standard_obj_change_exemption_subj_type (pam_login_prog_subj_type))
-
-(call sec_compute_user_contexts (pam_login_prog_subj_type))
-(call sec_compute_relabel_context (pam_login_prog_subj_type))
-(call sec_validate_context (pam_login_prog_subj_type))
-
-(call subj_interactive_fd_type (pam_login_prog_subj_type))
-
-(call app.send_signal (pam_login_prog_subj_type))
-
-(call pam_client_subj_type (pam_login_prog_subj_type))
-
-(call locale.read (pam_login_prog_subj_type))
-(call utmp.rw_runtime_files (pam_login_prog_subj_type))
-
-(call seutil_read_selinux_config_files (pam_login_prog_subj_type))
-(call seutil_read_default_context_files (pam_login_prog_subj_type))
-
-(optional pam_login_prog_subj_type_optional_sd_logind
-	(allow pam_login_prog_subj_type self (capability (dac_override dac_read_search)))
-
-	(call file_search_runtime_user (pam_login_prog_subj_type))
-	(call fs_search_tmpfs (pam_login_prog_subj_type))
-
-	(call sd_logind.client_subj_type (pam_login_prog_subj_type)))
-
-(optional pam_login_prog_subj_type_optional_sduser
-	(call sduser.link_keyring_all_subj (pam_login_prog_subj_type)))
-
-(optional pam_login_prog_subj_type_optional_usersubj
-	(call usersubj.create_keyring_common_login_subj (pam_login_prog_subj_type))
-	(call usersubj.send_signal_common_login_subj (pam_login_prog_subj_type)))
-
-(call sys_audit_client_subj_type (pam_client_subj_type))
-
-(call chkpwd.auto_subj_type_transition (pam_client_subj_type))
-(call updpwd.auto_subj_type_transition (pam_client_subj_type))
-
-(call pam_exec_pam (pam_client_subj_type))
-(call pam_read_config (pam_client_subj_type))
-
-(call pam_create_faillog_var_log_files (pam_client_subj_type))
-(call pam_rw_faillog_var_log_files (pam_client_subj_type))
-(call pam_var_log_obj_type_transition_faillog_var_log (pam_client_subj_type))
-
-(call pam_create_lastlog_var_log_files (pam_client_subj_type))
-(call pam_rw_lastlog_var_log_files (pam_client_subj_type))
-(call pam_var_log_obj_type_transition_lastlog_var_log (pam_client_subj_type))
-
-(call wtmp.append_var_log_files (pam_client_subj_type))
-(call wtmp.read_var_log_files (pam_client_subj_type))
-(call wtmp.dontaudit_write_var_log_files (pam_client_subj_type))
-
-(call nss.client_subj_type (pam_client_subj_type))
-
-(optional pam_client_subj_type_optional_sd_journald
-	(call sd_journald.client_subj_type (pam_client_subj_type)))
-
-(allow pam_adm_subj_type self (passwd (passwd chfn chsh rootok crontab)))
-
-(call file_search_config (pam_adm_subj_type))
-(call file_search_runtime (pam_adm_subj_type))
-(call file_search_var_log (pam_adm_subj_type))
-
-(allow pam_adm_subj_type pam_obj_type manage_file_perms)
-(allow pam_adm_subj_type pam_obj_type manage_dir_perms)
-(allow pam_adm_subj_type pam_obj_type manage_lnk_file_perms)
-
-(allow pam_adm_subj_type pam_obj_type relabel_file_perms)
-(allow pam_adm_subj_type pam_obj_type relabel_dir_perms)
-(allow pam_adm_subj_type pam_obj_type relabel_lnk_file_perms)
-
-(allow pam_unconfined_subj_type self (passwd (passwd chfn chsh rootok crontab)))
+	(typeattributeset pam.obj_type_attribute runtime_file))

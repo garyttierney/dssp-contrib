@@ -189,9 +189,9 @@
 
 	(call mount.manage_runtime_dirs (subj))
 
-	(call pam_read_faillog_var_log_files (subj))
-	(call pam_read_lastlog_var_log_files (subj))
-	(call pam_link_login_prog_keyring (subj))
+	(call faillog.read_var_log_files (subj))
+	(call lastlog.read_var_log_files (subj))
+	(call pam.link_login_prog_keyring (subj))
 
 	(call sd.auto_subj_type_transition (subj))
 	(call sd.exec (subj))

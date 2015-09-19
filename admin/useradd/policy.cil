@@ -69,7 +69,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call pam_rw_lastlog_var_log_files (subj))
+	(call lastlog.rw_var_log_files (subj))
 
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_file_context_files (subj))

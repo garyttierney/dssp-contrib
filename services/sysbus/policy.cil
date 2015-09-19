@@ -59,7 +59,7 @@
 	(call dev_rw_inherited_event (subj))
 	(call dev_rw_inherited_ptmx (subj))
 
-	(call pam_read_pam_console_runtime_files (subj))
+	(call pam_console.read_runtime_files (subj))
 
 	(optional sysbus_optional_sd_logind
 		(call sd_logind.write_inherited_runtime_fifo_files (subj)))

@@ -1,20 +1,20 @@
 (boolean mount_any_file false)
 
-(roleattribute mount_role)
-
 (block mount
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset mount_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype mount_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_runtime_obj_blk)
 
-	(allow subj self (capability (dac_override sys_admin fowner)))
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj "*"))
 
-	(call mount_manage_runtime (subj))
-	(call mount_runtime_obj_type_transition_runtime (subj "*"))
+	(allow subj self (capability (dac_override sys_admin fowner)))
 
 	(call sys_dontaudit_audit_access_mountpoint_dirs (subj))
 	(call sys_setattr_mountpoint_dirs (subj))

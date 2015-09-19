@@ -314,8 +314,8 @@
 		(call numad.adm (subj role)))
 
 	(optional sysadm_optional_mount
-		(call mount_manage_runtime (subj))
-		(call mount_run (sysadm_subj_type role)))
+		(call mount.manage_runtime (subj))
+		(call mount.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_myqemu
 		(call myqemu_runner.run (sysadm_subj_type role))

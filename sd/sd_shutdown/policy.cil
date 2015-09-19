@@ -57,8 +57,8 @@
 
 	(call utmp.read_runtime_files (subj))
 
-	(call mount_exec (subj))
-	(call mount_manage_runtime_files (subj))
+	(call mount.exec (subj))
+	(call mount.manage_runtime_files (subj))
 
 	(call sd.getattr_unit_dirs (subj))
 	(call sd.search_runtime (subj))

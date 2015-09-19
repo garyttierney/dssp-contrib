@@ -1,17 +1,23 @@
 (boolean login_priv false)
 
-(typeattribute login_adm_subj_type)
-(typeattribute login_subj_type)
-
-(typeattribute login_obj_type)
-
 (block login_priv
-        (blockinherit sec_bool_obj_blk))
+        (blockinherit sec_bool_obj_blk)
+
+	(booleanif login_priv
+		(true
+			(call usersubj.shell_manual_subj_type_transition_common_login_subj (login.subj)))
+		(false
+			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (login.subj)))))
 
 (block login
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit subj_common_blk)
 
-	(typeattributeset login_subj_type subj)
+	(typeattributeset subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -44,12 +50,6 @@
 
 	(call usersubj.dontaudit_manual_subj_type_transition_common_subj (subj))
 
-	(booleanif login_priv
-		(true
-			(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj)))
-		(false
-			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (subj))))
-
 	(booleanif term_console_login
 		(true
 			(call term_relabel_console (subj))
@@ -65,12 +65,19 @@
 		(call plymouth_exec_plymouth (subj)))
 
 	(optional login_optional_sd
-		(call sd.daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file)))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))
 
 (block sulogin
 	(blockinherit subj_common_blk)
 
-	(typeattributeset login_subj_type subj)
+	(typeattributeset login.subj_type_attribute subj)
 
 	(blockinherit cmd_obj_blk)
 
@@ -122,15 +129,8 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset login_obj_type unit_file)
+		(typeattributeset login.obj_type_attribute unit_file)
 
-		(allow login_adm_subj_type unit_file (service (stop status disable enable reload start)))
+		(allow login.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
 		(call sd.getpgid (subj))))
-
-(allow login_adm_subj_type login_subj_type (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (login_adm_subj_type login_subj_type))
-
-(allow login_adm_subj_type login_obj_type manage_file_perms)
-
-(allow login_adm_subj_type login_obj_type relabel_file_perms)

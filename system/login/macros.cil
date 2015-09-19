@@ -1,40 +1,30 @@
-(macro login_exec_login ((type ARG1))
-	(call can_exec (ARG1 login.cmd_file)))
+(in login
+	(blockinherit exec_blk)
 
-(macro login_auto_subj_type_transition_login ((type ARG1))
-	(call login_send_signal_login (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 login.cmd_file login.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro login_send_signal_login ((type ARG1))
-	(allow ARG1 login.subj (process (signal))))
+	(blockinherit send_signal_blk)
+	(blockinherit send_signull_blk)
 
-(macro login_send_signull_login ((type ARG1))
-	(allow ARG1 login.subj (process (signull))))
+	(blockinherit cmd_obj_entry_subj_blk)
 
-(macro login_entry_subj ((type ARG1))
-	(call subj_entry (ARG1 login.cmd_file)))
+	(macro set_priv_boolean ((type ARG1))
+		(call sec_set_spec_boolean (ARG1 login_priv.bool))
+		(optional login_set_priv_boolean_optional_seutil
+			(call seutil_exec_setsebool (ARG1))))
 
-(macro login_exec_sulogin ((type ARG1))
-	(call can_exec (ARG1 sulogin.cmd_file)))
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional login_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional login_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
-(macro login_auto_subj_type_transition_sulogin ((type ARG1))
-	(call login_send_signal_sulogin (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 sulogin.cmd_file sulogin.subj)))
+(in sulogin
+	(blockinherit exec_blk)
 
-(macro login_send_signal_sulogin ((type ARG1))
-	(allow ARG1 sulogin.subj (process (signal))))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro login_use_fd_sulogin ((type ARG1))
-	(allow ARG1 sulogin.subj (fd (use))))
+	(blockinherit send_signal_blk)
 
-(macro login_set_priv_boolean ((type ARG1))
-	(call sec_set_spec_boolean (ARG1 login_priv.bool))
-	(optional login_set_priv_boolean_optional_seutil
-		(call seutil_exec_setsebool (ARG1))))
-
-(macro login_adm ((type ARG1)(role ARG2))
-	(typeattributeset login_adm_subj_type ARG1)
-	(optional login_adm_optional_sd
-		(call sd.daemon_adm_subj_type (ARG1)))
-	(optional login_adm_optional_sd_askpwd
-		(call sd_askpwd_agent.run (ARG1 ARG2))))
+	(blockinherit use_fd_blk))

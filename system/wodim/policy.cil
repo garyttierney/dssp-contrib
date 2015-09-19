@@ -1,11 +1,11 @@
-(roleattribute wodim_role)
-
 (block wodim
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset wodim_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype wodim_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
 

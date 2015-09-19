@@ -1,61 +1,26 @@
-(macro fstools_exec ((type ARG1))
-	(call can_exec (ARG1 fstools.cmd_file)))
+(in fstools
+	(blockinherit exec_blk)
 
-(macro fstools_auto_subj_type_transition ((type ARG1))
-	(call fstools_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 fstools.cmd_file fstools.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro fstools_send_signal ((type ARG1))
-	(allow ARG1 fstools.subj (process (signal))))
+	(blockinherit run_blk)
 
-(macro fstools_run ((type ARG1)(role ARG2))
-	(call fstools_auto_subj_type_transition (ARG1))
-	(roleattributeset fstools_role ARG2))
+	(blockinherit send_signal_blk)
 
-(macro fstools_search_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 fstools.runtime_file search_dir_perms))
+	(blockinherit search_runtime_blk)
+	(blockinherit list_runtime_blk)
+	(blockinherit read_runtime_files_blk)
+	(blockinherit manage_runtime_files_blk)
+	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit read_runtime_blk)
+	(blockinherit manage_runtime_blk)
+	(blockinherit relabel_runtime_blk)
 
-(macro fstools_list_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 fstools.runtime_file list_dir_perms))
+	(macro manage_runtime_dirs ((type ARG1))
+		(call file_rw_runtime_dirs (ARG1))
+		(call manage_dirs_pattern (ARG1 runtime_file runtime_file)))
 
-(macro fstools_read_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_files_pattern (ARG1 fstools.runtime_file fstools.runtime_file)))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "blkid")))
 
-(macro fstools_manage_runtime_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call manage_files_pattern (ARG1 fstools.runtime_file fstools.runtime_file)))
-
-(macro fstools_manage_runtime_dirs ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(call manage_dirs_pattern (ARG1 fstools.runtime_file fstools.runtime_file)))
-
-(macro fstools_read_runtime_lnk_files ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(call read_lnk_files_pattern (ARG1 fstools.runtime_file fstools.runtime_file)))
-
-(macro fstools_runtime_obj_type_transition_runtime ((type ARG1))
-	(call file_runtime_obj_type_transition (ARG1 fstools.runtime_file dir "blkid")))
-
-(macro fstools_use_fd ((type ARG1))
-	(allow ARG1 fstools.subj (fd (use))))
-
-(macro fstools_read_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 fstools.runtime_file read_file_perms)
-	(allow ARG1 fstools.runtime_file list_dir_perms)
-	(allow ARG1 fstools.runtime_file read_lnk_file_perms))
-
-(macro fstools_manage_runtime ((type ARG1))
-	(call file_rw_runtime_dirs (ARG1))
-	(allow ARG1 fstools.runtime_file manage_file_perms)
-	(allow ARG1 fstools.runtime_file manage_dir_perms)
-	(allow ARG1 fstools.runtime_file manage_lnk_file_perms))
-
-(macro fstools_relabel_runtime ((type ARG1))
-	(call file_search_runtime (ARG1))
-	(allow ARG1 fstools.runtime_file relabel_file_perms)
-	(allow ARG1 fstools.runtime_file relabel_dir_perms)
-	(allow ARG1 fstools.runtime_file relabel_lnk_file_perms))
+	(blockinherit use_fd_blk))

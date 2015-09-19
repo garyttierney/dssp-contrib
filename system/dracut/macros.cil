@@ -4,7 +4,7 @@
 	(blockinherit send_signal_blk)
 
 	(macro auto_subj_type_transition ((type ARG1))
-		(call dracut_send_signal (ARG1))
+		(call send_signal (ARG1))
 		(call ps_subj_pattern (subj ARG1))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
 

@@ -105,11 +105,11 @@
 	(call bootloader.run (rpm_script_t rpm_role)))
 
 (optional rpm_script_optional_dracut
-	(call dracut_run (rpm_script_t rpm_role)))
+	(call dracut.run (rpm_script_t rpm_role)))
 
 (optional rpm_script_optional_fstools
-	(call fstools_runtime_obj_type_transition_runtime (rpm_script_t))
-	(call fstools_run (rpm_script_t rpm_role)))
+	(call fstools.runtime_obj_type_transition_runtime (rpm_script_t))
+	(call fstools.run (rpm_script_t rpm_role)))
 
 (optional rpm_script_optional_journalctl
 	(call journalctl.run (rpm_script_t rpm_role)))

@@ -1,13 +1,18 @@
-(roleattribute fstools_role)
-
 (block fstools
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset fstools_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype fstools_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_runtime_obj_blk)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(call exec (subj))
 
 	(allow subj self (capability (sys_admin sys_rawio dac_override)))
 	(allow subj self (process (setfscreate)))
@@ -39,11 +44,6 @@
 	(call miscfile_read_fstab (subj))
 	(call miscfile_read_all_terminfo (subj))
 	(call miscfile_read_locale (subj))
-
-	(call fstools_exec (subj))
-
-	(call fstools_manage_runtime (subj))
-	(call fstools_runtime_obj_type_transition_runtime (subj))
 
 	(call mount_read_runtime_files (subj))
 

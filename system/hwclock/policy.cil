@@ -1,15 +1,15 @@
-(roleattribute hwclock_role)
-
 (block hwclock
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset hwclock_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype hwclock_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(call hwclock_read_config_files (subj))
+	(call read_config_files (subj))
 
 	(optional hwclock_optional_sd
 		(call sd.daemon (subj cmd_file))))

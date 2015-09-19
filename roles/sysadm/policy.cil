@@ -242,8 +242,8 @@
 		(call hostname.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_hwclock
-		(call hwclock_manage_config_files (subj))
-		(call hwclock_run (sysadm_subj_type role)))
+		(call hwclock.manage_config_files (subj))
+		(call hwclock.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_iotop
 		(call iotop.run (sysadm_subj_type role)))

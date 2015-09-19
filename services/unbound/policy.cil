@@ -53,8 +53,8 @@
 	(call dns.tcp_bind_reserved_port (subj))
 	(call dns.udp_bind_reserved_port (subj))
 
-	(call miscfile_read_cert (subj))
-	(call miscfile_read_locale (subj))
+	(call cert.read (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -102,7 +102,7 @@
 	(call net_udp_bind_all_unreserved_ports (subj))
 	(call net_udp_bind_ephemeral_port (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call unbound.manage_var_lib_files (subj))
 
@@ -132,8 +132,8 @@
 
 	(call dev_read_urandom (subj))
 
-	(call miscfile_read_cert (subj))
-	(call miscfile_read_locale (subj))
+	(call cert.read (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

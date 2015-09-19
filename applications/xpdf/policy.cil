@@ -28,8 +28,8 @@
 
 	(call fs_manage_fuse_subj_type (subj_type_attribute))
 
-	(call miscfile_read_all_fonts (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call usersubj.dontaudit_getattr_all_home_user_files (subj_type_attribute))
 	(call usersubj.list_home_user (subj_type_attribute))

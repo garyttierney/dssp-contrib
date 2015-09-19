@@ -9,8 +9,8 @@
 
 (call dns.client_subj_type (nss_client_subj_type))
 
-(call miscfile_read_network (nss_client_subj_type))
-(call miscfile_read_passwords (nss_client_subj_type))
+(call network.read_config (nss_client_subj_type))
+(call passwords.read (nss_client_subj_type))
 
 (call nss_read_config_files (nss_client_subj_type))
 

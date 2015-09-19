@@ -26,10 +26,10 @@
 	(call sec_compute_access_vector (subj_type_attribute))
 	(call sec_list_fs (subj_type_attribute))
 
-	(call miscfile_manage_passwords (subj_type_attribute))
-	(call miscfile_manage_shadow (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
-	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
+	(call passwords.manage (subj_type_attribute))
+	(call shadow.manage (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 

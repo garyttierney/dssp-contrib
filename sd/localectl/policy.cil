@@ -34,8 +34,8 @@
 
 	(call cmd_exec_cmd (client_subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (client_subj_type_attribute))
-	(call miscfile_read_locale (client_subj_type_attribute))
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
 
 	(call sd_localed.sysbus_chat_client_subj_type (client_subj_type_attribute))
 

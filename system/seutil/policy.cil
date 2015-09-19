@@ -19,7 +19,7 @@
 	(call seutil_read_selinux_config_files (subj))
 	(call seutil_read_policy_config_files (subj))
 
-	(call miscfile_read_locale (subj)))
+	(call locale.read (subj)))
 
 (block matchpathcon
 	(blockinherit app.application_blk)
@@ -86,8 +86,8 @@
 
 	(call term_use_inherited_console (subj))
 
-	(call miscfile_read_locale (subj))
-	(call miscfile_relabel_shadow (subj))
+	(call locale.read (subj))
+	(call shadow.relabel (subj))
 
 	(call seutil_read_default_context_files (subj))
 	(call seutil_read_file_context_files (subj))
@@ -161,7 +161,7 @@
 
 (call seutil_read_selinux_config_files (seutil_setsebool_client_subj_type))
 
-(call miscfile_read_locale (seutil_setsebool_client_subj_type))
+(call locale.read (seutil_setsebool_client_subj_type))
 
 (call nss_client_subj_type (seutil_setsebool_client_subj_type))
 

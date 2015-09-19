@@ -21,9 +21,9 @@
 
 	(call fs_getattr_fs (subj))
 
-	(call miscfile_read_all_fonts (subj))
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call fonts.read_all (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(call usersubj.use_term (subj))
 

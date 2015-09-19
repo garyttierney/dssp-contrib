@@ -10,8 +10,8 @@
 	(call fs_list_tmpfs (subj))
 	(call fs_read_sysfs_files (subj))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(call nm.client_subj_type (subj))
 

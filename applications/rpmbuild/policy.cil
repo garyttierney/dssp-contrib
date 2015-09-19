@@ -33,8 +33,8 @@
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

@@ -36,7 +36,7 @@
 
 	(call sec_validate_context (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -111,8 +111,8 @@
 
 	(call http.tcp_connect_port (subj))
 
-	(call miscfile_read_cert (subj))
-	(call miscfile_read_locale (subj))
+	(call cert.read (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -142,7 +142,7 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_audit_read_access_shell_files (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

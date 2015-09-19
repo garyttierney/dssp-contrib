@@ -13,9 +13,9 @@
 
 	(call term_use_console (subj))
 
-	(call miscfile_manage_utmp_runtime_files (subj))
-	(call miscfile_runtime_obj_type_transition_utmp_runtime (subj))
-	(call miscfile_write_wtmp_var_log_files (subj))
+	(call utmp.manage_runtime_files (subj))
+	(call utmp.runtime_obj_type_transition_runtime (subj))
+	(call wtmp.write_var_log_files (subj))
 
 	(call sd_journald.client_subj_type (subj))
 

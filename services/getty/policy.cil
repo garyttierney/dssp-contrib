@@ -27,9 +27,9 @@
 
 	(call file_read_config_files (subj))
 
-	(call miscfile_read_locale (subj))
-	(call miscfile_rw_utmp_runtime_files (subj))
-	(call miscfile_write_wtmp_var_log_files (subj))
+	(call locale.read (subj))
+	(call utmp.rw_runtime_files (subj))
+	(call wtmp.write_var_log_files (subj))
 
 	(call nss_client_subj_type (subj))
 

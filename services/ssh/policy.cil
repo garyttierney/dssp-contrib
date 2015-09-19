@@ -104,7 +104,7 @@
 
 	(call subj_dynamic_subj_type_transition_type (subj_type_attribute))
 
-	(call miscfile_read_cert (subj_type_attribute))
+	(call cert.read (subj_type_attribute))
 
 	(call pam_login_prog_subj_type (subj_type_attribute))
 	(call pam_read_config_files (subj_type_attribute))
@@ -152,7 +152,7 @@
 
 	(call file_search_var (subj_type_attribute))
 
-	(call miscfile_read_locale (subj_type_attribute)))
+	(call locale.read (subj_type_attribute)))
 
 (block ssh_agent
 	(typeattribute subj_type_attribute)
@@ -172,7 +172,7 @@
 
 	(call dev_read_urandom (subj_type_attribute))
 
-	(call miscfile_read_all_cert (subj_type_attribute))
+	(call cert.read_all (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 
@@ -203,9 +203,9 @@
 
 	(call fs_manage_fuse_subj_type (subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (subj_type_attribute))
-	(call miscfile_read_all_cert (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call cert.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 
@@ -268,7 +268,7 @@
 
 	(call dev_read_urandom (subj))
 
-	(call miscfile_read_all_cert (subj))
+	(call cert.read_all (subj))
 
 	(call nss_client_subj_type (subj)))
 
@@ -279,7 +279,7 @@
 
 	(roletype role_attribute subj)
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

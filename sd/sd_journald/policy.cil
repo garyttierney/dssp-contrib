@@ -79,8 +79,8 @@
 
 	(call term_write_console (subj))
 
-	(call miscfile_read_locale (subj))
-	(call miscfile_read_utmp_runtime_files (subj))
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
 
 	(call sd_machined.read_config_files (subj))
 

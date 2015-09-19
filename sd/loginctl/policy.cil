@@ -34,8 +34,8 @@
 
 	(call fs_getattr_fs (client_subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (client_subj_type_attribute))
-	(call miscfile_read_locale (client_subj_type_attribute))
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
 
 	(call sd_logind.sysbus_chat_client_subj_type (client_subj_type_attribute))
 

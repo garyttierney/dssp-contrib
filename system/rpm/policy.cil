@@ -52,8 +52,8 @@
 
 	(call rpm_shell_manual_subj_type_transition_rpm_script (subj))
 
-	(call miscfile_manage_shadow (subj))
-	(call miscfile_relabel_shadow (subj))
+	(call shadow.manage (subj))
+	(call shadow.relabel (subj))
 
 	(call seutil_manage_policy_config (subj))
 	(call seutil_relabel_policy_config (subj))

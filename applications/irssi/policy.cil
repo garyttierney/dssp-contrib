@@ -28,9 +28,9 @@
 
 	(call irc.tcp_connect_port (subj_type_attribute))
 
-	(call miscfile_read_all_cert (subj_type_attribute))
-	(call miscfile_read_all_terminfo (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call cert.read_all (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 

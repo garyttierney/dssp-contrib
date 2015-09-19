@@ -48,9 +48,9 @@
 	(call subj_dontaudit_read_common_subj_state (common_type_attribute))
 	(call subj_interactive_fd_type (common_type_attribute))
 
-	(call miscfile_read_utmp_runtime_files (common_type_attribute))
-	(call miscfile_read_all_terminfo (common_type_attribute))
-	(call miscfile_read_locale (common_type_attribute))
+	(call utmp.read_runtime_files (common_type_attribute))
+	(call terminfo.read_all (common_type_attribute))
+	(call locale.read (common_type_attribute))
 
 	(call nss_read_config_files (common_type_attribute))
 
@@ -92,9 +92,9 @@
 
 	(call login.send_signull (common_login_type_attribute))
 
-	(call miscfile_read_fonts (common_login_type_attribute))
-	(call miscfile_read_passwords (common_login_type_attribute))
-	(call miscfile_read_man (common_login_type_attribute))
+	(call fonts.read (common_login_type_attribute))
+	(call passwords.read (common_login_type_attribute))
+	(call man.read (common_login_type_attribute))
 
 	(call seutil_exec_setfiles (common_login_type_attribute))
 	(call seutil_read_default_context_files (common_login_type_attribute))
@@ -113,7 +113,7 @@
 (block home_cert
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(call miscfile_cert_obj_type (home_user_file)))
+	(call cert.miscfile_obj_type (home_user_file)))
 
 (block home_config
 	(blockinherit usersubj.home_config_obj_blk))
@@ -134,20 +134,20 @@
 (block home_fonts
 	(blockinherit usersubj.home_cache_obj_blk)
 
-	(call miscfile_fonts_cache_obj_type (home_cache_file))
+	(call fonts.miscfile_cache_obj_type (home_cache_file))
 
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(call miscfile_fonts_config_obj_type (home_config_file))
+	(call fonts.miscfile_config_obj_type (home_config_file))
 
 	(blockinherit usersubj.home_data_obj_blk)
 
-	(call miscfile_fonts_data_obj_type (home_data_file)))
+	(call fonts.miscfile_data_obj_type (home_data_file)))
 
 (block home_terminfo
 	(blockinherit usersubj.home_data_obj_blk)
 
-	(call miscfile_terminfo_data_obj_type (home_data_file)))
+	(call terminfo.miscfile_data_obj_type (home_data_file)))
 
 (block home_user
 	(blockinherit usersubj.home_user_obj_blk))

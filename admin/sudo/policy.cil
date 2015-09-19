@@ -56,8 +56,8 @@
 
 	(call pam_read_config (subj_type_attribute))
 
-	(call miscfile_read_locale (subj_type_attribute))
-	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 
@@ -99,7 +99,7 @@
 
 	(allow subj_type_attribute self (capability (dac_override)))
 
-	(call miscfile_read_locale (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 

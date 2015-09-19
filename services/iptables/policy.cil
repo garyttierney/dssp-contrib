@@ -56,8 +56,8 @@
 	(call kmod.read_config (subj))
 	(call kmod.run (subj role_attribute))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

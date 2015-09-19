@@ -19,9 +19,9 @@
 
 	(call fs_getattr_fs (subj_type_attribute))
 
-	(call miscfile_dontaudit_setattr_fonts_var_cache_dirs (subj_type_attribute))
-	(call miscfile_read_all_fonts (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call fonts.dontaudit_setattr_var_cache_dirs (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call usersubj.create_home_cache_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))

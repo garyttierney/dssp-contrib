@@ -16,7 +16,7 @@
 
 	(call hwclock.read_config_files (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(optional timedatex_optional_chronyd
 		(call chronyd.enable_status_start_sd_unit_subj_type (subj)))

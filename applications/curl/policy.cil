@@ -25,8 +25,8 @@
 
 	(call http.tcp_connect_port (subj))
 
-	(call miscfile_read_all_cert (subj))
-	(call miscfile_read_locale (subj))
+	(call cert.read_all (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

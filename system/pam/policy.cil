@@ -75,8 +75,8 @@
 
 (call pam_client_subj_type (pam_login_prog_subj_type))
 
-(call miscfile_read_locale (pam_login_prog_subj_type))
-(call miscfile_rw_utmp_runtime_files (pam_login_prog_subj_type))
+(call locale.read (pam_login_prog_subj_type))
+(call utmp.rw_runtime_files (pam_login_prog_subj_type))
 
 (call seutil_read_selinux_config_files (pam_login_prog_subj_type))
 (call seutil_read_default_context_files (pam_login_prog_subj_type))
@@ -112,9 +112,9 @@
 (call pam_rw_lastlog_var_log_files (pam_client_subj_type))
 (call pam_var_log_obj_type_transition_lastlog_var_log (pam_client_subj_type))
 
-(call miscfile_append_wtmp_var_log_files (pam_client_subj_type))
-(call miscfile_read_wtmp_var_log_files (pam_client_subj_type))
-(call miscfile_dontaudit_write_wtmp_var_log_files (pam_client_subj_type))
+(call wtmp.append_var_log_files (pam_client_subj_type))
+(call wtmp.read_var_log_files (pam_client_subj_type))
+(call wtmp.dontaudit_write_var_log_files (pam_client_subj_type))
 
 (call nss_client_subj_type (pam_client_subj_type))
 

@@ -14,7 +14,7 @@
 	(call fs_list_devtmpfs (subj))
 	(call fs_read_sysfs (subj))
 
-	(call miscfile_read_hwdata (subj))
-	(call miscfile_read_locale (subj))
+	(call hwdata.read_data (subj))
+	(call locale.read (subj))
 
 	(call udev_client_subj_type (subj)))

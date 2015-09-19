@@ -12,8 +12,8 @@
 
 	(call bluetoothd.sysbus_chat_client_subj_type (subj))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(optional bluetoothctl_optional_sysbus
 		(call sysbus.client_subj_type (subj))))

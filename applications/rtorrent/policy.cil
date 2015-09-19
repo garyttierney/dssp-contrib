@@ -38,8 +38,8 @@
 
 	(call torrent.tcp_bind_unreserved_port (subj))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_locale (subj))
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
 
 	(call usersubj.manage_home_user_dirs (subj))
 	(call usersubj.manage_home_user_files (subj))

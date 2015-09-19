@@ -51,8 +51,8 @@
 	(call fs_getattr_fs (client_subj_type_attribute))
 	(call fs_read_cgroup (client_subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (client_subj_type_attribute))
-	(call miscfile_read_locale (client_subj_type_attribute))
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
 
 	(call sd_journald.read_var_log (client_subj_type_attribute))
 

@@ -31,8 +31,8 @@
 
 	(call gpg_helper.exec (subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))

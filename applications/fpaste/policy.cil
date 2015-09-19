@@ -43,10 +43,10 @@
 
 	(call http.tcp_connect_port (subj))
 
-	(call miscfile_read_hwdata (subj))
-	(call miscfile_read_locale (subj))
-	(call miscfile_read_utmp_runtime_files (subj))
-	(call miscfile_read_wtmp_var_log_files (subj))
+	(call hwdata.read_data (subj))
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+	(call wtmp.read_var_log_files (subj))
 
 	(call nss_client_subj_type (subj))
 

@@ -31,8 +31,8 @@
 
 	(call fs_getattr_fs (subj))
 
-	(call miscfile_read_man (subj))
-	(call miscfile_read_locale (subj))
+	(call man.read (subj))
+	(call locale.read (subj))
 
 	(optional mandb_optional_sd
 		(call sd.daemon (subj cmd_file))

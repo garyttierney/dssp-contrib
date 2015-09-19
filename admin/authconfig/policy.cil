@@ -41,9 +41,9 @@
 
 	(call hostname.exec (subj))
 
-	(call miscfile_rw_network_files (subj))
-	(call miscfile_manage_passwords (subj))
-	(call miscfile_manage_shadow (subj))
+	(call network.rw_config_files (subj))
+	(call passwords.manage (subj))
+	(call shadow.manage (subj))
 
 	(call nss_manage_config_files (subj))
 	(call nss_relabel_config_files (subj))

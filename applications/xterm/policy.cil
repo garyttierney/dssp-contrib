@@ -16,9 +16,9 @@
 
 	(call app.send_signal (subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (subj_type_attribute))
-	(call miscfile_read_all_fonts (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 

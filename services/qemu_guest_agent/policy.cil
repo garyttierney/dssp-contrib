@@ -23,8 +23,8 @@
 
 	(call term_use_virtio (subj))
 
-	(call miscfile_read_locale (subj))
-	(call miscfile_read_utmp_runtime_files (subj))
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
 
 	(optional qemu_quest_agent_optional_sd
 		(call sd.daemon (subj cmd_file))

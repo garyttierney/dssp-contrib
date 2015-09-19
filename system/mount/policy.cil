@@ -37,8 +37,8 @@
 
 	(call storage_rw_all (subj))
 
-	(call miscfile_read_fstab (subj))
-	(call miscfile_read_locale (subj))
+	(call fstab.read (subj))
+	(call locale.read (subj))
 
 	(booleanif (mount_any_file) (true
 		(call file_rw_all_files_except (subj))

@@ -30,7 +30,7 @@
 	(call app.getattr (subj_type_attribute))
 	(call app.read_state (subj_type_attribute))
 
-	(call miscfile_read_utmp_runtime_files (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 
@@ -95,8 +95,8 @@
 	(call fs_read_sysfs_files (client_subj_type_attribute))
 	(call fs_read_cgroup (client_subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (client_subj_type_attribute))
-	(call miscfile_read_locale (client_subj_type_attribute))
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
 
 	(call sd.read_state_lnk_files (client_subj_type_attribute))
 	(call sd.search_unit_runtime (client_subj_type_attribute))

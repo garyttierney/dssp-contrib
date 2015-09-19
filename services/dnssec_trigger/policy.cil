@@ -48,7 +48,7 @@
 
 	(call file_read_config_files (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call net_tcp_bind_generic_node (subj))
 
@@ -101,8 +101,8 @@
 
 	(call dnssec_trigger.manage_config (subj))
 
-	(call miscfile_read_cert (subj))
-	(call miscfile_read_locale (subj))
+	(call cert.read (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -150,7 +150,7 @@
 
 	(call dnssec_triggerc.auto_subj_type_transition (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

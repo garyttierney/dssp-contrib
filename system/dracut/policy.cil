@@ -66,10 +66,10 @@
 
 	(call ldconfig.exec (subj))
 
-	(call miscfile_read_all_terminfo (subj))
-	(call miscfile_read_fstab (subj))
-	(call miscfile_read_modules (subj))
-	(call miscfile_read_passwords (subj))
+	(call terminfo.read_all (subj))
+	(call fstab.read (subj))
+	(call modules.read (subj))
+	(call passwords.read (subj))
 
 	(call mount_exec (subj))
 

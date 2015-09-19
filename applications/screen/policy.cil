@@ -33,9 +33,9 @@
 
 	(call subj_interactive_fd_type (subj_type_attribute))
 
-	(call miscfile_read_all_terminfo (subj_type_attribute))
-	(call miscfile_read_locale (subj_type_attribute))
-	(call miscfile_rw_utmp_runtime_files (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call utmp.rw_runtime_files (subj_type_attribute))
 
 	(call nss_client_subj_type (subj_type_attribute))
 

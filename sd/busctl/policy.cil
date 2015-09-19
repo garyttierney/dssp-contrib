@@ -36,7 +36,7 @@
 
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-	(call miscfile_read_all_terminfo (client_subj_type_attribute))
-	(call miscfile_read_locale (client_subj_type_attribute))
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
 
 	(call sd_machined.read_config_files (client_subj_type_attribute)))

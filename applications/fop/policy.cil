@@ -23,9 +23,9 @@
 
 	(call java.client (subj))
 
-	(call miscfile_read_all_fonts (subj))
-	(call miscfile_read_locale (subj))
-	(call miscfile_read_network (subj))
+	(call fonts.read_all (subj))
+	(call locale.read (subj))
+	(call network.read_config (subj))
 
 	(call usersubj.manage_home_user_files (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))

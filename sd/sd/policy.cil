@@ -182,10 +182,10 @@
 	(call term_use_console (subj))
 	(call term_use_unallocated_ttys (subj))
 
-	(call miscfile_read_fstab (subj))
-	(call miscfile_read_modules (subj))
-	(call miscfile_rw_utmp_runtime_files (subj))
-	(call miscfile_write_wtmp_var_log_files (subj))
+	(call fstab.read (subj))
+	(call modules.read (subj))
+	(call utmp.rw_runtime_files (subj))
+	(call wtmp.write_var_log_files (subj))
 
 	(call mount_manage_runtime_dirs (subj))
 
@@ -297,7 +297,7 @@
 	(call sec_compute_create_context (subj_type_attribute))
 	(call sec_list_fs (subj_type_attribute))
 
-	(call miscfile_read_locale (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call mount_read_runtime (subj_type_attribute))
 
@@ -402,7 +402,7 @@
 
 	(call term_use_inherited_console (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 

@@ -32,7 +32,7 @@
 
 	(call fs_getattr_fs (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj))
 
@@ -112,6 +112,6 @@
 	(call auditd.read_config (subj))
 	(call auditd.read_var_log (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(call nss_client_subj_type (subj)))

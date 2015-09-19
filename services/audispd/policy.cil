@@ -23,7 +23,7 @@
 
 	(call auditd.rw_inherited_unix_stream_sockets (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(optional audispd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))))

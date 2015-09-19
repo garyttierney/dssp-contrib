@@ -27,7 +27,7 @@
 	(call fs_rw_sysfs_files (subj))
 	(call fs_read_sysfs_lnk_files (subj))
 
-	(call miscfile_read_locale (subj))
+	(call locale.read (subj))
 
 	(optional cpupower_optional_sd
 		(call sd.daemon (subj cmd_file))

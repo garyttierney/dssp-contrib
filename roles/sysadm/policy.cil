@@ -199,7 +199,9 @@
 		(call dnssec_triggerc.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dracut
-		(call dracut_run (sysadm_subj_type role)))
+		(call dracut.manage_config (subj))
+		(call dracut.manage_var_tmp (subj))
+		(call dracut.run (sysadm_subj_type role)))
 
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs.adm (subj role)))

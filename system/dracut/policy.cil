@@ -1,25 +1,26 @@
-(roleattribute dracut_role)
-
 (block dracut
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset dracut_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype dracut_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
+	(call read_config (subj))
+
 	(blockinherit file_var_tmp_obj_blk)
+
+	(call manage_var_tmp (subj))
+	(call mmap_var_tmp_files (subj))
+	(call var_tmp_obj_type_transition_var_tmp (subj))
+
+	(call exec (subj))
 
 	(allow subj self (capability (dac_override mknod sys_chroot sys_admin sys_resource)))
 	(allow subj self (process (getsched setfscreate)))
-
-	(call dracut_exec (subj))
-	(call dracut_read_config (subj))
-
-	(call dracut_manage_var_tmp (subj))
-	(call dracut_mmap_var_tmp_files (subj))
-	(call dracut_var_tmp_obj_type_transition_var_tmp (subj))
 
 	(call sys_list_cpu_sysfs (subj))
 	(call sys_list_memory_sysfs (subj))

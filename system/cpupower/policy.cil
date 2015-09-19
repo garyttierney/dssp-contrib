@@ -1,23 +1,23 @@
-(roleattribute cpupower_role)
-
-(typeattribute cpupower_adm_subj_type)
-
-(typeattribute cpupower_obj_type)
-
 (block cpupower
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset cpupower_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype cpupower_role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file_config_obj_blk)
 
-	(typeattributeset cpupower_obj_type config_file)
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
 
 	(allow subj self (capability (sys_rawio)))
-
-	(call cpupower_read_config_files (subj))
 
 	(call sys_read_cpuinfo_proc_files (subj))
 
@@ -34,13 +34,13 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset cpupower_obj_type unit_file)
+		(typeattributeset obj_type_attribute unit_file)
 
-		(allow cpupower_adm_subj_type unit_file (service (stop status disable enable reload start)))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-(allow cpupower_adm_subj_type cpupower.subj (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (cpupower_adm_subj_type cpupower.subj))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-(allow cpupower_adm_subj_type cpupower_obj_type manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
-(allow cpupower_adm_subj_type cpupower_obj_type relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

@@ -1,13 +1,8 @@
-(macro dd_exec ((type ARG1))
-	(call can_exec (ARG1 dd.cmd_file)))
+(in dd
+	(blockinherit exec_blk)
 
-(macro dd_auto_subj_type_transition ((type ARG1))
-	(call dd_send_signal (ARG1))
-	(call auto_subj_type_transition_pattern (ARG1 dd.cmd_file dd.subj)))
+	(blockinherit auto_subj_type_transition_blk)
 
-(macro dd_run ((type ARG1)(role ARG2))
-	(call dd_auto_subj_type_transition (ARG1))
-	(roleattributeset dd_role (ARG2)))
+	(blockinherit run_blk)
 
-(macro dd_send_signal ((type ARG1))
-	(allow ARG1 dd.subj (process (signal))))
+	(blockinherit send_signal_blk))

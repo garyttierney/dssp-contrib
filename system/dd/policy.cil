@@ -1,11 +1,11 @@
-(roleattribute dd_role)
-
 (block dd
+	(roleattribute role_attribute)
+
 	(blockinherit app.application_blk)
 
-	(roleattributeset dd_role sys.role)
+	(roleattributeset role_attribute sys.role)
 
-	(roletype dd_role subj)
+	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
 

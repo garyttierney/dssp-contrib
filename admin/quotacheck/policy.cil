@@ -5,14 +5,14 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_obj_blk)
+	(blockinherit file.obj_blk)
 
 	(call manage_db_files (subj))
 	(call mountpoint_obj_type_transition_file (subj))
 
 	(allow subj self (capability (dac_override)))
 
-	(call file_read_all_except (subj))
+	(call file.read_all_except (subj))
 
 	(call fs_get_fs_quotas (subj))
 	(call fs_getattr_fs (subj))

@@ -56,24 +56,24 @@
 	(blockinherit send_signal_blk))
 
 (in selinux_config
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
 	(macro rw_config_dirs ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 config_file rw_dir_perms))
 
 	(macro config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call obj_type_transition_pattern (ARG1 config_file ARG2 ARG3 ARG4)))
 
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file_config_obj_type_transition (ARG1 config_file dir "selinux"))))
+		(call file.config_obj_type_transition (ARG1 config_file dir "selinux"))))
 
 (in default_context
 	(macro search_config ((type ARG1))
@@ -115,7 +115,7 @@
 		(allow ARG1 config_file rw_dir_perms))
 
 	(macro selinux_config_obj_type_transition_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call obj_type_transition_pattern (ARG1 selinux_config.config_file config_file dir "contexts"))))
 
 (in file_context
@@ -208,7 +208,7 @@
 		(typeattributeset relabelto_subj_type_attribute ARG1))
 
 	(macro selinux_config_obj_type_transition_policy_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call obj_type_transition_pattern (ARG1 selinux_config.config_file sec_file dir "policy")))
 
 	(macro relabel_files ((type ARG1))
@@ -257,5 +257,5 @@
 		(allow ARG1 config_file relabel_lnk_file_perms))
 
 	(macro selinux_config_obj_type_transition_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call obj_type_transition_pattern (ARG1 selinux_config.config_file config_file dir "sources"))))

@@ -52,24 +52,24 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
-	(blockinherit search_var_lib_blk)
-	(blockinherit list_var_lib_blk)
-	(blockinherit read_var_lib_files_blk)
-	(blockinherit read_var_lib_lnk_files_blk)
-	(blockinherit read_var_lib_blk)
-	(blockinherit manage_var_lib_blk)
-	(blockinherit relabel_var_lib_blk)
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "pulse")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "pulse")))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -80,7 +80,7 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro mmap_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call mmap_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file)))
 
@@ -109,7 +109,7 @@
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".esd_auth")))
 
 	(macro stream_connect_all_subj ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
 

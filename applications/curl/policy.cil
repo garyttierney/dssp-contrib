@@ -5,7 +5,7 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config_files (subj))
 
@@ -15,9 +15,9 @@
 
 	(call dev_read_urandom (subj))
 
-	(call file_audit_access_var_tmp_dirs (subj))
-	(call file_list_var_tmp (subj))
-	(call file_read_config_files (subj))
+	(call file.audit_access_var_tmp_dirs (subj))
+	(call file.list_var_tmp (subj))
+	(call file.read_config_files (subj))
 
 	(call fs_getattr_fs (subj))
 	(call fs_list_tmpfs (subj))

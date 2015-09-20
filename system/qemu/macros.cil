@@ -22,14 +22,14 @@
 	(block obj_blk
 		(blockabstract obj_blk)
 
-		(blockinherit file_obj_blk)
+		(blockinherit file.obj_blk)
 
 		(typeattributeset qemu_guest.obj_type_attribute file))
 
 	(block runtime_obj_blk
 		(blockabstract runtime_obj_blk)
 
-		(blockinherit file_runtime_obj_blk)
+		(blockinherit file.runtime_obj_blk)
 
 		(typeattributeset qemu_guest.runtime_obj_type_attribute runtime_file))
 
@@ -45,11 +45,11 @@
 		(typeattributeset subj_type_attribute ARG1))
 
 	(macro guest_obj_type ((type ARG1))
-		(call file_obj_type (ARG1))
+		(call file.file_obj_type (ARG1))
 		(typeattributeset guest_obj_type_attribute ARG1))
 
 	(macro guest_runtime_obj_type ((type ARG1))
-		(call file_runtime_obj_type (ARG1))
+		(call file.runtime_obj_type (ARG1))
 		(typeattributeset runtime_obj_type_attribute ARG1))
 
 	(macro guest_pty_obj_type ((type ARG1))
@@ -62,7 +62,7 @@
 		(allow ARG1 ARG2 rw_file_perms)
 
 		(allow ARG1 ARG3 manage_sock_file_perms)
-		(call file_runtime_obj_type_transition (ARG1 ARG3 sock_file "*"))
+		(call file.runtime_obj_type_transition (ARG1 ARG3 sock_file "*"))
 
 		(call term_create_pty (ARG1 ARG4))
 		(allow ARG1 ARG4 rw_term_perms))
@@ -86,11 +86,11 @@
 			(call sd_machined.search_var_lib (ARG1))))
 
 	(macro manage_all_runtime_sock_files ((type ARG1))
-		(call file_rw_runtime_dirs (ARG1))
+		(call file.rw_runtime_dirs (ARG1))
 		(allow ARG1 runtime_obj_type_attribute manage_sock_file_perms))
 
 	(macro stream_connect_all_subj ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(call stream_connect_pattern (ARG1 runtime_obj_type_attribute runtime_obj_type_attribute subj_type_attribute)))
 
 	(macro getattr_all_ptys ((type ARG1))
@@ -125,13 +125,13 @@
 	(macro spec_manual_subj_type_transition ((type ARG1)(type ARG2))
 		(call manual_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
 	(macro set_use_hugepages_boolean ((type ARG1))
 		(call sec_set_spec_boolean (ARG1 qemu_use_hugepages.bool))

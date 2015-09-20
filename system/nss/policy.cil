@@ -1,13 +1,13 @@
 (block nss
 	(typeattribute client_subj_type_attribute)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config_files (client_subj_type_attribute))
 
 	(allow client_subj_type_attribute self create_unix_stream_socket_perms)
 
-	(call file_list_runtime (client_subj_type_attribute))
+	(call file.list_runtime (client_subj_type_attribute))
 
 	(call dns.client_subj_type (client_subj_type_attribute))
 

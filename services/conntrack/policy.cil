@@ -23,27 +23,27 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
 	(call read_config (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
 	(call manage_runtime_sock_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_runtime_lock_obj_blk)
+	(blockinherit file.runtime_lock_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_lock_file)
 
 	(call manage_runtime_lock_files (subj))
 	(call runtime_lock_obj_type_transition_runtime_lock (subj))
 
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset obj_type_attribute var_log_file)
 
@@ -70,7 +70,7 @@
 	(call sys_read_net_proc_files (subj))
 	(call sys_request_load_module (subj))
 
-	(call file_read_config_files (subj))
+	(call file.read_config_files (subj))
 
 	(call net_udp_bind_generic_node (subj))
 
@@ -93,7 +93,7 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_runtime_lock (adm_subj_type_attribute))
+	(call file.search_runtime_lock (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

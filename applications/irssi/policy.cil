@@ -5,7 +5,7 @@
 
 	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config_files (subj_type_attribute))
 
@@ -23,8 +23,8 @@
 	(call dev_read_random (subj_type_attribute))
 	(call dev_read_urandom (subj_type_attribute))
 
-	(call file_read_config_files (subj_type_attribute))
-	(call file_read_data (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
 
 	(call irc.tcp_connect_port (subj_type_attribute))
 

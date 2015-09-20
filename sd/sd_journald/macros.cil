@@ -44,14 +44,14 @@
 		(allow ARG1 config_file relabel_dir_perms)
 		(allow ARG1 config_file relabel_lnk_file_perms))
 
-	(blockinherit search_var_log_blk)
-	(blockinherit list_var_log_blk)
-	(blockinherit read_var_log_files_blk)
-	(blockinherit read_var_log_lnk_files_blk)
-	(blockinherit manage_var_log_lnk_files_blk)
-	(blockinherit read_var_log_blk)
-	(blockinherit manage_var_log_blk)
-	(blockinherit relabel_var_log_blk)
+	(blockinherit file.search_var_log_blk)
+	(blockinherit file.list_var_log_blk)
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.read_var_log_lnk_files_blk)
+	(blockinherit file.manage_var_log_lnk_files_blk)
+	(blockinherit file.read_var_log_blk)
+	(blockinherit file.manage_var_log_blk)
+	(blockinherit file.relabel_var_log_blk)
 
 	(macro relabelto_var_log_dirs ((type ARG1))
 		(call search_var_log (ARG1))
@@ -62,10 +62,10 @@
 		(allow ARG1 var_log_file relabelto_file_perms))
 
 	(macro runtime_obj_type_transition_var_log ((type ARG1))
-		(call file_runtime_obj_type_transition (ARG1 var_log_file dir "log")))
+		(call file.runtime_obj_type_transition (ARG1 var_log_file dir "log")))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file_var_log_obj_type_transition (ARG1 var_log_file dir "journal")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file dir "journal")))
 
 	(macro search_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))

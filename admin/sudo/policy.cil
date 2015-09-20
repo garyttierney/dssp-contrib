@@ -5,16 +5,16 @@
 
 	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config (subj_type_attribute))
 
-	(blockinherit file_var_db_obj_blk)
+	(blockinherit file.var_db_obj_blk)
 
 	(call manage_var_db (subj_type_attribute))
 	(call var_db_obj_type_transition_var_db (subj_type_attribute))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime (subj_type_attribute))
 	(call runtime_obj_type_transition_runtime (subj_type_attribute))
@@ -41,7 +41,7 @@
 	(call dev_getattr_all (subj_type_attribute))
 	(call dev_read_urandom (subj_type_attribute))
 
-	(call file_read_config_files (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
 
 	(call fs_list_devtmpfs (subj_type_attribute))
 	(call fs_dontaudit_getattr_devtmpfs_chr_files (subj_type_attribute))

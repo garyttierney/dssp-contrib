@@ -385,51 +385,60 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "systemd")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(macro read_private_tmpfs_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(allow ARG1 sduser_private.tmpfs_user_file read_sock_file_perms))
 
 	(macro write_private_tmpfs_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(allow ARG1 sduser_private.tmpfs_user_file write_sock_file_perms))
 
 	(macro rw_private_tmpfs_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(allow ARG1 sduser_private.tmpfs_user_file rw_sock_file_perms))
 
 	(macro manage_private_tmpfs_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call rw_tmpfs_user_dirs (ARG1))
 		(allow ARG1 sduser_private.tmpfs_user_file manage_sock_file_perms))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(call stream_connect_pattern (ARG1 sduser_private.tmpfs_user_file sduser_private.tmpfs_user_file ARG2)))
 
 	(macro stream_connect_all_subj ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(call stream_connect_pattern (ARG1 sduser_private.tmpfs_user_file sduser_private.tmpfs_user_file subj_type_attribute)))
 
 	(macro spec_dgram_send_notify ((type ARG1)(type ARG2))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(call dgram_send_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file ARG2)))
 
 	(macro dgram_send_notify_all_subj ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(call dgram_send_pattern (ARG1 sduser.tmpfs_user_file sduser.tmpfs_user_file subj_type_attribute)))
 
 	(macro relabel_private_tmpfs_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call search_tmpfs_user (ARG1))
 		(allow ARG1 sduser_private.tmpfs_user_file relabel_sock_file_perms))
 

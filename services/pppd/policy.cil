@@ -7,21 +7,21 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_runtime_lock_obj_blk)
+	(blockinherit file.runtime_lock_obj_blk)
 
 	(call manage_runtime_lock (subj))
 	(call runtime_lock_obj_type_transition_runtime_lock (subj))
 
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(allow subj var_log_file manage_dir_perms)
 	(allow subj var_log_file (file (setattr)))

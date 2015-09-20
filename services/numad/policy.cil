@@ -11,14 +11,14 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
 	(call manage_runtime_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset obj_type_attribute var_log_file)
 
@@ -64,8 +64,8 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_log (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 

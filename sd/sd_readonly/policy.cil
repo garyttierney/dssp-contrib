@@ -10,7 +10,7 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_audit_read_access_shell_files (subj))
 
-	(call file_read_config (subj))
+	(call file.read_config (subj))
 
 	(call fs_read_devtmpfs_lnk_files (subj))
 
@@ -25,7 +25,7 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_runtime (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute unit_file manage_file_perms)
 

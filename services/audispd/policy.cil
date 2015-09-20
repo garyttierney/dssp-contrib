@@ -29,9 +29,9 @@
 		(call sd_journald.client_subj_type (subj))))
 
 (block audispd_config
-	(blockinherit file_sec_obj_blk)
+	(blockinherit file.sec_obj_blk)
 
 	(call fs_associate_tmpfs (sec_file)))
 
 (block audispd_runtime
-	(blockinherit file_sec_obj_blk))
+	(blockinherit file.sec_obj_blk))

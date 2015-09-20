@@ -27,50 +27,50 @@
 		(roletype sys.role ARG1))
 
 	(macro search_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 audispd_config.sec_file search_dir_perms))
 
 	(macro list_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 audispd_config.sec_file list_dir_perms))
 
 	(macro read_config_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_files_pattern (ARG1 audispd_config.sec_file audispd_config.sec_file)))
 
 	(macro read_config_lnk_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 audispd_config.sec_file audispd_config.sec_file)))
 
 	(macro read_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 audispd_config.sec_file read_file_perms)
 		(allow ARG1 audispd_config.sec_file list_dir_perms)
 		(allow ARG1 audispd_config.sec_file read_lnk_file_perms))
 
 	(macro manage_config ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 audispd_config.sec_file manage_file_perms)
 		(allow ARG1 audispd_config.sec_file manage_dir_perms)
 		(allow ARG1 audispd_config.sec_file manage_lnk_file_perms))
 
 	(macro relabel_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 audispd_config.sec_file relabel_file_perms)
 		(allow ARG1 audispd_config.sec_file relabel_dir_perms)
 		(allow ARG1 audispd_config.sec_file relabel_lnk_file_perms))
 
 	(macro read_runtime_sock_files ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 audispd_runtime.sec_file read_sock_file_perms))
 
 	(macro manage_runtime_sock_files ((type ARG1))
-		(call file_rw_runtime_dirs (ARG1))
+		(call file.rw_runtime_dirs (ARG1))
 		(allow ARG1 audispd_runtime.sec_file manage_sock_file_perms))
 
 	(macro relabel_runtime_sock_files ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 audispd_runtime.sec_file relabel_sock_file_perms))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file_runtime_obj_type_transition (ARG1 audispd_runtime.sec_file sock_file "audisp_events"))))
+		(call file.runtime_obj_type_transition (ARG1 audispd_runtime.sec_file sock_file "audisp_events"))))

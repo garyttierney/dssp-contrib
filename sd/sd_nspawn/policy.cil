@@ -18,20 +18,20 @@
 	(typeattributeset obj_type_attribute unit_file)
 	(typeattributeset unit_obj_type_attribute unit_file)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
 	(call read_config (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_tmpfs_obj_blk)
+	(blockinherit file.tmpfs_obj_blk)
 
 	(typeattributeset obj_type_attribute tmpfs_file)
 
@@ -84,7 +84,7 @@
 	(call dev_setattr_null (subj))
 	(call dev_write_kmsg (subj))
 
-	(call file_getattr_all_except (subj))
+	(call file.getattr_all_except (subj))
 
 	(call fs_getattr_fs (subj))
 	(call fs_getattr_tmpfs_fs (subj))

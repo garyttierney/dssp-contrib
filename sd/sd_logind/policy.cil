@@ -11,20 +11,20 @@
 
 	(typeattributeset obj_type_attribute unit_file)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
 	(call read_config (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(typeattributeset obj_type_attribute var_lib_file)
 
@@ -63,9 +63,9 @@
 	(call fs_mount_tmpfs_fs (subj))
 	(call fs_unmount_tmpfs_fs (subj))
 
-	(call file_search_home (subj))
-	(call file_manage_runtime_user_dirs (subj))
-	(call file_mounton_runtime_user_dirs (subj))
+	(call file.search_home (subj))
+	(call file.manage_runtime_user_dirs (subj))
+	(call file.mounton_runtime_user_dirs (subj))
 
 	(call sec_get_enforce_mode (subj))
 

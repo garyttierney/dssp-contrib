@@ -37,8 +37,8 @@
 
 	(call dev_getattr_all (subj))
 
-	(call file_getattr_all (subj))
-	(call file_read_all_lnk_files (subj))
+	(call file.getattr_all (subj))
+	(call file.read_all_lnk_files (subj))
 
 	(call fs_getattr_all (subj))
 	(call fs_read_all_lnk_files (subj))
@@ -74,9 +74,9 @@
 
 	(call dev_relabel_all (subj))
 
-	(call file_list_all (subj))
-	(call file_read_all_lnk_files (subj))
-	(call file_relabel_all_except (subj))
+	(call file.list_all (subj))
+	(call file.read_all_lnk_files (subj))
+	(call file.relabel_all_except (subj))
 
 	(call fs_getattr_all_fs (subj))
 	(call fs_list_all (subj))
@@ -150,13 +150,13 @@
 	(call selinux_config.read_config_files (subj)))
 
 (block default_context
-	(blockinherit file_config_obj_blk))
+	(blockinherit file.config_obj_blk))
 
 (block file_context
-	(blockinherit file_config_obj_blk))
+	(blockinherit file.config_obj_blk))
 
 (block policy_config
-	(blockinherit file_sec_obj_blk)
+	(blockinherit file.sec_obj_blk)
 
 	(typeattribute relabelto_subj_type_attribute)
 	(typeattribute not_relabelto_subj_type_attribute)
@@ -173,7 +173,7 @@
 	(neverallow not_write_subj_type_attribute sec_file (file (create write))))
 
 (block policy_src
-	(blockinherit file_config_obj_blk))
+	(blockinherit file.config_obj_blk))
 
 (block selinux_config
-	(blockinherit file_config_obj_blk))
+	(blockinherit file.config_obj_blk))

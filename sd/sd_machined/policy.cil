@@ -10,20 +10,20 @@
 
 	(typeattributeset obj_type_attribute unit_file)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
 	(call read_config_files (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(call sys_mountpoint_obj_type (var_lib_file))
 
@@ -103,7 +103,7 @@
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_runtime (adm_subj_type_attribute))
-	(call file_search_var_lib (adm_subj_type_attribute))
+	(call file.search_var_lib (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

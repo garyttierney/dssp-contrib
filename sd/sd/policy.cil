@@ -41,12 +41,12 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 	(typeattributeset config_obj_type_attribute config_file)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 	(typeattributeset runtime_obj_type_attribute runtime_file)
@@ -63,7 +63,7 @@
 	(call manage_private_runtime_sock_files (subj))
 	(call runtime_obj_type_transition (subj sd_private.runtime_file sock_file "private"))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(typeattributeset obj_type_attribute var_lib_file)
 	(typeattributeset var_lib_obj_type_attribute var_lib_file)
@@ -139,14 +139,14 @@
 	(call dev_write_kmsg (subj))
 	(call dev_write_watchdog (subj))
 
-	(call file_audit_access_config_dirs (subj))
-	(call file_read_all_config (subj))
-	(call file_read_all_runtime_lock_files (subj))
-	(call file_relabel_all_runtime (subj))
-	(call file_relabelto_runtime_lock_dirs (subj))
+	(call file.audit_access_config_dirs (subj))
+	(call file.read_all_config (subj))
+	(call file.read_all_runtime_lock_files (subj))
+	(call file.relabel_all_runtime (subj))
+	(call file.relabelto_runtime_lock_dirs (subj))
 
-	(call file_manage_runtime_config (subj))
-	(call file_runtime_obj_type_transition_runtime_config (subj))
+	(call file.manage_runtime_config (subj))
+	(call file.runtime_obj_type_transition_runtime_config (subj))
 
 	(call fs_getattr_all_fs (subj))
 	(call fs_manage_devtmpfs_dirs (subj))
@@ -284,8 +284,8 @@
 
 	(call dev_read_urandom (subj_type_attribute))
 
-	(call file_manage_var_tmp_dirs (subj_type_attribute))
-	(call file_manage_var_tmp_lnk_files (subj_type_attribute))
+	(call file.manage_var_tmp_dirs (subj_type_attribute))
+	(call file.manage_var_tmp_lnk_files (subj_type_attribute))
 
 	(call fs_manage_tmpfs_dirs (subj_type_attribute))
 	(call fs_manage_tmpfs_lnk_files (subj_type_attribute))
@@ -329,9 +329,9 @@
 	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
-	(call file_search_config (adm_subj_type_attribute))
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_lib (adm_subj_type_attribute))
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_lib (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
@@ -419,7 +419,7 @@
 	(blockinherit cmd_obj_blk))
 
 (block sd_private
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset sd.obj_type_attribute runtime_file)
 	(typeattributeset sd.runtime_obj_type_attribute runtime_file))

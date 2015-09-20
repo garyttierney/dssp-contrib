@@ -23,11 +23,11 @@
 
 	(call dev_getattr_all (subj))
 
-	(call file_manage_config (subj))
-	(call file_manage_lost_found (subj))
-	(call file_manage_unknown (subj))
-	(call file_read_boot (subj))
-	(call file_rootfs_obj_type_transition_unknown (subj))
+	(call file.manage_config (subj))
+	(call file.manage_lost_found (subj))
+	(call file.manage_unknown (subj))
+	(call file.read_boot (subj))
+	(call file.rootfs_obj_type_transition_unknown (subj))
 
 	(call fs_getattr_all_fs (subj))
 	(call fs_list_devpts (subj))
@@ -1229,8 +1229,8 @@
 
 		(call cmd_shell_obj_entry_subj (subj))
 
-		(call file_list_config (subj))
-		(call file_search_var_spool (subj))
+		(call file.list_config (subj))
+		(call file.search_var_spool (subj))
 
 		(call usersubj.pty_template (subj))
 		(call usersubj.home_dir_obj_type_transition_home_user_files (subj))

@@ -12,10 +12,10 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_audit_read_access_shell_files (subj))
 
-	(call file_dontaudit_relabel_all (subj))
-	(call file_setattr_config_dirs (subj))
-	(call file_setattr_var_dirs (subj))
-	(call file_setattr_var_lib_dirs (subj))
+	(call file.dontaudit_relabel_all (subj))
+	(call file.setattr_config_dirs (subj))
+	(call file.setattr_var_dirs (subj))
+	(call file.setattr_var_lib_dirs (subj))
 
 	(call fs_list_tmpfs (subj))
 

@@ -833,25 +833,25 @@
 	(block list_var_tmp_user_blk
 		(blockabstract list_var_tmp_user_blk)
 		(macro list_var_tmp_user ((type ARG1))
-			(call file_list_var_tmp (ARG1))
+			(call file.list_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file list_dir_perms)))
 
 	(block search_var_tmp_user_blk
 		(blockabstract search_var_tmp_user_blk)
 		(macro search_var_tmp_user ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file search_dir_perms)))
 
 	(block create_var_tmp_user_dirs_blk
 		(blockabstract create_var_tmp_user_dirs_blk)
 		(macro create_var_tmp_user_dirs ((type ARG1))
-			(call file_add_entry_var_tmp (ARG1))
+			(call file.add_entry_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file create_dir_perms)))
 
 	(block delete_var_tmp_user_dirs_blk
 		(blockabstract delete_var_tmp_user_dirs_blk)
 		(macro delete_var_tmp_user_dirs ((type ARG1))
-			(call file_del_entry_var_tmp (ARG1))
+			(call file.del_entry_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file delete_dir_perms)))
 
 	(block rw_var_tmp_user_dirs_blk
@@ -863,121 +863,121 @@
 	(block manage_var_tmp_user_dirs_blk
 		(blockabstract manage_var_tmp_user_dirs_blk)
 		(macro manage_var_tmp_user_dirs ((type ARG1))
-			(call file_rw_var_tmp_dirs (ARG1))
+			(call file.rw_var_tmp_dirs (ARG1))
 			(call manage_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_dirs_blk
 		(blockabstract relabel_var_tmp_user_dirs_blk)
 		(macro relabel_var_tmp_user_dirs ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call relabel_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block setattr_var_tmp_user_dirs_blk
 		(blockabstract setattr_var_tmp_user_dirs_blk)
 		(macro setattr_var_tmp_user_dirs ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call setattr_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block delete_var_tmp_user_files_blk
 		(blockabstract delete_var_tmp_user_files_blk)
 		(macro delete_var_tmp_user_files ((type ARG1))
-			(call file_del_entry_var_tmp (ARG1))
+			(call file.del_entry_var_tmp (ARG1))
 			(call delete_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block create_var_tmp_user_files_blk
 		(blockabstract create_var_tmp_user_files_blk)
 		(macro create_var_tmp_user_files ((type ARG1))
-			(call file_add_entry_var_tmp (ARG1))
+			(call file.add_entry_var_tmp (ARG1))
 			(call create_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_files_blk
 		(blockabstract read_var_tmp_user_files_blk)
 		(macro read_var_tmp_user_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call read_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block write_var_tmp_user_files_blk
 		(blockabstract write_var_tmp_user_files_blk)
 		(macro write_var_tmp_user_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call write_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block rw_var_tmp_user_files_blk
 		(blockabstract rw_var_tmp_user_files_blk)
 		(macro rw_var_tmp_user_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call rw_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block manage_var_tmp_user_files_blk
 		(blockabstract manage_var_tmp_user_files_blk)
 		(macro manage_var_tmp_user_files ((type ARG1))
-			(call file_rw_var_tmp_dirs (ARG1))
+			(call file.rw_var_tmp_dirs (ARG1))
 			(call manage_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_files_blk
 		(blockabstract relabel_var_tmp_user_files_blk)
 		(macro relabel_var_tmp_user_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call relabel_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block setattr_var_tmp_user_files_blk
 		(blockabstract setattr_var_tmp_user_files_blk)
 		(macro setattr_var_tmp_user_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call setattr_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_fifo_files_blk
 		(blockabstract read_var_tmp_user_fifo_files_blk)
 		(macro read_var_tmp_user_fifo_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call read_fifo_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_lnk_files_blk
 		(blockabstract read_var_tmp_user_lnk_files_blk)
 		(macro read_var_tmp_user_lnk_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call read_lnk_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block manage_var_tmp_user_lnk_files_blk
 		(blockabstract manage_var_tmp_user_lnk_files_blk)
 		(macro manage_var_tmp_user_lnk_files ((type ARG1))
-			(call file_rw_var_tmp_dirs (ARG1))
+			(call file.rw_var_tmp_dirs (ARG1))
 			(call manage_lnk_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_sock_files_blk
 		(blockabstract read_var_tmp_user_sock_files_blk)
 		(macro read_var_tmp_user_sock_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call read_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block delete_var_tmp_user_sock_files_blk
 		(blockabstract delete_var_tmp_user_sock_files_blk)
 		(macro delete_var_tmp_user_sock_files ((type ARG1))
-			(call file_del_entry_var_tmp (ARG1))
+			(call file.del_entry_var_tmp (ARG1))
 			(call delete_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block write_var_tmp_user_sock_files_blk
 		(blockabstract write_var_tmp_user_sock_files_blk)
 		(macro write_var_tmp_user_sock_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call write_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block manage_var_tmp_user_sock_files_blk
 		(blockabstract manage_var_tmp_user_sock_files_blk)
 		(macro manage_var_tmp_user_sock_files ((type ARG1))
-			(call file_rw_var_tmp_dirs (ARG1))
+			(call file.rw_var_tmp_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_sock_files_blk
 		(blockabstract relabel_var_tmp_user_sock_files_blk)
 		(macro relabel_var_tmp_user_sock_files ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call relabel_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_blk
 		(blockabstract read_var_tmp_user_blk)
 		(macro read_var_tmp_user ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file read_file_perms)
 			(allow ARG1 var_tmp_user_file read_fifo_file_perms)
 			(allow ARG1 var_tmp_user_file list_dir_perms)
@@ -987,7 +987,7 @@
 	(block manage_var_tmp_user_blk
 		(blockabstract manage_var_tmp_user_blk)
 		(macro manage_var_tmp_user ((type ARG1))
-			(call file_rw_var_tmp_dirs (ARG1))
+			(call file.rw_var_tmp_dirs (ARG1))
 			(allow ARG1 var_tmp_user_file manage_file_perms)
 			(allow ARG1 var_tmp_user_file manage_fifo_file_perms)
 			(allow ARG1 var_tmp_user_file manage_dir_perms)
@@ -997,7 +997,7 @@
 	(block relabel_var_tmp_user_blk
 		(blockabstract relabel_var_tmp_user_blk)
 		(macro relabel_var_tmp_user ((type ARG1))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(allow ARG1 var_tmp_user_file relabel_file_perms)
 			(allow ARG1 var_tmp_user_file relabel_fifo_file_perms)
 			(allow ARG1 var_tmp_user_file relabel_dir_perms)
@@ -1007,7 +1007,7 @@
 	(block var_tmp_user_obj_type_transition_blk
 		(blockabstract var_tmp_user_obj_type_transition_blk)
 		(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-			(call file_search_var_tmp (ARG1))
+			(call file.search_var_tmp (ARG1))
 			(call obj_type_transition_pattern (ARG1 var_tmp_user_file ARG2 ARG3 ARG4))))
 
 	(block tmpfs_user_obj_blk
@@ -1019,14 +1019,14 @@
 	(block list_tmpfs_user_blk
 		(blockabstract list_tmpfs_user_blk)
 		(macro list_tmpfs_user ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(allow ARG1 tmpfs_user_file list_dir_perms)))
 
 	(block search_tmpfs_user_blk
 		(blockabstract search_tmpfs_user_blk)
 		(macro search_tmpfs_user ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(allow ARG1 tmpfs_user_file search_dir_perms)))
 
@@ -1069,119 +1069,119 @@
 	(block delete_tmpfs_user_files_blk
 		(blockabstract delete_tmpfs_user_files_blk)
 		(macro delete_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_del_entry_tmpfs (ARG1))
 			(call delete_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block create_tmpfs_user_files_blk
 		(blockabstract create_tmpfs_user_files_blk)
 		(macro create_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_add_entry_tmpfs (ARG1))
 			(call create_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_files_blk
 		(blockabstract read_tmpfs_user_files_blk)
 		(macro read_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call read_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block write_tmpfs_user_files_blk
 		(blockabstract write_tmpfs_user_files_blk)
 		(macro write_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call write_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block rw_tmpfs_user_files_blk
 		(blockabstract rw_tmpfs_user_files_blk)
 		(macro rw_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call rw_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block manage_tmpfs_user_files_blk
 		(blockabstract manage_tmpfs_user_files_blk)
 		(macro manage_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_rw_tmpfs_dirs (ARG1))
 			(call manage_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block relabel_tmpfs_user_files_blk
 		(blockabstract relabel_tmpfs_user_files_blk)
 		(macro relabel_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call relabel_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block setattr_tmpfs_user_files_blk
 		(blockabstract setattr_tmpfs_user_files_blk)
 		(macro setattr_tmpfs_user_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call setattr_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_fifo_files_blk
 		(blockabstract read_tmpfs_user_fifo_files_blk)
 		(macro read_tmpfs_user_fifo_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call read_fifo_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_lnk_files_blk
 		(blockabstract read_tmpfs_user_lnk_files_blk)
 		(macro read_tmpfs_user_lnk_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call read_lnk_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block manage_tmpfs_user_lnk_files_blk
 		(blockabstract manage_tmpfs_user_lnk_files_blk)
 		(macro manage_tmpfs_user_lnk_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_rw_tmpfs_dirs (ARG1))
 			(call manage_lnk_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_sock_files_blk
 		(blockabstract read_tmpfs_user_sock_files_blk)
 		(macro read_tmpfs_user_sock_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call read_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block delete_tmpfs_user_sock_files_blk
 		(blockabstract delete_tmpfs_user_sock_files_blk)
 		(macro delete_tmpfs_user_sock_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_del_entry_tmpfs (ARG1))
 			(call delete_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block write_tmpfs_user_sock_files_blk
 		(blockabstract write_tmpfs_user_sock_files_blk)
 		(macro write_tmpfs_user_sock_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call write_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block manage_tmpfs_user_sock_files_blk
 		(blockabstract manage_tmpfs_user_sock_files_blk)
 		(macro manage_tmpfs_user_sock_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_rw_tmpfs_dirs (ARG1))
 			(call manage_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block relabel_tmpfs_user_sock_files_blk
 		(blockabstract relabel_tmpfs_user_sock_files_blk)
 		(macro relabel_tmpfs_user_sock_files ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call relabel_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
 
 	(block read_tmpfs_user_blk
 		(blockabstract read_tmpfs_user_blk)
 		(macro read_tmpfs_user ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(allow ARG1 tmpfs_user_file read_file_perms)
 			(allow ARG1 tmpfs_user_file read_fifo_file_perms)
@@ -1192,7 +1192,7 @@
 	(block manage_tmpfs_user_blk
 		(blockabstract manage_tmpfs_user_blk)
 		(macro manage_tmpfs_user ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_rw_tmpfs_dirs (ARG1))
 			(allow ARG1 tmpfs_user_file manage_file_perms)
 			(allow ARG1 tmpfs_user_file manage_fifo_file_perms)
@@ -1203,7 +1203,7 @@
 	(block relabel_tmpfs_user_blk
 		(blockabstract relabel_tmpfs_user_blk)
 		(macro relabel_tmpfs_user ((type ARG1))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(allow ARG1 tmpfs_user_file relabel_file_perms)
 			(allow ARG1 tmpfs_user_file relabel_fifo_file_perms)
@@ -1214,7 +1214,7 @@
 	(block tmpfs_user_obj_type_transition_blk
 		(blockabstract tmpfs_user_obj_type_transition_blk)
 		(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-			(call file_search_runtime_user (ARG1))
+			(call file.search_runtime_user (ARG1))
 			(call fs_search_tmpfs (ARG1))
 			(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4))))
 
@@ -1414,7 +1414,7 @@
 		(allow ARG1 common_type_attribute read_lnk_file_perms))
 
 	(macro home_user_obj_type ((type ARG1))
-		(call file_obj_type (ARG1))
+		(call file.file_obj_type (ARG1))
 		(typeattributeset home_user_obj_type_attribute ARG1))
 
 	(macro home_cache_obj_type ((type ARG1))
@@ -1430,11 +1430,11 @@
 		(typeattributeset home_data_obj_type_attribute ARG1))
 
 	(macro var_tmp_user_obj_type ((type ARG1))
-		(call file_var_tmp_obj_type (ARG1))
+		(call file.var_tmp_obj_type (ARG1))
 		(typeattributeset var_tmp_user_obj_type_attribute ARG1))
 
 	(macro tmpfs_user_obj_type ((type ARG1))
-		(call file_tmpfs_obj_type (ARG1))
+		(call file.tmpfs_obj_type (ARG1))
 		(typeattributeset tmpfs_user_obj_type_attribute ARG1))
 
 	(macro tty_user_obj_type ((type ARG1))
@@ -1446,54 +1446,54 @@
 		(typeattributeset pty_user_obj_type_attribute ARG1))
 
 	(macro var_spool_user_obj_type ((type ARG1))
-		(call file_var_spool_obj_type (ARG1))
+		(call file.var_spool_obj_type (ARG1))
 		(typeattributeset var_spool_obj_type_attribute ARG1))
 
 	(macro search_home_dir ((type ARG1))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file search_dir_perms))
 
 	(macro list_home_dir ((type ARG1))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file list_dir_perms))
 
 	(macro add_entry_home_dir ((type ARG1))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file add_entry_dir_perms))
 
 	(macro del_entry_home_dir ((type ARG1))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file del_entry_dir_perms))
 
 	(macro setattr_home_dir ((type ARG1))
 		(allow ARG1 home_dir.file (dir (setattr))))
 
 	(macro create_home_dir ((type ARG1))
-		(call file_add_entry_home (ARG1))
+		(call file.add_entry_home (ARG1))
 		(allow ARG1 home_dir.file create_dir_perms))
 
 	(macro delete_home_dir ((type ARG1))
-		(call file_del_entry_home (ARG1))
+		(call file.del_entry_home (ARG1))
 		(allow ARG1 home_dir.file delete_dir_perms))
 
 	(macro rw_home_dir ((type ARG1))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file rw_dir_perms))
 
 	(macro manage_home_dir ((type ARG1))
-		(call file_rw_home_dirs (ARG1))
+		(call file.rw_home_dirs (ARG1))
 		(allow ARG1 home_dir.file manage_dir_perms))
 
 	(macro home_dir_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(call obj_type_transition_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
 
 	(macro home_dir_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_home (ARG1))
+		(call file.search_home (ARG1))
 		(call obj_type_transition_add_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
 
 	(macro home_obj_type_transition_home_dir ((type ARG1)(name ARG2))
-		(call file_home_obj_type_transition (ARG1 home_dir.file dir ARG2)))
+		(call file.home_obj_type_transition (ARG1 home_dir.file dir ARG2)))
 
 	(macro search_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -2012,39 +2012,39 @@
 		(call home_dir_obj_type_transition_home_user (ARG1)))
 
 	(macro search_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file search_dir_perms))
 
 	(macro list_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file list_dir_perms))
 
 	(macro add_entry_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file add_entry_dir_perms))
 
 	(macro del_entry_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file del_entry_dir_perms))
 
 	(macro rw_var_tmp_user_dirs ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file rw_dir_perms))
 
 	(macro read_var_tmp_user_files ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call read_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
 
 	(macro manage_var_tmp_user_files ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call manage_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
 
 	(macro read_var_tmp_user_lnk_files ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call read_lnk_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
 
 	(macro read_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file read_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file list_dir_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file read_fifo_file_perms)
@@ -2052,7 +2052,7 @@
 		(allow ARG1 var_tmp_user.var_tmp_user_file read_sock_file_perms))
 
 	(macro manage_var_tmp_user ((type ARG1))
-		(call file_rw_var_tmp_dirs (ARG1))
+		(call file.rw_var_tmp_dirs (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_dir_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_fifo_file_perms)
@@ -2060,7 +2060,7 @@
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_sock_file_perms))
 
 	(macro relabel_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_dir_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_fifo_file_perms)
@@ -2068,23 +2068,23 @@
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_sock_file_perms))
 
 	(macro search_all_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute search_dir_perms))
 
 	(macro list_all_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute list_dir_perms))
 
 	(macro read_all_var_tmp_user_files ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call read_files_pattern (ARG1 var_tmp_user_obj_type_attribute var_tmp_user_obj_type_attribute)))
 
 	(macro read_all_var_tmp_user_lnk_files ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call read_lnk_files_pattern (ARG1 var_tmp_user_obj_type_attribute var_tmp_user_obj_type_attribute)))
 
 	(macro read_all_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute read_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute list_dir_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute read_fifo_file_perms)
@@ -2092,7 +2092,7 @@
 		(allow ARG1 var_tmp_user_obj_type_attribute read_sock_file_perms))
 
 	(macro manage_all_var_tmp_user ((type ARG1))
-		(call file_rw_var_tmp_dirs (ARG1))
+		(call file.rw_var_tmp_dirs (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_dir_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_fifo_file_perms)
@@ -2100,7 +2100,7 @@
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_sock_file_perms))
 
 	(macro relabel_all_var_tmp_user ((type ARG1))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_fifo_file_perms)
@@ -2108,29 +2108,29 @@
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_sock_file_perms))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_files ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_dirs ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dirs "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dirs "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_fifo_files ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_sock_files ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_lnk_files ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*"))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dir "*"))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*"))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*"))
-		(call file_var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dir "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
 
 	(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_var_tmp (ARG1))
+		(call file.search_var_tmp (ARG1))
 		(call obj_type_transition_pattern (ARG1 var_tmp_user.var_tmp_user_file ARG2 ARG3 ARG4)))
 
 	(macro var_tmp_user_template ((type ARG1))
@@ -2139,32 +2139,32 @@
 		(call var_tmp_obj_type_transition_var_tmp_user (ARG1)))
 
 	(macro search_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file search_dir_perms))
 
 	(macro list_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file list_dir_perms))
 
 	(macro add_entry_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file add_entry_dir_perms))
 
 	(macro del_entry_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file del_entry_dir_perms))
 
 	(macro rw_tmpfs_user_dirs ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file rw_dir_perms))
 
 	(macro read_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
@@ -2172,7 +2172,7 @@
 		(dontaudit ARG1 tmpfs_user.tmpfs_user_file relabel_file_perms))
 
 	(macro delete_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_del_entry_tmpfs_dirs (ARG1))
 		(call delete_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
@@ -2180,22 +2180,22 @@
 		(allow ARG1 tmpfs_user.tmpfs_user_file rw_inherited_file_perms))
 
 	(macro manage_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_rw_tmpfs_dirs (ARG1))
 		(call manage_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
 	(macro read_tmpfs_user_lnk_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call read_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
 	(macro manage_tmpfs_user_lnk_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call manage_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
 	(macro read_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file read_file_perms)
 		(allow ARG1 tmpfs_user.tmpfs_user_file list_dir_perms)
@@ -2204,7 +2204,7 @@
 		(allow ARG1 tmpfs_user.tmpfs_user_file read_sock_file_perms))
 
 	(macro manage_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_rw_tmpfs_dirs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file manage_file_perms)
 		(allow ARG1 tmpfs_user.tmpfs_user_file manage_dir_perms)
@@ -2213,7 +2213,7 @@
 		(allow ARG1 tmpfs_user.tmpfs_user_file manage_sock_file_perms))
 
 	(macro relabel_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_file_perms)
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_dir_perms)
@@ -2222,27 +2222,27 @@
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_sock_file_perms))
 
 	(macro search_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute search_dir_perms))
 
 	(macro list_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute list_dir_perms))
 
 	(macro read_all_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call read_files_pattern (ARG1 tmpfs_user_obj_type_attribute tmpfs_user_obj_type_attribute)))
 
 	(macro read_all_tmpfs_user_lnk_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call read_lnk_files_pattern (ARG1 tmpfs_user_obj_type_attribute tmpfs_user_obj_type_attribute)))
 
 	(macro delete_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_del_entry_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute del_entry_dir_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute delete_file_perms)
@@ -2252,7 +2252,7 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute delete_sock_file_perms))
 
 	(macro read_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute read_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute list_dir_perms)
@@ -2261,7 +2261,7 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute read_sock_file_perms))
 
 	(macro manage_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_rw_tmpfs_dirs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute manage_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute manage_dir_perms)
@@ -2270,7 +2270,7 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute manage_sock_file_perms))
 
 	(macro relabel_all_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute relabel_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute relabel_dir_perms)
@@ -2279,7 +2279,7 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute relabel_sock_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file file "*"))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file dir "*"))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file fifo_file "*"))
@@ -2287,19 +2287,19 @@
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file sock_file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_lnk_files ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file lnk_file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_dirs ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file dir "*")))
 
 	(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call obj_type_transition_pattern (ARG1 tmpfs_user.tmpfs_user_file ARG2 ARG3 ARG4)))
 
 	(macro tmpfs_user_template ((type ARG1))
@@ -2468,38 +2468,38 @@
 		(call home_dir_obj_type_transition_home_terminfo (ARG1)))
 
 	(macro read_var_spool_user_files ((type ARG1))
-		(call file_search_var_spool (ARG1))
+		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file read_file_perms))
 
 	(macro write_var_spool_user_files ((type ARG1))
-		(call file_search_var_spool (ARG1))
+		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file write_file_perms))
 
 	(macro setattr_var_spool_user_files ((type ARG1))
 		(allow ARG1 var_spool_user.var_spool_file (file (setattr))))
 
 	(macro create_var_spool_user_files ((type ARG1))
-		(call file_add_entry_var_spool (ARG1))
+		(call file.add_entry_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file create_file_perms))
 
 	(macro delete_var_spool_user_files ((type ARG1))
-		(call file_del_entry_var_spool (ARG1))
+		(call file.del_entry_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file delete_file_perms))
 
 	(macro rw_var_spool_user_files ((type ARG1))
-		(call file_search_var_spool (ARG1))
+		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file rw_file_perms))
 
 	(macro manage_var_spool_user_files ((type ARG1))
-		(call file_rw_var_spool_dirs (ARG1))
+		(call file.rw_var_spool_dirs (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file manage_file_perms))
 
 	(macro relabel_var_spool_user_files ((type ARG1))
-		(call file_search_var_spool (ARG1))
+		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file relabel_file_perms))
 
 	(macro var_spool_obj_type_transition_var_spool_user ((type ARG1)(name ARG2))
-		(call file_var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG2)))
+		(call file.var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG2)))
 
 	(macro search_home_fonts_cache ((type ARG1))
 		(call search_home_cache (ARG1))

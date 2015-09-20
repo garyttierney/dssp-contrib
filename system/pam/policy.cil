@@ -1,9 +1,9 @@
 (block faillog
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset pam.obj_type_attribute var_log_file)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset pam.obj_type_attribute runtime_file)
 
@@ -11,7 +11,7 @@
 		(call logrotate.var_log_obj_type (var_log_file))))
 
 (block lastlog
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset pam.obj_type_attribute var_log_file))
 
@@ -34,11 +34,11 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
@@ -69,7 +69,7 @@
 	(optional pam_login_prog_subj_type_optional_sd_logind
 		(allow login_prog_subj_type_attribute self (capability (dac_override dac_read_search)))
 
-		(call file_search_runtime_user (login_prog_subj_type_attribute))
+		(call file.search_runtime_user (login_prog_subj_type_attribute))
 		(call fs_search_tmpfs (login_prog_subj_type_attribute))
 
 		(call sd_logind.client_subj_type (login_prog_subj_type_attribute)))
@@ -108,9 +108,9 @@
 
 	(allow adm_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab)))
 
-	(call file_search_config (adm_subj_type_attribute))
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_log (adm_subj_type_attribute))
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
@@ -133,6 +133,6 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset pam.obj_type_attribute runtime_file))

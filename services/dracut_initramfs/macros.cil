@@ -5,23 +5,23 @@
 
 	(blockinherit send_signal_blk)
 
-	(blockinherit search_runtime_blk)
-	(blockinherit list_runtime_blk)
-	(blockinherit read_runtime_files_blk)
-	(blockinherit manage_runtime_files_blk)
-	(blockinherit read_runtime_lnk_files_blk)
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.manage_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
 
 	(macro exec_runtime_files ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(call exec_files_pattern (ARG1 runtime_file runtime_file)))
 
 	(macro manage_runtime_chr_files ((type ARG1))
 		(allow ARG1 self (capability (mknod)))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(call manage_chr_files_pattern (ARG1 runtime_file runtime_file)))
 
 	(macro read_runtime ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 runtime_file read_file_perms)
 		(allow ARG1 runtime_file list_dir_perms)
 		(allow ARG1 runtime_file read_lnk_file_perms)
@@ -32,7 +32,7 @@
 
 	(macro manage_runtime ((type ARG1))
 		(allow ARG1 self (capability (mknod)))
-		(call file_rw_runtime_dirs (ARG1))
+		(call file.rw_runtime_dirs (ARG1))
 		(allow ARG1 runtime_file manage_file_perms)
 		(allow ARG1 runtime_file manage_dir_perms)
 		(allow ARG1 runtime_file manage_lnk_file_perms)
@@ -42,7 +42,7 @@
 		(allow ARG1 runtime_file manage_blk_file_perms))
 
 	(macro relabel_runtime ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 runtime_file relabel_file_perms)
 		(allow ARG1 runtime_file relabel_dir_perms)
 		(allow ARG1 runtime_file relabel_lnk_file_perms)
@@ -52,18 +52,18 @@
 		(allow ARG1 runtime_file relabel_blk_file_perms))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file_runtime_obj_type_transition (ARG1 runtime_file dir "initramfs")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "initramfs")))
 
-	(blockinherit search_var_lib_blk)
-	(blockinherit list_var_lib_blk)
-	(blockinherit read_var_lib_files_blk)
-	(blockinherit read_var_lib_lnk_files_blk)
-	(blockinherit read_var_lib_blk)
-	(blockinherit manage_var_lib_blk)
-	(blockinherit relabel_var_lib_blk)
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "initramfs")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "initramfs")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

@@ -5,13 +5,13 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config_files (subj))
 
 	(allow subj self (capability (dac_override sys_admin)))
 
-	(call file_read_config_files (subj))
+	(call file.read_config_files (subj))
 
 	(call fs_mount_fuse_fs (subj))
 	(call fs_unmount_fuse_fs (subj))

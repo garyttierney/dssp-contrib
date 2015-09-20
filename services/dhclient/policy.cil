@@ -7,16 +7,16 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
@@ -31,7 +31,7 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_mmap_shell (subj))
 
-	(call file_read_config_files (subj))
+	(call file.read_config_files (subj))
 
 	(call net_udp_bind_all_unreserved_ports (subj))
 	(call net_udp_bind_generic_node (subj))

@@ -7,7 +7,7 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
@@ -30,11 +30,11 @@
 	(call fs_read_sysfs (subj))
 	(call fs_trace_client_subj_type (subj))
 
-	(call file_read_data_files (subj))
-	(call file_read_config (subj))
+	(call file.read_data_files (subj))
+	(call file.read_config (subj))
 
-	(call file_manage_lost_found (subj))
-	(call file_mountpoint_obj_type_transition_lost_found (subj))
+	(call file.manage_lost_found (subj))
+	(call file.mountpoint_obj_type_transition_lost_found (subj))
 
 	(call storage_manage_all (subj))
 
@@ -55,7 +55,7 @@
 
 	(optional fstools_optional_mount
 		(booleanif (mount_any_file) (true
-			(call file_rw_all_files_except (subj)))))
+			(call file.rw_all_files_except (subj)))))
 
 	(optional fstools_optional_sd_fsck
 		(call sd_fsck.manage_runtime (subj))

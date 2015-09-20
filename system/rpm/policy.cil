@@ -14,11 +14,11 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
-	(blockinherit file_var_cache_obj_blk)
+	(blockinherit file.var_cache_obj_blk)
 
 	(typeattributeset obj_type_attribute var_cache_file)
 
@@ -27,13 +27,13 @@
 	(optional rpm_var_cache_optional_logrotate
 		(call logrotate.var_log_obj_type (var_cache_file)))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(typeattributeset obj_type_attribute var_lib_file)
 
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(blockinherit file_var_log_obj_blk)
+	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset obj_type_attribute var_log_file)
 
@@ -42,13 +42,13 @@
 	(optional rpm_var_log_optional_logrotate
 		(call logrotate.var_log_obj_type (var_log_file)))
 
-	(blockinherit file_var_tmp_obj_blk)
+	(blockinherit file.var_tmp_obj_blk)
 
 	(typeattributeset obj_type_attribute var_tmp_file)
 
 	(call var_tmp_obj_type_transition_var_tmp (subj))
 
-	(blockinherit file_tmpfs_obj_blk)
+	(blockinherit file.tmpfs_obj_blk)
 
 	(typeattributeset obj_type_attribute tmpfs_file)
 
@@ -82,7 +82,7 @@
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(call dev_unconfined_subj_type (subj_type_attribute))
-	(call file_unconfined_subj_type (subj_type_attribute))
+	(call file.unconfined_subj_type (subj_type_attribute))
 	(call fs_unconfined_subj_type (subj_type_attribute))
 	(call net_unconfined_subj_type (subj_type_attribute))
 	(call sec_unconfined_subj_type (subj_type_attribute))
@@ -100,10 +100,10 @@
 	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
-	(call file_search_var_cache (adm_subj_type_attribute))
-	(call file_search_var_lib (adm_subj_type_attribute))
-	(call file_search_var_log (adm_subj_type_attribute))
-	(call file_search_var_tmp (adm_subj_type_attribute))
+	(call file.search_var_cache (adm_subj_type_attribute))
+	(call file.search_var_lib (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
+	(call file.search_var_tmp (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

@@ -3,7 +3,7 @@
 (block qemu
 	(blockinherit app.application_cmd_obj_blk)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call subj_entry (qemu_guest.subj_type_attribute cmd_file)))
 
@@ -44,8 +44,8 @@
 	(call dev_rw_kvm (subj_type_attribute))
 	(call dev_rw_tun_tap (subj_type_attribute))
 
-	(call file_read_data (subj_type_attribute))
-	(call file_read_config_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
 
 	(call fs_getattr_fs (subj_type_attribute))
 

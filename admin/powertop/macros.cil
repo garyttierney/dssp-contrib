@@ -7,16 +7,16 @@
 
 	(blockinherit send_signal_blk)
 
-	(blockinherit search_var_cache_blk)
-	(blockinherit list_var_cache_blk)
-	(blockinherit read_var_cache_files_blk)
-	(blockinherit read_var_cache_lnk_files_blk)
-	(blockinherit read_var_cache_blk)
-	(blockinherit manage_var_cache_blk)
-	(blockinherit relabel_var_cache_blk)
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
 
 	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
-		(call file_var_cache_obj_type_transition (ARG1 var_cache_file dir "powertop")))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file dir "powertop")))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)

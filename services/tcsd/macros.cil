@@ -5,20 +5,20 @@
 
 	(blockinherit send_signal_blk)
 
-	(blockinherit read_config_files_blk)
-	(blockinherit manage_config_files_blk)
-	(blockinherit relabel_config_files_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
 
-	(blockinherit search_var_lib_blk)
-	(blockinherit list_var_lib_blk)
-	(blockinherit read_var_lib_files_blk)
-	(blockinherit read_var_lib_lnk_files_blk)
-	(blockinherit read_var_lib_blk)
-	(blockinherit manage_var_lib_blk)
-	(blockinherit relabel_var_lib_blk)
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file_var_lib_obj_type_transition (ARG1 var_lib_file dir "tpm")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "tpm")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

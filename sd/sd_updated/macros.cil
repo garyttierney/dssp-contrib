@@ -6,30 +6,30 @@
 	(blockinherit send_signal_blk)
 
 	(macro getattr_flag_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(call file_search_var (ARG1))
+		(call file.search_config (ARG1))
+		(call file.search_var (ARG1))
 		(allow ARG1 file (file (getattr))))
 
 	(macro read_flag_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(call file_search_var (ARG1))
+		(call file.search_config (ARG1))
+		(call file.search_var (ARG1))
 		(allow ARG1 file read_file_perms))
 
 	(macro manage_flag_files ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
-		(call file_rw_var_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
+		(call file.rw_var_dirs (ARG1))
 		(allow ARG1 file manage_file_perms))
 
 	(macro relabel_flag_files ((type ARG1))
-		(call file_search_config (ARG1))
-		(call file_search_var (ARG1))
+		(call file.search_config (ARG1))
+		(call file.search_var (ARG1))
 		(allow ARG1 file relabel_file_perms))
 
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file_config_obj_type_transition (ARG1 file file ".updated")))
+		(call file.config_obj_type_transition (ARG1 file file ".updated")))
 
 	(macro var_obj_type_transition_var ((type ARG1))
-		(call file_var_obj_type_transition (ARG1 file file ".updated")))
+		(call file.var_obj_type_transition (ARG1 file file ".updated")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

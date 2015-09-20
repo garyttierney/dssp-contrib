@@ -55,9 +55,9 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_config (adm_subj_type_attribute))
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_log (adm_subj_type_attribute))
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
@@ -70,19 +70,19 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block auditd_config
-	(blockinherit file_sec_obj_blk)
+	(blockinherit file.sec_obj_blk)
 
 	(typeattributeset auditd.obj_type_attribute sec_file))
 
 (block auditd_var_log
-	(blockinherit file_sec_obj_blk)
+	(blockinherit file.sec_obj_blk)
 
 	(call sys_mountpoint_obj_type (sec_file))
 
 	(typeattributeset auditd.obj_type_attribute sec_file))
 
 (block auditd_runtime
-	(blockinherit file_sec_obj_blk)
+	(blockinherit file.sec_obj_blk)
 
 	(typeattributeset auditd.obj_type_attribute sec_file)
 
@@ -107,7 +107,7 @@
 
 	(roletype role_attribute subj)
 
-	(call file_read_config_files (subj))
+	(call file.read_config_files (subj))
 
 	(call auditd.read_config (subj))
 	(call auditd.read_var_log (subj))

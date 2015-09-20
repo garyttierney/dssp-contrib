@@ -107,13 +107,13 @@
 	(blockinherit sd.status_all_unit_blk)
 	(blockinherit sd.stop_all_unit_blk)
 
-	(blockinherit search_tmpfs_blk)
-	(blockinherit list_tmpfs_blk)
-	(blockinherit read_tmpfs_files_blk)
-	(blockinherit read_tmpfs_lnk_files_blk)
-	(blockinherit read_tmpfs_blk)
-	(blockinherit manage_tmpfs_blk)
-	(blockinherit relabel_tmpfs_blk)
+	(blockinherit file.search_tmpfs_blk)
+	(blockinherit file.list_tmpfs_blk)
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.read_tmpfs_lnk_files_blk)
+	(blockinherit file.read_tmpfs_blk)
+	(blockinherit file.manage_tmpfs_blk)
+	(blockinherit file.relabel_tmpfs_blk)
 
 	(macro dontaudit_audit_access_tmpfs_dirs ((type ARG1))
 		(dontaudit ARG1 tmpfs_file (dir (audit_access))))
@@ -152,7 +152,7 @@
 	(block container_obj_blk
 		(blockabstract container_obj_blk)
 
-		(blockinherit file_obj_blk)
+		(blockinherit file.obj_blk)
 
 		(typeattributeset sd_nspawn_container.obj_type_attribute file))
 
@@ -255,7 +255,7 @@
 		(typeattributeset subj_type_attribute ARG1))
 
 	(macro container_obj_type ((type ARG1))
-		(call file_obj_type (ARG1))
+		(call file.file_obj_type (ARG1))
 		(typeattributeset obj_type_attribute ARG1))
 
 	(macro container_pattern ((type ARG1)(type ARG2))

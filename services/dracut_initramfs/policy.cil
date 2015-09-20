@@ -11,14 +11,14 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(typeattributeset obj_type_attribute var_lib_file)
 
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_file)
 
@@ -32,7 +32,7 @@
 	(call cmd_exec_cmd (subj))
 	(call cmd_exec_shell (subj))
 
-	(call file_read_boot (subj))
+	(call file.read_boot (subj))
 
 	(call fs_manage_tmpfs_files (subj))
 
@@ -57,8 +57,8 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_lib (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_lib (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

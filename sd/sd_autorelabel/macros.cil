@@ -5,9 +5,9 @@
 
 	(blockinherit send_signal_blk)
 
-	(blockinherit read_boot_flag_files_blk)
-	(blockinherit manage_boot_flag_files_blk)
-	(blockinherit relabel_boot_flag_files_blk)
+	(blockinherit file.read_boot_flag_files_blk)
+	(blockinherit file.manage_boot_flag_files_blk)
+	(blockinherit file.relabel_boot_flag_files_blk)
 
 	(macro rootfs_obj_type_transition_boot_flag ((type ARG1))
 		(call fs_rootfs_obj_type_transition (ARG1 boot_flag_file file ".autorelabel")))

@@ -45,12 +45,12 @@
 		(call spec_stream_connect (ARG1 ARG2)))
 
 	(macro stream_connect_all_subj ((type ARG1))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
-		(call file_search_runtime_user (ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs_search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2)))
 

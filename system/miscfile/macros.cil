@@ -3,65 +3,65 @@
 		(typeattributeset miscfile_obj_type_attribute ARG1))
 
 	(macro search ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file search_dir_perms))
 
 	(macro list ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file list_dir_perms))
 
 	(macro read_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_files_pattern (ARG1 file file)))
 
 	(macro read_lnk_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 file file)))
 
 	(macro read ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file read_file_perms)
 		(allow ARG1 file list_dir_perms)
 		(allow ARG1 file read_lnk_file_perms))
 
 	(macro manage ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 file manage_file_perms)
 		(allow ARG1 file manage_dir_perms)
 		(allow ARG1 file manage_lnk_file_perms))
 
 	(macro relabel ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file relabel_file_perms)
 		(allow ARG1 file relabel_dir_perms)
 		(allow ARG1 file relabel_lnk_file_perms))
 
 	(macro search_all ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_obj_type_attribute search_dir_perms)
 		(optional miscfile_search_all_cert_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro list_all ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_obj_type_attribute list_dir_perms)
 		(optional miscfile_list_all_cert_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_files_pattern (ARG1 miscfile_obj_type_attribute miscfile_obj_type_attribute))
 		(optional miscfile_read_all_cert_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_lnk_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 miscfile_obj_type_attribute miscfile_obj_type_attribute))
 		(optional miscfile_read_all_cert_lnk_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_obj_type_attribute list_dir_perms)
 		(allow ARG1 miscfile_obj_type_attribute read_lnk_file_perms)
@@ -69,7 +69,7 @@
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro manage_all ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 miscfile_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_obj_type_attribute manage_lnk_file_perms)
@@ -77,7 +77,7 @@
 			(call usersubj.rw_home_dir (ARG1))))
 
 	(macro relabel_all ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_obj_type_attribute relabel_file_perms)
 		(allow ARG1 miscfile_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 miscfile_obj_type_attribute relabel_lnk_file_perms)
@@ -88,43 +88,43 @@
 	(macro miscfile_cache_obj_type ((type ARG1))
 		(typeattributeset miscfile_cache_obj_type_attribute ARG1))
 
-	(blockinherit search_var_cache_blk)
-	(blockinherit list_var_cache_blk)
-	(blockinherit read_var_cache_files_blk)
-	(blockinherit read_var_cache_lnk_files_blk)
-	(blockinherit read_var_cache_blk)
-	(blockinherit manage_var_cache_blk)
-	(blockinherit relabel_var_cache_blk)
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
 
 	(macro dontaudit_setattr_var_cache_dirs ((type ARG1))
 		(dontaudit ARG1 var_cache_file (dir (setattr))))
 
 	(macro search_all_cache ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute search_dir_perms)
 		(optional miscfile_search_all_fonts_cache_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro list_all_cache ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute list_dir_perms)
 		(optional miscfile_list_all_fonts_cache_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro read_all_cache_files ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(call read_files_pattern (ARG1 miscfile_cache_obj_type_attribute miscfile_cache_obj_type_attribute))
 		(optional miscfile_read_all_fonts_cache_files_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro read_all_cache_lnk_files ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(call read_lnk_files_pattern (ARG1 miscfile_cache_obj_type_attribute miscfile_cache_obj_type_attribute))
 		(optional miscfile_read_all_fonts_cache_lnk_files_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro read_all_cache ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute list_dir_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute read_lnk_file_perms)
@@ -132,7 +132,7 @@
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro manage_all_cache ((type ARG1))
-		(call file_rw_var_cache_dirs (ARG1))
+		(call file.rw_var_cache_dirs (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute manage_lnk_file_perms)
@@ -140,7 +140,7 @@
 			(call usersubj.rw_home_cache_dirs (ARG1))))
 
 	(macro relabel_all_cache ((type ARG1))
-		(call file_search_var_cache (ARG1))
+		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute relabel_file_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute relabel_lnk_file_perms)
@@ -150,40 +150,40 @@
 	(macro miscfile_config_obj_type ((type ARG1))
 		(typeattributeset miscfile_config_obj_type_attribute ARG1))
 
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
 	(macro search_all_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute search_dir_perms)
 		(optional miscfile_search_all_fonts_config_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro list_all_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute list_dir_perms)
 		(optional miscfile_list_all_fonts_config_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro read_all_config_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_files_pattern (ARG1 miscfile_config_obj_type_attribute miscfile_config_obj_type_attribute))
 		(optional miscfile_read_all_fonts_config_files_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro read_all_config_lnk_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 miscfile_config_obj_type_attribute miscfile_config_obj_type_attribute))
 		(optional miscfile_read_all_fonts_config_lnk_files_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro read_all_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute list_dir_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute read_lnk_file_perms)
@@ -191,7 +191,7 @@
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro manage_all_config ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute manage_lnk_file_perms)
@@ -199,7 +199,7 @@
 			(call usersubj.rw_home_config_dirs (ARG1))))
 
 	(macro relabel_all_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute relabel_file_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute relabel_lnk_file_perms)
@@ -209,40 +209,40 @@
 	(macro miscfile_data_obj_type ((type ARG1))
 		(typeattributeset miscfile_data_obj_type_attribute ARG1))
 
-	(blockinherit search_data_blk)
-	(blockinherit list_data_blk)
-	(blockinherit read_data_files_blk)
-	(blockinherit read_data_lnk_files_blk)
-	(blockinherit read_data_blk)
-	(blockinherit manage_data_blk)
-	(blockinherit relabel_data_blk)
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk)
 
 	(macro search_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute search_dir_perms)
 		(optional miscfile_search_all_fonts_data_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro list_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
 		(optional miscfile_list_all_fonts_data_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro read_all_data_files ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(call read_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
 		(optional miscfile_read_all_fonts_data_files_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro read_all_data_lnk_files ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(call read_lnk_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
 		(optional miscfile_read_all_data_config_lnk_files_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro read_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute read_lnk_file_perms)
@@ -250,7 +250,7 @@
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro manage_all_data ((type ARG1))
-		(call file_rw_data_dirs (ARG1))
+		(call file.rw_data_dirs (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_lnk_file_perms)
@@ -258,7 +258,7 @@
 			(call usersubj.rw_home_data_dirs (ARG1))))
 
 	(macro relabel_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_lnk_file_perms)
@@ -299,48 +299,48 @@
 	(macro miscfile_data_obj_type ((type ARG1))
 		(typeattributeset miscfile_data_obj_type_attribute ARG1))
 
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
-	(blockinherit search_data_blk)
-	(blockinherit list_data_blk)
-	(blockinherit read_data_files_blk)
-	(blockinherit read_data_lnk_files_blk)
-	(blockinherit read_data_blk)
-	(blockinherit manage_data_blk)
-	(blockinherit relabel_data_blk)
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk)
 
 	(macro search_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute search_dir_perms)
 		(optional miscfile_search_all_terminfo_data_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro list_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
 		(optional miscfile_list_all_terminfo_data_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_data_files ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(call read_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
 		(optional miscfile_read_all_terminfo_data_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_data_lnk_files ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(call read_lnk_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
 		(optional miscfile_read_all_terminfo_data_lnk_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute read_lnk_file_perms)
@@ -348,7 +348,7 @@
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro manage_all_data ((type ARG1))
-		(call file_rw_data_dirs (ARG1))
+		(call file.rw_data_dirs (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_lnk_file_perms)
@@ -356,7 +356,7 @@
 			(call usersubj.rw_home_dir (ARG1))))
 
 	(macro relabel_all_data ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_dir_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_lnk_file_perms)
@@ -388,51 +388,51 @@
 		(call relabel_all_data (ARG1))))
 
 (in factory
-	(blockinherit search_data_blk)
-	(blockinherit list_data_blk)
-	(blockinherit read_data_files_blk)
-	(blockinherit read_data_lnk_files_blk)
-	(blockinherit read_data_blk)
-	(blockinherit manage_data_blk)
-	(blockinherit relabel_data_blk))
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk))
 
 (in fstab
 	(macro read ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file read_file_perms))
 
 	(macro manage ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 file manage_file_perms))
 
 	(macro relabel ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file relabel_file_perms))
 
 	(macro config_obj_type_transition_fstab ((type ARG1))
-		(call file_config_obj_type_transition (ARG1 file file "crypttab"))
-		(call file_config_obj_type_transition (ARG1 file file "fstab")))
+		(call file.config_obj_type_transition (ARG1 file file "crypttab"))
+		(call file.config_obj_type_transition (ARG1 file file "fstab")))
 
 	(macro sd_status_subj_type ((type ARG1))
 		(typeattributeset miscfile_sd_status_subj_type_attribute ARG1)))
 
 (in hwdata
-	(blockinherit search_data_blk)
-	(blockinherit list_data_blk)
-	(blockinherit read_data_files_blk)
-	(blockinherit read_data_lnk_files_blk)
-	(blockinherit read_data_blk)
-	(blockinherit manage_data_blk)
-	(blockinherit relabel_data_blk))
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk))
 
 (in locale
 	(macro search ((type ARG1))
-		(call file_read_config_lnk_files (ARG1))
+		(call file.read_config_lnk_files (ARG1))
 		(call lib_search_lib (ARG1))
 		(allow ARG1 file search_dir_perms))
 
 	(macro list ((type ARG1))
-		(call file_read_config_lnk_files (ARG1))
+		(call file.read_config_lnk_files (ARG1))
 		(call lib_search_lib (ARG1))
 		(allow ARG1 file list_dir_perms))
 
@@ -447,7 +447,7 @@
 		(allow ARG1 file read_lnk_file_perms))
 
 	(macro read ((type ARG1))
-		(call file_read_config_lnk_files (ARG1))
+		(call file.read_config_lnk_files (ARG1))
 		(call lib_search_lib (ARG1))
 		(allow ARG1 file read_file_perms)
 		(allow ARG1 file list_dir_perms)
@@ -456,7 +456,7 @@
 			(call sd_localed.read_config_files (ARG1))))
 
 	(macro manage ((type ARG1))
-		(call file_read_config_lnk_files (ARG1))
+		(call file.read_config_lnk_files (ARG1))
 		(call lib_rw_lib_dirs (ARG1))
 		(allow ARG1 file manage_file_perms)
 		(allow ARG1 file manage_dir_perms)
@@ -465,7 +465,7 @@
 			(call sd_localed.manage_config_files (ARG1))))
 
 	(macro relabel ((type ARG1))
-		(call file_read_config_lnk_files (ARG1))
+		(call file.read_config_lnk_files (ARG1))
 		(call lib_search_lib (ARG1))
 		(allow ARG1 file relabel_file_perms)
 		(allow ARG1 file relabel_dir_perms)
@@ -474,13 +474,13 @@
 			(call sd_localed.relabel_config_files (ARG1)))))
 
 (in man
-	(blockinherit search_data_blk)
-	(blockinherit list_data_blk)
-	(blockinherit read_data_files_blk)
-	(blockinherit read_data_lnk_files_blk)
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
 
 	(macro read ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 data_file read_file_perms)
 		(allow ARG1 data_file list_dir_perms)
 		(allow ARG1 data_file read_lnk_file_perms)
@@ -489,7 +489,7 @@
 			(call mandb.read_var_cache (ARG1))))
 
 	(macro manage ((type ARG1))
-		(call file_rw_data_dirs (ARG1))
+		(call file.rw_data_dirs (ARG1))
 		(allow ARG1 data_file manage_file_perms)
 		(allow ARG1 data_file manage_dir_perms)
 		(allow ARG1 data_file manage_lnk_file_perms)
@@ -498,7 +498,7 @@
 			(call mandb.manage_var_cache (ARG1))))
 
 	(macro relabel ((type ARG1))
-		(call file_search_data (ARG1))
+		(call file.search_data (ARG1))
 		(allow ARG1 data_file relabel_file_perms)
 		(allow ARG1 data_file relabel_dir_perms)
 		(allow ARG1 data_file relabel_lnk_file_perms)
@@ -542,115 +542,115 @@
 		(allow ARG1 file relabel_lnk_file_perms)))
 
 (in network
-	(blockinherit search_config_blk)
-	(blockinherit list_config_blk)
-	(blockinherit read_config_files_blk)
-	(blockinherit manage_config_files_blk)
-	(blockinherit read_config_lnk_files_blk)
-	(blockinherit read_config_blk)
-	(blockinherit manage_config_blk)
-	(blockinherit relabel_config_blk)
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
 	(macro rw_config_files ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(call rw_files_pattern (ARG1 config_file config_file)))
 
 	(macro setattr_config ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 config_file (file (setattr)))
 		(allow ARG1 config_file (dir (setattr)))
 		(allow ARG1 config_file (lnk_file (setattr))))
 
 	(macro config_obj_type_transition_config ((type ARG1)(class ARG2)(name ARG3))
-		(call file_config_obj_type_transition (ARG1 config_file ARG2 ARG3))))
+		(call file.config_obj_type_transition (ARG1 config_file ARG2 ARG3))))
 
 (in nologin
-	(blockinherit read_runtime_files_blk)
-	(blockinherit manage_runtime_files_blk)
-	(blockinherit relabel_runtime_files_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.manage_runtime_files_blk)
+	(blockinherit file.relabel_runtime_files_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file_runtime_obj_type_transition (ARG1 runtime_file file "*"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file "*"))))
 
 (in passwords
 	(macro read ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file read_file_perms))
 
 	(macro manage ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 file manage_file_perms))
 
 	(macro relabel ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 file relabel_file_perms))
 
 	(macro config_obj_type_transition_passwords ((type ARG1)(name ARG2))
-		(call file_config_obj_type_transition (ARG1 file file ARG2))))
+		(call file.config_obj_type_transition (ARG1 file file ARG2))))
 
 (in shadow
 	(macro manage ((type ARG1))
-		(call file_rw_config_dirs (ARG1))
+		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 auth_file manage_file_perms)
 		(typeattributeset miscfile_read_subj_type_attribute ARG1)
 		(typeattributeset miscfile_write_subj_type_attribute ARG1))
 
 	(macro getattr ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 auth_file (file (getattr))))
 
 	(macro dontaudit_read ((type ARG1))
 		(dontaudit ARG1 auth_file read_file_perms))
 
 	(macro read ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 auth_file read_file_perms)
 		(typeattributeset miscfile_read_subj_type_attribute ARG1))
 
 	(macro relabelfrom ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 auth_file relabelfrom_file_perms))
 
 	(macro relabelto ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 auth_file relabelto_file_perms)
 		(typeattributeset miscfile_relabelto_subj_type_attribute ARG1))
 
 	(macro relabel ((type ARG1))
-		(call file_search_config (ARG1))
+		(call file.search_config (ARG1))
 		(allow ARG1 auth_file relabel_file_perms)
 		(typeattributeset miscfile_relabelto_subj_type_attribute ARG1)))
 
 (in utmp
-	(blockinherit read_runtime_files_blk)
-	(blockinherit manage_runtime_files_blk)
-	(blockinherit relabel_runtime_files_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.manage_runtime_files_blk)
+	(blockinherit file.relabel_runtime_files_blk)
 
 	(macro dontaudit_read_runtime_files ((type ARG1))
 		(dontaudit ARG1 runtime_file read_file_perms))
 
 	(macro write_runtime_files ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 runtime_file write_file_perms))
 
 	(macro rw_runtime_files ((type ARG1))
-		(call file_search_runtime (ARG1))
+		(call file.search_runtime (ARG1))
 		(allow ARG1 runtime_file rw_file_perms))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file_runtime_obj_type_transition (ARG1 runtime_file file "utmp"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file "utmp"))))
 
 (in wtmp
-	(blockinherit read_var_log_files_blk)
-	(blockinherit manage_var_log_files_blk)
-	(blockinherit relabel_var_log_files_blk)
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.manage_var_log_files_blk)
+	(blockinherit file.relabel_var_log_files_blk)
 
 	(macro append_var_log_files ((type ARG1))
-		(call file_search_var_log (ARG1))
+		(call file.search_var_log (ARG1))
 		(allow ARG1 var_log_file append_file_perms))
 
 	(macro write_var_log_files ((type ARG1))
-		(call file_search_var_log (ARG1))
+		(call file.search_var_log (ARG1))
 		(allow ARG1 var_log_file write_file_perms))
 
 	(macro dontaudit_write_var_log_files ((type ARG1))

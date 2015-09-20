@@ -69,9 +69,9 @@
 
 	(call dev_rw_inherited_ptmx (common_login_type_attribute))
 
-	(call file_list_mnt (common_login_type_attribute))
-	(call file_read_config (common_login_type_attribute))
-	(call file_read_data (common_login_type_attribute))
+	(call file.list_mnt (common_login_type_attribute))
+	(call file.read_config (common_login_type_attribute))
+	(call file.read_data (common_login_type_attribute))
 
 	(call fs_dontaudit_getattr_devtmpfs_lnk_files (common_login_type_attribute))
 	(call fs_getattr_sysfs_fs (common_login_type_attribute))
@@ -122,7 +122,7 @@
 	(blockinherit usersubj.home_data_obj_blk))
 
 (block home_dir
-	(blockinherit file_obj_blk)
+	(blockinherit file.obj_blk)
 
 	(call sys_mountpoint_obj_type (file)))
 
@@ -169,6 +169,6 @@
 	(typeattributeset usersubj.pty_user_obj_type_attribute pty_dev))
 
 (block var_spool_user
-	(blockinherit file_var_spool_obj_blk)
+	(blockinherit file.var_spool_obj_blk)
 
 	(typeattributeset usersubj.var_spool_user_obj_type_attribute var_spool_file))

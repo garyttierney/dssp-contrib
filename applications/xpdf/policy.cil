@@ -5,7 +5,7 @@
 
 	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config (subj_type_attribute))
 
@@ -22,9 +22,9 @@
 
 	(call cmd_exec_shell (subj_type_attribute))
 
-	(call file_list_mnt (subj_type_attribute))
-	(call file_read_config_files (subj_type_attribute))
-	(call file_read_data_files (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
+	(call file.read_data_files (subj_type_attribute))
 
 	(call fs_manage_fuse_subj_type (subj_type_attribute))
 

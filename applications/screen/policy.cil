@@ -5,11 +5,11 @@
 
 	(call subj_entry (subj_type_attribute cmd_file))
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(call read_config_files (subj_type_attribute))
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime (subj_type_attribute))
 	(call runtime_obj_type_transition_runtime (subj_type_attribute))
@@ -29,7 +29,7 @@
 	(call sys_audit_client_subj_type (subj_type_attribute))
 	(call sys_read_crypto_sysctl_files (subj_type_attribute))
 
-	(call file_read_config_files (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
 
 	(call subj_interactive_fd_type (subj_type_attribute))
 

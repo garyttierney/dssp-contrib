@@ -16,8 +16,8 @@
 
 	(allow subj self (tcp_socket (listen accept)))
 
-	(call file_list_home (subj))
-	(call file_search_mnt (subj))
+	(call file.list_home (subj))
+	(call file.search_mnt (subj))
 
 	(call fs_getattr_fs (subj))
 	(call fs_list_rootfs (subj))

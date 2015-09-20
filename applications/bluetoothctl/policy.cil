@@ -8,7 +8,7 @@
 	(allow subj self (capability (net_raw net_admin)))
 	(allow subj self create_socket_perms)
 
-	(call file_read_config_files (subj))
+	(call file.read_config_files (subj))
 
 	(call bluetoothd.sysbus_chat_client_subj_type (subj))
 

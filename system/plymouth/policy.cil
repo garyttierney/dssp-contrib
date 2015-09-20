@@ -15,7 +15,7 @@
 
 	(typeattributeset subj_type_attribute subj)
 
-	(blockinherit file_config_obj_blk)
+	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
 
@@ -37,9 +37,9 @@
 	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
-	(call file_search_runtime (adm_subj_type_attribute))
-	(call file_search_var_lib (adm_subj_type_attribute))
-	(call file_search_var_spool (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_lib (adm_subj_type_attribute))
+	(call file.search_var_spool (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
@@ -62,21 +62,21 @@
 
 	(typeattributeset plymouth.subj_type_attribute subj)
 
-	(blockinherit file_runtime_obj_blk)
+	(blockinherit file.runtime_obj_blk)
 
 	(typeattributeset plymouth.obj_type_attribute runtime_file)
 
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(blockinherit file_var_lib_obj_blk)
+	(blockinherit file.var_lib_obj_blk)
 
 	(typeattributeset plymouth.obj_type_attribute var_lib_file)
 
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(blockinherit file_var_spool_obj_blk)
+	(blockinherit file.var_spool_obj_blk)
 
 	(typeattributeset plymouth.obj_type_attribute var_spool_file)
 
@@ -98,8 +98,8 @@
 	(call dev_rw_framebuf (subj))
 	(call dev_rw_ptmx (subj))
 
-	(call file_read_config_files (subj))
-	(call file_read_data (subj))
+	(call file.read_config_files (subj))
+	(call file.read_data (subj))
 
 	(call fs_getattr_devpts_fs (subj))
 	(call fs_rw_devpts_chr_files (subj))

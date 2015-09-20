@@ -11,7 +11,7 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file_var_cache_obj_blk)
+	(blockinherit file.var_cache_obj_blk)
 
 	(typeattributeset obj_type_attribute var_cache_file)
 
@@ -20,7 +20,7 @@
 
 	(allow subj self (capability (dac_override sys_chroot)))
 
-	(call file_read_config (subj))
+	(call file.read_config (subj))
 
 	(call lib_manage_lib (subj))
 	(call lib_manage_ld_so_cache_files (subj))
@@ -46,7 +46,7 @@
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file_search_var_cache (adm_subj_type_attribute))
+	(call file.search_var_cache (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

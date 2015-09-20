@@ -65,7 +65,8 @@
 		(call journalctl.exec (subj)))
 
 	(optional user_optional_lirc
-		(call lirc.run (user_subj_type role)))
+		(call lirc.run (user_subj_type role))
+		(call lirc_lsplugins.run (user_subj_type role)))
 
 	(optional user_optional_mysysstat
 		(call mysysstat.run (user_subj_type role)))

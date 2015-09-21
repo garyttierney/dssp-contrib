@@ -24,20 +24,20 @@
 	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (process (setfscreate)))
 
-	(call standard_obj_sys_change_exemption_subj_type (subj))
+	(call standard.obj_sys_change_exemption_subj_type (subj))
 
-	(call cmd_getattr_cmd_files (subj))
-	(call cmd_audit_read_access_cmd_files (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.getattr_cmd_files (subj))
+	(call cmd.audit_read_access_cmd_files (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.manage_config_files (subj))
 	(call file.read_data (subj))
 	(call file.relabel_config_files (subj))
 
-	(call sec_get_enforce_mode (subj))
-	(call sec_validate_context (subj))
+	(call sec.get_enforce_mode (subj))
+	(call sec.validate_context (subj))
 
 	(call hostname.exec (subj))
 

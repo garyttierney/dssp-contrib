@@ -10,13 +10,13 @@
 	(allow subj self (capability (dac_override setuid)))
 	(allow subj self (process (setfscreate setrlimit)))
 
-	(call sys_audit_client_subj_type (subj))
+	(call sys.audit_client_subj_type (subj))
 
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
 	(call file.read_config_files (subj))
 
-	(call sec_validate_context (subj))
+	(call sec.validate_context (subj))
 
 	(call passwords.config_obj_type_transition_passwords (subj "*"))
 	(call passwords.manage (subj))
@@ -46,10 +46,10 @@
 	(allow subj self (capability (chown fsetid fowner dac_override)))
 	(allow subj self (process (setfscreate)))
 
-	(call sys_audit_client_subj_type (subj))
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.audit_client_subj_type (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
 	(call fs.list_proc (subj))
 	(call fs.list_devtmpfs (subj))
@@ -57,10 +57,10 @@
 
 	(call file.read_config_files (subj))
 
-	(call sec_validate_context (subj))
+	(call sec.validate_context (subj))
 
-	(call subj_ptrace_uncond_type (subj))
-	(call subj_read_common_subj_state (subj))
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_common_subj_state (subj))
 
 	(call passwords.config_obj_type_transition_passwords (subj "*"))
 	(call passwords.manage (subj))

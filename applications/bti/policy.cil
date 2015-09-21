@@ -12,10 +12,10 @@
 
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_mmap_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.mmap_shell (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.audit_access_var_tmp_dirs (subj))
 	(call file.list_var_tmp (subj))

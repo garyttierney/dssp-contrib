@@ -25,13 +25,13 @@
 	(allow subj self (capability (chown fowner setuid setgid setpcap dac_override sys_time)))
 	(allow subj self (process (getcap setcap setrlimit)))
 
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
-	(call net_udp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call hwclock.read_config_files (subj))
 

@@ -3,11 +3,11 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -77,7 +77,7 @@
 (block auditd_var_log
 	(blockinherit file.sec_obj_blk)
 
-	(call sys_mountpoint_obj_type (sec_file))
+	(call sys.mountpoint_obj_type (sec_file))
 
 	(typeattributeset auditd.obj_type_attribute sec_file))
 

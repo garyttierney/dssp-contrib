@@ -14,9 +14,9 @@
 	(allow subj self (process (setsched)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_audit_client_subj_type (subj))
+	(call sys.audit_client_subj_type (subj))
 
-	(call dev_rw_dri (subj))
+	(call dev.rw_dri (subj))
 
 	(call file.read_config_files (subj))
 	(call file.read_data_files (subj))

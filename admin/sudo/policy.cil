@@ -29,17 +29,17 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self link_key_perms)
 
-	(call sys_audit_client_subj_type (subj_type_attribute))
-	(call sys_getattr_core_if (subj_type_attribute))
-	(call sys_read_kernel_sysctl_files (subj_type_attribute))
-	(call sys_link_keyring (subj_type_attribute))
+	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.getattr_core_if (subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+	(call sys.link_keyring (subj_type_attribute))
 
-	(call standard_role_change_exemption_subj_type (subj_type_attribute))
+	(call standard.role_change_exemption_subj_type (subj_type_attribute))
 
-	(call cmd_getattr_all_cmd_files (subj_type_attribute))
+	(call cmd.getattr_all_cmd_files (subj_type_attribute))
 
-	(call dev_getattr_all (subj_type_attribute))
-	(call dev_read_urandom (subj_type_attribute))
+	(call dev.getattr_all (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 
@@ -47,10 +47,10 @@
 	(call fs.dontaudit_getattr_devtmpfs_chr_files (subj_type_attribute))
 	(call fs.dontaudit_getattr_devtmpfs_blk_files (subj_type_attribute))
 
-	(call sec_compute_relabel_context (subj_type_attribute))
-	(call sec_validate_context (subj_type_attribute))
+	(call sec.compute_relabel_context (subj_type_attribute))
+	(call sec.validate_context (subj_type_attribute))
 
-	(call subj_interactive_fd_type (subj_type_attribute))
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call app.send_signal (subj_type_attribute))
 

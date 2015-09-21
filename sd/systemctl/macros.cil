@@ -6,7 +6,7 @@
 
 		(typeattributeset systemctl.subj_type_attribute subj))
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -52,7 +52,7 @@
 
 		(roleattributeset role_attribute ARG2))
 
-	(blockinherit getattr_all_blk)
-	(blockinherit read_state_all_blk)
-	(blockinherit use_fd_all_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_all_blk))
+	(blockinherit subj.getattr_all_blk)
+	(blockinherit subj.read_state_all_blk)
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))

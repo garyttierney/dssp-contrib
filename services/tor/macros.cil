@@ -5,7 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
@@ -57,17 +57,17 @@
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
 (in tor_control
-	(blockinherit tcp_bind_unreserved_port_blk)
-	(blockinherit tcp_connect_port_blk))
+	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_trans
-	(blockinherit tcp_bind_unreserved_port_blk)
-	(blockinherit tcp_connect_port_blk))
+	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_or
-	(blockinherit tcp_bind_unreserved_port_blk)
-	(blockinherit tcp_connect_port_blk))
+	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_dir
-	(blockinherit tcp_bind_unreserved_port_blk)
-	(blockinherit tcp_connect_port_blk))
+	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))

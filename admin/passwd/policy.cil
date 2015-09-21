@@ -10,12 +10,12 @@
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys_audit_client_subj_type (subj_type_attribute))
-	(call sys_read_crypto_sysctl_files (subj_type_attribute))
+	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
-	(call standard_obj_sys_change_exemption_subj_type (subj_type_attribute))
+	(call standard.obj_sys_change_exemption_subj_type (subj_type_attribute))
 
-	(call dev_read_urandom (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data_files (subj_type_attribute))
@@ -23,8 +23,8 @@
 	(call fs.list_devtmpfs (subj_type_attribute))
 	(call fs.search_devpts (subj_type_attribute))
 
-	(call sec_compute_access_vector (subj_type_attribute))
-	(call sec_list_fs (subj_type_attribute))
+	(call sec.compute_access_vector (subj_type_attribute))
+	(call sec.list_fs (subj_type_attribute))
 
 	(call passwords.manage (subj_type_attribute))
 	(call shadow.manage (subj_type_attribute))

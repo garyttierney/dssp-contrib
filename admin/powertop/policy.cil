@@ -32,21 +32,21 @@
 	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 
-	(call sys_list_cpu_sysfs (subj))
-	(call sys_load_kernel_module_subj_type (subj))
-	(call sys_read_cpuinfo_proc_files (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_read_kallsyms_proc_files (subj))
-	(call sys_request_load_module (subj))
-	(call sys_rw_cpu_sysfs_files (subj))
-	(call sys_rw_fs_sysctl_files (subj))
-	(call sys_rw_irq_sysctl_files (subj))
-	(call sys_rw_kernel_sysctl_files (subj))
-	(call sys_rw_vm_sysctl_files (subj))
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_kallsyms_proc_files (subj))
+	(call sys.request_load_module (subj))
+	(call sys.rw_cpu_sysfs_files (subj))
+	(call sys.rw_fs_sysctl_files (subj))
+	(call sys.rw_irq_sysctl_files (subj))
+	(call sys.rw_kernel_sysctl_files (subj))
+	(call sys.rw_vm_sysctl_files (subj))
 
-	(call cmd_exec_shell (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_read_cpu (subj))
+	(call dev.read_cpu (subj))
 
 	(call file.read_config_files (subj))
 
@@ -55,6 +55,9 @@
 	(call fs.rw_sysfs_files (subj))
 	(call fs.trace_client_subj_type (subj))
 
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_common_subj_state (subj))
+
 	(call kmod.auto_subj_type_transition (subj))
 
 	(call terminfo.read_all (subj))
@@ -62,9 +65,6 @@
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj))
-
-	(call subj_ptrace_uncond_type (subj))
-	(call subj_read_common_subj_state (subj))
 
 	(call usersubj.manage_home_user_files (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))

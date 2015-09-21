@@ -3,18 +3,18 @@
 	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
 	(allow subj self (capability (sys_nice sys_chroot setuid setgid)))
 	(allow subj self (process (setsched setcap setrlimit)))
 
-	(call subj_ptrace_uncond_type (subj))
+	(call subj.ptrace_uncond_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 

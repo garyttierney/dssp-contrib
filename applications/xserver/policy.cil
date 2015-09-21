@@ -12,7 +12,7 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit net_unreserved_port_obj_blk)
+	(blockinherit net.unreserved_port_obj_blk)
 
 	(call tcp_bind_unreserved_port (subj))
 
@@ -60,16 +60,16 @@
 	(allow subj tmpfs_client_subj_type_attribute (fd (use)))
 	(allow subj tmpfs_client_obj_type_attribute (file (read write)))
 
-	(call sys_read_cpuinfo_proc_files (subj))
-	(call sys_write_mtrr_proc_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.write_mtrr_proc_files (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_rw_framebuf (subj))
-	(call dev_rw_dri (subj))
-	(call dev_rw_event (subj))
-	(call dev_rw_xserver_misc (subj))
+	(call dev.rw_framebuf (subj))
+	(call dev.rw_dri (subj))
+	(call dev.rw_event (subj))
+	(call dev.rw_xserver_misc (subj))
 
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
@@ -81,9 +81,9 @@
 	(call fs.read_sysfs_lnk_files (subj))
 	(call fs.rw_inherited_tmpfs_files (subj))
 
-	(call net_tcp_bind_generic_node (subj))
+	(call net.tcp_bind_generic_node (subj))
 
-	(call subj_ptrace_type (subj))
+	(call subj.ptrace_subj_type (subj))
 
 	(call fonts.read_data_files (subj))
 

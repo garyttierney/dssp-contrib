@@ -3,14 +3,14 @@
 
         (blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (subj_type_attribute cmd_file))
+        (call subj.entry (subj_type_attribute cmd_file))
 
         (blockinherit usersubj.home_user_obj_blk)
 
 	(allow subj_type_attribute self (process (setpgid)))
 
-	(call cmd_shell_obj_entry_subj (subj_type_attribute))
-	(call cmd_exec_shell (subj_type_attribute))
+	(call cmd.shell_obj_entry_subj (subj_type_attribute))
+	(call cmd.exec_shell (subj_type_attribute))
 
 	(call fs.search_tmpfs (subj_type_attribute))
 

@@ -3,11 +3,11 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -27,10 +27,10 @@
 	(allow subj self (capability (dac_override setuid)))
 	(allow subj self create_tcp_stream_socket_perms)
 
-	(call net_tcp_bind_generic_node (subj))
+	(call net.tcp_bind_generic_node (subj))
 
-	(call dev_read_urandom (subj))
-	(call dev_rw_tpm (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_tpm (subj))
 
 	(call utmp.read_runtime_files (subj))
 

@@ -8,7 +8,7 @@
 	(allow subj self (capability (net_admin)))
 	(allow subj self create_netlink_netfilter_socket_perms)
 
-	(call sys_request_load_module (subj)))
+	(call sys.request_load_module (subj)))
 
 (block conntrackd
 	(roleattribute role_attribute)
@@ -55,7 +55,7 @@
 
 	(call var_log_obj_type_transition_var_log (subj))
 
-	(blockinherit net_unreserved_port_obj_blk)
+	(blockinherit net.unreserved_port_obj_blk)
 
 	(call udp_bind_unreserved_port (subj))
 
@@ -66,13 +66,13 @@
 	(allow subj self (unix_stream_socket (connectto)))
 	(allow subj self create_netlink_netfilter_socket_perms)
 
-	(call sys_load_kernel_module_subj_type (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_request_load_module (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.request_load_module (subj))
 
 	(call file.read_config_files (subj))
 
-	(call net_udp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
 
 	(call locale.read (subj))
 

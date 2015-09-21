@@ -428,12 +428,12 @@
 (in locale
 	(macro search ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file search_dir_perms))
 
 	(macro list ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file list_dir_perms))
 
 	(macro read_files ((type ARG1))
@@ -448,7 +448,7 @@
 
 	(macro read ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file read_file_perms)
 		(allow ARG1 file list_dir_perms)
 		(allow ARG1 file read_lnk_file_perms)
@@ -457,7 +457,7 @@
 
 	(macro manage ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(allow ARG1 file manage_file_perms)
 		(allow ARG1 file manage_dir_perms)
 		(allow ARG1 file manage_lnk_file_perms)
@@ -466,7 +466,7 @@
 
 	(macro relabel ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file relabel_file_perms)
 		(allow ARG1 file relabel_dir_perms)
 		(allow ARG1 file relabel_lnk_file_perms)
@@ -508,35 +508,35 @@
 
 (in modules
 	(macro search ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file search_dir_perms))
 
 	(macro list ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file list_dir_perms))
 
 	(macro read_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call read_files_pattern (ARG1 file file)))
 
 	(macro read_lnk_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call read_lnk_files_pattern (ARG1 file file)))
 
 	(macro read ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file read_file_perms)
 		(allow ARG1 file list_dir_perms)
 		(allow ARG1 file read_lnk_file_perms))
 
 	(macro manage ((type ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(allow ARG1 file manage_file_perms)
 		(allow ARG1 file manage_dir_perms)
 		(allow ARG1 file manage_lnk_file_perms))
 
 	(macro relabel ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(allow ARG1 file relabel_file_perms)
 		(allow ARG1 file relabel_dir_perms)
 		(allow ARG1 file relabel_lnk_file_perms)))

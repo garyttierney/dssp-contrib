@@ -9,8 +9,8 @@
 
 	(allow subj self (netlink_audit_socket (nlmsg_readpriv)))
 
-	(call sys_audit_client_subj_type (subj))
-	(call sys_audit_set_params (subj))
+	(call sys.audit_client_subj_type (subj))
+	(call sys.audit_set_params (subj))
 
 	(call file.getattr_all (subj))
 

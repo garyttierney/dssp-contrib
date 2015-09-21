@@ -44,13 +44,13 @@
 		(allow md.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
 
 (block mdmon
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset md.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 

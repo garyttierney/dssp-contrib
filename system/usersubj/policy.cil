@@ -25,28 +25,28 @@
 
 	(call use_term (common_type_attribute))
 
-	(call sys_dontaudit_list_mountpoints (common_type_attribute))
-	(call sys_dontaudit_read_all_proc_files (common_type_attribute))
-	(call sys_dontaudit_read_all_sysctl (common_type_attribute))
-	(call sys_dontaudit_read_all_sysfs (common_type_attribute))
-	(call sys_read_cpu_online_sysfs_files (common_type_attribute))
-	(call sys_read_node_online_sysfs_files (common_type_attribute))
+	(call sys.dontaudit_list_mountpoints (common_type_attribute))
+	(call sys.dontaudit_read_all_proc_files (common_type_attribute))
+	(call sys.dontaudit_read_all_sysctl (common_type_attribute))
+	(call sys.dontaudit_read_all_sysfs (common_type_attribute))
+	(call sys.read_cpu_online_sysfs_files (common_type_attribute))
+	(call sys.read_node_online_sysfs_files (common_type_attribute))
 
-	(call standard_user_exemption_target_subj_type (common_type_attribute))
+	(call standard.user_exemption_target_subj_type (common_type_attribute))
 
-	(call cmd_obj_entry_subj (common_type_attribute))
-	(call cmd_shell_obj_entry_subj (common_type_attribute))
+	(call cmd.obj_entry_subj (common_type_attribute))
+	(call cmd.shell_obj_entry_subj (common_type_attribute))
 
-	(call cmd_exec_cmd (common_type_attribute))
-	(call cmd_exec_shell (common_type_attribute))
+	(call cmd.exec (common_type_attribute))
+	(call cmd.exec_shell (common_type_attribute))
 
-	(call dev_read_urandom (common_type_attribute))
+	(call dev.read_urandom (common_type_attribute))
 
 	(call fs.dontaudit_getattr_all_fs (common_type_attribute))
 	(call fs.getattr_fs (common_type_attribute))
 
-	(call subj_dontaudit_read_common_subj_state (common_type_attribute))
-	(call subj_interactive_fd_type (common_type_attribute))
+	(call subj.dontaudit_read_common_subj_state (common_type_attribute))
+	(call subj.interactive_fd_subj_type (common_type_attribute))
 
 	(call utmp.read_runtime_files (common_type_attribute))
 	(call terminfo.read_all (common_type_attribute))
@@ -64,10 +64,10 @@
 	(call create_ptys (common_login_type_attribute))
 	(call obj_template (common_login_type_attribute))
 
-	(call sys_read_kernel_sysctl_files (common_login_type_attribute))
-	(call sys_read_net_proc_files (common_login_type_attribute))
+	(call sys.read_kernel_sysctl_files (common_login_type_attribute))
+	(call sys.read_net_proc_files (common_login_type_attribute))
 
-	(call dev_rw_inherited_ptmx (common_login_type_attribute))
+	(call dev.rw_inherited_ptmx (common_login_type_attribute))
 
 	(call file.list_mnt (common_login_type_attribute))
 	(call file.read_config (common_login_type_attribute))
@@ -78,7 +78,7 @@
 	(call fs.list_tmpfs (common_login_type_attribute))
 	(call fs.manage_fuse_subj_type (common_login_type_attribute))
 
-	(call sec_get_enforce_mode (common_login_type_attribute))
+	(call sec.get_enforce_mode (common_login_type_attribute))
 
 	(call app.getattr (common_login_type_attribute))
 	(call app.ptrace (common_login_type_attribute))
@@ -124,12 +124,12 @@
 (block home_dir
 	(blockinherit file.obj_blk)
 
-	(call sys_mountpoint_obj_type (file)))
+	(call sys.mountpoint_obj_type (file)))
 
 (block home_cmd
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(call cmd_obj_type (home_user_file)))
+	(call cmd.cmd_obj_type (home_user_file)))
 
 (block home_fonts
 	(blockinherit usersubj.home_cache_obj_blk)
@@ -159,12 +159,12 @@
 	(blockinherit usersubj.tmpfs_user_obj_blk))
 
 (block tty_user
-	(blockinherit term_tty_obj_blk)
+	(blockinherit term.tty_obj_blk)
 
 	(typeattributeset usersubj.tty_user_obj_type_attribute tty_dev))
 
 (block pty_user
-	(blockinherit term_pty_obj_blk)
+	(blockinherit term.pty_obj_blk)
 
 	(typeattributeset usersubj.pty_user_obj_type_attribute pty_dev))
 

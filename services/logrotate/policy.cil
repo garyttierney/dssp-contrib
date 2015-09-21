@@ -28,14 +28,14 @@
 	(allow subj self (process (setfscreate)))
 	(allow subj self (capability (chown fsetid dac_override)))
 
-	(call standard_obj_sys_change_exemption_subj_type (subj))
+	(call standard.obj_sys_change_exemption_subj_type (subj))
 
 	(call file.read_config (subj))
 	(call file.rw_var_log_dirs (subj))
 
 	(call fs.list_rootfs (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
 	(call locale.read (subj))
 

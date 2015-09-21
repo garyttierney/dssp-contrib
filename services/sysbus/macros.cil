@@ -2,11 +2,11 @@
 	(block daemon_blk
 		(blockabstract daemon_blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 
-		(blockinherit cmd_obj_blk)
+		(blockinherit cmd.obj_blk)
 
-		(call subj_entry (subj cmd_file))
+		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
 
@@ -33,16 +33,16 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
-	(blockinherit cmd_obj_entry_subj_blk)
+	(blockinherit cmd.cmd_obj_entry_subj_blk)
 
 	(macro acquire_service ((type ARG1))
 		(allow ARG1 subj (dbus (acquire_svc))))
 
 	(macro daemon ((type ARG1)(type ARG2))
-		(call subj_common_type (ARG1))
-		(call subj_entry (ARG1 ARG2))
+		(call subj.common_subj_type (ARG1))
+		(call subj.entry (ARG1 ARG2))
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG1 ARG2))
 		(roletype sys.role ARG1))

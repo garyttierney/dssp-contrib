@@ -6,7 +6,7 @@
 
 		(typeattributeset polkit_exec.subj_type_attribute subj))
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -39,7 +39,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
@@ -77,13 +77,13 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in polkit_helper
 	(blockinherit exec_blk))
 
 (in polkit_tty_agent
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))

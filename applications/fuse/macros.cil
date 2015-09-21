@@ -8,7 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -29,8 +29,8 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit use_fd_all_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_all_blk))
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))
 
 (in fusermount
 	(blockinherit exec_blk)
@@ -39,13 +39,13 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
 	(blockinherit file.relabel_config_files_blk)
 
-	(blockinherit use_fd_blk))
+	(blockinherit subj.use_fd_blk))
 
 (in ulockmgr
 	(blockinherit exec_blk)
@@ -54,4 +54,4 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))

@@ -1,11 +1,11 @@
 (block audispd
 	(typeattribute plugin_subj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -19,7 +19,7 @@
 	(call manage_runtime_sock_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(call cmd_exec_shell (subj))
+	(call cmd.exec_shell (subj))
 
 	(call auditd.rw_inherited_unix_stream_sockets (subj))
 

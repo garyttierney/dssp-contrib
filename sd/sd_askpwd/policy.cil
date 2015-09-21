@@ -57,12 +57,12 @@
 	(allow subj self (capability (net_admin)))
 	(allow subj self (process (setfscreate)))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call file.search_config (subj))
 
-	(call term_use_console (subj))
-	(call term_use_inherited_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_inherited_unallocated_ttys (subj))
 
 	(call sd.use_fd (subj))
 

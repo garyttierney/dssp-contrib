@@ -6,7 +6,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call sd.daemon (subj cmd_file))
 
@@ -25,7 +25,7 @@
 
 	(call client_subj_type (subj_type_attribute))
 
-	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
 
 	(call locale.read (client_subj_type_attribute))
 

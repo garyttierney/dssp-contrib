@@ -1,7 +1,7 @@
 (in nettools
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro auto_subj_type_transition ((type ARG1))
 		(call send_signal (ARG1))
@@ -19,7 +19,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in traceroute
 	(blockinherit exec_blk)
@@ -28,7 +28,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in arp
 	(blockinherit exec_blk)
@@ -37,7 +37,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

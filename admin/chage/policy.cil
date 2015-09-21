@@ -8,13 +8,13 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (setfscreate)))
 
-	(call sys_audit_client_subj_type (subj))
+	(call sys.audit_client_subj_type (subj))
 
-	(call standard_obj_sys_change_exemption_subj_type (subj))
+	(call standard.obj_sys_change_exemption_subj_type (subj))
 
-	(call sec_list_fs (subj))
-	(call sec_compute_access_vector (subj))
-	(call sec_validate_context (subj))
+	(call sec.list_fs (subj))
+	(call sec.compute_access_vector (subj))
+	(call sec.validate_context (subj))
 
 	(call passwords.config_obj_type_transition_passwords (subj "*"))
 	(call passwords.manage (subj))

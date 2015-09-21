@@ -27,19 +27,19 @@
 	(allow subj self (process (setfscreate getcap setcap)))
 	(allow subj self (tcp_socket (listen accept)))
 
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev_write_kmsg (subj))
-	(call dev_read_urandom (subj))
+	(call dev.write_kmsg (subj))
+	(call dev.read_urandom (subj))
 
 	(call fs.read_sysfs (subj))
 
-	(call net_tcp_bind_generic_node (subj))
-	(call net_udp_bind_generic_node (subj))
+	(call net.tcp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call llmnr.tcp_bind_unreserved_port (subj))
 	(call llmnr.udp_bind_unreserved_port (subj))

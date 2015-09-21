@@ -8,7 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -37,5 +37,5 @@
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-	(blockinherit use_fd_all_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_all_blk))
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))

@@ -6,7 +6,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call sd.daemon (subj cmd_file))
 
@@ -28,11 +28,11 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (client_subj_type_attribute))
+	(call cmd.exec (client_subj_type_attribute))
 
 	(call terminfo.read_all (client_subj_type_attribute))
 	(call locale.read (client_subj_type_attribute))

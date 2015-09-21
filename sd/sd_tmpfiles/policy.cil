@@ -38,15 +38,15 @@
 	(allow subj self (process (getcap setfscreate)))
 	(allow subj self create_unix_stream_socket_perms)
 
-	(call sys_read_kernel_sysctl_files (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_read_cpu_sysfs_files (subj))
-	(call sys_relabelfrom_invalid_dirs (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.relabelfrom_invalid_dirs (subj))
 
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call dev_manage_all (subj))
-	(call dev_relabel_all (subj))
+	(call dev.manage_all (subj))
+	(call dev.relabel_all (subj))
 
 	(call fs.list_rootfs (subj))
 	(call fs.manage_devtmpfs_dirs (subj))
@@ -57,7 +57,7 @@
 	(call fs.relabel_sysfs_dirs (subj))
 	(call fs.relabel_tmpfs_dirs (subj))
 
-	(call sec_set_check_req_prot (subj))
+	(call sec.set_check_req_prot (subj))
 
 	(call factory.read_data (subj))
 	(call locale.read (subj))

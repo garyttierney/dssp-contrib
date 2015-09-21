@@ -3,7 +3,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.home_user_obj_blk)
 
@@ -21,12 +21,12 @@
 	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call sec_get_enforce_mode (subj_type_attribute))
+	(call sec.get_enforce_mode (subj_type_attribute))
 
-	(call sys_read_net_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
 
-	(call dev_read_urandom (subj_type_attribute))
-	(call dev_rw_ptmx (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_ptmx (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))

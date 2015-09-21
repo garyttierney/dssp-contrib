@@ -6,7 +6,7 @@
 
 		(typeattributeset sessbus_launch.subj_type_attribute subj))
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -51,7 +51,7 @@
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".dbus")))
 
-	(blockinherit use_fd_all_blk)
+	(blockinherit subj.use_fd_all_blk)
 
 	(macro use_fd_client_subj ((type ARG1))
 		(allow ARG1 client_subj_type_attribute (fd (use))))

@@ -81,18 +81,18 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
-	(call dev_unconfined_subj_type (subj_type_attribute))
+	(call dev.unconfined_subj_type (subj_type_attribute))
 	(call file.unconfined_subj_type (subj_type_attribute))
 	(call fs.unconfined_subj_type (subj_type_attribute))
-	(call net_unconfined_subj_type (subj_type_attribute))
-	(call sec_unconfined_subj_type (subj_type_attribute))
-	(call storage_unconfined_subj_type (subj_type_attribute))
-	(call subj_unconfined_type (subj_type_attribute))
-	(call sys_unconfined_subj_type (subj_type_attribute))
+	(call net.unconfined_subj_type (subj_type_attribute))
+	(call sec.unconfined_subj_type (subj_type_attribute))
+	(call storage.unconfined_subj_type (subj_type_attribute))
+	(call subj.unconfined_subj_type (subj_type_attribute))
+	(call sys.unconfined_subj_type (subj_type_attribute))
 
-	(call subj_execmem_uncond_type (subj_type_attribute))
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
-	(call lib_config_obj_type_transition_ld_so_cache_files (subj_type_attribute))
+	(call lib.config_obj_type_transition_ld_so_cache_files (subj_type_attribute))
 
 	(optional rpm_subj_type_optional_sysbus
 		(call sysbus.unconfined_subj_type (subj_type_attribute)))
@@ -118,13 +118,13 @@
 (typeattribute rpm_script_client_subj_type_attribute)
 
 (type rpm_script_t)
-(call subj_common_type (rpm_script_t))
+(call subj.common_subj_type (rpm_script_t))
 
 (typeattributeset rpm.subj_type_attribute rpm_script_t)
 
 (roletype rpm.role_attribute rpm_script_t)
 
-(call mls_priv_range_trans_subj_type (rpm_script_t))
+(call mls.priv_range_trans_subj_type (rpm_script_t))
 
 (optional rpm_script_optional_bootloader
 	(call bootloader.run (rpm_script_t rpm.role_attribute)))

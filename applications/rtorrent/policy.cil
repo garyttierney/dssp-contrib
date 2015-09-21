@@ -22,15 +22,15 @@
 	(call fs.getattr_fs (subj))
 	(call fs.list_rootfs (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
-	(call net_tcp_bind_generic_node (subj))
-	(call net_tcp_bind_all_unreserved_ports (subj))
-	(call net_tcp_connect_all_unreserved_ports (subj))
-	(call net_tcp_connect_all_ephemeral_ports (subj))
-	(call net_udp_bind_generic_node (subj))
-	(call net_udp_bind_ephemeral_port (subj))
-	(call net_udp_bind_all_unreserved_ports (subj))
+	(call net.tcp_bind_generic_node (subj))
+	(call net.tcp_bind_all_unreserved_ports (subj))
+	(call net.tcp_connect_all_unreserved_ports (subj))
+	(call net.tcp_connect_all_ephemeral_ports (subj))
+	(call net.udp_bind_generic_node (subj))
+	(call net.udp_bind_ephemeral_port (subj))
+	(call net.udp_bind_all_unreserved_ports (subj))
 
 	(call http.tcp_connect_port (subj))
 

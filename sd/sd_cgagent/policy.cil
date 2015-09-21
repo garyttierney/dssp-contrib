@@ -3,13 +3,13 @@
 
 	(allow subj self (capability (net_admin)))
 
-	(call mls_range_trans_subj_type (subj))
+	(call mls.range_trans_subj_type (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call file.search_config (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call sd.read_state (subj))
 	(call sd.stream_connect (subj))

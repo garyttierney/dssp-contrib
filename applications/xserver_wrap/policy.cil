@@ -7,7 +7,7 @@
 
 	(allow subj self (capability (setuid setgid sys_admin)))
 
-	(call dev_rw_dri (subj))
+	(call dev.rw_dri (subj))
 
 	(call xserver.run (subj role_attribute))
 	(call xserver.read_config (subj)))

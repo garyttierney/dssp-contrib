@@ -5,13 +5,13 @@
 
 	(blockinherit sd.unit_obj_blk)
 
-	(call sys_audit_client_subj_type (subj))
+	(call sys.audit_client_subj_type (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call file.search_config (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call utmp.manage_runtime_files (subj))
 	(call utmp.runtime_obj_type_transition_runtime (subj))

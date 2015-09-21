@@ -7,7 +7,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro exec ((type ARG1))
 		(call client_subj_type (ARG1))
@@ -23,7 +23,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro dontaudit_audit_access_cmd_files ((type ARG1))
 		(dontaudit ARG1 cmd_file (file (audit_access)))))
@@ -35,7 +35,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in setenforce
 	(blockinherit exec_blk)
@@ -44,7 +44,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in matchpathcon
 	(blockinherit exec_blk)
@@ -53,7 +53,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in selinux_config
 	(blockinherit file.search_config_blk)

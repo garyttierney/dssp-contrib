@@ -4,13 +4,13 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -52,13 +52,13 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block lircmd
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset lircd.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 

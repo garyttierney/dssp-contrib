@@ -18,19 +18,19 @@
 	(allow subj self (capability (sys_tty_config sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_use_fd (subj))
+	(call sys.use_fd (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call fs.list_rootfs (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 	(call fs.rw_sysfs_files (subj))
 
-	(call term_use_console (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call locale.read (subj))
 

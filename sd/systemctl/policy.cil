@@ -8,7 +8,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(roletype role_attribute subj)
 
@@ -20,12 +20,12 @@
 	(allow subj_type_attribute self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
 	(allow subj_type_attribute self (process (setfscreate)))
 
-	(call sys_read_state_files (subj_type_attribute))
+	(call sys.read_state_files (subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 	(call fs.write_inherited_devpts_chr_files (subj_type_attribute))
 
-	(call term_use_inherited_console (subj_type_attribute))
+	(call term.use_inherited_console (subj_type_attribute))
 
 	(call app.getattr (subj_type_attribute))
 	(call app.read_state (subj_type_attribute))
@@ -72,7 +72,7 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
 	(optional subj_type_attribute_optional_plymouth
 		(call plymouthd.use_fd (subj_type_attribute)))
@@ -81,13 +81,13 @@
 	(allow client_subj_type_attribute self (process (setrlimit)))
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys_read_crypto_sysctl_files (client_subj_type_attribute))
-	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
-	(call sys_use_fd (client_subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (client_subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
+	(call sys.use_fd (client_subj_type_attribute))
 
-	(call cmd_exec_cmd (client_subj_type_attribute))
+	(call cmd.exec (client_subj_type_attribute))
 
-	(call dev_read_urandom (client_subj_type_attribute))
+	(call dev.read_urandom (client_subj_type_attribute))
 
 	(call file.read_config_files (client_subj_type_attribute))
 

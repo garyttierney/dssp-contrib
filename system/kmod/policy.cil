@@ -19,14 +19,14 @@
 
 	(allow subj self (capability (dac_override)))
 
-	(call sys_link_keyring (subj))
-	(call sys_load_kernel_module_subj_type (subj))
-	(call sys_request_load_module (subj))
+	(call sys.link_keyring (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.request_load_module (subj))
 
-	(call mls_range_trans_subj_type (subj))
+	(call mls.range_trans_subj_type (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))

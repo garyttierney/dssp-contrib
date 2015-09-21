@@ -8,8 +8,8 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_mmap_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.mmap_shell (subj))
 
 	(call fs.list_devtmpfs (subj))
 	(call fs.read_sysfs (subj))

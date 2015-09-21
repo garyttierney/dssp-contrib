@@ -4,11 +4,11 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -28,7 +28,7 @@
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call dev_rw_usb (subj))
+	(call dev.rw_usb (subj))
 
 	(call fs.list_devtmpfs (subj))
 	(call fs.read_sysfs (subj))

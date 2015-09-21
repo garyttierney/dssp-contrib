@@ -5,22 +5,22 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro read_db_files ((type ARG1))
-		(call sys_search_mountpoints (ARG1))
+		(call sys.search_mountpoints (ARG1))
 		(allow ARG1 file read_file_perms))
 
 	(macro enable_db_files ((type ARG1))
-		(call sys_search_mountpoints (ARG1))
+		(call sys.search_mountpoints (ARG1))
 		(allow ARG1 file (file (quotaon))))
 
 	(macro manage_db_files ((type ARG1))
-		(call sys_rw_mountpoint_dirs (ARG1))
+		(call sys.rw_mountpoint_dirs (ARG1))
 		(allow ARG1 file manage_file_perms))
 
 	(macro mountpoint_obj_type_transition_file ((type ARG1))
-        	(call sys_mountpoint_obj_type_transition (ARG1 file file "aquota.user"))
-        	(call sys_mountpoint_obj_type_transition (ARG1 file file "aquota.user.new"))
-        	(call sys_mountpoint_obj_type_transition (ARG1 file file "aquota.group"))
-        	(call sys_mountpoint_obj_type_transition (ARG1 file file "aquota.group.new"))))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.user"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.user.new"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.group"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.group.new"))))

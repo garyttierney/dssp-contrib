@@ -3,7 +3,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro search_config ((type ARG1))
 		(call file.search_config (ARG1))
@@ -113,8 +113,8 @@
 		(call file.runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "auditd_sock"))
 		(call file.runtime_obj_type_transition (ARG1 auditd_runtime.sec_file sock_file "audit_events")))
 
-	(blockinherit rw_inherited_unix_stream_sockets_blk)
-	(blockinherit use_fd_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -130,7 +130,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in ausearch
 	(blockinherit exec_blk)
@@ -139,4 +139,4 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))

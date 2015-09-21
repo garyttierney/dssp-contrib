@@ -2,9 +2,9 @@
 	(block plugin_blk
 		(blockabstract plugin_blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 
-		(blockinherit cmd_obj_blk)
+		(blockinherit cmd.obj_blk)
 
 		(call plugin_pattern (subj cmd_file)))
 
@@ -12,7 +12,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro plugin_pattern ((type ARG1)(type ARG2))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1))
@@ -22,7 +22,7 @@
 
 		(typeattributeset plugin_subj_type_attribute ARG1)
 
-		(call subj_entry (ARG1 ARG2))
+		(call subj.entry (ARG1 ARG2))
 
 		(roletype sys.role ARG1))
 

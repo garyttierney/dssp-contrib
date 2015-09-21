@@ -11,11 +11,11 @@
 	(allow subj self create_tun_socket_perms)
 	(allow subj self (tun_socket (relabelto relabelfrom)))
 
-	(call sys_request_load_module (subj))
+	(call sys.request_load_module (subj))
 
-	(call standard_change_exemption_subj_type (subj))
+	(call standard.change_exemption_subj_type (subj))
 
-	(call dev_rw_tun_tap (subj))
+	(call dev.rw_tun_tap (subj))
 
 	(call nss.client_subj_type (subj))
 

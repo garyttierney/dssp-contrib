@@ -2,7 +2,7 @@
 	(block blk
 		(blockabstract blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 
 		(call usersubj.common_type (subj)))
 
@@ -16,7 +16,7 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(call sys_role (role)))))
+				(call sys.sys_role (role)))))
 
 	(block base_priv_user_blk
 		(blockabstract base_priv_user_blk)
@@ -30,8 +30,8 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(call sys_role (role))
-				(call rbacsep_exempt_role (role)))))
+				(call sys.sys_role (role))
+				(call rbacsep.exempt_role (role)))))
 
 	(block base_login_blk
 		(blockabstract base_login_blk)
@@ -43,7 +43,7 @@
 
 		(call usersubj.common_login_type (subj))
 
-		(call sys_roleallow_role (role))
+		(call sys.roleallow_role (role))
 
 		(tunableif enable_rbacsep
 			(false
@@ -60,7 +60,7 @@
 		(call usersubj.common_login_type (subj))
 		(call usersubj.priv_login_type (subj))
 
-		(call sys_roleallow_role (role))
+		(call sys.roleallow_role (role))
 
 		(tunableif enable_rbacsep
 			(false
@@ -1234,27 +1234,27 @@
 		(typeattributeset priv_login_type_attribute ARG1))
 
 	(macro base ((role ARG1)(type ARG2))
-		(call subj_type (ARG2))
+		(call subj.subj_type (ARG2))
 		(call type (ARG2))
 
 		(roletype ARG1 ARG2)
 
 		(tunableif enable_rbacsep
 			(true
-				(call sys_role (ARG1)))))
+				(call sys.sys_role (ARG1)))))
 
 	(macro base_common ((role ARG1)(type ARG2))
-		(call subj_common_type (ARG2))
+		(call subj.common_subj_type (ARG2))
 		(call common_type (ARG2))
 
 		(roletype ARG1 ARG2)
 
 		(tunableif enable_rbacsep
 			(true
-				(call sys_role (ARG1)))))
+				(call sys.sys_role (ARG1)))))
 
 	(macro base_priv ((role ARG1)(type ARG2))
-		(call subj_common_type (ARG2))
+		(call subj.common_subj_type (ARG2))
 		(call common_type (ARG2))
 		(call priv_type (ARG2))
 
@@ -1262,13 +1262,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(call sys_role (ARG1))
-				(call rbacsep_exempt_role (ARG1)))))
+				(call sys.sys_role (ARG1))
+				(call rbacsep.exempt_role (ARG1)))))
 
 	(macro base_login ((user ARG1)(role ARG2)(type ARG3))
 		(call base (ARG2 ARG3))
 
-		(call sys_roleallow_role (ARG2))
+		(call sys.roleallow_role (ARG2))
 		(userrole ARG1 ARG2)
 
 		(tunableif enable_rbacsep
@@ -1279,7 +1279,7 @@
 		(call base_common (ARG2 ARG3))
 		(call common_login_type (ARG3))
 
-		(call sys_roleallow_role (ARG2))
+		(call sys.roleallow_role (ARG2))
 		(userrole ARG1 ARG2)
 
 		(tunableif enable_rbacsep
@@ -1291,7 +1291,7 @@
 		(call common_login_type (ARG3))
 		(call priv_login_type (ARG3))
 
-		(call sys_roleallow_role (ARG2))
+		(call sys.roleallow_role (ARG2))
 		(userrole ARG1 ARG2)
 
 		(tunableif enable_rbacsep
@@ -1331,22 +1331,22 @@
 		(call dynamic_subj_type_transition_pattern (ARG1 unpriv_login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_common_login_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 common_login_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 common_login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 unpriv_login_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 unpriv_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_common_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 common_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 common_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_priv_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 priv_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 priv_type_attribute)))
 
 	(macro cmd_manual_subj_type_transition_priv_subj ((type ARG1))
-		(call cmd_manual_subj_type_transition (ARG1 priv_type_attribute)))
+		(call cmd.manual_subj_type_transition (ARG1 priv_type_attribute)))
 
 	(macro dontaudit_dynamic_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (dyntransition))))
@@ -1438,11 +1438,11 @@
 		(typeattributeset tmpfs_user_obj_type_attribute ARG1))
 
 	(macro tty_user_obj_type ((type ARG1))
-		(call term_tty_obj_type (ARG1))
+		(call term.tty_obj_type (ARG1))
 		(typeattributeset tty_user_obj_type_attribute ARG1))
 
 	(macro pty_user_obj_type ((type ARG1))
-		(call term_pty_obj_type (ARG1))
+		(call term.pty_obj_type (ARG1))
 		(typeattributeset pty_user_obj_type_attribute ARG1))
 
 	(macro var_spool_user_obj_type ((type ARG1))
@@ -2367,7 +2367,7 @@
 		(allow ARG1 home_cmd.home_user_file relabel_sock_file_perms))
 
 	(macro home_cmd_obj_entry_subj ((type ARG1))
-		(call subj_entry (ARG1 home_cmd.home_user_file)))
+		(call subj.entry (ARG1 home_cmd.home_user_file)))
 
 	(macro home_cmd_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(call search_home_cmd (ARG1))
@@ -2667,7 +2667,7 @@
 		(call home_fonts_data (ARG1)))
 
 	(macro create_ptys ((type ARG1))
-		(call term_create_pty (ARG1 pty_user.pty_dev)))
+		(call term.create_pty (ARG1 pty_user.pty_dev)))
 
 	(macro getattr_ptys ((type ARG1))
 		(call fs.search_devpts (ARG1))
@@ -2704,7 +2704,7 @@
 		(allow ARG1 pty_user.pty_dev relabelfrom_chr_file_perms))
 
 	(macro pty_template ((type ARG1))
-		(call term_user_pty (ARG1 pty_user.pty_dev)))
+		(call term.user_pty (ARG1 pty_user.pty_dev)))
 
 	(macro getattr_ttys ((type ARG1))
 		(call fs.search_devtmpfs (ARG1))
@@ -2741,7 +2741,7 @@
 		(allow ARG1 tty_user.tty_dev relabelfrom_chr_file_perms))
 
 	(macro tty_template ((type ARG1))
-		(call term_user_tty (ARG1 tty_user.tty_dev)))
+		(call term.user_tty (ARG1 tty_user.tty_dev)))
 
 	(macro getattr_term ((type ARG1))
 		(call fs.search_devpts (ARG1))

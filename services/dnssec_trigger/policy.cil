@@ -22,13 +22,13 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
 
 (block dnssec_triggerd
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset dnssec_trigger.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -41,16 +41,16 @@
 
 	(allow subj self create_tcp_stream_socket_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.read_config_files (subj))
 
 	(call locale.read (subj))
 
-	(call net_tcp_bind_generic_node (subj))
+	(call net.tcp_bind_generic_node (subj))
 
 	(call dnssec.tcp_bind_unreserved_port (subj))
 
@@ -75,13 +75,13 @@
 		(call sd_journald.client_subj_type (subj))))
 
 (block dnssec_triggercs
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset dnssec_trigger.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -94,10 +94,10 @@
 
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call dnssec_trigger.manage_config (subj))
 
@@ -113,13 +113,13 @@
 		(call sd.daemon (subj cmd_file))))
 
 (block dnssec_triggers
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset dnssec_trigger.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -128,10 +128,10 @@
 
 	(allow subj dnssec_triggerd.subj rw_inherited_tcp_socket_perms)
 
-	(call cmd_list_cmd (subj))
-	(call cmd_exec_cmd (subj))
+	(call cmd.list_cmd (subj))
+	(call cmd.exec (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.list_var_tmp (subj))
 	(call file.create_config_lnk_files (subj))

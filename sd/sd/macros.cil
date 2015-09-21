@@ -2,11 +2,11 @@
 	(block daemon_blk
 		(blockabstract daemon_blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 
-		(blockinherit cmd_obj_blk)
+		(blockinherit cmd.obj_blk)
 
-		(call subj_entry (subj cmd_file))
+		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
 
@@ -142,8 +142,8 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit getattr_cmd_files_blk)
-	(blockinherit mmap_cmd_files_blk)
+	(blockinherit cmd.getattr_cmd_files_blk)
+	(blockinherit cmd.mmap_cmd_files_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
 
@@ -152,7 +152,7 @@
 	(macro mls ((type ARG1)(level ARG2)(level ARG3))
 		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
 
-	(blockinherit cmd_obj_entry_subj_blk)
+	(blockinherit cmd.cmd_obj_entry_subj_blk)
 
 	(macro forked_subj_type ((type ARG1))
 		(typeattributeset forked_subj_type_attribute ARG1))
@@ -172,18 +172,18 @@
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
-	(blockinherit bounded_blk)
+	(blockinherit subj.bounded_blk)
 
 	(macro daemon ((type ARG1)(type ARG2))
-		(call subj_common_type (ARG1))
-		(call subj_entry (ARG1 ARG2))
+		(call subj.common_subj_type (ARG1))
+		(call subj.entry (ARG1 ARG2))
 		(roletype sys.role ARG1)
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
 
 	(macro daemon_mls ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
 		(tunableif enable_mls (true (rangetransition subj ARG2 process (ARG3 ARG4))
-		(call mls_range_trans_subj_type (ARG1)))))
+		(call mls.range_trans_subj_type (ARG1)))))
 
 	(macro subj_type ((type ARG1))
 		(typeattributeset subj_type_attribute ARG1))
@@ -311,37 +311,37 @@
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "systemd")))
 
 	(macro search_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file search_dir_perms))
 
 	(macro list_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file list_dir_perms))
 
 	(macro read_unit_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(call read_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
 
 	(macro read_unit_lnk_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
 
 	(macro manage_unit_dirs ((type ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(call rw_config_dirs (ARG1))
 		(call manage_dirs_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
 
 	(macro manage_unit_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(call manage_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
 
 	(macro getattr_unit_dirs ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file (dir (getattr))))
 
@@ -350,26 +350,26 @@
 		(allow ARG1 sd_unit.unit_file relabelto_dir_perms))
 
 	(macro rw_unit_dirs ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file rw_dir_perms))
 
 	(macro read_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file read_file_perms)
 		(allow ARG1 sd_unit.unit_file list_dir_perms)
 		(allow ARG1 sd_unit.unit_file read_lnk_file_perms))
 
 	(macro manage_unit ((type ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(call rw_config_dirs (ARG1))
 		(allow ARG1 sd_unit.unit_file manage_file_perms)
 		(allow ARG1 sd_unit.unit_file manage_dir_perms)
 		(allow ARG1 sd_unit.unit_file manage_lnk_file_perms))
 
 	(macro relabel_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))
 		(allow ARG1 sd_unit.unit_file relabel_file_perms)
 		(allow ARG1 sd_unit.unit_file relabel_dir_perms)
@@ -492,23 +492,23 @@
 		(dontaudit ARG1 subj list_dir_perms)
 		(dontaudit ARG1 subj read_lnk_file_perms))
 
-	(blockinherit read_state_blk)
-	(blockinherit use_fd_blk)
-	(blockinherit rw_unix_stream_sockets_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.read_state_blk)
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 	(macro setattr_unix_stream_sockets ((type ARG1))
 		(allow ARG1 subj (unix_stream_socket (setattr))))
 
-	(blockinherit ptrace_blk)
-	(blockinherit getattr_blk)
-	(blockinherit getpgid_blk)
-	(blockinherit send_sigchld_blk)
-	(blockinherit send_signal_blk)
-	(blockinherit send_signull_blk)
-	(blockinherit send_sigkill_blk)
-	(blockinherit send_sigstop_blk)
-	(blockinherit link_keyring_blk)
+	(blockinherit subj.ptrace_blk)
+	(blockinherit subj.getattr_blk)
+	(blockinherit subj.getpgid_blk)
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signull_blk)
+	(blockinherit subj.send_sigkill_blk)
+	(blockinherit subj.send_sigstop_blk)
+	(blockinherit subj.link_keyring_blk)
 
 	(macro read_state_forked_subj ((type ARG1))
 		(call fs.search_proc (ARG1))

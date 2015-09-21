@@ -1,7 +1,7 @@
 (in dracut
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro auto_subj_type_transition ((type ARG1))
 		(call send_signal (ARG1))

@@ -25,9 +25,9 @@
 
 	(allow subj self (capability2 (block_suspend)))
 
-	(call sys_unix_stream_connectto (subj))
+	(call sys.unix_stream_connectto (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(optional plymouth_optional_sd
 		(call sd.daemon (subj cmd_file)))
@@ -52,11 +52,11 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block plymouthd
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -88,15 +88,15 @@
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_change_ring_buffer_level (subj))
-	(call sys_manage_invalid_files (subj))
-	(call sys_manage_invalid_dirs (subj))
-	(call sys_manage_var_log_files (subj))
-	(call sys_var_log_obj_type_transition_var_log (subj))
+	(call sys.change_ring_buffer_level (subj))
+	(call sys.manage_invalid_files (subj))
+	(call sys.manage_invalid_dirs (subj))
+	(call sys.manage_var_log_files (subj))
+	(call sys.var_log_obj_type_transition_var_log (subj))
 
-	(call dev_rw_dri (subj))
-	(call dev_rw_framebuf (subj))
-	(call dev_rw_ptmx (subj))
+	(call dev.rw_dri (subj))
+	(call dev.rw_framebuf (subj))
+	(call dev.rw_ptmx (subj))
 
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
@@ -105,8 +105,8 @@
 	(call fs.rw_devpts_chr_files (subj))
 	(call fs.read_sysfs (subj))
 
-	(call term_use_console (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call nss.client_subj_type (subj))
 

@@ -21,12 +21,12 @@
 	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev_read_urandom (subj))
-	(call dev_write_kmsg (subj))
+	(call dev.read_urandom (subj))
+	(call dev.write_kmsg (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call locale.read (subj))
 

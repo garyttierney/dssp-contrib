@@ -5,7 +5,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call sd.daemon (subj cmd_file))
 
@@ -14,11 +14,11 @@
 	(allow subj_type_attribute self create_udp_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call cmd_audit_exec_access_all_cmd_files (subj_type_attribute))
-	(call cmd_exec_cmd (subj_type_attribute))
-	(call cmd_mmap_shell (subj_type_attribute))
+	(call cmd.audit_exec_access_all_cmd_files (subj_type_attribute))
+	(call cmd.exec (subj_type_attribute))
+	(call cmd.mmap_shell (subj_type_attribute))
 
-	(call dev_read_memory (subj_type_attribute))
+	(call dev.read_memory (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
@@ -30,9 +30,9 @@
 	(call fs.read_cgroup (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
-	(call storage_getattr_all (subj_type_attribute))
+	(call storage.getattr_all (subj_type_attribute))
 
-	(call term_use_unallocated_ttys (subj_type_attribute))
+	(call term.use_unallocated_ttys (subj_type_attribute))
 
 	(call fstab.sd_status_subj_type (subj_type_attribute))
 	(call terminfo.read_all (subj_type_attribute))

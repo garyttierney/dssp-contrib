@@ -9,10 +9,10 @@
 
 	(allow subj self (capability (dac_override setuid)))
 
-	(call sys_audit_client_subj_type (subj))
-	(call sys_read_crypto_sysctl_files (subj))
+	(call sys.audit_client_subj_type (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 
-	(call term_dontaudit_use_console (subj))
+	(call term.dontaudit_use_console (subj))
 
 	(call locale.read (subj))
 	(call shadow.read (subj))

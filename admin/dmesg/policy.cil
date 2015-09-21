@@ -8,12 +8,12 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_read_ring_buffer (subj))
+	(call sys.read_ring_buffer (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_read_kmsg (subj))
+	(call dev.read_kmsg (subj))
 
 	(call terminfo.read_all (subj))
 	(call locale.read (subj))

@@ -16,14 +16,14 @@
 
 	(allow subj self (capability (dac_override sys_admin fowner)))
 
-	(call sys_dontaudit_audit_access_mountpoint_dirs (subj))
-	(call sys_setattr_mountpoint_dirs (subj))
-	(call sys_list_mountpoints (subj))
-	(call sys_mounton_mountpoint_dirs (subj))
-	(call sys_request_load_module (subj))
-	(call sys_setsched (subj))
+	(call sys.dontaudit_audit_access_mountpoint_dirs (subj))
+	(call sys.setattr_mountpoint_dirs (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.mounton_mountpoint_dirs (subj))
+	(call sys.request_load_module (subj))
+	(call sys.setsched (subj))
 
-	(call dev_rw_loop_control (subj))
+	(call dev.rw_loop_control (subj))
 
 	(call file.read_config_files (subj))
 
@@ -35,7 +35,7 @@
 	(call fs.remount_all_fs (subj))
 	(call fs.unmount_all_fs (subj))
 
-	(call storage_rw_all (subj))
+	(call storage.rw_all (subj))
 
 	(call fstab.read (subj))
 	(call locale.read (subj))
@@ -51,4 +51,4 @@
 		(call sd.daemon (subj cmd_file))))
 
 (block mount_any_file
-	(blockinherit sec_bool_obj_blk))
+	(blockinherit sec.bool_obj_blk))

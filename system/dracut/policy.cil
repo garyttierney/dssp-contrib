@@ -22,23 +22,23 @@
 	(allow subj self (capability (dac_override mknod sys_chroot sys_admin sys_resource)))
 	(allow subj self (process (getsched setfscreate)))
 
-	(call sys_list_cpu_sysfs (subj))
-	(call sys_list_memory_sysfs (subj))
-	(call sys_list_node_sysfs (subj))
-	(call sys_list_mountpoints (subj))
-	(call sys_read_cpu_sysfs_files (subj))
-	(call sys_read_cpuinfo_proc_files (subj))
-	(call sys_read_memory_sysfs_files (subj))
-	(call sys_read_node_sysfs_files (subj))
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.list_memory_sysfs (subj))
+	(call sys.list_node_sysfs (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_memory_sysfs_files (subj))
+	(call sys.read_node_sysfs_files (subj))
 
-	(call standard_obj_sys_change_exemption_subj_type (subj))
+	(call standard.obj_sys_change_exemption_subj_type (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
-	(call cmd_mmap_all_cmd (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+	(call cmd.mmap_all (subj))
 
-	(call dev_read_urandom (subj))
-	(call dev_rw_lvm_control (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_lvm_control (subj))
 
 	(call file.manage_boot_files (subj))
 	(call file.read_config (subj))
@@ -49,11 +49,11 @@
 	(call fs.read_sysfs (subj))
 	(call fs.search_tmpfs (subj))
 
-	(call lib_exec_ld_so_files (subj))
+	(call lib.exec_ld_so_files (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call storage_read_all (subj))
+	(call storage.read_all (subj))
 
 	(call fstools.exec (subj))
 	(call fstools.manage_runtime (subj))

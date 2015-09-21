@@ -4,9 +4,9 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
 	(call subj_entry (subj cmd_file))
 
@@ -22,8 +22,8 @@
 	(allow subj self (capability (chown fsetid sys_tty_config sys_admin)))
 	(allow subj self create_unix_stream_socket_perms)
 
-	(call term_setattr_unallocated_ttys (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.setattr_unallocated_ttys (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call file.read_config_files (subj))
 
@@ -37,10 +37,10 @@
 
 	(booleanif term_console_login
 		(true
-			(call term_setattr_console (subj))
-			(call term_use_console (subj)))
+			(call term.setattr_console (subj))
+			(call term.use_console (subj)))
 		(false
-			(call term_dontaudit_use_console (subj))))
+			(call term.dontaudit_use_console (subj))))
 
 	(optional getty_optional_plymouth
 		(call plymouth.exec (subj)))

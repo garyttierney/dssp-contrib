@@ -132,8 +132,8 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(call cmd_auto_subj_type_transition (ARG3 ARG2))
-		(call cmd_shell_auto_subj_type_transition (ARG3 ARG2))
+		(call cmd.auto_subj_type_transition (ARG3 ARG2))
+		(call cmd.shell_auto_subj_type_transition (ARG3 ARG2))
 
 		(call control_pattern (ARG2 ARG3))
 		(call control_unit_transient_pattern (ARG2 ARG3))
@@ -202,37 +202,37 @@
 		(typeattributeset notify_all_subj_type_attribute ARG1))
 
 	(macro search_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file list_dir_perms))
 
 	(macro list_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file list_dir_perms))
 
 	(macro read_unit_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(call read_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 	(macro read_unit_lnk_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 	(macro manage_unit_dirs ((type ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(call sd.rw_config_dirs (ARG1))
 		(call manage_dirs_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 	(macro manage_unit_files ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(call manage_files_pattern (ARG1 sduser_unit.unit_file sduser_unit.unit_file)))
 
 	(macro getattr_unit_dirs ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file (dir (getattr))))
 
@@ -241,26 +241,26 @@
 		(allow ARG1 sduser_unit.unit_file relabelto_dir_perms))
 
 	(macro rw_unit_dirs ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file rw_dir_perms))
 
 	(macro read_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file read_file_perms)
 		(allow ARG1 sduser_unit.unit_file list_dir_perms)
 		(allow ARG1 sduser_unit.unit_file read_lnk_file_perms))
 
 	(macro manage_unit ((type ARG1))
-		(call lib_rw_lib_dirs (ARG1))
+		(call lib.rw_lib_dirs (ARG1))
 		(call sd.rw_config_dirs (ARG1))
 		(allow ARG1 sduser_unit.unit_file manage_file_perms)
 		(allow ARG1 sduser_unit.unit_file manage_dir_perms)
 		(allow ARG1 sduser_unit.unit_file manage_lnk_file_perms))
 
 	(macro relabel_unit ((type ARG1))
-		(call lib_search_lib (ARG1))
+		(call lib.search_lib (ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 sduser_unit.unit_file relabel_file_perms)
 		(allow ARG1 sduser_unit.unit_file relabel_dir_perms)
@@ -699,14 +699,14 @@
 		(typeattributeset sysbus_chat_client_all_subj_type_attribute ARG1))
 
 	(macro shell_manual_subj_type_transition_all_subj ((type ARG1))
-		(call cmd_shell_manual_subj_type_transition (ARG1 subj_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1 subj_type_attribute)))
 
-	(blockinherit noatsecure_all_blk)
-	(blockinherit send_sigchld_all_blk)
-	(blockinherit link_keyring_all_blk)
-	(blockinherit use_fd_all_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_all_blk)
-	(blockinherit create_keyring_all_blk)
+	(blockinherit subj.noatsecure_all_blk)
+	(blockinherit subj.send_sigchld_all_blk)
+	(blockinherit subj.link_keyring_all_blk)
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+	(blockinherit subj.create_keyring_all_blk)
 
 	(macro dontaudit_link_keyring_all_subj ((type ARG1))
 		(dontaudit ARG1 subj_type_attribute link_key_perms)))

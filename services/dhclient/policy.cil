@@ -1,9 +1,9 @@
 (block dhclient
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -26,15 +26,15 @@
 	(allow subj self create_packet_socket_perms)
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_mmap_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.mmap_shell (subj))
 
 	(call file.read_config_files (subj))
 
-	(call net_udp_bind_all_unreserved_ports (subj))
-	(call net_udp_bind_generic_node (subj))
+	(call net.udp_bind_all_unreserved_ports (subj))
+	(call net.udp_bind_generic_node (subj))
 
 	(call dhcp.udp_bind_reserved_port (subj))
 

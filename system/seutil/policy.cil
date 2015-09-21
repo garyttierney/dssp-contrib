@@ -1,7 +1,7 @@
 (block seutil
 	(typeattribute libselinux_linked_client_subj_type_attribute)
 
-	(call sec_getattr_fs (libselinux_linked_client_subj_type_attribute))
+	(call sec.getattr_fs (libselinux_linked_client_subj_type_attribute))
 
 	(call selinux_config.search_config (libselinux_linked_client_subj_type_attribute)))
 
@@ -14,7 +14,7 @@
 
 	(roletype role_attribute subj)
 
-	(call sec_load_policy_subj_type (subj))
+	(call sec.load_policy_subj_type (subj))
 
 	(call selinux_config.read_config_files (subj))
 	(call policy_config.read_files (subj))
@@ -32,10 +32,10 @@
 
 	(allow subj self create_unix_stream_socket_perms)
 
-	(call sys_getattr_all_sysctl_files (subj))
-	(call sys_getattr_all_sysctl_lnk_files (subj))
+	(call sys.getattr_all_sysctl_files (subj))
+	(call sys.getattr_all_sysctl_lnk_files (subj))
 
-	(call dev_getattr_all (subj))
+	(call dev.getattr_all (subj))
 
 	(call file.getattr_all (subj))
 	(call file.read_all_lnk_files (subj))
@@ -43,7 +43,7 @@
 	(call fs.getattr_all (subj))
 	(call fs.read_all_lnk_files (subj))
 
-	(call sec_validate_context (subj))
+	(call sec.validate_context (subj))
 
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj)))
@@ -60,19 +60,19 @@
 	(allow subj self (capability (dac_override fowner)))
 	(allow subj self create_unix_stream_socket_perms)
 
-	(call sys_audit_client_subj_type (subj))
-	(call sys_list_cpu_sysfs (subj))
-	(call sys_list_invalid (subj))
-	(call sys_list_unlabeled (subj))
-	(call sys_read_cpu_sysfs_files (subj))
-	(call sys_read_invalid_lnk_files (subj))
-	(call sys_read_unlabeled_lnk_files (subj))
-	(call sys_relabelfrom_invalid (subj))
-	(call sys_relabelfrom_unlabeled (subj))
+	(call sys.audit_client_subj_type (subj))
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.list_invalid (subj))
+	(call sys.list_unlabeled (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_invalid_lnk_files (subj))
+	(call sys.read_unlabeled_lnk_files (subj))
+	(call sys.relabelfrom_invalid (subj))
+	(call sys.relabelfrom_unlabeled (subj))
 
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call dev_relabel_all (subj))
+	(call dev.relabel_all (subj))
 
 	(call file.list_all (subj))
 	(call file.read_all_lnk_files (subj))
@@ -85,10 +85,10 @@
 	(call fs.relabel_all (subj))
 	(call fs.trace_client_subj_type (subj))
 
-	(call sec_get_enforce_mode (subj))
-	(call sec_validate_context (subj))
+	(call sec.get_enforce_mode (subj))
+	(call sec.validate_context (subj))
 
-	(call term_use_inherited_console (subj))
+	(call term.use_inherited_console (subj))
 
 	(call locale.read (subj))
 	(call shadow.relabel (subj))
@@ -121,11 +121,11 @@
 
 	(roletype role_attribute subj)
 
-	(call sec_set_all_booleans (subj))
+	(call sec.set_all_booleans (subj))
 
 	(call client_subj_type (subj))
 
-	(call sec_list_fs (client_subj_type_attribute))
+	(call sec.list_fs (client_subj_type_attribute))
 
 	(call selinux_config.read_config_files (client_subj_type_attribute))
 
@@ -145,7 +145,7 @@
 
 	(roletype role_attribute subj)
 
-	(call sec_set_enforce_mode (subj))
+	(call sec.set_enforce_mode (subj))
 
 	(call selinux_config.read_config_files (subj)))
 

@@ -1,7 +1,7 @@
 (in xserver
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro auto_subj_type_transition ((type ARG1))
 		(call send_signal (ARG1))
@@ -77,18 +77,18 @@
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xserverrc")))
 
-	(blockinherit tcp_bind_unreserved_port_blk)
-	(blockinherit tcp_connect_port_blk)
+	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
 
 	(macro send_signal_client_subj ((type ARG1))
 		(allow ARG1 client_subj_type_attribute (process (signal))))
 
-	(blockinherit use_fd_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro stream_connect ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj)))
 
-	(blockinherit rw_inherited_unix_stream_sockets_blk)
-	(blockinherit read_state_blk))
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.read_state_blk))

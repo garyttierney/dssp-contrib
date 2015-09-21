@@ -20,10 +20,10 @@
 	(call fs.rw_sysfs_files (subj))
 	(call fs.trace_client_subj_type (subj))
 
-	(call dev_write_kmsg (subj))
-	(call dev_read_urandom (subj))
+	(call dev.write_kmsg (subj))
+	(call dev.read_urandom (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call sd_journald.client_subj_type (subj))
 

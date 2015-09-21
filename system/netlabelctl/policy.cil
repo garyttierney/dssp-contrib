@@ -10,6 +10,6 @@
 	(allow subj self (capability (net_admin)))
 	(allow subj self create_netlink_generic_socket_perms)
 
-	(call sys_read_net_sysctl_files (subj))
+	(call sys.read_net_sysctl_files (subj))
 
 	(call file.read_config_files (subj)))

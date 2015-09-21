@@ -11,7 +11,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro read_cmd_files ((type ARG1))
 		(allow ARG1 cmd_file read_file_perms))
@@ -28,7 +28,7 @@
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
-	(blockinherit use_ptys_blk))
+	(blockinherit term.use_ptys_blk))
 
 (in myqemu_runner
 	(blockinherit exec_blk)
@@ -37,7 +37,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro read_cmd_files ((type ARG1))
 		(allow ARG1 cmd_file read_file_perms)))
@@ -49,7 +49,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro read_cmd_files ((type ARG1))
 		(allow ARG1 cmd_file read_file_perms)))

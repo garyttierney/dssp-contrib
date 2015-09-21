@@ -3,12 +3,12 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro rw_inherited_udp_sockets ((type ARG1))
 		(allow ARG1 subj (udp_socket (read write))))
 
-	(blockinherit use_fd_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro write_inherited_fifo_files ((type ARG1))
 		(call use_fd (ARG1))

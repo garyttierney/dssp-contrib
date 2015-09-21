@@ -6,9 +6,9 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
-	(blockinherit net_unreserved_port_obj_blk)
+	(blockinherit net.unreserved_port_obj_blk)
 
 	(call exec (subj_type_attribute))
 
@@ -21,7 +21,7 @@
 	(call tor.read_config_files (client_subj_type_attribute)))
 
 (block tor_socks_use
-	(blockinherit sec_bool_obj_blk)
+	(blockinherit sec.bool_obj_blk)
 
 	(booleanif tor_socks_use
 		(true

@@ -3,12 +3,12 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self (capability (net_admin sys_chroot setgid setuid sys_admin)))
 
-	(call cmd_audit_exec_access_all_cmd_files (subj_type_attribute))
-	(call cmd_audit_exec_access_shell_files (subj_type_attribute))
+	(call cmd.audit_exec_access_all_cmd_files (subj_type_attribute))
+	(call cmd.audit_exec_access_shell_files (subj_type_attribute))
 
 	(call sd.start_unit_runtime (subj_type_attribute))
 	(call sd.start (subj_type_attribute))

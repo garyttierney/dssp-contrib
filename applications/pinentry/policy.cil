@@ -14,8 +14,8 @@
 
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
 	(call file.read_data (subj))
 

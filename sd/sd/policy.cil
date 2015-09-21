@@ -31,11 +31,11 @@
 
 	(typeattribute unconfined_subj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
 	(call subj_entry (subj cmd_file))
 
@@ -103,41 +103,41 @@
 
 	(allow subj daemon_rwdir_obj_type_attribute (dir (mounton)))
 
-	(call cmd_auto_subj_type_transition (subj sd_unknown.subj))
-	(call cmd_shell_auto_subj_type_transition (subj sd_unknown.subj))
+	(call cmd.auto_subj_type_transition (subj sd_unknown.subj))
+	(call cmd.shell_auto_subj_type_transition (subj sd_unknown.subj))
 
-	(call sys_link_keyring (subj))
-	(call sys_list_mountpoints (subj))
-	(call sys_mounton_mountpoint_dirs (subj))
-	(call sys_read_cpuinfo_proc_files (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_read_net_sysctl_files (subj))
-	(call sys_read_state_invalid (subj))
-	(call sys_rw_unix_stream_sockets (subj))
-	(call sys_use_fd (subj))
+	(call sys.link_keyring (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.mounton_mountpoint_dirs (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_net_sysctl_files (subj))
+	(call sys.read_state_invalid (subj))
+	(call sys.rw_unix_stream_sockets (subj))
+	(call sys.use_fd (subj))
 
-	(call mls_priv_range_trans_subj_type (subj))
+	(call mls.priv_range_trans_subj_type (subj))
 
-	(call standard_id_change_exemption_subj_type (subj))
-	(call standard_role_change_exemption_subj_type (subj))
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.id_change_exemption_subj_type (subj))
+	(call standard.role_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call dev_create_devtty (subj))
-	(call dev_tmpfs_obj_type_transition_devtty (subj))
-	(call dev_create_null (subj))
-	(call dev_tmpfs_obj_type_transition_null (subj))
-	(call dev_create_random (subj))
-	(call dev_tmpfs_obj_type_transition_random (subj))
-	(call dev_create_urandom (subj))
-	(call dev_tmpfs_obj_type_transition_urandom (subj))
-	(call dev_create_zero (subj))
-	(call dev_tmpfs_obj_type_transition_zero (subj))
+	(call dev.create_devtty (subj))
+	(call dev.tmpfs_obj_type_transition_devtty (subj))
+	(call dev.create_null (subj))
+	(call dev.tmpfs_obj_type_transition_null (subj))
+	(call dev.create_random (subj))
+	(call dev.tmpfs_obj_type_transition_random (subj))
+	(call dev.create_urandom (subj))
+	(call dev.tmpfs_obj_type_transition_urandom (subj))
+	(call dev.create_zero (subj))
+	(call dev.tmpfs_obj_type_transition_zero (subj))
 
-	(call dev_read_autofs (subj))
-	(call dev_read_memory (subj))
-	(call dev_relabel_all (subj))
-	(call dev_write_kmsg (subj))
-	(call dev_write_watchdog (subj))
+	(call dev.read_autofs (subj))
+	(call dev.read_memory (subj))
+	(call dev.relabel_all (subj))
+	(call dev.write_kmsg (subj))
+	(call dev.write_watchdog (subj))
 
 	(call file.audit_access_config_dirs (subj))
 	(call file.read_all_config (subj))
@@ -166,21 +166,21 @@
 	(call fs.unmount_all_fs (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 
-	(call sec_validate_context (subj))
-	(call sec_compute_user_contexts (subj))
+	(call sec.validate_context (subj))
+	(call sec.compute_user_contexts (subj))
 
-	(call storage_read_all (subj))
+	(call storage.read_all (subj))
 
-	(call subj_getattr_common_subj (subj))
-	(call subj_interactive_fd_type (subj))
-	(call subj_ptrace_uncond_type (subj))
-	(call subj_read_common_subj_state (subj))
-	(call subj_send_sigkill_common_subj (subj))
-	(call subj_send_signal_common_subj (subj))
-	(call subj_send_signull_common_subj (subj))
+	(call subj.getattr_common_subj (subj))
+	(call subj.interactive_fd_subj_type (subj))
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_common_subj_state (subj))
+	(call subj.send_sigkill_common_subj (subj))
+	(call subj.send_signal_common_subj (subj))
+	(call subj.send_signull_common_subj (subj))
 
-	(call term_use_console (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call fstab.read (subj))
 	(call modules.read (subj))
@@ -234,7 +234,7 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep_read_state_target_subj_type (subj))))
+			(call rbacsep.read_state_target_subj_type (subj))))
 
 	(optional sd_optional_sysbus
 		(call sysbus.acquire_service (subj))
@@ -264,7 +264,7 @@
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_optional_usersubj
-		(call sec_compute_relabel_context (subj))
+		(call sec.compute_relabel_context (subj))
 		(call usersubj.relabelto_ptys (subj))
 		(call usersubj.link_keyring_common_login_subj (subj)))
 
@@ -279,10 +279,10 @@
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self (unix_dgram_socket (sendto)))
 
-	(call sys_audit_client_subj_type (subj_type_attribute))
-	(call sys_read_kernel_sysctl_files (subj_type_attribute))
+	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
-	(call dev_read_urandom (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.manage_var_tmp_dirs (subj_type_attribute))
 	(call file.manage_var_tmp_lnk_files (subj_type_attribute))
@@ -293,9 +293,9 @@
 	(call fs.read_sysfs (subj_type_attribute))
 	(call fs.rw_cgroup_files (subj_type_attribute))
 
-	(call sec_compute_access_vector (subj_type_attribute))
-	(call sec_compute_create_context (subj_type_attribute))
-	(call sec_list_fs (subj_type_attribute))
+	(call sec.compute_access_vector (subj_type_attribute))
+	(call sec.compute_create_context (subj_type_attribute))
+	(call sec.list_fs (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 
@@ -314,7 +314,7 @@
 
 	(allow daemon_adm_subj_type_attribute self (capability (kill sys_resource net_admin)))
 
-	(call subj_ptrace_type (daemon_adm_subj_type_attribute))
+	(call subj.ptrace_subj_type (daemon_adm_subj_type_attribute))
 
 	(call sd.reload (daemon_adm_subj_type_attribute))
 	(call sd.search_unit (daemon_adm_subj_type_attribute))
@@ -391,16 +391,16 @@
 	(call fs.associate_tmpfs (unit_file)))
 
 (block sd_unknown
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(roletype sys.role subj)
 
-	(call cmd_obj_entry_subj (subj))
-	(call cmd_shell_obj_entry_subj (subj))
+	(call cmd.obj_entry_subj (subj))
+	(call cmd.shell_obj_entry_subj (subj))
 
-	(call cmd_exec_cmd (subj))
+	(call cmd.exec (subj))
 
-	(call term_use_inherited_console (subj))
+	(call term.use_inherited_console (subj))
 
 	(call locale.read (subj))
 
@@ -416,7 +416,7 @@
 				(call unconfinedsubj.unconfined_type (subj))))))
 
 (block sd_helper
-	(blockinherit cmd_obj_blk))
+	(blockinherit cmd.obj_blk))
 
 (block sd_private
 	(blockinherit file.runtime_obj_blk)

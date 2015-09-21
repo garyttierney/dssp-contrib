@@ -16,13 +16,13 @@
 	(call manage_var_lib (subj))
 	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call fs.list_sysfs (subj))
 	(call fs.rw_sysfs_files (subj))
 	(call fs.read_sysfs_lnk_files (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call sd_journald.client_subj_type (subj))
 

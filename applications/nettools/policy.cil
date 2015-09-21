@@ -14,24 +14,24 @@
 	(allow subj self create_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 
-	(call sys_read_kernel_sysctl_files (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_request_load_module (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.request_load_module (subj))
 
 	(call fs.list_devtmpfs (subj))
 	(call fs.list_proc (subj))
 	(call fs.read_sysfs (subj))
 
-	(call dev_read_usbmon (subj))
-	(call dev_rw_usb (subj))
+	(call dev.read_usbmon (subj))
+	(call dev.rw_usb (subj))
 
-	(call net_udp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call subj_getattr_common_subj (subj))
-	(call subj_ptrace_uncond_type (subj))
-	(call subj_read_common_subj_state (subj))
+	(call subj.getattr_common_subj (subj))
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_common_subj_state (subj))
 
 	(call locale.read (subj))
 
@@ -69,16 +69,16 @@
 	(allow subj self create_rawip_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 
-	(call sys_read_net_proc_files (subj))
+	(call sys.read_net_proc_files (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.read_config_files (subj))
 	(call file.read_data_files (subj))
 
 	(call fs.read_sysfs (subj))
 
-	(call net_udp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
 
 	(call locale.read (subj))
 

@@ -3,7 +3,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit file.config_obj_blk)
 
@@ -26,12 +26,12 @@
 	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys_audit_client_subj_type (subj_type_attribute))
-	(call sys_read_crypto_sysctl_files (subj_type_attribute))
+	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 
-	(call subj_interactive_fd_type (subj_type_attribute))
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call terminfo.read_all (subj_type_attribute))
 	(call locale.read (subj_type_attribute))

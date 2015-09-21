@@ -13,13 +13,13 @@
 
 	(call client_subj_type (subj))
 
-	(call sys_rw_cpu_sysfs_files (subj))
-	(call sys_rw_memory_sysfs_files (subj))
-	(call sys_rw_node_sysfs_files (subj))
+	(call sys.rw_cpu_sysfs_files (subj))
+	(call sys.rw_memory_sysfs_files (subj))
+	(call sys.rw_node_sysfs_files (subj))
 
-	(call dev_rw_all (subj))
-	(call dev_relabel_all (subj))
-	(call dev_setattr_all (subj))
+	(call dev.rw_all (subj))
+	(call dev.relabel_all (subj))
+	(call dev.setattr_all (subj))
 
 	(call fs.list_sysfs (subj))
 	(call fs.manage_devtmpfs_dirs (subj))
@@ -32,9 +32,9 @@
 	(call fs.relabelfrom_devtmpfs_chr_files (subj))
 	(call fs.rw_sysfs_files (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call storage_read_all (subj))
+	(call storage.read_all (subj))
 
 	(call kmod.read_config (subj))
 

@@ -5,7 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
@@ -152,7 +152,7 @@
 	(blockinherit sd.start_unit_blk)
 	(blockinherit sd.status_unit_blk)
 
-	(blockinherit use_fd_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro stream_connect ((type ARG1))
 		(call sd.search_runtime (ARG1))

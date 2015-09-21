@@ -8,7 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -113,4 +113,4 @@
 		(call fs.search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
 
-	(blockinherit read_state_all_blk))
+	(blockinherit subj.read_state_all_blk))

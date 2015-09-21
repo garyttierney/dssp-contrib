@@ -3,13 +3,13 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
-	(blockinherit send_signull_blk)
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signull_blk)
 
-	(blockinherit cmd_obj_entry_subj_blk)
+	(blockinherit cmd.cmd_obj_entry_subj_blk)
 
 	(macro set_priv_boolean ((type ARG1))
-		(call sec_set_spec_boolean (ARG1 login_priv.bool))
+		(call sec.set_spec_boolean (ARG1 login_priv.bool))
 		(optional login_set_priv_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
@@ -25,6 +25,5 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
-
-	(blockinherit use_fd_blk))
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_blk))

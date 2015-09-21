@@ -6,13 +6,13 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call sd.daemon (subj cmd_file))
 
 	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin)))
 
-	(call dev_rw_inherited_ptmx (subj_type_attribute))
+	(call dev.rw_inherited_ptmx (subj_type_attribute))
 
 	(call client_subj_type (subj_type_attribute))
 
@@ -40,11 +40,11 @@
 	(allow client_subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys_read_crypto_sysctl_files (client_subj_type_attribute))
-	(call sys_read_kernel_sysctl_files (client_subj_type_attribute))
-	(call sys_read_net_proc_files (client_subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (client_subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
+	(call sys.read_net_proc_files (client_subj_type_attribute))
 
-	(call cmd_exec_cmd (client_subj_type_attribute))
+	(call cmd.exec (client_subj_type_attribute))
 
 	(call file.read_config_files (client_subj_type_attribute))
 

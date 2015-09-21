@@ -12,10 +12,10 @@
 
 	(allow subj self (capability (setuid setgid dac_override sys_admin)))
 
-	(call sys_read_fs_sysctl_files (subj))
-	(call sys_list_mountpoints (subj))
+	(call sys.read_fs_sysctl_files (subj))
+	(call sys.list_mountpoints (subj))
 
-	(call cmd_exec_cmd (subj))
+	(call cmd.exec (subj))
 
 	(call file.read_config_files (subj))
 
@@ -24,9 +24,9 @@
 	(call fs.mod_fs_quotas (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call storage_getattr_all (subj))
+	(call storage.getattr_all (subj))
 
 	(call terminfo.read_all (subj))
 	(call locale.read (subj))

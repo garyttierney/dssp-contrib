@@ -3,7 +3,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
@@ -13,14 +13,14 @@
 	(allow subj_type_attribute self (process (getsched setsched)))
 	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 
-	(call sys_getattr_core_if (subj_type_attribute))
+	(call sys.getattr_core_if (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
 
-	(call net_tcp_connect_all_ephemeral_ports (subj_type_attribute))
+	(call net.tcp_connect_all_ephemeral_ports (subj_type_attribute))
 
-	(call subj_dontaudit_read_common_subj_state (subj_type_attribute))
-	(call subj_execmem_type (subj_type_attribute))
+	(call subj.dontaudit_read_common_subj_state (subj_type_attribute))
+	(call subj.execmem_subj_type (subj_type_attribute))
 
 	(call firefox.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))
 

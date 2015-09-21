@@ -5,7 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))
 
 (in conntrackd
 	(blockinherit exec_blk)
@@ -14,7 +14,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
@@ -49,7 +49,7 @@
 		(call file.search_runtime (ARG1))
 		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
 
-	(blockinherit udp_bind_unreserved_port_blk)
+	(blockinherit net.udp_bind_unreserved_port_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -65,4 +65,4 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk))
+	(blockinherit subj.send_signal_blk))

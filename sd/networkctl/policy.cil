@@ -10,7 +10,7 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
+	(call cmd.exec (subj))
 
 	(call fs.read_sysfs (subj))
 

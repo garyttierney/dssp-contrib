@@ -6,12 +6,12 @@
 
 	(blockinherit sd.unit_obj_blk)
 
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev_read_clock (subj))
-	(call dev_rw_kmsg (subj))
+	(call dev.read_clock (subj))
+	(call dev.rw_kmsg (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call hwclock.read_config_files (subj))
 

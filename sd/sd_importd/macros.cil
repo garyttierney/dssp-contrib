@@ -5,7 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
@@ -14,7 +14,7 @@
 		(typeattributeset all_sysbus_chat_client_subj_type_attribute ARG1))
 
 	(macro cmd_obj_entry_subj ((type ARG1))
-		(call subj_entry (ARG1 cmd_file)))
+		(call subj.entry (ARG1 cmd_file)))
 
 	(macro search_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))

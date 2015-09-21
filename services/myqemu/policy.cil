@@ -29,12 +29,12 @@
 	(allow subj self (process (setexec)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call standard_obj_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
-	(call sec_validate_context (subj))
+	(call sec.validate_context (subj))
 
 	(call locale.read (subj))
 
@@ -81,20 +81,20 @@
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_list_cpu_sysfs (subj))
-	(call sys_list_node_sysfs (subj))
-	(call sys_read_cpu_sysfs_files (subj))
-	(call sys_read_cpuinfo_proc_files (subj))
-	(call sys_read_crypto_sysctl_files (subj))
-	(call sys_read_node_sysfs_files (subj))
-	(call sys_read_net_proc_files (subj))
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.list_node_sysfs (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_node_sysfs_files (subj))
+	(call sys.read_net_proc_files (subj))
 
-	(call cmd_audit_read_access_shell_files (subj))
-	(call cmd_exec_cmd (subj))
-	(call cmd_list_cmd (subj))
+	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.list_cmd (subj))
 
-	(call dev_read_urandom (subj))
-	(call dev_rw_kvm (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_kvm (subj))
 
 	(call file.read_data (subj))
 	(call file.read_config_files (subj))
@@ -102,7 +102,7 @@
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_tmpfs_fs (subj))
 
-	(call term_create_pty (subj pty_dev))
+	(call term.create_pty (subj pty_dev))
 
 	(call curl.exec (subj))
 	(call curl.read_config_files (subj))
@@ -143,8 +143,8 @@
 
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
 	(call locale.read (subj))
 

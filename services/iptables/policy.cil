@@ -40,14 +40,14 @@
 	(allow subj self create_unix_dgram_socket_perms)
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_load_kernel_module_subj_type (subj))
-	(call sys_read_net_proc_files (subj))
-	(call sys_read_kernel_sysctl_files (subj))
-	(call sys_read_usermodehelper_sysctl_files (subj))
-	(call sys_request_load_module (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.read_usermodehelper_sysctl_files (subj))
+	(call sys.request_load_module (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
 	(call file.read_config_files (subj))
 

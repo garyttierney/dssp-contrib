@@ -5,7 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro role ((role ARG1))
 		(roleattributeset role_attribute ARG1))
@@ -107,11 +107,9 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file lnk_file "*")))
 
-	(blockinherit read_state_blk)
-
-	(blockinherit use_fd_blk)
-
-	(blockinherit rw_inherited_fifo_files_blk)
+	(blockinherit subj.read_state_blk)
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -124,7 +122,7 @@
 	(typeattributeset rpm_script_client_subj_type_attribute ARG1))
 
 (macro rpm_script_shell_manual_subj_type_transition ((type ARG1))
-	(call cmd_shell_manual_subj_type_transition (ARG1 rpm_script_t)))
+	(call cmd.shell_manual_subj_type_transition (ARG1 rpm_script_t)))
 
 (macro rpm_script_read_state ((type ARG1))
 	(call fs.search_proc (ARG1))

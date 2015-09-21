@@ -6,7 +6,7 @@
 
 		(typeattributeset busctl.subj_type_attribute subj))
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -36,5 +36,5 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit use_fd_all_blk)
-	(blockinherit rw_inherited_unix_stream_sockets_all_blk))
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))

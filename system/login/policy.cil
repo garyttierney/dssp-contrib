@@ -1,7 +1,7 @@
 (boolean login_priv false)
 
 (block login_priv
-        (blockinherit sec_bool_obj_blk)
+        (blockinherit sec.bool_obj_blk)
 
 	(booleanif login_priv
 		(true
@@ -15,29 +15,29 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
 	(allow subj self (capability (kill fsetid fowner sys_tty_config dac_override sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_link_keyring (subj))
-	(call sys_read_kernel_sysctl_files (subj))
+	(call sys.link_keyring (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev_read_urandom (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.read_config_files (subj))
 
-	(call term_relabel_unallocated_ttys (subj))
-	(call term_setattr_unallocated_ttys (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.relabel_unallocated_ttys (subj))
+	(call term.setattr_unallocated_ttys (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call pam_console.manage_runtime_files (subj))
 	(call pam.login_prog_subj_type (subj))
@@ -52,11 +52,11 @@
 
 	(booleanif term_console_login
 		(true
-			(call term_relabel_console (subj))
-			(call term_setattr_console (subj))
-			(call term_use_console (subj)))
+			(call term.relabel_console (subj))
+			(call term.setattr_console (subj))
+			(call term.use_console (subj)))
 		(false
-			(call term_dontaudit_use_console (subj))))
+			(call term.dontaudit_use_console (subj))))
 
 	(optional login_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
@@ -75,13 +75,13 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))
 
 (block sulogin
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset login.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -89,26 +89,26 @@
 	(allow subj self (process (setexec setsched getpgid)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_read_crypto_sysctl_files (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 
-	(call standard_id_change_exemption_subj_type (subj))
-	(call standard_obj_change_exemption_subj_type (subj))
-	(call standard_role_change_exemption_subj_type (subj))
+	(call standard.id_change_exemption_subj_type (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
+	(call standard.role_change_exemption_subj_type (subj))
 
 	(call fs.list_devtmpfs (subj))
 	(call fs.dontaudit_getattr_devtmpfs_chr_files (subj))
 	(call fs.dontaudit_getattr_devtmpfs_blk_files (subj))
 	(call fs.read_sysfs_files (subj))
 
-	(call dev_getattr_all (subj))
+	(call dev.getattr_all (subj))
 
-	(call sec_compute_user_contexts (subj))
-	(call sec_validate_context (subj))
+	(call sec.compute_user_contexts (subj))
+	(call sec.validate_context (subj))
 
-	(call subj_interactive_fd_type (subj))
+	(call subj.interactive_fd_subj_type (subj))
 
-	(call term_use_console (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call locale.read (subj))
 	(call shadow.read (subj))

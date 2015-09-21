@@ -8,7 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -87,4 +87,4 @@
 		(call gpg.search_home_user (ARG1))
 		(call stream_connect_pattern (ARG1 home_user_file home_user_file subj_type_attribute)))
 
-	(blockinherit send_signal_all_blk))
+	(blockinherit subj.send_signal_all_blk))

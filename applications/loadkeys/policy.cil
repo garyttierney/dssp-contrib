@@ -10,17 +10,17 @@
 	(allow subj self (capability (sys_tty_config)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_rw_inherited_unix_stream_sockets (subj))
+	(call sys.rw_inherited_unix_stream_sockets (subj))
 
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
 	(call file.list_var_tmp (subj))
 
 	(call fs.list_rootfs (subj))
 
-	(call term_use_console (subj))
-	(call term_use_unallocated_ttys (subj))
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
 
 	(call locale.read (subj))
 

@@ -2,15 +2,15 @@
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
-	(call dev_read_clock (subj))
+	(call dev.read_clock (subj))
 
 	(call fs.read_devtmpfs_lnk_files (subj))
 

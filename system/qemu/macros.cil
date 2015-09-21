@@ -36,7 +36,7 @@
 	(block pty_obj_blk
 		(blockabstract pty_obj_blk)
 
-		(blockinherit term_pty_obj_blk)
+		(blockinherit term.pty_obj_blk)
 
 		(typeattributeset qemu_guest.pty_obj_type_attribute pty_dev))
 
@@ -53,7 +53,7 @@
 		(typeattributeset runtime_obj_type_attribute ARG1))
 
 	(macro guest_pty_obj_type ((type ARG1))
-		(call term_pty_obj_type (ARG1))
+		(call term.pty_obj_type (ARG1))
 		(typeattributeset pty_obj_type_attribute ARG1))
 
 	(macro guest_pattern ((type ARG1)(type ARG2)(type ARG3)(type ARG4))
@@ -64,7 +64,7 @@
 		(allow ARG1 ARG3 manage_sock_file_perms)
 		(call file.runtime_obj_type_transition (ARG1 ARG3 sock_file "*"))
 
-		(call term_create_pty (ARG1 ARG4))
+		(call term.create_pty (ARG1 ARG4))
 		(allow ARG1 ARG4 rw_term_perms))
 
 	(macro run ((type ARG1)(role ARG2))
@@ -134,6 +134,6 @@
 	(blockinherit file.relabel_config_blk)
 
 	(macro set_use_hugepages_boolean ((type ARG1))
-		(call sec_set_spec_boolean (ARG1 qemu_use_hugepages.bool))
+		(call sec.set_spec_boolean (ARG1 qemu_use_hugepages.bool))
 		(optional qemu_set_use_hugepages_boolean_optional_seutil
 			(call setsebool.exec (ARG1)))))

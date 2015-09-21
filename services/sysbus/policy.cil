@@ -9,17 +9,17 @@
 
 	(typeattribute obj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset dbus_subj_type_attribute subj)
 
-	(call mls_trusted_obj_type (subj))
+	(call mls.trusted_obj_type (subj))
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
 	(roletype sys.role subj)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(blockinherit file.config_obj_blk)
 
@@ -41,7 +41,7 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(call mls_recv_subj_type (subj))
+	(call mls.recv_subj_type (subj))
 
 	(call chat_client_subj (subj))
 	(call chat_unconfined_subj (subj))
@@ -51,13 +51,13 @@
 	(allow subj self (process (setcap setrlimit)))
 	(allow subj self (capability (setgid setuid sys_resource)))
 
-	(call sys_audit_client_subj_type (subj))
+	(call sys.audit_client_subj_type (subj))
 
-	(call mls_priv_range_trans_subj_type (subj))
+	(call mls.priv_range_trans_subj_type (subj))
 
-	(call dev_rw_inherited_dri (subj))
-	(call dev_rw_inherited_event (subj))
-	(call dev_rw_inherited_ptmx (subj))
+	(call dev.rw_inherited_dri (subj))
+	(call dev.rw_inherited_event (subj))
+	(call dev.rw_inherited_ptmx (subj))
 
 	(call pam_console.read_runtime_files (subj))
 
@@ -88,14 +88,14 @@
 	(allow dbus_subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow dbus_subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call sys_read_kernel_sysctl_files (dbus_subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (dbus_subj_type_attribute))
 
-	(call dev_read_urandom (dbus_subj_type_attribute))
+	(call dev.read_urandom (dbus_subj_type_attribute))
 
 	(call file.read_data (dbus_subj_type_attribute))
 
-	(call sec_compute_access_vector (dbus_subj_type_attribute))
-	(call sec_list_fs (dbus_subj_type_attribute))
+	(call sec.compute_access_vector (dbus_subj_type_attribute))
+	(call sec.list_fs (dbus_subj_type_attribute))
 
 	(call locale.read (dbus_subj_type_attribute))
 
@@ -151,13 +151,13 @@
 		(true
 			(constrain (dbus (send_msg))
 			(or (or (eq l1 l2)
-			(eq t1 mls_send_subj_type_attribute))
-			(eq t2 mls_recv_subj_type_attribute)))))
+			(eq t1 mls.send_subj_type_attribute))
+			(eq t2 mls.recv_subj_type_attribute)))))
 
 	(tunableif enable_rbacsep
 		(true
 			(constrain (dbus (acquire_svc send_msg))
 			(or (or (or (eq r1 r2)
-			(eq r1 rbacsep_exempt_role))
-			(eq r2 rbacsep_exempt_role))
-			(eq t1 rbacsep_exempt_subj_type))))))
+			(eq r1 rbacsep.exempt_role_attribute))
+			(eq r2 rbacsep.exempt_role_attribute))
+			(eq t1 rbacsep.exempt_subj_type_attribute))))))

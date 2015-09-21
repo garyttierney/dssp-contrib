@@ -8,7 +8,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -58,9 +58,9 @@
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xinitrc")))
 
 	(macro home_user_obj_entry_subj ((type ARG1))
-        	(call subj_entry (ARG1 home_user_file)))
+        	(call subj.entry (ARG1 home_user_file)))
 
-	(blockinherit use_fd_all_blk)
-	(blockinherit read_state_all_blk)
-	(blockinherit send_sigchld_all_blk)
-	(blockinherit send_signal_all_blk))
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.read_state_all_blk)
+	(blockinherit subj.send_sigchld_all_blk)
+	(blockinherit subj.send_signal_all_blk))

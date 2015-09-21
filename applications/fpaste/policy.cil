@@ -13,16 +13,16 @@
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys_read_kernel_sysctl_files (subj))
-	(call sys_list_mountpoints (subj))
-	(call sys_read_ring_buffer (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.read_ring_buffer (subj))
 
-	(call cmd_list_cmd (subj))
-	(call cmd_exec_cmd (subj))
-	(call cmd_exec_shell (subj))
+	(call cmd.list_cmd (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
-	(call dev_read_kmsg (subj))
-	(call dev_read_urandom (subj))
+	(call dev.read_kmsg (subj))
+	(call dev.read_urandom (subj))
 
 	(call file.read_config_files (subj))
 	(call file.read_data_files (subj))
@@ -31,11 +31,11 @@
 	(call fs.read_sysfs_files (subj))
 	(call fs.read_sysfs_lnk_files (subj))
 
-	(call sec_get_enforce_mode (subj))
+	(call sec.get_enforce_mode (subj))
 
-	(call storage_getattr_all (subj))
+	(call storage.getattr_all (subj))
 
-	(call subj_read_common_subj_state (subj))
+	(call subj.read_common_subj_state (subj))
 
 	(call dmesg.exec (subj))
 

@@ -5,7 +5,7 @@
 
 	(blockinherit file.config_obj_blk)
 
-	(call subj_entry (qemu_guest.subj_type_attribute cmd_file)))
+	(call subj.entry (qemu_guest.subj_type_attribute cmd_file)))
 
 (block qemu_guest
 	(blockinherit guest_blk)
@@ -29,30 +29,30 @@
 
 	(allow subj_type_attribute subj (tun_socket (relabelfrom)))
 
-	(call sys_list_cpu_sysfs (subj_type_attribute))
-	(call sys_list_node_sysfs (subj_type_attribute))
-	(call sys_request_load_module (subj_type_attribute))
-	(call sys_read_cpuinfo_proc_files (subj_type_attribute))
-	(call sys_read_cpu_sysfs_files (subj_type_attribute))
-	(call sys_read_kernel_sysctl_files (subj_type_attribute))
-	(call sys_read_net_proc_files (subj_type_attribute))
-	(call sys_read_node_sysfs_files (subj_type_attribute))
+	(call sys.list_cpu_sysfs (subj_type_attribute))
+	(call sys.list_node_sysfs (subj_type_attribute))
+	(call sys.request_load_module (subj_type_attribute))
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_cpu_sysfs_files (subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
+	(call sys.read_node_sysfs_files (subj_type_attribute))
 
-	(call mcs_constrained_subj_type (subj_type_attribute))
+	(call mcs.constrained_subj_type (subj_type_attribute))
 
-	(call dev_read_urandom (subj_type_attribute))
-	(call dev_rw_kvm (subj_type_attribute))
-	(call dev_rw_tun_tap (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_kvm (subj_type_attribute))
+	(call dev.rw_tun_tap (subj_type_attribute))
 
 	(call file.read_data (subj_type_attribute))
 	(call file.read_config_files (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
 
-	(call subj_use_interactive_fd_type (subj_type_attribute))
+	(call subj.use_interactive_fd_subj_type (subj_type_attribute))
 
-	(call net_tcp_bind_generic_node (subj_type_attribute))
-	(call net_udp_bind_generic_node (subj_type_attribute))
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.udp_bind_generic_node (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 
@@ -74,7 +74,7 @@
 		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
 
 (block qemu_use_hugepages
-	(blockinherit sec_bool_obj_blk)
+	(blockinherit sec.bool_obj_blk)
 
 	(booleanif qemu_use_hugepages
 		(true

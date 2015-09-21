@@ -6,7 +6,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit file.config_obj_blk)
 
@@ -39,7 +39,7 @@
 	(allow subj_type_attribute self (process (setcap setsched setrlimit)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call dev_rw_sound (subj_type_attribute))
+	(call dev.rw_sound (subj_type_attribute))
 
 	(call file.read_data (subj_type_attribute))
 
@@ -85,10 +85,10 @@
 	(allow client_subj_type_attribute subj_type_attribute (fd (use)))
 	(allow client_subj_type_attribute subj_type_attribute (unix_stream_socket (connectto)))
 
-	(call sys_list_cpu_sysfs (client_subj_type_attribute))
-	(call sys_read_cpu_sysfs_files (client_subj_type_attribute))
+	(call sys.list_cpu_sysfs (client_subj_type_attribute))
+	(call sys.read_cpu_sysfs_files (client_subj_type_attribute))
 
-	(call dev_read_urandom (client_subj_type_attribute))
+	(call dev.read_urandom (client_subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (client_subj_type_attribute))
 	(call fs.read_sysfs (client_subj_type_attribute))

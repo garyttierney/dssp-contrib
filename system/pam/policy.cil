@@ -24,13 +24,13 @@
 	(typeattribute subj_type_attribute)
 	(typeattribute unconfined_subj_type_attribute)
 
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 
@@ -46,15 +46,15 @@
 	(allow login_prog_subj_type_attribute self (process (setexec setsched)))
 	(allow login_prog_subj_type_attribute self write_key_perms)
 
-	(call standard_id_change_exemption_subj_type (login_prog_subj_type_attribute))
-	(call standard_role_change_exemption_subj_type (login_prog_subj_type_attribute))
-	(call standard_obj_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard.id_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard.role_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard.obj_change_exemption_subj_type (login_prog_subj_type_attribute))
 
-	(call sec_compute_user_contexts (login_prog_subj_type_attribute))
-	(call sec_compute_relabel_context (login_prog_subj_type_attribute))
-	(call sec_validate_context (login_prog_subj_type_attribute))
+	(call sec.compute_user_contexts (login_prog_subj_type_attribute))
+	(call sec.compute_relabel_context (login_prog_subj_type_attribute))
+	(call sec.validate_context (login_prog_subj_type_attribute))
 
-	(call subj_interactive_fd_type (login_prog_subj_type_attribute))
+	(call subj.interactive_fd_subj_type (login_prog_subj_type_attribute))
 
 	(call app.send_signal (login_prog_subj_type_attribute))
 
@@ -81,7 +81,7 @@
 		(call usersubj.create_keyring_common_login_subj (login_prog_subj_type_attribute))
 		(call usersubj.send_signal_common_login_subj (login_prog_subj_type_attribute)))
 
-	(call sys_audit_client_subj_type (client_subj_type_attribute))
+	(call sys.audit_client_subj_type (client_subj_type_attribute))
 
 	(call chkpwd.auto_subj_type_transition (client_subj_type_attribute))
 	(call updpwd.auto_subj_type_transition (client_subj_type_attribute))
@@ -123,13 +123,13 @@
 	(allow unconfined_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab))))
 
 (block pam_console
-	(blockinherit subj_common_blk)
+	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset pam.subj_type_attribute subj)
 
-	(blockinherit cmd_obj_blk)
+	(blockinherit cmd.obj_blk)
 
-	(call subj_entry (subj cmd_file))
+	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
 

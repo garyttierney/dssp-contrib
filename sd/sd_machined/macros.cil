@@ -3,7 +3,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit send_signal_blk)
+	(blockinherit subj.send_signal_blk)
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
@@ -102,11 +102,11 @@
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "container"))
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "machines")))
 
-	(blockinherit use_fd_blk)
+	(blockinherit subj.use_fd_blk)
 
-	(blockinherit setattr_login_ptys_blk)
-	(blockinherit relabelfrom_login_ptys_blk)
-	(blockinherit use_login_ptys_blk)
+	(blockinherit term.setattr_login_ptys_blk)
+	(blockinherit term.relabelfrom_login_ptys_blk)
+	(blockinherit term.use_login_ptys_blk)
 
 	(macro dontaudit_rw_inherited_login_ptys ((type ARG1))
 		(dontaudit ARG1 login_pty_dev rw_inherited_term_perms))

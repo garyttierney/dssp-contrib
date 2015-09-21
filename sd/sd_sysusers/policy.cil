@@ -30,12 +30,12 @@
 
 	(allow subj self (process (setfscreate)))
 
-	(call dev_read_urandom (subj))
-	(call dev_write_kmsg (subj))
+	(call dev.read_urandom (subj))
+	(call dev.write_kmsg (subj))
 
-	(call sec_list_fs (subj))
+	(call sec.list_fs (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call passwords.manage (subj))
 	(call shadow.read (subj))

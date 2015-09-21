@@ -1,23 +1,23 @@
 (block startx
 	(typeattribute subj_type_attribute)
 
-        (blockinherit app.application_cmd_obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-        (call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys_read_net_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
 
-	(call cmd_exec_cmd (subj_type_attribute))
-	(call cmd_audit_read_access_shell_files (subj_type_attribute))
+	(call cmd.exec (subj_type_attribute))
+	(call cmd.audit_read_access_shell_files (subj_type_attribute))
 
-	(call dev_read_urandom (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 

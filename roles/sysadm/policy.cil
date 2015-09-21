@@ -11,17 +11,17 @@
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
 	(allow subj self (process (getcap setcap setfscreate)))
 
-	(call sys_manage_var_log_files (subj))
-	(call sys_read_all_proc_files (subj))
-	(call sys_read_all_sysctl (subj))
-	(call sys_read_all_sysfs (subj))
+	(call sys.manage_var_log_files (subj))
+	(call sys.read_all_proc_files (subj))
+	(call sys.read_all_sysctl (subj))
+	(call sys.read_all_sysfs (subj))
 
-	(call mls_priv_range_trans_subj_type (subj))
+	(call mls.priv_range_trans_subj_type (subj))
 
-	(call cmd_list_cmd (subj))
-	(call cmd_read_all_cmd_files (subj))
+	(call cmd.list_cmd (subj))
+	(call cmd.read_all_cmd_files (subj))
 
-	(call dev_getattr_all (subj))
+	(call dev.getattr_all (subj))
 
 	(call file.manage_config (subj))
 	(call file.manage_lost_found (subj))
@@ -36,13 +36,13 @@
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))
 
-	(call sec_get_all_booleans (subj))
+	(call sec.get_all_booleans (subj))
 
-	(call subj_getattr_common_subj (subj))
-	(call subj_ptrace_type (subj))
-	(call subj_read_common_subj_state (subj))
+	(call subj.getattr_common_subj (subj))
+	(call subj.ptrace_subj_type (subj))
+	(call subj.read_common_subj_state (subj))
 
-	(call term_use_inherited_unallocated_ttys (subj))
+	(call term.use_inherited_unallocated_ttys (subj))
 
 	(call fstab.manage (subj))
 	(call cert.manage (subj))
@@ -744,8 +744,8 @@
 
 		(call dunst.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -761,8 +761,8 @@
 
 		(call emacs.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -832,8 +832,8 @@
 
 		(call git.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
 
@@ -858,8 +858,8 @@
 
 		(call git_email.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -884,8 +884,8 @@
 
 		(call gpg_agent.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -970,7 +970,7 @@
 
 		(call irssi.role_pattern (sysadm.role sysadm_subj_type subj))
 
-                (call cmd_shell_auto_subj_type_transition (subj sysadm.subj))))
+                (call cmd.shell_auto_subj_type_transition (subj sysadm.subj))))
 
 (optional sysadm_journalctl_optional_journalctl
 	(block sysadm_journalctl
@@ -1022,8 +1022,8 @@
 
 		(call lynx.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1064,8 +1064,8 @@
 
 		(call mutt.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1096,7 +1096,7 @@
 
 		(call nb.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1118,8 +1118,8 @@
 
 		(call numactl.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1156,8 +1156,8 @@
 
 		(call polkit_exec.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1167,8 +1167,8 @@
 
 		(call rp.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1205,8 +1205,8 @@
 
 		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
 
@@ -1227,7 +1227,7 @@
 		(allow subj self (capability (dac_override)))
 		(allow subj self (process (setpgid)))
 
-		(call cmd_shell_obj_entry_subj (subj))
+		(call cmd.shell_obj_entry_subj (subj))
 
 		(call file.list_config (subj))
 		(call file.search_var_spool (subj))
@@ -1251,7 +1251,7 @@
 
 		(call sessbus.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1279,8 +1279,8 @@
 
 		(call ssh_agent.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1292,11 +1292,11 @@
 
 		(call ssh_client.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call standard_obj_id_change_exemption_subj_type (subj))
+		(call standard.obj_id_change_exemption_subj_type (subj))
 
-		(call sec_validate_context (subj))
+		(call sec.validate_context (subj))
 
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call selinux_config.read_config_files (subj))
 		(call file_context.read_config_files (subj))))
@@ -1340,8 +1340,8 @@
 
 		(call tor_socks.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1387,7 +1387,7 @@
 
 		(call visudo.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1397,7 +1397,7 @@
 
 		(call vlock.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1407,7 +1407,7 @@
 
 		(call xbindkeys.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1422,7 +1422,7 @@
 
 		(call xinit.home_user_auto_subj_type_transition_pattern (subj sysadm.subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 
@@ -1453,8 +1453,8 @@
 
 		(call xterm.role_pattern (sysadm.role sysadm_subj_type subj))
 
-		(call cmd_auto_subj_type_transition (subj sysadm.subj))
-		(call cmd_shell_auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.auto_subj_type_transition (subj sysadm.subj))
+		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
 
 		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
 

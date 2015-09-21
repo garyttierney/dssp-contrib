@@ -19,9 +19,9 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
 
-	(call cmd_exec_cmd (subj))
+	(call cmd.exec (subj))
 
-	(call dev_write_kmsg (subj))
+	(call dev.write_kmsg (subj))
 
 	(call file.getattr_all_tmpfs_files (subj))
 	(call file.list_all_tmpfs (subj))
@@ -31,9 +31,9 @@
 	(call fs.list_rootfs (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 
-	(call sec_set_enforce_mode (subj))
+	(call sec.set_enforce_mode (subj))
 
-	(call term_use_console (subj))
+	(call term.use_console (subj))
 
 	(call sulogin.auto_subj_type_transition (subj))
 

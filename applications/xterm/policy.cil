@@ -3,7 +3,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
@@ -12,7 +12,7 @@
 
 	(call fs.getattr_fs (subj_type_attribute))
 
-	(call subj_interactive_fd_type (subj_type_attribute))
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call app.send_signal (subj_type_attribute))
 

@@ -3,7 +3,7 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj_entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit file.config_obj_blk)
 
@@ -21,7 +21,7 @@
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call dev_read_urandom (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data_files (subj_type_attribute))
@@ -47,4 +47,4 @@
 		(call sysbus.read_var_lib_files (subj_type_attribute))))
 
 (block mutt_helper
-	(blockinherit cmd_obj_blk))
+	(blockinherit cmd.obj_blk))

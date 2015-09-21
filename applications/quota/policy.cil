@@ -11,8 +11,8 @@
 
 	(allow subj self (capability (sys_admin)))
 
-	(call sys_read_fs_sysctl_files (subj))
-	(call sys_list_mountpoints (subj))
+	(call sys.read_fs_sysctl_files (subj))
+	(call sys.list_mountpoints (subj))
 
 	(call locale.read (subj))
 
@@ -22,4 +22,4 @@
 	(call fs.getattr_fs (client_subj_type_attribute))
 	(call fs.get_fs_quotas (client_subj_type_attribute))
 
-	(call storage_getattr_all (client_subj_type_attribute)))
+	(call storage.getattr_all (client_subj_type_attribute)))

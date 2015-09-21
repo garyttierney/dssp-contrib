@@ -2,33 +2,33 @@
 	(block application_blk
 		(blockabstract application_blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 		(typeattributeset app.subj_type_attribute subj)
 
-		(blockinherit cmd_obj_blk)
+		(blockinherit cmd.obj_blk)
 		(typeattributeset app.cmd_obj_type_attribute cmd_file)
 
-		(call subj_entry (subj cmd_file)))
+		(call subj.entry (subj cmd_file)))
 
 	(block application_subj_blk
 		(blockabstract application_subj_blk)
 
-		(blockinherit subj_common_blk)
+		(blockinherit subj.common_subj_blk)
 
 		(typeattributeset app.subj_type_attribute subj))
 
 	(block application_cmd_obj_blk
 		(blockabstract application_cmd_obj_blk)
 
-		(blockinherit cmd_obj_blk)
+		(blockinherit cmd.obj_blk)
 		(typeattributeset app.cmd_obj_type_attribute cmd_file))
 
 	(macro application_subj_type ((type ARG1))
-		(call subj_common_type (ARG1))
+		(call subj.common_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))
 
 	(macro application_cmd_obj_type ((type ARG1))
-		(call subj_entry_obj_type (ARG1))
+		(call subj.entry_obj_type (ARG1))
 		(typeattributeset cmd_obj_type_attribute ARG1))
 
 	(macro exec_all ((type ARG1))
@@ -66,16 +66,16 @@
 		(allow ARG1 subj_type_attribute (fd (use))))
 
 	(macro application ((type ARG1)(type ARG2))
-		(call subj_common_type (ARG1))
+		(call subj.common_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1)
 
-		(call subj_entry_obj_type (ARG2))
+		(call subj.entry_obj_type (ARG2))
 		(typeattributeset cmd_obj_type_attribute ARG2)
 
-		(call subj_entry (ARG1 ARG2)))
+		(call subj.entry (ARG1 ARG2)))
 
 	(macro application_subj_entry ((type ARG1)(type ARG2))
-		(call subj_entry_obj_type (ARG2))
+		(call subj.entry_obj_type (ARG2))
 		(typeattributeset cmd_obj_type_attribute ARG2)
 
-		(call subj_entry (ARG1 ARG2))))
+		(call subj.entry (ARG1 ARG2))))

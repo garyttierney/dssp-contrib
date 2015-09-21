@@ -3,7 +3,7 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_blk))
 
-	(macro mls ((type ARG1)(level ARG2)(level ARG3))
-		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3))))))
+(macro sd_cgagent_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd_cgagent.cmd_file process (ARG2 ARG3)))))

@@ -7,9 +7,6 @@
 
 	(blockinherit subj.send_signal_blk)
 
-	(macro mls ((type ARG1)(level ARG2)(level ARG3))
-		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
-
 	(macro read_var_lib_files ((type ARG1))
 		(call sd.search_var_lib (ARG1))
 		(allow ARG1 var_lib_file read_file_perms))
@@ -29,3 +26,6 @@
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(call sd.daemon_adm_subj_type (ARG1))
 		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+(macro sd_randomseed_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd_randomseed.cmd_file process (ARG2 ARG3)))))

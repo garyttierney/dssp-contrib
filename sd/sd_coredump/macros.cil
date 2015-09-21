@@ -5,9 +5,6 @@
 
 	(blockinherit subj.send_signal_blk)
 
-	(macro mls ((type ARG1)(level ARG2)(level ARG3))
-		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
-
 	(macro search_config ((type ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 config_file search_dir_perms))
@@ -78,3 +75,6 @@
 
 	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
 		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir "coredump"))))
+
+(macro sd_coredump_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd_coredump.cmd_file process (ARG2 ARG3)))))

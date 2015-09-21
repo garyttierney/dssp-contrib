@@ -149,9 +149,6 @@
 
 	(blockinherit dynamic_subj_type_transition_blk)
 
-	(macro mls ((type ARG1)(level ARG2)(level ARG3))
-		(tunableif enable_mls (true (rangetransition ARG1 cmd_file process (ARG2 ARG3)))))
-
 	(blockinherit cmd.cmd_obj_entry_subj_blk)
 
 	(macro forked_subj_type ((type ARG1))
@@ -747,6 +744,9 @@
 
 	(macro unconfined_subj_type ((type ARG1))
 		(typeattributeset unconfined_subj_type_attribute ARG1)))
+
+(macro sd_mls ((type ARG1)(level ARG2)(level ARG3))
+	(tunableif enable_mls (true (rangetransition ARG1 sd.cmd_file process (ARG2 ARG3)))))
 
 (in sd_helper
 	(blockinherit exec_blk))

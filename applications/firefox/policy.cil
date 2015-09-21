@@ -5,7 +5,7 @@
 
 	(booleanif firefox_use_webcam
 		(true
-			(call dev_rw_v4l (firefox.subj_type_attribute)))))
+			(call dev.rw_v4l (firefox.subj_type_attribute)))))
 
 (block firefox
 	(typeattribute subj_type_attribute)
@@ -97,7 +97,7 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep_read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
 	(optional firefox_subj_type_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.sessbus_chat_client_subj_type (subj_type_attribute)))

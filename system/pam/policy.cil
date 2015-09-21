@@ -70,7 +70,7 @@
 		(allow login_prog_subj_type_attribute self (capability (dac_override dac_read_search)))
 
 		(call file.search_runtime_user (login_prog_subj_type_attribute))
-		(call fs_search_tmpfs (login_prog_subj_type_attribute))
+		(call fs.search_tmpfs (login_prog_subj_type_attribute))
 
 		(call sd_logind.client_subj_type (login_prog_subj_type_attribute)))
 

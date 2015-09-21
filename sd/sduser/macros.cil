@@ -386,16 +386,16 @@
 
 	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 		(call file.search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
+		(call fs.search_tmpfs (ARG1))
 		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "systemd")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "systemd")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(macro read_private_tmpfs_sock_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))

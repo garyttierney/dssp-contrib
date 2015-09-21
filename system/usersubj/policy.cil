@@ -42,8 +42,8 @@
 
 	(call dev_read_urandom (common_type_attribute))
 
-	(call fs_dontaudit_getattr_all_fs (common_type_attribute))
-	(call fs_getattr_fs (common_type_attribute))
+	(call fs.dontaudit_getattr_all_fs (common_type_attribute))
+	(call fs.getattr_fs (common_type_attribute))
 
 	(call subj_dontaudit_read_common_subj_state (common_type_attribute))
 	(call subj_interactive_fd_type (common_type_attribute))
@@ -73,10 +73,10 @@
 	(call file.read_config (common_login_type_attribute))
 	(call file.read_data (common_login_type_attribute))
 
-	(call fs_dontaudit_getattr_devtmpfs_lnk_files (common_login_type_attribute))
-	(call fs_getattr_sysfs_fs (common_login_type_attribute))
-	(call fs_list_tmpfs (common_login_type_attribute))
-	(call fs_manage_fuse_subj_type (common_login_type_attribute))
+	(call fs.dontaudit_getattr_devtmpfs_lnk_files (common_login_type_attribute))
+	(call fs.getattr_sysfs_fs (common_login_type_attribute))
+	(call fs.list_tmpfs (common_login_type_attribute))
+	(call fs.manage_fuse_subj_type (common_login_type_attribute))
 
 	(call sec_get_enforce_mode (common_login_type_attribute))
 

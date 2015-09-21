@@ -95,10 +95,10 @@
 	(call standard_obj_change_exemption_subj_type (subj))
 	(call standard_role_change_exemption_subj_type (subj))
 
-	(call fs_list_devtmpfs (subj))
-	(call fs_dontaudit_getattr_devtmpfs_chr_files (subj))
-	(call fs_dontaudit_getattr_devtmpfs_blk_files (subj))
-	(call fs_read_sysfs_files (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.dontaudit_getattr_devtmpfs_chr_files (subj))
+	(call fs.dontaudit_getattr_devtmpfs_blk_files (subj))
+	(call fs.read_sysfs_files (subj))
 
 	(call dev_getattr_all (subj))
 

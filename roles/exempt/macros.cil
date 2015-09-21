@@ -6,7 +6,7 @@
 	(allow ARG1 exempt.subj (process (noatsecure))))
 
 (macro exempt_read_state_all ((type ARG1))
-	(call fs_search_proc (ARG1))
+	(call fs.search_proc (ARG1))
 	(allow ARG1 exempt.subj read_file_perms)
 	(allow ARG1 exempt.subj list_dir_perms)
 	(allow ARG1 exempt.subj read_lnk_file_perms))

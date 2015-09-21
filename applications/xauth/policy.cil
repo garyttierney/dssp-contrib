@@ -12,8 +12,8 @@
 
 	(allow subj self create_unix_dgram_socket_perms)
 
-	(call fs_getattr_fs (subj))
-	(call fs_read_sysfs (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.read_sysfs (subj))
 
 	(call nss.client_subj_type (subj))
 

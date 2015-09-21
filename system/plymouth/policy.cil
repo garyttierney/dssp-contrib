@@ -101,9 +101,9 @@
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
 
-	(call fs_getattr_devpts_fs (subj))
-	(call fs_rw_devpts_chr_files (subj))
-	(call fs_read_sysfs (subj))
+	(call fs.getattr_devpts_fs (subj))
+	(call fs.rw_devpts_chr_files (subj))
+	(call fs.read_sysfs (subj))
 
 	(call term_use_console (subj))
 	(call term_use_unallocated_ttys (subj))

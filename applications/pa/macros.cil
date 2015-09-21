@@ -81,14 +81,14 @@
 
 	(macro mmap_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
+		(call fs.search_tmpfs (ARG1))
 		(call mmap_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "pulse")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "pulse")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -110,7 +110,7 @@
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
+		(call fs.search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
 
 	(blockinherit read_state_all_blk))

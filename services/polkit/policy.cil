@@ -34,8 +34,8 @@
 
 	(call dev_read_urandom (subj))
 
-	(call fs_getattr_fs (subj))
-	(call fs_getattr_tmpfs_fs (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
 
 	(call file.read_data (subj))
 
@@ -99,8 +99,8 @@
 
 	(call file.read_config_files (subj))
 
-	(call fs_list_devtmpfs (subj))
-	(call fs_search_devpts (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.search_devpts (subj))
 
 	(call chkpwd.run (subj role_attribute))
 

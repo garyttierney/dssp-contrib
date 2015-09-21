@@ -94,15 +94,15 @@
 		(call stream_connect_pattern (ARG1 runtime_obj_type_attribute runtime_obj_type_attribute subj_type_attribute)))
 
 	(macro getattr_all_ptys ((type ARG1))
-		(call fs_search_devpts (ARG1))
+		(call fs.search_devpts (ARG1))
 		(allow ARG1 pty_obj_type_attribute (chr_file (getattr))))
 
 	(macro use_all_ptys ((type ARG1))
-		(call fs_search_devpts (ARG1))
+		(call fs.search_devpts (ARG1))
 		(allow ARG1 pty_obj_type_attribute rw_term_perms))
 
 	(macro use_all_inherited_ptys ((type ARG1))
-		(call fs_search_devpts (ARG1))
+		(call fs.search_devpts (ARG1))
 		(allow ARG1 pty_obj_type_attribute rw_inherited_term_perms))
 
 	(macro relabelfrom_all_tun_socket ((type ARG1))

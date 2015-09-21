@@ -36,9 +36,9 @@
 
 	(call file.read_data (subj_type_attribute))
 
-	(call fs_dontaudit_audit_access_sysfs_dirs (subj_type_attribute))
-	(call fs_getattr_sysfs_fs (subj_type_attribute))
-	(call fs_getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.dontaudit_audit_access_sysfs_dirs (subj_type_attribute))
+	(call fs.getattr_sysfs_fs (subj_type_attribute))
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 
 	(call subj_interactive_fd_type (subj_type_attribute))
 

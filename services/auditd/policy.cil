@@ -30,7 +30,7 @@
 	(call manage_runtime_sock_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(call fs_getattr_fs (subj))
+	(call fs.getattr_fs (subj))
 
 	(call locale.read (subj))
 
@@ -86,7 +86,7 @@
 
 	(typeattributeset auditd.obj_type_attribute sec_file)
 
-	(call fs_associate_tmpfs (sec_file)))
+	(call fs.associate_tmpfs (sec_file)))
 
 (block augenrules
 	(roleattribute role_attribute)

@@ -22,8 +22,8 @@
 
 	(call sys_read_state_files (subj_type_attribute))
 
-	(call fs_getattr_tmpfs_fs (subj_type_attribute))
-	(call fs_write_inherited_devpts_chr_files (subj_type_attribute))
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.write_inherited_devpts_chr_files (subj_type_attribute))
 
 	(call term_use_inherited_console (subj_type_attribute))
 
@@ -91,9 +91,9 @@
 
 	(call file.read_config_files (client_subj_type_attribute))
 
-	(call fs_getattr_fs (client_subj_type_attribute))
-	(call fs_read_sysfs_files (client_subj_type_attribute))
-	(call fs_read_cgroup (client_subj_type_attribute))
+	(call fs.getattr_fs (client_subj_type_attribute))
+	(call fs.read_sysfs_files (client_subj_type_attribute))
+	(call fs.read_cgroup (client_subj_type_attribute))
 
 	(call terminfo.read_all (client_subj_type_attribute))
 	(call locale.read (client_subj_type_attribute))

@@ -29,7 +29,7 @@
 	(call manage_tmpfs_user (client_subj_type_attribute))
 	(call mmap_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (client_subj_type_attribute))
-	(call fs_tmpfs_obj_type_transition (subj_type_attribute tmpfs_user_file dir "*"))
+	(call fs.tmpfs_obj_type_transition (subj_type_attribute tmpfs_user_file dir "*"))
 	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
 
 	(call exec (subj_type_attribute))
@@ -43,8 +43,8 @@
 
 	(call file.read_data (subj_type_attribute))
 
-	(call fs_getattr_proc_fs (subj_type_attribute))
-	(call fs_list_devtmpfs (subj_type_attribute))
+	(call fs.getattr_proc_fs (subj_type_attribute))
+	(call fs.list_devtmpfs (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 
@@ -90,8 +90,8 @@
 
 	(call dev_read_urandom (client_subj_type_attribute))
 
-	(call fs_getattr_tmpfs_fs (client_subj_type_attribute))
-	(call fs_read_sysfs (client_subj_type_attribute))
+	(call fs.getattr_tmpfs_fs (client_subj_type_attribute))
+	(call fs.read_sysfs (client_subj_type_attribute))
 
 	(call alsactl.read_config (client_subj_type_attribute))
 

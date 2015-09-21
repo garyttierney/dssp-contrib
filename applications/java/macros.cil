@@ -14,10 +14,10 @@
 
 	(macro tmpfs_client ((type ARG1)(type ARG2))
 		(call client_subj_type (ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
 
 		(optional java_tmpfs_client_optional_xserver
-			(call fs_tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
 			(call xserver.tmpfs_client (ARG1 ARG2))))
 
 	(blockinherit file.search_config_blk)
@@ -48,4 +48,4 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1)(class ARG2)(name ARG3))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file ARG2 ARG3))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file ARG2 ARG3))))

@@ -103,9 +103,9 @@
 		(allow ARG1 tmpfs_file rw_inherited_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file lnk_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file lnk_file "*")))
 
 	(blockinherit read_state_blk)
 
@@ -127,7 +127,7 @@
 	(call cmd_shell_manual_subj_type_transition (ARG1 rpm_script_t)))
 
 (macro rpm_script_read_state ((type ARG1))
-	(call fs_search_proc (ARG1))
+	(call fs.search_proc (ARG1))
 	(allow ARG1 rpm_script_t read_file_perms)
 	(allow ARG1 rpm_script_t list_dir_perms)
 	(allow ARG1 rpm_script_t read_lnk_file_perms))

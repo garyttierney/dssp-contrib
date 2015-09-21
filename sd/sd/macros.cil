@@ -484,7 +484,7 @@
 		(allow ARG1 unit_obj_type_attribute relabel_lnk_file_perms))
 
 	(macro read_state_lnk_files ((type ARG1))
-		(call fs_search_proc (ARG1))
+		(call fs.search_proc (ARG1))
 		(call read_lnk_files_pattern (ARG1 subj subj)))
 
 	(macro dontaudit_read_state ((type ARG1))
@@ -511,7 +511,7 @@
 	(blockinherit link_keyring_blk)
 
 	(macro read_state_forked_subj ((type ARG1))
-		(call fs_search_proc (ARG1))
+		(call fs.search_proc (ARG1))
 		(allow ARG1 forked_subj_type_attribute read_file_perms)
 		(allow ARG1 forked_subj_type_attribute list_dir_perms)
 		(allow ARG1 forked_subj_type_attribute read_lnk_file_perms))
@@ -520,7 +520,7 @@
 		(allow ARG1 forked_subj_type_attribute (process (getattr))))
 
 	(macro read_state_daemon_subj ((type ARG1))
-		(call fs_search_proc (ARG1))
+		(call fs.search_proc (ARG1))
 		(allow ARG1 daemon_subj_type_attribute read_file_perms)
 		(allow ARG1 daemon_subj_type_attribute list_dir_perms)
 		(allow ARG1 daemon_subj_type_attribute read_lnk_file_perms))

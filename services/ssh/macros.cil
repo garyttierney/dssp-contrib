@@ -249,11 +249,11 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*")))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs_search_tmpfs (ARG1))
+		(call fs.search_tmpfs (ARG1))
 		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ssh_agent.subj_type_attribute))))
 
 (in ssh_client

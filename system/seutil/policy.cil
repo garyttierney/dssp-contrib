@@ -40,8 +40,8 @@
 	(call file.getattr_all (subj))
 	(call file.read_all_lnk_files (subj))
 
-	(call fs_getattr_all (subj))
-	(call fs_read_all_lnk_files (subj))
+	(call fs.getattr_all (subj))
+	(call fs.read_all_lnk_files (subj))
 
 	(call sec_validate_context (subj))
 
@@ -78,12 +78,12 @@
 	(call file.read_all_lnk_files (subj))
 	(call file.relabel_all_except (subj))
 
-	(call fs_getattr_all_fs (subj))
-	(call fs_list_all (subj))
-	(call fs_read_all_lnk_files (subj))
-	(call fs_read_cgroup_files (subj))
-	(call fs_relabel_all (subj))
-	(call fs_trace_client_subj_type (subj))
+	(call fs.getattr_all_fs (subj))
+	(call fs.list_all (subj))
+	(call fs.read_all_lnk_files (subj))
+	(call fs.read_cgroup_files (subj))
+	(call fs.relabel_all (subj))
+	(call fs.trace_client_subj_type (subj))
 
 	(call sec_get_enforce_mode (subj))
 	(call sec_validate_context (subj))

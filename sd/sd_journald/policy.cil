@@ -31,7 +31,7 @@
 	(call runtime_obj_type_transition_var_log (subj))
 
 	(call sys_mountpoint_obj_type (var_log_file))
-	(call fs_associate_tmpfs (var_log_file))
+	(call fs.associate_tmpfs (var_log_file))
 
 	(blockinherit file.runtime_obj_blk)
 
@@ -67,10 +67,10 @@
 	(call dev_rw_kmsg (subj))
 	(call dev_read_urandom (subj))
 
-	(call fs_getattr_fs (subj))
-	(call fs_getattr_tmpfs_fs (subj))
-	(call fs_read_sysfs (subj))
-	(call fs_write_inherited_devpts_chr_files (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.write_inherited_devpts_chr_files (subj))
 
 	(call sec_get_enforce_mode (subj))
 
@@ -105,7 +105,7 @@
 
 	(call dev_dontaudit_write_kmsg (client_subj_type_attribute))
 
-	(call fs_read_devtmpfs_lnk_files (client_subj_type_attribute))
+	(call fs.read_devtmpfs_lnk_files (client_subj_type_attribute))
 
 	(call term_dontaudit_use_console (client_subj_type_attribute))
 

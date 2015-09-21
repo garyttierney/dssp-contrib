@@ -18,8 +18,8 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call fs_read_devtmpfs_lnk_files (client_subj_type_attribute))
-	(call fs_getattr_fs (client_subj_type_attribute))
-	(call fs_get_fs_quotas (client_subj_type_attribute))
+	(call fs.read_devtmpfs_lnk_files (client_subj_type_attribute))
+	(call fs.getattr_fs (client_subj_type_attribute))
+	(call fs.get_fs_quotas (client_subj_type_attribute))
 
 	(call storage_getattr_all (client_subj_type_attribute)))

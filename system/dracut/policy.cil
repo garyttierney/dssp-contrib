@@ -44,10 +44,10 @@
 	(call file.read_config (subj))
 	(call file.read_data (subj))
 
-	(call fs_list_devtmpfs (subj))
-	(call fs_read_devtmpfs_lnk_files (subj))
-	(call fs_read_sysfs (subj))
-	(call fs_search_tmpfs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.search_tmpfs (subj))
 
 	(call lib_exec_ld_so_files (subj))
 

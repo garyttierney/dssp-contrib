@@ -119,11 +119,11 @@
 		(dontaudit ARG1 tmpfs_file (dir (audit_access))))
 
 	(macro setattr_tmpfs_dirs ((type ARG1))
-		(call fs_search_tmpfs (ARG1))
+		(call fs.search_tmpfs (ARG1))
 		(call setattr_dirs_pattern (ARG1 tmpfs_file tmpfs_file)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -275,13 +275,13 @@
 		(allow ARG1 ARG2 manage_blk_file_perms)
 		(allow ARG1 ARG2 manage_chr_file_perms)
 
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 fifo_file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 lnk_file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 sock_file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 blk_file "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 ARG2 chr_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 fifo_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 lnk_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 sock_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 blk_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 ARG2 chr_file "*")))
 
 	(macro search_all ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))

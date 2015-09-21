@@ -50,10 +50,10 @@
 
 	(call file.read_config_files (subj))
 
-	(call fs_list_sysfs (subj))
-	(call fs_read_sysfs_lnk_files (subj))
-	(call fs_rw_sysfs_files (subj))
-	(call fs_trace_client_subj_type (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.trace_client_subj_type (subj))
 
 	(call kmod.auto_subj_type_transition (subj))
 
@@ -85,7 +85,7 @@
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_cache (adm_subj_type_attribute))
-	(call fs_search_tmpfs (adm_subj_type_attribute))
+	(call fs.search_tmpfs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

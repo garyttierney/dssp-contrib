@@ -74,12 +74,12 @@
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
 
-	(call fs_getattr_sysfs_fs (subj))
-	(call fs_list_devtmpfs (subj))
-	(call fs_list_sysfs (subj))
-	(call fs_rw_sysfs_files (subj))
-	(call fs_read_sysfs_lnk_files (subj))
-	(call fs_rw_inherited_tmpfs_files (subj))
+	(call fs.getattr_sysfs_fs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_inherited_tmpfs_files (subj))
 
 	(call net_tcp_bind_generic_node (subj))
 
@@ -122,7 +122,7 @@
 
 	(allow tmpfs_client_subj_type_attribute self create_shm_perms)
 
-	(call fs_rw_inherited_tmpfs_files (tmpfs_client_subj_type_attribute))
+	(call fs.rw_inherited_tmpfs_files (tmpfs_client_subj_type_attribute))
 
 	(call usersubj.search_home_config (client_subj_type_attribute))
 

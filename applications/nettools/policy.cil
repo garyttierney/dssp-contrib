@@ -18,9 +18,9 @@
 	(call sys_read_net_proc_files (subj))
 	(call sys_request_load_module (subj))
 
-	(call fs_list_devtmpfs (subj))
-	(call fs_list_proc (subj))
-	(call fs_read_sysfs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.list_proc (subj))
+	(call fs.read_sysfs (subj))
 
 	(call dev_read_usbmon (subj))
 	(call dev_rw_usb (subj))
@@ -76,7 +76,7 @@
 	(call file.read_config_files (subj))
 	(call file.read_data_files (subj))
 
-	(call fs_read_sysfs (subj))
+	(call fs.read_sysfs (subj))
 
 	(call net_udp_bind_generic_node (subj))
 

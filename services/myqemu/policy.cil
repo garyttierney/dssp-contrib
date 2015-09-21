@@ -8,7 +8,7 @@
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_runtime_user (adm_subj_type_attribute))
-	(call fs_search_tmpfs (adm_subj_type_attribute))
+	(call fs.search_tmpfs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 
@@ -99,8 +99,8 @@
 	(call file.read_data (subj))
 	(call file.read_config_files (subj))
 
-	(call fs_getattr_fs (subj))
-	(call fs_getattr_tmpfs_fs (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
 
 	(call term_create_pty (subj pty_dev))
 

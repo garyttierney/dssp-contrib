@@ -47,7 +47,7 @@
 	(call file.read_data (subj_type_attribute))
 	(call file.read_config_files (subj_type_attribute))
 
-	(call fs_getattr_fs (subj_type_attribute))
+	(call fs.getattr_fs (subj_type_attribute))
 
 	(call subj_use_interactive_fd_type (subj_type_attribute))
 
@@ -78,5 +78,5 @@
 
 	(booleanif qemu_use_hugepages
 		(true
-			(call fs_getattr_hugetlbfs_fs (qemu_guest.subj_type_attribute))
-			(call fs_manage_hugetlbfs_files (qemu_guest.subj_type_attribute)))))
+			(call fs.getattr_hugetlbfs_fs (qemu_guest.subj_type_attribute))
+			(call fs.manage_hugetlbfs_files (qemu_guest.subj_type_attribute)))))

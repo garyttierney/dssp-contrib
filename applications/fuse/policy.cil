@@ -13,9 +13,9 @@
 
 	(call file.read_config_files (subj))
 
-	(call fs_mount_fuse_fs (subj))
-	(call fs_unmount_fuse_fs (subj))
-	(call fs_trace_client_subj_type (subj))
+	(call fs.mount_fuse_fs (subj))
+	(call fs.unmount_fuse_fs (subj))
+	(call fs.trace_client_subj_type (subj))
 
 	(call storage_rw_fuse (subj))
 
@@ -44,7 +44,7 @@
 
 	(call sys_request_load_module (subj_type_attribute))
 
-	(call fs_read_sysfs_files (subj_type_attribute))
+	(call fs.read_sysfs_files (subj_type_attribute))
 
 	(call storage_rw_fuse (subj_type_attribute))
 

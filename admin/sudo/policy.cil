@@ -43,9 +43,9 @@
 
 	(call file.read_config_files (subj_type_attribute))
 
-	(call fs_list_devtmpfs (subj_type_attribute))
-	(call fs_dontaudit_getattr_devtmpfs_chr_files (subj_type_attribute))
-	(call fs_dontaudit_getattr_devtmpfs_blk_files (subj_type_attribute))
+	(call fs.list_devtmpfs (subj_type_attribute))
+	(call fs.dontaudit_getattr_devtmpfs_chr_files (subj_type_attribute))
+	(call fs.dontaudit_getattr_devtmpfs_blk_files (subj_type_attribute))
 
 	(call sec_compute_relabel_context (subj_type_attribute))
 	(call sec_validate_context (subj_type_attribute))

@@ -148,23 +148,23 @@
 	(call file.manage_runtime_config (subj))
 	(call file.runtime_obj_type_transition_runtime_config (subj))
 
-	(call fs_getattr_all_fs (subj))
-	(call fs_manage_devtmpfs_dirs (subj))
-	(call fs_manage_devtmpfs_lnk_files (subj))
-	(call fs_manage_devtmpfs_chr_files (subj))
-	(call fs_manage_sysfs_dirs (subj))
-	(call fs_mount_autofs_fs (subj))
-	(call fs_mount_tmpfs_fs (subj))
-	(call fs_read_tmpfs_files (subj))
-	(call fs_relabel_devtmpfs_dirs (subj))
-	(call fs_relabel_sysfs_dirs (subj))
-	(call fs_relabelfrom_devtmpfs_chr_files (subj))
-	(call fs_relabelfrom_devtmpfs_blk_files (subj))
-	(call fs_relabelfrom_tmpfs (subj))
-	(call fs_remount_all_fs (subj))
-	(call fs_setattr_cgroup_files (subj))
-	(call fs_unmount_all_fs (subj))
-	(call fs_write_inherited_devpts_chr_files (subj))
+	(call fs.getattr_all_fs (subj))
+	(call fs.manage_devtmpfs_dirs (subj))
+	(call fs.manage_devtmpfs_lnk_files (subj))
+	(call fs.manage_devtmpfs_chr_files (subj))
+	(call fs.manage_sysfs_dirs (subj))
+	(call fs.mount_autofs_fs (subj))
+	(call fs.mount_tmpfs_fs (subj))
+	(call fs.read_tmpfs_files (subj))
+	(call fs.relabel_devtmpfs_dirs (subj))
+	(call fs.relabel_sysfs_dirs (subj))
+	(call fs.relabelfrom_devtmpfs_chr_files (subj))
+	(call fs.relabelfrom_devtmpfs_blk_files (subj))
+	(call fs.relabelfrom_tmpfs (subj))
+	(call fs.remount_all_fs (subj))
+	(call fs.setattr_cgroup_files (subj))
+	(call fs.unmount_all_fs (subj))
+	(call fs.write_inherited_devpts_chr_files (subj))
 
 	(call sec_validate_context (subj))
 	(call sec_compute_user_contexts (subj))
@@ -287,11 +287,11 @@
 	(call file.manage_var_tmp_dirs (subj_type_attribute))
 	(call file.manage_var_tmp_lnk_files (subj_type_attribute))
 
-	(call fs_manage_tmpfs_dirs (subj_type_attribute))
-	(call fs_manage_tmpfs_lnk_files (subj_type_attribute))
-	(call fs_manage_cgroup_dirs (subj_type_attribute))
-	(call fs_read_sysfs (subj_type_attribute))
-	(call fs_rw_cgroup_files (subj_type_attribute))
+	(call fs.manage_tmpfs_dirs (subj_type_attribute))
+	(call fs.manage_tmpfs_lnk_files (subj_type_attribute))
+	(call fs.manage_cgroup_dirs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+	(call fs.rw_cgroup_files (subj_type_attribute))
 
 	(call sec_compute_access_vector (subj_type_attribute))
 	(call sec_compute_create_context (subj_type_attribute))
@@ -371,7 +371,7 @@
 
 	(typeattributeset sd.obj_type_attribute unit_file)
 
-	(call fs_associate_tmpfs (sd.unit_obj_type_attribute)))
+	(call fs.associate_tmpfs (sd.unit_obj_type_attribute)))
 
 (block sd_unit_kexec
 	(blockinherit sd.unit_obj_blk)
@@ -388,7 +388,7 @@
 
 	(typeattributeset sd.obj_type_attribute unit_file)
 
-	(call fs_associate_tmpfs (unit_file)))
+	(call fs.associate_tmpfs (unit_file)))
 
 (block sd_unknown
 	(blockinherit subj_common_blk)

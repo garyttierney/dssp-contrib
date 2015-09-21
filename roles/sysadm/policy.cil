@@ -29,12 +29,12 @@
 	(call file.read_boot (subj))
 	(call file.rootfs_obj_type_transition_unknown (subj))
 
-	(call fs_getattr_all_fs (subj))
-	(call fs_list_devpts (subj))
-	(call fs_list_devtmpfs (subj))
-	(call fs_read_cgroup_files (subj))
-	(call fs_read_sysfs (subj))
-	(call fs_trace_client_subj_type (subj))
+	(call fs.getattr_all_fs (subj))
+	(call fs.list_devpts (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_cgroup_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.trace_client_subj_type (subj))
 
 	(call sec_get_all_booleans (subj))
 

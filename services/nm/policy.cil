@@ -60,11 +60,11 @@
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
 
-	(call fs_dontaudit_audit_access_sysfs_dirs (subj))
-	(call fs_getattr_fs (subj))
-	(call fs_list_tmpfs (subj))
-	(call fs_read_sysfs (subj))
-	(call fs_read_cgroup_files (subj))
+	(call fs.dontaudit_audit_access_sysfs_dirs (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.list_tmpfs (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.read_cgroup_files (subj))
 
 	(call resolv.manage_config_files (subj))
 	(call resolv.config_obj_type_transition_config (subj))
@@ -231,7 +231,7 @@
 
 	(call file.list_var_tmp (subj))
 
-	(call fs_list_tmpfs (subj))
+	(call fs.list_tmpfs (subj))
 
 	(call locale.read (subj))
 	(call passwords.read (subj))

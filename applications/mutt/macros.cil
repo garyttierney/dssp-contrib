@@ -68,8 +68,8 @@
 		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-		(call fs_tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(blockinherit send_sigchld_all_blk)
 	(blockinherit use_fd_all_blk)

@@ -57,6 +57,7 @@
 	(call fs.relabel_sysfs_dirs (subj))
 	(call fs.relabel_tmpfs_dirs (subj))
 
+	; i should be able to remove this in the near future: https://marc.info/?l=selinux&m=144286421512700&w=2
 	(call sec.set_check_req_prot (subj))
 
 	(call factory.read_data (subj))

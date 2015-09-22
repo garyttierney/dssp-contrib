@@ -1,0 +1,28 @@
+(block user_emacs
+	(blockinherit emacs.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+	(call user_shell_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_emacs_optional_user_dbus_send
+		(call user_dbus_send_auto_type_transition_subj_type (subj)))
+
+	(optional user_emacs_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_emacs_optional_user_git
+		(call user_git.auto_subj_type_transition (subj)))
+
+	(optional user_emacs_optional_user_gpg
+		(call user_gpg.auto_subj_type_transition (subj)))
+
+	(optional user_emacs_optional_user_lynx
+		(call user_lynx.auto_subj_type_transition (subj)))
+
+	(optional user_emacs_optional_user_mutt
+		(call user_mutt.auto_subj_type_transition (subj)))
+
+	(optional user_emacs_optional_user_ssh_client
+		(call user_ssh_client.auto_subj_type_transition (subj))))

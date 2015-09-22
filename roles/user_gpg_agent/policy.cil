@@ -1,0 +1,7 @@
+(block user_gpg_agent
+	(blockinherit gpg_agent.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+	(call user_shell_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj)))

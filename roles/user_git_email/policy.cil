@@ -1,0 +1,10 @@
+(block user_git_email
+	(blockinherit git_email.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+	(call user_shell_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_git_email_optional_user_git
+		(call user_git.auto_subj_type_transition (subj))))

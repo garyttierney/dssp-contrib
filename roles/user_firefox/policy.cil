@@ -1,0 +1,14 @@
+(block user_firefox
+	(blockinherit firefox.subj_blk)
+
+	(optional user_firefox_optional_user_firefox_plugins
+		(call user_firefox_plugins.auto_subj_type_transition (subj)))
+
+	(optional user_firefox_optional_user_firefox_xremotec
+		(call user_firefox_xremotec.auto_subj_type_transition (subj)))
+
+	(optional user_firefox_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj)))
+
+	(optional user_firefox_optional_user_xpdf
+		(call user_xpdf.auto_subj_type_transition (subj))))

@@ -1,3 +1,6 @@
+(macro user_subj_type ((type ARG1))
+	(typeattributeset user_subj_type ARG1))
+
 (macro user_rw_inherited_fifo_files ((type ARG1))
 	(call user_use_fd (ARG1))
 	(allow ARG1 user.subj rw_inherited_fifo_file_perms))
@@ -8,3 +11,21 @@
 
 (macro user_use_fd ((type ARG1))
 	(allow ARG1 user.subj (fd (use))))
+
+(macro user_cmd_auto_subj_type_transition ((type ARG1))
+	(call cmd.auto_subj_type_transition (ARG1 user.subj)))
+
+(macro user_shell_auto_subj_type_transition ((type ARG1))
+	(call cmd.shell_auto_subj_type_transition (ARG1 user.subj)))
+
+(macro user_home_cmd_auto_subj_type_transition ((type ARG1))
+	(call usersubj.home_cmd_auto_subj_type_transition (ARG1 user.subj)))
+
+(macro user_dbus_send_auto_type_transition_subj_type ((type ARG1))
+	(typeattributeset user_dbus_send_auto_type_transition_subj_type_attribute ARG1))
+
+(macro user_git_home_user_auto_type_transition_subj_type ((type ARG1))
+	(typeattributeset user_git_home_user_auto_type_transition_subj_type_attribute ARG1))
+
+(macro user_xinit_home_user_auto_type_transition_subj_type ((type ARG1))
+        (typeattributeset user_xinit_home_user_auto_type_transition_subj_type_attribute ARG1))

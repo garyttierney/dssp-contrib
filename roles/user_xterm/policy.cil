@@ -1,0 +1,10 @@
+(block user_xterm
+	(blockinherit xterm.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+	(call user_shell_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_xterm_optional_user_screen
+		(call user_screen.auto_subj_type_transition (subj))))

@@ -1,0 +1,13 @@
+(block user_dunst
+	(blockinherit dunst.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+	(call user_shell_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_dunst_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_dunst_optional_user_sessbus_launch
+		(call user_sessbus_launch.auto_subj_type_transition (subj))))

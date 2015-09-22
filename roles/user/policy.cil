@@ -1,4 +1,18 @@
 (typeattribute user_subj_type)
+(typeattribute user_git_home_user_auto_type_transition_subj_type_attribute)
+(typeattribute user_xinit_home_user_auto_type_transition_subj_type_attribute)
+(typeattribute user_dbus_send_auto_type_transition_subj_type_attribute)
+
+(optional user_dbus_send_auto_type_transition_subj_type_optional_dbus_send
+	(call dbus_send.spec_auto_subj_type_transition (user_dbus_send_auto_type_transition_subj_type_attribute user.subj)))
+
+(optional user_git_home_user_auto_type_transition_subj_type_optional_git
+	(call git.home_user_obj_entry_subj (user.subj))
+	(call git.spec_home_user_auto_subj_type_transition (user_git_home_user_auto_type_transition_subj_type_attribute user.subj)))
+
+(optional user_xinit_home_user_auto_type_transition_subj_type_optional_git
+	(call xinit.home_user_obj_entry_subj (user.subj))
+	(call xinit.spec_home_user_auto_subj_type_transition (user_xinit_home_user_auto_type_transition_subj_type_attribute user.subj)))
 
 (block user
 	(blockinherit usersubj.base_login_blk)
@@ -45,6 +59,13 @@
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
+
+	(optional user_optional_fuse
+		(call fusermount.run (user_subj_type role))
+		(call ulockmgr.run (user_subj_type role)))
+
+	(optional user_optional_gpg
+		(call gpg_helper.exec (subj)))
 
 	(optional user_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (user_subj_type role)))
@@ -175,497 +196,124 @@
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_xwd
-		(call xwd.run (user_subj_type role))))
+		(call xwd.run (user_subj_type role)))
 
-(optional user_alsautil_optional_alsautil
-	(block user_alsautil
-		(blockinherit alsautil.subj_blk)
+	(optional user_optional_user_alsautil
+		(call user_alsautil.role_pattern (user.role user_subj_type)))
 
-		(call alsautil.role_pattern (user.role user_subj_type user_alsautil.subj))))
+	(optional user_optional_user_atspi_sessbus_launch
+		(call user_atspi_sessbus_launch.role_pattern (user.role user_subj_type)))
 
-(optional user_alsautil_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_alsautil.subj user_pa.subj)))
+	(optional user_optional_user_chfn
+		(call user_chfn.role_pattern (user.role user_subj_type)))
 
-(optional user_atspi_sessbus_launch_optional_atspi_sessbus_launch
-	(block user_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch.subj_blk)
+	(optional user_optional_user_dunst
+		(call user_dunst.role_pattern (user.role user_subj_type)))
 
-		(call atspi_sessbus_launch.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_emacs
+		(call user_emacs.role_pattern (user.role user_subj_type)))
 
-(optional user_atspi_sessbus_launch_optional_user_sessbus
-        (call sessbus.spec_sysbus_auto_subj_type_transition (user_atspi_sessbus_launch.subj user_sessbus.subj)))
+	(optional user_optional_user_emacsclient
+		(call user_emacsclient.role_pattern (user.role user_subj_type)))
 
-(optional user_chfn_optional_chfn
-	(block user_chfn
-		(blockinherit chfn.subj_blk)
+	(optional user_optional_user_firefox
+		(call user_firefox.role_pattern (user.role user_subj_type)))
 
-		(call chfn.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_firefox_plugins
+		(call user_firefox_plugins.role_pattern (user.role user_subj_type)))
 
-(optional user_dunst_optional_dunst
-	(block user_dunst
-		(blockinherit dunst.subj_blk)
+	(optional user_optional_user_firefox_xremotec
+		(call user_firefox_xremotec.role_pattern (user.role user_subj_type)))
 
-		(call dunst.role_pattern (user.role user_subj_type subj))
+	(optional user_optional_user_festival
+		(call user_festival.role_pattern (user.role user_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
+	(optional user_optional_user_ffmpeg
+		(call user_ffmpeg.role_pattern (user.role user_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
+	(optional user_optional_user_fuse_sshfs
+		(call user_fuse_sshfs.role_pattern (user.role user_subj_type)))
 
-(optional user_dunst_optional_user_firefox
-	(call firefox.spec_auto_subj_type_transition (user_dunst.subj user_firefox.subj)))
+	(optional user_optional_user_git
+		(call user_git.role_pattern (user.role user_subj_type)))
 
-(optional user_dunst_optional_user_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (user_dunst.subj user_sessbus_launch.subj)))
+	(optional user_optional_user_git_email
+		(call user_git_email.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_emacs
-	(block user_emacs
-		(blockinherit emacs.subj_blk)
+	(optional user_optional_user_gpg
+		(call user_gpg.role_pattern (user.role user_subj_type)))
 
-		(call emacs.role_pattern (user.role user_subj_type subj))
+	(optional user_optional_user_gpg_agent
+                (call user_gpg_agent.role_pattern (user.role user_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
+	(optional user_optional_user_irssi
+		(call user_irssi.role_pattern (user.role user_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
+	(optional user_optional_user_libnotify
+		(call user_libnotify.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_dbus_send
-	(call dbus_send.spec_auto_subj_type_transition (user_emacs.subj user.subj)))
+	(optional user_optional_user_livestreamer
+		(call user_livestreamer.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_firefox
-	(call firefox.spec_auto_subj_type_transition (user_emacs.subj user_firefox.subj)))
+	(optional user_optional_user_lynx
+		(call user_lynx.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_git
-	(call git.spec_auto_subj_type_transition (user_emacs.subj user_git.subj)))
+	(optional user_optional_user_mplayer
+		(call user_mplayer.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_gpg
-	(call gpg.spec_auto_subj_type_transition (user_emacs.subj user_gpg.subj)))
+	(optional user_optional_user_mutt
+		(call user_mutt.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_lynx
-	(call lynx.spec_auto_subj_type_transition (user_emacs.subj user_lynx.subj)))
+	(optional user_optional_user_mutt_pgp_ewrap
+		(call user_mutt_pgp_ewrap.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_mutt
-	(call mutt.spec_auto_subj_type_transition (user_emacs.subj user_mutt.subj)))
+	(optional user_optional_user_nb
+		(call user_nb.role_pattern (user.role user_subj_type)))
 
-(optional user_emacs_optional_user_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (user_emacs.subj user_ssh_client.subj)))
+	(optional user_optional_user_pa
+		(call user_pa.role_pattern (user.role user_subj_type)))
 
-(optional user_emacsclient_optional_emacsclient
-	(block user_emacsclient
-		(blockinherit emacsclient.subj_blk)
+	(optional user_optional_user_pactl
+		(call user_pactl.role_pattern (user.role user_subj_type)))
 
-		(call emacsclient.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_passwd
+		(call user_passwd.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_optional_firefox
-	(block user_firefox
-		(blockinherit firefox.subj_blk)
+	(optional user_optional_user_rp
+		(call user_rp.role_pattern (user.role user_subj_type)))
 
-		(call firefox.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_screen
+		(call user_screen.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_optional_user_firefox_plugins
-	(call firefox_plugins.spec_auto_subj_type_transition (user_firefox.subj user_firefox_plugins.subj)))
+	(optional user_optional_user_sduser
+		(call user_sduser.role_pattern (user.role user.subj)))
 
-(optional user_firefox_optional_user_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (user_firefox.subj user_firefox_xremotec.subj)))
+	(optional user_optional_user_sessbus
+		(call user_sessbus.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_firefox.subj user_pa.subj)))
+	(optional user_optional_user_sessbus_launch
+		(call user_sessbus_launch.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_optional_user_xpdf
-	(call xpdf.spec_auto_subj_type_transition (user_firefox.subj user_xpdf.subj)))
+	(optional user_optional_user_ssh_agent
+		(call user_ssh_agent.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_plugins_optional_firefox_plugins
-	(block user_firefox_plugins
-		(blockinherit firefox_plugins.subj_blk)
+	(optional user_optional_user_ssh_client
+		(call user_ssh_client.role_pattern (user.role user_subj_type)))
 
-		(call firefox_plugins.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_startx
+		(call user_startx.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_plugins_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_firefox_plugins.subj user_pa.subj)))
+	(optional user_optional_user_vlock
+		(call user_vlock.role_pattern (user.role user_subj_type)))
 
-(optional user_firefox_xremotec_optional_firefox_xremotec
-	(block user_firefox_xremotec
-		(blockinherit firefox_xremotec.subj_blk)
+	(optional user_optional_user_xbindkeys
+		(call user_xbindkeys.role_pattern (user.role user_subj_type)))
 
-		(call firefox_xremotec.role_pattern (user.role user_subj_type subj))))
+	(optional user_optional_user_xpdf
+		(call user_xpdf.role_pattern (user.role user_subj_type)))
 
-(optional user_festival_optional_festival
-	(block user_festival
-		(blockinherit festival.subj_blk)
+	(optional user_optional_user_xinit
+		(call user_xinit.role_pattern (user.role user_subj_type)))
 
-		(call festival.role_pattern (user.role user_subj_type subj))))
-
-(optional user_festival_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_festival.subj user_pa.subj)))
-
-(optional user_ffmpeg_optional_ffmpeg
-	(block user_ffmpeg
-		(blockinherit ffmpeg.subj_blk)
-
-		(call ffmpeg.role_pattern (user.role user_subj_type subj))))
-
-(optional user_ffmpeg_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_ffmpeg.subj user_pa.subj)))
-
-(optional user_fuse_optional_fuse
-	(block user_fuse_sshfs
-		(blockinherit sshfs.subj_blk)
-
-		(call sshfs.role_pattern (user.role user_subj_type subj)))
-
-	(call fusermount.run (user.subj user.role))
-	(call ulockmgr.run (user.subj user.role)))
-
-(optional user_fuse_optional_user_ssh
-	(call ssh_client.spec_auto_subj_type_transition (user_fuse_sshfs.subj user_ssh_client.subj)))
-
-(optional user_git_optional_git
-	(block user_git
-		(blockinherit git.subj_blk)
-
-		(call git.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))
-
-		(call git.home_user_obj_entry_subj (user.subj))
-		(call git.spec_home_user_auto_subj_type_transition (subj user.subj))))
-
-(optional user_git_optional_user_gpg
-	(call gpg.spec_auto_subj_type_transition (user_git.subj user_gpg.subj)))
-
-(optional user_git_optional_user_git_email
-	(call git_email.spec_auto_subj_type_transition (user_git.subj user_git_email.subj)))
-
-(optional user_git_optional_user_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (user_git.subj user_ssh_client.subj)))
-
-(optional user_git_email_optional_git_email
-	(block user_git_email
-		(blockinherit git_email.subj_blk)
-
-		(call git_email.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_git_email_optional_user_git
-	(call git.spec_auto_subj_type_transition (user_git_email.subj user_git.subj)))
-
-(optional user_gpg_optional_gpg
-	(block user_gpg
-		(blockinherit gpg.subj_blk)
-
-		(call gpg.role_pattern (user.role user_subj_type subj))
-
-		(call gpg_helper.exec (user.subj))))
-
-(optional user_gpg_optional_gpg_agent
-	(call gpg_agent.spec_auto_subj_type_transition (user_gpg.subj user_gpg_agent.subj)))
-
-(optional user_gpg_agent_optional_gpg_agent
-        (block user_gpg_agent
-                (blockinherit gpg_agent.subj_blk)
-
-                (call gpg_agent.role_pattern (user.role user_subj_type subj))
-
-                (call cmd.auto_subj_type_transition (subj user.subj))
-                (call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-                (call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_irssi_optional_irssi
-	(block user_irssi
-		(blockinherit irssi.subj_blk)
-
-		(call irssi.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))))
-
-(optional user_libnotify_optional_libnotify
-	(block user_libnotify
-		(blockinherit libnotify.subj_blk)
-
-		(call libnotify.role_pattern (user.role user_subj_type subj))))
-
-(optional user_libnotify_optional_sysadm_user_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (user_libnotify.subj user_sessbus_launch.subj)))
-
-(optional user_livestreamer_optional_livestreamer
-	(block user_livestreamer
-		(blockinherit livestreamer.subj_blk)
-
-		(call livestreamer.role_pattern (user.role user_subj_type subj))))
-
-(optional user_livestreamer_optional_user_mplayer
-	(call mplayer.spec_auto_subj_type_transition (user_livestreamer.subj user_mplayer.subj)))
-
-(optional user_lynx_optional_lynx
-	(block user_lynx
-		(blockinherit lynx.subj_blk)
-
-		(call lynx.role_pattern (user.role user_subj_type subj))
-
-                (call cmd.auto_subj_type_transition (subj user.subj))
-                (call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-                (call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_lynx_optional_user_gpg
-	(call gpg.spec_auto_subj_type_transition (user_lynx.subj user_gpg.subj)))
-
-(optional user_lynx_optional_user_irssi
-	(call irssi.spec_auto_subj_type_transition (user_lynx.subj user_irssi.subj)))
-
-(optional user_lynx_optional_user_mutt
-	(call mutt.spec_auto_subj_type_transition (user_lynx.subj user_mutt.subj)))
-
-(optional user_mplayer_optional_mplayer
-	(block user_mplayer
-		(blockinherit mplayer.subj_blk)
-
-		(call mplayer.role_pattern (user.role user_subj_type subj))))
-
-(optional user_mplayer_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_mplayer.subj user_pa.subj)))
-
-(optional user_mutt_optional_mutt
-	(block user_mutt
-		(blockinherit mutt.subj_blk)
-
-		(call mutt.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_mutt_optional_user_emacsclient
-	(call emacsclient.spec_auto_subj_type_transition (user_mutt.subj user_emacsclient.subj)))
-
-(optional user_mutt_optional_user_firefox
-	(call firefox.spec_auto_subj_type_transition (user_mutt.subj user_firefox.subj)))
-
-(optional user_mutt_optional_user_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (user_mutt.subj user_firefox_xremotec.subj)))
-
-(optional user_mutt_optional_user_mutt_pgp_ewrap
-	(call mutt_pgp_ewrap.spec_auto_subj_type_transition (user_mutt.subj user_mutt_pgp_ewrap.subj)))
-
-(optional user_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
-	(block user_mutt_pgp_ewrap
-		(blockinherit mutt_pgp_ewrap.subj_blk)
-
-		(call mutt_pgp_ewrap.role_pattern (user.role user_subj_type subj))))
-
-(optional user_mutt_pgp_ewrap_optional_user_gpg
-	(call gpg.spec_auto_subj_type_transition (user_mutt_pgp_ewrap.subj user_gpg.subj)))
-
-(optional user_nb_optional_nb
-	(block user_nb
-		(blockinherit nb.subj_blk)
-
-		(call nb.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_nb_optional_user_firefox
-	(call firefox.spec_auto_subj_type_transition (user_nb.subj user_firefox.subj)))
-
-(optional user_nb_optional_user_lynx
-	(call lynx.spec_auto_subj_type_transition (user_nb.subj user_lynx.subj)))
-
-(optional user_nb_optional_user_mplayer
-	(call mplayer.spec_auto_subj_type_transition (user_nb.subj user_mplayer.subj)))
-
-(optional user_nb_optional_user_mutt
-	(call mutt.spec_auto_subj_type_transition (user_nb.subj user_mutt.subj)))
-
-(optional user_pa_optional_pa
-	(block user_pa
-		(blockinherit pa.subj_blk)
-
-		(call pa.role_pattern (user.role user_subj_type subj))))
-
-(optional user_pa_optional_user_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (user_pa.subj user_sessbus_launch.subj)))
-
-(optional user_pactl_optional_pactl
-	(block user_pactl
-		(blockinherit pactl.subj_blk)
-
-		(call pactl.role_pattern (user.role user_subj_type subj))))
-
-(optional user_pactl_optional_user_pa
-	(call pa.spec_auto_subj_type_transition (user_pactl.subj user_pa.subj)))
-
-(optional user_passwd_optional_passwd
-	(block user_passwd
-		(blockinherit passwd.subj_blk)
-
-		(call passwd.role_pattern (user.role user_subj_type subj))))
-
-(optional user_rp_optional_rp
-	(block user_rp
-		(blockinherit rp.subj_blk)
-
-		(call rp.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_screen_optional_screen
-	(block user_screen
-		(blockinherit screen.subj_blk)
-
-		(call screen.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_sduser_optional_sduser
-	(block user_sduser
-		(blockinherit sduser.subj_blk)
-
-		(call sduser.role_pattern (user.role user.subj subj))
-
-		(typeattributeset user_subj_type subj)))
-
-(optional user_sduser_optional_user_sessbus
-	(call sduser.unix_stream_socket_activated_subj_pattern (user_sduser.subj user_sessbus.subj))
-
-	(call sessbus.acquire_service_pattern (user_sduser.subj user_sessbus.subj))
-	(call sessbus.client_pattern (user_sduser.subj user_sessbus.subj))
-
-	(call sessbus.manage_tmpfs_user (user_sduser.subj))
-	(call sessbus.tmpfs_obj_type_transition_tmpfs (user_sduser.subj)))
-
-(optional user_sessbus_optional_sessbus
-	(block user_sessbus
-		(blockinherit sessbus.subj_blk)
-
-		(call sessbus.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_sessbus_optional_user_atspi_sessbus_launch
-	(call atspi_sessbus_launch.spec_auto_subj_type_transition (user_sessbus.subj user_atspi_sessbus_launch.subj)))
-
-(optional user_sessbus_optional_user_dunst
-	(call dunst.spec_auto_subj_type_transition (user_sessbus.subj user_dunst.subj)))
-
-(optional user_sessbus_optional_user_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (user_sessbus.subj user_sessbus_launch.subj)))
-
-(optional user_sessbus_launch_optional_sessbus_launch
-	(block user_sessbus_launch
-		(blockinherit sessbus_launch.subj_blk)
-
-		(call sessbus_launch.role_pattern (user.role user_subj_type subj))))
-
-(optional user_sessbus_launch_optional_user_sessbus
-	(call sessbus.spec_sysbus_auto_subj_type_transition (user_sessbus_launch.subj user_sessbus.subj)))
-
-(optional user_ssh_agent_optional_ssh
-	(block user_ssh_agent
-		(blockinherit ssh_agent.subj_blk)
-
-		(call ssh_agent.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_ssh_client_optional_ssh
-	(block user_ssh_client
-		(blockinherit ssh_client.subj_blk)
-
-		(call ssh_client.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))))
-
-(optional user_startx_optional_startx
-	(block user_startx
-		(blockinherit startx.subj_blk)
-
-		(call startx.role_pattern (user.role user_subj_type subj))))
-
-(optional user_startx_optional_user_xinit
-	(call xinit.spec_auto_subj_type_transition (user_startx.subj user_xinit.subj)))
-
-(optional user_vlock_optional_vlock
-	(block user_vlock
-		(blockinherit vlock.subj_blk)
-
-		(call vlock.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_xbindkeys_optional_xbindkeys
-	(block user_xbindkeys
-		(blockinherit xbindkeys.subj_blk)
-
-		(call xbindkeys.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_xbindkeys_optional_user_pactl
-	(call pactl.spec_auto_subj_type_transition (user_xbindkeys.subj user_pactl.subj)))
-
-(optional user_xpdf_optional_xpdf
-	(block user_xpdf
-		(blockinherit xpdf.subj_blk)
-
-		(call xpdf.role_pattern (user.role user_subj_type subj))))
-
-(optional user_xinit_optional_xinit
-	(block user_xinit
-		(blockinherit xinit.subj_blk)
-
-		(call xinit.role_pattern (user.role user_subj_type subj))
-
-		(call xinit.home_user_auto_subj_type_transition_pattern (subj user.subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_xinit_optional_user_rp
-	(call rp.spec_auto_subj_type_transition (user_xinit.subj user_rp.subj)))
-
-(optional user_xinit_optional_user_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (user_xinit.subj user_sessbus_launch.subj)))
-
-(optional user_xinit_optional_user_xbindkeys
-	(call xbindkeys.spec_auto_subj_type_transition (user_xinit.subj user_xbindkeys.subj)))
-
-(optional user_xterm_optional_xterm
-	(block user_xterm
-		(blockinherit xterm.subj_blk)
-
-		(call xterm.role_pattern (user.role user_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj user.subj))
-		(call cmd.shell_auto_subj_type_transition (subj user.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj user.subj))))
-
-(optional user_xterm_optional_user_screen
-	(call screen.spec_auto_subj_type_transition (user_xterm.subj user_screen.subj)))
+	(optional user_optional_user_xterm
+		(call user_xterm.role_pattern (user.role user_subj_type))))

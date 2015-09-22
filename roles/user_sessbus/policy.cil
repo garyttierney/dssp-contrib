@@ -1,0 +1,21 @@
+(block user_sessbus
+	(typeattribute unix_stream_socket_activation_sduser_subj_type_attribute)
+
+	(blockinherit sessbus.subj_blk)
+
+	(call user_cmd_auto_subj_type_transition (subj))
+
+	(call user_home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_sessbus_optional_user_atspi_sessbus_launch
+		(call user_atspi_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional user_sessbus_optional_user_dunst
+		(call user_dunst.auto_subj_type_transition (subj)))
+
+	(optional user_sessbus_optional_user_sessbus_launch
+		(call user_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional user_sessbus_optional_user_sduser
+		(call sduser.unix_stream_socket_activated_subj_pattern
+			(unix_stream_socket_activation_sduser_subj_type_attribute subj))))

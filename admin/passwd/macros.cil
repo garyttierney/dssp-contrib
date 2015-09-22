@@ -23,4 +23,8 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call chkpwd.run (ARG3 ARG1))))
+		(call chkpwd.run (ARG3 ARG1)))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

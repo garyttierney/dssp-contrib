@@ -3,7 +3,10 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit run_blk)
+	(macro run ((type ARG1)(role ARG2))
+		(allow ARG1 rpmbuild.subj (process (noatsecure)))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2))
 
 	(blockinherit subj.send_signal_blk)
 

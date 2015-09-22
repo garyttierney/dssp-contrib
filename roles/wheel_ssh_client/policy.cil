@@ -1,7 +1,7 @@
 (block wheel_ssh_client
 	(blockinherit ssh_client.subj_blk)
 
-        (call wheel_shell_auto_subj_type_transition (subj))
+        (call wheel.shell_auto_subj_type_transition (subj))
 
 	(optional wheel_ssh_client_optional_tor_socks
 		(call tor_socks.client_subj_type (subj))))

@@ -1,65 +1,61 @@
-(typeattribute wheel_subj_type)
-
-(typeattribute wheel_git_home_user_auto_type_transition_subj_type_attribute)
-(typeattribute wheel_xinit_home_user_auto_type_transition_subj_type_attribute)
-
-(optional wheel_git_home_user_auto_type_transition_subj_type_optional_git
-	(call git.home_user_obj_entry_subj (wheel.subj))
-	(call git.spec_home_user_auto_subj_type_transition (wheel_git_home_user_auto_type_transition_subj_type_attribute wheel.subj)))
-
-(optional wheel_xinit_home_user_auto_type_transition_subj_type_optional_git
-	(call xinit.home_user_obj_entry_subj (wheel.subj))
-	(call xinit.spec_home_user_auto_subj_type_transition (wheel_xinit_home_user_auto_type_transition_subj_type_attribute wheel.subj)))
-
 (block wheel
+	(typeattribute subj_type_attribute)
+
+	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+
 	(blockinherit usersubj.base_login_blk)
 
 	(call usersubj.mls (id systemlow (systemlow systemhigh)))
 
-        (typeattributeset wheel_subj_type subj)
+        (typeattributeset subj_type_attribute subj)
 
 	(optional wheel_optional_bluetoothctl
-		(call bluetoothctl.run (wheel_subj_type role)))
+		(call bluetoothctl.run (subj_type_attribute role)))
 
 	(optional wheel_optional_coredumpctl
-		(call coredumpctl.run (wheel_subj_type role)))
+		(call coredumpctl.run (subj_type_attribute role)))
 
 	(optional wheel_optional_curl
-		(call curl.run (wheel_subj_type role))
+		(call curl.run (subj_type_attribute role))
 		(call curl.manage_home_user_files (subj))
 		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_bti
-		(call bti.run (wheel_subj_type role))
+		(call bti.run (subj_type_attribute role))
 		(call bti.manage_home_user_files (subj))
 		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_dd
-		(call dd.exec (wheel_subj_type)))
+		(call dd.exec (subj_type_attribute)))
 
 	(optional wheel_optional_dirmngr
-		(call dirmngr.run (wheel_subj_type role))
+		(call dirmngr.run (subj_type_attribute role))
 		(call dirmngr.manage_home_user (subj))
 		(call dirmngr.relabel_home_user (subj))
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_dmenu
-		(call dmenu.run (wheel_subj_type role)))
+		(call dmenu.run (subj_type_attribute role)))
 
 	(optional wheel_optional_dmesg
-		(call dmesg.run (wheel_subj_type role)))
+		(call dmesg.run (subj_type_attribute role)))
 
 	(optional wheel_optional_fop
-		(call fop.run (wheel_subj_type role))
+		(call fop.run (subj_type_attribute role))
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_fuse
-		(call fusermount.run (wheel_subj_type role))
-		(call ulockmgr.run (wheel_subj_type role)))
+		(call fusermount.run (subj_type_attribute role))
+		(call ulockmgr.run (subj_type_attribute role)))
+
+	(optional wheel_optional_git
+		(call git.home_user_obj_entry_subj (subj))
+		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional wheel_optional_gpg
 		(call gpg_helper.exec (subj)))
@@ -70,7 +66,7 @@
 		(call fpaste.relabel_var_tmp_user (subj)))
 
 	(optional wheel_optional_gpg_pcsc_wrapper
-		(call gpg_pcsc_wrapper.run (wheel_subj_type role)))
+		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
 	(optional wheel_optional_gstreamer
 		(call gstreamer.manage_home_cache (subj))
@@ -85,8 +81,8 @@
 		(call java.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_lirc
-		(call lirc.run (wheel_subj_type role))
-		(call lirc_lsplugins.run (wheel_subj_type role)))
+		(call lirc.run (subj_type_attribute role))
+		(call lirc_lsplugins.run (subj_type_attribute role)))
 
 	(optional wheel_optional_myqemu
 		(call myqemu_installer.read_cmd_files (subj))
@@ -94,16 +90,16 @@
 		(call myqemu_shutdown.read_cmd_files (subj)))
 
 	(optional wheel_optional_mysysstat
-		(call mysysstat.run (wheel_subj_type role)))
+		(call mysysstat.run (subj_type_attribute role)))
 
 	(optional wheel_optional_networkctl
-		(call networkctl.run (wheel_subj_type role)))
+		(call networkctl.run (subj_type_attribute role)))
 
 	(optional wheel_optional_newrole
-		(call newrole.run (wheel_subj_type role)))
+		(call newrole.run (subj_type_attribute role)))
 
 	(optional wheel_optional_openssl
-		(call openssl.run (wheel_subj_type role))
+		(call openssl.run (subj_type_attribute role))
 		(call openssl.manage_home_user_files (subj))
 		(call openssl.relabel_home_user_files (subj))
 		(call openssl.home_dir_obj_type_transition_home (subj)))
@@ -114,30 +110,30 @@
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
         (optional wheel_optional_pinentry
-		(call pinentry.run (wheel_subj_type role))
+		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional wheel_optional_pwgen
-		(call pwgen.run (wheel_subj_type role)))
+		(call pwgen.run (subj_type_attribute role)))
 
 	(optional wheel_optional_qiv
 		(call qiv.manage_tmpfs_user_files (subj))
 		(call qiv.relabel_tmpfs_user_files (subj))
-		(call qiv.run (wheel_subj_type role)))
+		(call qiv.run (subj_type_attribute role)))
 
 	(optional wheel_optional_quota
-		(call quota.exec (wheel_subj_type)))
+		(call quota.exec (subj_type_attribute)))
 
 	(optional wheel_optional_rpmbuild
 		(call rpmbuild.manage_tmpfs_user (subj))
 		(call rpmbuild.relabel_tmpfs_user (subj))
 		(call rpmbuild.manage_var_tmp_user (subj))
 		(call rpmbuild.relabel_var_tmp_user (subj))
-		(call rpmbuild.run (wheel_subj_type role)))
+		(call rpmbuild.run (subj_type_attribute role)))
 
 	(optional wheel_optional_rpws
-		(call rpws.run (wheel_subj_type role))
+		(call rpws.run (subj_type_attribute role))
 		(call rpws.manage_tmpfs_user_files (subj))
 		(call rpws.relabel_tmpfs_user_files (subj)))
 
@@ -148,13 +144,13 @@
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
 		(call rtorrent.home_config_obj_type_transition_home_config (subj))
-		(call rtorrent.run (wheel_subj_type role)))
+		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional wheel_optional_run
 		(call run.exec (subj)))
 
 	(optional wheel_optional_scdaemon
-		(call scdaemon.run (wheel_subj_type role))
+		(call scdaemon.run (subj_type_attribute role))
 		(call scdaemon.manage_home_user (subj))
 		(call scdaemon.relabel_home_user (subj))
 		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
@@ -162,14 +158,14 @@
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional wheel_optional_sd_stdio
-		(call sd_stdio.run (wheel_subj_type role)))
+		(call sd_stdio.run (subj_type_attribute role)))
 
 	(optional wheel_optional_setools
 		(call setools.exec (subj)))
 
 	(optional wheel_optional_ssh
-		(call ssh_sftpserver.run (wheel_subj_type role))
-		(call ssh_keygen.run (wheel_subj_type role))
+		(call ssh_sftpserver.run (subj_type_attribute role))
+		(call ssh_keygen.run (subj_type_attribute role))
 		(call ssh.login_subj_type (subj)))
 
 	(optional wheel_optional_sysadm
@@ -183,44 +179,48 @@
 		(call tetex.home_dir_obj_type_transition_home (subj))
 		(call tetex.manage_tmpfs_user (subj))
 		(call tetex.relabel_tmpfs_user (subj))
-		(call pdftex.run (wheel_subj_type role)))
+		(call pdftex.run (subj_type_attribute role)))
 
 	(optional wheel_optional_tor
 		(call tor.manage_home_user (subj))
 		(call tor.relabel_home_user (subj))
 		(call tor.home_dir_obj_type_transition_home (subj))
-		(call tor.run (wheel_subj_type role)))
+		(call tor.run (subj_type_attribute role)))
 
 	(optional wheel_optional_tor_gencert
-		(call tor_gencert.run (wheel_subj_type role)))
+		(call tor_gencert.run (subj_type_attribute role)))
 
 	(optional wheel_optional_tor_resolve
-		(call tor_resolve.run (wheel_subj_type role)))
+		(call tor_resolve.run (subj_type_attribute role)))
 
 	(optional wheel_optional_usbutil
-		(call usbutil.run (wheel_subj_type role)))
+		(call usbutil.run (subj_type_attribute role)))
 
 	(optional wheel_optional_wodim
-		(call wodim.run (wheel_subj_type role)))
+		(call wodim.run (subj_type_attribute role)))
 
 	(optional wheel_optional_wpacli
 		(call wpacli.manage_tmpfs_user_sock_files (subj))
 		(call wpacli.relabel_tmpfs_user_sock_files (subj))
-		(call wpacli.run (wheel_subj_type role)))
+		(call wpacli.run (subj_type_attribute role)))
 
 	(optional wheel_optional_xauth
-		(call xauth.run (wheel_subj_type role))
+		(call xauth.run (subj_type_attribute role))
 		(call xauth.manage_home_user_files (subj))
 		(call xauth.relabel_home_user_files (subj)))
+
+	(optional wheel_optional_xinit
+		(call xinit.home_user_obj_entry_subj (subj))
+		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional wheel_optional_xlock
 		(call xlock.manage_home_user_files (subj))
 		(call xlock.relabel_home_user_files (subj))
 		(call xlock.home_dir_obj_type_transition_home (subj))
-		(call xlock.run (wheel_subj_type role)))
+		(call xlock.run (subj_type_attribute role)))
 
 	(optional wheel_optional_xserver
-		(call xserver.run (wheel_subj_type role))
+		(call xserver.run (subj_type_attribute role))
 		(call xserver.manage_home_user_files (subj))
 		(call xserver.relabel_home_user_files (subj))
 		(call xserver.home_dir_obj_type_transition_home (subj))
@@ -233,175 +233,175 @@
 		(call xserver.relabel_tmpfs_user_sock_files (subj)))
 
 	(optional wheel_optional_xutil
-		(call xutil.run (wheel_subj_type role))
+		(call xutil.run (subj_type_attribute role))
 		(call xutil.manage_home_user_files (subj))
 		(call xutil.relabel_home_user_files (subj))
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_xwd
-		(call xwd.run (wheel_subj_type role)))
+		(call xwd.run (subj_type_attribute role)))
 
 	(optional wheel_optional_wheel_alsautil
-		(call wheel_alsautil.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_alsautil.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_analyze
-		(call wheel_analyze.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_analyze.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_atspi_sessbus_launch
-		(call wheel_atspi_sessbus_launch.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_chfn
-		(call wheel_chfn.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_chfn.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_dbus_send
-		(call wheel_dbus_send.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_dbus_send.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_dunst
-		(call wheel_dunst.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_dunst.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_emacs
-		(call wheel_emacs.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_emacsclient
-		(call wheel_emacsclient.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_emacsclient.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_fedpkg
-		(call wheel_fedpkg.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_fedpkg.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_festival
-		(call wheel_festival.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_festival.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ffmpeg
-		(call wheel_ffmpeg.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_ffmpeg.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_fuse_sshfs
-		(call wheel_fuse_sshfs.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_git
-		(call wheel_git.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_git.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_git_email
-		(call wheel_git_email.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_git_email.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gpg
-		(call wheel_gpg.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_gpg.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gpg_agent
-		(call wheel_gpg_agent.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_gpg_agent.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_busctl
-		(call wheel_busctl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_busctl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_firefox
-		(call wheel_firefox.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_firefox.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_firefox_plugins
-		(call wheel_firefox_plugins.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_firefox_plugins.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_firefox_xremotec
-		(call wheel_firefox_xremotec.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_firefox_xremotec.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_irssi
-		(call wheel_irssi.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_irssi.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_hostnamectl
-		(call wheel_hostnamectl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_hostnamectl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_journalctl
-		(call wheel_journalctl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_journalctl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_libnotify
-		(call wheel_libnotify.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_libnotify.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_livestreamer
-		(call wheel_livestreamer.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_livestreamer.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_localectl
-		(call wheel_localectl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_localectl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_loginctl
-		(call wheel_loginctl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_loginctl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_lynx
-		(call wheel_lynx.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_lynx.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mutt
-		(call wheel_mutt.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mutt_pgp_ewrap
-		(call wheel_mutt_pgp_ewrap.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_machinectl
-		(call wheel_machinectl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_machinectl.role_pattern (role subj_type_attribute)))
  
 	(optional wheel_optional_wheel_mplayer
-		(call wheel_mplayer.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_mplayer.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_nb
-		(call wheel_nb.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_nb.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_pa
-		(call wheel_pa.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_pa.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_pactl
-		(call wheel_pactl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_pactl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_passwd
-		(call wheel_passwd.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_passwd.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_polkit_exec.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_rp
-		(call wheel_rp.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_rp.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_rpmdev
-		(call wheel_rpmdev.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_rpmdev.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_screen
-		(call wheel_screen.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_screen.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_sduser
-		(call wheel_sduser.role_pattern (wheel.role wheel.subj)))
+		(call wheel_sduser.role_pattern (role wheel.subj)))
 
 	(optional wheel_optional_wheel_sessbus
-		(call wheel_sessbus.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_sessbus.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_sessbus_launch
-		(call wheel_sessbus_launch.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ssh_agent
-		(call wheel_ssh_agent.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_ssh_agent.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ssh_client
-		(call wheel_ssh_client.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_ssh_client.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_startx
-		(call wheel_startx.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_startx.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_sudo
-		(call wheel_sudo.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_sudo.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_systemctl
-		(call wheel_systemctl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_systemctl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_timedatectl
-		(call wheel_timedatectl.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_timedatectl.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_tor_socks
-		(call wheel_tor_socks.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_tor_socks.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_vlock
-		(call wheel_vlock.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_vlock.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xbindkeys
-		(call wheel_xbindkeys.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_xbindkeys.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xinit
-		(call wheel_xinit.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_xinit.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xpdf
-		(call wheel_xpdf.role_pattern (wheel.role wheel_subj_type)))
+		(call wheel_xpdf.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xterm
-		(call wheel_xterm.role_pattern (wheel.role wheel_subj_type))))
+		(call wheel_xterm.role_pattern (role subj_type_attribute))))

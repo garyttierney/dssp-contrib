@@ -1,10 +1,10 @@
 (block wheel_emacs
 	(blockinherit emacs.subj_blk)
 
-	(call wheel_cmd_auto_subj_type_transition (subj))
-	(call wheel_shell_auto_subj_type_transition (subj))
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
 
-	(call wheel_home_cmd_auto_subj_type_transition (subj))
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
 
 	(optional wheel_emacs_optional_wheel_dbus_send
 		(call wheel_dbus_send.auto_subj_type_transition (subj)))

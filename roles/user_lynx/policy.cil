@@ -1,10 +1,10 @@
 (block user_lynx
 	(blockinherit lynx.subj_blk)
 
-	(call user_cmd_auto_subj_type_transition (subj))
-	(call user_shell_auto_subj_type_transition (subj))
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user_home_cmd_auto_subj_type_transition (subj))
+	(call user.home_cmd_auto_subj_type_transition (subj))
 
 	(optional user_lynx_optional_user_gpg
 		(call user_gpg.auto_subj_type_transition (subj)))

@@ -1,7 +1,7 @@
 (block user_sduser
 	(blockinherit sduser.subj_blk)
 
-	(call user_subj_type (subj))
+	(call user.user_subj_type (subj))
 
 	(optional user_sduser_optional_user_sessbus
 		(call user_sessbus.unix_stream_socket_activation_sduser_subj_type (subj))

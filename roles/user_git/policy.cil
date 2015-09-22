@@ -1,12 +1,12 @@
 (block user_git
 	(blockinherit git.subj_blk)
 
-	(call user_cmd_auto_subj_type_transition (subj))
-	(call user_shell_auto_subj_type_transition (subj))
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user_home_cmd_auto_subj_type_transition (subj))
+	(call user.home_cmd_auto_subj_type_transition (subj))
 
-	(call user_git_home_user_auto_type_transition_subj_type (subj))
+	(call user.git_home_user_auto_type_transition_subj_type (subj))
 
 	(optional user_git_optional_user_gpg
 		(call user_gpg.auto_subj_type_transition (subj)))

@@ -1,74 +1,68 @@
-(typeattribute user_subj_type)
-(typeattribute user_git_home_user_auto_type_transition_subj_type_attribute)
-(typeattribute user_xinit_home_user_auto_type_transition_subj_type_attribute)
-(typeattribute user_dbus_send_auto_type_transition_subj_type_attribute)
-
-(optional user_dbus_send_auto_type_transition_subj_type_optional_dbus_send
-	(call dbus_send.spec_auto_subj_type_transition (user_dbus_send_auto_type_transition_subj_type_attribute user.subj)))
-
-(optional user_git_home_user_auto_type_transition_subj_type_optional_git
-	(call git.home_user_obj_entry_subj (user.subj))
-	(call git.spec_home_user_auto_subj_type_transition (user_git_home_user_auto_type_transition_subj_type_attribute user.subj)))
-
-(optional user_xinit_home_user_auto_type_transition_subj_type_optional_git
-	(call xinit.home_user_obj_entry_subj (user.subj))
-	(call xinit.spec_home_user_auto_subj_type_transition (user_xinit_home_user_auto_type_transition_subj_type_attribute user.subj)))
-
 (block user
+	(typeattribute subj_type_attribute)
+	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute dbus_send_auto_type_transition_subj_type_attribute)
+
 	(blockinherit usersubj.base_login_blk)
 
 	(call usersubj.mls (id systemlow (systemlow systemlow)))
 
-        (typeattributeset user_subj_type subj)
+        (typeattributeset subj_type_attribute subj)
 
 	(optional user_optional_bluetoothctl
-		(call bluetoothctl.run (user_subj_type role)))
+		(call bluetoothctl.run (subj_type_attribute role)))
 
 	(optional user_optional_busctl
-		(call busctl.exec (user_subj_type)))
+		(call busctl.exec (subj_type_attribute)))
 
 	(optional user_optional_curl
-		(call curl.run (user_subj_type role))
+		(call curl.run (subj_type_attribute role))
 		(call curl.manage_home_user_files (subj))
 		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_bti
-		(call bti.run (user_subj_type role))
+		(call bti.run (subj_type_attribute role))
 		(call bti.manage_home_user_files (subj))
 		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_dbus_send
-		(call dbus_send.exec (user_subj_type)))
+		(call dbus_send.spec_auto_subj_type_transition (dbus_send_auto_type_transition_subj_type_attribute subj))
+		(call dbus_send.exec (subj_type_attribute)))
 
 	(optional user_optional_dd
-		(call dd.exec (user_subj_type)))
+		(call dd.exec (subj_type_attribute)))
 
 	(optional user_optional_dirmngr
-		(call dirmngr.run (user_subj_type role))
+		(call dirmngr.run (subj_type_attribute role))
 		(call dirmngr.manage_home_user (subj))
 		(call dirmngr.relabel_home_user (subj))
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional user_optional_dmenu
-		(call dmenu.run (user_subj_type role)))
+		(call dmenu.run (subj_type_attribute role)))
 
 	(optional user_optional_fop
-		(call fop.run (user_subj_type role))
+		(call fop.run (subj_type_attribute role))
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_fuse
-		(call fusermount.run (user_subj_type role))
-		(call ulockmgr.run (user_subj_type role)))
+		(call fusermount.run (subj_type_attribute role))
+		(call ulockmgr.run (subj_type_attribute role)))
+
+	(optional user_optional_git
+		(call git.home_user_obj_entry_subj (subj))
+		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional user_optional_gpg
 		(call gpg_helper.exec (subj)))
 
 	(optional user_optional_gpg_pcsc_wrapper
-		(call gpg_pcsc_wrapper.run (user_subj_type role)))
+		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
 	(optional user_optional_gstreamer
 		(call gstreamer.manage_home_cache (subj))
@@ -86,14 +80,14 @@
 		(call journalctl.exec (subj)))
 
 	(optional user_optional_lirc
-		(call lirc.run (user_subj_type role))
-		(call lirc_lsplugins.run (user_subj_type role)))
+		(call lirc.run (subj_type_attribute role))
+		(call lirc_lsplugins.run (subj_type_attribute role)))
 
 	(optional user_optional_mysysstat
-		(call mysysstat.run (user_subj_type role)))
+		(call mysysstat.run (subj_type_attribute role)))
 
 	(optional user_optional_openssl
-		(call openssl.run (user_subj_type role))
+		(call openssl.run (subj_type_attribute role))
 		(call openssl.manage_home_user_files (subj))
 		(call openssl.relabel_home_user_files (subj))
 		(call openssl.home_dir_obj_type_transition_home (subj)))
@@ -104,23 +98,23 @@
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_pinentry
-		(call pinentry.run (user_subj_type role))
+		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional user_optional_pwgen
-		(call pwgen.run (user_subj_type role)))
+		(call pwgen.run (subj_type_attribute role)))
 
 	(optional user_optional_qiv
 		(call qiv.manage_tmpfs_user_files (subj))
 		(call qiv.relabel_tmpfs_user_files (subj))
-		(call qiv.run (user_subj_type role)))
+		(call qiv.run (subj_type_attribute role)))
 
 	(optional user_optional_quota
-		(call quota.exec (user_subj_type)))
+		(call quota.exec (subj_type_attribute)))
 
 	(optional user_optional_rpws
-		(call rpws.run (user_subj_type role))
+		(call rpws.run (subj_type_attribute role))
 		(call rpws.manage_tmpfs_user_files (subj))
 		(call rpws.relabel_tmpfs_user_files (subj)))
 
@@ -131,13 +125,13 @@
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
 		(call rtorrent.home_config_obj_type_transition_home_config (subj))
-		(call rtorrent.run (user_subj_type role)))
+		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional user_optional_run
 		(call run.exec (subj)))
 
 	(optional user_optional_scdaemon
-		(call scdaemon.run (user_subj_type role))
+		(call scdaemon.run (subj_type_attribute role))
 		(call scdaemon.manage_home_user (subj))
 		(call scdaemon.relabel_home_user (subj))
 		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
@@ -145,8 +139,8 @@
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
 	(optional user_optional_ssh
-		(call ssh_sftpserver.run (user_subj_type role))
-		(call ssh_keygen.run (user_subj_type role))
+		(call ssh_sftpserver.run (subj_type_attribute role))
+		(call ssh_keygen.run (subj_type_attribute role))
 		(call ssh.login_subj_type (subj)))
 
 	(optional user_optional_systemctl
@@ -158,7 +152,7 @@
 		(call tetex.home_dir_obj_type_transition_home (subj))
 		(call tetex.manage_tmpfs_user (subj))
 		(call tetex.relabel_tmpfs_user (subj))
-		(call pdftex.run (user_subj_type role)))
+		(call pdftex.run (subj_type_attribute role)))
 
 	(optional user_optional_tor
 		(call tor.manage_home_user (subj))
@@ -166,18 +160,22 @@
 		(call tor.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_xauth
-		(call xauth.run (user_subj_type role))
+		(call xauth.run (subj_type_attribute role))
 		(call xauth.manage_home_user_files (subj))
 		(call xauth.relabel_home_user_files (subj)))
+
+	(optional user_optional_xinit
+		(call xinit.home_user_obj_entry_subj (subj))
+		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional user_optional_xlock
 		(call xlock.manage_home_user_files (subj))
 		(call xlock.relabel_home_user_files (subj))
 		(call xlock.home_dir_obj_type_transition_home (subj))
-		(call xlock.run (user_subj_type role)))
+		(call xlock.run (subj_type_attribute role)))
 
 	(optional user_optional_xserver
-		(call xserver.run (user_subj_type role))
+		(call xserver.run (subj_type_attribute role))
 		(call xserver.manage_home_user_files (subj))
 		(call xserver.relabel_home_user_files (subj))
 		(call xserver.home_dir_obj_type_transition_home (subj))
@@ -190,130 +188,130 @@
 		(call xserver.relabel_tmpfs_user_sock_files (subj)))
 
 	(optional user_optional_xutil
-		(call xutil.run (user_subj_type role))
+		(call xutil.run (subj_type_attribute role))
 		(call xutil.manage_home_user_files (subj))
 		(call xutil.relabel_home_user_files (subj))
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_xwd
-		(call xwd.run (user_subj_type role)))
+		(call xwd.run (subj_type_attribute role)))
 
 	(optional user_optional_user_alsautil
-		(call user_alsautil.role_pattern (user.role user_subj_type)))
+		(call user_alsautil.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_atspi_sessbus_launch
-		(call user_atspi_sessbus_launch.role_pattern (user.role user_subj_type)))
+		(call user_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_chfn
-		(call user_chfn.role_pattern (user.role user_subj_type)))
+		(call user_chfn.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_dunst
-		(call user_dunst.role_pattern (user.role user_subj_type)))
+		(call user_dunst.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_emacs
-		(call user_emacs.role_pattern (user.role user_subj_type)))
+		(call user_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_emacsclient
-		(call user_emacsclient.role_pattern (user.role user_subj_type)))
+		(call user_emacsclient.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_firefox
-		(call user_firefox.role_pattern (user.role user_subj_type)))
+		(call user_firefox.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_firefox_plugins
-		(call user_firefox_plugins.role_pattern (user.role user_subj_type)))
+		(call user_firefox_plugins.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_firefox_xremotec
-		(call user_firefox_xremotec.role_pattern (user.role user_subj_type)))
+		(call user_firefox_xremotec.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_festival
-		(call user_festival.role_pattern (user.role user_subj_type)))
+		(call user_festival.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_ffmpeg
-		(call user_ffmpeg.role_pattern (user.role user_subj_type)))
+		(call user_ffmpeg.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_fuse_sshfs
-		(call user_fuse_sshfs.role_pattern (user.role user_subj_type)))
+		(call user_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_git
-		(call user_git.role_pattern (user.role user_subj_type)))
+		(call user_git.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_git_email
-		(call user_git_email.role_pattern (user.role user_subj_type)))
+		(call user_git_email.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gpg
-		(call user_gpg.role_pattern (user.role user_subj_type)))
+		(call user_gpg.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gpg_agent
-                (call user_gpg_agent.role_pattern (user.role user_subj_type)))
+                (call user_gpg_agent.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_irssi
-		(call user_irssi.role_pattern (user.role user_subj_type)))
+		(call user_irssi.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_libnotify
-		(call user_libnotify.role_pattern (user.role user_subj_type)))
+		(call user_libnotify.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_livestreamer
-		(call user_livestreamer.role_pattern (user.role user_subj_type)))
+		(call user_livestreamer.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_lynx
-		(call user_lynx.role_pattern (user.role user_subj_type)))
+		(call user_lynx.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_mplayer
-		(call user_mplayer.role_pattern (user.role user_subj_type)))
+		(call user_mplayer.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_mutt
-		(call user_mutt.role_pattern (user.role user_subj_type)))
+		(call user_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_mutt_pgp_ewrap
-		(call user_mutt_pgp_ewrap.role_pattern (user.role user_subj_type)))
+		(call user_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_nb
-		(call user_nb.role_pattern (user.role user_subj_type)))
+		(call user_nb.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_pa
-		(call user_pa.role_pattern (user.role user_subj_type)))
+		(call user_pa.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_pactl
-		(call user_pactl.role_pattern (user.role user_subj_type)))
+		(call user_pactl.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_passwd
-		(call user_passwd.role_pattern (user.role user_subj_type)))
+		(call user_passwd.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_rp
-		(call user_rp.role_pattern (user.role user_subj_type)))
+		(call user_rp.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_screen
-		(call user_screen.role_pattern (user.role user_subj_type)))
+		(call user_screen.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_sduser
-		(call user_sduser.role_pattern (user.role user.subj)))
+		(call user_sduser.role_pattern (role user.subj)))
 
 	(optional user_optional_user_sessbus
-		(call user_sessbus.role_pattern (user.role user_subj_type)))
+		(call user_sessbus.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_sessbus_launch
-		(call user_sessbus_launch.role_pattern (user.role user_subj_type)))
+		(call user_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_ssh_agent
-		(call user_ssh_agent.role_pattern (user.role user_subj_type)))
+		(call user_ssh_agent.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_ssh_client
-		(call user_ssh_client.role_pattern (user.role user_subj_type)))
+		(call user_ssh_client.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_startx
-		(call user_startx.role_pattern (user.role user_subj_type)))
+		(call user_startx.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_vlock
-		(call user_vlock.role_pattern (user.role user_subj_type)))
+		(call user_vlock.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xbindkeys
-		(call user_xbindkeys.role_pattern (user.role user_subj_type)))
+		(call user_xbindkeys.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xpdf
-		(call user_xpdf.role_pattern (user.role user_subj_type)))
+		(call user_xpdf.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xinit
-		(call user_xinit.role_pattern (user.role user_subj_type)))
+		(call user_xinit.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xterm
-		(call user_xterm.role_pattern (user.role user_subj_type))))
+		(call user_xterm.role_pattern (role subj_type_attribute))))

@@ -1,10 +1,10 @@
 (block user_mutt
 	(blockinherit mutt.subj_blk)
 
-	(call user_cmd_auto_subj_type_transition (subj))
-	(call user_shell_auto_subj_type_transition (subj))
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user_home_cmd_auto_subj_type_transition (subj))
+	(call user.home_cmd_auto_subj_type_transition (subj))
 
 	(optional user_mutt_optional_user_emacsclient
 		(call user_emacsclient.auto_subj_type_transition (subj)))

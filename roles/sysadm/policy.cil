@@ -1,22 +1,14 @@
-(typeattribute sysadm_subj_type)
-
-(typeattribute sysadm_git_home_user_auto_type_transition_subj_type_attribute)
-(typeattribute sysadm_xinit_home_user_auto_type_transition_subj_type_attribute)
-
-(optional sysadm_git_home_user_auto_type_transition_subj_type_optional_git
-	(call git.home_user_obj_entry_subj (sysadm.subj))
-	(call git.spec_home_user_auto_subj_type_transition (sysadm_git_home_user_auto_type_transition_subj_type_attribute sysadm.subj)))
-
-(optional sysadm_xinit_home_user_auto_type_transition_subj_type_optional_git
-	(call xinit.home_user_obj_entry_subj (sysadm.subj))
-	(call xinit.spec_home_user_auto_subj_type_transition (sysadm_xinit_home_user_auto_type_transition_subj_type_attribute sysadm.subj)))
-
 (block sysadm
+	(typeattribute subj_type_attribute)
+
+	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+
 	(blockinherit usersubj.base_priv_login_blk)
 
 	(call usersubj.mls (id systemlow (systemlow systemhigh)))
 
-	(typeattributeset sysadm_subj_type subj)
+	(typeattributeset subj_type_attribute subj)
 
 	(dontaudit subj self (capability (sys_ptrace)))
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
@@ -70,46 +62,46 @@
 			(call policy_config.manage (subj))
 			(call policy_src.manage_config (subj))
 			(call selinux_config.manage_config (subj))
-			(call load_policy.run (sysadm_subj_type role))
-			(call matchpathcon.run (sysadm_subj_type role))
-			(call setenforce.run (sysadm_subj_type role))
-			(call setfiles.run (sysadm_subj_type role))
-			(call setsebool.run (sysadm_subj_type role))
+			(call load_policy.run (subj_type_attribute role))
+			(call matchpathcon.run (subj_type_attribute role))
+			(call setenforce.run (subj_type_attribute role))
+			(call setfiles.run (subj_type_attribute role))
+			(call setsebool.run (subj_type_attribute role))
 
 			(optional sysadm_optional_audispd
 				(call audispd.manage_config (subj))
 				(call audispd.manage_runtime_sock_files (subj)))
 
 			(optional sysadm_optional_auditctl
-				(call auditctl.run (sysadm_subj_type role)))
+				(call auditctl.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_auditd
 				(call auditd.adm (subj role))
-				(call augenrules.run (sysadm_subj_type role))
-				(call ausearch.run (sysadm_subj_type role)))
+				(call augenrules.run (subj_type_attribute role))
+				(call ausearch.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_authconfig
 				(call authconfig.manage_config_files (subj))
 				(call authconfig.manage_data (subj))
 				(call authconfig.manage_var_lib (subj))
-				(call authconfig.run (sysadm_subj_type role)))
+				(call authconfig.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_chage
-				(call chage.run (sysadm_subj_type role)))
+				(call chage.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_cracklib
-				(call cracklib.run (sysadm_subj_type role))
+				(call cracklib.run (subj_type_attribute role))
 				(call cracklib.manage_var_cache (subj)))
 
 			(optional sysadm_optional_iptables
 				(call iptables.adm (subj role))
-				(call iptables.run (sysadm_subj_type role)))
+				(call iptables.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_mcstransd
 				(call mcstransd.adm (subj role)))
 
 			(optional sysadm_optional_netlabelctl
-				(call netlabelctl.run (sysadm_subj_type role)))
+				(call netlabelctl.run (subj_type_attribute role)))
 
 			(optional sysadm_optional_pam
 				(call pam.adm_subj_type (subj)))
@@ -123,7 +115,7 @@
 		(call alsactl.adm (subj role)))
 
 	(optional sysadm_optional_bluetoothctl
-		(call bluetoothctl.run (sysadm_subj_type role)))
+		(call bluetoothctl.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_bluetoothd
 		(call bluetoothd.adm (subj role)))
@@ -132,46 +124,46 @@
 		(call bootloader.manage_config (subj))
 		(call bootloader.manage_boot_files (subj))
 		(call bootloader.manage_var_log_files (subj))
-		(call bootloader.run (sysadm_subj_type role)))
+		(call bootloader.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_bridgeutil
-		(call bridgeutil.run (sysadm_subj_type role)))
+		(call bridgeutil.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_bti
-		(call bti.run (sysadm_subj_type role))
+		(call bti.run (subj_type_attribute role))
 		(call bti.manage_home_user_files (subj))
 		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_chkpwd
-		(call chkpwd.run (sysadm_subj_type role)))
+		(call chkpwd.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_chronyd
 		(call chronyd.adm (subj role))
-		(call chronyc.run (sysadm_subj_type role)))
+		(call chronyc.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_conntrack
-		(call conntrack.run (sysadm_subj_type role))
-		(call conntrackd.run (sysadm_subj_type role))
-		(call nfct.run (sysadm_subj_type role))
+		(call conntrack.run (subj_type_attribute role))
+		(call conntrackd.run (subj_type_attribute role))
+		(call nfct.run (subj_type_attribute role))
 		(call conntrackd.adm (subj role)))
 
 	(optional sysadm_optional_coredumpctl
-		(call coredumpctl.run (sysadm_subj_type role)))
+		(call coredumpctl.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_cpupower
 		(call cpupower.adm (subj role))
-		(call cpupower.run (sysadm_subj_type role)))
+		(call cpupower.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_curl
-		(call curl.run (sysadm_subj_type role))
+		(call curl.run (subj_type_attribute role))
 		(call curl.manage_config_files (subj))
 		(call curl.manage_home_user_files (subj))
 		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dd
-		(call dd.run (sysadm_subj_type role)))
+		(call dd.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dhclient
 		(call dhclient.manage_config (subj))
@@ -179,26 +171,26 @@
 		(call dhclient.manage_var_lib (subj)))
 
 	(optional sysadm_optional_dirmngr
-		(call dirmngr.run (sysadm_subj_type role))
+		(call dirmngr.run (subj_type_attribute role))
 		(call dirmngr.manage_home_user (subj))
 		(call dirmngr.relabel_home_user (subj))
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dm
-		(call dmcrypt.run (sysadm_subj_type role))
-		(call dmsetup.run (sysadm_subj_type role)))
+		(call dmcrypt.run (subj_type_attribute role))
+		(call dmsetup.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmenu
-		(call dmenu.run (sysadm_subj_type role)))
+		(call dmenu.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmesg
-		(call dmesg.run (sysadm_subj_type role)))
+		(call dmesg.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmeventd
-		(call dmeventd.adm (sysadm_subj_type role)))
+		(call dmeventd.adm (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmidecode
-		(call dmidecode.run (sysadm_subj_type role)))
+		(call dmidecode.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dns
 		(call resolv.manage_config_files (subj)))
@@ -207,12 +199,12 @@
 		(call dnssec_trigger.adm (subj role)))
 
 	(optional sysadm_optional_dnssec_triggerc
-		(call dnssec_triggerc.run (sysadm_subj_type role)))
+		(call dnssec_triggerc.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dracut
 		(call dracut.manage_config (subj))
 		(call dracut.manage_var_tmp (subj))
-		(call dracut.run (sysadm_subj_type role)))
+		(call dracut.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs.adm (subj role)))
@@ -222,7 +214,7 @@
 		(call fedpkg.relabel_config (subj)))
 
 	(optional sysadm_optional_fop
-		(call fop.run (sysadm_subj_type role))
+		(call fop.run (subj_type_attribute role))
 		(call fop.manage_config_files (subj))
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
@@ -230,21 +222,25 @@
 
 	(optional sysadm_optional_fuse
 		(call fusermount.manage_config_files (subj))
-		(call fusermount.run (sysadm_subj_type sysadm.role))
-		(call ulockmgr.run (sysadm_subj_type sysadm.role)))
+		(call fusermount.run (subj_type_attribute role))
+		(call ulockmgr.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_git
+		(call git.home_user_obj_entry_subj (subj))
+		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional sysadm_optional_gpg
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))
 
 	(optional sysadm_optional_fpaste
-		(call fpaste.run (sysadm_subj_type role))
+		(call fpaste.run (subj_type_attribute role))
 		(call fpaste.manage_var_tmp_user (subj))
 		(call fpaste.relabel_var_tmp_user (subj)))
 
 	(optional sysadm_optional_fstools
 		(call fstools.manage_runtime (subj))
-		(call fstools.run (sysadm_subj_type role)))
+		(call fstools.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_fstim
 		(call fstrim.adm (subj role))
@@ -254,7 +250,7 @@
 		(call getty.adm (subj role)))
 
 	(optional sysadm_optional_gpg_pcsc_wrapper
-		(call gpg_pcsc_wrapper.run (sysadm_subj_type role)))
+		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_gstreamer
 		(call gstreamer.manage_home_cache (subj))
@@ -263,24 +259,24 @@
 
 	(optional sysadm_optional_hostname
 		(call hostname.manage_config_files (subj))
-		(call hostname.run (sysadm_subj_type role)))
+		(call hostname.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_hwclock
 		(call hwclock.manage_config_files (subj))
-		(call hwclock.run (sysadm_subj_type role)))
+		(call hwclock.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_iotop
-		(call iotop.run (sysadm_subj_type role)))
+		(call iotop.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_iptools
 		(call iptools.manage_config (subj))
-		(call iptools.run (sysadm_subj_type role)))
+		(call iptools.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_irssi
 		(call irssi.manage_config_files (subj)))
 
 	(optional sysadm_optional_java
-		(call java.exec (sysadm_subj_type))
+		(call java.exec (subj_type_attribute))
 		(call java.manage_config (subj))
 		(call java.manage_tmpfs_user (subj))
 		(call java.relabel_tmpfs_user (subj))
@@ -289,36 +285,36 @@
 		(call java.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_networkctl
-		(call networkctl.run (sysadm_subj_type role)))
+		(call networkctl.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_kmod
 		(call kmod.adm (subj role))
-		(call kmod.run (sysadm_subj_type role)))
+		(call kmod.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_ldconfig
 		(call ldconfig.adm (subj role))
-		(call ldconfig.run (sysadm_subj_type role)))
+		(call ldconfig.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_lirc
-		(call lirc.run (sysadm_subj_type role))
-		(call lirc_lsplugins.run (sysadm_subj_type role)))
+		(call lirc.run (subj_type_attribute role))
+		(call lirc_lsplugins.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_lircd
 		(call lircd.adm (subj role)))
 
 	(optional sysadm_optional_loadkeys
-		(call loadkeys.run (sysadm_subj_type role)))
+		(call loadkeys.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_login
 		(call login.adm (subj role)))
 
 	(optional sysadm_optional_logrotate
 		(call logrotate.adm (subj role))
-		(call logrotate.run (sysadm_subj_type role)))
+		(call logrotate.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_lvm
 		(call lvm.adm (subj role))
-		(call lvm.run (sysadm_subj_type role)))
+		(call lvm.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_lvmetad
 		(call lvmetad.adm (subj role)))
@@ -328,21 +324,21 @@
 
 	(optional sysadm_optional_mandb
 		(call mandb.adm (subj role))
-		(call mandb.run (sysadm_subj_type role)))
+		(call mandb.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_md
 		(call md.adm (subj role))
-		(call mdadm.run (sysadm_subj_type role)))
+		(call mdadm.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_newrole
-		(call newrole.run (sysadm_subj_type role)))
+		(call newrole.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_numad
 		(call numad.adm (subj role)))
 
 	(optional sysadm_optional_mount
 		(call mount.manage_runtime (subj))
-		(call mount.run (sysadm_subj_type role)))
+		(call mount.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_mplayer
 		(call mplayer.manage_config (subj)))
@@ -351,26 +347,26 @@
 		(call mutt.manage_config_files (subj)))
 
 	(optional sysadm_optional_myqemu
-		(call myqemu_runner.run (sysadm_subj_type role))
-		(call myqemu_installer.run (sysadm_subj_type role))
-		(call myqemu_shutdown.run (sysadm_subj_type role))
+		(call myqemu_runner.run (subj_type_attribute role))
+		(call myqemu_installer.run (subj_type_attribute role))
+		(call myqemu_shutdown.run (subj_type_attribute role))
 		(call myqemu.adm (subj role)))
 
 	(optional sysadm_optional_mysysstat
-		(call mysysstat.run (sysadm_subj_type role)))
+		(call mysysstat.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_nethogs
-		(call nethogs.run (sysadm_subj_type role)))
+		(call nethogs.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_nettools
 		(call arp.adm (subj role))
-		(call arp.run (sysadm_subj_type role))
-		(call nettools.run (sysadm_subj_type role))
-		(call ping.run (sysadm_subj_type role))
-		(call traceroute.run (sysadm_subj_type role)))
+		(call arp.run (subj_type_attribute role))
+		(call nettools.run (subj_type_attribute role))
+		(call ping.run (subj_type_attribute role))
+		(call traceroute.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_nmcli
-		(call nmcli.run (sysadm_subj_type role)))
+		(call nmcli.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_nm
 		(call nm.adm (subj role)))
@@ -379,7 +375,7 @@
 		(call nss.manage_config_files (subj)))
 
 	(optional sysadm_optional_openssl
-		(call openssl.run (sysadm_subj_type role))
+		(call openssl.run (subj_type_attribute role))
 		(call openssl.manage_home_user_files (subj))
 		(call openssl.relabel_home_user_files (subj))
 		(call openssl.home_dir_obj_type_transition_home (subj)))
@@ -394,28 +390,28 @@
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_pcitools
-		(call pcitools.run (sysadm_subj_type role)))
+		(call pcitools.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_pcscd
 		(call pcscd.adm (subj role)))
 
 	(optional sysadm_optional_pinentry
-		(call pinentry.run (sysadm_subj_type role))
+		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_plymouth
 		(call plymouth.adm (subj role))
-		(call plymouth.run (sysadm_subj_type role)))
+		(call plymouth.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_polkit
 		(call polkit.adm (subj role))
-		(call polkit_agent.run (sysadm_subj_type role))
-		(call polkit_tty_agent.run (sysadm_subj_type role)))
+		(call polkit_agent.run (subj_type_attribute role))
+		(call polkit_tty_agent.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_powertop
 		(call powertop.adm (subj role))
-		(call powertop.run (sysadm_subj_type role)))
+		(call powertop.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_pppd
 		(call pppd.manage_config (subj))
@@ -424,10 +420,10 @@
 		(call pppd.manage_var_log (subj)))
 
 	(optional sysadm_optional_ppputil
-		(call ppputil.run (sysadm_subj_type role)))
+		(call ppputil.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_pwgen
-		(call pwgen.run (sysadm_subj_type role)))
+		(call pwgen.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_qemu
 		(call qemu_guest.manage_all_files (subj))
@@ -440,29 +436,29 @@
 	(optional sysadm_optional_qiv
 		(call qiv.manage_tmpfs_user_files (subj))
 		(call qiv.relabel_tmpfs_user_files (subj))
-		(call qiv.run (sysadm_subj_type role)))
+		(call qiv.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_quota
-		(call quota.run (sysadm_subj_type role)))
+		(call quota.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_quotaed
-		(call quotaed.run (sysadm_subj_type role))
+		(call quotaed.run (subj_type_attribute role))
 		(call quotaed.manage_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_quotaon
 		(call quotaon.adm (subj role))
-		(call quotaon.run (sysadm_subj_type role)))
+		(call quotaon.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_quotacheck
-		(call quotacheck.run (sysadm_subj_type role))
+		(call quotacheck.run (subj_type_attribute role))
 		(call quotacheck.manage_db_files (subj)))
 
 	(optional sysadm_optional_rfkill
-		(call rfkill.run (sysadm_subj_type role)))
+		(call rfkill.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rpm
 		(call rpm.adm (subj role))
-		(call rpm.run (sysadm_subj_type role)))
+		(call rpm.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rpmdev
 		(call rpmdev.manage_config (subj))
@@ -473,15 +469,15 @@
 		(call rpmbuild.relabel_tmpfs_user (subj))
 		(call rpmbuild.manage_var_tmp_user (subj))
 		(call rpmbuild.relabel_var_tmp_user (subj))
-		(call rpmbuild.run (sysadm_subj_type role)))
+		(call rpmbuild.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rpws
-		(call rpws.run (sysadm_subj_type role))
+		(call rpws.run (subj_type_attribute role))
 		(call rpws.manage_tmpfs_user_files (subj))
 		(call rpws.relabel_tmpfs_user_files (subj)))
 
 	(optional sysadm_optional_rtkitctl
-		(call rtkitctl.run (sysadm_subj_type role)))
+		(call rtkitctl.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rtkitd
 		(call rtkitd.adm (subj role)))
@@ -493,10 +489,10 @@
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
 		(call rtorrent.home_config_obj_type_transition_home_config (subj))
-		(call rtorrent.run (sysadm_subj_type role)))
+		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_scdaemon
-		(call scdaemon.run (sysadm_subj_type role))
+		(call scdaemon.run (subj_type_attribute role))
 		(call scdaemon.manage_home_user (subj))
 		(call scdaemon.relabel_home_user (subj))
 		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
@@ -509,7 +505,7 @@
 
 	(optional sysadm_optional_sctl
 		(call sctl.manage_config (subj))
-		(call sctl.run (sysadm_subj_type role)))
+		(call sctl.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sd
 		(call sd.adm (subj role)))
@@ -573,15 +569,15 @@
 		(call sd_networkd.adm (subj role)))
 
 	(optional sysadm_optional_sd_nspawn
-		(call sd_nspawn.run (sysadm_subj_type role))
+		(call sd_nspawn.run (subj_type_attribute role))
 		(call sd_nspawn.adm (subj role)))
 
 	(optional sysadm_optional_sd_quotacheck
 		(call sd_quotacheck.adm (subj role)))
 
 	(optional sysadm_optional_sd_randomseed
-		(call sd_randomseed.run (sysadm_subj_type role))
-		(call sd_randomseed_mls (sysadm_subj_type systemhigh systemhigh))
+		(call sd_randomseed.run (subj_type_attribute role))
+		(call sd_randomseed_mls (subj_type_attribute systemhigh systemhigh))
 		(call sd_randomseed.adm (subj role)))
 
 	(optional sysadm_optional_sd_resolved
@@ -597,14 +593,14 @@
 		(call sd_sleep.adm (subj role)))
 
 	(optional sysadm_optional_sd_stdio
-		(call sd_stdio.run (sysadm_subj_type role)))
+		(call sd_stdio.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sd_sysctl
-		(call sd_sysctl.run (sysadm_subj_type role))
+		(call sd_sysctl.run (subj_type_attribute role))
 		(call sd_sysctl.adm (subj role)))
 
 	(optional sysadm_optional_sd_sysusers
-		(call sd_sysusers.run (sysadm_subj_type role))
+		(call sd_sysusers.run (subj_type_attribute role))
 		(call sd_sysusers.adm (subj role)))
 
 	(optional sysadm_optional_sd_timedated
@@ -615,7 +611,7 @@
 
 	(optional sysadm_optional_sd_tmpfiles
 		(call sd_tmpfiles.adm (subj role))
-		(call sd_tmpfiles.run (sysadm_subj_type role)))
+		(call sd_tmpfiles.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sd_udevd
 		(call sd_udevd.adm (subj role)))
@@ -630,12 +626,12 @@
 		(call sd_vconsole.adm (subj role)))
 
 	(optional sysadm_optional_setools
-		(call setools.run (sysadm_subj_type role)))
+		(call setools.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_ssh
-		(call ssh.adm (sysadm_subj_type role))
-		(call ssh_sftpserver.run (sysadm_subj_type role))
-		(call ssh_keygen.run (sysadm_subj_type role))
+		(call ssh.adm (subj_type_attribute role))
+		(call ssh_sftpserver.run (subj_type_attribute role))
+		(call ssh_keygen.run (subj_type_attribute role))
 		(call ssh.priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_sysbus
@@ -655,49 +651,49 @@
 		(call tetex.relabel_tmpfs_user (subj))
 		(call tetex.manage_var_lib (subj))
 		(call tetex.manage_var_spool (subj))
-		(call pdftex.run (sysadm_subj_type role)))
+		(call pdftex.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_tor
 		(call tor.manage_home_user (subj))
 		(call tor.relabel_home_user (subj))
 		(call tor.home_dir_obj_type_transition_home (subj))
-		(call tor.run (sysadm_subj_type role))
+		(call tor.run (subj_type_attribute role))
 		(call tor.adm (subj role)))
 
 	(optional sysadm_optional_tor_gencert
-		(call tor_gencert.run (sysadm_subj_type role)))
+		(call tor_gencert.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_tor_resolve
-		(call tor_resolve.run (sysadm_subj_type role)))
+		(call tor_resolve.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_tunctl
 		(call tunctl.run (subj role)))
 
 	(optional sysadm_optional_udevadm
-		(call udevadm.run (sysadm_subj_type role)))
+		(call udevadm.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_unbound
 		(call unbound.adm (subj role)))
 
 	(optional sysadm_optional_unboundctl
-		(call unboundctl.run (sysadm_subj_type role))
-		(call unboundcc.run (sysadm_subj_type role)))
+		(call unboundctl.run (subj_type_attribute role))
+		(call unboundcc.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_updpwd
-		(call updpwd.run (sysadm_subj_type role)))
+		(call updpwd.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_usbutil
-		(call usbutil.run (sysadm_subj_type role)))
+		(call usbutil.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_useradd
-		(call groupadd.run (sysadm_subj_type role))
-		(call useradd.run (sysadm_subj_type role)))
+		(call groupadd.run (subj_type_attribute role))
+		(call useradd.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_utempter
-		(call utempter.run (sysadm_subj_type role)))
+		(call utempter.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_wodim
-		(call wodim.run (sysadm_subj_type role)))
+		(call wodim.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_wpa
 		(call wpa.adm (subj role)))
@@ -705,24 +701,28 @@
 	(optional sysadm_optional_wpacli
 		(call wpacli.manage_tmpfs_user_sock_files (subj))
 		(call wpacli.relabel_tmpfs_user_sock_files (subj))
-		(call wpacli.run (sysadm_subj_type role)))
+		(call wpacli.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_xauth
-		(call xauth.run (sysadm_subj_type role))
+		(call xauth.run (subj_type_attribute role))
 		(call xauth.manage_home_user_files (subj))
 		(call xauth.relabel_home_user_files (subj)))
+
+	(optional sysadm_optional_xinit
+		(call xinit.home_user_obj_entry_subj (subj))
+		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj)))
 
 	(optional sysadm_optional_xlock
 		(call xlock.manage_home_user_files (subj))
 		(call xlock.relabel_home_user_files (subj))
 		(call xlock.home_dir_obj_type_transition_home (subj))
-		(call xlock.run (sysadm_subj_type role)))
+		(call xlock.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_xpdf
 		(call xpdf.manage_config (subj)))
 
 	(optional sysadm_optional_xserver
-		(call xserver.run (sysadm_subj_type role))
+		(call xserver.run (subj_type_attribute role))
 		(call xserver.manage_config (subj))
 		(call xserver.manage_var_log_files (subj))
 		(call xserver.manage_var_lib (subj))
@@ -738,185 +738,185 @@
 		(call xserver.relabel_tmpfs_user_sock_files (subj)))
 
 	(optional sysadm_optional_xutil
-		(call xutil.run (sysadm_subj_type role))
+		(call xutil.run (subj_type_attribute role))
 		(call xutil.manage_home_user_files (subj))
 		(call xutil.relabel_home_user_files (subj))
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_xwd
-		(call xwd.run (sysadm_subj_type role)))
+		(call xwd.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sysadm_alsautil
-		(call sysadm_alsautil.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_alsautil.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_analyze
-		(call sysadm_analyze.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_analyze.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_atspi_sessbus_launch
-		(call sysadm_atspi_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_chfn
-		(call sysadm_chfn.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_chfn.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dbus_send
-		(call sysadm_dbus_send.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_dbus_send.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dunst
-		(call sysadm_dunst.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_dunst.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_emacs
-		(call sysadm_emacs.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_emacsclient
-		(call sysadm_emacsclient.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_emacsclient.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_festival
-		(call sysadm_festival.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_festival.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ffmpeg
-		(call sysadm_ffmpeg.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_ffmpeg.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_fuse_sshfs
-		(call sysadm_fuse_sshfs.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git
-		(call sysadm_git.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_git.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git_email
-		(call sysadm_git_email.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_git_email.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gpg
-		(call sysadm_gpg.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_gpg.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gpg_agent
-		(call sysadm_gpg_agent.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_gpg_agent.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_busctl
-		(call sysadm_busctl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_busctl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_fedpkg
-		(call sysadm_fedpkg.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_fedpkg.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_firefox
-		(call sysadm_firefox.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_firefox.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_firefox_plugins
-		(call sysadm_firefox_plugins.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_firefox_plugins.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_firefox_xremotec
-		(call sysadm_firefox_xremotec.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_firefox_xremotec.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_hostnamectl
-		(call sysadm_hostnamectl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_hostnamectl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_irssi
-		(call sysadm_irssi.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_irssi.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_journalctl
-		(call sysadm_journalctl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_journalctl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_libnotify
-		(call sysadm_libnotify.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_libnotify.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_livestreamer
-		(call sysadm_livestreamer.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_livestreamer.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_localectl
-		(call sysadm_localectl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_localectl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_loginctl
-		(call sysadm_loginctl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_loginctl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_lynx
-		(call sysadm_lynx.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_lynx.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_machinectl
-		(call sysadm_machinectl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_machinectl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mplayer
-		(call sysadm_mplayer.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_mplayer.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mutt
-		(call sysadm_mutt.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mutt_pgp_ewrap
-		(call sysadm_mutt_pgp_ewrap.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_nb
-		(call sysadm_nb.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_nb.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_numactl
-		(call sysadm_numactl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_numactl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_pa
-		(call sysadm_pa.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_pa.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_pactl
-		(call sysadm_pactl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_pactl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_passwd
-		(call sysadm_passwd.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_passwd.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_polkit_exec
-		(call sysadm_polkit_exec.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_polkit_exec.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rp
-		(call sysadm_rp.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_rp.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rpmdev
-		(call sysadm_rpmdev.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_rpmdev.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_run
-		(call sysadm_run.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_run.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_screen
 		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))
-		(call sysadm_screen.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_screen.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_sduser
-		(call sysadm_sduser.role_pattern (sysadm.role sysadm.subj)))
+		(call sysadm_sduser.role_pattern (role sysadm.subj)))
 
 	(optional sysadm_optional_sysadm_sessbus
-		(call sysadm_sessbus.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_sessbus.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_sessbus_launch
-		(call sysadm_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_sessbus_launch.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ssh_agent
-		(call sysadm_ssh_agent.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_ssh_agent.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ssh_client
-		(call sysadm_ssh_client.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_ssh_client.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_startx
-		(call sysadm_startx.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_startx.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_sudo
-		(call sysadm_sudo.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_sudo.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_systemctl
-		(call sysadm_systemctl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_systemctl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_timedatectl
-		(call sysadm_timedatectl.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_timedatectl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_tor_socks
-		(call sysadm_tor_socks.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_tor_socks.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_visudo
-		(call sysadm_visudo.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_visudo.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_vlock
-		(call sysadm_vlock.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_vlock.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xbindkeys
-		(call sysadm_xbindkeys.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_xbindkeys.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xinit
-		(call sysadm_xinit.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_xinit.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xpdf
-		(call sysadm_xpdf.role_pattern (sysadm.role sysadm_subj_type)))
+		(call sysadm_xpdf.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xterm
-		(call sysadm_xterm.role_pattern (sysadm.role sysadm_subj_type))))
+		(call sysadm_xterm.role_pattern (role subj_type_attribute))))

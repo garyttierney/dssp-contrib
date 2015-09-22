@@ -169,9 +169,9 @@
 		(call ssh.login_subj_type (subj)))
 
 	(optional wheel_optional_sysadm
-		(call sysadm_roleallow (role))
-		(call sysadm_send_signal (subj))
-		(call sysadm_userrole (id)))
+		(call sysadm.sysadm_roleallow (role))
+		(call sysadm.send_signal (subj))
+		(call sysadm.sysadm_userrole (id)))
 
 	(optional wheel_optional_tetex
 		(call tetex.manage_home_user (subj))

@@ -1,11 +1,11 @@
 (block sysadm_xinit
 	(blockinherit xinit.subj_blk)
 
-        (call sysadm_cmd_auto_subj_type_transition (subj))
+        (call sysadm.cmd_auto_subj_type_transition (subj))
 
-        (call sysadm_home_cmd_auto_subj_type_transition (subj))
+        (call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(call sysadm_xinit_home_user_auto_type_transition_subj_type (subj))
+	(call sysadm.xinit_home_user_auto_type_transition_subj_type (subj))
 
 	(optional sysadm_xinit_optional_sysadm_rp
 		(call sysadm_rp.auto_subj_type_transition (subj)))

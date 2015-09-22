@@ -10,7 +10,7 @@
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 
-        (call sysadm_shell_auto_subj_type_transition (subj))
+        (call sysadm.shell_auto_subj_type_transition (subj))
 
 	(optional sysadm_ssh_client_optional_tor_socks
 		(call tor_socks.client_subj_type (subj))))

@@ -1,10 +1,10 @@
 (block sysadm_tor_socks
 	(blockinherit tor_socks.subj_blk)
 
-	(call sysadm_cmd_auto_subj_type_transition (subj))
-	(call sysadm_shell_auto_subj_type_transition (subj))
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
 
-	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_tor_socks_optional_sysadm_firefox
         	(call sysadm_firefox.auto_subj_type_transition (subj)))

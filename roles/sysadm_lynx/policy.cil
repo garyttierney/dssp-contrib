@@ -1,10 +1,10 @@
 (block sysadm_lynx
 	(blockinherit lynx.subj_blk)
 
-	(call sysadm_cmd_auto_subj_type_transition (subj))
-	(call sysadm_shell_auto_subj_type_transition (subj))
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
 
-	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_lynx_optional_sysadm_gpg
 		(call sysadm_gpg.auto_subj_type_transition (subj)))

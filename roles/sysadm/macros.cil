@@ -1,40 +1,32 @@
-(macro sysadm_subj_type ((type ARG1))
-	(typeattributeset sysadm_subj_type ARG1))
+(in sysadm
+	(macro sysadm_subj_type ((type ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-(macro sysadm_shell_manual_subj_type_transition ((type ARG1))
-	(call cmd.shell_manual_subj_type_transition (ARG1 sysadm.subj)))
+	(macro shell_manual_subj_type_transition ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1 subj)))
 
-(macro sysadm_userrole ((user ARG1))
-	(userrole ARG1 sysadm.role))
+	(macro sysadm_userrole ((user ARG1))
+		(userrole ARG1 role))
 
-(macro sysadm_roleallow ((role ARG1))
-	(roleallow ARG1 sysadm.role))
+	(macro sysadm_roleallow ((role ARG1))
+		(roleallow ARG1 role))
 
-(macro sysadm_send_signal ((type ARG1))
-	(allow ARG1 sysadm.subj (process (signal))))
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.use_fd_blk)
 
-(macro sysadm_rw_inherited_fifo_files ((type ARG1))
-	(call sysadm_use_fd (ARG1))
-	(allow ARG1 sysadm.subj rw_inherited_fifo_file_perms))
+	(macro cmd_auto_subj_type_transition ((type ARG1))
+		(call cmd.auto_subj_type_transition (ARG1 subj)))
 
-(macro sysadm_rw_inherited_unix_stream_sockets ((type ARG1))
-	(call sysadm_use_fd (ARG1))
-	(allow ARG1 sysadm.subj rw_inherited_unix_stream_socket_perms))
+	(macro shell_auto_subj_type_transition ((type ARG1))
+		(call cmd.shell_auto_subj_type_transition (ARG1 subj)))
 
-(macro sysadm_use_fd ((type ARG1))
-	(allow ARG1 sysadm.subj (fd (use))))
+	(macro home_cmd_auto_subj_type_transition ((type ARG1))
+		(call usersubj.home_cmd_auto_subj_type_transition (ARG1 subj)))
 
-(macro sysadm_cmd_auto_subj_type_transition ((type ARG1))
-	(call cmd.auto_subj_type_transition (ARG1 sysadm.subj)))
+	(macro git_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset git_home_user_auto_type_transition_subj_type_attribute ARG1))
 
-(macro sysadm_shell_auto_subj_type_transition ((type ARG1))
-	(call cmd.shell_auto_subj_type_transition (ARG1 sysadm.subj)))
-
-(macro sysadm_home_cmd_auto_subj_type_transition ((type ARG1))
-	(call usersubj.home_cmd_auto_subj_type_transition (ARG1 sysadm.subj)))
-
-(macro sysadm_git_home_user_auto_type_transition_subj_type ((type ARG1))
-	(typeattributeset sysadm_git_home_user_auto_type_transition_subj_type_attribute ARG1))
-
-(macro sysadm_xinit_home_user_auto_type_transition_subj_type ((type ARG1))
-	(typeattributeset sysadm_xinit_home_user_auto_type_transition_subj_type_attribute ARG1))
+	(macro xinit_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset xinit_home_user_auto_type_transition_subj_type_attribute ARG1)))

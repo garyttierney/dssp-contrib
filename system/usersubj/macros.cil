@@ -1,6 +1,6 @@
 (in usersubj
-	(block blk
-		(blockabstract blk)
+	(block usersubj_blk
+		(blockabstract usersubj_blk)
 
 		(blockinherit subj.common_subj_blk)
 
@@ -9,7 +9,7 @@
 	(block base_user_blk
 		(blockabstract base_user_blk)
 
-		(blockinherit usersubj.blk)
+		(blockinherit usersubj.usersubj_blk)
 
 		(role role)
 		(roletype role subj)
@@ -21,7 +21,7 @@
 	(block base_priv_user_blk
 		(blockabstract base_priv_user_blk)
 
-		(blockinherit usersubj.blk)
+		(blockinherit usersubj.usersubj_blk)
 
 		(role role)
 		(roletype role subj)
@@ -1407,7 +1407,7 @@
 	(macro getattr_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (process (getattr))))
 
-	(macro read_common_subj_state ((type ARG1))
+	(macro read_state_common_subj ((type ARG1))
 		(call fs.search_proc (ARG1))
 		(allow ARG1 common_type_attribute read_file_perms)
 		(allow ARG1 common_type_attribute list_dir_perms)

@@ -1,0 +1,18 @@
+(block sysadm_nb
+	(blockinherit nb.subj_blk)
+
+	(call sysadm_cmd_auto_subj_type_transition (subj))
+
+	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_nb_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_nb_optional_sysadm_lynx
+		(call sysadm_lynx.auto_subj_type_transition (subj)))
+
+	(optional sysadm_nb_optional_sysadm_mplayer
+		(call sysadm_mplayer.auto_subj_type_transition (subj)))
+
+	(optional sysadm_nb_optional_sysadm_mutt
+		(call sysadm_mutt.auto_subj_type_transition (subj))))

@@ -1,5 +1,16 @@
 (typeattribute sysadm_subj_type)
 
+(typeattribute sysadm_git_home_user_auto_type_transition_subj_type_attribute)
+(typeattribute sysadm_xinit_home_user_auto_type_transition_subj_type_attribute)
+
+(optional sysadm_git_home_user_auto_type_transition_subj_type_optional_git
+	(call git.home_user_obj_entry_subj (sysadm.subj))
+	(call git.spec_home_user_auto_subj_type_transition (sysadm_git_home_user_auto_type_transition_subj_type_attribute sysadm.subj)))
+
+(optional sysadm_xinit_home_user_auto_type_transition_subj_type_optional_git
+	(call xinit.home_user_obj_entry_subj (sysadm.subj))
+	(call xinit.spec_home_user_auto_subj_type_transition (sysadm_xinit_home_user_auto_type_transition_subj_type_attribute sysadm.subj)))
+
 (block sysadm
 	(blockinherit usersubj.base_priv_login_blk)
 
@@ -206,12 +217,25 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs.adm (subj role)))
 
+	(optional sysadm_optional_fedpkg
+		(call fedpkg.manage_config (subj))
+		(call fedpkg.relabel_config (subj)))
+
 	(optional sysadm_optional_fop
 		(call fop.run (sysadm_subj_type role))
 		(call fop.manage_config_files (subj))
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_fuse
+		(call fusermount.manage_config_files (subj))
+		(call fusermount.run (sysadm_subj_type sysadm.role))
+		(call ulockmgr.run (sysadm_subj_type sysadm.role)))
+
+	(optional sysadm_optional_gpg
+		(call gpg.manage_config (subj))
+		(call gpg_helper.exec (subj)))
 
 	(optional sysadm_optional_fpaste
 		(call fpaste.run (sysadm_subj_type role))
@@ -251,6 +275,9 @@
 	(optional sysadm_optional_iptools
 		(call iptools.manage_config (subj))
 		(call iptools.run (sysadm_subj_type role)))
+
+	(optional sysadm_optional_irssi
+		(call irssi.manage_config_files (subj)))
 
 	(optional sysadm_optional_java
 		(call java.exec (sysadm_subj_type))
@@ -317,6 +344,12 @@
 		(call mount.manage_runtime (subj))
 		(call mount.run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_mplayer
+		(call mplayer.manage_config (subj)))
+
+	(optional sysadm_optional_mutt
+		(call mutt.manage_config_files (subj)))
+
 	(optional sysadm_optional_myqemu
 		(call myqemu_runner.run (sysadm_subj_type role))
 		(call myqemu_installer.run (sysadm_subj_type role))
@@ -350,6 +383,10 @@
 		(call openssl.manage_home_user_files (subj))
 		(call openssl.relabel_home_user_files (subj))
 		(call openssl.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_pa
+		(call pa.manage_config (subj))
+		(call pa.manage_var_lib (subj)))
 
 	(optional sysadm_optional_pass
 		(call pass.manage_home_user (subj))
@@ -427,6 +464,10 @@
 		(call rpm.adm (subj role))
 		(call rpm.run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_rpmdev
+		(call rpmdev.manage_config (subj))
+		(call rpmdev.relabel_config (subj)))
+
 	(optional sysadm_optional_rpmbuild
 		(call rpmbuild.manage_tmpfs_user (subj))
 		(call rpmbuild.relabel_tmpfs_user (subj))
@@ -461,6 +502,10 @@
 		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
 		(call scdaemon.manage_tmpfs_user (subj))
 		(call scdaemon.relabel_tmpfs_user (subj)))
+
+	(optional sysadm_optional_screen
+		(call screen.manage_config_files (subj))
+		(call screen.manage_runtime (subj)))
 
 	(optional sysadm_optional_sctl
 		(call sctl.manage_config (subj))
@@ -673,6 +718,9 @@
 		(call xlock.home_dir_obj_type_transition_home (subj))
 		(call xlock.run (sysadm_subj_type role)))
 
+	(optional sysadm_optional_xpdf
+		(call xpdf.manage_config (subj)))
+
 	(optional sysadm_optional_xserver
 		(call xserver.run (sysadm_subj_type role))
 		(call xserver.manage_config (subj))
@@ -696,767 +744,179 @@
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_xwd
-		(call xwd.run (sysadm_subj_type role))))
+		(call xwd.run (sysadm_subj_type role)))
 
-(optional sysadm_alsautil_optional_alsautil
-	(block sysadm_alsautil
-		(blockinherit alsautil.subj_blk)
+	(optional sysadm_optional_sysadm_alsautil
+		(call sysadm_alsautil.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call alsautil.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_analyze
+		(call sysadm_analyze.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_alsautil_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_alsautil.subj sysadm_pa.subj)))
+	(optional sysadm_optional_sysadm_atspi_sessbus_launch
+		(call sysadm_atspi_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_analyze_optional_analyze
-	(block sysadm_analyze
-		(blockinherit analyze.subj_blk)
+	(optional sysadm_optional_sysadm_chfn
+		(call sysadm_chfn.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call analyze.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_dbus_send
+		(call sysadm_dbus_send.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_atspi_sessbus_launch_optional_atspi_sessbus_launch
-	(block sysadm_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch.subj_blk)
+	(optional sysadm_optional_sysadm_dunst
+		(call sysadm_dunst.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call atspi_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_emacs
+		(call sysadm_emacs.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_atspi_sessbus_launch_optional_sysadm_sessbus
-	(call sessbus.spec_sysbus_auto_subj_type_transition (sysadm_atspi_sessbus_launch.subj sysadm_sessbus.subj)))
+	(optional sysadm_optional_sysadm_emacsclient
+		(call sysadm_emacsclient.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_chfn_optional_chfn
-	(block sysadm_chfn
-		(blockinherit chfn.subj_blk)
+	(optional sysadm_optional_sysadm_festival
+		(call sysadm_festival.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call chfn.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_ffmpeg
+		(call sysadm_ffmpeg.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_dbus_send_optional_dbus_send
-	(block sysadm_dbus_send
-		(blockinherit dbus_send.subj_blk)
+	(optional sysadm_optional_sysadm_fuse_sshfs
+		(call sysadm_fuse_sshfs.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call dbus_send.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_git
+		(call sysadm_git.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_dbus_send_optional_sysadm_sessbus
-	(call sessbus.chat_all_client_subj (sysadm_dbus_send.subj))
-	(call sessbus.client_pattern (sysadm_dbus_send.subj sysadm_sessbus.subj)))
+	(optional sysadm_optional_sysadm_git_email
+		(call sysadm_git_email.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_dunst_optional_dunst
-	(block sysadm_dunst
-		(blockinherit dunst.subj_blk)
+	(optional sysadm_optional_sysadm_gpg
+		(call sysadm_gpg.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call dunst.role_pattern (sysadm.role sysadm_subj_type subj))
+	(optional sysadm_optional_sysadm_gpg_agent
+		(call sysadm_gpg_agent.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
+	(optional sysadm_optional_sysadm_busctl
+		(call sysadm_busctl.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+	(optional sysadm_optional_sysadm_fedpkg
+		(call sysadm_fedpkg.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_dunst_optional_sysadm_firefox
-	(call firefox.spec_auto_subj_type_transition (sysadm_dunst.subj sysadm_firefox.subj)))
+	(optional sysadm_optional_sysadm_firefox
+		(call sysadm_firefox.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_dunst_optional_sysadm_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_dunst.subj sysadm_sessbus_launch.subj)))
+	(optional sysadm_optional_sysadm_firefox_plugins
+		(call sysadm_firefox_plugins.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_emacs
-	(block sysadm_emacs
-		(blockinherit emacs.subj_blk)
+	(optional sysadm_optional_sysadm_firefox_xremotec
+		(call sysadm_firefox_xremotec.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call emacs.role_pattern (sysadm.role sysadm_subj_type subj))
+	(optional sysadm_optional_sysadm_hostnamectl
+		(call sysadm_hostnamectl.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
+	(optional sysadm_optional_sysadm_irssi
+		(call sysadm_irssi.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
+	(optional sysadm_optional_sysadm_journalctl
+		(call sysadm_journalctl.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_dbus_send
-	(call dbus_send.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_dbus_send.subj)))
+	(optional sysadm_optional_sysadm_libnotify
+		(call sysadm_libnotify.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_firefox
-	(call firefox.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_firefox.subj)))
+	(optional sysadm_optional_sysadm_livestreamer
+		(call sysadm_livestreamer.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_git
-	(call git.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_git.subj)))
+	(optional sysadm_optional_sysadm_localectl
+		(call sysadm_localectl.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_gpg
-	(call gpg.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_gpg.subj)))
+	(optional sysadm_optional_sysadm_loginctl
+		(call sysadm_loginctl.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_lynx
-	(call lynx.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_lynx.subj)))
+	(optional sysadm_optional_sysadm_lynx
+		(call sysadm_lynx.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_mutt
-	(call mutt.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_mutt.subj)))
+	(optional sysadm_optional_sysadm_machinectl
+		(call sysadm_machinectl.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacs_optional_sysadm_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_emacs.subj sysadm_ssh_client.subj)))
+	(optional sysadm_optional_sysadm_mplayer
+		(call sysadm_mplayer.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_emacsclient_optional_emacsclient
-	(block sysadm_emacsclient
-		(blockinherit emacsclient.subj_blk)
+	(optional sysadm_optional_sysadm_mutt
+		(call sysadm_mutt.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call emacsclient.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_mutt_pgp_ewrap
+		(call sysadm_mutt_pgp_ewrap.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_festival_optional_festival
-	(block sysadm_festival
-		(blockinherit festival.subj_blk)
+	(optional sysadm_optional_sysadm_nb
+		(call sysadm_nb.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call festival.manage_config (sysadm.subj))
+	(optional sysadm_optional_sysadm_numactl
+		(call sysadm_numactl.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call festival.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_pa
+		(call sysadm_pa.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_festival_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_festival.subj sysadm_pa.subj)))
+	(optional sysadm_optional_sysadm_pactl
+		(call sysadm_pactl.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_ffmpeg_optional_ffmpeg
-	(block sysadm_ffmpeg
-		(blockinherit ffmpeg.subj_blk)
+	(optional sysadm_optional_sysadm_passwd
+		(call sysadm_passwd.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call ffmpeg.role_pattern (sysadm.role sysadm_subj_type subj))))
+	(optional sysadm_optional_sysadm_polkit_exec
+		(call sysadm_polkit_exec.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_ffmpeg_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_ffmpeg.subj sysadm_pa.subj)))
+	(optional sysadm_optional_sysadm_rp
+		(call sysadm_rp.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_fuse_optional_fuse
-	(block sysadm_fuse_sshfs
-		(blockinherit sshfs.subj_blk)
+	(optional sysadm_optional_sysadm_rpmdev
+		(call sysadm_rpmdev.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call sshfs.role_pattern (sysadm.role sysadm_subj_type subj)))
+	(optional sysadm_optional_sysadm_run
+		(call sysadm_run.role_pattern (sysadm.role sysadm_subj_type)))
 
-	(call fusermount.manage_config_files (sysadm.subj))
-	(call fusermount.run (sysadm.subj sysadm.role))
-	(call ulockmgr.run (sysadm.subj sysadm.role)))
-
-(optional sysadm_fuse_optional_sysadm_ssh
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_fuse_sshfs.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_git_optional_git
-	(block sysadm_git
-		(blockinherit git.subj_blk)
-
-		(call git.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
-
-		(call git.home_user_obj_entry_subj (sysadm.subj))
-		(call git.spec_home_user_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_git_optional_sysadm_gpg
-	(call gpg.spec_auto_subj_type_transition (sysadm_git.subj sysadm_gpg.subj)))
-
-(optional sysadm_git_optional_sysadm_git_email
-	(call git_email.spec_auto_subj_type_transition (sysadm_git.subj sysadm_git_email.subj)))
-
-(optional sysadm_git_optional_sysadm_tor_socks
-	(call tor_socks.spec_auto_subj_type_transition (sysadm_git.subj sysadm_tor_socks.subj)))
-
-(optional sysadm_git_optional_sysadm_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_git.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_git_email_optional_git_email
-	(block sysadm_git_email
-		(blockinherit git_email.subj_blk)
-
-		(call git_email.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_git_email_optional_sysadm_git
-	(call git.spec_auto_subj_type_transition (sysadm_git_email.subj sysadm_git.subj)))
-
-(optional sysadm_gpg_optional_gpg
-	(block sysadm_gpg
-		(blockinherit gpg.subj_blk)
-
-		(call gpg.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call gpg_helper.exec (sysadm.subj))
-		(call gpg.manage_config (sysadm.subj))))
-
-(optional sysadm_gpg_optional_gpg_agent
-	(call gpg_agent.spec_auto_subj_type_transition (sysadm_gpg.subj sysadm_gpg_agent.subj)))
-
-(optional sysadm_gpg_agent_optional_gpg_agent
-	(block sysadm_gpg_agent
-		(blockinherit gpg_agent.subj_blk)
-
-		(call gpg_agent.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_analyze_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_analyze.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_busctl_optional_busctl
-	(block sysadm_busctl
-		(blockinherit busctl.subj_blk)
-
-		(call busctl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_busctl_optional_sysadm_sduser
-	(call sduser.control_pattern (sysadm_busctl.subj sysadm_sduser.subj)))
-
-(optional sysadm_busctl_optional_sysadm_sessbus
-	(call sessbus.chat_all_client_subj (sysadm_busctl.subj))
-	(call sessbus.client_pattern (sysadm_busctl.subj sysadm_sessbus.subj)))
-
-(optional sysadm_busctl_optional_ssh
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_busctl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_fedpkg_optional_fedpkg
-	(block sysadm_fedpkg
-		(blockinherit fedpkg.subj_blk)
-
-		(call fedpkg.manage_config (sysadm.subj))
-		(call fedpkg.relabel_config (sysadm.subj))
-
-		(call fedpkg.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_fedpkg_optional_sysadm_git
-	(call git.spec_auto_subj_type_transition (sysadm_fedpkg.subj sysadm_git.subj)))
-
-(optional sysadm_firefox_optional_firefox
-	(block sysadm_firefox
-		(blockinherit firefox.subj_blk)
-
-		(call firefox.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_firefox_optional_sysadm_firefox_plugins
-	(call firefox_plugins.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_plugins.subj)))
-
-(optional sysadm_firefox_optional_sysadm_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_firefox_xremotec.subj)))
-
-(optional sysadm_firefox_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_pa.subj)))
-
-(optional sysadm_firefox_optional_sysadm_xpdf
-	(call xpdf.spec_auto_subj_type_transition (sysadm_firefox.subj sysadm_xpdf.subj)))
-
-(optional sysadm_firefox_plugins_optional_firefox_plugins
-	(block sysadm_firefox_plugins
-		(blockinherit firefox_plugins.subj_blk)
-
-		(call firefox_plugins.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_firefox_plugins_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_firefox_plugins.subj sysadm_pa.subj)))
-
-(optional sysadm_firefox_xremotec_optional_firefox_xremotec
-	(block sysadm_firefox_xremotec
-		(blockinherit firefox_xremotec.subj_blk)
-
-		(call firefox_xremotec.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_hostnamectl_optional_hostnamectl
-	(block sysadm_hostnamectl
-		(blockinherit hostnamectl.subj_blk)
-
-		(call hostnamectl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_hostnamectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_hostnamectl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_irssi_optional_irssi
-	(block sysadm_irssi
-		(blockinherit irssi.subj_blk)
-
-		(call irssi.manage_config_files (sysadm.subj))
-
-		(call irssi.role_pattern (sysadm.role sysadm_subj_type subj))
-
-                (call cmd.shell_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_journalctl_optional_journalctl
-	(block sysadm_journalctl
-		(blockinherit journalctl.subj_blk)
-
-		(call journalctl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_libnotify_optional_libnotify
-	(block sysadm_libnotify
-		(blockinherit libnotify.subj_blk)
-
-		(call libnotify.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_libnotify_optional_sysadm_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_libnotify.subj sysadm_sessbus_launch.subj)))
-
-(optional sysadm_livestreamer_optional_livestreamer
-	(block sysadm_livestreamer
-		(blockinherit livestreamer.subj_blk)
-
-		(call livestreamer.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_livestreamer_optional_sysadm_mplayer
-	(call mplayer.spec_auto_subj_type_transition (sysadm_livestreamer.subj sysadm_mplayer.subj)))
-
-(optional sysadm_localectl_optional_localectl
-	(block sysadm_localectl
-		(blockinherit localectl.subj_blk)
-
-		(call localectl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_localectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_localectl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_loginctl_optional_loginctl
-	(block sysadm_loginctl
-		(blockinherit loginctl.subj_blk)
-
-		(call loginctl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_loginctl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_loginctl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_lynx_optional_lynx
-	(block sysadm_lynx
-		(blockinherit lynx.subj_blk)
-
-		(call lynx.manage_config_files (sysadm.subj))
-
-		(call lynx.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_lynx_optional_sysadm_gpg
-	(call gpg.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_gpg.subj)))
-
-(optional sysadm_lynx_optional_sysadm_irssi
-	(call irssi.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_irssi.subj)))
-
-(optional sysadm_lynx_optional_sysadm_mutt
-	(call mutt.spec_auto_subj_type_transition (sysadm_lynx.subj sysadm_mutt.subj)))
-
-(optional sysadm_machinectl_optional_machinectl
-	(block sysadm_machinectl
-		(blockinherit machinectl.subj_blk)
-
-		(call machinectl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_machinectl_optional_ssh
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_machinectl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_mplayer_optional_mplayer
-	(block sysadm_mplayer
-		(blockinherit mplayer.subj_blk)
-
-		(call mplayer.manage_config (sysadm.subj))
-
-		(call mplayer.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_mplayer_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_mplayer.subj sysadm_pa.subj)))
-
-(optional sysadm_mutt_optional_mutt
-	(block sysadm_mutt
-		(blockinherit mutt.subj_blk)
-
-		(call mutt.manage_config_files (sysadm.subj))
-
-		(call mutt.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_mutt_optional_sysadm_emacsclient
-	(call emacsclient.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_emacsclient.subj)))
-
-(optional sysadm_mutt_optional_sysadm_firefox
-	(call firefox.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_firefox.subj)))
-
-(optional sysadm_mutt_optional_sysadm_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_firefox_xremotec.subj)))
-
-(optional sysadm_mutt_optional_sysadm_mutt_pgp_ewrap
-	(call mutt_pgp_ewrap.spec_auto_subj_type_transition (sysadm_mutt.subj sysadm_mutt_pgp_ewrap.subj)))
-
-(optional sysadm_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
-	(block sysadm_mutt_pgp_ewrap
-		(blockinherit mutt_pgp_ewrap.subj_blk)
-
-		(call mutt_pgp_ewrap.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_mutt_pgp_ewrap_optional_sysadm_gpg
-	(call gpg.spec_auto_subj_type_transition (sysadm_mutt_pgp_ewrap.subj sysadm_gpg.subj)))
-
-(optional sysadm_nb_optional_nb
-	(block sysadm_nb
-		(blockinherit nb.subj_blk)
-
-		(call nb.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_nb_optional_sysadm_firefox
-	(call firefox.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_firefox.subj)))
-
-(optional sysadm_nb_optional_sysadm_lynx
-	(call lynx.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_lynx.subj)))
-
-(optional sysadm_nb_optional_sysadm_mplayer
-	(call mplayer.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_mplayer.subj)))
-
-(optional sysadm_nb_optional_sysadm_mutt
-	(call mutt.spec_auto_subj_type_transition (sysadm_nb.subj sysadm_mutt.subj)))
-
-(optional sysadm_numactl_optional_numactl
-	(block sysadm_numactl
-		(blockinherit numactl.subj_blk)
-
-		(call numactl.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_pa_optional_pa
-	(block sysadm_pa
-		(blockinherit pa.subj_blk)
-
-		(call pa.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call pa.manage_config (sysadm.subj))
-		(call pa.manage_var_lib (sysadm.subj))))
-
-(optional sysadm_pa_optional_sysadm_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_pa.subj sysadm_sessbus_launch.subj)))
-
-(optional sysadm_pactl_optional_pactl
-	(block sysadm_pactl
-		(blockinherit pactl.subj_blk)
-
-		(call pactl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_pactl_optional_sysadm_pa
-	(call pa.spec_auto_subj_type_transition (sysadm_pactl.subj sysadm_pa.subj)))
-
-(optional sysadm_passwd_optional_passwd
-	(block sysadm_passwd
-		(blockinherit passwd.subj_blk)
-
-		(call passwd.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_polkit_exec_optional_polkit
-	(block sysadm_polkit_exec
-		(blockinherit polkit_exec.subj_blk)
-
-		(call polkit_exec.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_rp_optional_rp
-	(block sysadm_rp
-		(blockinherit rp.subj_blk)
-
-		(call rp.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_rpmdev_optional_rpmdev
-	(block sysadm_rpmdev
-                (blockinherit rpmdev.subj_blk)
-
-		(call rpmdev.manage_config (sysadm.subj))
-		(call rpmdev.relabel_config (sysadm.subj))
-
-		(call rpmdev.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_rpmdev_optional_sysadm_gpg
-	(call gpg.spec_auto_subj_type_transition (sysadm_rpmdev.subj sysadm_gpg.subj)))
-
-(optional sysadm_run_optional_run
-	(block sysadm_run
-		(blockinherit run.subj_blk)
-
-		(call run.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_run_optional_sysadm_sduser
-	(call sduser.control_pattern (sysadm_run.subj sysadm_sduser.subj))
-	(call sduser.spec_stream_connect (sysadm_run.subj sysadm_sduser.subj)))
-
-(optional sysadm_run_optional_sysadm_ssh
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_run.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_screen_optional_screen
-	(block sysadm_screen
-		(blockinherit screen.subj_blk)
-
-		(call screen.role_pattern (sysadm.role sysadm_subj_type subj))
-
+	(optional sysadm_optional_sysadm_screen
 		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))
+		(call sysadm_screen.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
+	(optional sysadm_optional_sysadm_sduser
+		(call sysadm_sduser.role_pattern (sysadm.role sysadm.subj)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))
+	(optional sysadm_optional_sysadm_sessbus
+		(call sysadm_sessbus.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call screen.manage_config_files (sysadm.subj))
-		(call screen.manage_runtime (sysadm.subj))))
+	(optional sysadm_optional_sysadm_sessbus_launch
+		(call sysadm_sessbus_launch.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_screen_optional_qemu
-	(call qemu_guest.use_all_ptys (sysadm_screen.subj)))
+	(optional sysadm_optional_sysadm_ssh_agent
+		(call sysadm_ssh_agent.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_sduser_optional_sduser
-	(block sysadm_sduser
-		(blockinherit sduser.subj_blk)
+	(optional sysadm_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(typeattributeset sysadm_subj_type subj)
+	(optional sysadm_optional_sysadm_startx
+		(call sysadm_startx.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call sduser.role_pattern (sysadm.role sysadm.subj subj))
+	(optional sysadm_optional_sysadm_sudo
+		(call sysadm_sudo.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(allow subj self (capability (dac_override)))
-		(allow subj self (process (setpgid)))
+	(optional sysadm_optional_sysadm_systemctl
+		(call sysadm_systemctl.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call cmd.shell_obj_entry_subj (subj))
+	(optional sysadm_optional_sysadm_timedatectl
+		(call sysadm_timedatectl.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call file.list_config (subj))
-		(call file.search_var_spool (subj))
+	(optional sysadm_optional_sysadm_tor_socks
+		(call sysadm_tor_socks.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call usersubj.pty_template (subj))
-		(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
-		(call usersubj.manage_home_user_files (subj))))
+	(optional sysadm_optional_sysadm_visudo
+		(call sysadm_visudo.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_sduser_optional_sysadm_sessbus
-	(call sduser.unix_stream_socket_activated_subj_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+	(optional sysadm_optional_sysadm_vlock
+		(call sysadm_vlock.role_pattern (sysadm.role sysadm_subj_type)))
 
-	(call sessbus.acquire_service_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
-	(call sessbus.client_pattern (sysadm_sduser.subj sysadm_sessbus.subj))
+	(optional sysadm_optional_sysadm_xbindkeys
+		(call sysadm_xbindkeys.role_pattern (sysadm.role sysadm_subj_type)))
 
-	(call sessbus.manage_tmpfs_user (sysadm_sduser.subj))
-	(call sessbus.tmpfs_obj_type_transition_tmpfs (sysadm_sduser.subj)))
+	(optional sysadm_optional_sysadm_xinit
+		(call sysadm_xinit.role_pattern (sysadm.role sysadm_subj_type)))
 
-(optional sysadm_sessbus_optional_sessbus
-	(block sysadm_sessbus
-		(blockinherit sessbus.subj_blk)
+	(optional sysadm_optional_sysadm_xpdf
+		(call sysadm_xpdf.role_pattern (sysadm.role sysadm_subj_type)))
 
-		(call sessbus.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_sessbus_optional_sysadm_atspi_sessbus_launch
-	(call atspi_sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_atspi_sessbus_launch.subj)))
-
-(optional sysadm_sessbus_optional_sysadm_dunst
-	(call dunst.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_dunst.subj)))
-
-(optional sysadm_sessbus_optional_sysadm_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_sessbus.subj sysadm_sessbus_launch.subj)))
-
-(optional sysadm_sessbus_launch_optional_sessbus_launch
-	(block sysadm_sessbus_launch
-		(blockinherit sessbus_launch.subj_blk)
-
-		(call sessbus_launch.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_sessbus_launch_optional_sysadm_sessbus
-	(call sessbus.spec_sysbus_auto_subj_type_transition (sysadm_sessbus_launch.subj sysadm_sessbus.subj)))
-
-(optional sysadm_ssh_agent_optional_ssh
-	(block sysadm_ssh_agent
-		(blockinherit ssh_agent.subj_blk)
-
-		(call ssh_agent.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_ssh_client_optional_ssh
-	(block sysadm_ssh_client
-		(blockinherit ssh_client.subj_blk)
-
-		(allow subj self (capability (setuid setgid dac_override net_admin)))
-
-		(call ssh_client.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call standard.obj_id_change_exemption_subj_type (subj))
-
-		(call sec.validate_context (subj))
-
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call selinux_config.read_config_files (subj))
-		(call file_context.read_config_files (subj))))
-
-(optional sysadm_startx_optional_startx
-	(block sysadm_startx
-		(blockinherit startx.subj_blk)
-
-		(call startx.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_startx_optional_sysadm_xinit
-	(call xinit.spec_auto_subj_type_transition (sysadm_startx.subj sysadm_xinit.subj)))
-
-(optional sysadm_sudo_optional_sudo
-	(block sysadm_sudo
-		(blockinherit sudo.subj_blk)
-
-		(call sudo.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_systemctl_optional_systemctl
-	(block sysadm_systemctl
-		(blockinherit systemctl.subj_blk)
-
-		(call systemctl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_systemctl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_systemctl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_timedatectl_optional_timedatectl
-	(block sysadm_timedatectl
-		(blockinherit timedatectl.subj_blk)
-
-		(call timedatectl.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_timedatectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (sysadm_timedatectl.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_tor_socks_optional_tor_socks
-	(block sysadm_tor_socks
-		(blockinherit tor_socks.subj_blk)
-
-		(call tor_socks.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_tor_socks_optional_sysadm_firefox
-	(call tor_socks.client_subj_type (sysadm_firefox.subj))
-	(call firefox.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_firefox.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_git
-	(call tor_socks.client_subj_type (sysadm_git.subj))
-	(call git.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_git.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_git_email
-	(call tor_socks.client_subj_type (sysadm_git_email.subj))
-	(call git_email.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_git_email.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_irssi
-	(call tor_socks.client_subj_type (sysadm_irssi.subj))
-	(call irssi.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_irssi.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_livestreamer
-	(call tor_socks.client_subj_type (sysadm_livestreamer.subj))
-	(call livestreamer.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_livestreamer.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_lynx
-	(call tor_socks.client_subj_type (sysadm_lynx.subj))
-	(call lynx.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_lynx.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_mplayer
-	(call tor_socks.client_subj_type (sysadm_mplayer.subj))
-	(call mplayer.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_mplayer.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_mutt
-	(call tor_socks.client_subj_type (sysadm_mutt.subj))
-	(call mutt.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_mutt.subj)))
-
-(optional sysadm_tor_socks_optional_sysadm_ssh_client
-	(call tor_socks.client_subj_type (sysadm_ssh_client.subj))
-	(call ssh_client.spec_auto_subj_type_transition (sysadm_tor_socks.subj sysadm_ssh_client.subj)))
-
-(optional sysadm_visudo_optional_visudo
-	(block sysadm_visudo
-		(blockinherit visudo.subj_blk)
-
-		(call visudo.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_vlock_optional_vlock
-	(block sysadm_vlock
-		(blockinherit vlock.subj_blk)
-
-		(call vlock.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_xbindkeys_optional_xbindkeys
-	(block sysadm_xbindkeys
-		(blockinherit xbindkeys.subj_blk)
-
-		(call xbindkeys.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_xbindkeys_optional_sysadm_pactl
-	(call pactl.spec_auto_subj_type_transition (sysadm_xbindkeys.subj sysadm_pactl.subj)))
-
-(optional sysadm_xinit_optional_xinit
-	(block sysadm_xinit
-		(blockinherit xinit.subj_blk)
-
-		(call xinit.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call xinit.spec_home_user_auto_subj_type_transition (subj sysadm.subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_xinit_optional_sysadm_rp
-	(call rp.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_rp.subj)))
-
-(optional sysadm_xinit_optional_sysadm_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_sessbus_launch.subj)))
-
-(optional sysadm_xinit_optional_sysadm_systemctl
-	(allow sysadm_xinit.subj sysadm_systemctl.subj (process (noatsecure)))
-	(call systemctl.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_systemctl.subj)))
-
-(optional sysadm_xinit_optional_sysadm_xbindkeys
-	(call xbindkeys.spec_auto_subj_type_transition (sysadm_xinit.subj sysadm_xbindkeys.subj)))
-
-(optional sysadm_xpdf_optional_xpdf
-	(block sysadm_xpdf
-		(blockinherit xpdf.subj_blk)
-
-		(call xpdf.manage_config (sysadm.subj))
-
-		(call xpdf.role_pattern (sysadm.role sysadm_subj_type subj))))
-
-(optional sysadm_xterm_optional_xterm
-	(block sysadm_xterm
-		(blockinherit xterm.subj_blk)
-
-		(call xterm.role_pattern (sysadm.role sysadm_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj sysadm.subj))
-		(call cmd.shell_auto_subj_type_transition (subj sysadm.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj sysadm.subj))))
-
-(optional sysadm_xterm_optional_sysadm_screen
-	(call screen.spec_auto_subj_type_transition (sysadm_xterm.subj sysadm_screen.subj)))
+	(optional sysadm_optional_sysadm_xterm
+		(call sysadm_xterm.role_pattern (sysadm.role sysadm_subj_type))))

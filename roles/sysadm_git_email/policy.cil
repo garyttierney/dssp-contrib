@@ -1,0 +1,13 @@
+(block sysadm_git_email
+	(blockinherit git_email.subj_blk)
+
+	(call sysadm_cmd_auto_subj_type_transition (subj))
+	(call sysadm_shell_auto_subj_type_transition (subj))
+
+	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_git_email_optional_sysadm_git
+		(call sysadm_git.auto_subj_type_transition (subj)))
+
+        (optional sysadm_git_email_optional_tor_socks
+                (call tor_socks.client_subj_type (subj))))

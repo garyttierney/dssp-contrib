@@ -1,0 +1,13 @@
+(block sysadm_dunst
+	(blockinherit dunst.subj_blk)
+
+	(call sysadm_cmd_auto_subj_type_transition (subj))
+	(call sysadm_shell_auto_subj_type_transition (subj))
+
+	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_dunst_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_dunst_optional_sysadm_sessbus_launch
+		(call sysadm_sessbus_launch.auto_subj_type_transition (subj))))

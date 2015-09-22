@@ -1,0 +1,24 @@
+(block sysadm_sduser
+	(blockinherit sduser.subj_blk)
+
+	(call sysadm_subj_type (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self (process (setpgid)))
+
+	(call cmd.shell_obj_entry_subj (subj))
+
+	(call file.list_config (subj))
+	(call file.search_var_spool (subj))
+
+	(call usersubj.pty_template (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.manage_home_user_files (subj))
+
+	(optional sysadm_sduser_optional_user_sessbus
+		(call sysadm_sessbus.unix_stream_socket_activation_sduser_subj_type (subj))
+		(call sysadm_sessbus.acquire_service (subj))
+		(call sysadm_sessbus.client (subj))
+
+		(call sessbus.manage_tmpfs_user (subj))
+		(call sessbus.tmpfs_obj_type_transition_tmpfs (subj))))

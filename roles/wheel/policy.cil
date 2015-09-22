@@ -57,11 +57,11 @@
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
 
-	(optional user_optional_fuse
-		(call fusermount.run (user_subj_type role))
-		(call ulockmgr.run (user_subj_type role)))
+	(optional wheel_optional_fuse
+		(call fusermount.run (wheel_subj_type role))
+		(call ulockmgr.run (wheel_subj_type role)))
 
-	(optional user_optional_gpg
+	(optional wheel_optional_gpg
 		(call gpg_helper.exec (subj)))
 
 	(optional wheel_optional_fpaste

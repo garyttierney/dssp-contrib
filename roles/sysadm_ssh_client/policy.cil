@@ -1,0 +1,16 @@
+(block sysadm_ssh_client
+	(blockinherit ssh_client.subj_blk)
+
+	(allow subj self (capability (setuid setgid dac_override net_admin)))
+
+	(call standard.obj_id_change_exemption_subj_type (subj))
+
+	(call sec.validate_context (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+
+        (call sysadm_shell_auto_subj_type_transition (subj))
+
+	(optional sysadm_ssh_client_optional_tor_socks
+		(call tor_socks.client_subj_type (subj))))

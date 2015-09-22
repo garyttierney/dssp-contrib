@@ -1,0 +1,6 @@
+(block sysadm_dbus_send
+	(blockinherit dbus_send.subj_blk)
+
+	(optional sysadm_dbus_send_optional_sysadm_sessbus   
+        	(call sessbus.chat_all_client_subj (subj))
+        	(call sysadm_sessbus.client (subj))))

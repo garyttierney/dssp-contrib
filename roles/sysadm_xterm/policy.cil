@@ -1,0 +1,10 @@
+(block sysadm_xterm
+	(blockinherit xterm.subj_blk)
+
+	(call sysadm_cmd_auto_subj_type_transition (subj))
+	(call sysadm_shell_auto_subj_type_transition (subj))
+
+	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_xterm_optional_sysadm_screen
+		(call sysadm_screen.auto_subj_type_transition (subj))))

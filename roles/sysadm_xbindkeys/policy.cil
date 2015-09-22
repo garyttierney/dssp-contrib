@@ -1,0 +1,9 @@
+(block sysadm_xbindkeys
+	(blockinherit xbindkeys.subj_blk)
+
+	(call sysadm_cmd_auto_subj_type_transition (subj))
+
+	(call sysadm_home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_xbindkeys_optional_sysadm_pactl
+		(call sysadm_pactl.auto_subj_type_transition (subj))))

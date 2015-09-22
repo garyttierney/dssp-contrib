@@ -1,0 +1,19 @@
+(block wheel_mutt
+	(blockinherit mutt.subj_blk)
+
+	(call wheel_cmd_auto_subj_type_transition (subj))
+	(call wheel_shell_auto_subj_type_transition (subj))
+
+	(call wheel_home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_mutt_optional_wheel_emacsclient
+		(call wheel_emacsclient.auto_subj_type_transition (subj)))
+
+	(optional wheel_mutt_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_mutt_optional_wheel_firefox_xremotec
+		(call wheel_firefox_xremotec.auto_subj_type_transition (subj)))
+
+	(optional wheel_mutt_optional_wheel_mutt_pgp_ewrap
+		(call wheel_mutt_pgp_ewrap.auto_subj_type_transition (subj))))

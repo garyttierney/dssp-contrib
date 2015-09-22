@@ -1,0 +1,21 @@
+(block wheel_sessbus
+	(typeattribute unix_stream_socket_activation_sduser_subj_type_attribute)
+
+	(blockinherit sessbus.subj_blk)
+
+	(call wheel_cmd_auto_subj_type_transition (subj))
+
+	(call wheel_home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_sessbus_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional wheel_sessbus_optional_wheel_dunst
+		(call wheel_dunst.auto_subj_type_transition (subj)))
+
+	(optional wheel_sessbus_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional wheel_sessbus_optional_wheel_sduser
+		(call sduser.unix_stream_socket_activated_subj_pattern
+			(unix_stream_socket_activation_sduser_subj_type_attribute subj))))

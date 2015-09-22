@@ -1,0 +1,13 @@
+(block wheel_dunst
+	(blockinherit dunst.subj_blk)
+
+	(call wheel_cmd_auto_subj_type_transition (subj))
+	(call wheel_shell_auto_subj_type_transition (subj))
+
+	(call wheel_home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_dunst_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_dunst_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj))))

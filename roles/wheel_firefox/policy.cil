@@ -1,0 +1,17 @@
+(block wheel_firefox
+	(blockinherit firefox.subj_blk)
+
+	(optional wheel_firefox_optional_wheel_firefox_plugins
+		(call wheel_firefox_plugins.auto_subj_type_transition (subj)))
+
+	(optional wheel_firefox_optional_wheel_firefox_xremotec
+		(call wheel_firefox_xremotec.auto_subj_type_transition (subj)))
+
+	(optional wheel_firefox_optional_wheel_pa
+		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_firefox_optional_tor_socks
+		(call tor_socks.client_subj_type (subj)))
+
+	(optional wheel_firefox_optional_wheel_xpdf
+		(call wheel_xpdf.auto_subj_type_transition (subj))))

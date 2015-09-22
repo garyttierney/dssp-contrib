@@ -1,5 +1,16 @@
 (typeattribute wheel_subj_type)
 
+(typeattribute wheel_git_home_user_auto_type_transition_subj_type_attribute)
+(typeattribute wheel_xinit_home_user_auto_type_transition_subj_type_attribute)
+
+(optional wheel_git_home_user_auto_type_transition_subj_type_optional_git
+	(call git.home_user_obj_entry_subj (wheel.subj))
+	(call git.spec_home_user_auto_subj_type_transition (wheel_git_home_user_auto_type_transition_subj_type_attribute wheel.subj)))
+
+(optional wheel_xinit_home_user_auto_type_transition_subj_type_optional_git
+	(call xinit.home_user_obj_entry_subj (wheel.subj))
+	(call xinit.spec_home_user_auto_subj_type_transition (wheel_xinit_home_user_auto_type_transition_subj_type_attribute wheel.subj)))
+
 (block wheel
 	(blockinherit usersubj.base_login_blk)
 
@@ -45,6 +56,13 @@
 		(call fop.manage_home_user (subj))
 		(call fop.relabel_home_user (subj))
 		(call fop.home_dir_obj_type_transition_home (subj)))
+
+	(optional user_optional_fuse
+		(call fusermount.run (user_subj_type role))
+		(call ulockmgr.run (user_subj_type role)))
+
+	(optional user_optional_gpg
+		(call gpg_helper.exec (subj)))
 
 	(optional wheel_optional_fpaste
 		(call fpaste.run (subj role))
@@ -221,684 +239,169 @@
 		(call xutil.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_xwd
-		(call xwd.run (wheel_subj_type role))))
+		(call xwd.run (wheel_subj_type role)))
 
-(optional wheel_alsautil_optional_alsautil
-	(block wheel_alsautil
-		(blockinherit alsautil.subj_blk)
+	(optional wheel_optional_wheel_alsautil
+		(call wheel_alsautil.role_pattern (wheel.role wheel_subj_type)))
 
-		(call alsautil.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_analyze
+		(call wheel_analyze.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_alsautil_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_alsautil.subj wheel_pa.subj)))
+	(optional wheel_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_analyze_optional_analyze
-	(block wheel_analyze
-		(blockinherit analyze.subj_blk)
+	(optional wheel_optional_wheel_chfn
+		(call wheel_chfn.role_pattern (wheel.role wheel_subj_type)))
 
-		(call analyze.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_dbus_send
+		(call wheel_dbus_send.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_atspi_sessbus_launch_optional_atspi_sessbus_launch
-	(block wheel_atspi_sessbus_launch
-		(blockinherit atspi_sessbus_launch.subj_blk)
+	(optional wheel_optional_wheel_dunst
+		(call wheel_dunst.role_pattern (wheel.role wheel_subj_type)))
 
-		(call atspi_sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_emacs
+		(call wheel_emacs.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
-	(call sessbus.spec_sysbus_auto_subj_type_transition (wheel_atspi_sessbus_launch.subj wheel_sessbus.subj)))
+	(optional wheel_optional_wheel_emacsclient
+		(call wheel_emacsclient.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_chfn_optional_chfn
-	(block wheel_chfn
-		(blockinherit chfn.subj_blk)
+	(optional wheel_optional_wheel_fedpkg
+		(call wheel_fedpkg.role_pattern (wheel.role wheel_subj_type)))
 
-		(call chfn.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_festival
+		(call wheel_festival.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_dbus_send_optional_dbus_send
-	(block wheel_dbus_send
-		(blockinherit dbus_send.subj_blk)
+	(optional wheel_optional_wheel_ffmpeg
+		(call wheel_ffmpeg.role_pattern (wheel.role wheel_subj_type)))
 
-		(call dbus_send.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_fuse_sshfs
+		(call wheel_fuse_sshfs.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_dbus_send_optional_wheel_sessbus
-	(call sessbus.chat_all_client_subj (wheel_dbus_send.subj))
-	(call sessbus.client_pattern (wheel_dbus_send.subj wheel_sessbus.subj)))
+	(optional wheel_optional_wheel_git
+		(call wheel_git.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_dunst_optional_dunst
-	(block wheel_dunst
-		(blockinherit dunst.subj_blk)
+	(optional wheel_optional_wheel_git_email
+		(call wheel_git_email.role_pattern (wheel.role wheel_subj_type)))
 
-		(call dunst.role_pattern (wheel.role wheel_subj_type subj))
+	(optional wheel_optional_wheel_gpg
+		(call wheel_gpg.role_pattern (wheel.role wheel_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
+	(optional wheel_optional_wheel_gpg_agent
+		(call wheel_gpg_agent.role_pattern (wheel.role wheel_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
+	(optional wheel_optional_wheel_busctl
+		(call wheel_busctl.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_dunst_optional_wheel_firefox
-	(call firefox.spec_auto_subj_type_transition (wheel_dunst.subj wheel_firefox.subj)))
+	(optional wheel_optional_wheel_firefox
+		(call wheel_firefox.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_dunst_optional_wheel_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (wheel_dunst.subj wheel_sessbus_launch.subj)))
+	(optional wheel_optional_wheel_firefox_plugins
+		(call wheel_firefox_plugins.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_emacs
-	(block wheel_emacs
-		(blockinherit emacs.subj_blk)
+	(optional wheel_optional_wheel_firefox_xremotec
+		(call wheel_firefox_xremotec.role_pattern (wheel.role wheel_subj_type)))
 
-		(call emacs.role_pattern (wheel.role wheel_subj_type subj))
+	(optional wheel_optional_wheel_irssi
+		(call wheel_irssi.role_pattern (wheel.role wheel_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
+	(optional wheel_optional_wheel_hostnamectl
+		(call wheel_hostnamectl.role_pattern (wheel.role wheel_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
+	(optional wheel_optional_wheel_journalctl
+		(call wheel_journalctl.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_dbus_send
-	(call dbus_send.spec_auto_subj_type_transition (wheel_emacs.subj wheel_dbus_send.subj)))
+	(optional wheel_optional_wheel_libnotify
+		(call wheel_libnotify.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_firefox
-	(call firefox.spec_auto_subj_type_transition (wheel_emacs.subj wheel_firefox.subj)))
+	(optional wheel_optional_wheel_livestreamer
+		(call wheel_livestreamer.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_git
-	(call git.spec_auto_subj_type_transition (wheel_emacs.subj wheel_git.subj)))
+	(optional wheel_optional_wheel_localectl
+		(call wheel_localectl.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_gpg
-	(call gpg.spec_auto_subj_type_transition (wheel_emacs.subj wheel_gpg.subj)))
+	(optional wheel_optional_wheel_loginctl
+		(call wheel_loginctl.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_lynx
-	(call lynx.spec_auto_subj_type_transition (wheel_emacs.subj wheel_lynx.subj)))
+	(optional wheel_optional_wheel_lynx
+		(call wheel_lynx.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_mutt
-	(call mutt.spec_auto_subj_type_transition (wheel_emacs.subj wheel_mutt.subj)))
+	(optional wheel_optional_wheel_mutt
+		(call wheel_mutt.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacs_optional_wheel_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (wheel_emacs.subj wheel_ssh_client.subj)))
+	(optional wheel_optional_wheel_mutt_pgp_ewrap
+		(call wheel_mutt_pgp_ewrap.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_emacsclient_optional_emacsclient
-	(block wheel_emacsclient
-		(blockinherit emacsclient.subj_blk)
+	(optional wheel_optional_wheel_machinectl
+		(call wheel_machinectl.role_pattern (wheel.role wheel_subj_type)))
+ 
+	(optional wheel_optional_wheel_mplayer
+		(call wheel_mplayer.role_pattern (wheel.role wheel_subj_type)))
 
-		(call emacsclient.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_nb
+		(call wheel_nb.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_fedpkg_optional_fedpkg
-	(block wheel_fedpkg
-		(blockinherit fedpkg.subj_blk)
+	(optional wheel_optional_wheel_pa
+		(call wheel_pa.role_pattern (wheel.role wheel_subj_type)))
 
-		(call fedpkg.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_pactl
+		(call wheel_pactl.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_fedpkg_optional_wheel_git
-	(call git.spec_auto_subj_type_transition (wheel_fedpkg.subj wheel_git.subj)))
+	(optional wheel_optional_wheel_passwd
+		(call wheel_passwd.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_festival_optional_festival
-	(block wheel_festival
-		(blockinherit festival.subj_blk)
+	(optional wheel_optional_wheel_polkit_exec
+		(call wheel_polkit_exec.role_pattern (wheel.role wheel_subj_type)))
 
-		(call festival.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_rp
+		(call wheel_rp.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_festival_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_festival.subj wheel_pa.subj)))
+	(optional wheel_optional_wheel_rpmdev
+		(call wheel_rpmdev.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_ffmpeg_optional_ffmpeg
-	(block wheel_ffmpeg
-		(blockinherit ffmpeg.subj_blk)
+	(optional wheel_optional_wheel_screen
+		(call wheel_screen.role_pattern (wheel.role wheel_subj_type)))
 
-		(call ffmpeg.role_pattern (wheel.role wheel_subj_type subj))))
+	(optional wheel_optional_wheel_sduser
+		(call wheel_sduser.role_pattern (wheel.role wheel.subj)))
 
-(optional wheel_ffmpeg_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_ffmpeg.subj wheel_pa.subj)))
+	(optional wheel_optional_wheel_sessbus
+		(call wheel_sessbus.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_fuse_optional_fuse
-	(block wheel_fuse_sshfs
-		(blockinherit sshfs.subj_blk)
+	(optional wheel_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.role_pattern (wheel.role wheel_subj_type)))
 
-		(call sshfs.role_pattern (wheel.role wheel_subj_type subj)))
+	(optional wheel_optional_wheel_ssh_agent
+		(call wheel_ssh_agent.role_pattern (wheel.role wheel_subj_type)))
 
-	(call fusermount.run (wheel.subj wheel.role))
-	(call ulockmgr.run (wheel.subj wheel.role)))
+	(optional wheel_optional_wheel_ssh_client
+		(call wheel_ssh_client.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_fuse_optional_wheel_ssh
-	(call ssh_client.spec_auto_subj_type_transition (wheel_fuse_sshfs.subj wheel_ssh_client.subj)))
+	(optional wheel_optional_wheel_startx
+		(call wheel_startx.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_git_optional_git
-	(block wheel_git
-		(blockinherit git.subj_blk)
+	(optional wheel_optional_wheel_sudo
+		(call wheel_sudo.role_pattern (wheel.role wheel_subj_type)))
 
-		(call git.role_pattern (wheel.role wheel_subj_type subj))
+	(optional wheel_optional_wheel_systemctl
+		(call wheel_systemctl.role_pattern (wheel.role wheel_subj_type)))
 
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
+	(optional wheel_optional_wheel_timedatectl
+		(call wheel_timedatectl.role_pattern (wheel.role wheel_subj_type)))
 
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))
+	(optional wheel_optional_wheel_tor_socks
+		(call wheel_tor_socks.role_pattern (wheel.role wheel_subj_type)))
 
-		(call git.home_user_obj_entry_subj (wheel.subj))
-		(call git.spec_home_user_auto_subj_type_transition (subj wheel.subj))))
+	(optional wheel_optional_wheel_vlock
+		(call wheel_vlock.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_git_optional_wheel_gpg
-	(call gpg.spec_auto_subj_type_transition (wheel_git.subj wheel_gpg.subj)))
+	(optional wheel_optional_wheel_xbindkeys
+		(call wheel_xbindkeys.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_git_optional_wheel_git_email
-	(call git_email.spec_auto_subj_type_transition (wheel_git.subj wheel_git_email.subj)))
+	(optional wheel_optional_wheel_xinit
+		(call wheel_xinit.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_git_optional_wheel_tor_socks
-	(call tor_socks.spec_auto_subj_type_transition (wheel_git.subj wheel_tor_socks.subj)))
+	(optional wheel_optional_wheel_xpdf
+		(call wheel_xpdf.role_pattern (wheel.role wheel_subj_type)))
 
-(optional wheel_git_optional_wheel_ssh_client
-	(call ssh_client.spec_auto_subj_type_transition (wheel_git.subj wheel_ssh_client.subj)))
-
-(optional wheel_git_email_optional_git_email
-	(block wheel_git_email
-		(blockinherit git_email.subj_blk)
-
-		(call git_email.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_git_email_optional_wheel_git
-	(call git.spec_auto_subj_type_transition (wheel_git_email.subj wheel_git.subj)))
-
-(optional wheel_gpg_optional_gpg
-	(block wheel_gpg
-		(blockinherit gpg.subj_blk)
-
-		(call gpg.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call gpg_helper.exec (wheel.subj))))
-
-(optional wheel_gpg_optional_gpg_agent
-	(call gpg_agent.spec_auto_subj_type_transition (wheel_gpg.subj wheel_gpg_agent.subj)))
-
-(optional wheel_gpg_agent_optional_gpg_agent
-	(block wheel_gpg_agent
-		(blockinherit gpg_agent.subj_blk)
-
-		(call gpg_agent.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_analyze_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_analyze.subj wheel_ssh_client.subj)))
-
-(optional wheel_busctl_optional_busctl
-	(block wheel_busctl
-		(blockinherit busctl.subj_blk)
-
-		(call busctl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_busctl_optional_wheel_sduser
-	(call sduser.control_pattern (wheel_busctl.subj wheel_sduser.subj)))
-
-(optional wheel_busctl_optional_wheel_sessbus
-	(call sessbus.chat_all_client_subj (wheel_busctl.subj))
-	(call sessbus.client_pattern (wheel_busctl.subj wheel_sessbus.subj)))
-
-(optional wheel_busctl_optional_ssh
-	(call ssh_client.spec_auto_subj_type_transition (wheel_busctl.subj wheel_ssh_client.subj)))
-
-(optional wheel_firefox_optional_firefox
-	(block wheel_firefox
-		(blockinherit firefox.subj_blk)
-
-		(call firefox.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_firefox_optional_wheel_firefox_plugins
-	(call firefox_plugins.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_plugins.subj)))
-
-(optional wheel_firefox_optional_wheel_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (wheel_firefox.subj wheel_firefox_xremotec.subj)))
-
-(optional wheel_firefox_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_firefox.subj wheel_pa.subj)))
-
-(optional wheel_firefox_optional_wheel_xpdf
-	(call xpdf.spec_auto_subj_type_transition (wheel_firefox.subj wheel_xpdf.subj)))
-
-(optional wheel_firefox_plugins_optional_firefox_plugins
-	(block wheel_firefox_plugins
-		(blockinherit firefox_plugins.subj_blk)
-
-		(call firefox_plugins.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_firefox_plugins_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_firefox_plugins.subj wheel_pa.subj)))
-
-(optional wheel_firefox_xremotec_optional_firefox_xremotec
-	(block wheel_firefox_xremotec
-		(blockinherit firefox_xremotec.subj_blk)
-
-		(call firefox_xremotec.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_hostnamectl_optional_hostnamectl
-	(block wheel_hostnamectl
-		(blockinherit hostnamectl.subj_blk)
-
-		(call hostnamectl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_hostnamectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_hostnamectl.subj wheel_ssh_client.subj)))
-
-(optional wheel_irssi_optional_irssi
-	(block wheel_irssi
-		(blockinherit irssi.subj_blk)
-
-		(call irssi.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_journalctl_optional_journalctl
-	(block wheel_journalctl
-		(blockinherit journalctl.subj_blk)
-
-		(call journalctl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_libnotify_optional_libnotify
-	(block wheel_libnotify
-		(blockinherit libnotify.subj_blk)
-
-		(call libnotify.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_libnotify_optional_wheel_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (wheel_libnotify.subj wheel_sessbus_launch.subj)))
-
-(optional wheel_livestreamer_optional_livestreamer
-	(block wheel_livestreamer
-		(blockinherit livestreamer.subj_blk)
-
-		(call livestreamer.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_livestreamer_optional_wheel_mplayer
-	(call mplayer.spec_auto_subj_type_transition (wheel_livestreamer.subj wheel_mplayer.subj)))
-
-(optional wheel_localectl_optional_localectl
-	(block wheel_localectl
-		(blockinherit localectl.subj_blk)
-
-		(call localectl.role_pattern (wheel.role wheel_subj_type wheel_localectl.subj))))
-
-(optional wheel_localectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_localectl.subj wheel_ssh_client.subj)))
-
-(optional wheel_loginctl_optional_loginctl
-	(block wheel_loginctl
-		(blockinherit loginctl.subj_blk)
-
-		(call loginctl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_loginctl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_loginctl.subj wheel_ssh_client.subj)))
-
-(optional wheel_lynx_optional_lynx
-	(block wheel_lynx
-		(blockinherit lynx.subj_blk)
-
-		(call lynx.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_lynx_optional_wheel_gpg
-	(call gpg.spec_auto_subj_type_transition (wheel_lynx.subj wheel_gpg.subj)))
-
-(optional wheel_lynx_optional_wheel_irssi
-	(call irssi.spec_auto_subj_type_transition (wheel_lynx.subj wheel_irssi.subj)))
-
-(optional wheel_lynx_optional_wheel_mutt
-	(call mutt.spec_auto_subj_type_transition (wheel_lynx.subj wheel_mutt.subj)))
-
-(optional wheel_mutt_optional_mutt
-	(block wheel_mutt
-		(blockinherit mutt.subj_blk)
-
-		(call mutt.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_mutt_optional_wheel_emacsclient
-	(call emacsclient.spec_auto_subj_type_transition (wheel_mutt.subj wheel_emacsclient.subj)))
-
-(optional wheel_mutt_optional_wheel_firefox
-	(call firefox.spec_auto_subj_type_transition (wheel_mutt.subj wheel_firefox.subj)))
-
-(optional wheel_mutt_optional_wheel_firefox_xremotec
-	(call firefox_xremotec.spec_auto_subj_type_transition (wheel_mutt.subj wheel_firefox_xremotec.subj)))
-
-(optional wheel_mutt_optional_wheel_mutt_pgp_ewrap
-	(call mutt_pgp_ewrap.spec_auto_subj_type_transition (wheel_mutt.subj wheel_mutt_pgp_ewrap.subj)))
-
-(optional wheel_mutt_pgp_ewrap_optional_mutt_pgp_ewrap
-	(block wheel_mutt_pgp_ewrap
-		(blockinherit mutt_pgp_ewrap.subj_blk)
-
-		(call mutt_pgp_ewrap.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_mutt_pgp_ewrap_optional_wheel_gpg
-        (call gpg.spec_auto_subj_type_transition (wheel_mutt_pgp_ewrap.subj wheel_gpg.subj)))
-
-(optional wheel_machinectl_optional_machinectl
-	(block wheel_machinectl
-		(blockinherit machinectl.subj_blk)
-
-		(call machinectl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_machinectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_machinectl.subj wheel_ssh_client.subj)))
-
-(optional wheel_mplayer_optional_mplayer
-	(block wheel_mplayer
-		(blockinherit mplayer.subj_blk)
-
-		(call mplayer.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_mplayer_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_mplayer.subj wheel_pa.subj)))
-
-(optional wheel_nb_optional_nb
-	(block wheel_nb
-		(blockinherit nb.subj_blk)
-
-		(call nb.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_nb_optional_wheel_firefox
-	(call firefox.spec_auto_subj_type_transition (wheel_nb.subj wheel_firefox.subj)))
-
-(optional wheel_nb_optional_wheel_lynx
-	(call lynx.spec_auto_subj_type_transition (wheel_nb.subj wheel_lynx.subj)))
-
-(optional wheel_nb_optional_wheel_mplayer
-	(call mplayer.spec_auto_subj_type_transition (wheel_nb.subj wheel_mplayer.subj)))
-
-(optional wheel_nb_optional_wheel_mutt
-	(call mutt.spec_auto_subj_type_transition (wheel_nb.subj wheel_mutt.subj)))
-
-(optional wheel_pa_optional_pa
-	(block wheel_pa
-		(blockinherit pa.subj_blk)
-
-		(call pa.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_pa_optional_wheel_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (wheel_pa.subj wheel_sessbus_launch.subj)))
-
-(optional wheel_pactl_optional_pactl
-	(block wheel_pactl
-		(blockinherit pactl.subj_blk)
-
-		(call pactl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_pactl_optional_wheel_pa
-	(call pa.spec_auto_subj_type_transition (wheel_pactl.subj wheel_pa.subj)))
-
-(optional wheel_passwd_optional_passwd
-	(block wheel_passwd
-		(blockinherit passwd.subj_blk)
-
-		(call passwd.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_polkit_exec_optional_polkit
-	(block wheel_polkit_exec
-		(blockinherit polkit_exec.subj_blk)
-
-		(call polkit_exec.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_rp_optional_rp
-	(block wheel_rp
-		(blockinherit rp.subj_blk)
-
-		(call rp.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_rpmdev_optional_rpmdev
-	(block wheel_rpmdev
-		(blockinherit rpmdev.subj_blk)
-
-		(call rpmdev.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_rpmdev_optional_wheel_gpg
-	(call gpg.spec_auto_subj_type_transition (wheel_rpmdev.subj wheel_gpg.subj)))
-
-(optional wheel_screen_optional_screen
-	(block wheel_screen
-		(blockinherit screen.subj_blk)
-
-		(call screen.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_sduser_optional_sduser
-	(block wheel_sduser
-		(blockinherit sduser.subj_blk)
-
-		(call sduser.role_pattern (wheel.role wheel.subj subj))
-
-		(typeattributeset wheel_subj_type subj)))
-
-(optional wheel_sduser_optional_wheel_sessbus
-	(call sduser.unix_stream_socket_activated_subj_pattern (wheel_sduser.subj wheel_sessbus.subj))
-
-	(call sessbus.acquire_service_pattern (wheel_sduser.subj wheel_sessbus.subj))
-	(call sessbus.client_pattern (wheel_sduser.subj wheel_sessbus.subj))
-
-	(call sessbus.manage_tmpfs_user (wheel_sduser.subj))
-	(call sessbus.tmpfs_obj_type_transition_tmpfs (wheel_sduser.subj)))
-
-(optional wheel_sessbus_optional_sessbus
-	(block wheel_sessbus
-		(blockinherit sessbus.subj_blk)
-
-		(call sessbus.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_sessbus_optional_wheel_atspi_sessbus_launch
-	(call atspi_sessbus_launch.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_atspi_sessbus_launch.subj)))
-
-(optional wheel_sessbus_optional_wheel_dunst
-	(call dunst.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_dunst.subj)))
-
-(optional wheel_sessbus_optional_wheel_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (wheel_sessbus.subj wheel_sessbus_launch.subj)))
-
-(optional wheel_sessbus_launch_optional_sessbus_launch
-	(block wheel_sessbus_launch
-		(blockinherit sessbus_launch.subj_blk)
-
-		(call sessbus_launch.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_sessbus_launch_optional_wheel_sessbus
-	(call sessbus.spec_sysbus_auto_subj_type_transition (wheel_sessbus_launch.subj wheel_sessbus.subj)))
-
-(optional wheel_ssh_agent_optional_ssh
-	(block wheel_ssh_agent
-		(blockinherit ssh_agent.subj_blk)
-
-		(call ssh_agent.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_ssh_client_optional_ssh
-	(block wheel_ssh_client
-		(blockinherit ssh_client.subj_blk)
-
-		(call ssh_client.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_startx_optional_startx
-	(block wheel_startx
-		(blockinherit startx.subj_blk)
-
-		(call startx.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_startx_optional_wheel_xinit
-	(call xinit.spec_auto_subj_type_transition (wheel_startx.subj wheel_xinit.subj)))
-
-(optional wheel_sudo_optional_sudo
-	(block wheel_sudo
-		(blockinherit sudo.subj_blk)
-
-		(call sudo.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_sudo_optional_sysadm
-	(call sysadm_shell_manual_subj_type_transition (wheel_sudo.subj)))
-
-(optional wheel_systemctl_optional_systemctl
-	(block wheel_systemctl
-		(blockinherit systemctl.subj_blk)
-
-		(call systemctl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_systemctl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_systemctl.subj wheel_ssh_client.subj)))
-
-(optional wheel_timedatectl_optional_timedatectl
-	(block wheel_timedatectl
-		(blockinherit timedatectl.subj_blk)
-
-		(call timedatectl.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_timedatectl_optional_ssh
-		(call ssh_client.spec_auto_subj_type_transition (wheel_timedatectl.subj wheel_ssh_client.subj)))
-
-(optional wheel_tor_socks_optional_tor_socks
-	(block wheel_tor_socks
-		(blockinherit tor_socks.subj_blk)
-
-		(call tor_socks.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_tor_socks_optional_wheel_firefox
-	(call tor_socks.client_subj_type (wheel_firefox.subj))
-	(call firefox.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_firefox.subj)))
-
-(optional wheel_tor_socks_optional_wheel_git
-	(call tor_socks.client_subj_type (wheel_git.subj))
-	(call git.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_git.subj)))
-
-(optional wheel_tor_socks_optional_wheel_git_email
-	(call tor_socks.client_subj_type (wheel_git_email.subj))
-	(call git_email.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_git_email.subj)))
-
-(optional wheel_tor_socks_optional_wheel_irssi
-	(call tor_socks.client_subj_type (wheel_irssi.subj))
-	(call irssi.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_irssi.subj)))
-
-(optional wheel_tor_socks_optional_wheel_livestreamer
-	(call tor_socks.client_subj_type (wheel_livestreamer.subj))
-	(call livestreamer.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_livestreamer.subj)))
-
-(optional wheel_tor_socks_optional_wheel_lynx
-	(call tor_socks.client_subj_type (wheel_lynx.subj))
-	(call lynx.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_lynx.subj)))
-
-(optional wheel_tor_socks_optional_wheel_mplayer
-	(call tor_socks.client_subj_type (wheel_mplayer.subj))
-	(call mplayer.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_mplayer.subj)))
-
-(optional wheel_tor_socks_optional_wheel_mutt
-	(call tor_socks.client_subj_type (wheel_mutt.subj))
-	(call mutt.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_mutt.subj)))
-
-(optional wheel_tor_socks_optional_wheel_ssh_client
-	(call tor_socks.client_subj_type (wheel_ssh_client.subj))
-	(call ssh_client.spec_auto_subj_type_transition (wheel_tor_socks.subj wheel_ssh_client.subj)))
-
-(optional wheel_vlock_optional_vlock
-	(block wheel_vlock
-		(blockinherit vlock.subj_blk)
-
-		(call vlock.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_xbindkeys_optional_xbindkeys
-	(block wheel_xbindkeys
-		(blockinherit xbindkeys.subj_blk)
-
-		(call xbindkeys.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_xbindkeys_optional_wheel_pactl
-	(call pactl.spec_auto_subj_type_transition (wheel_xbindkeys.subj wheel_pactl.subj)))
-
-(optional wheel_xinit_optional_xinit
-	(block wheel_xinit
-		(blockinherit xinit.subj_blk)
-
-		(call xinit.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call xinit.spec_home_user_auto_subj_type_transition (subj wheel.subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_xinit_optional_wheel_rp
-	(call rp.spec_auto_subj_type_transition (wheel_xinit.subj wheel_rp.subj)))
-
-(optional wheel_xinit_optional_wheel_sessbus_launch
-	(call sessbus_launch.spec_auto_subj_type_transition (wheel_xinit.subj wheel_sessbus_launch.subj)))
-
-(optional wheel_xinit_optional_wheel_systemctl
-	(allow wheel_xinit.subj wheel_systemctl.subj (process (noatsecure)))
-	(call systemctl.spec_auto_subj_type_transition (wheel_xinit.subj wheel_systemctl.subj)))
-
-(optional wheel_xinit_optional_wheel_xbindkeys
-	(call xbindkeys.spec_auto_subj_type_transition (wheel_xinit.subj wheel_xbindkeys.subj)))
-
-(optional wheel_xpdf_optional_xpdf
-	(block wheel_xpdf
-		(blockinherit xpdf.subj_blk)
-
-		(call xpdf.role_pattern (wheel.role wheel_subj_type subj))))
-
-(optional wheel_xterm_optional_xterm
-	(block wheel_xterm
-		(blockinherit xterm.subj_blk)
-
-		(call xterm.role_pattern (wheel.role wheel_subj_type subj))
-
-		(call cmd.auto_subj_type_transition (subj wheel.subj))
-		(call cmd.shell_auto_subj_type_transition (subj wheel.subj))
-
-		(call usersubj.home_cmd_auto_subj_type_transition (subj wheel.subj))))
-
-(optional wheel_xterm_optional_wheel_screen
-	(call screen.spec_auto_subj_type_transition (wheel_xterm.subj wheel_screen.subj)))
+	(optional wheel_optional_wheel_xterm
+		(call wheel_xterm.role_pattern (wheel.role wheel_subj_type))))

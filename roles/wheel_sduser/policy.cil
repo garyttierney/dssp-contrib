@@ -1,0 +1,12 @@
+(block wheel_sduser
+	(blockinherit sduser.subj_blk)
+
+	(call wheel_subj_type (subj))
+
+	(optional wheel_sduser_optional_user_sessbus
+		(call wheel_sessbus.unix_stream_socket_activation_sduser_subj_type (subj))
+		(call wheel_sessbus.acquire_service (subj))
+		(call wheel_sessbus.client (subj))
+
+		(call sessbus.manage_tmpfs_user (subj))
+		(call sessbus.tmpfs_obj_type_transition_tmpfs (subj))))

@@ -63,6 +63,8 @@
 
 	(call usbutil.exec (subj))
 
+	(call usersubj.read_home_user_files (subj))
+
 	(optional fpaste_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 

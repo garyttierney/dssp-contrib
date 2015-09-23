@@ -79,6 +79,7 @@
 	(call file_context.read_config (subj))
 
 	(call udev.read_config_files (subj))
+	(call udev.read_runtime_files (subj))
 
 	(optional dracut_optional_dm
 		(call dmsetup.exec (subj)))

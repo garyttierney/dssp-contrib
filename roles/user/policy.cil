@@ -102,6 +102,9 @@
 		(call pinentry.manage_tmpfs_user_files (subj))
 		(call pinentry.relabel_tmpfs_user_files (subj)))
 
+	(optional user_optional_polkit
+		(call polkit_tty_agent.exec (subj)))
+
 	(optional user_optional_pwgen
 		(call pwgen.run (subj_type_attribute role)))
 

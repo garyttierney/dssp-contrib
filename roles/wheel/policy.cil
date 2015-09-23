@@ -109,10 +109,13 @@
 		(call pass.relabel_home_user (subj))
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
-        (optional wheel_optional_pinentry
+	(optional wheel_optional_pinentry
 		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))
 		(call pinentry.relabel_tmpfs_user_files (subj)))
+
+	(optional wheel_optional_polkit
+		(call polkit_tty_agent.exec (subj)))
 
 	(optional wheel_optional_pwgen
 		(call pwgen.run (subj_type_attribute role)))

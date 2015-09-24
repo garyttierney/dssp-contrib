@@ -27,11 +27,13 @@
 
 	(call file.read_config (subj))
 	(call file.read_data (subj))
+	(call file.search_runtime_lock (subj))
 
 	(call fs.delete_cgroup_dirs (subj))
 	(call fs.getattr_all_fs (subj))
 	(call fs.list_devtmpfs (subj))
 	(call fs.list_proc (subj))
+	(call fs.mount_proc_fs (subj))
 	(call fs.read_cgroup_files (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
@@ -66,8 +68,12 @@
 	(call udev.client_subj_type (subj))
 
 	(optional sd_shutdown_optional_dracut_initramfs
+		(call dracut_initramfs.mounton_runtime_dirs (subj))
 		(call dracut_initramfs.exec_runtime_files (subj))
 		(call dracut_initramfs.manage_runtime (subj)))
+
+	(optional sd_shutdown_optional_sd_journald
+		(call sd_journald.search_var_log (subj)))
 
 	(optional sd_shutdown_optional_lvm
 		(call lvm.exec (subj)))
@@ -79,7 +85,8 @@
 	(optional sd_shutdown_optional_plymouth
 		(call plymouth.exec (subj))
 		(call plymouthd.auto_subj_type_transition (subj))
-		(call plymouth.use_fd (subj)))
+		(call plymouth.use_fd (subj))
+		(call plymouthd.use_fd (subj)))
 
 	(optional sd_shutdown_optional_usersubj
 		(call usersubj.use_inherited_term (subj))))

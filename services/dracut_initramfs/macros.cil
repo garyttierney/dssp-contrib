@@ -51,6 +51,9 @@
 		(allow ARG1 runtime_file relabel_chr_file_perms)
 		(allow ARG1 runtime_file relabel_blk_file_perms))
 
+	(macro mounton_runtime_dirs ((type ARG1))
+		(allow ARG1 runtime_file (dir (mounton))))
+
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "initramfs")))
 

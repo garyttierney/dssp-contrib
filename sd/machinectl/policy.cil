@@ -10,7 +10,7 @@
 
 	(call sd.daemon (subj cmd_file))
 
-	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin setgid)))
+	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin setuid setgid)))
 
 	(call dev.rw_inherited_ptmx (subj_type_attribute))
 
@@ -25,7 +25,9 @@
 	(call sd_machined.read_runtime (subj_type_attribute))
 
 	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
+	(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
 	(call sd_nspawn_container.manage_all (subj_type_attribute))
+
 	(call sd_nspawn.status_all_unit (subj_type_attribute))
 	(call sd_nspawn.start_all_unit (subj_type_attribute))
 	(call sd_nspawn.stop_all_unit (subj_type_attribute))

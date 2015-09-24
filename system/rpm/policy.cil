@@ -79,6 +79,9 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
+		(call sd.status_unit_power (subj))
+		(call sd.start_unit_power (subj))
+
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(call dev.unconfined_subj_type (subj_type_attribute))

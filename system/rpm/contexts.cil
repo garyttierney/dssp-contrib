@@ -12,6 +12,7 @@
 		(context rpm_var_lib (sys.id object_r rpm.var_lib_file (systemlow systemlow)))
 		(context rpm_var_log (sys.id object_r rpm.var_log_file (systemlow systemlow)))))
 
+(filecon "/system-update" symlink rpm_var_lib)
 (filecon "/etc/dnf(/.*)?" any rpm_config)
 (filecon "/etc/rpm(/.*)?" any rpm_config)
 (filecon "/etc/yum(/.*)?" any rpm_config)

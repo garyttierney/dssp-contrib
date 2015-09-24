@@ -91,6 +91,8 @@
 		(call sysbus.read_config_files (subj)))
 
 	(optional sd_machined_optional_usersubj
+		(call usersubj.list_home_dir (subj))
+		(call usersubj.list_home_user (subj))
 		(call usersubj.read_home_user_files (subj))
 		(call usersubj.getattr_ptys (subj)))
 

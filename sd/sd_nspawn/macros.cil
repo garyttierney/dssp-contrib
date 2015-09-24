@@ -345,6 +345,7 @@
 
 	(blockinherit subj.send_signal_blk)
 	(blockinherit subj.read_state_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro getattr_fs ((type ARG1))
 		(allow ARG1 file (filesystem (getattr))))
@@ -355,6 +356,7 @@
 
 	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.read_state_all_blk)
+	(blockinherit subj.use_fd_all_blk)
 
 	(macro getattr_all_fs ((type ARG1))
 		(allow ARG1 obj_type_attribute (filesystem (getattr))))

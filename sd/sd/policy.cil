@@ -136,7 +136,6 @@
 	(call dev.read_autofs (subj))
 	(call dev.read_memory (subj))
 	(call dev.relabel_all (subj))
-	(call dev.write_kmsg (subj))
 	(call dev.write_watchdog (subj))
 
 	(call file.audit_access_config_dirs (subj))
@@ -287,6 +286,7 @@
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
+	(call dev.write_kmsg (subj_type_attribute))
 
 	(call file.manage_var_tmp_dirs (subj_type_attribute))
 	(call file.manage_var_tmp_lnk_files (subj_type_attribute))

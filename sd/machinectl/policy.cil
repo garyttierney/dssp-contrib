@@ -40,6 +40,10 @@
 	(call usersubj.tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 	(call usersubj.var_tmp_obj_type_transition_var_tmp_user (subj_type_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+
 	(allow client_subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 

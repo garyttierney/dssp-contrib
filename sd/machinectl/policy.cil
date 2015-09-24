@@ -10,7 +10,7 @@
 
 	(call sd.daemon (subj cmd_file))
 
-	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin)))
+	(allow subj_type_attribute self (capability (dac_override net_admin sys_chroot sys_admin setgid)))
 
 	(call dev.rw_inherited_ptmx (subj_type_attribute))
 

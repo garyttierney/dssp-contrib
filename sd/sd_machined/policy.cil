@@ -37,7 +37,7 @@
 	(allow subj login_pty_dev rw_term_perms)
 	(call term.create_pty (subj login_pty_dev))
 
-	(allow subj self (capability (sys_chroot setgid sys_admin dac_override)))
+	(allow subj self (capability (sys_chroot setgid sys_admin dac_override chown fsetid fowner)))
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self (process (setfscreate)))
 
@@ -69,7 +69,7 @@
 	(call sd_nspawn.getattr_ptys (subj))
 	(call sd_nspawn_container.list_all (subj))
 	(call sd_nspawn_container.read_all_lnk_files (subj))
-	(call sd_nspawn_container.read_all_files (subj))
+	(call sd_nspawn_container.manage_all_files (subj))
 	(call sd_nspawn.read_state (subj))
 	(call sd_nspawn_container.read_state_all_subj (subj))
 	(call sd_nspawn_container.rw_all_chr_files (subj))

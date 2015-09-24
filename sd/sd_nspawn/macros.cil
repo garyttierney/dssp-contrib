@@ -309,6 +309,10 @@
 		(call sd_machined.search_var_lib (ARG1))
 		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
 
+	(macro manage_all_files ((type ARG1))
+		(call sd_machined.search_var_lib (ARG1))
+		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
 	(macro read_all_lnk_files ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
 		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))

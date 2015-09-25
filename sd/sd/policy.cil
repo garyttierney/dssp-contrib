@@ -272,10 +272,10 @@
 		(call usersubj.link_keyring_common_login_subj (subj)))
 
 	(optional sd_optional_exempt
-		(call exempt_noatsecure (subj))
-		(call exempt_send_sigchld (subj))
-		(call exempt_create_keyring (subj))
-		(call exempt_shell_manual_subj_type_transition (subj)))
+		(call exempt.noatsecure (subj))
+		(call exempt.send_sigchld (subj))
+		(call exempt.create_keyring (subj))
+		(call exempt.shell_manual_subj_type_transition (subj)))
 
 	(allow subj_type_attribute self (process (getsched setsched setrlimit setfscreate setsockcreate)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))

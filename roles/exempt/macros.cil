@@ -1,18 +1,8 @@
-(macro exempt_create_keyring ((type ARG1))
-	(allow ARG1 exempt.subj (process (setkeycreate)))
-	(allow ARG1 exempt.subj create_key_perms))
+(in exempt
+	(blockinherit subj.create_keyring_blk)
+	(blockinherit subj.noatsecure_blk)
+	(blockinherit subj.read_state_blk)
+	(blockinherit subj.send_sigchld_blk)
 
-(macro exempt_noatsecure ((type ARG1))
-	(allow ARG1 exempt.subj (process (noatsecure))))
-
-(macro exempt_read_state_all ((type ARG1))
-	(call fs.search_proc (ARG1))
-	(allow ARG1 exempt.subj read_file_perms)
-	(allow ARG1 exempt.subj list_dir_perms)
-	(allow ARG1 exempt.subj read_lnk_file_perms))
-
-(macro exempt_send_sigchld ((type ARG1))
-	(allow ARG1 exempt.subj (process (sigchld))))
-
-(macro exempt_shell_manual_subj_type_transition ((type ARG1))
-	(call cmd.shell_manual_subj_type_transition (ARG1 exempt.subj)))
+	(macro shell_manual_subj_type_transition ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1 subj))))

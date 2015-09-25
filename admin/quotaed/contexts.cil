@@ -1,13 +1,8 @@
-(tunableif enable_rbacsep
-	(true
-		(context quotaed_cmd (sys.id sys.role quotaed.cmd_file (systemlow systemlow))))
-	(false
-		(context quotaed_cmd (sys.id object_r quotaed.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/sbin/convertquota" file quotaed_cmd)
-(filecon "/usr/sbin/edquota" file quotaed_cmd)
-(filecon "/usr/sbin/quotastats" file quotaed_cmd)
-(filecon "/usr/sbin/requota" file quotaed_cmd)
-(filecon "/usr/sbin/setquota" file quotaed_cmd)
-(filecon "/usr/sbin/xfs_quota" file quotaed_cmd)
-(filecon "/usr/sbin/xqmstats" file quotaed_cmd)
+(in quotaed
+	(filecon "/usr/sbin/convertquota" file cmd_file_context)
+	(filecon "/usr/sbin/edquota" file cmd_file_context)
+	(filecon "/usr/sbin/quotastats" file cmd_file_context)
+	(filecon "/usr/sbin/requota" file cmd_file_context)
+	(filecon "/usr/sbin/setquota" file cmd_file_context)
+	(filecon "/usr/sbin/xfs_quota" file cmd_file_context)
+	(filecon "/usr/sbin/xqmstats" file cmd_file_context))

@@ -1,22 +1,13 @@
-(tunableif enable_rbacsep
-	(true
-		(context mutt_cmd (sys.id sys.role mutt.cmd_file (systemlow systemlow)))
-		(context mutt_config (sys.id sys.role mutt.config_file (systemlow systemlow)))
-		(context mutt_home (sys.id sys.role mutt.home_user_file (systemlow systemlow)))
-		(context mutt_helper_cmd (sys.id sys.role mutt_helper.cmd_file (systemlow systemlow))))
-	(false
-		(context mutt_cmd (sys.id object_r mutt.cmd_file (systemlow systemlow)))
-		(context mutt_config (sys.id object_r mutt.config_file (systemlow systemlow)))
-		(context mutt_home (sys.id object_r mutt.home_user_file (systemlow systemlow)))
-		(context mutt_helper_cmd (sys.id object_r mutt_helper.cmd_file (systemlow systemlow)))))
+(in mutt
+	(filecon "/etc/Muttrc" file config_file_context)
+	(filecon "/etc/Muttrc\.local" file config_file_context)
+	(filecon "/usr/bin/mutt" file cmd_file_context)
+	(filecon "HOME_DIR/\.muttrc" file home_user_file_context)
+	(filecon "HOME_DIR/\.muttrc\..*" file home_user_file_context)
+	(filecon "HOME_DIR/\.mutt_cache" file home_user_file_context)
+	(filecon "HOME_DIR/\.mutt_cache\..*" file home_user_file_context)
+	(filecon "HOME_DIR/\.mutt_certificates" file home_user_file_context))
 
-(filecon "/etc/Muttrc" file mutt_config)
-(filecon "/etc/Muttrc\.local" file mutt_config)
-(filecon "/usr/bin/mutt" file mutt_cmd)
-(filecon "/usr/bin/pgpring" file mutt_helper_cmd)
-(filecon "/usr/bin/smime_keys" file mutt_helper_cmd)
-(filecon "HOME_DIR/\.muttrc" file mutt_home)
-(filecon "HOME_DIR/\.muttrc\..*" file mutt_home)
-(filecon "HOME_DIR/\.mutt_cache" file mutt_home)
-(filecon "HOME_DIR/\.mutt_cache\..*" file mutt_home)
-(filecon "HOME_DIR/\.mutt_certificates" file mutt_home)
+(in mutt_helper
+	(filecon "/usr/bin/pgpring" file cmd_file_context)
+	(filecon "/usr/bin/smime_keys" file cmd_file_context))

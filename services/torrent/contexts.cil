@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context torrent_port (sys.id sys.role torrent.port (systemlow systemlow))))
-	(false
-		(context torrent_port (sys.id object_r torrent.port (systemlow systemlow)))))
-
-(portcon "tcp" 6881 torrent_port)
-(portcon "udp" 6881 torrent_port)
+(in torrent
+	(portcon "tcp" 6881 port_obj_context)
+	(portcon "udp" 6881 port_obj_context))

@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_initctl_cmd (sys.id sys.role sd_initctl.cmd_file (systemlow systemlow)))
-		(context sd_initctl_runtime (sys.id sys.role sd_initctl.runtime_file (systemlow systemlow)))
-		(context sd_initctl_unit (sys.id sys.role sd_initctl.unit_file (systemlow systemlow))))
-	(false
-		(context sd_initctl_cmd (sys.id object_r sd_initctl.cmd_file (systemlow systemlow)))
-		(context sd_initctl_runtime (sys.id object_r sd_initctl.runtime_file (systemlow systemlow)))
-		(context sd_initctl_unit (sys.id object_r sd_initctl.unit_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/systemd-initctl" file sd_initctl_cmd)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-initctl.*" file sd_initctl_unit)
-(filecon "/var/run/systemd/initctl(/.*)?" any sd_initctl_runtime)
+(in sd_initctl
+	(filecon "/usr/lib/systemd/systemd-initctl" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-initctl.*" file unit_file_context)
+	(filecon "/var/run/systemd/initctl(/.*)?" any runtime_file_context))

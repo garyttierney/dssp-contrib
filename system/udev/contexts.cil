@@ -1,16 +1,9 @@
-(tunableif enable_rbacsep
-	(true
-		(context udev_config (sys.id sys.role udev.config_file (systemlow systemlow)))
-		(context udev_helper_cmd (sys.id sys.role udev_helper.cmd_file (systemlow systemlow)))
-		(context udev_runtime (sys.id sys.role udev.runtime_file (systemlow systemlow))))
-	(false
-		(context udev_config (sys.id object_r udev.config_file (systemlow systemlow)))
-		(context udev_helper_cmd (sys.id object_r udev_helper.cmd_file (systemlow systemlow)))
-		(context udev_runtime (sys.id object_r udev.runtime_file (systemlow systemlow)))))
+(in udev
+	(filecon "/etc/udev(/.*)?" any config_file_context)
+	(filecon "/var/run/udev(/.*)?" any runtime_file_context))
 
-(filecon "/etc/udev(/.*)?" any udev_config)
-(filecon "/usr/lib/udev/[^/]*" file udev_helper_cmd)
-(filecon "/usr/sbin/biosdevname" file udev_helper_cmd)
-(filecon "/usr/sbin/crda" file udev_helper_cmd)
-(filecon "/usr/sbin/setregdomain" file udev_helper_cmd)
-(filecon "/var/run/udev(/.*)?" any udev_runtime)
+(in udev_helper
+	(filecon "/usr/lib/udev/[^/]*" file cmd_file_context)
+	(filecon "/usr/sbin/biosdevname" file cmd_file_context)
+	(filecon "/usr/sbin/crda" file cmd_file_context)
+	(filecon "/usr/sbin/setregdomain" file cmd_file_context))

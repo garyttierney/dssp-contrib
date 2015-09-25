@@ -1,15 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context xpdf_cmd (sys.id sys.role xpdf.cmd_file (systemlow systemlow)))
-		(context xpdf_home (sys.id sys.role xpdf.home_user_file (systemlow systemlow)))
-		(context xpdf_config (sys.id sys.role xpdf.config_file (systemlow systemlow))))
-	(false
-		(context xpdf_cmd (sys.id object_r xpdf.cmd_file (systemlow systemlow)))
-		(context xpdf_home (sys.id object_r xpdf.home_user_file (systemlow systemlow)))
-		(context xpdf_config (sys.id object_r xpdf.config_file (systemlow systemlow)))))
-
-(filecon "/etc/xpdf(/.*)?" any xpdf_config)
-(filecon "/etc/xpdfrc" file xpdf_config)
-(filecon "/usr/bin/xpdf" file xpdf_cmd)
-(filecon "/usr/bin/pdftopng" file xpdf_cmd)
-(filecon "HOME_DIR/\.xpdfrc" file xpdf_home)
+(in xpdf
+	(filecon "/etc/xpdf(/.*)?" any config_file_context)
+	(filecon "/etc/xpdfrc" file config_file_context)
+	(filecon "/usr/bin/xpdf" file cmd_file_context)
+	(filecon "/usr/bin/pdftopng" file cmd_file_context)
+	(filecon "HOME_DIR/\.xpdfrc" file home_user_file_context))

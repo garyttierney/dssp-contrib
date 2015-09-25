@@ -1,13 +1,13 @@
-(tunableif enable_rbacsep
-	(true
-		(context mcstransd_cmd (sys.id sys.role mcstransd.cmd_file (systemlow systemlow))))
-	(false
-		(context mcstransd_cmd (sys.id object_r mcstransd.cmd_file (systemlow systemlow)))))
+(in mcstransd
+	(filecon "/usr/sbin/mcstransd" file cmd_file_context)
+
+	(optional mcstransd_unit_optional_sd
+
+	(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file unit_file_context)))
 
 (filecon "/etc/selinux/([^/]*/)?secolor\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.d(/.*)?" any mcstransd_config)
-(filecon "/usr/sbin/mcstransd" file mcstransd_cmd)
 (filecon "/var/run/mcstransd./pid" file mcstransd_runtime)
 (filecon "/var/run/setrans(/.*)?" any mcstransd_runtime)
 
@@ -34,12 +34,3 @@
 			(true   
 				(context mcstransd_config (sys.id object_r mcstransd.config_file (systemlow systemlow)))
 				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemlow systemlow)))))))
-
-(optional mcstransd_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context mcstransd_unit (sys.id sys.role mcstransd.unit_file (systemlow systemlow))))
-		(false
-			(context mcstransd_unit (sys.id object_r mcstransd.unit_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file mcstransd_unit))

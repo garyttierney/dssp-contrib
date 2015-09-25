@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context gpg_pcsc_wrapper_cmd (sys.id sys.role gpg_pcsc_wrapper.cmd_file (systemlow systemlow))))
-	(false
-		(context gpg_pcsc_wrapper_cmd (sys.id object_r gpg_pcsc_wrapper.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/libexec/gnupg-pcsc-wrapper" file gpg_pcsc_wrapper_cmd)
+(in gpg_pcsc_wrapper
+	(filecon "/usr/libexec/gnupg-pcsc-wrapper" file cmd_file_context))

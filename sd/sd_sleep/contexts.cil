@@ -1,14 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_sleep_cmd (sys.id sys.role sd_sleep.cmd_file (systemlow systemlow)))
-		(context sd_sleep_config (sys.id sys.role sd_sleep.config_file (systemlow systemlow)))
-		(context sd_sleep_unit (sys.id sys.role sd_sleep.unit_file (systemlow systemlow))))
-	(false
-		(context sd_sleep_cmd (sys.id object_r sd_sleep.cmd_file (systemlow systemlow)))
-		(context sd_sleep_config (sys.id object_r sd_sleep.config_file (systemlow systemlow)))
-		(context sd_sleep_unit (sys.id object_r sd_sleep.unit_file (systemlow systemlow)))))
-
-(filecon "/etc/systemd/sleep\.conf\.d(/.*)?" any sd_sleep_config)
-(filecon "/etc/systemd/sleep\.conf" file sd_sleep_config)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-hybrid-sleep.*" file sd_sleep_unit)
-(filecon "/usr/lib/systemd/systemd-sleep" file sd_sleep_cmd)
+(in sd_sleep
+	(filecon "/etc/systemd/sleep\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/etc/systemd/sleep\.conf" file config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-hybrid-sleep.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-sleep" file cmd_file_context))

@@ -1,11 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context bti_cmd (sys.id sys.role bti.cmd_file (systemlow systemlow)))
-		(context bti_home (sys.id sys.role bti.home_user_file (systemlow systemlow))))
-	(false
-		(context bti_cmd (sys.id object_r bti.cmd_file (systemlow systemlow)))
-		(context bti_home (sys.id object_r bti.home_user_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/bti" file bti_cmd)
-(filecon "HOME_DIR/\.bti" file bti_home)
-(filecon "HOME_DIR/\.bti\.log.*" file bti_home)
+(in bti
+	(filecon "/usr/bin/bti" file cmd_file_context)
+	(filecon "HOME_DIR/\.bti" file home_user_file_context)
+	(filecon "HOME_DIR/\.bti\.log.*" file home_user_file_context))

@@ -1,15 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context curl_cmd (sys.id sys.role curl.cmd_file (systemlow systemlow)))
-		(context curl_config (sys.id sys.role curl.config_file (systemlow systemlow)))
-		(context curl_home (sys.id sys.role curl.home_user_file (systemlow systemlow))))
-	(false
-		(context curl_cmd (sys.id object_r curl.cmd_file (systemlow systemlow)))
-		(context curl_config (sys.id object_r curl.config_file (systemlow systemlow)))
-		(context curl_home (sys.id object_r curl.home_user_file (systemlow systemlow)))))
-
-(filecon "/etc/wgetrc" file curl_config)
-(filecon "/usr/bin/curl" file curl_cmd)
-(filecon "/usr/bin/wget" file curl_cmd)
-(filecon "HOME_DIR/\.wgetrc" file curl_home)
-(filecon "HOME_DIR/\.curlrc" file curl_home)
+(in curl
+	(filecon "/etc/wgetrc" file config_file_context)
+	(filecon "/usr/bin/curl" file cmd_file_context)
+	(filecon "/usr/bin/wget" file cmd_file_context)
+	(filecon "HOME_DIR/\.wgetrc" file home_user_file_context)
+	(filecon "HOME_DIR/\.curlrc" file home_user_file_context))

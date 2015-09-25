@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context irssi_cmd (sys.id sys.role irssi.cmd_file (systemlow systemlow)))
-		(context irssi_home (sys.id sys.role irssi.home_user_file (systemlow systemlow)))
-		(context irssi_config (sys.id sys.role irssi.config_file (systemlow systemlow))))
-	(false
-		(context irssi_cmd (sys.id object_r irssi.cmd_file (systemlow systemlow)))
-		(context irssi_home (sys.id object_r irssi.home_user_file (systemlow systemlow)))
-		(context irssi_config (sys.id object_r irssi.config_file (systemlow systemlow)))))
-
-(filecon "/etc/irssi\.conf" file irssi_config)
-(filecon "/usr/bin/irssi" file irssi_cmd)
-(filecon "HOME_DIR/\.irssi(/.*)?" any irssi_home)
+(in irssi
+	(filecon "/etc/irssi\.conf" file config_file_context)
+	(filecon "/usr/bin/irssi" file cmd_file_context)
+	(filecon "HOME_DIR/\.irssi(/.*)?" any home_user_file_context))

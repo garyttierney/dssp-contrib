@@ -1,20 +1,10 @@
-(tunableif enable_rbacsep
-	(true
-		(context bootloader_boot (sys.id sys.role bootloader.boot_file (systemlow systemlow)))
-		(context bootloader_cmd (sys.id sys.role bootloader.cmd_file (systemlow systemlow)))
-		(context bootloader_config (sys.id sys.role bootloader.config_file (systemlow systemlow)))
-		(context bootloader_var_log (sys.id sys.role bootloader.var_log_file (systemlow systemlow))))
-	(false
-		(context bootloader_boot (sys.id object_r bootloader.boot_file (systemlow systemlow)))
-		(context bootloader_cmd (sys.id object_r bootloader.cmd_file (systemlow systemlow)))
-		(context bootloader_config (sys.id object_r bootloader.config_file (systemlow systemlow)))
-		(context bootloader_var_log (sys.id object_r bootloader.var_log_file (systemlow systemlow)))))
+(in bootloader
+	(filecon "/boot/System\.map.*" file config_file_context)
+	(filecon "/etc/grub\.d" dir config_file_context)
+	(filecon "/etc/grub\.d/README" file config_file_context)
+	(filecon "/etc/grub2-efi\.cfg" symlink config_file_context)
+	(filecon "/usr/sbin/grub2-.*" file cmd_file_context)
+	(filecon "/usr/sbin/grubby" file cmd_file_context)
+	(filecon "/var/log/grubby.*" file var_log_file_context))
 
-(filecon "/boot/System\.map.*" file bootloader_boot)
-(filecon "/etc/grub\.d" dir bootloader_config)
-(filecon "/etc/grub\.d/README" file bootloader_config)
-(filecon "/etc/grub2-efi\.cfg" symlink bootloader_config)
-(filecon "/usr/sbin/grub2-.*" file bootloader_cmd)
-(filecon "/usr/sbin/grubby" file bootloader_cmd)
-(filecon "/var/log/grubby.*" file bootloader_var_log)
 (filecon "/etc/grub\.d(/.*)?" file cmd)

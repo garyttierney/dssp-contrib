@@ -1,8 +1,8 @@
-(tunableif enable_rbacsep
-	(true
-		(context audispd_cmd (sys.id sys.role audispd.cmd_file (systemlow systemlow))))
-	(false
-		(context audispd_cmd (sys.id object_r audispd.cmd_file (systemlow systemlow)))))
+(in audispd
+	(filecon "/usr/sbin/audispd" file cmd_file_context))
+
+(filecon "/etc/audisp(/.*)?" any audispd_config)
+(filecon "/var/run/audispd_events" socket audispd_runtime)
 
 (tunableif enable_mls
 	(true
@@ -27,7 +27,3 @@
 			(true
 				(context audispd_config (sys.id object_r audispd_config.sec_file (systemlow systemlow)))
 				(context audispd_runtime (sys.id object_r audispd_runtime.sec_file (systemlow systemlow)))))))
-
-(filecon "/etc/audisp(/.*)?" any audispd_config)
-(filecon "/usr/sbin/audispd" file audispd_cmd)
-(filecon "/var/run/audispd_events" socket audispd_runtime)

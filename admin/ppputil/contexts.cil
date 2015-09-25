@@ -1,11 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context ppputil_cmd (sys.id sys.role ppputil.cmd_file (systemlow systemlow))))
-	(false
-		(context ppputil_cmd (sys.id object_r ppputil.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/sbin/chat" file ppputil_cmd)
-(filecon "/usr/sbin/ppp-watch" file ppputil_cmd)
-(filecon "/usr/sbin/pppdump" file ppputil_cmd)
-(filecon "/usr/sbin/pppoe-discovery" file ppputil_cmd)
-(filecon "/usr/sbin/pppstats" file ppputil_cmd)
+(in ppputil
+	(filecon "/usr/sbin/chat" file cmd_file_context)
+	(filecon "/usr/sbin/ppp-watch" file cmd_file_context)
+	(filecon "/usr/sbin/pppdump" file cmd_file_context)
+	(filecon "/usr/sbin/pppoe-discovery" file cmd_file_context)
+	(filecon "/usr/sbin/pppstats" file cmd_file_context))

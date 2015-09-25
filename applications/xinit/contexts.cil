@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context xinit_cmd (sys.id sys.role xinit.cmd_file (systemlow systemlow)))
-		(context xinit_home (sys.id sys.role xinit.home_user_file (systemlow systemlow))))
-	(false
-		(context xinit_cmd (sys.id object_r xinit.cmd_file (systemlow systemlow)))
-		(context xinit_home (sys.id object_r xinit.home_user_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/xinit" file xinit_cmd)
-(filecon "HOME_DIR/\.xinitrc" file xinit_home)
+(in xinit
+	(filecon "/usr/bin/xinit" file cmd_file_context)
+	(filecon "HOME_DIR/\.xinitrc" file home_user_file_context))

@@ -1,12 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context openssl_cmd (sys.id sys.role openssl.cmd_file (systemlow systemlow)))
-		(context openssl_home (sys.id sys.role openssl.home_user_file (systemlow systemlow))))
-	(false
-		(context openssl_cmd (sys.id object_r openssl.cmd_file (systemlow systemlow)))
-		(context openssl_home (sys.id object_r openssl.home_user_file (systemlow systemlow)))))
+(in openssl
+	(filecon "/usr/bin/openssl" file cmd_file_context)
+	(filecon "HOME_DIR/\.rnd" file home_user_file_context))
 
-(filecon "/usr/bin/openssl" file openssl_cmd)
 (filecon "/etc/pki/tls/certs/make-dummy-cert" file cmd)
 (filecon "/etc/pki/tls/certs/renew-dummy-cert" file cmd)
-(filecon "HOME_DIR/\.rnd" file openssl_home)

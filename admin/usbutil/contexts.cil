@@ -1,10 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context usbutil_cmd (sys.id sys.role usbutil.cmd_file (systemlow systemlow))))
-	(false
-		(context usbutil_cmd (sys.id object_r usbutil.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/lsusb" file usbutil_cmd)
-(filecon "/usr/bin/lsusb\.pu" file usbutil_cmd)
-(filecon "/usr/bin/usb-devices" file usbutil_cmd)
-(filecon "/usr/bin/usbhid-dump" file usbutil_cmd)
+(in usbutil
+	(filecon "/usr/bin/lsusb" file cmd_file_context)
+	(filecon "/usr/bin/lsusb\.pu" file cmd_file_context)
+	(filecon "/usr/bin/usb-devices" file cmd_file_context)
+	(filecon "/usr/bin/usbhid-dump" file cmd_file_context))

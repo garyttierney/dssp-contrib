@@ -1,24 +1,14 @@
-(tunableif enable_rbacsep
-	(true
-		(context git_cmd (sys.id sys.role git.cmd_file (systemlow systemlow)))
-		(context git_home (sys.id sys.role git.home_user_file (systemlow systemlow)))
-		(context git_home_config (sys.id sys.role git.home_config_file (systemlow systemlow)))
-		(context git_port (sys.id sys.role git.port (systemlow systemlow))))
-	(false
-		(context git_cmd (sys.id object_r git.cmd_file (systemlow systemlow)))
-		(context git_home (sys.id object_r git.home_user_file (systemlow systemlow)))
-		(context git_home_config (sys.id object_r git.home_config_file (systemlow systemlow)))
-		(context git_port (sys.id object_r git.port (systemlow systemlow)))))
+(in git
+	(filecon "/usr/bin/git" file cmd_file_context)
+	(filecon "/usr/bin/git-receive-pack" file cmd_file_context)
+	(filecon "/usr/bin/git-upload-archive" file cmd_file_context)
+	(filecon "/usr/bin/git-upload-pack" file cmd_file_context)
+	(filecon "/usr/libexec/git-core(/.*)?" file cmd_file_context)
+	(filecon "HOME_DIR/.*/\.git(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.config/git(/.*)?" any home_config_file_context)
 
-(filecon "/usr/bin/git" file git_cmd)
-(filecon "/usr/bin/git-receive-pack" file git_cmd)
-(filecon "/usr/bin/git-upload-archive" file git_cmd)
-(filecon "/usr/bin/git-upload-pack" file git_cmd)
-(filecon "/usr/libexec/git-core(/.*)?" file git_cmd)
+	(portcon "tcp" 9418 port_obj_context)
+	(portcon "udp" 9418 port_obj_context))
+
 (filecon "/usr/bin/git-shell" file shell)
 (filecon "/usr/libexec/git-core/git-shell" file shell)
-(filecon "HOME_DIR/.*/\.git(/.*)?" any git_home)
-(filecon "HOME_DIR/\.config/git(/.*)?" any git_home_config)
-
-(portcon "tcp" 9418 git_port)
-(portcon "udp" 9418 git_port)

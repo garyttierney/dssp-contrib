@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_backlight_cmd (sys.id sys.role sd_backlight.cmd_file (systemlow systemlow)))
-		(context sd_backlight_unit (sys.id sys.role sd_backlight.unit_file (systemlow systemlow)))
-		(context sd_backlight_var_lib (sys.id sys.role sd_backlight.var_lib_file (systemlow systemlow))))
-	(false
-		(context sd_backlight_cmd (sys.id object_r sd_backlight.cmd_file (systemlow systemlow)))
-		(context sd_backlight_unit (sys.id object_r sd_backlight.unit_file (systemlow systemlow)))
-		(context sd_backlight_var_lib (sys.id object_r sd_backlight.var_lib_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/systemd-backlight" file sd_backlight_cmd)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-backlight.*" file sd_backlight_unit)
-(filecon "/var/lib/systemd/backlight(/.*)?" any sd_backlight_var_lib)
+(in sd_backlight
+	(filecon "/usr/lib/systemd/systemd-backlight" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-backlight.*" file unit_file_context)
+	(filecon "/var/lib/systemd/backlight(/.*)?" any var_lib_file_context))

@@ -1,22 +1,17 @@
-(tunableif enable_rbacsep
-	(true
-		(context lirc_cmd (sys.id sys.role lirc.cmd_file (systemlow systemlow)))
-		(context lirc_lsplugins_cmd (sys.id sys.role lirc_lsplugins.cmd_file (systemlow systemlow))))
-	(false
-		(context lirc_cmd (sys.id object_r lirc.cmd_file (systemlow systemlow)))
-		(context lirc_lsplugins_cmd (sys.id object_r lirc_lsplugins.cmd_file (systemlow systemlow)))))
+(in lirc
+	(filecon "/usr/bin/ircat" file cmd_file_context)
+	(filecon "/usr/bin/irexec" file cmd_file_context)
+	(filecon "/usr/bin/irman2lirc" file cmd_file_context)
+	(filecon "/usr/bin/irpty" file cmd_file_context)
+	(filecon "/usr/bin/irrecord" file cmd_file_context)
+	(filecon "/usr/bin/irsend" file cmd_file_context)
+	(filecon "/usr/bin/irsimreceive" file cmd_file_context)
+	(filecon "/usr/bin/irsimsend" file cmd_file_context)
+	(filecon "/usr/bin/irtestcase" file cmd_file_context)
+	(filecon "/usr/bin/irw" file cmd_file_context)
+	(filecon "/usr/bin/lirc-lsremotes" file cmd_file_context)
+	(filecon "/usr/bin/mode2" file cmd_file_context)
+	(filecon "/usr/bin/printo2lirc" file cmd_file_context))
 
-(filecon "/usr/bin/ircat" file lirc_cmd)
-(filecon "/usr/bin/irexec" file lirc_cmd)
-(filecon "/usr/bin/irman2lirc" file lirc_cmd)
-(filecon "/usr/bin/irpty" file lirc_cmd)
-(filecon "/usr/bin/irrecord" file lirc_cmd)
-(filecon "/usr/bin/irsend" file lirc_cmd)
-(filecon "/usr/bin/irsimreceive" file lirc_cmd)
-(filecon "/usr/bin/irsimsend" file lirc_cmd)
-(filecon "/usr/bin/irtestcase" file lirc_cmd)
-(filecon "/usr/bin/irw" file lirc_cmd)
-(filecon "/usr/bin/lirc-lsremotes" file lirc_cmd)
-(filecon "/usr/bin/mode2" file lirc_cmd)
-(filecon "/usr/bin/printo2lirc" file lirc_cmd)
-(filecon "/usr/sbin/lirc-lsplugins" file lirc_lsplugins_cmd)
+(in lirc_lsplugins
+	(filecon "/usr/sbin/lirc-lsplugins" file cmd_file_context))

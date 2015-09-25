@@ -1,42 +1,36 @@
-(tunableif enable_rbacsep
-	(true
-		(context home_user (sys.id sys.role home_user.home_user_file (systemlow systemlow)))
-		(context home_cache (sys.id sys.role home_cache.home_cache_file (systemlow systemlow)))
-		(context home_config (sys.id sys.role home_config.home_config_file (systemlow systemlow)))
-		(context home_data (sys.id sys.role home_data.home_data_file (systemlow systemlow)))
-		(context home_cmd (sys.id sys.role home_cmd.home_user_file (systemlow systemlow)))
-		(context home_cert (sys.id sys.role home_cert.home_user_file (systemlow systemlow)))
-		(context home_fonts_cache (sys.id sys.role home_fonts.home_cache_file (systemlow systemlow)))
-		(context home_fonts_config (sys.id sys.role home_fonts.home_config_file (systemlow systemlow)))
-		(context home_fonts_data (sys.id sys.role home_fonts.home_data_file (systemlow systemlow)))
-		(context home_terminfo_data (sys.id sys.role home_terminfo.home_data_file (systemlow systemlow))))
-	(false
-		(context home_user (sys.id object_r home_user.home_user_file (systemlow systemlow)))
-		(context home_cache (sys.id object_r home_cache.home_cache_file (systemlow systemlow)))
-		(context home_config (sys.id object_r home_config.home_config_file (systemlow systemlow)))
-		(context home_data (sys.id object_r home_data.home_data_file (systemlow systemlow)))
-		(context home_cmd (sys.id object_r home_cmd.home_user_file (systemlow systemlow)))
-		(context home_cert (sys.id object_r home_cert.home_user_file (systemlow systemlow)))
-		(context home_fonts_cache (sys.id object_r home_fonts.home_cache_file (systemlow systemlow)))
-		(context home_fonts_config (sys.id object_r home_fonts.home_config_file (systemlow systemlow)))
-		(context home_fonts_data (sys.id object_r home_fonts.home_data_file (systemlow systemlow)))
-		(context home_terminfo_data (sys.id object_r home_terminfo.home_data_file (systemlow systemlow)))))
+(in home_user
+	(filecon "HOME_DIR/.*" any home_user_file_context))
 
-(filecon "HOME_DIR/.*" any home_user)
-(filecon "HOME_DIR/\.cache(/.*)?" any home_cache)
-(filecon "HOME_DIR/\.config(/.*)?" any home_config)
-(filecon "HOME_DIR/\.local(/.*)?" any home_data)
-(filecon "HOME_DIR/bin(/.*)?" any home_cmd)
-(filecon "HOME_DIR/\.local/bin(/.*)?" any home_cmd)
-(filecon "HOME_DIR/\.pki(/.*)?" any home_cert)
-(filecon "HOME_DIR/\.fontconfig(/.*)?" any home_fonts_cache)
-(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any home_fonts_cache)
-(filecon "HOME_DIR/\.fonts\.conf" file home_fonts_config)
-(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any home_fonts_config)
-(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any home_fonts_config)
-(filecon "HOME_DIR/\.fonts(/.*)?" any home_fonts_data)
-(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any home_fonts_data)
-(filecon "HOME_DIR/\.terminfo" file home_terminfo_data)
+(in home_cache
+	(filecon "HOME_DIR/\.cache(/.*)?" any home_cache_file_context))
+
+(in home_config
+	(filecon "HOME_DIR/\.config(/.*)?" any home_config_file_context))
+
+(in home_data
+	(filecon "HOME_DIR/\.local(/.*)?" any home_data_file_context))
+
+(in home_cmd
+	(filecon "HOME_DIR/bin(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.local/bin(/.*)?" any home_user_file_context))
+
+(in home_cert
+	(filecon "HOME_DIR/\.pki(/.*)?" any home_user_file_context))
+
+(in home_fonts
+	(filecon "HOME_DIR/\.fontconfig(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.fonts\.conf" file home_config_file_context)
+	(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.fonts(/.*)?" any home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any home_data_file_context))
+
+(in home_terminfo
+	(filecon "HOME_DIR/\.terminfo" file home_data_file_context))
+
+(filecon "HOME_DIR" dir home_dir)
+(filecon "USER_SPOOL" file user_spool)
 
 (tunableif enable_mls
         (true   
@@ -61,6 +55,3 @@
                         (true   
                                 (context home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
                                 (context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
-
-(filecon "HOME_DIR" dir home_dir)
-(filecon "USER_SPOOL" file user_spool)

@@ -1,28 +1,16 @@
-(tunableif enable_rbacsep
-	(true
-		(context emacs_cmd (sys.id sys.role emacs.cmd_file (systemlow systemlow)))
-		(context emacs_home (sys.id sys.role emacs.home_user_file (systemlow systemlow))))
-	(false
-		(context emacs_cmd (sys.id object_r emacs.cmd_file (systemlow systemlow)))
-		(context emacs_home (sys.id object_r emacs.home_user_file (systemlow systemlow)))))
+(in emacs
+	(filecon "/usr/bin/emacs-.*" file cmd_file_context)
+	(filecon "HOME_DIR/\.authinfo" file home_user_file_context)
+	(filecon "HOME_DIR/\.emacs" file home_user_file_context)
+	(filecon "HOME_DIR/\.emacs\.el" file home_user_file_context)
+	(filecon "HOME_DIR/\.gnus" file home_user_file_context)
+	(filecon "HOME_DIR/\.newsrc" file home_user_file_context)
+	(filecon "HOME_DIR/\.newsrc\.eld" file home_user_file_context)
+	(filecon "HOME_DIR/\.profile" file home_user_file_context)
+	(filecon "HOME_DIR/\.emacs\.d(/.*)?" any home_user_file_context)
 
-(filecon "/usr/bin/emacs-.*" file emacs_cmd)
-(filecon "HOME_DIR/\.authinfo" file emacs_home)
-(filecon "HOME_DIR/\.emacs" file emacs_home)
-(filecon "HOME_DIR/\.emacs\.el" file emacs_home)
-(filecon "HOME_DIR/\.gnus" file emacs_home)
-(filecon "HOME_DIR/\.newsrc" file emacs_home)
-(filecon "HOME_DIR/\.newsrc\.eld" file emacs_home)
-(filecon "HOME_DIR/\.profile" file emacs_home)
-(filecon "HOME_DIR/\.emacs\.d(/.*)?" any emacs_home)
+	(optional emacs_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file unit_file_context)))
 
-(filecon "/usr/share/emacs/([^/]*/)?etc/e(/.*)?" any terminfo_data)
-
-(optional emacs_unit_optional_sduser
-	(tunableif enable_rbacsep
-		(true
-			(context emacs_unit (sys.id sys.role emacs.unit_file (systemlow systemlow))))
-		(false
-			(context emacs_unit (sys.id object_r emacs.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file emacs_unit))
+(in terminfo
+	(filecon "/usr/share/emacs/([^/]*/)?etc/e(/.*)?" any data_file_context))

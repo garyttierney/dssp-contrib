@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context java_cmd (sys.id sys.role java.cmd_file (systemlow systemlow)))
-		(context java_home (sys.id sys.role java.home_user_file (systemlow systemlow)))
-		(context java_config (sys.id sys.role java.config_file (systemlow systemlow))))
-	(false
-		(context java_cmd (sys.id object_r java.cmd_file (systemlow systemlow)))
-		(context java_home (sys.id object_r java.home_user_file (systemlow systemlow)))
-		(context java_config (sys.id object_r java.config_file (systemlow systemlow)))))
-
-(filecon "/etc/java(/.*)?" any java_config)
-(filecon "/usr/lib/jvm/java-.*-openjdk-.*/jre/bin/java" file java_cmd)
-(filecon "HOME_DIR/\.java(/.*)?" any java_home)
+(in java
+	(filecon "/etc/java(/.*)?" any config_file_context)
+	(filecon "/usr/lib/jvm/java-.*-openjdk-.*/jre/bin/java" file cmd_file_context)
+	(filecon "HOME_DIR/\.java(/.*)?" any home_user_file_context))

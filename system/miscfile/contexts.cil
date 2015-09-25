@@ -1,78 +1,67 @@
-(tunableif enable_rbacsep
-	(true
-		(context cert (sys.id sys.role cert.file (systemlow systemlow)))
-		(context factory_data (sys.id sys.role factory.data_file (systemlow systemlow)))
-		(context fonts_var_cache (sys.id sys.role fonts.var_cache_file (systemlow systemlow)))
-		(context fonts_config (sys.id sys.role fonts.config_file (systemlow systemlow)))
-		(context fonts_data (sys.id sys.role fonts.data_file (systemlow systemlow)))
-		(context fstab (sys.id sys.role fstab.file (systemlow systemlow)))
-		(context hwdata_data (sys.id sys.role hwdata.data_file (systemlow systemlow)))
-		(context locale (sys.id sys.role locale.file (systemlow systemlow)))
-		(context man_data (sys.id sys.role man.data_file (systemlow systemlow)))
-		(context modules (sys.id sys.role modules.file (systemlow systemlow)))
-		(context network_config (sys.id sys.role network.config_file (systemlow systemlow)))
-		(context nologin_runtime (sys.id sys.role nologin.runtime_file (systemlow systemlow)))
-		(context passwords (sys.id sys.role passwords.file (systemlow systemlow)))
-		(context shadow_auth (sys.id sys.role shadow.auth_file (systemlow systemlow)))
-		(context terminfo_config (sys.id sys.role terminfo.config_file (systemlow systemlow)))
-		(context terminfo_data (sys.id sys.role terminfo.data_file (systemlow systemlow)))
-		(context utmp_runtime (sys.id sys.role utmp.runtime_file (systemlow systemlow)))
-		(context wtmp_var_log (sys.id sys.role wtmp.var_log_file (systemlow systemlow))))
-	(false
-		(context cert (sys.id object_r cert.file (systemlow systemlow)))
-		(context factory_data (sys.id object_r factory.data_file (systemlow systemlow)))
-		(context fonts_var_cache (sys.id object_r fonts.var_cache_file (systemlow systemlow)))
-		(context fonts_config (sys.id object_r fonts.config_file (systemlow systemlow)))
-		(context fonts_data (sys.id object_r fonts.data_file (systemlow systemlow)))
-		(context fstab (sys.id object_r fstab.file (systemlow systemlow)))
-		(context hwdata_data (sys.id object_r hwdata.data_file (systemlow systemlow)))
-		(context locale (sys.id object_r locale.file (systemlow systemlow)))
-		(context man_data (sys.id object_r man.data_file (systemlow systemlow)))
-		(context modules (sys.id object_r modules.file (systemlow systemlow)))
-		(context network_config (sys.id object_r network.config_file (systemlow systemlow)))
-		(context nologin_runtime (sys.id object_r nologin.runtime_file (systemlow systemlow)))
-		(context passwords (sys.id object_r passwords.file (systemlow systemlow)))
-		(context shadow_auth (sys.id object_r shadow.auth_file (systemlow systemlow)))
-		(context terminfo_config (sys.id object_r terminfo.config_file (systemlow systemlow)))
-		(context terminfo_data (sys.id object_r terminfo.data_file (systemlow systemlow)))
-		(context utmp_runtime (sys.id object_r utmp.runtime_file (systemlow systemlow)))
-		(context wtmp_var_log (sys.id object_r wtmp.var_log_file (systemlow systemlow)))))
+(in cert
+	(filecon "/etc/pki(/.*)?" any file_file_context))
 
-(filecon "/etc/crypttab" file fstab)
-(filecon "/etc/fonts(/.*)?" any fonts_config)
-(filecon "/etc/fstab" file fstab)
-(filecon "/etc/group[-\+]?" file passwords)
-(filecon "/etc/group\.lock" file shadow_auth)
-(filecon "/etc/gshadow.*" file shadow_auth)
-(filecon "/etc/hosts" file network_config)
-(filecon "/etc/nshadow.*" file shadow_auth)
-(filecon "/etc/passwd\.adjunct.*" file passwords)
-(filecon "/etc/passwd[-\+]?" file passwords)
-(filecon "/etc/passwd\.lock" file passwords)
-(filecon "/etc/passwd\.OLD" file passwords)
-(filecon "/etc/pki(/.*)?" any cert)
-(filecon "/etc/ptmptmp" file passwords)
-(filecon "/etc/\.pwd\.lock" file passwords)
-(filecon "/etc/security/opasswd" file shadow_auth)
-(filecon "/etc/security/opasswd\.old" file shadow_auth)
-(filecon "/etc/services" file network_config)
-(filecon "/etc/shadow.*" file shadow_auth)
-(filecon "/etc/sysconfig/network" file network_config)
-(filecon "/etc/sysconfig/network-scripts(/.*)?" file network_config)
-(filecon "/etc/terminfo(/.*)?" any terminfo_config)
-(filecon "/var/log/wtmp.*" file wtmp_var_log)
-(filecon "/var/run/\.nologin.*" file nologin_runtime)
-(filecon "/var/run/nologin" file nologin_runtime)
-(filecon "/usr/lib/locale(/.*)?" any locale)
-(filecon "/usr/lib/modules(/.*)?" any modules)
-(filecon "/usr/share/factory(/.*)?" any factory_data)
-(filecon "/usr/share/fonts(/.*)?" any fonts_data)
-(filecon "/usr/share/ghostscript/fonts(/.*)?" any fonts_data)
-(filecon "/usr/share/hwdata(/.*)?" any hwdata_data)
-(filecon "/usr/share/locale(/.*)?" any locale)
-(filecon "/usr/share/man(/.*)?" any man_data)
-(filecon "/usr/share/terminfo(/.*)?" any terminfo_data)
-(filecon "/usr/share/zoneinfo(/.*)?" any locale)
-(filecon "/var/cache/fontconfig(/.*)?" any fonts_var_cache)
-(filecon "/var/db/shadow.*" file shadow_auth)
-(filecon "/var/run/utmp" file utmp_runtime)
+(in factory
+	(filecon "/usr/share/factory(/.*)?" any data_file_context))
+
+(in fonts
+	(filecon "/var/cache/fontconfig(/.*)?" any var_cache_file_context)
+	(filecon "/etc/fonts(/.*)?" any config_file_context)
+	(filecon "/usr/share/fonts(/.*)?" any data_file_context)
+	(filecon "/usr/share/ghostscript/fonts(/.*)?" any data_file_context))
+
+(in fstab
+	(filecon "/etc/crypttab" file file_file_context)
+	(filecon "/etc/fstab" file file_file_context))
+
+(in hwdata
+	(filecon "/usr/share/hwdata(/.*)?" any data_file_context))
+
+(in locale
+	(filecon "/usr/share/zoneinfo(/.*)?" any file_file_context)
+	(filecon "/usr/share/locale(/.*)?" any file_file_context)
+	(filecon "/usr/lib/locale(/.*)?" any file_file_context))
+
+(in man
+	(filecon "/usr/share/man(/.*)?" any data_file_context))
+
+(in modules
+	(filecon "/usr/lib/modules(/.*)?" any file_file_context))
+
+(in network
+	(filecon "/etc/sysconfig/network" file config_file_context)
+	(filecon "/etc/sysconfig/network-scripts(/.*)?" file config_file_context)
+	(filecon "/etc/services" file config_file_context)
+	(filecon "/etc/hosts" file config_file_context))
+
+(in nologin
+	(filecon "/var/run/\.nologin.*" file runtime_file_context)
+	(filecon "/var/run/nologin" file runtime_file_context))
+
+(in passwords
+	(filecon "/etc/ptmptmp" file file_file_context)
+	(filecon "/etc/\.pwd\.lock" file file_file_context)
+	(filecon "/etc/group[-\+]?" file file_file_context)
+	(filecon "/etc/passwd\.adjunct.*" file file_file_context)
+	(filecon "/etc/passwd[-\+]?" file file_file_context)
+	(filecon "/etc/passwd\.lock" file file_file_context)
+	(filecon "/etc/passwd\.OLD" file file_file_context))
+
+(in shadow
+	(filecon "/var/db/shadow.*" file auth_file_context)
+	(filecon "/etc/shadow.*" file auth_file_context)
+	(filecon "/etc/security/opasswd" file auth_file_context)
+	(filecon "/etc/security/opasswd\.old" file auth_file_context)
+	(filecon "/etc/nshadow.*" file auth_file_context)
+	(filecon "/etc/group\.lock" file auth_file_context)
+	(filecon "/etc/gshadow.*" file auth_file_context))
+
+(in terminfo
+	(filecon "/usr/share/terminfo(/.*)?" any data_file_context)
+	(filecon "/etc/terminfo(/.*)?" any config_file_context))
+
+(in utmp
+	(filecon "/var/run/utmp" file runtime_file_context))
+
+(in wtmp
+	(filecon "/var/log/wtmp.*" file var_log_file_context))

@@ -1,11 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context ffmpeg_cmd (sys.id sys.role ffmpeg.cmd_file (systemlow systemlow))))
-	(false
-		(context ffmpeg_cmd (sys.id object_r ffmpeg.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/ffmpeg" file ffmpeg_cmd)
-(filecon "/usr/bin/ffplay" file ffmpeg_cmd)
-(filecon "/usr/bin/ffprobe" file ffmpeg_cmd)
-(filecon "/usr/bin/ffserver" file ffmpeg_cmd)
-(filecon "/usr/bin/qt-faststart" file ffmpeg_cmd)
+(in ffmpeg
+	(filecon "/usr/bin/ffmpeg" file cmd_file_context)
+	(filecon "/usr/bin/ffplay" file cmd_file_context)
+	(filecon "/usr/bin/ffprobe" file cmd_file_context)
+	(filecon "/usr/bin/ffserver" file cmd_file_context)
+	(filecon "/usr/bin/qt-faststart" file cmd_file_context))

@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_sessions_cmd (sys.id sys.role sd_sessions.cmd_file (systemlow systemlow)))
-		(context sd_sessions_unit (sys.id sys.role sd_sessions.unit_file (systemlow systemlow))))
-	(false
-		(context sd_sessions_cmd (sys.id object_r sd_sessions.cmd_file (systemlow systemlow)))
-		(context sd_sessions_unit (sys.id object_r sd_sessions.unit_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/system/[^/]*systemd-user-sessions.*" file sd_sessions_unit)
-(filecon "/usr/lib/systemd/systemd-user-sessions" file sd_sessions_cmd)
+(in sd_sessions
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-user-sessions.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-user-sessions" file cmd_file_context))

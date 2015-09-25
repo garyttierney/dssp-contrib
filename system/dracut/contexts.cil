@@ -1,12 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context dracut_cmd (sys.id sys.role dracut.cmd_file (systemlow systemlow)))
-		(context dracut_config (sys.id sys.role dracut.config_file (systemlow systemlow))))
-	(false
-		(context dracut_cmd (sys.id object_r dracut.cmd_file (systemlow systemlow)))
-		(context dracut_config (sys.id object_r dracut.config_file (systemlow systemlow)))))
+(in dracut
+	(filecon "/etc/dracut\.conf" file config_file_context)
+	(filecon "/etc/dracut\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/bin/dracut" file cmd_file_context))
 
-(filecon "/etc/dracut\.conf" file dracut_config)
-(filecon "/etc/dracut\.conf\.d(/.*)?" any dracut_config)
-(filecon "/usr/bin/dracut" file dracut_cmd)
 (filecon "/usr/lib/dracut(/.*)?" file cmd)

@@ -1,17 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_networkd_cmd (sys.id sys.role sd_networkd.cmd_file (systemlow systemlow)))
-		(context sd_networkd_config (sys.id sys.role sd_networkd.config_file (systemlow systemlow)))
-		(context sd_networkd_runtime (sys.id sys.role sd_networkd.runtime_file (systemlow systemlow)))
-		(context sd_networkd_unit (sys.id sys.role sd_networkd.unit_file (systemlow systemlow))))
-	(false
-		(context sd_networkd_cmd (sys.id object_r sd_networkd.cmd_file (systemlow systemlow)))
-		(context sd_networkd_config (sys.id object_r sd_networkd.config_file (systemlow systemlow)))
-		(context sd_networkd_runtime (sys.id object_r sd_networkd.runtime_file (systemlow systemlow)))
-		(context sd_networkd_unit (sys.id object_r sd_networkd.unit_file (systemlow systemlow)))))
-
-(filecon "/etc/systemd/network(/.*)?" any sd_networkd_config)
-(filecon "/usr/lib/systemd/systemd-networkd" file sd_networkd_cmd)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-networkd.*" file sd_networkd_unit)
-(filecon "/usr/lib/systemd/systemd-networkd-wait-online" file sd_networkd_cmd)
-(filecon "/var/run/systemd/netif(/.*)?" any sd_networkd_runtime)
+(in sd_networkd
+	(filecon "/etc/systemd/network(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/systemd-networkd" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-networkd.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-networkd-wait-online" file cmd_file_context)
+	(filecon "/var/run/systemd/netif(/.*)?" any runtime_file_context))

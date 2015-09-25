@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context ntp_port (sys.id sys.role ntp.port (systemlow systemlow))))
-	(false
-		(context ntp_port (sys.id object_r ntp.port (systemlow systemlow)))))
-
-(portcon "tcp" 123 ntp_port)
-(portcon "udp" 123 ntp_port)
+(in ntp
+	(portcon "tcp" 123 port_obj_context)
+	(portcon "udp" 123 port_obj_context))

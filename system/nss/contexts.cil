@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context nss_config (sys.id sys.role nss.config_file (systemlow systemlow))))
-	(false
-		(context nss_config (sys.id object_r nss.config_file (systemlow systemlow)))))
-
-(filecon "/etc/nsswitch\.conf.*" file nss_config)
-(filecon "/etc/host\.conf" file nss_config)
+(in nss
+	(filecon "/etc/nsswitch\.conf.*" file config_file_context)
+	(filecon "/etc/host\.conf" file config_file_context))

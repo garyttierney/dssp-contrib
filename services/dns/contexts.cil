@@ -1,16 +1,10 @@
-(tunableif enable_rbacsep
-	(true
-		(context dns_port (sys.id sys.role dns.port (systemlow systemlow)))
-		(context resolv_config (sys.id sys.role resolv.config_file (systemlow systemlow))))
-	(false
-		(context dns_port (sys.id object_r dns.port (systemlow systemlow)))
-		(context resolv_config (sys.id object_r resolv.config_file (systemlow systemlow)))))
+(in dns
+	(portcon "tcp" 53 port_obj_context)
+	(portcon "udp" 53 port_obj_context))
 
-(filecon "/etc/\.resolv\.conf.*" file resolv_config)
-(filecon "/etc/\.resolv-secure\.conf.*" file resolv_config)
-(filecon "/etc/resolv\.conf.*" file resolv_config)
-(filecon "/etc/resolv-secure\.conf.*" file resolv_config)
-(filecon "/var/run/dnssec-trigger/resolv\.conf\.backup" file resolv_config)
-
-(portcon "tcp" 53 dns_port)
-(portcon "udp" 53 dns_port)
+(in resolv
+	(filecon "/etc/\.resolv\.conf.*" file config_file_context)
+	(filecon "/etc/\.resolv-secure\.conf.*" file config_file_context)
+	(filecon "/etc/resolv\.conf.*" file config_file_context)
+	(filecon "/etc/resolv-secure\.conf.*" file config_file_context)
+	(filecon "/var/run/dnssec-trigger/resolv\.conf\.backup" file config_file_context))

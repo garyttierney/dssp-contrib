@@ -1,24 +1,34 @@
-(tunableif enable_rbacsep
-	(true
-		(context default_context (sys.id sys.role default_context.config_file (systemlow systemlow)))
-		(context file_context (sys.id sys.role file_context.config_file (systemlow systemlow)))
-		(context load_policy_cmd (sys.id sys.role load_policy.cmd_file (systemlow systemlow)))
-		(context matchpathcon_cmd (sys.id sys.role matchpathcon.cmd_file (systemlow systemlow)))
-		(context policy_src (sys.id sys.role policy_src.config_file (systemlow systemlow)))
-		(context selinux_config (sys.id sys.role selinux_config.config_file (systemlow systemlow)))
-		(context setenforce_cmd (sys.id sys.role setenforce.cmd_file (systemlow systemlow)))
-		(context setfiles_cmd (sys.id sys.role setfiles.cmd_file (systemlow systemlow)))
-		(context setsebool_cmd (sys.id sys.role setsebool.cmd_file (systemlow systemlow))))
-	(false
-		(context default_context (sys.id object_r default_context.config_file (systemlow systemlow)))
-		(context file_context (sys.id object_r file_context.config_file (systemlow systemlow)))
-		(context load_policy_cmd (sys.id object_r load_policy.cmd_file (systemlow systemlow)))
-		(context matchpathcon_cmd (sys.id object_r matchpathcon.cmd_file (systemlow systemlow)))
-		(context policy_src (sys.id object_r policy_src.config_file (systemlow systemlow)))
-		(context selinux_config (sys.id object_r selinux_config.config_file (systemlow systemlow)))
-		(context setenforce_cmd (sys.id object_r setenforce.cmd_file (systemlow systemlow)))
-		(context setfiles_cmd (sys.id object_r setfiles.cmd_file (systemlow systemlow)))
-		(context setsebool_cmd (sys.id object_r setsebool.cmd_file (systemlow systemlow)))))
+(in default_context
+	(filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any config_file_context))
+
+(in file_context
+	(filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any config_file_context))
+
+(in load_policy
+	(filecon "/usr/sbin/load_policy" file cmd_file_context))
+
+(in matchpathcon
+	(filecon "/usr/sbin/matchpathcon" file cmd_file_context))
+
+(in policy_src
+	(filecon "/etc/selinux/([^/]*/)?source(/.*)?" any config_file_context))
+
+(in selinux_config
+	(filecon "/etc/selinux(/.*)?" any config_file_context)
+	(filecon "/etc/selinux/([^/]*/)?seusers" file config_file_context)
+	(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file config_file_context))
+
+(in setenforce
+	(filecon "/usr/sbin/setenforce" file cmd_file_context))
+
+(in setfiles
+	(filecon "/usr/bin/chcon" file cmd_file_context)
+	(filecon "/usr/sbin/setfiles" file cmd_file_context))
+
+(in setsebool
+	(filecon "/usr/sbin/setsebool" file cmd_file_context))
+
+(filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
 
 (tunableif enable_mls
 	(true
@@ -39,17 +49,3 @@
 		(tunableif (not enable_rbacsep)
 			(true
 				(context policy_config (sys.id object_r policy_config.sec_file (systemlow systemlow)))))))
-
-(filecon "/etc/selinux(/.*)?" any selinux_config)
-(filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any default_context)
-(filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any file_context)
-(filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
-(filecon "/etc/selinux/([^/]*/)?seusers" file selinux_config)
-(filecon "/etc/selinux/([^/]*/)?source(/.*)?" any policy_src)
-(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file selinux_config)
-(filecon "/usr/bin/chcon" file setfiles_cmd)
-(filecon "/usr/sbin/load_policy" file load_policy_cmd)
-(filecon "/usr/sbin/matchpathcon" file matchpathcon_cmd)
-(filecon "/usr/sbin/setenforce" file setenforce_cmd)
-(filecon "/usr/sbin/setfiles" file setfiles_cmd)
-(filecon "/usr/sbin/setsebool" file setsebool_cmd)

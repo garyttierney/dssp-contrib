@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context firefox_plugins_cmd (sys.id sys.role firefox_plugins.cmd_file (systemlow systemlow))))
-	(false
-		(context firefox_plugins_cmd (sys.id object_r firefox_plugins.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/firefox/plugin-container" file firefox_plugins_cmd)
+(in firefox_plugins
+	(filecon "/usr/lib/firefox/plugin-container" file cmd_file_context))

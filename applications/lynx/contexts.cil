@@ -1,15 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context lynx_cmd (sys.id sys.role lynx.cmd_file (systemlow systemlow)))
-		(context lynx_home (sys.id sys.role lynx.home_user_file (systemlow systemlow)))
-		(context lynx_config (sys.id sys.role lynx.config_file (systemlow systemlow))))
-	(false
-		(context lynx_cmd (sys.id object_r lynx.cmd_file (systemlow systemlow)))
-		(context lynx_home (sys.id object_r lynx.home_user_file (systemlow systemlow)))
-		(context lynx_config (sys.id object_r lynx.config_file (systemlow systemlow)))))
-
-(filecon "/etc/lynx-site\.cfg" file lynx_config)
-(filecon "/etc/lynx\.cfg" file lynx_config)
-(filecon "/etc/lynx\.lss" file lynx_config)
-(filecon "/usr/bin/lynx" file lynx_cmd)
-(filecon "HOME_DIR/\.lynxrc" file lynx_home)
+(in lynx
+	(filecon "/etc/lynx-site\.cfg" file config_file_context)
+	(filecon "/etc/lynx\.cfg" file config_file_context)
+	(filecon "/etc/lynx\.lss" file config_file_context)
+	(filecon "/usr/bin/lynx" file cmd_file_context)
+	(filecon "HOME_DIR/\.lynxrc" file home_user_file_context))

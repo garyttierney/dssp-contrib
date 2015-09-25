@@ -1,10 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context ldap_port (sys.id sys.role ldap.port (systemlow systemlow))))
-	(false
-		(context ldap_port (sys.id object_r ldap.port (systemlow systemlow)))))
-
-(portcon "tcp" 389 ldap_port)
-(portcon "udp" 389 ldap_port)
-(portcon "tcp" 636 ldap_port)
-(portcon "udp" 636 ldap_port)
+(in ldap
+	(portcon "tcp" 389 port_obj_context)
+	(portcon "udp" 389 port_obj_context)
+	(portcon "tcp" 636 port_obj_context)
+	(portcon "udp" 636 port_obj_context))

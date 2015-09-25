@@ -1,17 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_timesyncd_cmd (sys.id sys.role sd_timesyncd.cmd_file (systemlow systemlow)))
-		(context sd_timesyncd_config (sys.id sys.role sd_timesyncd.config_file (systemlow systemlow)))
-		(context sd_timesyncd_unit (sys.id sys.role sd_timesyncd.unit_file (systemlow systemlow)))
-		(context sd_timesyncd_var_lib (sys.id sys.role sd_timesyncd.var_lib_file (systemlow systemlow))))
-	(false
-		(context sd_timesyncd_cmd (sys.id object_r sd_timesyncd.cmd_file (systemlow systemlow)))
-		(context sd_timesyncd_config (sys.id object_r sd_timesyncd.config_file (systemlow systemlow)))
-		(context sd_timesyncd_unit (sys.id object_r sd_timesyncd.unit_file (systemlow systemlow)))
-		(context sd_timesyncd_var_lib (sys.id object_r sd_timesyncd.var_lib_file (systemlow systemlow)))))
-
-(filecon "/etc/systemd/timesyncd\.conf" file sd_timesyncd_config)
-(filecon "/etc/systemd/timesyncd\.conf\.d(/.*)?" any sd_timesyncd_config)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-timesyncd.*" file sd_timesyncd_unit)
-(filecon "/usr/lib/systemd/systemd-timesyncd" file sd_timesyncd_cmd)
-(filecon "/var/lib/systemd/clock" file sd_timesyncd_var_lib)
+(in sd_timesyncd
+	(filecon "/etc/systemd/timesyncd\.conf" file config_file_context)
+	(filecon "/etc/systemd/timesyncd\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-timesyncd.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-timesyncd" file cmd_file_context)
+	(filecon "/var/lib/systemd/clock" file var_lib_file_context))

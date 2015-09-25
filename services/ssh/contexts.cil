@@ -1,73 +1,46 @@
-(tunableif enable_rbacsep
-	(true
-		(context ssh_agent_cmd (sys.id sys.role ssh_agent.cmd_file (systemlow systemlow)))
-		(context ssh_client_cmd (sys.id sys.role ssh_client.cmd_file (systemlow systemlow)))
-		(context sshd_cmd (sys.id sys.role sshd.cmd_file (systemlow systemlow)))
-		(context sshd_config (sys.id sys.role sshd.config_file (systemlow systemlow)))
-		(context ssh_client_home (sys.id sys.role ssh_client.home_user_file (systemlow systemlow)))
-		(context sshd_keygen_cmd (sys.id sys.role sshd_keygen.cmd_file (systemlow systemlow)))
-		(context sshd_key (sys.id sys.role sshd_key.file (systemlow systemlow)))
-		(context sshd_runtime (sys.id sys.role sshd.runtime_file (systemlow systemlow)))
-		(context ssh_helper_cmd (sys.id sys.role ssh_helper.cmd_file (systemlow systemlow)))
-		(context ssh_keygen_cmd (sys.id sys.role ssh_keygen.cmd_file (systemlow systemlow)))
-		(context sshd_port (sys.id sys.role sshd.port (systemlow systemlow)))
-		(context ssh_priv_login (sys.id sys.role ssh_priv_login.bool (systemlow systemlow)))
-		(context ssh_sftpserver_cmd (sys.id sys.role ssh_sftpserver.cmd_file (systemlow systemlow))))
-	(false
-		(context ssh_agent_cmd (sys.id object_r ssh_agent.cmd_file (systemlow systemlow)))
-		(context ssh_client_cmd (sys.id object_r ssh_client.cmd_file (systemlow systemlow)))
-		(context sshd_cmd (sys.id object_r sshd.cmd_file (systemlow systemlow)))
-		(context sshd_config (sys.id object_r sshd.config_file (systemlow systemlow)))
-		(context ssh_client_home (sys.id object_r ssh_client.home_user_file (systemlow systemlow)))
-		(context sshd_keygen_cmd (sys.id object_r sshd_keygen.cmd_file (systemlow systemlow)))
-		(context sshd_key (sys.id object_r sshd_key.file (systemlow systemlow)))
-		(context sshd_runtime (sys.id object_r sshd.runtime_file (systemlow systemlow)))
-		(context ssh_helper_cmd (sys.id object_r ssh_helper.cmd_file (systemlow systemlow)))
-		(context ssh_keygen_cmd (sys.id object_r ssh_keygen.cmd_file (systemlow systemlow)))
-		(context sshd_port (sys.id object_r sshd.port (systemlow systemlow)))
-		(context ssh_priv_login (sys.id object_r ssh_priv_login.bool (systemlow systemlow)))
-		(context ssh_sftpserver_cmd (sys.id object_r ssh_sftpserver.cmd_file (systemlow systemlow)))))
+(in ssh_agent
+	(filecon "/usr/bin/ssh-keyscan" file cmd_file_context)
+	(filecon "/usr/bin/ssh-add" file cmd_file_context)
+	(filecon "/usr/bin/ssh-agent" file cmd_file_context)
+	(filecon "/usr/bin/ssh-copy-id" file cmd_file_context))
 
+(in ssh_client
+	(filecon "/usr/bin/ssh" file cmd_file_context)
+	(filecon "/usr/bin/scp" file cmd_file_context)
+	(filecon "/usr/bin/sftp" file cmd_file_context)
+	(filecon "/usr/bin/slogin" file cmd_file_context)
+	(filecon "HOME_DIR/\.ssh(/.*)?" any home_user_file_context))
 
-(filecon "HOME_DIR/\.ssh(/.*)?" any ssh_client_home)
-(filecon "/etc/ssh(/.*)" any sshd_config)
-(filecon "/etc/ssh/moduli.*" file sshd_key)
-(filecon "/etc/ssh/ssh_host.*" file sshd_key)
-(filecon "/etc/sysconfig/sshd" file sshd_config)
-(filecon "/usr/bin/scp" file ssh_client_cmd)
-(filecon "/usr/bin/sftp" file ssh_client_cmd)
-(filecon "/usr/bin/slogin" file ssh_client_cmd)
-(filecon "/usr/bin/ssh-add" file ssh_agent_cmd)
-(filecon "/usr/bin/ssh-agent" file ssh_agent_cmd)
-(filecon "/usr/bin/ssh-copy-id" file ssh_agent_cmd)
-(filecon "/usr/bin/ssh" file ssh_client_cmd)
-(filecon "/usr/bin/ssh-keygen" file ssh_keygen_cmd)
-(filecon "/usr/bin/ssh-keyscan" file ssh_agent_cmd)
-(filecon "/usr/libexec/openssh/sftp-server" file ssh_sftpserver_cmd)
-(filecon "/usr/libexec/openssh/ssh-pkcs11-helper" file ssh_helper_cmd)
-(filecon "/usr/sbin/sshd" file sshd_cmd)
-(filecon "/usr/sbin/sshd-keygen" file sshd_keygen_cmd)
-(filecon "/var/run/sshd\.pid" file sshd_runtime)
+(in sshd
+	(filecon "/usr/sbin/sshd" file cmd_file_context)
+	(filecon "/etc/ssh(/.*)" any config_file_context)
+	(filecon "/etc/sysconfig/sshd" file config_file_context)
+	(filecon "/var/run/sshd\.pid" file runtime_file_context)
 
-(genfscon "selinuxfs" "/booleans/ssh_priv_login" ssh_priv_login)
+	(portcon "tcp" 22 port_obj_context)
+	(portcon "udp" 22 port_obj_context)
 
-(portcon "tcp" 22 sshd_port)
-(portcon "udp" 22 sshd_port)
+	(optional sshd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*sshd.*" file unit_file_context)))
 
-(optional sshd_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context sshd_unit (sys.id sys.role sshd.unit_file (systemlow systemlow))))
-		(false
-			(context sshd_unit (sys.id object_r sshd.unit_file (systemlow systemlow)))))
+(in sshd_keygen
+	(filecon "/usr/sbin/sshd-keygen" file cmd_file_context)
 
-	(filecon "/usr/lib/systemd/system/[^/]*sshd.*" file sshd_unit))
+	(optional sshd_keygen_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*sshd-keygen.*" file unit_file_context)))
 
-(optional sshd_keygen_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context sshd_keygen_unit (sys.id sys.role sshd_keygen.unit_file (systemlow systemlow))))
-		(false
-			(context sshd_keygen_unit (sys.id object_r sshd_keygen.unit_file (systemlow systemlow)))))
+(in sshd_key
+	(filecon "/etc/ssh/moduli.*" file file_file_context)
+	(filecon "/etc/ssh/ssh_host.*" file file_file_context))
 
-	(filecon "/usr/lib/systemd/system/[^/]*sshd-keygen.*" file sshd_keygen_unit))
+(in ssh_helper
+	(filecon "/usr/libexec/openssh/ssh-pkcs11-helper" file cmd_file_context))
+
+(in ssh_keygen
+	(filecon "/usr/bin/ssh-keygen" file cmd_file_context))
+
+(in ssh_priv_login
+	(genfscon "selinuxfs" "/booleans/ssh_priv_login" bool_obj_context))
+
+(in ssh_sftpserver
+	(filecon "/usr/libexec/openssh/sftp-server" file cmd_file_context))

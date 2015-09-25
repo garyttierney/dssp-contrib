@@ -1,19 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context pa_cmd (sys.id sys.role pa.cmd_file (systemlow systemlow)))
-		(context pa_config (sys.id sys.role pa.config_file (systemlow systemlow)))
-		(context pa_home_config (sys.id sys.role pa.home_config_file (systemlow systemlow)))
-		(context pa_home (sys.id sys.role pa.home_user_file (systemlow systemlow)))
-		(context pa_var_lib (sys.id sys.role pa.var_lib_file (systemlow systemlow))))
-	(false
-		(context pa_cmd (sys.id object_r pa.cmd_file (systemlow systemlow)))
-		(context pa_config (sys.id object_r pa.config_file (systemlow systemlow)))
-		(context pa_home_config (sys.id object_r pa.home_config_file (systemlow systemlow)))
-		(context pa_home (sys.id object_r pa.home_user_file (systemlow systemlow)))
-		(context pa_var_lib (sys.id object_r pa.var_lib_file (systemlow systemlow)))))
-
-(filecon "/etc/pulse(/.*)?" any pa_config)
-(filecon "/usr/bin/pulseaudio" file pa_cmd)
-(filecon "/var/lib/pulse(/.*)?" any pa_var_lib)
-(filecon "HOME_DIR/\.esd_auth" file pa_home)
-(filecon "HOME_DIR/\.config/pulse(/.*)?" any pa_home_config)
+(in pa
+	(filecon "/etc/pulse(/.*)?" any config_file_context)
+	(filecon "/usr/bin/pulseaudio" file cmd_file_context)
+	(filecon "/var/lib/pulse(/.*)?" any var_lib_file_context)
+	(filecon "HOME_DIR/\.esd_auth" file home_user_file_context)
+	(filecon "HOME_DIR/\.config/pulse(/.*)?" any home_config_file_context))

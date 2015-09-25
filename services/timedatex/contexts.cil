@@ -1,16 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context timedatex_cmd (sys.id sys.role timedatex.cmd_file (systemlow systemlow))))
-	(false
-		(context timedatex_cmd (sys.id object_r timedatex.cmd_file (systemlow systemlow)))))
+(in timedatex
+	(filecon "/usr/sbin/timedatex" file cmd_file_context)
 
-(filecon "/usr/sbin/timedatex" file timedatex_cmd)
-
-(optional timedatex_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context timedatex_unit (sys.id sys.role timedatex.unit_file (systemlow systemlow))))
-		(false
-			(context timedatex_unit (sys.id object_r timedatex.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*timedatex.*" file timedatex_unit))
+	(optional timedatex_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*timedatex.*" file unit_file_context)))

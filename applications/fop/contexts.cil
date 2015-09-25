@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context fop_cmd (sys.id sys.role fop.cmd_file (systemlow systemlow)))
-		(context fop_home (sys.id sys.role fop.home_user_file (systemlow systemlow)))
-		(context fop_config (sys.id sys.role fop.config_file (systemlow systemlow))))
-	(false
-		(context fop_cmd (sys.id object_r fop.cmd_file (systemlow systemlow)))
-		(context fop_home (sys.id object_r fop.home_user_file (systemlow systemlow)))
-		(context fop_config (sys.id object_r fop.config_file (systemlow systemlow)))))
-
-(filecon "/etc/fop\.conf" file fop_config)
-(filecon "/usr/bin/fop" file fop_cmd)
-(filecon "HOME_DIR/\.fop(/.*)?" any fop_home)
+(in fop
+	(filecon "/etc/fop\.conf" file config_file_context)
+	(filecon "/usr/bin/fop" file cmd_file_context)
+	(filecon "HOME_DIR/\.fop(/.*)?" any home_user_file_context))

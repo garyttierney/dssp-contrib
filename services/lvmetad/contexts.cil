@@ -1,20 +1,7 @@
-(tunableif enable_rbacsep
-	(true
-		(context lvmetad_cmd (sys.id sys.role lvmetad.cmd_file (systemlow systemlow)))
-		(context lvmetad_runtime (sys.id sys.role lvmetad.runtime_file (systemlow systemlow))))
-	(false
-		(context lvmetad_cmd (sys.id object_r lvmetad.cmd_file (systemlow systemlow)))
-		(context lvmetad_runtime (sys.id object_r lvmetad.runtime_file (systemlow systemlow)))))
+(in lvmetad
+	(filecon "/usr/sbin/lvmetad" file cmd_file_context)
+	(filecon "/var/run/lvm/lvmetad\.socket" socket runtime_file_context)
+	(filecon "/var/run/lvmetad\.pid" file runtime_file_context)
 
-(filecon "/usr/sbin/lvmetad" file lvmetad_cmd)
-(filecon "/var/run/lvm/lvmetad\.socket" socket lvmetad_runtime)
-(filecon "/var/run/lvmetad\.pid" file lvmetad_runtime)
-
-(optional lvmetad_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context lvmetad_unit (sys.id sys.role lvmetad.unit_file (systemlow systemlow))))
-		(false
-			(context lvmetad_unit (sys.id object_r lvmetad.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/lvm2-lvmetad.*" file lvmetad_unit))
+	(optional lvmetad_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/lvm2-lvmetad.*" file unit_file_context)))

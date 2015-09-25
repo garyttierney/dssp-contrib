@@ -1,22 +1,7 @@
-(tunableif enable_rbacsep
-	(true
-		(context numad_cmd (sys.id sys.role numad.cmd_file (systemlow systemlow)))
-		(context numad_runtime (sys.id sys.role numad.runtime_file (systemlow systemlow)))
-		(context numad_var_log (sys.id sys.role numad.var_log_file (systemlow systemlow))))
-	(false
-		(context numad_cmd (sys.id object_r numad.cmd_file (systemlow systemlow)))
-		(context numad_runtime (sys.id object_r numad.runtime_file (systemlow systemlow)))
-		(context numad_var_log (sys.id object_r numad.var_log_file (systemlow systemlow)))))
+(in numad
+	(filecon "/usr/bin/numad" file cmd_file_context)
+	(filecon "/var/log/numad.*" file var_log_file_context)
+	(filecon "/var/run/numad\.pid" file runtime_file_context)
 
-(filecon "/usr/bin/numad" file numad_cmd)
-(filecon "/var/log/numad.*" file numad_var_log)
-(filecon "/var/run/numad\.pid" file numad_runtime)
-
-(optional numad_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context numad_unit (sys.id sys.role numad.unit_file (systemlow systemlow))))
-		(false
-			(context numad_unit (sys.id object_r numad.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*numad.*" file numad_unit))
+	(optional numad_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*numad.*" file unit_file_context)))

@@ -1,13 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context dirmngr_cmd (sys.id sys.role dirmngr.cmd_file (systemlow systemlow)))
-		(context dirmngr_home (sys.id sys.role dirmngr.home_user_file (systemlow systemlow))))
-	(false
-		(context dirmngr_cmd (sys.id object_r dirmngr.cmd_file (systemlow systemlow)))
-		(context dirmngr_home (sys.id object_r dirmngr.home_user_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/dirmngr" file dirmngr_cmd)
-(filecon "HOME_DIR/\.gnupg/crls\.d(/.*)?" any dirmngr_home)
-(filecon "HOME_DIR/\.gnupg/dirmngr-cache\.d(/.*)?" any dirmngr_home)
-(filecon "HOME_DIR/\.gnupg/dirmngr\.conf" file dirmngr_home)
-(filecon "HOME_DIR/\.gnupg/S\.dirmngr" socket dirmngr_home)
+(in dirmngr
+	(filecon "/usr/bin/dirmngr" file cmd_file_context)
+	(filecon "HOME_DIR/\.gnupg/crls\.d(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/dirmngr-cache\.d(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/dirmngr\.conf" file home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/S\.dirmngr" socket home_user_file_context))

@@ -1,16 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_tmpfiles_cmd (sys.id sys.role sd_tmpfiles.cmd_file (systemlow systemlow)))
-		(context sd_tmpfiles_config (sys.id sys.role sd_tmpfiles.config_file (systemlow systemlow)))
-		(context sd_tmpfiles_runtime (sys.id sys.role sd_tmpfiles.runtime_file (systemlow systemlow)))
-		(context sd_tmpfiles_unit (sys.id sys.role sd_tmpfiles.unit_file (systemlow systemlow))))
-	(false
-		(context sd_tmpfiles_cmd (sys.id object_r sd_tmpfiles.cmd_file (systemlow systemlow)))
-		(context sd_tmpfiles_config (sys.id object_r sd_tmpfiles.config_file (systemlow systemlow)))
-		(context sd_tmpfiles_runtime (sys.id object_r sd_tmpfiles.runtime_file (systemlow systemlow)))
-		(context sd_tmpfiles_unit (sys.id object_r sd_tmpfiles.unit_file (systemlow systemlow)))))
-
-(filecon "/etc/tmpfiles\.d(/.*)?" any sd_tmpfiles_config)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-tmpfiles.*" file sd_tmpfiles_unit)
-(filecon "/usr/bin/systemd-tmpfiles" file sd_tmpfiles_cmd)
-(filecon "/var/run/tmpfiles\.d(/.*)?" any sd_tmpfiles_runtime)
+(in sd_tmpfiles
+	(filecon "/etc/tmpfiles\.d(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-tmpfiles.*" file unit_file_context)
+	(filecon "/usr/bin/systemd-tmpfiles" file cmd_file_context)
+	(filecon "/var/run/tmpfiles\.d(/.*)?" any runtime_file_context))

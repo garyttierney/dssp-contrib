@@ -1,19 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context bluetoothd_cmd (sys.id sys.role bluetoothd.cmd_file (systemlow systemlow)))
-		(context bluetoothd_var_lib (sys.id sys.role bluetoothd.var_lib_file (systemlow systemlow))))
-	(false
-		(context bluetoothd_cmd (sys.id object_r bluetoothd.cmd_file (systemlow systemlow)))
-		(context bluetoothd_var_lib (sys.id object_r bluetoothd.var_lib_file (systemlow systemlow)))))
+(in bluetoothd
+	(filecon "/usr/libexec/bluetooth/bluetoothd" file cmd_file_context)
+	(filecon "/var/lib/bluetooth(/.*)?" any var_lib_file_context)
 
-(filecon "/usr/libexec/bluetooth/bluetoothd" file bluetoothd_cmd)
-(filecon "/var/lib/bluetooth(/.*)?" any bluetoothd_var_lib)
-
-(optional bluetoothd_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context bluetoothd_unit (sys.id sys.role bluetoothd.unit_file (systemlow systemlow))))
-		(false
-			(context bluetoothd_unit (sys.id object_r bluetoothd.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*bluetooth.*" file bluetoothd_unit))
+	(optional bluetoothd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*bluetooth.*" file unit_file_context)))

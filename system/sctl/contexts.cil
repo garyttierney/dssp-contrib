@@ -1,11 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context sctl_cmd (sys.id sys.role sctl.cmd_file (systemlow systemlow)))
-		(context sctl_config (sys.id sys.role sctl.config_file (systemlow systemlow))))
-	(false
-		(context sctl_cmd (sys.id object_r sctl.cmd_file (systemlow systemlow)))
-		(context sctl_config (sys.id object_r sctl.config_file (systemlow systemlow)))))
-
-(filecon "/etc/sysctl\.conf" file sctl_config)
-(filecon "/etc/sysctl\.d(/.*)?" any sctl_config)
-(filecon "/usr/sbin/sysctl" file sctl_cmd)
+(in sctl
+	(filecon "/etc/sysctl\.conf" file config_file_context)
+	(filecon "/etc/sysctl\.d(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/sysctl" file cmd_file_context))

@@ -84,7 +84,13 @@
 		(blockabstract home_cache_obj_blk)
 
 		(type home_cache_file)
-		(call usersubj.home_cache_obj_type (home_cache_file)))
+		(call usersubj.home_cache_obj_type (home_cache_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context home_cache_file_context (sys.id sys.role home_cache_file (systemlow systemlow))))
+			(false
+				(context home_cache_file_context (sys.id object_r home_cache_file (systemlow systemlow))))))
 
 	(block list_home_cache_blk
 		(blockabstract list_home_cache_blk)
@@ -270,7 +276,13 @@
 		(blockabstract home_config_obj_blk)
 
 		(type home_config_file)
-		(call usersubj.home_config_obj_type (home_config_file)))
+		(call usersubj.home_config_obj_type (home_config_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context home_config_file_context (sys.id sys.role home_config_file (systemlow systemlow))))
+			(false
+				(context home_config_file_context (sys.id object_r home_config_file (systemlow systemlow))))))
 
 	(block list_home_config_blk
 		(blockabstract list_home_config_blk)
@@ -456,7 +468,13 @@
 		(blockabstract home_data_obj_blk)
 
 		(type home_data_file)
-		(call usersubj.home_data_obj_type (home_data_file)))
+		(call usersubj.home_data_obj_type (home_data_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context home_data_file_context (sys.id sys.role home_data_file (systemlow systemlow))))
+			(false
+				(context home_data_file_context (sys.id object_r home_data_file (systemlow systemlow))))))
 
 	(block list_home_data_blk
 		(blockabstract list_home_data_blk)
@@ -642,7 +660,13 @@
 		(blockabstract home_user_obj_blk)
 
 		(type home_user_file)
-		(call usersubj.home_user_obj_type (home_user_file)))
+		(call usersubj.home_user_obj_type (home_user_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context home_user_file_context (sys.id sys.role home_user_file (systemlow systemlow))))
+			(false
+				(context home_user_file_context (sys.id object_r home_user_file (systemlow systemlow))))))
 
 	(block list_home_user_blk
 		(blockabstract list_home_user_blk)
@@ -828,7 +852,13 @@
 		(blockabstract var_tmp_user_obj_blk)
 
 		(type var_tmp_user_file)
-		(call usersubj.var_tmp_user_obj_type (var_tmp_user_file)))
+		(call usersubj.var_tmp_user_obj_type (var_tmp_user_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context var_tmp_user_file_context (sys.id sys.role var_tmp_user_file (systemlow systemlow))))
+			(false
+				(context var_tmp_user_file_context (sys.id object_r var_tmp_user_file (systemlow systemlow))))))
 
 	(block list_var_tmp_user_blk
 		(blockabstract list_var_tmp_user_blk)
@@ -1014,7 +1044,13 @@
 		(blockabstract tmpfs_user_obj_blk)
 
 		(type tmpfs_user_file)
-		(call usersubj.tmpfs_user_obj_type (tmpfs_user_file)))
+		(call usersubj.tmpfs_user_obj_type (tmpfs_user_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context tmpfs_user_file_context (sys.id sys.role tmpfs_user_file (systemlow systemlow))))
+			(false
+				(context tmpfs_user_file_context (sys.id object_r tmpfs_user_file (systemlow systemlow))))))
 
 	(block list_tmpfs_user_blk
 		(blockabstract list_tmpfs_user_blk)

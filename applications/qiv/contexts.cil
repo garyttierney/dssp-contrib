@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context qiv_cmd (sys.id sys.role qiv.cmd_file (systemlow systemlow))))
-	(false
-		(context qiv_cmd (sys.id object_r qiv.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/qiv" file qiv_cmd)
+(in qiv
+	(filecon "/usr/bin/qiv" file cmd_file_context))

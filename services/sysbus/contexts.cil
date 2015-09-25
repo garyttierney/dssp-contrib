@@ -1,25 +1,8 @@
-(tunableif enable_rbacsep
-	(true
-		(context sysbus_cmd (sys.id sys.role sysbus.cmd_file (systemlow systemlow)))
-		(context sysbus_config (sys.id sys.role sysbus.config_file (systemlow systemlow)))
-		(context sysbus_runtime (sys.id sys.role sysbus.runtime_file (systemlow systemlow)))
-		(context sysbus_var_lib (sys.id sys.role sysbus.var_lib_file (systemlow systemlow))))
-	(false
-		(context sysbus_cmd (sys.id object_r sysbus.cmd_file (systemlow systemlow)))
-		(context sysbus_config (sys.id object_r sysbus.config_file (systemlow systemlow)))
-		(context sysbus_runtime (sys.id object_r sysbus.runtime_file (systemlow systemlow)))
-		(context sysbus_var_lib (sys.id object_r sysbus.var_lib_file (systemlow systemlow)))))
+(in sysbus
+	(filecon "/etc/dbus-1(/.*)?" any config_file_context)
+	(filecon "/usr/bin/dbus-daemon" file cmd_file_context)
+	(filecon "/var/lib/dbus(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/dbus(/.*)?" any runtime_file_context)
 
-(filecon "/etc/dbus-1(/.*)?" any sysbus_config)
-(filecon "/usr/bin/dbus-daemon" file sysbus_cmd)
-(filecon "/var/lib/dbus(/.*)?" any sysbus_var_lib)
-(filecon "/var/run/dbus(/.*)?" any sysbus_runtime)
-
-(optional sysbus_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context sysbus_unit (sys.id sys.role sysbus.unit_file (systemlow systemlow))))
-		(false
-			(context sysbus_unit (sys.id object_r sysbus.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*dbus.*" file sysbus_unit))
+	(optional sysbus_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*dbus.*" file unit_file_context)))

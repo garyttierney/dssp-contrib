@@ -1,19 +1,9 @@
-(tunableif enable_rbacsep
-	(true
-		(context dhclient_cmd (sys.id sys.role dhclient.cmd_file (systemlow systemlow)))
-		(context dhclient_config (sys.id sys.role dhclient.config_file (systemlow systemlow)))
-		(context dhclient_runtime (sys.id sys.role dhclient.runtime_file (systemlow systemlow)))
-		(context dhclient_var_lib (sys.id sys.role dhclient.var_lib_file (systemlow systemlow))))
-	(false
-		(context dhclient_cmd (sys.id object_r dhclient.cmd_file (systemlow systemlow)))
-		(context dhclient_config (sys.id object_r dhclient.config_file (systemlow systemlow)))
-		(context dhclient_runtime (sys.id object_r dhclient.runtime_file (systemlow systemlow)))
-		(context dhclient_var_lib (sys.id object_r dhclient.var_lib_file (systemlow systemlow)))))
+(in dhclient
+	(filecon "/etc/dhcp/dhclient\.d(/.*)?" any config_file_context)
+	(filecon "/etc/NetworkManager/dispatcher\.d/[^/]*dhclient" file cmd_file_context)
+	(filecon "/usr/sbin/dhclient.*" file cmd_file_context)
+	(filecon "/var/lib/dhclient(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/dhclient.*" file runtime_file_context))
 
-(filecon "/etc/dhcp/dhclient\.d(/.*)?" any dhclient_config)
-(filecon "/etc/NetworkManager/dispatcher\.d/[^/]*dhclient" file dhclient_cmd)
-(filecon "/usr/sbin/dhclient.*" file dhclient_cmd)
-(filecon "/var/lib/dhclient(/.*)?" any dhclient_var_lib)
-(filecon "/var/run/dhclient.*" file dhclient_runtime)
 (filecon "/etc/dhcp/dhclient\.d/chrony\.sh" file cmd)
 (filecon "/etc/dhcp/dhclient\.d/ntp\.sh" file cmd)

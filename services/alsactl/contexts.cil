@@ -1,31 +1,12 @@
-(tunableif enable_rbacsep
-	(true
-		(context alsactl_cmd (sys.id sys.role alsactl.cmd_file (systemlow systemlow)))
-		(context alsactl_config (sys.id sys.role alsactl.config_file (systemlow systemlow)))
-		(context alsactl_runtime (sys.id sys.role alsactl.runtime_file (systemlow systemlow)))
-		(context alsactl_runtime_lock (sys.id sys.role alsactl.runtime_lock_file (systemlow systemlow)))
-		(context alsactl_var_lib (sys.id sys.role alsactl.var_lib_file (systemlow systemlow))))
-	(false
-		(context alsactl_cmd (sys.id object_r alsactl.cmd_file (systemlow systemlow)))
-		(context alsactl_config (sys.id object_r alsactl.config_file (systemlow systemlow)))
-		(context alsactl_runtime (sys.id object_r alsactl.runtime_file (systemlow systemlow)))
-		(context alsactl_runtime_lock (sys.id object_r alsactl.runtime_lock_file (systemlow systemlow)))
-		(context alsactl_var_lib (sys.id object_r alsactl.var_lib_file (systemlow systemlow)))))
+(in alsactl
+	(filecon "/etc/alsa(/.*)?" any config_file_context)
+	(filecon "/etc/asound\.conf(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/alsactl" file cmd_file_context)
+	(filecon "/var/run/alsactl\.pid" file runtime_file_context)
+	(filecon "/var/run/lock/asound\.state\.lock" file runtime_lock_file_context)
+	(filecon "/var/lib/alsa(/.*)?" any var_lib_file_context)
 
-(filecon "/etc/alsa(/.*)?" any alsactl_config)
-(filecon "/etc/asound\.conf(/.*)?" any alsactl_config)
-(filecon "/usr/sbin/alsactl" file alsactl_cmd)
-(filecon "/var/run/alsactl\.pid" file alsactl_runtime)
-(filecon "/var/run/lock/asound\.state\.lock" file alsactl_runtime_lock)
-(filecon "/var/lib/alsa(/.*)?" any alsactl_var_lib)
-
-(optional alsactl_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context alsactl_unit (sys.id sys.role alsactl.unit_file (systemlow systemlow))))
-		(false
-			(context alsactl_unit (sys.id object_r alsactl.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*alsa-state.*" file alsactl_unit)
-	(filecon "/usr/lib/systemd/system/[^/]*alsa-restore.*" file alsactl_unit)
-	(filecon "/usr/lib/systemd/system/[^/]*alsa-store.*" file alsactl_unit))
+	(optional alsactl_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*alsa-state.*" file unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*alsa-restore.*" file unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*alsa-store.*" file unit_file_context)))

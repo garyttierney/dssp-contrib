@@ -1,17 +1,9 @@
-(tunableif enable_rbacsep
-	(true
-		(context mount_any_file (sys.id sys.role mount_any_file.bool (systemlow systemlow)))
-		(context mount_cmd (sys.id sys.role mount.cmd_file (systemlow systemlow)))
-		(context mount_runtime (sys.id sys.role mount.runtime_file (systemlow systemlow))))
-	(false
-		(context mount_any_file (sys.id object_r mount_any_file.bool (systemlow systemlow)))
-		(context mount_cmd (sys.id object_r mount.cmd_file (systemlow systemlow)))
-		(context mount_runtime (sys.id object_r mount.runtime_file (systemlow systemlow)))))
+(in mount
+	(filecon "/usr/bin/mount.*" file cmd_file_context)
+	(filecon "/usr/bin/umount.*" file cmd_file_context)
+	(filecon "/usr/sbin/mount.*" file cmd_file_context)
+	(filecon "/usr/sbin/umount.*" file cmd_file_context)
+	(filecon "/var/run/mount(/.*)?" any runtime_file_context))
 
-(filecon "/usr/bin/mount.*" file mount_cmd)
-(filecon "/usr/bin/umount.*" file mount_cmd)
-(filecon "/usr/sbin/mount.*" file mount_cmd)
-(filecon "/usr/sbin/umount.*" file mount_cmd)
-(filecon "/var/run/mount(/.*)?" any mount_runtime)
-
-(genfscon "selinuxfs" "/booleans/mount_any_file" mount_any_file)
+(in mount_any_file
+	(genfscon "selinuxfs" "/booleans/mount_any_file" bool_obj_context))

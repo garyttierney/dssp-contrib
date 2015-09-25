@@ -1,29 +1,18 @@
-(tunableif enable_rbacsep
-	(true
-		(context arp_cmd (sys.id sys.role arp.cmd_file (systemlow systemlow)))
-		(context nettools_cmd (sys.id sys.role nettools.cmd_file (systemlow systemlow)))
-		(context ping_cmd (sys.id sys.role ping.cmd_file (systemlow systemlow)))
-		(context traceroute_cmd (sys.id sys.role traceroute.cmd_file (systemlow systemlow))))
-	(false
-		(context arp_cmd (sys.id object_r arp.cmd_file (systemlow systemlow)))
-		(context nettools_cmd (sys.id object_r nettools.cmd_file (systemlow systemlow)))
-		(context ping_cmd (sys.id object_r ping.cmd_file (systemlow systemlow)))
-		(context traceroute_cmd (sys.id object_r traceroute.cmd_file (systemlow systemlow)))))
+(in nettools
+	(filecon "/usr/bin/netstat" file cmd_file_context)
+	(filecon "/usr/sbin/arping" file cmd_file_context)
+	(filecon "/usr/sbin/tcpdump" file cmd_file_context))
 
-(filecon "/usr/bin/netstat" file nettools_cmd)
-(filecon "/usr/bin/nmap" file traceroute_cmd)
-(filecon "/usr/bin/ping" file ping_cmd)
-(filecon "/usr/bin/tcptraceroute" file traceroute_cmd)
-(filecon "/usr/bin/traceroute" file traceroute_cmd)
-(filecon "/usr/sbin/arp" file arp_cmd)
-(filecon "/usr/sbin/arping" file nettools_cmd)
-(filecon "/usr/sbin/tcpdump" file nettools_cmd)
+(in traceroute
+	(filecon "/usr/bin/nmap" file cmd_file_context)
+	(filecon "/usr/bin/tcptraceroute" file cmd_file_context)
+	(filecon "/usr/bin/traceroute" file cmd_file_context))
 
-(optional nettools_arp_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context arp_unit (sys.id sys.role arp.unit_file (systemlow systemlow))))
-		(false
-			(context arp_unit (sys.id object_r arp.unit_file (systemlow systemlow)))))
+(in ping
+	(filecon "/usr/bin/ping" file cmd_file_context))
 
-		(filecon "/usr/lib/systemd/system/[^/]*arp-ethers.*" file arp_unit))
+(in arp
+	(filecon "/usr/sbin/arp" file cmd_file_context)
+
+	(optional nettools_arp_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*arp-ethers.*" file unit_file_context)))

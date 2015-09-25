@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context systemctl_cmd (sys.id sys.role systemctl.cmd_file (systemlow systemlow))))
-	(false
-		(context systemctl_cmd (sys.id object_r systemctl.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/systemctl" file systemctl_cmd)
+(in systemctl
+	(filecon "/usr/bin/systemctl" file cmd_file_context))

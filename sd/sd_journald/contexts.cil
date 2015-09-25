@@ -1,22 +1,12 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_journald_cmd (sys.id sys.role sd_journald.cmd_file (systemlow systemlow)))
-		(context sd_journald_config (sys.id sys.role sd_journald.config_file (systemlow systemlow)))
-		(context sd_journald_unit (sys.id sys.role sd_journald.unit_file (systemlow systemlow)))
-		(context sd_journald_var_lib (sys.id sys.role sd_journald.var_lib_file (systemlow systemlow))))
-	(false
-		(context sd_journald_cmd (sys.id object_r sd_journald.cmd_file (systemlow systemlow)))
-		(context sd_journald_config (sys.id object_r sd_journald.config_file (systemlow systemlow)))
-		(context sd_journald_unit (sys.id object_r sd_journald.unit_file (systemlow systemlow)))
-		(context sd_journald_var_lib (sys.id object_r sd_journald.var_lib_file (systemlow systemlow)))))
+(in sd_journald
+	(filecon "/etc/systemd/journald\.conf" file config_file_context)
+	(filecon "/etc/systemd/journald\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journald" file cmd_file_context)
+	(filecon "/usr/lib/systemd/systemd-kmsg-syslogd" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*syslog.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal.*" file unit_file_context)
+	(filecon "/var/lib/systemd/catalog(/.*)?" any var_lib_file_context))
 
-(filecon "/etc/systemd/journald\.conf" file sd_journald_config)
-(filecon "/etc/systemd/journald\.conf\.d(/.*)?" any sd_journald_config)
-(filecon "/usr/lib/systemd/systemd-journald" file sd_journald_cmd)
-(filecon "/usr/lib/systemd/systemd-kmsg-syslogd" file sd_journald_cmd)
-(filecon "/usr/lib/systemd/system/[^/]*syslog.*" file sd_journald_unit)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-journal.*" file sd_journald_unit)
-(filecon "/var/lib/systemd/catalog(/.*)?" any sd_journald_var_lib)
 (filecon "/var/log/journal(/.*)?" any sd_journald_var_log)
 (filecon "/var/run/log(/.*)?" any sd_journald_var_log)
 (filecon "/var/run/systemd/journal(/.*)?" any sd_journald_runtime)

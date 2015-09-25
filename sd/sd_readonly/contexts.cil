@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_readonly_cmd (sys.id sys.role sd_readonly.cmd_file (systemlow systemlow)))
-		(context sd_readonly_unit (sys.id sys.role sd_readonly.unit_file (systemlow systemlow))))
-	(false
-		(context sd_readonly_cmd (sys.id object_r sd_readonly.cmd_file (systemlow systemlow)))
-		(context sd_readonly_unit (sys.id object_r sd_readonly.unit_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/system/[^/]*fedora-readonly.*" file sd_readonly_unit)
-(filecon "/usr/lib/systemd/fedora-readonly" file sd_readonly_cmd)
+(in sd_readonly
+	(filecon "/usr/lib/systemd/system/[^/]*fedora-readonly.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/fedora-readonly" file cmd_file_context))

@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context chfn_cmd (sys.id sys.role chfn.cmd_file (systemlow systemlow))))
-	(false
-		(context chfn_cmd (sys.id object_r chfn.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/chfn" file chfn_cmd)
-(filecon "/usr/bin/chsh" file chfn_cmd)
+(in chfn
+	(filecon "/usr/bin/chfn" file cmd_file_context)
+	(filecon "/usr/bin/chsh" file cmd_file_context))

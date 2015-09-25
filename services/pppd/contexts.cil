@@ -1,19 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context pppd_cmd (sys.id sys.role pppd.cmd_file (systemlow systemlow)))
-		(context pppd_config (sys.id sys.role pppd.config_file (systemlow systemlow)))
-		(context pppd_runtime (sys.id sys.role pppd.runtime_file (systemlow systemlow)))
-		(context pppd_runtime_lock (sys.id sys.role pppd.runtime_lock_file (systemlow systemlow)))
-		(context pppd_var_log (sys.id sys.role pppd.var_log_file (systemlow systemlow))))
-	(false
-		(context pppd_cmd (sys.id object_r pppd.cmd_file (systemlow systemlow)))
-		(context pppd_config (sys.id object_r pppd.config_file (systemlow systemlow)))
-		(context pppd_runtime (sys.id object_r pppd.runtime_file (systemlow systemlow)))
-		(context pppd_runtime_lock (sys.id object_r pppd.runtime_lock_file (systemlow systemlow)))
-		(context pppd_var_log (sys.id object_r pppd.var_log_file (systemlow systemlow)))))
-
-(filecon "/etc/ppp(/.*)?" any pppd_config)
-(filecon "/usr/sbin/pppd" file pppd_cmd)
-(filecon "/var/log/ppp(/.*)?" any pppd_var_log)
-(filecon "/var/run/lock/ppp(/.*)?" any pppd_runtime_lock)
-(filecon "/var/run/ppp(/.*)?" any pppd_runtime)
+(in pppd
+	(filecon "/etc/ppp(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/pppd" file cmd_file_context)
+	(filecon "/var/log/ppp(/.*)?" any var_log_file_context)
+	(filecon "/var/run/lock/ppp(/.*)?" any runtime_lock_file_context)
+	(filecon "/var/run/ppp(/.*)?" any runtime_file_context))

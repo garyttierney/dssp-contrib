@@ -1,13 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_rfkill_cmd (sys.id sys.role sd_rfkill.cmd_file (systemlow systemlow)))
-		(context sd_rfkill_unit (sys.id sys.role sd_rfkill.unit_file (systemlow systemlow)))
-		(context sd_rfkill_var_lib (sys.id sys.role sd_rfkill.var_lib_file (systemlow systemlow))))
-	(false
-		(context sd_rfkill_cmd (sys.id object_r sd_rfkill.cmd_file (systemlow systemlow)))
-		(context sd_rfkill_unit (sys.id object_r sd_rfkill.unit_file (systemlow systemlow)))
-		(context sd_rfkill_var_lib (sys.id object_r sd_rfkill.var_lib_file (systemlow systemlow)))))
-
-(filecon "/var/lib/systemd/rfkill(/.*)?" any sd_rfkill_var_lib)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-rfkill.*" file sd_rfkill_unit)
-(filecon "/usr/lib/systemd/systemd-rfkill" file sd_rfkill_cmd)
+(in sd_rfkill
+	(filecon "/var/lib/systemd/rfkill(/.*)?" any var_lib_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-rfkill.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-rfkill" file cmd_file_context))

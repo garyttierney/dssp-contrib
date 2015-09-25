@@ -1,37 +1,20 @@
-(tunableif enable_rbacsep
-	(true
-		(context nm_cmd (sys.id sys.role nm.cmd_file (systemlow systemlow)))
-		(context nm_config (sys.id sys.role nm.config_file (systemlow systemlow)))
-		(context nm_disp_cmd (sys.id sys.role nm_disp.cmd_file (systemlow systemlow)))
-		(context nm_helper_cmd (sys.id sys.role nm_helper.cmd_file (systemlow systemlow)))
-		(context nm_online_cmd (sys.id sys.role nm_online.cmd_file (systemlow systemlow)))
-		(context nm_runtime (sys.id sys.role nm.runtime_file (systemlow systemlow)))
-		(context nm_var_lib (sys.id sys.role nm.var_lib_file (systemlow systemlow))))
-	(false
-		(context nm_cmd (sys.id object_r nm.cmd_file (systemlow systemlow)))
-		(context nm_config (sys.id object_r nm.config_file (systemlow systemlow)))
-		(context nm_disp_cmd (sys.id object_r nm_disp.cmd_file (systemlow systemlow)))
-		(context nm_helper_cmd (sys.id object_r nm_helper.cmd_file (systemlow systemlow)))
-		(context nm_online_cmd (sys.id object_r nm_online.cmd_file (systemlow systemlow)))
-		(context nm_runtime (sys.id object_r nm.runtime_file (systemlow systemlow)))
-		(context nm_var_lib (sys.id object_r nm.var_lib_file (systemlow systemlow)))))
+(in nm
+	(filecon "/etc/NetworkManager(/.*)?" any config_file_context)
+	(filecon "/usr/libexec/nm-dispatcher\.action" file cmd_file_context)
+	(filecon "/usr/sbin/NetworkManager" file cmd_file_context)
+	(filecon "/var/lib/NetworkManager(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/netreport(/.*)?" any runtime_file_context)
+	(filecon "/var/run/NetworkManager(/.*)?" any runtime_file_context)
 
-(filecon "/etc/NetworkManager(/.*)?" any nm_config)
-(filecon "/etc/NetworkManager/dispatcher\.d/.*" file nm_helper_cmd)
-(filecon "/usr/bin/nm-online" file nm_online_cmd)
-(filecon "/usr/libexec/nm-dhcp-helper" file nm_helper_cmd)
-(filecon "/usr/libexec/nm-dispatcher\.action" file nm_cmd)
-(filecon "/usr/libexec/nm-dispatcher" file nm_disp_cmd)
-(filecon "/usr/sbin/NetworkManager" file nm_cmd)
-(filecon "/var/lib/NetworkManager(/.*)?" any nm_var_lib)
-(filecon "/var/run/netreport(/.*)?" any nm_runtime)
-(filecon "/var/run/NetworkManager(/.*)?" any nm_runtime)
+	(optional nm_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*NetworkManager.*" file unit_file_context)))
 
-(optional nm_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context nm_unit (sys.id sys.role nm.unit_file (systemlow systemlow))))
-		(false
-			(context nm_unit (sys.id object_r nm.unit_file (systemlow systemlow)))))
+(in nm_disp
+	(filecon "/usr/libexec/nm-dispatcher" file cmd_file_context))
 
-	(filecon "/usr/lib/systemd/system/[^/]*NetworkManager.*" file nm_unit))
+(in nm_helper
+	(filecon "/etc/NetworkManager/dispatcher\.d/.*" file cmd_file_context)
+	(filecon "/usr/libexec/nm-dhcp-helper" file cmd_file_context))
+
+(in nm_online
+	(filecon "/usr/bin/nm-online" file cmd_file_context))

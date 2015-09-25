@@ -1,37 +1,22 @@
-(tunableif enable_rbacsep
-	(true
-		(context polkit_agent_cmd (sys.id sys.role polkit_agent.cmd_file (systemlow systemlow)))
-		(context polkit_cmd (sys.id sys.role polkit.cmd_file (systemlow systemlow)))
-		(context polkit_config (sys.id sys.role polkit.config_file (systemlow systemlow)))
-		(context polkit_exec_cmd (sys.id sys.role polkit_exec.cmd_file (systemlow systemlow)))
-		(context polkit_helper_cmd (sys.id sys.role polkit_helper.cmd_file (systemlow systemlow)))
-		(context polkit_tty_agent_cmd (sys.id sys.role polkit_tty_agent.cmd_file (systemlow systemlow)))
-		(context polkit_var_lib (sys.id sys.role polkit.var_lib_file (systemlow systemlow))))
-	(false
-		(context polkit_agent_cmd (sys.id object_r polkit_agent.cmd_file (systemlow systemlow)))
-		(context polkit_cmd (sys.id object_r polkit.cmd_file (systemlow systemlow)))
-		(context polkit_config (sys.id object_r polkit.config_file (systemlow systemlow)))
-		(context polkit_exec_cmd (sys.id object_r polkit_exec.cmd_file (systemlow systemlow)))
-		(context polkit_helper_cmd (sys.id object_r polkit_helper.cmd_file (systemlow systemlow)))
-		(context polkit_tty_agent_cmd (sys.id object_r polkit_tty_agent.cmd_file (systemlow systemlow)))
-		(context polkit_var_lib (sys.id object_r polkit.var_lib_file (systemlow systemlow)))))
+(in polkit_agent
+	(filecon "/usr/lib/polkit-1/polkit-agent-helper-1" file cmd_file_context))
 
-(filecon "/etc/polkit-1(/.*)?" any polkit_config)
-(filecon "/usr/bin/pkaction" file polkit_exec_cmd)
-(filecon "/usr/bin/pkcheck" file polkit_exec_cmd)
-(filecon "/usr/bin/pkexec" file polkit_exec_cmd)
-(filecon "/usr/bin/pkla-admin-identities" file polkit_helper_cmd)
-(filecon "/usr/bin/pkla-check-authorization" file polkit_helper_cmd)
-(filecon "/usr/bin/pkttyagent" file polkit_tty_agent_cmd)
-(filecon "/usr/lib/polkit-1/polkit-agent-helper-1" file polkit_agent_cmd)
-(filecon "/usr/lib/polkit-1/polkitd" file polkit_cmd)
-(filecon "/var/lib/polkit-1(/.*)?" any polkit_var_lib)
+(in polkit
+	(filecon "/etc/polkit-1(/.*)?" any config_file_context)
+	(filecon "/usr/lib/polkit-1/polkitd" file cmd_file_context)
+	(filecon "/var/lib/polkit-1(/.*)?" any var_lib_file_context)
 
-(optional polkit_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context polkit_unit (sys.id sys.role polkit.unit_file (systemlow systemlow))))
-		(false
-			(context polkit_unit (sys.id object_r polkit.unit_file (systemlow systemlow)))))
+	(optional polkit_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*polkit.*" file unit_file_context)))
 
-	(filecon "/usr/lib/systemd/system/[^/]*polkit.*" file polkit_unit))
+(in polkit_exec
+	(filecon "/usr/bin/pkaction" file cmd_file_context)
+	(filecon "/usr/bin/pkcheck" file cmd_file_context)
+	(filecon "/usr/bin/pkexec" file cmd_file_context))
+
+(in polkit_helper
+	(filecon "/usr/bin/pkla-admin-identities" file cmd_file_context)
+	(filecon "/usr/bin/pkla-check-authorization" file cmd_file_context))
+
+(in polkit_tty_agent
+	(filecon "/usr/bin/pkttyagent" file cmd_file_context))

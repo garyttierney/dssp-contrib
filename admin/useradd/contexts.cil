@@ -1,16 +1,11 @@
-(tunableif enable_rbacsep
-	(true
-		(context groupadd_cmd (sys.id sys.role groupadd.cmd_file (systemlow systemlow)))
-		(context useradd_cmd (sys.id sys.role useradd.cmd_file (systemlow systemlow))))
-	(false
-		(context groupadd_cmd (sys.id object_r groupadd.cmd_file (systemlow systemlow)))
-		(context useradd_cmd (sys.id object_r useradd.cmd_file (systemlow systemlow)))))
+(in groupadd
+	(filecon "/usr/bin/gpasswd" file cmd_file_context)
+	(filecon "/usr/sbin/groupadd" file cmd_file_context)
+	(filecon "/usr/sbin/groupdel" file cmd_file_context)
+	(filecon "/usr/sbin/groupmod" file cmd_file_context))
 
-(filecon "/usr/bin/gpasswd" file groupadd_cmd)
-(filecon "/usr/sbin/groupadd" file groupadd_cmd)
-(filecon "/usr/sbin/groupdel" file groupadd_cmd)
-(filecon "/usr/sbin/groupmod" file groupadd_cmd)
-(filecon "/usr/sbin/useradd" file useradd_cmd)
-(filecon "/usr/sbin/userdel" file useradd_cmd)
-(filecon "/usr/sbin/usermod" file useradd_cmd)
-(filecon "/usr/sbin/newusers" file useradd_cmd)
+(in useradd
+	(filecon "/usr/sbin/useradd" file cmd_file_context)
+	(filecon "/usr/sbin/userdel" file cmd_file_context)
+	(filecon "/usr/sbin/usermod" file cmd_file_context)
+	(filecon "/usr/sbin/newusers" file cmd_file_context))

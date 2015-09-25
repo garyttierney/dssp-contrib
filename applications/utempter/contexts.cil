@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context utempter_cmd (sys.id sys.role utempter.cmd_file (systemlow systemlow))))
-	(false
-		(context utempter_cmd (sys.id object_r utempter.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/libexec/utempter/utempter" file utempter_cmd)
+(in utempter
+	(filecon "/usr/libexec/utempter/utempter" file cmd_file_context))

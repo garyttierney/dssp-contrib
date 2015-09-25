@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context tcs_port (sys.id sys.role tcs.port (systemlow systemlow))))
-	(false
-		(context tcs_port (sys.id object_r tcs.port (systemlow systemlow)))))
-
-(portcon "tcp" 30003 tcs_port)
-(portcon "udp" 30003 tcs_port)
+(in tcs
+	(portcon "tcp" 30003 port_obj_context)
+	(portcon "udp" 30003 port_obj_context))

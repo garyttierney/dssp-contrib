@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context updpwd_cmd (sys.id sys.role updpwd.cmd_file (systemlow systemlow))))
-	(false
-		(context updpwd_cmd (sys.id object_r updpwd.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/sbin/unix_update" file updpwd_cmd)
+(in updpwd
+	(filecon "/usr/sbin/unix_update" file cmd_file_context))

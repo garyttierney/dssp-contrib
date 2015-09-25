@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context vlock_cmd (sys.id sys.role vlock.cmd_file (systemlow systemlow)))
-		(context vlock_home (sys.id sys.role vlock.home_user_file (systemlow systemlow))))
-	(false
-		(context vlock_cmd (sys.id object_r vlock.cmd_file (systemlow systemlow)))
-		(context vlock_home (sys.id object_r vlock.home_user_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/vlock" file vlock_cmd)
-(filecon "HOME_DIR/\.vlockrc" file vlock_home)
+(in vlock
+	(filecon "/usr/bin/vlock" file cmd_file_context)
+	(filecon "HOME_DIR/\.vlockrc" file home_user_file_context))

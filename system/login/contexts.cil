@@ -1,24 +1,12 @@
-(tunableif enable_rbacsep
-	(true
-		(context login_cmd (sys.id sys.role login.cmd_file (systemlow systemlow)))
-		(context login_priv (sys.id sys.role login_priv.bool (systemlow systemlow)))
-		(context sulogin_cmd (sys.id sys.role sulogin.cmd_file (systemlow systemlow))))
-	(false
-		(context login_cmd (sys.id object_r login.cmd_file (systemlow systemlow)))
-		(context login_priv (sys.id object_r login_priv.bool (systemlow systemlow)))
-		(context sulogin_cmd (sys.id object_r sulogin.cmd_file (systemlow systemlow)))))
+(in login
+	(filecon "/usr/bin/login" file cmd_file_context))
 
-(filecon "/usr/bin/login" file login_cmd)
-(filecon "/usr/sbin/sulogin" file sulogin_cmd)
-(filecon "/usr/sbin/sushell" file sulogin_cmd)
+(in sulogin
+	(filecon "/usr/sbin/sulogin" file cmd_file_context)
+	(filecon "/usr/sbin/sushell" file cmd_file_context)
 
-(genfscon "selinuxfs" "/booleans/login_priv" login_priv)
+	(optional sulogin_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*emergency.*" file unit_file_context)))
 
-(optional sulogin_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context sulogin_unit (sys.id sys.role sulogin.unit_file (systemlow systemlow))))
-		(false
-			(context sulogin_unit (sys.id object_r sulogin.unit_file (systemlow systemlow)))))
-
-	(filecon "/usr/lib/systemd/system/[^/]*emergency.*" file sulogin_unit))
+(in login_priv
+	(genfscon "selinuxfs" "/booleans/login_priv" bool_obj_context))

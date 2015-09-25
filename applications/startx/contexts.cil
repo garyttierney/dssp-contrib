@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context startx_cmd (sys.id sys.role startx.cmd_file (systemlow systemlow))))
-	(false
-		(context startx_cmd (sys.id object_r startx.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/startx" file startx_cmd)
+(in startx
+	(filecon "/usr/bin/startx" file cmd_file_context))

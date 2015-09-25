@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context git_email_cmd (sys.id sys.role git_email.cmd_file (systemlow systemlow))))
-	(false
-		(context git_email_cmd (sys.id object_r git_email.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/libexec/git-core/git-send-email" file git_email_cmd)
+(in git_email
+	(filecon "/usr/libexec/git-core/git-send-email" file cmd_file_context))

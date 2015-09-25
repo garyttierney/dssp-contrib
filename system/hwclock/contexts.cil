@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context hwclock_cmd (sys.id sys.role hwclock.cmd_file (systemlow systemlow)))
-		(context hwclock_config (sys.id sys.role hwclock.config_file (systemlow systemlow))))
-	(false
-		(context hwclock_cmd (sys.id object_r hwclock.cmd_file (systemlow systemlow)))
-		(context hwclock_config (sys.id object_r hwclock.config_file (systemlow systemlow)))))
-
-(filecon "/etc/adjtime" file hwclock_config)
-(filecon "/usr/sbin/hwclock" file hwclock_cmd)
+(in hwclock
+	(filecon "/etc/adjtime" file config_file_context)
+	(filecon "/usr/sbin/hwclock" file cmd_file_context))

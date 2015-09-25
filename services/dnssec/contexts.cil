@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context dnssec_port (sys.id sys.role dnssec.port (systemlow systemlow))))
-	(false
-		(context dnssec_port (sys.id object_r dnssec.port (systemlow systemlow)))))
-
-(portcon "tcp" 8955 dnssec_port)
-(portcon "udp" 8955 dnssec_port)
+(in dnssec
+	(portcon "tcp" 8955 port_obj_context)
+	(portcon "udp" 8955 port_obj_context))

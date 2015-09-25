@@ -18,7 +18,13 @@
 		(blockabstract unit_obj_blk)
 
 		(type unit_file)
-		(call unit_obj_type (unit_file)))
+		(call unit_obj_type (unit_file))
+
+		(tunableif enable_rbacsep
+			(true
+				(context unit_file_context (sys.id sys.role unit_file (systemlow systemlow))))
+			(false
+				(context unit_file_context (sys.id object_r unit_file (systemlow systemlow))))))
 
 	(block read_unit_files_blk
 		(blockabstract read_unit_files_blk)

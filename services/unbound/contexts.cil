@@ -1,38 +1,20 @@
-(tunableif enable_rbacsep
-	(true
-		(context unbound_cmd (sys.id sys.role unbound.cmd_file (systemlow systemlow)))
-		(context unbound_config (sys.id sys.role unbound.config_file (systemlow systemlow)))
-		(context unbound_runtime (sys.id sys.role unbound.runtime_file (systemlow systemlow)))
-		(context unbound_var_lib (sys.id sys.role unbound.var_lib_file (systemlow systemlow)))
-		(context unboundanch_cmd (sys.id sys.role unboundanch.cmd_file (systemlow systemlow)))
-		(context unboundcs_cmd (sys.id sys.role unboundcs.cmd_file (systemlow systemlow)))
-		(context unbounddnsctl_port (sys.id sys.role unbounddnsctl.port (systemlow systemlow))))
-	(false
-		(context unbound_cmd (sys.id object_r unbound.cmd_file (systemlow systemlow)))
-		(context unbound_config (sys.id object_r unbound.config_file (systemlow systemlow)))
-		(context unbound_runtime (sys.id object_r unbound.runtime_file (systemlow systemlow)))
-		(context unbound_var_lib (sys.id object_r unbound.var_lib_file (systemlow systemlow)))
-		(context unboundanch_cmd (sys.id object_r unboundanch.cmd_file (systemlow systemlow)))
-		(context unboundcs_cmd (sys.id object_r unboundcs.cmd_file (systemlow systemlow)))
-		(context unbounddnsctl_port (sys.id object_r unbounddnsctl.port (systemlow systemlow)))))
+(in unbound
+	(filecon "/etc/unbound(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/unbound" file config_file_context)
+	(filecon "/usr/sbin/unbound" file cmd_file_context)
+	(filecon "/var/lib/unbound(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/unbound(/.*)?" any runtime_file_context)
+	(filecon "/var/run/unbound/unbound\.pid" file runtime_file_context)
 
-(filecon "/etc/unbound(/.*)?" any unbound_config)
-(filecon "/etc/sysconfig/unbound" file unbound_config)
-(filecon "/usr/sbin/unbound" file unbound_cmd)
-(filecon "/usr/sbin/unbound-anchor" file unboundanch_cmd)
-(filecon "/usr/sbin/unbound-control-setup" file unboundcs_cmd)
-(filecon "/var/lib/unbound(/.*)?" any unbound_var_lib)
-(filecon "/var/run/unbound(/.*)?" any unbound_runtime)
-(filecon "/var/run/unbound/unbound\.pid" file unbound_runtime)
+	(optional unbound_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*unbound.*" file unit_file_context)))
 
-(portcon "tcp" 8953 unbounddnsctl_port)
-(portcon "udp" 8953 unbounddnsctl_port)
+(in unboundanch
+	(filecon "/usr/sbin/unbound-anchor" file cmd_file_context))
 
-(optional unbound_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context unbound_unit (sys.id sys.role unbound.unit_file (systemlow systemlow))))
-		(false
-			(context unbound_unit (sys.id object_r unbound.unit_file (systemlow systemlow)))))
+(in unboundcs
+	(filecon "/usr/sbin/unbound-control-setup" file cmd_file_context))
 
-	(filecon "/usr/lib/systemd/system/[^/]*unbound.*" file unbound_unit))
+(in unbounddnsctl
+	(portcon "tcp" 8953 port_obj_context)
+	(portcon "udp" 8953 port_obj_context))

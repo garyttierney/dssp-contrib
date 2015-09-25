@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context hkp_port (sys.id sys.role hkp.port (systemlow systemlow))))
-	(false
-		(context hkp_port (sys.id object_r hkp.port (systemlow systemlow)))))
-
-(portcon "tcp" 11371 hkp_port)
-(portcon "udp" 11371 hkp_port)
+(in hkp
+	(portcon "tcp" 11371 port_obj_context)
+	(portcon "udp" 11371 port_obj_context))

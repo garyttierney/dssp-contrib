@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context nethogs_cmd (sys.id sys.role nethogs.cmd_file (systemlow systemlow))))
-	(false
-		(context nethogs_cmd (sys.id object_r nethogs.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/sbin/nethogs" file nethogs_cmd)
+(in nethogs
+	(filecon "/usr/sbin/nethogs" file cmd_file_context))

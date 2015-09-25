@@ -1,12 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context scdaemon_cmd (sys.id sys.role scdaemon.cmd_file (systemlow systemlow)))
-		(context scdaemon_home (sys.id sys.role scdaemon.home_user_file (systemlow systemlow))))
-	(false
-		(context scdaemon_cmd (sys.id object_r scdaemon.cmd_file (systemlow systemlow)))
-		(context scdaemon_home (sys.id object_r scdaemon.home_user_file (systemlow systemlow)))))
-
-(filecon "/usr/libexec/scdaemon" file scdaemon_cmd)
-(filecon "HOME_DIR/\.gnupg/reader.*\.status" file scdaemon_home)
-(filecon "HOME_DIR/\.gnupg/scdaemon\.conf" file scdaemon_home)
-(filecon "HOME_DIR/\.gnupg/S\.scdaemon" socket scdaemon_home)
+(in scdaemon
+	(filecon "/usr/libexec/scdaemon" file cmd_file_context)
+	(filecon "HOME_DIR/\.gnupg/reader.*\.status" file home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/scdaemon\.conf" file home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/S\.scdaemon" socket home_user_file_context))

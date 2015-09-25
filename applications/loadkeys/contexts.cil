@@ -1,8 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context loadkeys_cmd (sys.id sys.role loadkeys.cmd_file (systemlow systemlow))))
-	(false
-		(context loadkeys_cmd (sys.id object_r loadkeys.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/loadkeys" file loadkeys_cmd)
-
+(in loadkeys
+	(filecon "/usr/bin/loadkeys" file cmd_file_context))

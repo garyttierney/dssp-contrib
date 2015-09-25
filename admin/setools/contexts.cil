@@ -1,9 +1,4 @@
-(tunableif enable_rbacsep
-	(true
-		(context setools_cmd (sys.id sys.role setools.cmd_file (systemlow systemlow))))
-	(false
-		(context setools_cmd (sys.id object_r setools.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/sediff" file setools_cmd)
-(filecon "/usr/bin/seinfo" file setools_cmd)
-(filecon "/usr/bin/sesearch" file setools_cmd)
+(in setools
+	(filecon "/usr/bin/sediff" file cmd_file_context)
+	(filecon "/usr/bin/seinfo" file cmd_file_context)
+	(filecon "/usr/bin/sesearch" file cmd_file_context))

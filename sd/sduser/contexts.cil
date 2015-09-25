@@ -1,16 +1,9 @@
-(tunableif enable_rbacsep
-	(true
-		(context sduser_unit (sys.id sys.role sduser_unit.unit_file (systemlow systemlow)))
-		(context sduser_home_config (sys.id sys.role sduser.home_config_file (systemlow systemlow)))
-		(context sduser_home_data (sys.id sys.role sduser.home_data_file (systemlow systemlow)))
-		(context sduser_unit_user (sys.id sys.role sduser_unit_user.unit_file (systemlow systemlow))))
-	(false
-		(context sduser_unit (sys.id object_r sduser_unit.unit_file (systemlow systemlow)))
-		(context sduser_home_config (sys.id object_r sduser.home_config_file (systemlow systemlow)))
-		(context sduser_home_data (sys.id object_r sduser.home_data_file (systemlow systemlow)))
-		(context sduser_unit_user (sys.id object_r sduser_unit_user.unit_file (systemlow systemlow)))))
+(in sduser
+	(filecon "HOME_DIR/\.config/systemd(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.local/share/systemd(/.*)?" any home_data_file_context))
 
-(filecon "/usr/lib/systemd/system/[^/]*user@.*" file sduser_unit_user)
-(filecon "/usr/lib/systemd/user(/.*)?" any sduser_unit)
-(filecon "HOME_DIR/\.config/systemd(/.*)?" any sduser_home_config)
-(filecon "HOME_DIR/\.local/share/systemd(/.*)?" any sduser_home_data)
+(in sduser_unit
+	(filecon "/usr/lib/systemd/user(/.*)?" any unit_file_context))
+
+(in sduser_unit_user
+	(filecon "/usr/lib/systemd/system/[^/]*user@.*" file unit_file_context))

@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context gstreamer_home_cache (sys.id sys.role gstreamer.home_cache_file (systemlow systemlow))))
-	(false
-		(context gstreamer_home_cache (sys.id object_r gstreamer.home_cache_file (systemlow systemlow)))))
-
-(filecon "HOME_DIR/\.cache/gstreamer-1\.0(/.*)?" any gstreamer_home_cache)
+(in gstreamer
+	(filecon "HOME_DIR/\.cache/gstreamer-1\.0(/.*)?" any home_cache_file_context))

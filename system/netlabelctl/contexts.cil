@@ -1,7 +1,2 @@
-(tunableif enable_rbacsep
-	(true
-		(context netlabelctl_cmd (sys.id sys.role netlabelctl.cmd_file (systemlow systemlow))))
-	(false
-		(context netlabelctl_cmd (sys.id object_r netlabelctl.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/sbin/netlabelctl" file netlabelctl_cmd)
+(in netlabelctl
+	(filecon "/usr/sbin/netlabelctl" file cmd_file_context))

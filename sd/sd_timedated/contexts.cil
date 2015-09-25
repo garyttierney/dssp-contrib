@@ -1,10 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_timedated_cmd (sys.id sys.role sd_timedated.cmd_file (systemlow systemlow)))
-		(context sd_timedated_unit (sys.id sys.role sd_timedated.unit_file (systemlow systemlow))))
-	(false
-		(context sd_timedated_cmd (sys.id object_r sd_timedated.cmd_file (systemlow systemlow)))
-		(context sd_timedated_unit (sys.id object_r sd_timedated.unit_file (systemlow systemlow)))))
-
-(filecon "/usr/lib/systemd/system/[^/]*systemd-timedated.*" file sd_timedated_unit)
-(filecon "/usr/lib/systemd/systemd-timedated" file sd_timedated_cmd)
+(in sd_timedated
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-timedated.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-timedated" file cmd_file_context))

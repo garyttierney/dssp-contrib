@@ -1,17 +1,6 @@
-(tunableif enable_rbacsep
-	(true
-		(context sd_nspawn_cmd (sys.id sys.role sd_nspawn.cmd_file (systemlow systemlow)))
-		(context sd_nspawn_config (sys.id sys.role sd_nspawn.config_file (systemlow systemlow)))
-		(context sd_nspawn_runtime (sys.id sys.role sd_nspawn.runtime_file (systemlow systemlow)))
-		(context sd_nspawn_unit (sys.id sys.role sd_nspawn.unit_file (systemlow systemlow))))
-	(false
-		(context sd_nspawn_cmd (sys.id object_r sd_nspawn.cmd_file (systemlow systemlow)))
-		(context sd_nspawn_config (sys.id object_r sd_nspawn.config_file (systemlow systemlow)))
-		(context sd_nspawn_runtime (sys.id object_r sd_nspawn.runtime_file (systemlow systemlow)))
-		(context sd_nspawn_unit (sys.id object_r sd_nspawn.unit_file (systemlow systemlow)))))
-
-(filecon "/etc/systemd/nspawn(/.*)?" any sd_nspawn_config)
-(filecon "/usr/bin/systemd-nspawn" file sd_nspawn_cmd)
-(filecon "/usr/lib/systemd/system/[^/]*systemd-nspawn.*" file sd_nspawn_unit)
-(filecon "/var/lib/machines/.*\.nspawn" file sd_nspawn_config)
-(filecon "/var/run/systemd/nspawn(/.*)?" any sd_nspawn_runtime)
+(in sd_nspawn
+	(filecon "/etc/systemd/nspawn(/.*)?" any config_file_context)
+	(filecon "/usr/bin/systemd-nspawn" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-nspawn.*" file unit_file_context)
+	(filecon "/var/lib/machines/.*\.nspawn" file config_file_context)
+	(filecon "/var/run/systemd/nspawn(/.*)?" any runtime_file_context))

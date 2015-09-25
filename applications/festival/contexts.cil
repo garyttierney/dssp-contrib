@@ -1,20 +1,11 @@
-(tunableif enable_rbacsep
-	(true
-		(context festival_cmd (sys.id sys.role festival.cmd_file (systemlow systemlow)))
-		(context festival_config (sys.id sys.role festival.config_file (systemlow systemlow)))
-		(context festival_home (sys.id sys.role festival.home_user_file (systemlow systemlow))))
-	(false
-		(context festival_cmd (sys.id object_r festival.cmd_file (systemlow systemlow)))
-		(context festival_config (sys.id object_r festival.config_file (systemlow systemlow)))
-		(context festival_home (sys.id object_r festival.home_user_file (systemlow systemlow)))))
-
-(filecon "/etc/festival(/.*)?" any festival_config)
-(filecon "/usr/bin/festival" file festival_cmd)
-(filecon "/usr/bin/festival_client" file festival_cmd)
-(filecon "/usr/bin/festival_server" file festival_cmd)
-(filecon "/usr/bin/festival_server_control" file festival_cmd)
-(filecon "/usr/bin/saytime" file festival_cmd)
-(filecon "/usr/bin/text2wave" file festival_cmd)
-(filecon "/usr/lib/festival/etc/audsp" file festival_cmd)
-(filecon "HOME_DIR/\.festival_history" file festival_home)
-(filecon "HOME_DIR/\.festivalrc" file festival_home)
+(in festival
+	(filecon "/etc/festival(/.*)?" any config_file_context)
+	(filecon "/usr/bin/festival" file cmd_file_context)
+	(filecon "/usr/bin/festival_client" file cmd_file_context)
+	(filecon "/usr/bin/festival_server" file cmd_file_context)
+	(filecon "/usr/bin/festival_server_control" file cmd_file_context)
+	(filecon "/usr/bin/saytime" file cmd_file_context)
+	(filecon "/usr/bin/text2wave" file cmd_file_context)
+	(filecon "/usr/lib/festival/etc/audsp" file cmd_file_context)
+	(filecon "HOME_DIR/\.festival_history" file home_user_file_context)
+	(filecon "HOME_DIR/\.festivalrc" file home_user_file_context))

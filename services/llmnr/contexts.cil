@@ -1,8 +1,3 @@
-(tunableif enable_rbacsep
-	(true
-		(context llmnr_port (sys.id sys.role llmnr.port (systemlow systemlow))))
-	(false
-		(context llmnr_port (sys.id object_r llmnr.port (systemlow systemlow)))))
-
-(portcon "tcp" 5355 llmnr_port)
-(portcon "udp" 5355 llmnr_port)
+(in llmnr
+	(portcon "tcp" 5355 port_obj_context)
+	(portcon "udp" 5355 port_obj_context))

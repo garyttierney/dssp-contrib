@@ -1,30 +1,17 @@
-(tunableif enable_rbacsep
-	(true
-		(context dnssec_trigger_config (sys.id sys.role dnssec_trigger.config_file (systemlow systemlow)))
-		(context dnssec_triggerd_cmd (sys.id sys.role dnssec_triggerd.cmd_file (systemlow systemlow)))
-		(context dnssec_triggerd_runtime (sys.id sys.role dnssec_triggerd.runtime_file (systemlow systemlow)))
-		(context dnssec_triggercs_cmd (sys.id sys.role dnssec_triggercs.cmd_file (systemlow systemlow)))
-		(context dnssec_triggers_cmd (sys.id sys.role dnssec_triggers.cmd_file (systemlow systemlow))))
-	(false
-		(context dnssec_trigger_config (sys.id object_r dnssec_trigger.config_file (systemlow systemlow)))
-		(context dnssec_triggerd_cmd (sys.id object_r dnssec_triggerd.cmd_file (systemlow systemlow)))
-		(context dnssec_triggerd_runtime (sys.id object_r dnssec_triggerd.runtime_file (systemlow systemlow)))
-		(context dnssec_triggercs_cmd (sys.id object_r dnssec_triggercs.cmd_file (systemlow systemlow)))
-		(context dnssec_triggers_cmd (sys.id object_r dnssec_triggers.cmd_file (systemlow systemlow)))))
+(in dnssec_trigger
+	(filecon "/etc/dnssec-trigger(/.*)?" any config_file_context)
+	(filecon "/etc/dnssec\.conf" file config_file_context))
 
-(filecon "/etc/dnssec-trigger(/.*)?" any dnssec_trigger_config)
-(filecon "/etc/dnssec\.conf" file dnssec_trigger_config)
-(filecon "/usr/sbin/dnssec-trigger-control-setup" file dnssec_triggercs_cmd)
-(filecon "/usr/sbin/dnssec-triggerd" file dnssec_triggerd_cmd)
-(filecon "/usr/libexec/dnssec-trigger-script" file dnssec_triggers_cmd)
-(filecon "/var/run/dnssec-trigger(/.*)?" any dnssec_triggerd_runtime)
-(filecon "/var/run/dnssec-triggerd\.pid" file dnssec_triggerd_runtime)
+(in dnssec_triggerd
+	(filecon "/usr/sbin/dnssec-triggerd" file cmd_file_context)
+	(filecon "/var/run/dnssec-trigger(/.*)?" any runtime_file_context)
+	(filecon "/var/run/dnssec-triggerd\.pid" file runtime_file_context)
 
-(optional dnssec_triggerd_unit_optional_sd
-	(tunableif enable_rbacsep
-		(true
-			(context dnssec_triggerd_unit (sys.id sys.role dnssec_triggerd.unit_file (systemlow systemlow))))
-		(false
-			(context dnssec_triggerd_unit (sys.id object_r dnssec_triggerd.unit_file (systemlow systemlow)))))
+	(optional dnssec_triggerd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*dnssec-triggerd.*" file unit_file_context)))
 
-	(filecon "/usr/lib/systemd/system/[^/]*dnssec-triggerd.*" file dnssec_triggerd_unit))
+(in dnssec_triggercs
+	(filecon "/usr/sbin/dnssec-trigger-control-setup" file cmd_file_context))
+
+(in dnssec_triggers
+	(filecon "/usr/libexec/dnssec-trigger-script" file cmd_file_context))

@@ -1,10 +1,5 @@
-(tunableif enable_rbacsep
-	(true
-		(context wodim_cmd (sys.id sys.role wodim.cmd_file (systemlow systemlow))))
-	(false
-		(context wodim_cmd (sys.id object_r wodim.cmd_file (systemlow systemlow)))))
-
-(filecon "/usr/bin/devdump" file wodim_cmd)
-(filecon "/usr/bin/readom" file wodim_cmd)
-(filecon "/usr/bin/wodim" file wodim_cmd)
-(filecon "/usr/sbin/netscsid" file wodim_cmd)
+(in wodim
+	(filecon "/usr/bin/devdump" file cmd_file_context)
+	(filecon "/usr/bin/readom" file cmd_file_context)
+	(filecon "/usr/bin/wodim" file cmd_file_context)
+	(filecon "/usr/sbin/netscsid" file cmd_file_context))

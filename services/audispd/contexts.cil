@@ -9,21 +9,15 @@
 		(tunableif enable_rbacsep
 			(true
 				(context audispd_config (sys.id sys.role audispd_config.sec_file (systemhigh systemhigh)))
-				(context audispd_runtime (sys.id sys.role audispd_runtime.sec_file (systemhigh systemhigh))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context audispd_runtime (sys.id sys.role audispd_runtime.sec_file (systemhigh systemhigh))))
+			(false
 				(context audispd_config (sys.id object_r audispd_config.sec_file (systemhigh systemhigh)))
-				(context audispd_runtime (sys.id object_r audispd_runtime.sec_file (systemhigh systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
+				(context audispd_runtime (sys.id object_r audispd_runtime.sec_file (systemhigh systemhigh))))))
+	(false
 		(tunableif enable_rbacsep
 			(true
 				(context audispd_config (sys.id sys.role audispd_config.sec_file (systemlow systemlow)))
-				(context audispd_runtime (sys.id sys.role audispd_runtime.sec_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context audispd_runtime (sys.id sys.role audispd_runtime.sec_file (systemlow systemlow))))
+			(false
 				(context audispd_config (sys.id object_r audispd_config.sec_file (systemlow systemlow)))
 				(context audispd_runtime (sys.id object_r audispd_runtime.sec_file (systemlow systemlow)))))))

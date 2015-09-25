@@ -16,21 +16,15 @@
 		(tunableif enable_rbacsep
 			(true   
 				(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemhigh systemhigh)))
-				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemhigh systemhigh))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true   
+				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemhigh systemhigh))))
+			(false
 				(context mcstransd_config (sys.id object_r mcstransd.config_file (systemhigh systemhigh)))
-				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemhigh systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
+				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemhigh systemhigh))))))
+	(false
 		(tunableif enable_rbacsep
 			(true   
 				(context mcstransd_config (sys.id sys.role mcstransd.config_file (systemlow systemlow)))
-				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true   
+				(context mcstransd_runtime (sys.id sys.role mcstransd.runtime_file (systemlow systemlow))))
+			(false
 				(context mcstransd_config (sys.id object_r mcstransd.config_file (systemlow systemlow)))
 				(context mcstransd_runtime (sys.id object_r mcstransd.runtime_file (systemlow systemlow)))))))

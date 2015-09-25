@@ -34,18 +34,12 @@
 	(true
 		(tunableif enable_rbacsep
 			(true
-				(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))))
+				(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))
+			(false
+				(context policy_config (sys.id object_r policy_config.sec_file (systemhigh systemhigh))))))
 	(false
-		(tunableif (not enable_rbacsep)
-			(true
-				(context policy_config (sys.id object_r policy_config.sec_file (systemhigh systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
 		(tunableif enable_rbacsep
 			(true
-				(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow))))
+			(false
 				(context policy_config (sys.id object_r policy_config.sec_file (systemlow systemlow)))))))

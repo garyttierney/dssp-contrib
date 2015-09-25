@@ -450,22 +450,16 @@
 		(tunableif enable_rbacsep
 			(true
 				(context root_home_dir (sysadm.id sysadm.role home_dir.file (systemlow systemhigh)))
-				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemhigh))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemhigh))))
+			(false
 				(context root_home_dir (sysadm.id object_r home_dir.file (systemlow systemhigh)))
-				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
+				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemhigh))))))
+	(false
 		(tunableif enable_rbacsep
 			(true
 				(context root_home_dir (sysadm.id sysadm.role home_dir.file (systemlow systemlow)))
-				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context root_user_spool (sysadm.id sysadm.role var_spool_user.var_spool_file (systemlow systemlow))))
+			(false
 				(context root_home_dir (sysadm.id object_r home_dir.file (systemlow systemlow)))
 				(context root_user_spool (sysadm.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
 

@@ -8,18 +8,12 @@
 	(true
 		(tunableif enable_rbacsep
 			(true
-				(context sd_randomseed_var_lib (sys.id sys.role sd_randomseed.var_lib_file (systemhigh systemhigh))))))
+				(context sd_randomseed_var_lib (sys.id sys.role sd_randomseed.var_lib_file (systemhigh systemhigh))))
+			(false
+				(context sd_randomseed_var_lib (sys.id object_r sd_randomseed.var_lib_file (systemhigh systemhigh))))))
 	(false
-		(tunableif (not enable_rbacsep)
-			(true
-				(context sd_randomseed_var_lib (sys.id object_r sd_randomseed.var_lib_file (systemhigh systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
 		(tunableif enable_rbacsep
 			(true
-				(context sd_randomseed_var_lib (sys.id sys.role sd_randomseed.var_lib_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context sd_randomseed_var_lib (sys.id sys.role sd_randomseed.var_lib_file (systemlow systemlow))))
+			(false
 				(context sd_randomseed_var_lib (sys.id object_r sd_randomseed.var_lib_file (systemlow systemlow)))))))

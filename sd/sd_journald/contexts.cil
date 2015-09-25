@@ -16,21 +16,15 @@
 		(tunableif enable_rbacsep
 			(true
 				(context sd_journald_runtime (sys.id sys.role sd_journald.runtime_file (systemhigh systemhigh)))
-				(context sd_journald_var_log (sys.id sys.role sd_journald.var_log_file (systemhigh systemhigh))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context sd_journald_var_log (sys.id sys.role sd_journald.var_log_file (systemhigh systemhigh))))
+			(false
 				(context sd_journald_runtime (sys.id object_r sd_journald.runtime_file (systemhigh systemhigh)))
-				(context sd_journald_var_log (sys.id object_r sd_journald.var_log_file (systemhigh systemhigh)))))))
-
-(tunableif (not enable_mls)
-	(true
+				(context sd_journald_var_log (sys.id object_r sd_journald.var_log_file (systemhigh systemhigh))))))
+	(false
 		(tunableif enable_rbacsep
 			(true
 				(context sd_journald_runtime (sys.id sys.role sd_journald.runtime_file (systemlow systemlow)))
-				(context sd_journald_var_log (sys.id sys.role sd_journald.var_log_file (systemlow systemlow))))))
-	(false
-		(tunableif (not enable_rbacsep)
-			(true
+				(context sd_journald_var_log (sys.id sys.role sd_journald.var_log_file (systemlow systemlow))))
+			(false
 				(context sd_journald_runtime (sys.id object_r sd_journald.runtime_file (systemlow systemlow)))
 				(context sd_journald_var_log (sys.id object_r sd_journald.var_log_file (systemlow systemlow)))))))

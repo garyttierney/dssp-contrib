@@ -33,25 +33,19 @@
 (filecon "USER_SPOOL" file user_spool)
 
 (tunableif enable_mls
-        (true   
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context home_dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
+				(context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemhigh))))
+			(false
+				(context home_dir (sys.id object_r home_dir.file (systemlow systemhigh)))
+				(context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemhigh))))))
+	(false
                 (tunableif enable_rbacsep
-                        (true   
-                                (context home_dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
-                                (context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemhigh))))))
-        (false  
-                (tunableif (not enable_rbacsep)
-                        (true   
-                                (context home_dir (sys.id object_r home_dir.file (systemlow systemhigh)))
-                                (context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemhigh)))))))
-
-(tunableif (not enable_mls)
-        (true   
-                (tunableif enable_rbacsep
-                        (true   
-                                (context home_dir (sys.id sys.role home_dir.file (systemlow systemlow)))
-                                (context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemlow))))))
-        (false  
-                (tunableif (not enable_rbacsep)
-                        (true   
-                                (context home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
-                                (context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
+			(true
+				(context home_dir (sys.id sys.role home_dir.file (systemlow systemlow)))
+				(context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemlow))))
+			(false
+				(context home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
+				(context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))

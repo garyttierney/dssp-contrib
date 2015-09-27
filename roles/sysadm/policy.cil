@@ -68,45 +68,48 @@
 			(call setfiles.run (subj_type_attribute role))
 			(call setsebool.run (subj_type_attribute role))
 
-			(optional sysadm_optional_audispd
+			(optional sysadm_enable_mls_optional_audispd
 				(call audispd.manage_config (subj))
 				(call audispd.manage_runtime_sock_files (subj)))
 
-			(optional sysadm_optional_auditctl
+			(optional sysadm_enable_mls_optional_auditctl
 				(call auditctl.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_auditd
+			(optional sysadm_enable_mls_optional_auditd
 				(call auditd.adm (subj role))
 				(call augenrules.run (subj_type_attribute role))
 				(call ausearch.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_authconfig
+			(optional sysadm_enable_mls_optional_authconfig
 				(call authconfig.manage_config_files (subj))
 				(call authconfig.manage_data (subj))
 				(call authconfig.manage_var_lib (subj))
 				(call authconfig.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_chage
+			(optional sysadm_enable_mls_optional_chage
 				(call chage.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_cracklib
+			(optional sysadm_enable_mls_optional_cracklib
 				(call cracklib.run (subj_type_attribute role))
 				(call cracklib.manage_var_cache (subj)))
 
-			(optional sysadm_optional_iptables
+			(optional sysadm_enable_mls_optional_iptables
 				(call iptables.adm (subj role))
 				(call iptables.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_mcstransd
+			(optional sysadm_enable_mls_optional_mcstransd
 				(call mcstransd.adm (subj role)))
 
-			(optional sysadm_optional_netlabelctl
+			(optional sysadm_enable_mls_optional_netlabelctl
 				(call netlabelctl.run (subj_type_attribute role)))
 
-			(optional sysadm_optional_pam
+			(optional sysadm_enable_mls_optional_pam
 				(call pam.adm_subj_type (subj)))
 
-			(optional sysadm_optional_sudo
+			(optional sysadm_enable_mls_optional_randomseed
+				(call sd_randomseed.auto_subj_range_transition (subj systemhigh systemhigh)))
+
+			(optional sysadm_enable_mls_optional_sudo
 				(call sudo.manage_config (subj))
 				(call sudo.manage_var_db (subj))
 				(call sudo.manage_runtime (subj)))))
@@ -580,7 +583,6 @@
 
 	(optional sysadm_optional_sd_randomseed
 		(call sd_randomseed.run (subj_type_attribute role))
-		(tunableif enable_mls (true (call sd_randomseed.auto_range_transition (subj systemhigh systemhigh))))
 		(call sd_randomseed.adm (subj role)))
 
 	(optional sysadm_optional_sd_readonly

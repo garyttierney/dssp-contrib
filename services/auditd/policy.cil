@@ -38,6 +38,11 @@
 
 	(call audispd.auto_subj_type_transition (subj))
 
+	(tunableif enable_mls
+		(true
+			(optional auditd_enable_mls_optional_sd
+				(call sd.daemon_auto_subj_range_transition (subj cmd_file systemhigh systemhigh)))))
+
 	(optional auditd_optional_sd
 		(call sd.daemon (subj cmd_file))
 

@@ -580,6 +580,7 @@
 
 	(optional sysadm_optional_sd_randomseed
 		(call sd_randomseed.run (subj_type_attribute role))
+		(tunableif enable_mls (true (call sd_randomseed.auto_range_transition (subj systemhigh systemhigh))))
 		(call sd_randomseed.adm (subj role)))
 
 	(optional sysadm_optional_sd_readonly

@@ -39,6 +39,7 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(allow subj self (capability (dac_override fowner fsetid chown)))
 	(allow subj self create_tcp_stream_socket_perms)
 
 	(call cmd.exec (subj))
@@ -72,7 +73,11 @@
 		(allow dnssec_trigger.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional dnssec_triggerd_optional_sd_journald
-		(call sd_journald.client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional dnssec_triggerd_optional_sd_resolved
+		(call sd_resolved.write_runtime_files (subj))
+		(call sd_resolved.setattr_runtime_files (subj))))
 
 (block dnssec_triggercs
 	(blockinherit subj.common_subj_blk)
@@ -98,6 +103,8 @@
 	(call cmd.audit_read_access_shell_files (subj))
 
 	(call dev.read_urandom (subj))
+
+	(call fs.getattr_tmpfs_fs (subj))
 
 	(call dnssec_trigger.manage_config (subj))
 

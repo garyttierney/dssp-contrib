@@ -335,6 +335,27 @@
 		(call search_unit (ARG1))
 		(allow ARG1 unit_obj_type_attribute relabel_file_perms))
 
+	(macro read_all_unit ((type ARG1))
+		(call lib.search_lib (ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 unit_obj_type_attribute read_file_perms)
+		(allow ARG1 sduser_unit.unit_file list_dir_perms)
+		(allow ARG1 sduser_unit.unit_file read_lnk_file_perms))
+
+	(macro manage_all_unit ((type ARG1))
+		(call lib.rw_lib_dirs (ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 unit_obj_type_attribute manage_file_perms)
+		(allow ARG1 sduser_unit.unit_file manage_dir_perms)
+		(allow ARG1 sduser_unit.unit_file manage_lnk_file_perms))
+
+	(macro relabel_all_unit ((type ARG1))
+		(call lib.search_lib (ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 unit_obj_type_attribute relabel_file_perms)
+		(allow ARG1 sduser_unit.unit_file relabel_dir_perms)
+		(allow ARG1 sduser_unit.unit_file relabel_lnk_file_perms))
+
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
 	(blockinherit usersubj.manage_home_config_dirs_blk)

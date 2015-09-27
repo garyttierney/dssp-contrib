@@ -54,6 +54,14 @@
 		(call sd.search_runtime (ARG1))
 		(call read_files_pattern (ARG1 runtime_file runtime_file)))
 
+	(macro write_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call write_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro setattr_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call setattr_files_pattern (ARG1 runtime_file runtime_file)))
+
 	(macro manage_runtime_files ((type ARG1))
 		(call sd.search_runtime (ARG1))
 		(call manage_files_pattern (ARG1 runtime_file runtime_file)))

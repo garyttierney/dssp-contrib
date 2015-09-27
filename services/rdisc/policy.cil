@@ -1,0 +1,23 @@
+(block rdisc
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(optional rdisc_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

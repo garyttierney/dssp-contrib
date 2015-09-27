@@ -453,6 +453,9 @@
 		(call quotacheck.run (subj_type_attribute role))
 		(call quotacheck.manage_db_files (subj)))
 
+	(optional sysadm_optional_rdisc
+		(call rdisc.adm (subj role)))
+
 	(optional sysadm_optional_rfkill
 		(call rfkill.run (subj_type_attribute role)))
 

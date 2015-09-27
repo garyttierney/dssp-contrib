@@ -184,10 +184,6 @@
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
 
-	(macro daemon_mls ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
-		(tunableif enable_mls (true (rangetransition subj ARG2 process (ARG3 ARG4))
-		(call mls.range_trans_subj_type (ARG1)))))
-
 	(macro subj_type ((type ARG1))
 		(typeattributeset subj_type_attribute ARG1))
 
@@ -750,9 +746,6 @@
 
 	(macro unconfined_subj_type ((type ARG1))
 		(typeattributeset unconfined_subj_type_attribute ARG1)))
-
-(macro sd_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 sd.cmd_file process (ARG2 ARG3)))))
 
 (in sd_helper
 	(blockinherit exec_blk))

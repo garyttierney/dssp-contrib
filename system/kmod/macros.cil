@@ -21,6 +21,3 @@
 			(call sd.daemon_adm_subj_type (ARG1)))
 		(optional kmod_adm_optional_sd_askpwd
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
-
-(macro kmod_mls ((type ARG1)(level ARG2)(level ARG3))
-	(tunableif enable_mls (true (rangetransition ARG1 kmod.cmd_file process (ARG2 ARG3)))))

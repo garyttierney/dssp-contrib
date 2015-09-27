@@ -6,8 +6,6 @@
 
 	(blockinherit sd.daemon_blk)
 
-	(call sd.daemon_mls (subj cmd_file systemhigh systemhigh))
-
 	(call sd.netlink_socket_activated (subj netlink_audit_socket))
 	(call sd.unix_dgram_socket_activated (subj runtime_file))
 	(call sd.unix_stream_socket_activated (subj runtime_file))

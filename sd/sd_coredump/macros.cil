@@ -5,9 +5,6 @@
 
 	(blockinherit subj.send_signal_blk)
 
-	(macro auto_range_transition ((type ARG1)(level ARG2)(level ARG3))
-		(call auto_range_transition_pattern (ARG1 cmd_file ARG2 ARG3)))
-
 	(macro search_config ((type ARG1))
 		(call sd.search_config (ARG1))
 		(allow ARG1 config_file search_dir_perms))

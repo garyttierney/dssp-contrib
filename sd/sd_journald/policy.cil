@@ -86,10 +86,6 @@
 
 	(call udev.client_subj_type (subj))
 
-	(tunableif enable_mls
-		(true
-			(call sd.daemon_auto_range_transition (subj cmd_file systemhigh systemhigh))))
-
 	(optional sd_journald_optional_plymouth
 		(call plymouthd.use_fd (subj)))
 

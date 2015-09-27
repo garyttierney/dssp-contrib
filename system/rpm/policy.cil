@@ -155,9 +155,7 @@
 
 (optional rpm_script_optional_sd_randomseed
 	(call sd_randomseed.run (rpm_script_t rpm.role_attribute))
-	(tunableif enable_mls
-		(true
-			(call sd_randomseed.auto_subj_range_transition (rpm_script_t systemhigh systemhigh)))))
+	(tunableif enable_mls (true (call sd_randomseed.auto_range_transition (rpm_script_t systemhigh systemhigh)))))
 
 (optional rpm_script_optional_sd_sysctl
 	(call sd_sysctl.run (rpm_script_t rpm.role_attribute)))

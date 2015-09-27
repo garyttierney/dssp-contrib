@@ -184,12 +184,12 @@
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
 
-	(macro daemon_auto_subj_range_transition ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
-		(call auto_subj_range_transition_pattern (subj ARG2 ARG3 ARG4))
+	(macro daemon_auto_range_transition ((type ARG1)(type ARG2)(level ARG3)(level ARG4))
+		(call auto_range_transition_pattern (subj ARG2 ARG3 ARG4))
 		(call mls.range_trans_subj_type (ARG1)))
 
-	(macro auto_subj_range_transition ((type ARG1)(level ARG2)(level ARG3))
-		(call auto_subj_range_transition_pattern (ARG1 cmd_file ARG2 ARG3)))
+	(macro auto_range_transition ((type ARG1)(level ARG2)(level ARG3))
+		(call auto_range_transition_pattern (ARG1 cmd_file ARG2 ARG3)))
 
 	(macro subj_type ((type ARG1))
 		(typeattributeset subj_type_attribute ARG1))

@@ -21,6 +21,7 @@
 	(allow client_subj_type_attribute self (process (getsched)))
 
 	(call sys.read_net_proc_files (client_subj_type_attribute))
+        (call sys.read_cpu_sysfs_files (client_subj_type_attribute))
 
 	(call dev.read_random (client_subj_type_attribute))
 	(call dev.read_urandom (client_subj_type_attribute))
@@ -29,7 +30,6 @@
 	(call file.read_data (client_subj_type_attribute))
 
 	(call fs.getattr_fs (client_subj_type_attribute))
-	(call fs.read_sysfs (client_subj_type_attribute))
 
 	(call subj.execmem_uncond_subj_type (client_subj_type_attribute))
 

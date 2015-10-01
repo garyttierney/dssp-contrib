@@ -41,6 +41,7 @@
 	(allow subj_type_attribute self create_rawip_socket_perms)
 
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 
 	(call cmd.exec (subj_type_attribute))
 	(call cmd.exec_shell (subj_type_attribute))

@@ -83,6 +83,8 @@
 	(optional tor_optional_sd
 		(call sd.daemon (subj cmd_file))
 
+		(call sd.notify_subj_type (subj))
+
 		(blockinherit sd.unit_obj_blk)
 
 		(typeattributeset obj_type_attribute unit_file)

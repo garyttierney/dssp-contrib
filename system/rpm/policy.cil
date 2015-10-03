@@ -131,10 +131,10 @@
 
 (call mls.priv_range_trans_subj_type (rpm_script_t))
 
-(tunableif enable_mls
-	(true
-		(optional rpm_script_enable_mls_optiona_sd_randomseed
-			(call sd_randomseed.auto_subj_range_transition (rpm_script_t systemhigh systemhigh)))))
+;(tunableif enable_mls
+;	(true
+;		(optional rpm_script_enable_mls_optiona_sd_randomseed
+;			(call sd_randomseed.auto_subj_range_transition (rpm_script_t systemhigh systemhigh)))))
 
 (optional rpm_script_optional_bootloader
 	(call bootloader.run (rpm_script_t rpm.role_attribute)))

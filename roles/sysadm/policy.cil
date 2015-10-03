@@ -108,8 +108,8 @@
 			(optional sysadm_enable_mls_optional_pam
 				(call pam.adm_subj_type (subj)))
 
-			(optional sysadm_enable_mls_optional_randomseed
-				(call sd_randomseed.auto_subj_range_transition (subj systemhigh systemhigh)))
+			;(optional sysadm_enable_mls_optional_randomseed
+			;	(call sd_randomseed.auto_subj_range_transition (subj systemhigh systemhigh)))
 
 			(optional sysadm_enable_mls_optional_sudo
 				(call sudo.manage_config (subj))

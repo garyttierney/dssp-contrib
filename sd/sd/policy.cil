@@ -15,6 +15,7 @@
 	(typeattribute daemon_adm_subj_type_attribute)
 	(typeattribute daemon_pid_obj_type_attribute)
 	(typeattribute daemon_rwdir_obj_type_attribute)
+	(typeattribute daemon_pvt_devices_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 	(typeattribute unit_obj_type_attribute)
@@ -102,6 +103,8 @@
 	(allow subj daemon_pid_obj_type_attribute delete_file_perms)
 
 	(allow subj daemon_rwdir_obj_type_attribute (dir (mounton)))
+
+	(call fs.read_tmpfs_lnk_files (daemon_pvt_devices_subj_type_attribute))
 
 	(call cmd.auto_subj_type_transition (subj sd_unknown.subj))
 	(call cmd.shell_auto_subj_type_transition (subj sd_unknown.subj))

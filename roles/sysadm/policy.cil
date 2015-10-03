@@ -49,6 +49,8 @@
 
 	(call fstab.manage (subj))
 	(call cert.manage (subj))
+	(call hwdata.read_data (subj))
+	(call modules.read (subj))
 
 	(tunableif enable_mls
 		(false
@@ -779,6 +781,7 @@
 		(call sysadm_emacsclient.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_festival
+		(call festival.manage_config (subj))
 		(call sysadm_festival.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ffmpeg

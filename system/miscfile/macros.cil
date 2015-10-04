@@ -523,6 +523,10 @@
 		(call lib.search_lib (ARG1))
 		(call read_lnk_files_pattern (ARG1 file file)))
 
+	(macro rw_dirs ((type ARG1))
+		(call lib.search_lib (ARG1))
+		(allow ARG1 file rw_dir_perms))
+
 	(macro read ((type ARG1))
 		(call lib.search_lib (ARG1))
 		(allow ARG1 file read_file_perms)
@@ -539,7 +543,41 @@
 		(call lib.search_lib (ARG1))
 		(allow ARG1 file relabel_file_perms)
 		(allow ARG1 file relabel_dir_perms)
-		(allow ARG1 file relabel_lnk_file_perms)))
+		(allow ARG1 file relabel_lnk_file_perms))
+
+	(macro obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call lib.search_lib (ARG1))
+		(call obj_type_transition_pattern (ARG1 file ARG2 ARG3 ARG4))))
+
+(in modules_dep
+	(macro read_files ((type ARG1))
+		(call modules.search (ARG1))
+		(allow ARG1 file read_file_perms))
+
+	(macro manage_files ((type ARG1))
+		(call modules.rw_dirs (ARG1))
+		(allow ARG1 file manage_file_perms))
+
+	(macro relabel_files ((type ARG1))
+		(call modules.search (ARG1))
+		(allow ARG1 file relabel_file_perms))
+
+	(macro modules_obj_type_transition_modules_dep ((type ARG1))
+		(call modules.obj_type_transition (ARG1 file file "modules.symbols.bin"))
+		(call modules.obj_type_transition (ARG1 file file "modules.builtin.bin"))
+		(call modules.obj_type_transition (ARG1 file file "modules.softdep"))
+		(call modules.obj_type_transition (ARG1 file file "modules.alias.bin"))
+		(call modules.obj_type_transition (ARG1 file file "modules.dep.bin"))
+		(call modules.obj_type_transition (ARG1 file file "modules.alias"))
+		(call modules.obj_type_transition (ARG1 file file "modules.block"))
+		(call modules.obj_type_transition (ARG1 file file "modules.builtin"))
+		(call modules.obj_type_transition (ARG1 file file "modules.devname"))
+		(call modules.obj_type_transition (ARG1 file file "modules.drm"))
+		(call modules.obj_type_transition (ARG1 file file "modules.modesetting"))
+		(call modules.obj_type_transition (ARG1 file file "modules.networking"))
+		(call modules.obj_type_transition (ARG1 file file "modules.order"))
+		(call modules.obj_type_transition (ARG1 file file "modules.symbols"))
+		(call modules.obj_type_transition (ARG1 file file "modules.dep"))))
 
 (in network
 	(blockinherit file.search_config_blk)

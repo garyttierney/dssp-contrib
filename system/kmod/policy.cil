@@ -28,6 +28,8 @@
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
 
+	(call file.read_boot_files (subj))
+
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))
 

@@ -26,9 +26,11 @@
 	(roletype sys.role subj)
 
 	(allow subj self (capability (kill fsetid fowner sys_tty_config dac_override sys_admin)))
+	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.link_keyring (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
@@ -39,6 +41,8 @@
 	(call term.relabel_unallocated_ttys (subj))
 	(call term.setattr_unallocated_ttys (subj))
 	(call term.use_unallocated_ttys (subj))
+
+	(call shadow.manage (subj))
 
 	(call pam_console.manage_runtime_files (subj))
 	(call pam.login_prog_subj_type (subj))

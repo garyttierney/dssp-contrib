@@ -615,6 +615,10 @@
 		(call file.search_config (ARG1))
 		(allow ARG1 file read_file_perms))
 
+	(macro write_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 file write_file_perms))
+
 	(macro manage ((type ARG1))
 		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 file manage_file_perms))

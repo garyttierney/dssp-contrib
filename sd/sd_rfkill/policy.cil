@@ -17,6 +17,7 @@
 	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(call dev.read_event (subj))
+	(call dev.rw_inherited_wireless (subj))
 	(call dev.write_kmsg (subj))
 
 	(call fs.list_sysfs (subj))
@@ -24,6 +25,8 @@
 	(call fs.read_sysfs_lnk_files (subj))
 
 	(call term.use_console (subj))
+
+	(call sd.notify_subj_type (subj))
 
 	(call sd_journald.client_subj_type (subj))
 

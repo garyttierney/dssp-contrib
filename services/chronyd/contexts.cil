@@ -5,6 +5,7 @@
 	(filecon "/usr/sbin/chronyd" file cmd_file_context)
 	(filecon "/var/lib/chrony(/.*)?" any var_lib_file_context)
 	(filecon "/var/log/chrony(/.*)?" any var_log_file_context)
+	(filecon "/var/run/chrony(/.*)?" any runtime_file_context)
 	(filecon "/var/run/chronyd\.pid" file runtime_file_context)
 
 	(optional chronyd_unit_optional_sd

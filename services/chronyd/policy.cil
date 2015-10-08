@@ -53,7 +53,7 @@
 
 	(typeattributeset obj_type_attribute runtime_file)
 
-	(call manage_runtime_files (subj))
+	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(blockinherit file.var_lib_obj_blk)
@@ -78,7 +78,7 @@
 	(optional chronyd_optional_logrotate
 		(call logrotate.var_log_obj_type (var_log_file)))
 
-	(allow subj self (capability (sys_time setuid setgid fsetid)))
+	(allow subj self (capability (sys_time setuid setgid fsetid chown)))
 	(allow subj self (process (setcap)))
 	(allow subj self rw_fifo_file_perms)
 
@@ -138,4 +138,7 @@
 	(blockinherit net.reserved_port_obj_blk))
 
 (block chronyd_helper
-	(blockinherit cmd.obj_blk))
+	(blockinherit cmd.obj_blk)
+
+	(optional chrony_helper_optional_sd
+                (call sd.daemon (chronyd.subj cmd_file))))

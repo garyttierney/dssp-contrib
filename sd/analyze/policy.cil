@@ -26,12 +26,14 @@
 	(call fs.dontaudit_audit_access_sysfs_dirs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.getattr_sysfs_fs (subj_type_attribute))
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.read_cgroup (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
 	(call storage.getattr_all (subj_type_attribute))
 
+	(call term.getattr_virtio (subj_type_attribute))
 	(call term.use_unallocated_ttys (subj_type_attribute))
 
 	(call fstab.sd_status_subj_type (subj_type_attribute))

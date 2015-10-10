@@ -35,8 +35,7 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional rtkitd_optional_sysbus
-		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional rtkitd_optional_unconfinedsubj
 		(call unconfinedsubj.getsched_all_subj (subj))

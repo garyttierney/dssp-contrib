@@ -67,8 +67,7 @@
 	(call udev.client_subj_type (subj))
 
 	(optional sd_networkd_optional_sysbus
-		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional sd_networkd_optional_qemu
 		(call qemu_guest.relabelfrom_all_tun_socket (subj)))

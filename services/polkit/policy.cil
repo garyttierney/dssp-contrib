@@ -65,8 +65,7 @@
 		(call sd_logind.read_runtime (subj)))
 
 	(optional polkit_optional_sysbus
-		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))

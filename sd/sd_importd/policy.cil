@@ -41,8 +41,7 @@
 	(call sd_machined.manage_var_lib_files (subj))
 
 	(optional sd_importd_optional_sysbus
-		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional sd_importd_optional_http
 		(call http.tcp_connect_port (subj)))

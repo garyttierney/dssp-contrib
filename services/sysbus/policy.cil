@@ -2,6 +2,7 @@
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
 	(typeattribute daemon_subj_type_attribute)
+	(typeattribute service_subj_type_attribute)
 	(typeattribute dbus_subj_type_attribute)
 	(typeattribute mls_recv_subj_type_attribute)
 	(typeattribute mls_send_subj_type_attribute)
@@ -113,7 +114,10 @@
 	(optional sysbus_dbus_subj_type_optional_sd_logind
 		(call sd_logind.read_runtime (dbus_subj_type_attribute)))
 
-	(call acquire_service (daemon_subj_type_attribute))
+	(allow service_subj_type_attribute subj (dbus (acquire_svc)))
+	(call read_config_files (service_subj_type_attribute))
+
+	(call service_subj_type (daemon_subj_type_attribute))
 	(call client_subj_type (daemon_subj_type_attribute))
 
 	(allow client_subj_type_attribute self (dbus (send_msg)))
@@ -143,7 +147,7 @@
 
 	(allow unconfined_subj_type_attribute self (dbus (acquire_svc)))
 
-	(call acquire_service (unconfined_subj_type_attribute))
+	(call service_subj_type (unconfined_subj_type_attribute))
 	(call chat_client_subj (unconfined_subj_type_attribute))
 	(call chat_unconfined_subj (unconfined_subj_type_attribute))
 

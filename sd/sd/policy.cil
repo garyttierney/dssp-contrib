@@ -240,8 +240,7 @@
 			(call rbacsep.read_state_target_subj_type (subj))))
 
 	(optional sd_optional_sysbus
-		(call sysbus.acquire_service (subj))
-		(call sysbus.read_config_files (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional sd_optional_dhclient
 		(call dhclient.read_var_lib (subj)))

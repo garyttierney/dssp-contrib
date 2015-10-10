@@ -26,6 +26,9 @@
 	(macro daemon_subj_type ((type ARG1))
 		(typeattributeset daemon_subj_type_attribute ARG1))
 
+	(macro service_subj_type ((type ARG1))
+		(typeattributeset service_subj_type_attribute ARG1))
+
 	(macro dbus_subj_type ((type ARG1))
 		(typeattributeset dbus_subj_type_attribute ARG1))
 
@@ -36,9 +39,6 @@
 	(blockinherit subj.send_signal_blk)
 
 	(blockinherit cmd.obj_entry_subj_blk)
-
-	(macro acquire_service ((type ARG1))
-		(allow ARG1 subj (dbus (acquire_svc))))
 
 	(macro daemon ((type ARG1)(type ARG2))
 		(call subj.common_subj_type (ARG1))

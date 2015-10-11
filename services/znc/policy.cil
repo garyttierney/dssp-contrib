@@ -21,6 +21,10 @@
 
 	(call manage_var_lib (subj))
 
+	(blockinherit net.unreserved_port_obj_blk)
+
+	(call dev.read_urandom (subj))
+
 	(optional znc_optional_sd
 		(call sd.daemon (subj cmd_file))
 

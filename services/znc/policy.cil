@@ -25,6 +25,8 @@
 
 	(call tcp_bind_unreserved_port (subj))
 
+	(call exec (subj))
+
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self (tcp_socket (accept listen)))
 

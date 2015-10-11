@@ -18,6 +18,10 @@
 
 	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+
 	(optional cgtop_subj_type_optional_sd_machined
 		(call sd_machined.read_runtime_files (subj_type_attribute)))
 

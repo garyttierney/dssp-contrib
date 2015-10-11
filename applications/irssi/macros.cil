@@ -23,6 +23,8 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
+		(call dontaudit_rw_inherited_tcp_sockets (ARG2))
+
 		(call manage_home_user (ARG2))
 		(call relabel_home_user (ARG2))
 
@@ -46,6 +48,9 @@
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".irssi")))
+
+	(macro dontaudit_rw_inherited_tcp_sockets ((type ARG1))
+		(dontaudit ARG1 subj rw_inherited_tcp_socket_perms))
 
 	(blockinherit subj.send_sigchld_all_blk)
 	(blockinherit subj.use_fd_all_blk)

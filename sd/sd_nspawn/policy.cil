@@ -139,6 +139,10 @@
 
 	(call udev.read_config_files (subj))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_target_subj_type (subj))))
+
 	(optional sd_nspawn_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
 

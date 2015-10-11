@@ -1,0 +1,7 @@
+(in znc
+	(filecon "/usr/bin/znc" file cmd_file_context)
+	(filecon "/var/lib/znc(/.*)?" any var_lib_file_context)
+	(filecon "HOME_DIR/\.znc(/.*)?" any home_user_file_context)
+
+	(optional znc_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*znc.*" file unit_file_context)))

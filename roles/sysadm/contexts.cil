@@ -445,6 +445,15 @@
 
 	(filecon "/root/\.Xresources" file root_xutil_home))
 
+(optional sysadm_znc_home_optional_znc
+	(tunableif enable_rbacsep
+		(true
+			(context root_znc_home (sysadm.id sysadm.role znc.home_user_file (systemlow systemlow))))
+		(false
+			(context root_znc_home (sysadm.id object_r znc.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.znc(/.*)?" any root_znc_home))
+
 (tunableif enable_mls
 	(true
 		(tunableif enable_rbacsep

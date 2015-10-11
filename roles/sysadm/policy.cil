@@ -756,6 +756,13 @@
 	(optional sysadm_optional_xwd
 		(call xwd.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_znc
+		(call znc.adm (subj role))
+		(call znc.run (subj_type_attribute role))
+		(call znc.manage_home_user (subj))
+		(call znc.relabel_home_user (subj))
+		(call znc.home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_sysadm_alsautil
 		(call sysadm_alsautil.role_pattern (role subj_type_attribute)))
 

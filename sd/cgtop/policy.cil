@@ -11,11 +11,15 @@
 	(call fs.read_cgroup (subj_type_attribute))
 
 	(call sd.stream_connect (subj_type_attribute))
+	(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 
 	(call sd_nspawn.status_all_unit (subj_type_attribute))
 	(call sd_nspawn.read_state (subj_type_attribute))
 
 	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
 
-	(optional cgtop_optional_sd_machined
-		(call sd_machined.read_runtime_files (subj_type_attribute))))
+	(optional cgtop_subj_type_optional_sd_machined
+		(call sd_machined.read_runtime_files (subj_type_attribute)))
+
+	(optional cgtop_subj_type_attribute_optional_sysbus
+                (call sysbus.client_subj_type (subj_type_attribute))))

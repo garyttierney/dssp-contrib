@@ -23,6 +23,12 @@
 
 	(blockinherit net.unreserved_port_obj_blk)
 
+	(call tcp_bind_unreserved_port (subj))
+
+	(allow subj self create_tcp_stream_socket_perms)
+
+	(call net.tcp_bind_generic_node (subj))
+
 	(call dev.read_urandom (subj))
 
 	(optional znc_optional_sd

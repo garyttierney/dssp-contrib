@@ -25,11 +25,18 @@
 
 	(call tcp_bind_unreserved_port (subj))
 
-	(allow subj self create_tcp_stream_socket_perms)
+	(allow subj self (tcp_socket (accept listen)))
 
 	(call net.tcp_bind_generic_node (subj))
 
 	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
+
+	(call dns.client_subj_type (subj))
+
+	(call cert.read_all (subj))
+	(call locale.read (subj))
 
 	(optional znc_optional_sd
 		(call sd.daemon (subj cmd_file))

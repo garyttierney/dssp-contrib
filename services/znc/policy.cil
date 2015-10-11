@@ -25,6 +25,7 @@
 
 	(call tcp_bind_unreserved_port (subj))
 
+	(allow subj self rw_fifo_file_perms)
 	(allow subj self (tcp_socket (accept listen)))
 
 	(call net.tcp_bind_generic_node (subj))
@@ -34,7 +35,9 @@
 	(call file.read_config_files (subj))
 	(call file.read_data (subj))
 
-	(call dns.client_subj_type (subj))
+	(call irc.tcp_connect_port (subj))
+
+	(call nss.client_subj_type (subj))
 
 	(call cert.read_all (subj))
 	(call locale.read (subj))

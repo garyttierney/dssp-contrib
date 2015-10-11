@@ -5,4 +5,12 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call fs.read_cgroup (subj_type_attribute)))
+	(allow subj_type_attribute self (capability (net_admin)))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.read_cgroup (subj_type_attribute))
+
+	(call sd.stream_connect (subj_type_attribute))
+
+	(optional cgtop_optional_sd_machined
+		(call sd_machined.read_runtime_files (subj_type_attribute))))

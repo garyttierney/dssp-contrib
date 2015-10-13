@@ -107,6 +107,7 @@
 	(call fs.read_tmpfs_lnk_files (daemon_pvt_devices_subj_type_attribute))
 
 	(call cmd.auto_subj_type_transition (subj sd_unknown.subj))
+	(call cmd.exec (subj))
 	(call cmd.shell_auto_subj_type_transition (subj sd_unknown.subj))
 
 	(call sys.link_keyring (subj))
@@ -201,33 +202,13 @@
 	(call sd.manage_all_unit (subj))
 	(call sd.relabelto_unit_runtime_dirs (subj))
 
-	(call sd_askpwd.read_runtime (subj))
-
-	(call sd_fsck.read_runtime (subj))
-
-	(call sd_importd.cmd_obj_entry_subj (subj))
-	(call sd_importd.manage_runtime (subj))
-	(call sd_importd.all_sysbus_chat_client_subj_type (subj))
-
 	(call sd_journald.list_var_log (subj))
 	(call sd_journald.read_runtime (subj))
 	(call sd_journald.relabelto_var_log_dirs (subj))
 	(call sd_journald.relabelto_var_log_files (subj))
 	(call sd_journald.use_fd (subj))
 
-	(call sd_logind.read_runtime (subj))
-	(call sd_logind.write_inherited_runtime_fifo_files (subj))
-
-	(call sd_machined.manage_var_lib (subj))
-	(call sd_machined.setattr_login_ptys (subj))
-	(call sd_machined.relabelfrom_login_ptys (subj))
-	(call sd_machined.use_login_ptys (subj))
-
 	(call sd_shutdown.share (subj))
-
-	(call sd_tmpfiles.read_runtime (subj))
-
-	(call sd_updated.getattr_flag_files (subj))
 
 	(call sduser.create_keyring_all_subj (subj))
 	(call sduser.noatsecure_all_subj (subj))
@@ -254,6 +235,9 @@
 	(optional sd_optional_http
 		(call http.tcp_connect_port (subj)))
 
+	(optional sd_optional_machinectl
+		(call machinectl.use_fd_all_subj (subj)))
+
 	(optional sd_optional_numactl
 		(call numactl.exec (subj)))
 
@@ -269,10 +253,42 @@
 		(call rpm.read_var_lib_files (subj))
 		(call rpm.read_var_lib_lnk_files (subj)))
 
+	(optional sd_optional_sd_askwpd
+		(call sd_askpwd.read_runtime (subj)))
+
+	(optional sd_optional_sd_fsck
+		(call sd_fsck.read_runtime (subj)))
+
+	(optional sd_optional_sd_importd
+		(call sd_importd.cmd_obj_entry_subj (subj))
+		(call sd_importd.manage_runtime (subj))
+		(call sd_importd.all_sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_optional_sd_logind
+		(call sd_logind.read_runtime (subj))
+		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
+
+	(optional sd_optional_sd_machined
+		(call sd_machined.manage_var_lib (subj))
+		(call sd_machined.setattr_login_ptys (subj))
+		(call sd_machined.relabelfrom_login_ptys (subj))
+		(call sd_machined.use_login_ptys (subj)))
+
+	(optional sd_optional_sd_nspawn_container
+		(call sd_nspawn_container.audit_write_access_all_dirs (subj))
+		(call sd_nspawn_container.read_all (subj)))
+
+	(optional sd_optional_sd_tmpfiles
+		(call sd_tmpfiles.read_runtime (subj)))
+
+	(optional sd_optional_sd_updated
+		(call sd_updated.getattr_flag_files (subj)))
+
 	(optional sd_optional_usersubj
 		(call sec.compute_relabel_context (subj))
 		(call usersubj.relabelto_ptys (subj))
-		(call usersubj.link_keyring_common_login_subj (subj)))
+		(call usersubj.link_keyring_common_login_subj (subj))
+		(call usersubj.write_inherited_home_user_files (subj)))
 
 	(optional sd_optional_exempt
 		(call exempt.noatsecure (subj))

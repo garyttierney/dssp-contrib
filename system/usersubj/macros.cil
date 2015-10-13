@@ -740,6 +740,11 @@
 			(call usersubj.search_home_dir (ARG1))
 			(call write_files_pattern (ARG1 home_user_file home_user_file))))
 
+	(block write_inherited_home_user_files_blk
+		(blockabstract write_inherited_home_user_files_blk)
+		(macro write_inherited_home_user_files ((type ARG1))
+			(allow ARG1 home_user_file write_inherited_file_perms)))
+
 	(block rw_home_user_files_blk
 		(blockabstract rw_home_user_files_blk)
 		(macro rw_home_user_files ((type ARG1))
@@ -1889,6 +1894,9 @@
 	(macro write_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(call write_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
+	(macro write_inherited_home_user_files ((type ARG1))
+		(allow ARG1 home_user.home_user_file write_inherited_file_perms))
 
 	(macro setattr_home_user_files ((type ARG1))
 		(allow ARG1 home_user.home_user_file (file (setattr))))

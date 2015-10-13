@@ -62,6 +62,9 @@
 
 	(call pam_console.read_runtime_files (subj))
 
+	(optional sysbus_optional_machinectl
+		(call machinectl.use_fd_all_subj (subj)))
+
 	(optional sysbus_optional_sd_logind
 		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
 
@@ -84,6 +87,9 @@
 
 	(optional sysbus_optional_unconfinedsubj
 		(call unconfinedsubj.use_fd_all_subj (subj)))
+
+	(optional sysbus_optional_usersubj
+		(call usersubj.write_inherited_home_user_files (subj)))
 
 	(allow dbus_subj_type_attribute self (process (getcap)))
 	(allow dbus_subj_type_attribute self create_netlink_selinux_socket_perms)

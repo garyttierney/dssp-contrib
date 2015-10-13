@@ -179,6 +179,11 @@
 			(call sd_machined.rw_var_lib_dirs (ARG1))
 			(call delete_dirs_pattern (ARG1 file file))))
 
+	(block audit_write_access_dirs_blk
+		(blockabstract audit_write_access_dirs_blk)
+		(macro audit_write_access_dirs ((type ARG1))
+			(allow ARG1 file (dir (write)))))
+
 	(block rw_chr_files_blk
 		(blockabstract rw_chr_files_blk)
 		(macro rw_chr_files ((type ARG1))
@@ -293,6 +298,9 @@
 	(macro list_all ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
 		(allow ARG1 obj_type_attribute list_dir_perms))
+
+	(macro audit_write_access_all_dirs ((type ARG1))
+		(allow ARG1 obj_type_attribute (dir (write))))
 
 	(macro delete_all_dirs ((type ARG1))
 		(call sd_machined.rw_var_lib_dirs (ARG1))

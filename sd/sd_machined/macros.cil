@@ -62,7 +62,7 @@
 	(blockinherit file.read_var_lib_lnk_files_blk)
 
 	(macro write_inherited_var_lib_files ((type ARG1))
-		(allow ARG1 var_lib_file (file (write))))
+		(allow ARG1 var_lib_file write_inherited_file_perms))
 
 	(macro audit_read_access_var_lib_files ((type ARG1))
 		(allow ARG1 var_lib_file (file (read))))

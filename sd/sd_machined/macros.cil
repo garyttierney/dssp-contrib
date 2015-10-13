@@ -61,7 +61,10 @@
 	(blockinherit file.manage_var_lib_files_blk)
 	(blockinherit file.read_var_lib_lnk_files_blk)
 
-	(macro audit_access_var_lib_files ((type ARG1))
+	(macro write_inherited_var_lib_files ((type ARG1))
+		(allow ARG1 var_lib_file (file (write))))
+
+	(macro audit_read_access_var_lib_files ((type ARG1))
 		(allow ARG1 var_lib_file (file (read))))
 
 	(macro relabelfrom_var_lib_files ((type ARG1))

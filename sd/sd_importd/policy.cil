@@ -20,7 +20,7 @@
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (dac_override setpcap)))
+	(allow subj self (capability (dac_override setpcap sys_admin)))
 	(allow subj self (process (setfscreate getcap setcap)))
 	(allow subj self rw_fifo_file_perms)
 

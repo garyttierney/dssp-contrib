@@ -47,6 +47,9 @@
 	(call dev.write_kmsg (subj))
 	(call dev.read_urandom (subj))
 
+	(call file.getattr_lost_found_files (subj))
+	(call file.list_lost_found (subj))
+
 	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.search_tmpfs (subj))
 	(call fs.list_rootfs (subj))
@@ -86,6 +89,9 @@
 	(optional sd_machined_optional_qemu
 		(call qemu_guest.read_all_inherited_files (subj))
 		(call qemu_guest.getattr_all_ptys (subj)))
+
+	(optional sd_machined_optional_quotacheck
+		(call quotacheck.getattr_db_files (subj)))
 
 	(optional sd_machined_optional_sysbus
 		(call sysbus.service_subj_type (subj))

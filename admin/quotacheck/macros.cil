@@ -7,6 +7,10 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro getattr_db_files ((type ARG1))
+		(call sys.search_mountpoints (ARG1))
+		(allow ARG1 file (file (getattr))))
+
 	(macro read_db_files ((type ARG1))
 		(call sys.search_mountpoints (ARG1))
 		(allow ARG1 file read_file_perms))

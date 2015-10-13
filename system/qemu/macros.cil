@@ -80,6 +80,9 @@
 		(optional qemu_guest_relabel_all_files_optional_sd_machined
 			(call sd_machined.search_var_lib (ARG1))))
 
+	(macro read_all_inherited_files ((type ARG1))
+		(allow ARG1 obj_type_attribute read_inherited_file_perms))
+
 	(macro rw_all_files ((type ARG1))
 		(allow ARG1 obj_type_attribute rw_file_perms)
 		(optional qemu_guest_rw_all_files_optional_sd_machined

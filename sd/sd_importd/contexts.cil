@@ -1,4 +1,5 @@
 (in sd_importd
 	(filecon "/var/run/systemd/import(/.*)?" any runtime_file_context)
+	(filecon "/var/run/systemd/machines\.lock" file runtime_file_context)
 	(filecon "/usr/lib/systemd/systemd-importd" file cmd_file_context)
 	(filecon "/usr/lib/systemd/system/[^/]*systemd-importd.*" file unit_file_context))

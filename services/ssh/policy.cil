@@ -5,6 +5,8 @@
 	(typeattribute login_subj_type_attribute)
 	(typeattribute priv_login_subj_type_attribute)
 
+	(allow login_subj_type_attribute self (process (setexec)))
+
 	(call sshd.rw_inherited_tcp_sockets_all_subj (login_subj_type_attribute))
 	(call sshd.rw_inherited_unix_stream_sockets_all_subj (login_subj_type_attribute))
 	(call sshd.rw_inherited_unix_dgram_sockets_all_subj (login_subj_type_attribute))
@@ -51,7 +53,7 @@
 	(booleanif ssh_priv_login
 		(true
 			(allow ssh.priv_login_subj_type_attribute self (capability (setuid setgid sys_tty_config)))
-			(allow ssh.priv_login_subj_type_attribute self (process (setexec dyntransition setcurrent)))
+			(allow ssh.priv_login_subj_type_attribute self (process (dyntransition setcurrent)))
 			(allow ssh.priv_login_subj_type_attribute self r_netlink_route_socket_perms)
 			(allow ssh.priv_login_subj_type_attribute self setattr_key_perms)
 

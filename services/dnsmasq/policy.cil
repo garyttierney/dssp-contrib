@@ -24,6 +24,13 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
 	(allow subj self (capability (net_raw setgid setuid)))
 	(allow subj self (process (setcap)))
 	(allow subj self (tcp_socket (listen accept)))
@@ -35,6 +42,10 @@
 
 	(call net.udp_bind_generic_node (subj))
 	(call net.tcp_bind_generic_node (subj))
+
+	(call dhcp.udp_bind_reserved_port (subj))
+
+	(call dns.udp_bind_reserved_port (subj))
 
 	(call locale.read (subj))
 
@@ -52,10 +63,14 @@
 	(optional dnsmasq_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
+	(optional dnsmasq_optional_sd_resolved
+		(call sd_resolved.read_runtime (subj)))
+
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
 	(call file.search_var_lib (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

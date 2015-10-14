@@ -1,0 +1,8 @@
+(in dnsmasq
+	(filecon "/etc/dnsmasq\.conf.*" file config_file_context)
+	(filecon "/etc/dnsmasq\.d(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/dnsmasq" file cmd_file_context)
+	(filecon "/var/lib/dnsmasq(/.*)?" any var_lib_file_context)
+
+	(optional dnsmasq_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*dnsmasq.*" file unit_file_context)))

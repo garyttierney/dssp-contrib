@@ -192,7 +192,7 @@
 		(call dmesg.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmeventd
-		(call dmeventd.adm (subj_type_attribute role)))
+		(call dmeventd.adm (subj role)))
 
 	(optional sysadm_optional_dmidecode
 		(call dmidecode.run (subj_type_attribute role)))
@@ -205,6 +205,10 @@
 
 	(optional sysadm_optional_dnssec_triggerc
 		(call dnssec_triggerc.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dnsmasq
+		(call dnsmasq.adm (subj role))
+		(call dnsmasq.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dracut
 		(call dracut.manage_config (subj))

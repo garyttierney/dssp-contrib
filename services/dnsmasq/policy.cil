@@ -33,6 +33,7 @@
 
 	(allow subj self (capability (net_raw setgid setuid)))
 	(allow subj self (process (setcap)))
+	(allow subj self create_rawip_socket_perms)
 	(allow subj self (tcp_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 

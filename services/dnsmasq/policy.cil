@@ -42,6 +42,7 @@
 	(call dev.read_urandom (subj))
 
 	(call net.udp_bind_generic_node (subj))
+	(call net.udp_bind_unreserved_port (subj))
 	(call net.tcp_bind_generic_node (subj))
 
 	(call dhcp.udp_bind_reserved_port (subj))

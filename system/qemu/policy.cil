@@ -1,3 +1,4 @@
+(boolean qemu_guest_tcp_connect_all_ports false)
 (boolean qemu_use_hugepages true)
 
 (block qemu
@@ -72,6 +73,13 @@
 
 	(optional qemu_guest_subj_type_optional_tunctl
 		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
+
+(block qemu_guest_tcp_connect_all_ports
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif qemu_guest_tcp_connect_all_ports
+		(true
+			(call net.tcp_connect_all_ports (qemu_guest.subj)))))
 
 (block qemu_use_hugepages
 	(blockinherit sec.bool_obj_blk)

@@ -13,17 +13,26 @@
 
 	(call sd_logind.sysbus_chat_client_subj_type (subj))
 
-	(call sd_machined.sysbus_chat_client_subj_type (subj))
-
 	(call sd.sysbus_chat_client_subj_type (subj))
 	(call sd.read_state (subj))
 	(call sd.control_all_unit (subj))
 	(call sd.control (subj))
 
-	(call sd_timedated.sysbus_chat_client_subj_type (subj))
+	(optional sd_stdio_optional_sd_machined
+		(call sd_machined.read_runtime_files (subj))
+		(call sd_machined.sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_stdio_optional_sd_nspawn_container
+	        (call sd_nspawn_container.list_all (subj))
+	        (call sd_nspawn_container.read_all_lnk_files (subj))
+	        (call sd_nspawn_container.stream_connect_all_subj (subj))
+	        (call sd_nspawn_container.read_state_all_subj (subj)))
 
 	(optional sd_stdio_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
+
+	(optional sd_stdio_optional_sd_timedated
+		(call sd_timedated.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_stdio_optional_timedatex
 		(call timedatex.sysbus_chat_client_subj_type (subj))))

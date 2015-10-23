@@ -30,10 +30,15 @@
 
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
+        (allow subj_type_attribute self (process (setpgid)))
+
+        (call cmd.shell_obj_entry_subj (subj_type_attribute))
+
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 
 	(call dev.getattr_all (subj_type_attribute))
 
+        (call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.audit_write_access_sysfs_dirs (subj_type_attribute))
@@ -66,7 +71,11 @@
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+        (call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+        (call usersubj.manage_home_user_files (subj_type_attribute))
+        (call usersubj.pty_template (subj_type_attribute))
 	(call usersubj.read_state_common_subj (subj_type_attribute))
+        (call usersubj.read_var_spool_user_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true

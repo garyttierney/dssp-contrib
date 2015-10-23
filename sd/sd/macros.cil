@@ -237,6 +237,9 @@
 		(call file.runtime_obj_type (ARG1))
 		(typeattributeset runtime_obj_type_attribute ARG1))
 
+	(macro dontaudit_search_runtime ((type ARG1))
+		(dontaudit ARG1 runtime_file search_dir_perms))
+
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
 	(blockinherit file.rw_runtime_dirs_blk)

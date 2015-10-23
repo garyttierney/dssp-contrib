@@ -377,8 +377,16 @@
 
 	(call rw_inherited_unix_stream_sockets (forked_subj_type_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_target_subj_type (forked_subj_type_attribute))))
+
 	(call forked_subj_type (daemon_subj_type_attribute))
 	(call read_state (daemon_subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_target_subj_type (daemon_subj_type_attribute))))
 
 	(allow unconfined_subj_type_attribute self (system (halt reboot status start stop undefined enable disable reload)))
 	(allow unconfined_subj_type_attribute subj_type_attribute (system (halt reboot status start stop undefined enable disable reload)))

@@ -31,6 +31,7 @@
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
         (allow subj_type_attribute self (process (setpgid)))
+        (allow subj_type_attribute self rw_fifo_file_perms)
 
         (call cmd.shell_obj_entry_subj (subj_type_attribute))
 
@@ -53,6 +54,10 @@
 	(call app.send_signull (subj_type_attribute))
 	(call app.send_sigkill (subj_type_attribute))
 	(call app.send_sigstop (subj_type_attribute))
+
+	(call hostname.exec (subj_type_attribute))
+
+	(call terminfo.read_all (subj_type_attribute))
 
 	(call sd.obj_entry_subj (subj_type_attribute))
 	(call sd.forked_subj_type (subj_type_attribute))

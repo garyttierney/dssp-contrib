@@ -13,12 +13,6 @@
 
 	(call login_subj_type (priv_login_subj_type_attribute))
 
-	(optional ssh_priv_login_subj_optional_sd_journald
-		(call sd_journald.client_subj_type (priv_login_subj_type_attribute)))
-
-	(optional ssh_priv_login_subj_optional_sd_logind
-		(call sd_logind.client_subj_type (priv_login_subj_type_attribute)))
-
 	(allow adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute sshd.subj_type_attribute))
 

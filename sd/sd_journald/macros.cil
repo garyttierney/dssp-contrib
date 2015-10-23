@@ -71,6 +71,9 @@
 		(call sd.search_runtime (ARG1))
 		(allow ARG1 runtime_file search_dir_perms))
 
+	(macro dontaudit_search_runtime ((type ARG1))
+		(dontaudit ARG1 runtime_file search_dir_perms))
+
 	(macro list_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))
 		(allow ARG1 runtime_file list_dir_perms))

@@ -46,13 +46,6 @@
 	(call sd_logind.read_runtime (subj_type_attribute))
 	(call sd_logind.client_subj_type (subj_type_attribute))
 
-	(call sd_machined.read_runtime (subj_type_attribute))
-
-	(call sd_nspawn_container.list_all (subj_type_attribute))
-	(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
-	(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
-	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
-
 	(call sduser.control_all_subj (subj_type_attribute))
 	(call sduser.control_unit_transient_all_subj (subj_type_attribute))
 	(call sduser.control_home_config (subj_type_attribute))
@@ -72,6 +65,15 @@
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+
+	(optional subj_type_attributer_optional_sd_machined
+		(call sd_machined.read_runtime (subj_type_attribute)))
+
+	(optional subj_type_attribute_optional_sd_nspawn_container
+		(call sd_nspawn_container.list_all (subj_type_attribute))
+		(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
+		(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
+		(call sd_nspawn_container.read_state_all_subj (subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_plymouth
 		(call plymouthd.use_fd (subj_type_attribute)))
@@ -105,7 +107,8 @@
 
 	(call sd_journald.read_var_log (client_subj_type_attribute))
 
-	(call sd_machined.read_config_files (client_subj_type_attribute))
+	(optional client_subj_type_optional_sd_machined
+		(call sd_machined.read_config_files (client_subj_type_attribute)))
 
 	(optional client_subj_type_attribute_optional_sysbus
 		(call sysbus.client_subj_type (client_subj_type_attribute))))

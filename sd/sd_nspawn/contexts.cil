@@ -4,3 +4,6 @@
 	(filecon "/usr/lib/systemd/system/[^/]*systemd-nspawn.*" file unit_file_context)
 	(filecon "/var/lib/machines/.*\.nspawn" file config_file_context)
 	(filecon "/var/run/systemd/nspawn(/.*)?" any runtime_file_context))
+
+(in sd_nspawn_container_tcp_connect_all_ports
+	(genfscon "selinuxfs" "/booleans/sd_nspawn_container_tcp_connect_all_ports" bool_obj_context))

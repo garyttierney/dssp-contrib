@@ -1,3 +1,5 @@
+(boolean sd_nspawn_container_tcp_connect_all_ports false)
+
 (block sd_nspawn
 	(roleattribute role_attribute)
 
@@ -188,6 +190,10 @@
 
 	(blockinherit sd_nspawn_container.container_blk)
 
+	(optional sd_nspawn_container_optional_dhcp
+		(call dhcp.udp_bind_reserved_port (subj))
+		(call dhcpv6_client.udp_bind_reserved_port (subj)))
+
 	(allow obj_type_attribute self (filesystem (associate)))
 
 	(call fs.associate_tmpfs (obj_type_attribute))
@@ -298,8 +304,15 @@
 		(true
 			(call rbacsep.read_state_target_subj_type (subj_type_attribute))))
 
-	(optional subj_type_attribute_optional_sduser
+	(optional subj_type_optional_sduser
 		(call sduser.dontaudit_link_keyring_all_subj (subj_type_attribute)))
 
-	(optional subj_type_attribute_optional_usersubj
+	(optional subj_type_optional_usersubj
 		(call usersubj.dontaudit_link_keyring_common_login_subj (subj_type_attribute))))
+
+(block sd_nspawn_container_tcp_connect_all_ports
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif sd_nspawn_container_tcp_connect_all_ports
+		(true
+			(call net.tcp_connect_all_ports (sd_nspawn_container.subj)))))

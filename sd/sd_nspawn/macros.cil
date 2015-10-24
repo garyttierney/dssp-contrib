@@ -379,4 +379,9 @@
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2)(type ARG3))
 		(call sd_machined.search_var_lib (ARG1))
-		(call stream_connect_pattern (ARG1 ARG2 ARG2 ARG3))))
+		(call stream_connect_pattern (ARG1 ARG2 ARG2 ARG3)))
+
+	(macro set_tcp_connect_all_ports_boolean ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 sd_nspawn_container_tcp_connect_all_ports.bool))
+		(optional sd_nspawn_container_tcp_connect_all_ports_boolean_optional_seutil
+			(call setsebool.exec (ARG1)))))

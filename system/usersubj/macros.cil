@@ -1355,6 +1355,7 @@
 		(call home_cmd_template (ARG1))
 		(call home_cert_template (ARG1))
 		(call home_fonts_template (ARG1))
+		(call home_history_template (ARG1))
 		(call home_terminfo_template (ARG1))
 		(call home_user_template (ARG1))
 		(call home_cache_template (ARG1))
@@ -2442,6 +2443,26 @@
 		(call relabel_home_cmd (ARG1))
 		(call home_data_obj_type_transition_home_cmd (ARG1))
 		(call home_dir_obj_type_transition_home_cmd (ARG1)))
+
+	(macro read_home_history_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_history.home_user_file read_file_perms))
+
+	(macro manage_home_history_files ((type ARG1))
+		(call rw_home_dir (ARG1))
+		(allow ARG1 home_history.home_user_file manage_file_perms))
+
+	(macro relabel_home_history_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_history.home_user_file relabel_file_perms))
+
+	(macro home_dir_obj_type_transition_home_history ((type ARG1))
+		(call home_dir_obj_type_transition (ARG1 home_history.home_user_file file ".bash_history")))
+
+	(macro home_history_template ((type ARG1))
+		(call manage_home_history_files (ARG1))
+		(call relabel_home_history_files (ARG1))
+		(call home_dir_obj_type_transition_home_history (ARG1)))
 
 	(macro search_home_cert ((type ARG1))
 		(call search_home_dir (ARG1))

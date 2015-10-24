@@ -9,6 +9,7 @@
 		(context root_home_fonts_cache (sysadm.id sysadm.role home_fonts.home_cache_file (systemlow systemlow)))
 		(context root_home_fonts_config (sysadm.id sysadm.role home_fonts.home_config_file (systemlow systemlow)))
 		(context root_home_fonts_data (sysadm.id sysadm.role home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_history (sysadm.id sysadm.role home_history.home_user_file (systemlow systemlow)))
 		(context root_home_terminfo_data (sysadm.id sysadm.role home_terminfo.home_data_file (systemlow systemlow))))
 	(false
 		(context root_home_user (sysadm.id object_r home_user.home_user_file (systemlow systemlow)))
@@ -20,6 +21,7 @@
 		(context root_home_fonts_cache (sysadm.id object_r home_fonts.home_cache_file (systemlow systemlow)))
 		(context root_home_fonts_config (sysadm.id object_r home_fonts.home_config_file (systemlow systemlow)))
 		(context root_home_fonts_data (sysadm.id object_r home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_history (sysadm.id object_r home_history.home_user_file (systemlow systemlow)))
 		(context root_home_terminfo_data (sysadm.id object_r home_terminfo.home_data_file (systemlow systemlow)))))
 
 (filecon "/root/.*" any root_home_user)
@@ -36,6 +38,7 @@
 (filecon "/root/\.config/fontconfig(/.*)?" any root_home_fonts_config)
 (filecon "/root/\.fonts(/.*)?" any root_home_fonts_data)
 (filecon "/root/\.local/share/fonts(/.*)?" any root_home_fonts_data)
+(filecon "/root/\.bash_history" file root_home_history)
 (filecon "/root/\.terminfo" file root_home_terminfo_data)
 
 (optional sysadm_curl_home_optional_curl

@@ -435,6 +435,11 @@
 	(optional sysadm_optional_pwgen
 		(call pwgen.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_python
+		(call python.manage_home_data (subj))
+		(call python.relabel_home_data (subj))
+		(call python.home_data_obj_type_transition_home_data (subj)))
+
 	(optional sysadm_optional_qemu
 		(call qemu_guest.manage_all_files (subj))
 		(call qemu_guest.manage_all_runtime_sock_files (subj))

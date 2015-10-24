@@ -111,6 +111,11 @@
 	(optional user_optional_pwgen
 		(call pwgen.run (subj_type_attribute role)))
 
+	(optional user_optional_python
+		(call python.manage_home_data (subj))
+		(call python.relabel_home_data (subj))
+		(call python.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_qiv
 		(call qiv.manage_tmpfs_user_files (subj))
 		(call qiv.relabel_tmpfs_user_files (subj))

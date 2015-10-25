@@ -14,6 +14,9 @@
 	(allow subj self (capability (net_admin)))
 
 	(call sys.list_all_sysctl (subj))
+	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.rw_all_sysctl_files (subj))
+
+	(call fs.read_binfmt_misc (subj))
 
 	(call locale.read (subj)))

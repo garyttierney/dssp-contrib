@@ -67,6 +67,9 @@
 	(optional rpmbuild_optional_hostname
 		(call hostname.exec (subj)))
 
+	(optional rpmbuild_optional_python
+		(call python.read_home_data (subj)))
+
 	(optional rpmbuild_optional_sd
 		(call sd.search_unit_runtime (subj)))
 

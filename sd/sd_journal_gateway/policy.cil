@@ -26,15 +26,42 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
 
 (block sd_journal_gatewayd
+	(typepermissive curl.subj)
+
 	(blockinherit sd.daemon_blk)
 
 	(call sd.tcp_socket_activated_subj_type (subj))
 
 	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
 
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self create_tcp_stream_socket_perms)
+
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+
 	(call net.tcp_bind_generic_node (subj))
 
-	(call sd_journal_gateway.tcp_bind_unreserved_port (subj)))
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call sd_journal_gateway.tcp_bind_unreserved_port (subj))
+
+	(call sd_journald.client_subj_type (subj))
+	(call sd_journald.read_var_log (subj))
+
+	(optional sd_journal_gatewayd_optional_sd_machined
+		(call sd_machined.read_config_files (subj))))
 
 (block sd_journal_remote
 	(roleattribute role_attribute)

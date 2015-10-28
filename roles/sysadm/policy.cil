@@ -569,7 +569,8 @@
 		(call sd_initctl.adm (subj role)))
 
 	(optional sysadm_optional_sd_journal_gateway
-		(call sd_journal_gateway.adm (subj role)))
+		(call sd_journal_gateway.adm (subj role))
+		(call sd_journal_remote.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))

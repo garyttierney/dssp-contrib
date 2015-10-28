@@ -29,7 +29,13 @@
 	(typeattributeset sd_journal_gateway.subj_type_attribute subj))
 
 (block sd_journal_remote
-	(blockinherit sd.daemon_blk)
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call sd.daemon (subj cmd_file))
 
 	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
 

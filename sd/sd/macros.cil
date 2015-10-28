@@ -549,32 +549,11 @@
 	(macro tcp_socket_activated_subj_type ((type ARG1))
 		(typeattributeset tcp_socket_activated_subj_type_attribute ARG1))
 
-	(macro tcp_socket_activated_obj_type ((type ARG1))
-		(typeattributeset tcp_socket_activated_obj_type_attribute ARG1))
-
-	(macro tcp_socket_activated ((type ARG1)(type ARG2))
-		(call tcp_socket_activated_subj_type (ARG1))
-		(call tcp_socket_activated_obj_type (ARG2)))
-
 	(macro udp_socket_activated_subj_type ((type ARG1))
 		(typeattributeset udp_socket_activated_subj_type_attribute ARG1))
 
-	(macro udp_socket_activated_obj_type ((type ARG1))
-		(typeattributeset udp_socket_activated_obj_type_attribute ARG1))
-
-	(macro udp_socket_activated ((type ARG1)(type ARG2))
-		(call udp_socket_activated_subj_type (ARG1))
-		(call udp_socket_activated_obj_type (ARG2)))
-
 	(macro dccp_socket_activated_subj_type ((type ARG1))
 		(typeattributeset dccp_socket_activated_subj_type_attribute ARG1))
-
-	(macro dccp_socket_activated_obj_type ((type ARG1))
-		(typeattributeset dccp_socket_activated_obj_type_attribute ARG1))
-
-	(macro dccp_socket_activated ((type ARG1)(type ARG2))
-		(call dccp_socket_activated_subj_type (ARG1))
-		(call dccp_socket_activated_obj_type (ARG2)))
 
 	(macro fifo_file_activated_obj_type ((type ARG1))
 		(call socket_activated_obj_type (ARG1))

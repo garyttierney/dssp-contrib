@@ -1,4 +1,7 @@
 (in sd_journal_gateway
+        (blockinherit net.tcp_connect_port_blk)
+        (blockinherit net.tcp_bind_unreserved_port_blk)
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(call sd.daemon_adm_subj_type (ARG1))

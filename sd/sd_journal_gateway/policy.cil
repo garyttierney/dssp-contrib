@@ -4,6 +4,8 @@
 
 	(typeattribute obj_type_attribute)
 
+	(blockinherit net.port_obj_blk)
+
 	(blockinherit sd.unit_obj_blk)
 
 	(typeattributeset obj_type_attribute unit_file)
@@ -26,7 +28,13 @@
 (block sd_journal_gatewayd
 	(blockinherit sd.daemon_blk)
 
-	(typeattributeset sd_journal_gateway.subj_type_attribute subj))
+	(call sd.tcp_socket_activated_subj_type (subj))
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(call net.tcp_bind_generic_node (subj))
+
+	(call sd_journal_gateway.tcp_bind_unreserved_port (subj)))
 
 (block sd_journal_remote
 	(roleattribute role_attribute)

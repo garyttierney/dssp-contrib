@@ -22,9 +22,6 @@
 	(typeattribute fifo_file_activated_obj_type_attribute)
 
 	(typeattribute socket_activated_obj_type_attribute)
-	(typeattribute dccp_socket_activated_obj_type_attribute)
-	(typeattribute tcp_socket_activated_obj_type_attribute)
-	(typeattribute udp_socket_activated_obj_type_attribute)
 
 	(typeattribute config_obj_type_attribute)
 	(typeattribute runtime_obj_type_attribute)
@@ -82,13 +79,10 @@
 	(allow subj self write_key_perms)
 
 	(allow subj tcp_socket_activated_subj_type_attribute create_tcp_stream_socket_perms)
-	(allow subj tcp_socket_activated_obj_type_attribute (tcp_socket (name_bind)))
 
 	(allow subj udp_socket_activated_subj_type_attribute create_udp_socket_perms)
-	(allow subj udp_socket_activated_obj_type_attribute (udp_socket (name_bind)))
 
 	(allow subj dccp_socket_activated_subj_type_attribute create_dccp_stream_socket_perms)
-	(allow subj dccp_socket_activated_obj_type_attribute (dccp_socket (name_bind)))
 
 	(allow subj fifo_file_activated_obj_type_attribute manage_dir_perms)
 	(allow subj fifo_file_activated_obj_type_attribute manage_fifo_file_perms)

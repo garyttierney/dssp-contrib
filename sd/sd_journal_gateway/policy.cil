@@ -1,0 +1,54 @@
+(block sd_journal_gateway
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call sd.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+
+(block sd_journal_gatewayd
+	(blockinherit sd.daemon_blk)
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj))
+
+(block sd_journal_remote
+	(blockinherit sd.daemon_blk)
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute config_file))
+
+(block sd_journal_upload
+	(blockinherit sd.daemon_blk)
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute config_file)
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj)))

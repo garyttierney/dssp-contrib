@@ -1,0 +1,18 @@
+(in sd_journal_gateway
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-gatewayd.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-remote.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-upload.*" file unit_file_context))
+
+(in sd_journal_gatewayd
+	(filecon "/usr/lib/systemd/systemd-journal-gatewayd" file cmd_file_context))
+
+(in sd_journal_remote
+	(filecon "/etc/systemd/journal-remote\.conf" file config_file_context)
+	(filecon "/etc/systemd/journal-remote\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journal-remote" file cmd_file_context))
+
+(in sd_journal_upload
+	(filecon "/etc/systemd/journal-upload\.conf" file config_file_context)
+	(filecon "/etc/systemd/journal-upload\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journal-upload" file cmd_file_context)
+	(filecon "/var/lib/systemd/journal-upload(/.*)?" any var_lib_file_context))

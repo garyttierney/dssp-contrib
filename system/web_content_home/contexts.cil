@@ -1,0 +1,14 @@
+(in web_content_home
+	(block web_content_ro
+		(filecon "HOME_DIR/public_html(/.*)?" any file_file_context))
+
+	(block web_content_cgi
+		(filecon "HOME_DIR/public_html/cgi-bin(/.*)?" any cmd_file_context)
+		(filecon "HOME_DIR/public_html/scripts(/.*)?" any cmd_file_context))
+
+	(block web_content_ra
+		(filecon "HOME_DIR/public_html/log(/.*)?" any file_file_context))
+
+	(block web_content_rw
+		(filecon "HOME_DIR/public_html/incoming(/.*)?" any file_file_context)
+		(filecon "HOME_DIR/public_html/uploads(/.*)?" any file_file_context)))

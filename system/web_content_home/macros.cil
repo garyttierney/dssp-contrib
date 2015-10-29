@@ -1,0 +1,18 @@
+(in web_content_home
+	(macro home_dir_obj_type_transition_web_content_ro ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 web_content_home.web_content_ro.file dir "public_html")))
+
+	(macro web_content_home_ro_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call usersubj.search_home_dir (ARG1))
+		(call obj_type_transition_pattern (ARG1 web_content_home.web_content_ro.file ARG2 ARG3 ARG4)))
+
+	(macro web_content_home_ro_obj_type_transition_web_content_cgi ((type ARG1))
+		(call web_content_home_ro_obj_type_transition (ARG1 web_content_home.web_content_cgi.cmd_file dir "cgi-bin"))
+		(call web_content_home_ro_obj_type_transition (ARG1 web_content_home.web_content_cgi.cmd_file dir "scripts")))
+
+	(macro web_content_home_ro_obj_type_transition_web_content_ra ((type ARG1))
+		(call web_content_home_ro_obj_type_transition (ARG1 web_content_home.web_content_ra.file dir "log")))
+
+	(macro web_content_home_ro_obj_type_transition_web_content_rw ((type ARG1))
+		(call web_content_home_ro_obj_type_transition (ARG1 web_content_home.web_content_rw.file dir "incoming"))
+		(call web_content_home_ro_obj_type_transition (ARG1 web_content_home.web_content_rw.file dir "uploads"))))

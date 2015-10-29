@@ -1,0 +1,8 @@
+(block web_content_home
+	(blockinherit web_content_template)
+
+	(call usersubj.home_user_obj_type (web_content_home.web_content_cgi.cmd_file))
+	(call usersubj.home_user_obj_type (web_content_home.web_content_ra.file))
+	(call usersubj.home_user_obj_type (web_content_home.web_content_ro.file))
+
+	(call usersubj.tmpfs_user_obj_type (web_content_home.web_content_rw.file)))

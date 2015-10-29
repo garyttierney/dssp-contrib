@@ -1,0 +1,13 @@
+(in mdadm
+	(filecon "/usr/sbin/mdadm" file cmd_file_context)
+	(filecon "/usr/sbin/raid-check" file cmd_file_context)
+	(filecon "/var/run/mdadm(/.*)?" any runtime_file_context)
+
+	(optional mdadm_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*mdadm-.*" file unit_file_context)))
+
+(in mdmon
+	(filecon "/usr/sbin/mdmon" file cmd_file_context)
+
+	(optional mdmon_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*mdmon.*" file unit_file_context)))

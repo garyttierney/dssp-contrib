@@ -390,6 +390,26 @@
 
 	(filecon "/root/\.vlockrc" file root_vlock_home))
 
+(optional sysadm_web_content_home_optional_web_content_home
+	(tunableif enable_rbacsep
+		(true
+			(context root_web_content_home_ro (sysadm.id sysadm.role web_content_home.web_content_ro.file (systemlow systemlow)))
+			(context root_web_content_home_cgi (sysadm.id sysadm.role web_content_home.web_content_cgi.cmd_file (systemlow systemlow)))
+			(context root_web_content_home_ra (sysadm.id sysadm.role web_content_home.web_content_ra.file (systemlow systemlow)))
+			(context root_web_content_home_rw (sysadm.id sysadm.role web_content_home.web_content_rw.file (systemlow systemlow))))
+		(false
+			(context root_web_content_home_ro (sysadm.id object_r web_content_home.web_content_ro.file (systemlow systemlow)))
+			(context root_web_content_home_cgi (sysadm.id object_r web_content_home.web_content_cgi.cmd_file (systemlow systemlow)))
+			(context root_web_content_home_ra (sysadm.id object_r web_content_home.web_content_ra.file (systemlow systemlow)))
+			(context root_web_content_home_rw (sysadm.id object_r web_content_home.web_content_rw.file (systemlow systemlow)))))
+
+	(filecon "/root/public_html(/.*)?" any root_web_content_home_ro)
+	(filecon "/root/public_html/cgi-bin(/.*)?" any root_web_content_home_cgi)
+	(filecon "/root/public_html/scripts(/.*)?" any root_web_content_home_cgi)
+	(filecon "/root/public_html/log(/.*)?" any root_web_content_home_ra)
+	(filecon "/root/public_html/incoming(/.*)?" any root_web_content_home_rw)
+	(filecon "/root/public_html/uploads(/.*)?" any root_web_content_home_rw))
+
 (optional sysadm_xauth_home_optional_xauth
 	(tunableif enable_rbacsep
 		(true

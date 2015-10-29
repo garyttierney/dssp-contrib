@@ -1,0 +1,626 @@
+(block web_content_template
+	(blockabstract web_content_template)
+
+	(block web_content
+		(typeattribute obj_type_attribute)
+
+		(typeattributeset .web_content.obj_type_attribute obj_type_attribute)
+
+		(macro search_all ((type ARG1))
+			(call web_content_ro.search (ARG1))
+			(allow ARG1 obj_type_attribute search_dir_perms))
+
+		(macro read_all ((type ARG1))
+			(allow ARG1 obj_type_attribute read_file_perms)
+			(allow ARG1 obj_type_attribute read_fifo_file_perms)
+			(allow ARG1 obj_type_attribute list_dir_perms)
+			(allow ARG1 obj_type_attribute read_lnk_file_perms)
+			(allow ARG1 obj_type_attribute read_sock_file_perms))
+
+		(macro manage_all ((type ARG1))
+			(allow ARG1 obj_type_attribute manage_file_perms)
+			(allow ARG1 obj_type_attribute manage_fifo_file_perms)
+			(allow ARG1 obj_type_attribute manage_dir_perms)
+			(allow ARG1 obj_type_attribute manage_lnk_file_perms)
+			(allow ARG1 obj_type_attribute manage_sock_file_perms))
+
+		(macro relabel_all ((type ARG1))
+			(call search_all (ARG1))
+			(allow ARG1 obj_type_attribute relabel_file_perms)
+			(allow ARG1 obj_type_attribute relabel_fifo_file_perms)
+			(allow ARG1 obj_type_attribute relabel_dir_perms)
+			(allow ARG1 obj_type_attribute relabel_lnk_file_perms)
+			(allow ARG1 obj_type_attribute relabel_sock_file_perms)))
+
+	(block web_content_cgi
+		(typeattribute subj_type_attribute)
+
+		(typeattribute obj_type_attribute)
+
+		(blockinherit app.application_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset obj_type_attribute cmd_file)
+		(typeattributeset web_content.obj_type_attribute cmd_file)
+
+		(typeattributeset .web_content_cgi.obj_type_attribute cmd_file)
+
+		(roleattributeset .web_content.cgi_client_role_attribute sys.role)
+
+		(roletype .web_content.cgi_client_role_attribute subj)
+
+		(call auto_subj_type_transition (.web_content.cgi_client_subj_type_attribute))
+
+		(call exec (subj))
+
+		(call list (subj))
+		(call read_lnk_files (subj))
+
+		(call web_content_ra.list (subj))
+		(call web_content_ra.add_entry (subj))
+		(call web_content_ra.setattr_dirs (subj))
+
+		(call web_content_ra.append_files (subj))
+		(call web_content_ra.read_files (subj))
+		(call web_content_ra.create_files (subj))
+		(call web_content_ra.setattr_files (subj))
+
+		(call web_content_ro.list (subj))
+		(call web_content_ro.read_files (subj))
+		(call web_content_ro.read_lnk_files (subj))
+
+		(call web_content_rw.manage_dirs (subj))
+		(call web_content_rw.manage_files (subj))
+		(call web_content_rw.manage_fifo_files (subj))
+		(call web_content_rw.manage_lnk_files (subj))
+		(call web_content_rw.manage_sock_files (subj))
+
+		(call web_content_rw.tmpfs_obj_type_transition_tmpfs (subj))
+
+		(block list_blk
+			(blockabstract list_blk)
+			(macro list ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file list_dir_perms)))
+
+		(block search_blk
+			(blockabstract search_blk)
+			(macro search ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file search_dir_perms)))
+
+		(block exec_blk
+			(blockabstract exec_blk)
+			(macro exec ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call exec_files_pattern (ARG1 cmd_file cmd_file))))
+
+		(block auto_subj_type_transition_blk
+			(blockabstract auto_subj_type_transition_blk)
+			(macro auto_subj_type_transition ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call send_signal (ARG1))
+				(call auto_subj_type_transition_pattern (ARG1 cmd_file subj))))
+
+		(block send_signal_blk
+			(blockabstract send_signal_blk)
+			(macro send_signal ((type ARG1))
+				(allow ARG1 subj (process (signal)))))
+
+		(block run_blk
+			(blockabstract run_blk)
+			(macro run ((type ARG1)(role ARG2))
+				(call send_signal (ARG1))
+				(call auto_subj_type_transition (ARG1))
+				(roleattributeset .web_content.cgi_client_role_attribute ARG2)))
+
+		(block read_files_blk
+			(blockabstract read_files_blk)
+			(macro read_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_files_pattern (ARG1 cmd_file cmd_file))))
+
+		(block read_lnk_files_blk
+			(blockabstract read_lnk_files_blk)
+			(macro read_lnk_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_lnk_files_pattern (ARG1 cmd_file cmd_file))))
+
+		(block read_blk
+			(blockabstract read_blk)
+			(macro read ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file read_file_perms)
+				(allow ARG1 cmd_file list_dir_perms)
+				(allow ARG1 cmd_file read_lnk_file_perms)))
+
+		(block manage_blk
+			(blockabstract manage_blk)
+			(macro manage ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file manage_file_perms)
+				(allow ARG1 cmd_file manage_dir_perms)
+				(allow ARG1 cmd_file manage_lnk_file_perms)))
+
+		(block relabel_blk
+			(blockabstract relabel_blk)
+			(macro relabel ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file relabel_file_perms)
+				(allow ARG1 cmd_file relabel_dir_perms)
+				(allow ARG1 cmd_file relabel_lnk_file_perms)))
+
+		(blockinherit list_blk)
+		(blockinherit search_blk)
+		(blockinherit exec_blk)
+		(blockinherit auto_subj_type_transition_blk)
+		(blockinherit send_signal_blk)
+		(blockinherit run_blk)
+		(blockinherit read_files_blk)
+		(blockinherit read_lnk_files_blk)
+		(blockinherit read_blk)
+		(blockinherit manage_blk)
+		(blockinherit relabel_blk))
+
+	(block web_content_ra
+		(blockinherit file.obj_blk)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattributeset obj_type_attribute file)
+		(typeattributeset web_content.obj_type_attribute file)
+
+		(typeattributeset .web_content_ra.obj_type_attribute file)
+
+		(block list_blk
+			(blockabstract list_blk)
+				(macro list ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file list_dir_perms)))
+
+		(block search_blk
+			(blockabstract search_blk)
+			(macro search ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file search_dir_perms)))
+
+		(block add_entry_blk
+			(blockabstract add_entry_blk)
+			(macro add_entry ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file add_entry_dir_perms)))
+
+		(block setattr_dirs_blk
+			(blockabstract setattr_dirs_blk)
+			(macro setattr_dirs ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call setattr_dirs_pattern (ARG1 file file))))
+
+		(block append_files_blk
+			(blockabstract append_files_blk)
+			(macro append_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call append_files_pattern (ARG1 file file))))
+
+		(block read_files_blk
+			(blockabstract read_files_blk)
+			(macro read_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_files_pattern (ARG1 file file))))
+
+		(block create_files_blk
+			(blockabstract create_files_blk)
+			(macro create_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call create_files_pattern (ARG1 file file))))
+
+		(block setattr_files_blk
+			(blockabstract setattr_files_blk)
+			(macro setattr_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call setattr_files_pattern (ARG1 file file))))
+
+		(block read_lnk_files_blk
+			(blockabstract read_lnk_files_blk)
+			(macro read_lnk_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_lnk_files_pattern (ARG1 file file))))
+
+		(block read_blk
+			(blockabstract read_blk)
+			(macro read ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file read_file_perms)
+				(allow ARG1 file list_dir_perms)
+				(allow ARG1 file read_lnk_file_perms)))
+
+		(block manage_blk
+			(blockabstract manage_blk)
+			(macro manage ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file manage_file_perms)
+				(allow ARG1 file manage_dir_perms)
+				(allow ARG1 file manage_lnk_file_perms)))
+
+		(block relabel_blk
+			(blockabstract relabel_blk)
+			(macro relabel ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file relabel_file_perms)
+				(allow ARG1 file relabel_dir_perms)
+				(allow ARG1 file relabel_lnk_file_perms)))
+
+		(blockinherit list_blk)
+		(blockinherit search_blk)
+		(blockinherit add_entry_blk)
+		(blockinherit setattr_dirs_blk)
+		(blockinherit append_files_blk)
+		(blockinherit read_files_blk)
+		(blockinherit create_files_blk)
+		(blockinherit setattr_files_blk)
+		(blockinherit read_lnk_files_blk)
+		(blockinherit read_blk)
+		(blockinherit manage_blk)
+		(blockinherit relabel_blk))
+
+	(block web_content_ro
+		(blockinherit file.obj_blk)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattributeset obj_type_attribute file)
+		(typeattributeset web_content.obj_type_attribute file)
+
+		(typeattributeset .web_content_ro.obj_type_attribute file)
+
+		(block list_blk
+			(blockabstract list_blk)
+			(macro list ((type ARG1))
+				(allow ARG1 file list_dir_perms)))
+
+		(block search_blk
+			(blockabstract search_blk)
+			(macro search ((type ARG1))
+				(allow ARG1 file search_dir_perms)))
+
+		(block read_files_blk
+			(blockabstract read_files_blk)
+			(macro read_files ((type ARG1))
+				(call read_files_pattern (ARG1 file file))))
+
+		(block read_lnk_files_blk
+			(blockabstract read_lnk_files_blk)
+			(macro read_lnk_files ((type ARG1))
+				(call read_lnk_files_pattern (ARG1 file file))))
+
+		(block read_blk
+			(blockabstract read_blk)
+			(macro read ((type ARG1))
+				(allow ARG1 file read_file_perms)
+				(allow ARG1 file list_dir_perms)
+				(allow ARG1 file read_lnk_file_perms)))
+
+		(block manage_blk
+			(blockabstract manage_blk)
+			(macro manage ((type ARG1))
+				(allow ARG1 file manage_file_perms)
+				(allow ARG1 file manage_dir_perms)
+				(allow ARG1 file manage_lnk_file_perms)))
+
+		(block relabel_blk
+			(blockabstract relabel_blk)
+			(macro relabel ((type ARG1))
+				(allow ARG1 file relabel_file_perms)
+				(allow ARG1 file relabel_dir_perms)
+				(allow ARG1 file relabel_lnk_file_perms)))
+
+		(blockinherit list_blk)
+		(blockinherit search_blk)
+		(blockinherit read_files_blk)
+		(blockinherit read_lnk_files_blk)
+		(blockinherit read_blk)
+		(blockinherit manage_blk)
+		(blockinherit relabel_blk))
+
+	(block web_content_rw
+		(blockinherit file.obj_blk)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattributeset obj_type_attribute file)
+		(typeattributeset web_content.obj_type_attribute file)
+
+		(typeattributeset .web_content_rw.obj_type_attribute file)
+
+		(block list_blk
+			(blockabstract list_blk)
+			(macro list ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file list_dir_perms)))
+
+		(block search_blk
+			(blockabstract search_blk)
+			(macro search ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file search_dir_perms)))
+
+		(block rw_dirs_blk
+			(blockabstract rw_dirs_blk)
+			(macro rw_dirs ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file rw_dir_perms)))
+
+		(block manage_dirs_blk
+			(blockabstract manage_dirs_blk)
+			(macro manage_dirs ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_dirs_pattern (ARG1 file file))))
+
+		(block read_files_blk
+			(blockabstract read_files_blk)
+			(macro read_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_files_pattern (ARG1 file file))))
+
+		(block rw_files_blk
+			(blockabstract rw_files_blk)
+			(macro rw_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call rw_files_pattern (ARG1 file file))))
+
+		(block manage_files_blk
+			(blockabstract manage_files_blk)
+			(macro manage_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_files_pattern (ARG1 file file))))
+
+		(block read_fifo_files_blk
+			(blockabstract read_fifo_files_blk)
+			(macro read_fifo_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_fifo_files_pattern (ARG1 file file))))
+
+		(block manage_fifo_files_blk
+			(blockabstract manage_fifo_files_blk)
+			(macro manage_fifo_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_fifo_files_pattern (ARG1 file file))))
+
+		(block read_lnk_files_blk
+			(blockabstract read_lnk_files_blk)
+			(macro read_lnk_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_lnk_files_pattern (ARG1 file file))))
+
+		(block manage_lnk_files_blk
+			(blockabstract manage_lnk_files_blk)
+			(macro manage_lnk_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_lnk_files_pattern (ARG1 file file))))
+
+		(block read_sock_files_blk
+			(blockabstract read_sock_files_blk)
+			(macro read_sock_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call read_sock_files_pattern (ARG1 file file))))
+
+		(block manage_sock_files_blk
+			(blockabstract manage_sock_files_blk)
+			(macro manage_sock_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_sock_files_pattern (ARG1 file file))))
+
+		(block read_blk
+			(blockabstract read_blk)
+			(macro read ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file read_file_perms)
+				(allow ARG1 file read_fifo_file_perms)
+				(allow ARG1 file list_dir_perms)
+				(allow ARG1 file read_lnk_file_perms)
+				(allow ARG1 file read_sock_file_perms)))
+
+		(block manage_blk
+			(blockabstract manage_blk)
+			(macro manage ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file manage_file_perms)
+				(allow ARG1 file manage_fifo_file_perms)
+				(allow ARG1 file manage_dir_perms)
+				(allow ARG1 file manage_lnk_file_perms)
+				(allow ARG1 file manage_sock_file_perms)))
+
+		(block relabel_blk
+			(blockabstract relabel_blk)
+			(macro relabel ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file relabel_file_perms)
+				(allow ARG1 file relabel_fifo_file_perms)
+				(allow ARG1 file relabel_dir_perms)
+				(allow ARG1 file relabel_lnk_file_perms)
+				(allow ARG1 file relabel_sock_file_perms)))
+
+		(blockinherit list_blk)
+		(blockinherit search_blk)
+		(blockinherit rw_dirs_blk)
+		(blockinherit manage_dirs_blk)
+		(blockinherit read_files_blk)
+		(blockinherit rw_files_blk)
+		(blockinherit manage_files_blk)
+		(blockinherit read_fifo_files_blk)
+		(blockinherit manage_fifo_files_blk)
+		(blockinherit read_lnk_files_blk)
+		(blockinherit manage_lnk_files_blk)
+		(blockinherit read_sock_files_blk)
+	        (blockinherit manage_sock_files_blk)
+	        (blockinherit read_blk)
+	        (blockinherit manage_blk)
+	        (blockinherit relabel_blk)
+
+		(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+			(call fs.tmpfs_obj_type_transition (ARG1 file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file fifo_file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file lnk_file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file sock_file "*")))))
+
+(in web_content
+	(macro cgi_client_subj ((type ARG1)(role ARG2))
+		(roleattributeset cgi_client_role_attribute ARG2)
+		(typeattributeset cgi_client_subj_type_attribute ARG1))
+
+	(macro list ((type ARG1))
+		(allow ARG1 obj_type_attribute list_dir_perms))
+
+	(macro search ((type ARG1))
+		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro rw_dirs ((type ARG1))
+		(allow ARG1 obj_type_attribute rw_dir_perms))
+
+	(macro read_files ((type ARG1))
+		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro rw_files ((type ARG1))
+		(call rw_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro manage_files ((type ARG1))
+		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_fifo_files ((type ARG1))
+		(call read_fifo_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro manage_fifo_files ((type ARG1))
+		(call manage_fifo_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_lnk_files ((type ARG1))
+		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro manage_lnk_files ((type ARG1))
+		(call manage_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_sock_files ((type ARG1))
+		(call read_sock_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro manage_sock_files ((type ARG1))
+		(call manage_sock_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_all ((type ARG1))
+		(allow ARG1 obj_type_attribute read_file_perms)
+		(allow ARG1 obj_type_attribute read_fifo_file_perms)
+		(allow ARG1 obj_type_attribute list_dir_perms)
+		(allow ARG1 obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 obj_type_attribute read_sock_file_perms))
+
+	(macro manage_all ((type ARG1))
+		(allow ARG1 obj_type_attribute manage_file_perms)
+		(allow ARG1 obj_type_attribute manage_fifo_file_perms)
+		(allow ARG1 obj_type_attribute manage_dir_perms)
+		(allow ARG1 obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 obj_type_attribute manage_sock_file_perms))
+
+	(macro relabel_all ((type ARG1))
+		(call search (ARG1))
+		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(allow ARG1 obj_type_attribute relabel_fifo_file_perms)
+		(allow ARG1 obj_type_attribute relabel_dir_perms)
+		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 obj_type_attribute relabel_sock_file_perms)))
+
+(in web_content_cgi
+	(macro exec_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call exec_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro search_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro read_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute read_file_perms)
+		(allow ARG1 obj_type_attribute list_dir_perms)
+		(allow ARG1 obj_type_attribute read_lnk_file_perms))
+
+	(macro manage_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute manage_file_perms)
+		(allow ARG1 obj_type_attribute manage_dir_perms)
+		(allow ARG1 obj_type_attribute manage_lnk_file_perms))
+
+	(macro relabel_all ((type ARG1))
+		(call search_all (ARG1))
+		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(allow ARG1 obj_type_attribute relabel_dir_perms)
+		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)))
+
+(in web_content_ra
+	(macro search_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro read_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute read_file_perms)
+		(allow ARG1 obj_type_attribute list_dir_perms)
+		(allow ARG1 obj_type_attribute read_lnk_file_perms))
+
+	(macro manage_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute manage_file_perms)
+		(allow ARG1 obj_type_attribute manage_dir_perms)
+		(allow ARG1 obj_type_attribute manage_lnk_file_perms))
+
+	(macro relabel_all ((type ARG1))
+		(call search_all (ARG1))
+		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(allow ARG1 obj_type_attribute relabel_dir_perms)
+		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)))
+
+(in web_content_ro
+	(macro search_all ((type ARG1))
+		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro read_all ((type ARG1))
+		(allow ARG1 obj_type_attribute read_file_perms)
+		(allow ARG1 obj_type_attribute list_dir_perms)
+		(allow ARG1 obj_type_attribute read_lnk_file_perms))
+
+	(macro manage_all ((type ARG1))
+		(allow ARG1 obj_type_attribute manage_file_perms)
+		(allow ARG1 obj_type_attribute manage_dir_perms)
+		(allow ARG1 obj_type_attribute manage_lnk_file_perms))
+
+	(macro relabel_all ((type ARG1))
+		(call search_all (ARG1))
+		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(allow ARG1 obj_type_attribute relabel_dir_perms)
+		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)))
+
+(in web_content_rw
+	(macro search_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro read_all ((type ARG1))
+		(allow ARG1 obj_type_attribute read_file_perms)
+		(allow ARG1 obj_type_attribute read_fifo_file_perms)
+		(allow ARG1 obj_type_attribute list_dir_perms)
+		(allow ARG1 obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 obj_type_attribute read_sock_file_perms))
+
+	(macro manage_all ((type ARG1))
+		(allow ARG1 obj_type_attribute manage_file_perms)
+		(allow ARG1 obj_type_attribute manage_fifo_file_perms)
+		(allow ARG1 obj_type_attribute manage_dir_perms)
+		(allow ARG1 obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 obj_type_attribute manage_sock_file_perms))
+
+	(macro relabel_all ((type ARG1))
+		(call search_all (ARG1))
+		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(allow ARG1 obj_type_attribute relabel_fifo_file_perms)
+		(allow ARG1 obj_type_attribute relabel_dir_perms)
+		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 obj_type_attribute relabel_sock_file_perms)))

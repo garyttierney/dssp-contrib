@@ -6,26 +6,26 @@
 
 		(typeattributeset .web_content.obj_type_attribute obj_type_attribute)
 
-		(macro search_all ((type ARG1))
+		(macro search ((type ARG1))
 			(call web_content_ro.search (ARG1))
 			(allow ARG1 obj_type_attribute search_dir_perms))
 
-		(macro read_all ((type ARG1))
+		(macro read ((type ARG1))
 			(allow ARG1 obj_type_attribute read_file_perms)
 			(allow ARG1 obj_type_attribute read_fifo_file_perms)
 			(allow ARG1 obj_type_attribute list_dir_perms)
 			(allow ARG1 obj_type_attribute read_lnk_file_perms)
 			(allow ARG1 obj_type_attribute read_sock_file_perms))
 
-		(macro manage_all ((type ARG1))
+		(macro manage ((type ARG1))
 			(allow ARG1 obj_type_attribute manage_file_perms)
 			(allow ARG1 obj_type_attribute manage_fifo_file_perms)
 			(allow ARG1 obj_type_attribute manage_dir_perms)
 			(allow ARG1 obj_type_attribute manage_lnk_file_perms)
 			(allow ARG1 obj_type_attribute manage_sock_file_perms))
 
-		(macro relabel_all ((type ARG1))
-			(call search_all (ARG1))
+		(macro relabel ((type ARG1))
+			(call search (ARG1))
 			(allow ARG1 obj_type_attribute relabel_file_perms)
 			(allow ARG1 obj_type_attribute relabel_fifo_file_perms)
 			(allow ARG1 obj_type_attribute relabel_dir_perms)

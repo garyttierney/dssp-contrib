@@ -76,7 +76,7 @@
 		(call web_content_rw.manage_lnk_files (subj))
 		(call web_content_rw.manage_sock_files (subj))
 
-		(call web_content_rw.tmpfs_obj_type_transition_tmpfs (subj))
+		(call web_content_rw.tmpfs_obj_type_transition_web_content_rw (subj))
 
 		(block list_blk
 			(blockabstract list_blk)
@@ -458,7 +458,7 @@
 	        (blockinherit manage_blk)
 	        (blockinherit relabel_blk)
 
-		(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(macro tmpfs_obj_type_transition_web_content_rw ((type ARG1))
 			(call fs.tmpfs_obj_type_transition (ARG1 file dir "*"))
 			(call fs.tmpfs_obj_type_transition (ARG1 file file "*"))
 			(call fs.tmpfs_obj_type_transition (ARG1 file fifo_file "*"))

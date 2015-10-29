@@ -24,7 +24,10 @@
 	(filecon "/usr/lib/systemd/system/[^/]*suspend.*" file unit_file_context))
 
 (in sd_unit_runtime
-	(filecon "/var/run/systemd/system(/.*)?" any unit_file_context))
+	(filecon "/var/run/systemd/system(/.*)?" any unit_file_context)
+	(filecon "/var/run/systemd/generator(/.*)?" any unit_file_context)
+	(filecon "/var/run/systemd/generator\.early(/.*)?" any unit_file_context)
+	(filecon "/var/run/systemd/generator\.late(/.*)?" any unit_file_context))
 
 (in sd_private
 	(filecon "/var/run/systemd/private" socket runtime_file_context))

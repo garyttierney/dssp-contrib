@@ -1,3 +1,232 @@
+(block sshd_blk
+	(blockabstract sshd_blk)
+
+	(block sshd
+	        (typeattribute adm_subj_type_attribute)
+	        (typeattribute subj_type_attribute)
+
+	        (typeattribute obj_type_attribute)
+
+	        (typeattribute config_obj_type_attribute)
+	        (typeattribute port_obj_type_attribute)
+	        (typeattribute runtime_obj_type_attribute)
+
+		(typeattributeset ssh.adm_subj_type_attribute adm_subj_type_attribute)
+
+		(typeattributeset .sshd.obj_type_attribute obj_type_attribute)
+
+		(typeattributeset .sshd.config_obj_type_attribute config_obj_type_attribute)
+		(typeattributeset .sshd.port_obj_type_attribute port_obj_type_attribute)
+		(typeattributeset .sshd.runtime_obj_type_attribute runtime_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset sshd.subj_type_attribute subj)
+
+		(typeattributeset .sshd.subj_type_attribute subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit net.reserved_port_obj_blk)
+
+		(typeattributeset sshd.port_obj_type_attribute port)
+
+		(allow subj port (tcp_socket (name_bind)))
+
+		(blockinherit file.config_obj_blk)
+
+		(typeattributeset sshd.obj_type_attribute config_file)
+		(typeattributeset sshd.config_obj_type_attribute config_file)
+
+		(call read_files_pattern (subj config_file config_file))
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset sshd.obj_type_attribute runtime_file)
+		(typeattributeset sshd.runtime_obj_type_attribute runtime_file)
+
+		(allow subj runtime_file manage_file_perms)
+		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
+
+		(blockinherit term.login_pty_obj_blk)
+
+		(allow subj login_pty_dev rw_term_perms)
+		(allow subj login_pty_dev (chr_file (setattr)))
+		(allow subj login_pty_dev relabelfrom_chr_file_perms)
+		(call term.create_pty (subj login_pty_dev))
+
+		(call exec (subj))
+
+	        (allow subj sshd_net.subj (process (signal sigkill)))
+
+	        (call dynamic_subj_type_transition_pattern (subj sshd_net.subj))
+
+	        (allow subj sshd_key.file read_file_perms)
+
+		(optional sshd_blk_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset sshd.obj_type_attribute unit_file)
+
+			(allow sshd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	        (allow adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	        (call ps_subj_pattern (adm_subj_type_attribute sshd.subj_type_attribute))
+
+	        (call file.search_config (adm_subj_type_attribute))
+	        (call file.search_runtime (adm_subj_type_attribute))
+
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute manage_dir_perms)
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute manage_file_perms)
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute manage_lnk_file_perms)
+
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute relabel_dir_perms)
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute relabel_file_perms)
+	        (allow adm_subj_type_attribute sshd.obj_type_attribute relabel_lnk_file_perms)
+
+	        (allow adm_subj_type_attribute sshd_keygen.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	        (call ps_subj_pattern (adm_subj_type_attribute sshd_keygen.subj_type_attribute))
+
+	        (call sshd.search_config (adm_subj_type_attribute))
+
+	        (allow adm_subj_type_attribute sshd_key.obj_type_attribute manage_file_perms)
+
+	        (allow adm_subj_type_attribute sshd_key.obj_type_attribute relabel_file_perms)
+
+	        (allow adm_subj_type_attribute sshd_net.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	        (call ps_subj_pattern (adm_subj_type_attribute sshd_net.subj_type_attribute))
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit file.search_config_blk)
+		(blockinherit file.list_config_blk)
+		(blockinherit file.rw_config_dirs_blk)
+		(blockinherit file.read_config_files_blk)
+		(blockinherit file.read_config_lnk_files_blk)
+		(blockinherit file.read_config_blk)
+		(blockinherit file.manage_config_blk)
+		(blockinherit file.relabel_config_blk)
+
+		(blockinherit file.search_all_config_blk)
+		(blockinherit file.list_all_config_blk)
+		(blockinherit file.rw_all_config_dirs_blk)
+		(blockinherit file.read_all_config_files_blk)
+		(blockinherit file.read_all_config_lnk_files_blk)
+		(blockinherit file.read_all_config_blk)
+		(blockinherit file.manage_all_config_blk)
+		(blockinherit file.relabel_all_config_blk)
+
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.manage_runtime_files_blk)
+		(blockinherit file.relabel_runtime_files_blk)
+
+		(blockinherit net.tcp_connect_port_blk)
+		(blockinherit net.tcp_bind_reserved_port_blk)
+		(blockinherit net.udp_bind_reserved_port_blk)
+
+		(blockinherit subj.use_fd_blk)
+
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+		(blockinherit subj.rw_inherited_unix_dgram_sockets_blk)
+
+		(macro rw_inherited_tcp_sockets ((type ARG1))
+			(call use_fd (ARG1))
+			(allow ARG1 subj (tcp_socket (read write getopt setopt getattr))))
+
+		(blockinherit subj.rw_inherited_fifo_files_blk)
+
+		(macro adm ((type ARG1)(role ARG2))
+			(typeattributeset sshd.adm_subj_type_attribute ARG1)
+			(optional sshd_adm_optional_sd
+				(call sd.daemon_adm_subj_type (ARG1)))
+			(optional sshd_adm_optional_sd_askpwd
+				(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+	(block sshd_key
+		(typeattribute obj_type_attribute)
+
+		(blockinherit file.obj_blk)
+
+		(typeattributeset sshd_key.obj_type_attribute file)
+
+		(typeattributeset .sshd.obj_type_attribute obj_type_attribute)
+		(typeattributeset .sshd_key.obj_type_attribute obj_type_attribute)
+
+		(macro read_files ((type ARG1))
+			(call sshd.search_config (ARG1))
+			(allow ARG1 file read_file_perms))
+
+		(macro manage_files ((type ARG1))
+			(call sshd.rw_config_dirs (ARG1))
+			(allow ARG1 file manage_file_perms))
+
+		(macro relabel_files ((type ARG1))
+			(call sshd.search_config (ARG1))
+			(allow ARG1 file relabel_file_perms)))
+
+	(block sshd_keygen
+		(typeattribute subj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset sshd_keygen.subj_type_attribute subj)
+
+		(typeattributeset .sshd.subj_type_attribute subj_type_attribute)
+		(typeattributeset .sshd_keygen.subj_type_attribute subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(allow subj sshd_key.file manage_file_perms)
+		(call obj_type_transition_pattern (subj sshd.config_file sshd_key.file file "*"))
+
+		(optional sshd_keygen_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset sshd.obj_type_attribute unit_file)
+
+			(allow sshd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk))
+
+	(block sshd_net
+		(typeattribute subj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset sshd_net.subj_type_attribute subj)
+
+		(typeattributeset .sshd.subj_type_attribute subj_type_attribute)
+		(typeattributeset .sshd_net.subj_type_attribute subj_type_attribute)
+
+		(roletype sys.role subj)
+
+		(allow subj sshd.subj (fd (use)))
+
+		(allow subj sshd.subj rw_inherited_fifo_file_perms)
+		(allow subj sshd.subj rw_tcp_socket_perms)
+		(allow subj sshd.subj rw_inherited_unix_dgram_socket_perms)
+		(allow subj sshd.subj rw_inherited_unix_stream_socket_perms)))
+
 (in ssh
 	(macro login_subj_type ((type ARG1))
 		(typeattributeset login_subj_type_attribute ARG1))
@@ -18,71 +247,6 @@
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
 (in sshd
-	(block subj_blk
-		(blockabstract subj_blk)
-
-		(blockinherit subj.common_subj_blk)
-
-		(typeattributeset sshd.subj_type_attribute subj)
-
-		(blockinherit cmd.obj_blk)
-
-		(call subj.entry (subj cmd_file))
-
-		(roletype sys.role subj)
-
-		(blockinherit net.reserved_port_obj_blk)
-
-		(typeattributeset sshd.port_obj_type_attribute port)
-
-		(blockinherit file.config_obj_blk)
-
-		(typeattributeset sshd.obj_type_attribute config_file)
-		(typeattributeset sshd.config_obj_type_attribute config_file)
-
-		(blockinherit file.runtime_obj_blk)
-
-		(typeattributeset sshd.obj_type_attribute runtime_file)
-		(typeattributeset sshd.runtime_obj_type_attribute runtime_file)
-
-		(blockinherit term.login_pty_obj_blk)
-
-		(allow subj runtime_file manage_file_perms)
-		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
-
-		(allow subj login_pty_dev rw_term_perms)
-		(allow subj login_pty_dev (chr_file (setattr)))
-		(allow subj login_pty_dev relabelfrom_chr_file_perms)
-		(call term.create_pty (subj login_pty_dev))
-
-		(call read_files_pattern (subj config_file config_file))
-
-		(allow subj port (tcp_socket (name_bind)))
-
-		(optional ssh_sshd_blk_optional_sd
-			(call sd.daemon (subj cmd_file))
-
-			(blockinherit sd.unit_obj_blk)
-
-			(typeattributeset sshd.obj_type_attribute unit_file)
-
-			(allow ssh.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
-
-	(blockinherit exec_blk)
-
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit subj.send_signal_blk)
-
-	(blockinherit file.search_config_blk)
-	(blockinherit file.list_config_blk)
-	(blockinherit file.rw_config_dirs_blk)
-	(blockinherit file.read_config_files_blk)
-	(blockinherit file.read_config_lnk_files_blk)
-	(blockinherit file.read_config_blk)
-	(blockinherit file.manage_config_blk)
-	(blockinherit file.relabel_config_blk)
-
 	(blockinherit file.search_all_config_blk)
 	(blockinherit file.list_all_config_blk)
 	(blockinherit file.rw_all_config_dirs_blk)
@@ -92,120 +256,40 @@
 	(blockinherit file.manage_all_config_blk)
 	(blockinherit file.relabel_all_config_blk)
 
-	(blockinherit file.read_runtime_files_blk)
-	(blockinherit file.manage_runtime_files_blk)
-	(blockinherit file.relabel_runtime_files_blk)
-
 	(blockinherit file.read_all_runtime_files_blk)
 	(blockinherit file.manage_all_runtime_files_blk)
 	(blockinherit file.relabel_all_runtime_files_blk)
 
-	(blockinherit net.tcp_connect_port_blk)
-	(blockinherit net.tcp_bind_reserved_port_blk)
-	(blockinherit net.udp_bind_reserved_port_blk)
-
 	(macro tcp_connect_all_port ((type ARG1))
-		(allow ARG1 sshd.port_obj_type_attribute (tcp_socket (name_connect))))
+		(allow ARG1 port_obj_type_attribute (tcp_socket (name_connect))))
 
 	(macro tcp_bind_all_reserved_port ((type ARG1))
 		(allow ARG1 self (capability (net_bind_service)))
-		(allow ARG1 sshd.port_obj_type_attribute (tcp_socket (name_bind))))
+		(allow ARG1 port_obj_type_attribute (tcp_socket (name_bind))))
 
-	(macro udp_bind_all_reserved_port ((type ARG1))
-		(allow ARG1 self (capability (net_bind_service)))
-		(allow ARG1 sshd.port_obj_type_attribute (udp_socket (name_bind))))
-
-	(blockinherit subj.use_fd_blk)
 	(blockinherit subj.use_fd_all_blk)
-
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-	(blockinherit subj.rw_inherited_unix_dgram_sockets_blk)
-
-	(macro rw_inherited_tcp_sockets ((type ARG1))
-		(call use_fd (ARG1))
-		(allow ARG1 subj (tcp_socket (read write getopt setopt getattr))))
-
-	(blockinherit subj.rw_inherited_fifo_files_blk)
 
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
 	(blockinherit subj.rw_inherited_unix_dgram_sockets_all_blk)
 
 	(macro rw_inherited_tcp_sockets_all_subj ((type ARG1))
 		(call use_fd_all_subj (ARG1))
-		(allow ARG1 sshd.subj_type_attribute (tcp_socket (read write getopt setopt getattr))))
+		(allow ARG1 subj_type_attribute (tcp_socket (read write getopt setopt getattr))))
 
 	(blockinherit subj.rw_inherited_fifo_files_all_blk))
 
 (in sshd_key
-	(block obj_blk
-		(blockabstract obj_blk)
-
-		(blockinherit file.obj_blk)
-
-		(typeattributeset sshd_key.obj_type_attribute file))
-
-	(macro read_files ((type ARG1))
-		(call sshd.search_config (ARG1))
-		(allow ARG1 sshd_key.file read_file_perms))
-
-	(macro manage_files ((type ARG1))
-		(call sshd.rw_config_dirs (ARG1))
-		(allow ARG1 sshd_key.file manage_file_perms))
-
-	(macro relabel_files ((type ARG1))
-		(call sshd.search_config (ARG1))
-		(allow ARG1 sshd_key.file relabel_file_perms))
-
 	(macro read_all_files ((type ARG1))
 		(call sshd.search_all_config (ARG1))
-		(allow ARG1 sshd_key.obj_type_attribute read_file_perms))
+		(allow ARG1 obj_type_attribute read_file_perms))
 
 	(macro manage_all_files ((type ARG1))
 		(call sshd.rw_all_config_dirs (ARG1))
-		(allow ARG1 sshd_key.obj_type_attribute manage_file_perms))
+		(allow ARG1 obj_type_attribute manage_file_perms))
 
 	(macro relabel_all_files ((type ARG1))
 		(call sshd.search_all_config (ARG1))
-		(allow ARG1 sshd_key.obj_type_attribute relabel_file_perms)))
-
-(in sshd_keygen
-	(block subj_blk
-		(blockabstract subj_blk)
-
-		(blockinherit subj.common_subj_blk)
-
-		(typeattributeset sshd_keygen.subj_type_attribute subj)
-
-		(blockinherit cmd.obj_blk)
-
-		(call subj.entry (subj cmd_file))
-
-		(roletype sys.role subj)
-
-		(optional ssh_sshd_keygen_optional_sd
-			(call sd.daemon (subj cmd_file))
-
-			(blockinherit sd.unit_obj_blk)
-
-			(typeattributeset sshd.obj_type_attribute unit_file)
-
-			(allow ssh.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
-
-	(blockinherit exec_blk)
-
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit subj.send_signal_blk))
-
-(in sshd_net
-	(block subj_blk
-		(blockabstract subj_blk)
-
-		(blockinherit subj.common_subj_blk)
-
-		(typeattributeset sshd_net.subj_type_attribute subj)
-
-		(roletype sys.role subj)))
+		(allow ARG1 obj_type_attribute relabel_file_perms)))
 
 (in ssh_agent
 	(block subj_blk

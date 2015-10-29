@@ -12,26 +12,27 @@
 	(filecon "HOME_DIR/\.ssh(/.*)?" any home_user_file_context))
 
 (in sshd
-	(filecon "/usr/sbin/sshd" file cmd_file_context)
-	(filecon "/etc/ssh(/.*)" any config_file_context)
-	(filecon "/etc/sysconfig/sshd" file config_file_context)
-	(filecon "/var/run/sshd\.pid" file runtime_file_context)
+	(block sshd
+		(filecon "/usr/sbin/sshd" file cmd_file_context)
+		(filecon "/etc/ssh(/.*)" any config_file_context)
+		(filecon "/etc/sysconfig/sshd" file config_file_context)
+		(filecon "/var/run/sshd\.pid" file runtime_file_context)
 
-	(portcon "tcp" 22 port_obj_context)
-	(portcon "udp" 22 port_obj_context)
+		(portcon "tcp" 22 port_obj_context)
+		(portcon "udp" 22 port_obj_context)
 
-	(optional sshd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*sshd.*" file unit_file_context)))
+		(optional sshd_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*sshd.*" file unit_file_context)))
 
-(in sshd_keygen
-	(filecon "/usr/sbin/sshd-keygen" file cmd_file_context)
+	(block sshd_keygen
+		(filecon "/usr/sbin/sshd-keygen" file cmd_file_context)
 
-	(optional sshd_keygen_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*sshd-keygen.*" file unit_file_context)))
+		(optional sshd_keygen_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*sshd-keygen.*" file unit_file_context)))
 
-(in sshd_key
-	(filecon "/etc/ssh/moduli.*" file file_file_context)
-	(filecon "/etc/ssh/ssh_host.*" file file_file_context))
+	(block sshd_key
+		(filecon "/etc/ssh/moduli.*" file file_file_context)
+		(filecon "/etc/ssh/ssh_host.*" file file_file_context)))
 
 (in ssh_helper
 	(filecon "/usr/libexec/openssh/ssh-pkcs11-helper" file cmd_file_context))

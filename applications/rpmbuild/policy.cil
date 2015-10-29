@@ -74,7 +74,7 @@
 		(call sd.search_unit_runtime (subj)))
 
 	(optional rpmbuild_optional_ssh
-		(call sshd_key.read_files (subj)))
+		(call sshd_key.read_all_files (subj)))
 
 	(optional rpmbuild_optional_tetex
 		(call pdftex.run (subj role_attribute))))

@@ -205,13 +205,13 @@
 		(call usbutil.run (subj_type_attribute role)))
 
 	(optional wheel_optional_web_content_home
-		(call web_content_home.home_dir_obj_type_transition_web_content_ro (subj))
-		(call web_content_home.web_content_home_ro_obj_type_transition_web_content_cgi (subj))
-		(call web_content_home.web_content_home_ro_obj_type_transition_web_content_ra (subj))
-		(call web_content_home.web_content_home_ro_obj_type_transition_web_content_rw (subj))
-		(call web_content_home.web_content_cgi.exec (subj))
-		(call web_content_home.web_content.manage (subj))
-		(call web_content_home.web_content.relabel (subj)))
+		(call web_home.home_dir_obj_type_transition_web_home_ro (subj))
+		(call web_home.web_home_ro_obj_type_transition_web_home_cgi (subj))
+		(call web_home.web_home_ro_obj_type_transition_web_home_ra (subj))
+		(call web_home.web_home_ro_obj_type_transition_web_home_rw (subj))
+		(call web_home.web_content_cgi.exec (subj))
+		(call web_home.web_content.manage (subj))
+		(call web_home.web_content.relabel (subj)))
 
 	(optional wheel_optional_wodim
 		(call wodim.run (subj_type_attribute role)))

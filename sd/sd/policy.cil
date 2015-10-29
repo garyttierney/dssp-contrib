@@ -193,7 +193,8 @@
 
 	(call sd.auto_subj_type_transition (subj))
 	(call sd.exec (subj))
-	(call sd.manage_all_unit (subj))
+	(call sd.read_all_unit (subj))
+	(call sd.manage_unit_runtime (subj))
 	(call sd.relabelto_unit_runtime_dirs (subj))
 
 	(call sd_journald.list_var_log (subj))

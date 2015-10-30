@@ -53,6 +53,8 @@
 	(call hwdata.read_data (subj))
 	(call modules.read (subj))
 
+	(call usersubj.setattr_home_dir (subj))
+
 	(tunableif enable_mls
 		(false
 			(call file_context.default_context_obj_type_transition_config (subj))

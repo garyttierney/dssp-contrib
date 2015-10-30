@@ -19,7 +19,11 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
 
+	(call sys.list_node_sysfs (subj))
+	(call sys.search_memory_sysfs (subj))
+
 	(call cmd.exec (subj))
+	(call cmd.mmap_shell (subj))
 
 	(call dev.write_kmsg (subj))
 

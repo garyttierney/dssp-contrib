@@ -217,8 +217,6 @@
 (call sshd.rw_inherited_unix_stream_sockets_all_subj (ssh.login_subj_type_attribute))
 (call sshd.rw_inherited_unix_dgram_sockets_all_subj (ssh.login_subj_type_attribute))
 
-(call subj.dynamic_type_transition_subj_type (ssh.priv_login_subj_type_attribute))
-
 (call ssh.login_subj_type (ssh.priv_login_subj_type_attribute))
 
 (allow ssh.adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))

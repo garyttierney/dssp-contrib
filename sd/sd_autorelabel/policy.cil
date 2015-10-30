@@ -19,6 +19,8 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
 
+	(call sys.unix_stream_connectto (subj))
+
 	(call cmd.exec (subj))
 	(call cmd.mmap_shell (subj))
 

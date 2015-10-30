@@ -19,9 +19,6 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
 
-	(call sys.list_node_sysfs (subj))
-	(call sys.search_memory_sysfs (subj))
-
 	(call cmd.exec (subj))
 	(call cmd.mmap_shell (subj))
 
@@ -33,6 +30,7 @@
 	(call file.search_var_lib (subj))
 
 	(call fs.list_rootfs (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 
 	(call sec.set_enforce_mode (subj))
@@ -40,6 +38,8 @@
 	(call term.use_console (subj))
 
 	(call sulogin.auto_subj_type_transition (subj))
+
+	(call fstab.read (subj))
 
 	(call nss.client_subj_type (subj))
 

@@ -91,7 +91,8 @@
 
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
-	(call cmd.exec (subj_type_attribute))
+	(call cmd.mmap (subj_type_attribute))
+	(call cmd.mmap_shell (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 
@@ -105,6 +106,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
+
+	(call web_sys.web_content_cgi.list (httpd.subj))
 
 	(call web_sys.web_content_ra.list (httpd.subj))
 	(call web_sys.web_content_ra.add_entry (httpd.subj))

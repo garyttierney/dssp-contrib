@@ -16,7 +16,7 @@
 	(call manage_boot_flag_files (subj))
 	(call rootfs_obj_type_transition_boot_flag (subj))
 
-	(allow subj self (capability (dac_override)))
+	(allow subj self (capability (dac_override net_admin)))
 	(allow subj self (process (getsched)))
 
 	(call sys.unix_stream_connectto (subj))
@@ -28,6 +28,7 @@
 
 	(call file.getattr_all_tmpfs_files (subj))
 	(call file.list_all_tmpfs (subj))
+	(call file.list_var_tmp (subj))
 	(call file.read_config_files (subj))
 	(call file.search_var_lib (subj))
 
@@ -46,16 +47,22 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call file_context.read_config_files (subj))
 	(call load_policy.dontaudit_audit_access_cmd_files (subj))
+	(call policy_config.read_files (subj))
 	(call setfiles.auto_subj_type_transition (subj))
 	(call selinux_config.read_config_files (subj))
 
 	(call sd.reboot (subj))
+	(call sd.stream_connect (subj))
 
 	(call systemctl.exec (subj))
 
 	(optional sd_autorelabel_optional_plymouth
 		(call plymouth.exec (subj)))
+
+	(optional sd_autorelabel_optional_polkit
+		(call polkit_tty_agent.exec (subj)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

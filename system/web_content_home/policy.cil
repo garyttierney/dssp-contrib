@@ -7,5 +7,6 @@
 
 	(call usersubj.tmpfs_user_obj_type (web_home.web_content_rw.file))
 
-	(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
-	(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj)))
+	(optional web_content_home_optional_httpd
+		(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
+		(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj))))

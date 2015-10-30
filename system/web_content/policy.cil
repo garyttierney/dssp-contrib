@@ -35,5 +35,6 @@
 (block web_sys
 	(blockinherit web_content_blk)
 
-	(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
-	(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj)))
+	(optional web_content_optional_httpd
+		(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
+		(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj))))

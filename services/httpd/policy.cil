@@ -107,6 +107,8 @@
 
 	(call locale.read (subj_type_attribute))
 
+	(call usersubj.search_home_dir (subj_type_attribute))
+
 	(call web_sys.web_content_cgi.list (httpd.subj))
 
 	(call web_sys.web_content_ra.list (httpd.subj))
@@ -127,6 +129,25 @@
 	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (httpd.subj))
 
 	(call web_sys.web_content_cgi.auto_subj_type_transition (httpd.subj))
+
+	(call web_home.web_content_cgi.list (httpd.subj))
+
+	(call web_home.web_content_ra.list (httpd.subj))
+	(call web_home.web_content_ra.add_entry (httpd.subj))
+	(call web_home.web_content_ra.setattr_dirs (httpd.subj))
+
+	(call web_home.web_content_ra.append_files (httpd.subj))
+	(call web_home.web_content_ra.read_files (httpd.subj))
+	(call web_home.web_content_ra.create_files (httpd.subj))
+	(call web_home.web_content_ra.setattr_files (httpd.subj))
+
+	(call web_home.web_content_ro.list (httpd.subj))
+	(call web_home.web_content_ro.read_files (httpd.subj))
+	(call web_home.web_content_ro.read_lnk_files (httpd.subj))
+
+	(call web_home.web_content_rw.manage (httpd.subj))
+
+	(call web_home.web_content_cgi.auto_subj_type_transition (httpd.subj))
 
 	(optional httpd_optional_sd
 		(call sd.notify_subj_type (subj_type_attribute))

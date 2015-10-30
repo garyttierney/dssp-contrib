@@ -251,12 +251,8 @@
 	(blockinherit file.manage_all_runtime_files_blk)
 	(blockinherit file.relabel_all_runtime_files_blk)
 
-	(macro tcp_connect_all_port ((type ARG1))
-		(allow ARG1 port_obj_type_attribute (tcp_socket (name_connect))))
-
-	(macro tcp_bind_all_reserved_port ((type ARG1))
-		(allow ARG1 self (capability (net_bind_service)))
-		(allow ARG1 port_obj_type_attribute (tcp_socket (name_bind))))
+        (blockinherit net.tcp_connect_all_port_blk)
+        (blockinherit net.tcp_bind_all_reserved_port_blk)
 
 	(blockinherit subj.use_fd_all_blk)
 

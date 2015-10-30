@@ -275,6 +275,10 @@
 		(call hostname.manage_config_files (subj))
 		(call hostname.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_httpd
+		(call apachectl.run (subj_type_attribute role))
+		(call httpd.adm (subj role)))
+
 	(optional sysadm_optional_hwclock
 		(call hwclock.manage_config_files (subj))
 		(call hwclock.run (subj_type_attribute role)))

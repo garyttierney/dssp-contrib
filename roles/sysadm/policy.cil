@@ -276,6 +276,8 @@
 		(call hostname.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_httpd
+		(call apachectl.manage_tmpfs_user_files (subj))
+		(call apachectl.relabel_tmpfs_user_files (subj))
 		(call apachectl.run (subj_type_attribute role))
 		(call httpd.adm (subj role)))
 

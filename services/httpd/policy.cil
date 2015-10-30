@@ -7,9 +7,9 @@
 
 	(roletype role_attribute subj)
 
-	(blockinherit file.tmpfs_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(call manage_tmpfs_files (subj))
+	(call manage_tmpfs_user_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self (capability (dac_override net_admin)))

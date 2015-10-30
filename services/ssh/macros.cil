@@ -90,18 +90,6 @@
 	        (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	        (allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
 
-	        (allow adm_subj_type_attribute sshd_keygen.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-	        (call ps_subj_pattern (adm_subj_type_attribute sshd_keygen.subj_type_attribute))
-
-	        (call sshd.search_config (adm_subj_type_attribute))
-
-	        (allow adm_subj_type_attribute sshd_key.obj_type_attribute manage_file_perms)
-
-	        (allow adm_subj_type_attribute sshd_key.obj_type_attribute relabel_file_perms)
-
-	        (allow adm_subj_type_attribute sshd_net.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-	        (call ps_subj_pattern (adm_subj_type_attribute sshd_net.subj_type_attribute))
-
 		(blockinherit exec_blk)
 
 		(blockinherit auto_subj_type_transition_blk)

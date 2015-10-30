@@ -34,6 +34,8 @@
 
 		(blockinherit cmd.obj_blk)
 
+		(typeattributeset exec_obj_type_attribute cmd_file)
+
 		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
@@ -59,6 +61,7 @@
 		(typeattributeset runtime_obj_type_attribute runtime_file)
 
 		(allow subj runtime_file manage_dir_perms)
+		(allow subj runtime_file manage_file_perms)
 
 		(call file.runtime_obj_type_transition (subj runtime_file dir "*"))
 
@@ -94,6 +97,8 @@
 
 		(call file.var_log_obj_type_transition (subj var_log_file dir "*"))
 
+		(call suexec.auto_subj_type_transition (subj))
+
 		(optional httpd_blk_optional_logrotate
 			(call logrotate.var_log_obj_type (var_log_file)))
 
@@ -103,6 +108,7 @@
 			(blockinherit sd.unit_obj_blk)
 
 			(typeattributeset obj_type_attribute unit_file)
+			(typeattributeset unit_obj_type_attribute unit_file)
 
 			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
@@ -253,6 +259,8 @@
 
 		(blockinherit cmd.obj_blk)
 
+		(typeattributeset exec_obj_type_attribute cmd_file)
+
 		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
@@ -286,6 +294,12 @@
 		(blockinherit subj.send_signal_blk)))
 
 (in httpd
+	(macro exec_all ((type ARG1))
+		(call can_exec (ARG1 exec_obj_type_attribute)))
+
+	(macro status_start_stop_reload_all_sd_unit_subj_type ((type ARG1))
+		(typeattributeset status_start_stop_reload_all_sd_unit_subj_type_attribute ARG1))
+
 	(blockinherit net.tcp_connect_all_port_blk)
 	(blockinherit net.tcp_bind_all_reserved_port_blk)
 
@@ -336,6 +350,10 @@
 		(optional httpd_adm_optional_sd_askpwd
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
+(in suexec
+	(macro mmap_all ((type ARG1))
+		(allow ARG1 exec_obj_type_attribute mmap_file_perms)))
+
 (in apachectl
 	(blockinherit exec_blk)
 
@@ -343,7 +361,12 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.manage_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))))
 
 (in fcgistarter
 	(blockinherit exec_blk))

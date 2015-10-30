@@ -41,6 +41,8 @@
 
 		(typeattributeset subj_type_attribute subj)
 
+                (typeattributeset .web_content_cgi.subj_type_attribute subj_type_attribute)
+
 		(typeattributeset obj_type_attribute cmd_file)
 		(typeattributeset web_content.obj_type_attribute cmd_file)
 
@@ -70,11 +72,7 @@
 		(call web_content_ro.read_files (subj))
 		(call web_content_ro.read_lnk_files (subj))
 
-		(call web_content_rw.manage_dirs (subj))
-		(call web_content_rw.manage_files (subj))
-		(call web_content_rw.manage_fifo_files (subj))
-		(call web_content_rw.manage_lnk_files (subj))
-		(call web_content_rw.manage_sock_files (subj))
+		(call web_content_rw.manage (subj))
 
 		(call web_content_rw.tmpfs_obj_type_transition_web_content_rw (subj))
 

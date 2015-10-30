@@ -6,7 +6,12 @@
 	(roleattribute cgi_client_role_attribute))
 
 (block web_content_cgi
-	(typeattribute obj_type_attribute))
+	(typeattribute subj_type_attribute)
+	(typeattribute obj_type_attribute)
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
 
 (block web_content_ra
 	(typeattribute obj_type_attribute))
@@ -15,7 +20,9 @@
 	(typeattribute obj_type_attribute))
 
 (block web_content_rw
-	(typeattribute obj_type_attribute))
+	(typeattribute obj_type_attribute)
+
+	(call fs.associate_tmpfs (obj_type_attribute)))
 
 (block web_sys
 	(blockinherit web_content_blk))

@@ -5,7 +5,57 @@
 
 	(roleattributeset role_attribute sys.role)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (capability (dac_override net_admin)))
+	(allow subj self (process (setfscreate setexec)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call sec.validate_context (subj))
+
+	(call httpd.exec_all (subj))
+	(call httpd.status_start_stop_reload_all_sd_unit_subj_type (subj))
+	(call httpd.read_all_config (subj))
+	(call httpd.search_all_var_log (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call web_content_ro.search_all (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj))))
+
+        (optional apachectl_optional_sysbus
+                (call sysbus.client_subj_type (subj)))
+
+	(optional apachectl_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj))
+		(call polkit_tty_agent.exec (subj)))
+
+	(optional apachectl_optional_sd
+		(call sd.read_state (subj))
+		(call sd.search_unit_runtime (subj))
+		(call sd.stream_connect (subj)))
+
+	(optional apachectl_optional_sd_askpwd
+		(call sd_askpwd.read_runtime (subj))
+		(call sd_askpwd_agent.exec (subj))
+		(call sd_askpwd_agent.read_runtime_fifo_files (subj)))
+
+	(optional apachectl_optional_systemctl
+		(call systemctl.exec (subj))))
 
 (block fcgistarter
 	(blockinherit cmd.obj_blk))
@@ -14,11 +64,15 @@
 	(typeattribute subj_type_attribute))
 
 (block httpd
+	(typeattribute status_start_stop_reload_all_sd_unit_subj_type_attribute)
+
         (typeattribute adm_subj_type_attribute)
 
 	(typeattribute subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
+	(typeattribute exec_obj_type_attribute)
+	(typeattribute unit_obj_type_attribute)
 	(typeattribute config_obj_type_attribute)
 	(typeattribute port_obj_type_attribute)
 	(typeattribute runtime_obj_type_attribute)
@@ -26,13 +80,64 @@
 	(typeattribute var_lib_obj_type_attribute)
 	(typeattribute var_log_obj_type_attribute)
 
-	(blockinherit httpd_blk))
+	(blockinherit httpd_blk)
+
+	(allow subj_type_attribute self (capability (setgid setuid kill)))
+	(allow subj_type_attribute self (process (getpgid)))
+	(allow subj_type_attribute self create_sem_perms)
+	(allow subj_type_attribute self create_shm_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+
+	(call http.tcp_bind_reserved_port (httpd.subj))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call web_sys.web_content_ra.list (httpd.subj))
+	(call web_sys.web_content_ra.add_entry (httpd.subj))
+	(call web_sys.web_content_ra.setattr_dirs (httpd.subj))
+
+	(call web_sys.web_content_ra.append_files (httpd.subj))
+	(call web_sys.web_content_ra.read_files (httpd.subj))
+	(call web_sys.web_content_ra.create_files (httpd.subj))
+	(call web_sys.web_content_ra.setattr_files (httpd.subj))
+
+	(call web_sys.web_content_ro.list (httpd.subj))
+	(call web_sys.web_content_ro.read_files (httpd.subj))
+	(call web_sys.web_content_ro.read_lnk_files (httpd.subj))
+
+	(call web_sys.web_content_rw.manage (httpd.subj))
+
+	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (httpd.subj))
+
+	(call web_sys.web_content_cgi.auto_subj_type_transition (httpd.subj))
+
+	(optional httpd_optional_sd
+		(call sd.notify_subj_type (subj_type_attribute))
+		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
+
+		(allow status_start_stop_reload_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload)))))
 
 (block rotatelogs
 	(typeattribute subj_type_attribute))
 
 (block suexec
-	(typeattribute subj_type_attribute))
+	(typeattribute subj_type_attribute)
+
+	(typeattribute exec_obj_type_attribute))
 
 (allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (httpd.adm_subj_type_attribute httpd.subj_type_attribute))

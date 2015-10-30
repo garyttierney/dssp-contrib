@@ -370,6 +370,7 @@
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
 	(allow notify_subj_type_attribute self (unix_dgram_socket (sendto)))
+	(call sys.unix_dgram_sendto (notify_subj_type_attribute))
 	(call dgram_send_notify (notify_subj_type_attribute))
 
 	(call rw_inherited_unix_stream_sockets (forked_subj_type_attribute))

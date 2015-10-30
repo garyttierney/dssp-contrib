@@ -59,7 +59,10 @@
 	(call usersubj.dontaudit_manual_subj_type_transition_common_subj (subj_type_attribute))
 	(call usersubj.relabel_ptys (subj_type_attribute))
 	(call usersubj.setattr_ptys (subj_type_attribute))
-	(call usersubj.use_ptys (subj_type_attribute)))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional sshd_optional_sd
+		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))))
 
 (block sshd_key
 	(typeattribute obj_type_attribute))

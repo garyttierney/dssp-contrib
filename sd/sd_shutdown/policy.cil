@@ -6,6 +6,7 @@
 	(allow subj self create_unix_stream_socket_perms)
 	(allow subj self manage_fifo_file_perms)
 
+	(call sys.get_sysvipc_info (subj))
 	(call sys.manual_subj_type_transition (subj))
 	(call sys.mounton_mountpoint_dirs (subj))
 	(call sys.request_load_module (subj))

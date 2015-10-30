@@ -23,6 +23,7 @@
 	(call sys.read_state_files (subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.write_inherited_devpts_chr_files (subj_type_attribute))
 
 	(call term.use_inherited_console (subj_type_attribute))
@@ -66,7 +67,10 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
-	(optional subj_type_attributer_optional_sd_machined
+	(optional subj_type_attribute_optional_sd_initctl
+		(call sd_initctl.getattr_runtime_fifo_files (subj_type_attribute)))
+
+	(optional subj_type_attribute_optional_sd_machined
 		(call sd_machined.read_runtime (subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_sd_nspawn_container

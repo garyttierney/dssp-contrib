@@ -82,12 +82,13 @@
 
 	(blockinherit httpd_blk)
 
-	(allow subj_type_attribute self (capability (setgid setuid kill)))
+	(allow subj_type_attribute self (capability (dac_override setgid setuid kill)))
 	(allow subj_type_attribute self (process (getpgid)))
 	(allow subj_type_attribute self create_sem_perms)
 	(allow subj_type_attribute self create_shm_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self (unix_stream_socket (connectto listen accept)))
 
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
@@ -109,7 +110,7 @@
 
 	(call usersubj.search_home_dir (subj_type_attribute))
 
-	(call web_sys.web_content_cgi.list (httpd.subj))
+	(call web_sys.web_content_cgi.search (httpd.subj))
 
 	(call web_sys.web_content_ra.list (httpd.subj))
 	(call web_sys.web_content_ra.add_entry (httpd.subj))
@@ -130,7 +131,7 @@
 
 	(call web_sys.web_content_cgi.auto_subj_type_transition (httpd.subj))
 
-	(call web_home.web_content_cgi.list (httpd.subj))
+	(call web_home.web_content_cgi.search (httpd.subj))
 
 	(call web_home.web_content_ra.list (httpd.subj))
 	(call web_home.web_content_ra.add_entry (httpd.subj))
@@ -161,7 +162,16 @@
 (block suexec
 	(typeattribute subj_type_attribute)
 
-	(typeattribute exec_obj_type_attribute))
+	(typeattribute exec_obj_type_attribute)
+
+	(call usersubj.search_home_dir (subj_type_attribute))
+
+	(call web_home.web_content_cgi.search (httpd.suexec.subj))
+
+	(call web_home.web_content_cgi.auto_subj_type_transition (httpd.suexec.subj))
+
+	(optional suexec_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute))))
 
 (allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 (call ps_subj_pattern (httpd.adm_subj_type_attribute httpd.subj_type_attribute))

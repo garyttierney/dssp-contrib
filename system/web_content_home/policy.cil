@@ -5,4 +5,7 @@
 	(call usersubj.home_user_obj_type (web_home.web_content_ra.file))
 	(call usersubj.home_user_obj_type (web_home.web_content_ro.file))
 
-	(call usersubj.tmpfs_user_obj_type (web_home.web_content_rw.file)))
+	(call usersubj.tmpfs_user_obj_type (web_home.web_content_rw.file))
+
+	(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
+	(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj)))

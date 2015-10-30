@@ -9,10 +9,15 @@
 	(typeattribute subj_type_attribute)
 	(typeattribute obj_type_attribute)
 
-	(call cmd.audit_read_access_cmd_files (subj_type_attribute))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
 	(call cmd.audit_read_access_shell_files (subj_type_attribute))
 
+	(call cmd.exec (subj_type_attribute))
+
 	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute)))
 
@@ -28,4 +33,7 @@
 	(call fs.associate_tmpfs (obj_type_attribute)))
 
 (block web_sys
-	(blockinherit web_content_blk))
+	(blockinherit web_content_blk)
+
+	(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
+	(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj)))

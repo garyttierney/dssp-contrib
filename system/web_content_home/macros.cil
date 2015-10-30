@@ -7,6 +7,7 @@
 		(call obj_type_transition_pattern (ARG1 web_content_ro.file ARG2 ARG3 ARG4)))
 
 	(macro web_home_ro_obj_type_transition_web_home_cgi ((type ARG1))
+		(call web_home_ro_obj_type_transition (ARG1 web_content_cgi.cmd_file dir "fcgi-bin"))
 		(call web_home_ro_obj_type_transition (ARG1 web_content_cgi.cmd_file dir "cgi-bin"))
 		(call web_home_ro_obj_type_transition (ARG1 web_content_cgi.cmd_file dir "scripts")))
 

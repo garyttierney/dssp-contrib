@@ -4,6 +4,7 @@
 
 	(block web_content_cgi
 		(filecon "/var/www(/.*)?/cgi-bin(/.*)?" any cmd_file_context)
+		(filecon "/var/www(/.*)?/fcgi-bin(/.*)?" any cmd_file_context)
 		(filecon "/var/www(/.*)?/scripts(/.*)?" any cmd_file_context))
 
 	(block web_content_ra

@@ -171,10 +171,11 @@
 		(call tor.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_web_content_home
+		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))
+		(call web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi (subj))
+		(call web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra (subj))
+		(call web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw (subj))
 		(call web_home.home_dir_obj_type_transition_web_home_ro (subj))
-		(call web_home.web_home_ro_obj_type_transition_web_home_cgi (subj))
-		(call web_home.web_home_ro_obj_type_transition_web_home_ra (subj))
-		(call web_home.web_home_ro_obj_type_transition_web_home_rw (subj))
 		(call web_home.web_content_cgi.exec (subj))
 		(call web_home.web_content.manage (subj))
 		(call web_home.web_content.relabel (subj)))

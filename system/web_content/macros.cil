@@ -10,6 +10,9 @@
 			(call web_content_ro.search (ARG1))
 			(allow ARG1 obj_type_attribute search_dir_perms))
 
+		(macro rw_dirs ((type ARG1))
+			(allow ARG1 obj_type_attribute rw_dir_perms))
+
 		(macro read ((type ARG1))
 			(allow ARG1 obj_type_attribute read_file_perms)
 			(allow ARG1 obj_type_attribute read_fifo_file_perms)
@@ -88,6 +91,12 @@
 				(call web_content_ro.search (ARG1))
 				(allow ARG1 cmd_file search_dir_perms)))
 
+		(block rw_dirs_blk
+			(blockabstract rw_dirs_blk)
+			(macro rw_dirs ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 cmd_file rw_dir_perms)))
+
 		(block exec_blk
 			(blockabstract exec_blk)
 			(macro exec ((type ARG1))
@@ -149,6 +158,13 @@
 				(allow ARG1 cmd_file relabel_dir_perms)
 				(allow ARG1 cmd_file relabel_lnk_file_perms)))
 
+		(block web_content_ro_obj_type_transition_web_content_cgi_blk
+			(blockabstract web_content_ro_obj_type_transition_web_content_cgi_blk)
+			(macro web_content_ro_obj_type_transition_web_content_cgi ((type ARG1))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "fcgi-bin"))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "cgi-bin"))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "scripts"))))
+
 		(blockinherit list_blk)
 		(blockinherit search_blk)
 		(blockinherit exec_blk)
@@ -159,7 +175,40 @@
 		(blockinherit read_lnk_files_blk)
 		(blockinherit read_blk)
 		(blockinherit manage_blk)
-		(blockinherit relabel_blk))
+		(blockinherit relabel_blk)
+		(blockinherit web_content_ro_obj_type_transition_web_content_cgi_blk))
+
+	(block web_content_htaccess
+		(blockinherit file.obj_blk)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattributeset obj_type_attribute file)
+		(typeattributeset web_content.obj_type_attribute file)
+
+		(typeattributeset .web_content_htaccess.obj_type_attribute file)
+
+		(block read_files_blk
+			(blockabstract read_files_blk)
+			(macro read_files ((type ARG1))
+				(call web_content.search (ARG1))
+				(allow ARG1 file read_file_perms)))
+
+		(block manage_files_blk
+			(blockabstract manage_files_blk)
+			(macro manage_files ((type ARG1))
+				(call web_content.rw_dirs (ARG1))
+				(allow ARG1 file manage_file_perms)))
+
+		(block web_content_obj_type_transition_web_content_htaccess_blk
+			(blockabstract web_content_obj_type_transition_web_content_htaccess_blk)
+			(macro web_content_obj_type_transition_web_content_htaccess ((type ARG1))
+				(call obj_type_transition_pattern (ARG1 web_content.obj_type_attribute file file ".htaccess"))
+				(call obj_type_transition_pattern (ARG1 web_content.obj_type_attribute file file ".htpasswd"))))
+
+		(blockinherit read_files_blk)
+		(blockinherit manage_files_blk)
+		(blockinherit web_content_obj_type_transition_web_content_htaccess_blk))
 
 	(block web_content_ra
 		(blockinherit file.obj_blk)
@@ -182,6 +231,12 @@
 			(macro search ((type ARG1))
 				(call web_content_ro.search (ARG1))
 				(allow ARG1 file search_dir_perms)))
+
+		(block rw_dirs_blk
+			(blockabstract rw_dirs_blk)
+			(macro rw_dirs ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file rw_dir_perms)))
 
 		(block add_entry_blk
 			(blockabstract add_entry_blk)
@@ -261,18 +316,26 @@
 				(allow ARG1 file relabel_dir_perms)
 				(allow ARG1 file relabel_lnk_file_perms)))
 
+		(block web_content_ro_obj_type_transition_web_content_ra_blk
+			(blockabstract web_content_ro_obj_type_transition_web_content_ra_blk)
+			(macro web_content_ro_obj_type_transition_web_content_ra ((type ARG1))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "log"))))
+
 		(blockinherit list_blk)
 		(blockinherit search_blk)
 		(blockinherit add_entry_blk)
 		(blockinherit setattr_dirs_blk)
 		(blockinherit append_files_blk)
 		(blockinherit read_files_blk)
+		(blockinherit rename_files_blk)
 		(blockinherit create_files_blk)
+		(blockinherit delete_files_blk)
 		(blockinherit setattr_files_blk)
 		(blockinherit read_lnk_files_blk)
 		(blockinherit read_blk)
 		(blockinherit manage_blk)
-		(blockinherit relabel_blk))
+		(blockinherit relabel_blk)
+		(blockinherit web_content_ro_obj_type_transition_web_content_ra_blk))
 
 	(block web_content_ro
 		(blockinherit file.obj_blk)
@@ -293,6 +356,11 @@
 			(blockabstract search_blk)
 			(macro search ((type ARG1))
 				(allow ARG1 file search_dir_perms)))
+
+		(block rw_dirs_blk
+			(blockabstract rw_dirs_blk)
+			(macro rw_dirs ((type ARG1))
+				(allow ARG1 file rw_dir_perms)))
 
 		(block read_files_blk
 			(blockabstract read_files_blk)
@@ -451,6 +519,12 @@
 				(allow ARG1 file relabel_lnk_file_perms)
 				(allow ARG1 file relabel_sock_file_perms)))
 
+		(block web_content_ro_obj_type_transition_web_content_rw_blk
+			(blockabstract web_content_ro_obj_type_transition_web_content_rw_blk)
+			(macro web_content_ro_obj_type_transition_web_content_rw ((type ARG1))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "incoming"))
+				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "uploads"))))
+
 		(blockinherit list_blk)
 		(blockinherit search_blk)
 		(blockinherit rw_dirs_blk)
@@ -467,6 +541,7 @@
 	        (blockinherit read_blk)
 	        (blockinherit manage_blk)
 	        (blockinherit relabel_blk)
+		(blockinherit web_content_ro_obj_type_transition_web_content_rw_blk)
 
 		(macro tmpfs_obj_type_transition_web_content_rw ((type ARG1))
 			(call fs.tmpfs_obj_type_transition (ARG1 file dir "*"))
@@ -564,6 +639,15 @@
 		(allow ARG1 obj_type_attribute relabel_file_perms)
 		(allow ARG1 obj_type_attribute relabel_dir_perms)
 		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)))
+
+(in web_content_htaccess
+	(macro read_files ((type ARG1))
+		(call web_content.search (ARG1))
+		(allow ARG1 file read_file_perms))
+
+	(macro manage_files ((type ARG1))
+		(call web_content.rw_dirs (ARG1))
+		(allow ARG1 file manage_file_perms)))
 
 (in web_content_ra
 	(macro search_all ((type ARG1))

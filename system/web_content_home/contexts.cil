@@ -7,6 +7,10 @@
 		(filecon "HOME_DIR/public_html(/.*)?/fcgi-bin(/.*)?" any cmd_file_context)
 		(filecon "HOME_DIR/public_html(/.*)?/scripts(/.*)?" any cmd_file_context))
 
+	(block web_content_htaccess
+		(filecon "HOME_DIR/public_html/.*/\.htaccess" file file_file_context)
+		(filecon "HOME_DIR/public_html/.*/\.htpasswd" file file_file_context))
+
 	(block web_content_ra
 		(filecon "HOME_DIR/public_html(/.*)?/log(/.*)?" any file_file_context))
 

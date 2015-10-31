@@ -112,6 +112,8 @@
 
 	(call web_sys.web_content_cgi.search (httpd.subj))
 
+	(call web_sys.web_content_htaccess.read_files (httpd.subj))
+
 	(call web_sys.web_content_ra.list (httpd.subj))
 	(call web_sys.web_content_ra.setattr_dirs (httpd.subj))
 
@@ -133,6 +135,8 @@
 	(call web_sys.web_content_cgi.auto_subj_type_transition (httpd.subj))
 
 	(call web_home.web_content_cgi.search (httpd.subj))
+
+	(call web_home.web_content_htaccess.read_files (httpd.subj))
 
 	(call web_home.web_content_ra.list (httpd.subj))
 	(call web_home.web_content_ra.setattr_dirs (httpd.subj))

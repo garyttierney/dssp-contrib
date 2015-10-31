@@ -395,11 +395,13 @@
 		(true
 			(context root_web_home_ro (sysadm.id sysadm.role web_home.web_content_ro.file (systemlow systemlow)))
 			(context root_web_home_cgi (sysadm.id sysadm.role web_home.web_content_cgi.cmd_file (systemlow systemlow)))
+			(context root_web_home_htaccess (sysadm.id sysadm.role web_home.web_content_htaccess.file (systemlow systemlow)))
 			(context root_web_home_ra (sysadm.id sysadm.role web_home.web_content_ra.file (systemlow systemlow)))
 			(context root_web_home_rw (sysadm.id sysadm.role web_home.web_content_rw.file (systemlow systemlow))))
 		(false
 			(context root_web_home_ro (sysadm.id object_r web_home.web_content_ro.file (systemlow systemlow)))
 			(context root_web_home_cgi (sysadm.id object_r web_home.web_content_cgi.cmd_file (systemlow systemlow)))
+			(context root_web_home_htaccess (sysadm.id object_r web_home.web_content_htaccess.file (systemlow systemlow)))
 			(context root_web_home_ra (sysadm.id object_r web_home.web_content_ra.file (systemlow systemlow)))
 			(context root_web_home_rw (sysadm.id object_r web_home.web_content_rw.file (systemlow systemlow)))))
 
@@ -407,6 +409,8 @@
 	(filecon "/root/public_html(/.*)?/cgi-bin(/.*)?" any root_web_home_cgi)
 	(filecon "/root/public_html(/.*)?/fcgi-bin(/.*)?" any root_web_home_cgi)
 	(filecon "/root/public_html(/.*)?/scripts(/.*)?" any root_web_home_cgi)
+	(filecon "/root/public_html/.*/\.htaccess" file root_web_home_htaccess)
+	(filecon "/root/public_html/.*/\.htpasswd" file root_web_home_htaccess)
 	(filecon "/root/public_html(/.*)?/log(/.*)?" any root_web_home_ra)
 	(filecon "/root/public_html(/.*)?/incoming(/.*)?" any root_web_home_rw)
 	(filecon "/root/public_html(/.*)?/uploads(/.*)?" any root_web_home_rw))

@@ -232,10 +232,16 @@
 		(typeattributeset httpd.runtime_obj_type_attribute runtime_file)
 
 		(allow subj runtime_file manage_dir_perms)
+		(allow subj runtime_file manage_file_perms)
+
 		(call obj_type_transition_pattern (subj httpd.runtime_file runtime_file dir "htcacheclean"))
+
+		(call httpd.list_var_cache (subj))
 
 		(optional htcacheclean_optional_sd
 			(call sd.daemon (subj cmd_file))
+
+			(call sd.daemon_pid_obj_type (runtime_file))
 
 			(blockinherit sd.unit_obj_blk)
 

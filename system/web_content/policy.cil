@@ -19,7 +19,15 @@
 
 	(call file.read_data_files (subj_type_attribute))
 
-	(call nss.client_subj_type (subj_type_attribute)))
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional web_content_cgi_optional_php
+		(call php.read_config (subj_type_attribute)))
+
+	(optional web_content_cgi_optional_phpcli
+		(call phpcli.exec (subj_type_attribute))))
 
 (block web_content_htaccess
 	(typeattribute obj_type_attribute))

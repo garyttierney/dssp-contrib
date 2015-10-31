@@ -5,4 +5,16 @@
 
 	(roleattributeset role_attribute sys.role)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home_user (subj))
+
+	(call locale.read (subj))
+	(call terminfo.read_all (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call php.read_config (subj)))

@@ -213,6 +213,18 @@
 				(call web_content_ro.search (ARG1))
 				(call create_files_pattern (ARG1 file file))))
 
+		(block delete_files_blk
+			(blockabstract delete_files_blk)
+			(macro delete_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call delete_files_pattern (ARG1 file file))))
+
+		(block rename_files_blk
+			(blockabstract rename_files_blk)
+			(macro rename_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(allow ARG1 file (file (rename)))))
+
 		(block setattr_files_blk
 			(blockabstract setattr_files_blk)
 			(macro setattr_files ((type ARG1))

@@ -417,6 +417,9 @@
 	(optional sysadm_optional_pcscd
 		(call pcscd.adm (subj role)))
 
+	(optional sysadm_optional_phpcli
+		(call phpcli.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_pinentry
 		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))

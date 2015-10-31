@@ -100,6 +100,9 @@
 		(call pass.relabel_home_user (subj))
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
+	(optional user_optional_phpcli
+		(call phpcli.run (subj_type_attribute role)))
+
 	(optional user_optional_pinentry
 		(call pinentry.run (subj_type_attribute role))
 		(call pinentry.manage_tmpfs_user_files (subj))

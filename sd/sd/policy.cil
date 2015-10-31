@@ -93,8 +93,8 @@
 	(allow subj socket_activated_obj_type_attribute manage_dir_perms)
 	(allow subj socket_activated_obj_type_attribute manage_sock_file_perms)
 
-	(allow subj daemon_pid_obj_type_attribute read_file_perms)
-	(allow subj daemon_pid_obj_type_attribute delete_file_perms)
+	(call read_files_pattern (subj daemon_pid_obj_type_attribute daemon_pid_obj_type_attribute))
+	(call delete_files_pattern (subj daemon_pid_obj_type_attribute daemon_pid_obj_type_attribute))
 
 	(allow subj daemon_rwdir_obj_type_attribute (dir (mounton)))
 

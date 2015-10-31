@@ -309,6 +309,8 @@
 		(typeattributeset .httpd.subj_type_attribute subj_type_attribute)
 		(typeattributeset .rotatelogs.subj_type_attribute subj_type_attribute)
 
+		(call httpd.append_var_log_files (subj))
+
 		(blockinherit cmd.obj_blk)
 
 		(call subj.entry (subj cmd_file))

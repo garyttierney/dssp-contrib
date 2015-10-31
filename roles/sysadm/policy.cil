@@ -418,7 +418,7 @@
 		(call pcscd.adm (subj role)))
 
 	(optional sysadm_optional_phpcli
-		(call phpcli.run (subj_type_attribute role))
+		(call phpcli.exec (subj_type_attribute))
 		(call phpcli.manage_home_user_files (subj))
 		(call phpcli.relabel_home_user_files (subj))
 		(call phpcli.home_dir_obj_type_transition_home_user (subj)))

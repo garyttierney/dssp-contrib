@@ -79,6 +79,7 @@
 		(call web_content_ra.setattr_files (subj))
 
 		(call web_content_ro.list (subj))
+		(call web_content_ro.dontaudit_audit_access_dirs (subj))
 		(call web_content_ro.read_files (subj))
 		(call web_content_ro.read_lnk_files (subj))
 
@@ -372,7 +373,7 @@
 		(block dontaudit_audit_access_dirs_blk
 			(blockabstract dontaudit_audit_access_dirs_blk)
 			(macro dontaudit_audit_access_dirs ((type ARG1))
-				(dontaudit ARG1 file (file (audit_access)))))
+				(dontaudit ARG1 file (dir (audit_access)))))
 
 		(block read_files_blk
 			(blockabstract read_files_blk)

@@ -13,6 +13,13 @@
 		(macro rw_dirs ((type ARG1))
 			(allow ARG1 obj_type_attribute rw_dir_perms))
 
+		(macro getattr ((type ARG1))
+			(allow ARG1 obj_type_attribute (file (getattr)))
+			(allow ARG1 obj_type_attribute (fifo_file (getattr)))
+			(allow ARG1 obj_type_attribute (dir (getattr)))
+			(allow ARG1 obj_type_attribute (lnk_file (getattr)))
+			(allow ARG1 obj_type_attribute (sock_file (getattr))))
+
 		(macro read ((type ARG1))
 			(allow ARG1 obj_type_attribute read_file_perms)
 			(allow ARG1 obj_type_attribute read_fifo_file_perms)
@@ -362,6 +369,11 @@
 			(macro rw_dirs ((type ARG1))
 				(allow ARG1 file rw_dir_perms)))
 
+		(block dontaudit_audit_access_dirs_blk
+			(blockabstract dontaudit_audit_access_dirs_blk)
+			(macro dontaudit_audit_access_dirs ((type ARG1))
+				(dontaudit ARG1 file (file (audit_access)))))
+
 		(block read_files_blk
 			(blockabstract read_files_blk)
 			(macro read_files ((type ARG1))
@@ -395,6 +407,7 @@
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
+		(blockinherit dontaudit_audit_access_dirs_blk)
 		(blockinherit read_files_blk)
 		(blockinherit read_lnk_files_blk)
 		(blockinherit read_blk)

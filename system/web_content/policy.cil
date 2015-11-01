@@ -11,17 +11,24 @@
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call cmd.audit_read_access_shell_files (subj_type_attribute))
-
+	(call cmd.mmap_shell (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_data_files (subj_type_attribute))
+	(call file.dontaudit_audit_access_var_tmp_dirs (subj_type_attribute))
+	(call file.list_var_tmp (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
+	(call cert.read (subj_type_attribute))
+
+	(optional web_content_cgi_optional_mariadb_server
+		(call mariadb_server.stream_connect (subj_type_attribute)))
 
 	(optional web_content_cgi_optional_phpcli
 		(call phpcli.exec (subj_type_attribute))))

@@ -185,9 +185,13 @@
 
 	(call usersubj.search_home_dir (subj_type_attribute))
 
+	(call web_home.web_content.getattr (httpd.suexec.subj))
 	(call web_home.web_content_cgi.search (httpd.suexec.subj))
-
 	(call web_home.web_content_cgi.auto_subj_type_transition (httpd.suexec.subj))
+
+	(call web_sys.web_content.getattr (httpd.suexec.subj))
+	(call web_sys.web_content_cgi.search (httpd.suexec.subj))
+	(call web_sys.web_content_cgi.auto_subj_type_transition (httpd.suexec.subj))
 
 	(optional suexec_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute))))

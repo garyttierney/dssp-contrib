@@ -79,6 +79,7 @@
 	(call fs.list_tmpfs (common_login_type_attribute))
 	(call fs.manage_fuse_subj_type (common_login_type_attribute))
 
+	(call sec.validate_context (common_login_type_attribute))
 	(call sec.get_enforce_mode (common_login_type_attribute))
 
 	(call app.getattr (common_login_type_attribute))

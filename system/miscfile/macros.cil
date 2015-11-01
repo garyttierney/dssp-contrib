@@ -506,6 +506,19 @@
 			(call mandb.relabel_config_files (ARG1))
 			(call mandb.relabel_var_cache (ARG1)))))
 
+(in mime_types
+	(macro read_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms))
+
+	(macro manage_config_files ((type ARG1))
+		(call file.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms))
+
+	(macro relabel_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)))
+
 (in modules
 	(macro search ((type ARG1))
 		(call lib.search_lib (ARG1))

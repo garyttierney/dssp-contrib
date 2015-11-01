@@ -97,7 +97,6 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call net.tcp_bind_generic_node (subj_type_attribute))
@@ -107,6 +106,7 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
+	(call mime_types.read_config_files (subj_type_attribute))
 
 	(call usersubj.search_home_dir (subj_type_attribute))
 

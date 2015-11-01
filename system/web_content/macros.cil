@@ -277,6 +277,12 @@
 				(call web_content_ro.search (ARG1))
 				(call read_files_pattern (ARG1 file file))))
 
+		(block manage_files_blk
+			(blockabstract manage_files_blk)
+			(macro manage_files ((type ARG1))
+				(call web_content_ro.search (ARG1))
+				(call manage_files_pattern (ARG1 file file))))
+
 		(block create_files_blk
 			(blockabstract create_files_blk)
 			(macro create_files ((type ARG1))
@@ -342,6 +348,7 @@
 		(blockinherit setattr_dirs_blk)
 		(blockinherit append_files_blk)
 		(blockinherit read_files_blk)
+		(blockinherit manage_files_blk)
 		(blockinherit rename_files_blk)
 		(blockinherit create_files_blk)
 		(blockinherit delete_files_blk)

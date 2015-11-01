@@ -165,15 +165,7 @@
 (block rotatelogs
 	(typeattribute subj_type_attribute)
 
-	(call web_sys.web_content_ra.list (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.setattr_dirs (httpd.rotatelogs.subj))
-
-	(call web_sys.web_content_ra.append_files (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.create_files (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.delete_files (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.read_files (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.rename_files (httpd.rotatelogs.subj))
-	(call web_sys.web_content_ra.setattr_files (httpd.rotatelogs.subj))
+	(call web_sys.web_content_ra.manage_files (httpd.rotatelogs.subj))
 
 	(optional rotatelogs_optional_sd
 		(call sd.forked_subj_type (subj_type_attribute))))

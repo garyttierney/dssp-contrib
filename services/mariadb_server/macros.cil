@@ -89,14 +89,7 @@
 	(macro var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
 		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file file "*"))))
 
-(in mariadb_server_cs
-	(blockinherit exec_blk)
-
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit subj.send_signal_blk))
-
-(in mariadb_server_cu
+(in mariadb_server_helper
 	(blockinherit exec_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
@@ -104,20 +97,6 @@
 	(blockinherit subj.send_signal_blk))
 
 (in mariadb_server_pdd
-	(blockinherit exec_blk)
-
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit subj.send_signal_blk))
-
-(in mariadb_server_wr
-	(blockinherit exec_blk)
-
-	(blockinherit auto_subj_type_transition_blk)
-
-	(blockinherit subj.send_signal_blk))
-
-(in mariadb_server_ws
 	(blockinherit exec_blk)
 
 	(blockinherit auto_subj_type_transition_blk)

@@ -158,64 +158,6 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
-(block mariadb_server_cs
-	(blockinherit subj.common_subj_blk)
-
-	(typeattributeset mariadb_server.subj_type_attribute subj)
-
-	(blockinherit cmd.obj_blk)
-
-	(call subj.entry (subj cmd_file))
-
-	(roletype sys.role subj)
-
-	(allow subj self rw_fifo_file_perms)
-
-	(call cmd.mmap_shell (subj))
-	(call cmd.exec (subj))
-
-	(call hostname.exec (subj))
-
-	(call locale.read (subj))
-
-	(call mariadb.exec (subj))
-	(call mariadb.read_config (subj))
-
-	(call mariadb_server.read_config_files (subj))
-	(call mariadb_server.search_var_lib (subj))
-
-	(optional mariadb_server_cs_optional_sd
-		(call sd.daemon (subj cmd_file))))
-
-(block mariadb_server_cu
-	(blockinherit subj.common_subj_blk)
-
-	(typeattributeset mariadb_server.subj_type_attribute subj)
-
-	(blockinherit cmd.obj_blk)
-
-	(call subj.entry (subj cmd_file))
-
-	(roletype sys.role subj)
-
-	(allow subj self rw_fifo_file_perms)
-
-	(call cmd.mmap_shell (subj))
-	(call cmd.exec (subj))
-
-	(call hostname.exec (subj))
-
-	(call locale.read (subj))
-
-	(call mariadb.exec (subj))
-	(call mariadb.read_config (subj))
-
-	(call mariadb_server.read_config_files (subj))
-	(call mariadb_server.read_var_lib_files (subj))
-
-	(optional mariadb_server_cu_optional_sd
-		(call sd.daemon (subj cmd_file))))
-
 (block mariadb_server_pdd
 	(blockinherit subj.common_subj_blk)
 
@@ -267,10 +209,7 @@
 	(optional mariadb_server_pdd_optional_systemctl
 		(call systemctl.exec (subj))))
 
-(block mariadb_server_sc
-	(blockinherit cmd.obj_blk))
-
-(block mariadb_server_wr
+(block mariadb_server_helper
 	(blockinherit subj.common_subj_blk)
 
 	(typeattributeset mariadb_server.subj_type_attribute subj)
@@ -297,39 +236,11 @@
 
 	(call mariadb_server.read_config_files (subj))
 	(call mariadb_server.read_state (subj))
+	(call mariadb_server.read_var_lib_files (subj))
+	(call mariadb_server.search_runtime (subj))
 	(call mariadb_server.stream_connect (subj))
 
 	(call nss.client_subj_type (subj))
 
-	(optional mariadb_server_wr_optional_sd
-		(call sd.daemon (subj cmd_file))))
-
-(block mariadb_server_ws
-	(blockinherit subj.common_subj_blk)
-
-	(typeattributeset mariadb_server.subj_type_attribute subj)
-
-	(blockinherit cmd.obj_blk)
-
-	(call subj.entry (subj cmd_file))
-
-	(roletype sys.role subj)
-
-	(allow subj self rw_fifo_file_perms)
-
-	(call cmd.mmap_shell (subj))
-	(call cmd.exec (subj))
-
-	(call hostname.exec (subj))
-
-	(call locale.read (subj))
-
-	(call mariadb.exec (subj))
-	(call mariadb.read_config (subj))
-
-	(call mariadb_server.read_config_files (subj))
-	(call mariadb_server.search_runtime (subj))
-	(call mariadb_server.search_var_lib (subj))
-
-	(optional mariadb_server_ws_optional_sd
+	(optional mariadb_server_helper_optional_sd
 		(call sd.daemon (subj cmd_file))))

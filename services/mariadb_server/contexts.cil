@@ -43,17 +43,11 @@
 	(filecon "/usr/bin/tokuft_logprint" file cmd_file_context)
 	(filecon "/usr/bin/tokuftdump" file cmd_file_context))
 
-(in mariadb_server_cs
-	(filecon "/usr/libexec/mysql-check-socket" file cmd_file_context))
-
-(in mariadb_server_cu
-	(filecon "/usr/libexec/mysql-check-upgrade" file cmd_file_context))
+(in mariadb_server_helper
+	(filecon "/usr/libexec/mysql-check-socket" file cmd_file_context)
+	(filecon "/usr/libexec/mysql-check-upgrade" file cmd_file_context)
+	(filecon "/usr/libexec/mysql-wait-ready" file cmd_file_context)
+	(filecon "/usr/libexec/mysql-wait-stop" file cmd_file_context))
 
 (in mariadb_server_pdd
 	(filecon "/usr/libexec/mysql-prepare-db-dir" file cmd_file_context))
-
-(in mariadb_server_wr
-	(filecon "/usr/libexec/mysql-wait-ready" file cmd_file_context))
-
-(in mariadb_server_ws
-	(filecon "/usr/libexec/mysql-wait-stop" file cmd_file_context))

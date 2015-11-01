@@ -1,0 +1,21 @@
+(in mariadb
+	(filecon "/usr/bin/msql2mysql" file cmd_file_context)
+	(filecon "/usr/bin/my_print_defaults" file cmd_file_context)
+	(filecon "/usr/bin/mysql" file cmd_file_context)
+	(filecon "/usr/bin/mysql_find_rows" file cmd_file_context)
+	(filecon "/usr/bin/mysql_plugin" file cmd_file_context)
+	(filecon "/usr/bin/mysql_waitpid" file cmd_file_context)
+	(filecon "/usr/bin/mysqlaccess" file cmd_file_context)
+	(filecon "/usr/bin/mysqladmin" file cmd_file_context)
+	(filecon "/usr/bin/mysqlbinlog" file cmd_file_context)
+	(filecon "/usr/bin/mysqlcheck" file cmd_file_context)
+	(filecon "/usr/bin/mysqldump" file cmd_file_context)
+	(filecon "/usr/bin/mysqlimport" file cmd_file_context)
+	(filecon "/usr/bin/mysqlshow" file cmd_file_context)
+	(filecon "/usr/bin/mysqlslap" file cmd_file_context)
+
+	(filecon "/etc/my\.cnf" file config_file_context)
+	(filecon "/etc/my\.cnf\.d(/.*)?" any config_file_context)
+
+	(filecon "HOME_DIR/\.mysql" file home_user_file_context)
+	(filecon "HOME_DIR/\.my\.cnf" file home_user_file_context))

@@ -86,6 +86,12 @@
 		(call lirc.run (subj_type_attribute role))
 		(call lirc_lsplugins.run (subj_type_attribute role)))
 
+	(optional user_optional_mariadb
+		(call mariadb.manage_home_user_files (subj))
+		(call mariadb.relabel_home_user_files (subj))
+		(call mariadb.home_dir_obj_type_transition_home (subj))
+		(call mariadb.run (subj_type_attribute role)))
+
 	(optional user_optional_mysysstat
 		(call mysysstat.run (subj_type_attribute role)))
 

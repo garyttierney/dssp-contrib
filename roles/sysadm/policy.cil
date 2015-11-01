@@ -358,6 +358,19 @@
 	(optional sysadm_optional_numad
 		(call numad.adm (subj role)))
 
+	(optional sysadm_optional_mariadb
+		(call mariadb.manage_config (subj))
+		(call mariadb.manage_home_user_files (subj))
+		(call mariadb.relabel_home_user_files (subj))
+		(call mariadb.home_dir_obj_type_transition_home (subj))
+		(call mariadb.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mariadb_server
+		(call mariadb_server_util.manage_var_tmp_user_files (subj))
+		(call mariadb_server_util.relabel_var_tmp_user_files (subj))
+		(call mariadb_server_util.run (subj_type_attribute role))
+		(call mariadb_server.adm (subj role)))
+
 	(optional sysadm_optional_mount
 		(call mount.manage_runtime (subj))
 		(call mount.run (subj_type_attribute role)))

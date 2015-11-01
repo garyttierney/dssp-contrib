@@ -69,6 +69,8 @@
 		(call list (subj))
 		(call read_lnk_files (subj))
 
+		(call web_content_htaccess.dontaudit_write_files (subj))
+
 		(call web_content_ra.list (subj))
 		(call web_content_ra.setattr_dirs (subj))
 
@@ -78,7 +80,6 @@
 		(call web_content_ra.setattr_files (subj))
 
 		(call web_content_ro.list (subj))
-		(call web_content_ro.dontaudit_audit_access_dirs (subj))
 		(call web_content_ro.read_files (subj))
 		(call web_content_ro.read_lnk_files (subj))
 
@@ -201,6 +202,11 @@
 				(call web_content.search (ARG1))
 				(allow ARG1 file read_file_perms)))
 
+		(block dontaudit_write_files_blk
+			(blockabstract dontaudit_write_files_blk)
+			(macro dontaudit_write_files ((type ARG1))
+				(dontaudit ARG1 file write_file_perms)))
+
 		(block manage_files_blk
 			(blockabstract manage_files_blk)
 			(macro manage_files ((type ARG1))
@@ -214,6 +220,7 @@
 				(call obj_type_transition_pattern (ARG1 web_content.obj_type_attribute file file ".htpasswd"))))
 
 		(blockinherit read_files_blk)
+		(blockinherit dontaudit_write_files_blk)
 		(blockinherit manage_files_blk)
 		(blockinherit web_content_obj_type_transition_web_content_htaccess_blk))
 
@@ -369,11 +376,6 @@
 			(macro rw_dirs ((type ARG1))
 				(allow ARG1 file rw_dir_perms)))
 
-		(block dontaudit_audit_access_dirs_blk
-			(blockabstract dontaudit_audit_access_dirs_blk)
-			(macro dontaudit_audit_access_dirs ((type ARG1))
-				(dontaudit ARG1 file (dir (audit_access)))))
-
 		(block read_files_blk
 			(blockabstract read_files_blk)
 			(macro read_files ((type ARG1))
@@ -407,7 +409,6 @@
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
-		(blockinherit dontaudit_audit_access_dirs_blk)
 		(blockinherit read_files_blk)
 		(blockinherit read_lnk_files_blk)
 		(blockinherit read_blk)

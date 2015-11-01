@@ -80,6 +80,7 @@
 		(call web_content_ra.setattr_files (subj))
 
 		(call web_content_ro.list (subj))
+		(call web_content_ro.dontaudit_write_dirs (subj))
 		(call web_content_ro.read_files (subj))
 		(call web_content_ro.read_lnk_files (subj))
 
@@ -376,6 +377,11 @@
 			(macro rw_dirs ((type ARG1))
 				(allow ARG1 file rw_dir_perms)))
 
+		(block dontaudit_write_dirs_blk
+			(blockabstract dontaudit_write_dirs_blk)
+			(macro dontaudit_write_dirs ((type ARG1))
+				(dontaudit ARG1 file write_dir_perms)))
+
 		(block read_files_blk
 			(blockabstract read_files_blk)
 			(macro read_files ((type ARG1))
@@ -409,6 +415,7 @@
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
+		(blockinherit dontaudit_write_dirs_blk)
 		(blockinherit read_files_blk)
 		(blockinherit read_lnk_files_blk)
 		(blockinherit read_blk)

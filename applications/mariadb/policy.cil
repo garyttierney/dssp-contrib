@@ -30,5 +30,6 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional mariadb_optional_mariadb_server
-		(call mariadb_server.read_config_files (subj))
-		(call mariadb_server.stream_connect (subj))))
+		(call mariadb_server.read_all_config_files (subj))
+		(call mariadb_server.stream_connect_all_subj (subj))
+		(call mariadb_server.tcp_connect_all_port (subj))))

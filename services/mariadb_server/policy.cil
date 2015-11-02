@@ -73,6 +73,8 @@
 
 	(call file.read_data_files (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
+
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
@@ -106,8 +108,9 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call selinux_config.read_config_files (subj_type_attribute))
+	(call default_context.read_config_files (subj_type_attribute))
 	(call file_context.read_config_files (subj_type_attribute))
+	(call selinux_config.read_config_files (subj_type_attribute))
 	(call setfiles.exec (subj_type_attribute))
 
 	(optional mariadb_server_pdd_subj_type_optional_sysbus

@@ -36,7 +36,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call torrent.tcp_bind_unreserved_port (subj))
+	(call torrent.tcp_bind_port (subj))
 
 	(call terminfo.read_all (subj))
 	(call locale.read (subj))
@@ -48,4 +48,4 @@
 	(call usersubj.read_home_user_lnk_files (subj))
 
 	(optional rtorrent_optional_httpd
-		(call httpd.tcp_connect_all_port (subj))))
+		(call httpd.tcp_connect_all_ports (subj))))

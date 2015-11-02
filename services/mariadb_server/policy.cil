@@ -82,7 +82,7 @@
 	(call mariadb.exec (subj_type_attribute))
 	(call mariadb.read_config (subj_type_attribute))
 
-	(call mysql.tcp_bind_unreserved_port (mariadb_server.subj))
+	(call mysql.tcp_bind_port (mariadb_server.subj))
 
 	(call nss.client_subj_type (subj_type_attribute)))
 

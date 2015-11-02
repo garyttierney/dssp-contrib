@@ -53,7 +53,7 @@
 	(call cert.read (subj))
 	(call locale.read (subj))
 
-	(call sd_journal_gateway.tcp_bind_unreserved_port (subj))
+	(call sd_journal_gateway.tcp_bind_port (subj))
 
 	(call sd_journald.client_subj_type (subj))
 	(call sd_journald.read_var_log (subj))

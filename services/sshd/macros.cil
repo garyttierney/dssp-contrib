@@ -117,7 +117,7 @@
 		(blockinherit file.relabel_runtime_files_blk)
 
 		(blockinherit net.tcp_connect_port_blk)
-		(blockinherit net.tcp_bind_reserved_port_blk)
+		(blockinherit net.tcp_bind_port_blk)
 
 		(blockinherit subj.use_fd_blk)
 
@@ -214,8 +214,8 @@
 		(allow subj sshd.subj rw_inherited_unix_stream_socket_perms)))
 
 (in sshd
-	(blockinherit net.tcp_connect_all_port_blk)
-	(blockinherit net.tcp_bind_all_reserved_port_blk)
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk)
 
 	(macro read_all_config_files ((type ARG1))
 		(call ssh_client.search_config (ARG1))

@@ -151,7 +151,7 @@
 			(allow ARG1 subj rw_unix_stream_stream_socket_perms))
 
 		(blockinherit net.tcp_connect_port_blk)
-		(blockinherit net.tcp_bind_reserved_port_blk)
+		(blockinherit net.tcp_bind_port_blk)
 
 		(blockinherit file.search_config_blk)
 		(blockinherit file.list_config_blk)
@@ -331,8 +331,8 @@
 	(macro status_start_stop_reload_all_sd_unit_subj_type ((type ARG1))
 		(typeattributeset status_start_stop_reload_all_sd_unit_subj_type_attribute ARG1))
 
-	(blockinherit net.tcp_connect_all_port_blk)
-	(blockinherit net.tcp_bind_all_reserved_port_blk)
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk)
 
 	(blockinherit file.search_all_config_blk)
 	(blockinherit file.list_all_config_blk)

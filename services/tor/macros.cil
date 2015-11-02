@@ -57,17 +57,17 @@
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
 (in tor_control
-	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
 	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_trans
-	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
 	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_or
-	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
 	(blockinherit net.tcp_connect_port_blk))
 
 (in tor_dir
-	(blockinherit net.tcp_bind_unreserved_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
 	(blockinherit net.tcp_connect_port_blk))

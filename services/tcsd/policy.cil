@@ -36,7 +36,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call tcs.tcp_bind_unreserved_port (subj))
+	(call tcs.tcp_bind_port (subj))
 
 	(optional tcsd_optional_sd
 		(call sd.daemon (subj cmd_file))

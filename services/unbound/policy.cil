@@ -58,7 +58,7 @@
 
 	(call nss.client_subj_type (subj))
 
-	(call unbounddnsctl.tcp_bind_unreserved_port (subj))
+	(call unbounddnsctl.tcp_bind_port (subj))
 
 	(optional unbound_optional_sd
 		(call sd.daemon (subj cmd_file))

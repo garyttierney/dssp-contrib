@@ -40,6 +40,7 @@
 		(filecon "/var/lib/mysql(/.*)?" any var_lib_file_context)
 		(filecon "/var/log/mariadb(/.*)?" any var_log_file_context)
 		(filecon "/var/run/mariadb(/.*)?" any runtime_file_context)
+		(filecon "/var/run/mysqld(/.*)?" any runtime_file_context)
 
 		(optional mariadb_server_unit_optional_sd
 			(filecon "/usr/lib/systemd/system/[^/]*mariadb.*" file unit_file_context)))

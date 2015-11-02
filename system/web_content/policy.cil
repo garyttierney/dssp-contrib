@@ -22,17 +22,10 @@
 
 	(call fs.getattr_fs (subj_type_attribute))
 
-	(call http.tcp_connect_port (subj_type_attribute))
-
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 	(call cert.read (subj_type_attribute))
-
-	(call mysql.tcp_connect_port (subj_type_attribute))
-
-	(optional web_content_cgi_optional_httpd
-		(call httpd.tcp_connect_all_port (subj_type_attribute)))
 
 	(optional web_content_cgi_optional_mariadb_server
 		(call mariadb_server.mariadb_server.stream_connect (subj_type_attribute)))

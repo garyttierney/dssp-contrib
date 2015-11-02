@@ -27,6 +27,12 @@
 	(call locale.read (subj_type_attribute))
 	(call cert.read (subj_type_attribute))
 
+	(call web_sys.web_content.search (subj_type_attribute))
+
+	(optional web_content_cgi_optional_httpd
+		(call httpd.httpd.append_var_log_files (subj_type_attribute))
+		(call httpd.httpd.rw_unix_stream_stream_sockets (subj_type_attribute)))
+
 	(optional web_content_cgi_optional_mariadb_server
 		(call mariadb_server.mariadb_server.stream_connect (subj_type_attribute)))
 
@@ -48,8 +54,4 @@
 	(call fs.associate_tmpfs (obj_type_attribute)))
 
 (block web_sys
-	(blockinherit web_content_blk)
-
-	(optional web_content_optional_httpd
-		(call httpd.httpd.append_var_log_files (web_content_cgi.subj))
-		(call httpd.httpd.rw_unix_stream_stream_sockets (web_content_cgi.subj))))
+	(blockinherit web_content_blk))

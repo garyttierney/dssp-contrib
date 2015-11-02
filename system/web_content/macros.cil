@@ -579,8 +579,11 @@
 			(call fs.tmpfs_obj_type_transition (ARG1 file sock_file "*")))))
 
 (in web_content
-	(macro cgi_client_subj ((type ARG1)(role ARG2))
-		(roleattributeset cgi_client_role_attribute ARG2)
+	(macro cgi_client ((type ARG1)(role ARG2))
+		(call cgi_client_subj (ARG1))
+		(roleattributeset cgi_client_role_attribute ARG2))
+
+	(macro cgi_client_subj ((type ARG1))
 		(typeattributeset cgi_client_subj_type_attribute ARG1))
 
 	(macro list ((type ARG1))
@@ -618,6 +621,13 @@
 
 	(macro manage_sock_files ((type ARG1))
 		(call manage_sock_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro getattr_all ((type ARG1))
+		(allow ARG1 obj_type_attribute (file (getattr)))
+		(allow ARG1 obj_type_attribute (fifo_file (getattr)))
+		(allow ARG1 obj_type_attribute (dir (getattr)))
+		(allow ARG1 obj_type_attribute (lnk_file (getattr)))
+		(allow ARG1 obj_type_attribute (sock_file (getattr))))
 
 	(macro read_all ((type ARG1))
 		(allow ARG1 obj_type_attribute read_file_perms)
@@ -669,18 +679,54 @@
 		(allow ARG1 obj_type_attribute relabel_lnk_file_perms)))
 
 (in web_content_htaccess
-	(macro read_files ((type ARG1))
+	(macro read_all_files ((type ARG1))
 		(call web_content.search (ARG1))
-		(allow ARG1 file read_file_perms))
+		(allow ARG1 obj_type_attribute read_file_perms))
 
-	(macro manage_files ((type ARG1))
+	(macro manage_all_files ((type ARG1))
 		(call web_content.rw_dirs (ARG1))
-		(allow ARG1 file manage_file_perms)))
+		(allow ARG1 obj_type_attribute manage_file_perms)))
 
 (in web_content_ra
 	(macro search_all ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
 		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro list_all ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute list_dir_perms))
+
+	(macro setattr_all_dirs ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call setattr_dirs_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro append_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call append_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro create_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call create_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro delete_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call delete_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro manage_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro rename_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(allow ARG1 obj_type_attribute (file (rename))))
+
+	(macro setattr_all_files ((type ARG1))
+		(call web_content_ro.search_all (ARG1))
+		(call setattr_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
 
 	(macro read_all ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
@@ -703,6 +749,15 @@
 (in web_content_ro
 	(macro search_all ((type ARG1))
 		(allow ARG1 obj_type_attribute search_dir_perms))
+
+	(macro list_all ((type ARG1))
+		(allow ARG1 obj_type_attribute list_dir_perms))
+
+	(macro read_all_files ((type ARG1))
+		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+
+	(macro read_all_lnk_files ((type ARG1))
+		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
 
 	(macro read_all ((type ARG1))
 		(allow ARG1 obj_type_attribute read_file_perms)

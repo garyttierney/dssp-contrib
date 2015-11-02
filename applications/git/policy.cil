@@ -58,6 +58,9 @@
 	(optional git_subj_type_optional_http
 		(call http.tcp_connect_port (subj_type_attribute)))
 
+	(optional git_subj_type_optional_httpd
+		(call httpd.tcp_connect_all_port (subj_type_attribute)))
+
 	(optional git_subj_type_optional_mutt
 		(call mutt.read_tmpfs_user_files (subj_type_attribute)))
 

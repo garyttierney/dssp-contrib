@@ -108,6 +108,9 @@
 	(optional firefox_subj_type_optional_gstreamer
 		(call gstreamer.client_subj_type (subj_type_attribute)))
 
+	(optional firefox_subj_type_optional_httpd
+		(call httpd.tcp_connect_all_port (subj_type_attribute)))
+
 	(optional firefox_subj_type_optional_mutt
 		(call mutt.rw_tmpfs_user_files (subj_type_attribute)))
 

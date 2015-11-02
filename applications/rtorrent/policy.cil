@@ -45,4 +45,7 @@
 	(call usersubj.manage_home_user_files (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
-	(call usersubj.read_home_user_lnk_files (subj)))
+	(call usersubj.read_home_user_lnk_files (subj))
+
+	(optional rtorrent_optional_httpd
+		(call httpd.tcp_connect_all_port (subj))))

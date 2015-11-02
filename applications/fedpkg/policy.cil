@@ -45,4 +45,7 @@
 
 	(call usersubj.manage_home_user_dirs (subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute)))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
+
+	(optional fedpkg_subj_type_optional_httpd
+		(call httpd.tcp_connect_all_port (subj_type_attribute))))

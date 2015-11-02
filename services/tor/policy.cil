@@ -77,6 +77,9 @@
 	(optional tor_optional_http
 		(call http.tcp_connect_port (subj)))
 
+	(optional tor_optional_httpd
+		(call httpd.tcp_connect_all_port (subj)))
+
 	(optional tor_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 

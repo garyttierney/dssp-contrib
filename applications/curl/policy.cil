@@ -35,5 +35,8 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
+	(optional curl_optional_httpd
+		(call httpd.tcp_connect_all_port (subj)))
+
 	(optional curl_optional_tor
 		(call tor_socks.client_subj_type (subj))))

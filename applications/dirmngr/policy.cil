@@ -28,4 +28,7 @@
 	(call cert.read_all (subj))
 	(call locale.read (subj))
 
-	(call nss.client_subj_type (subj)))
+	(call nss.client_subj_type (subj))
+
+	(optional dirmngr_optional_httpd
+		(call httpd.tcp_connect_all_port (subj))))

@@ -39,6 +39,9 @@
 	(optional mplayer_subj_type_optional_http
 		(call http.tcp_connect_port (subj_type_attribute)))
 
+	(optional mplayer_subj_type_optional_httpd
+		(call httpd.tcp_connect_all_port (subj_type_attribute)))
+
 	(optional mplayer_subj_type_optional_icecast
 		(call icecast.tcp_connect_port (subj_type_attribute)))
 

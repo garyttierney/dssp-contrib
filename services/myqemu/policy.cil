@@ -127,6 +127,9 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 	(call usersubj.search_home_data (subj))
 
+	(optional myqemu_installer_optional_httpd
+		(call httpd.tcp_connect_all_port (subj)))
+
 	(optional myqemu_installer_optional_sd_machined
 		(call sd_machined.manage_var_lib_files (subj))))
 

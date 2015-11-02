@@ -1,0 +1,21 @@
+(in ssh_agent
+	(filecon "/usr/bin/ssh-keyscan" file cmd_file_context)
+	(filecon "/usr/bin/ssh-add" file cmd_file_context)
+	(filecon "/usr/bin/ssh-agent" file cmd_file_context)
+	(filecon "/usr/bin/ssh-copy-id" file cmd_file_context))
+
+(in ssh_client
+	(filecon "/etc/ssh" dir config_file_context)
+	(filecon "/etc/ssh/ssh_config" file config_file_context)
+	(filecon "/etc/ssh/moduli.*" file config_file_context)
+	(filecon "/usr/bin/ssh" file cmd_file_context)
+	(filecon "/usr/bin/scp" file cmd_file_context)
+	(filecon "/usr/bin/sftp" file cmd_file_context)
+	(filecon "/usr/bin/slogin" file cmd_file_context)
+	(filecon "HOME_DIR/\.ssh(/.*)?" any home_user_file_context))
+
+(in ssh_keygen
+	(filecon "/usr/bin/ssh-keygen" file cmd_file_context))
+
+(in ssh_sftpserver
+	(filecon "/usr/libexec/openssh/sftp-server" file cmd_file_context))

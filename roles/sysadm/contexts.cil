@@ -374,7 +374,7 @@
 
 	(filecon "/root/\.dbus(/.*)?" any root_sessbus_launch_home))
 
-(optional sysadm_ssh_client_home_optional_ssh
+(optional sysadm_ssh_client_home_optional_ssh_client
 	(tunableif enable_rbacsep
 		(true
 			(context root_ssh_client_home (sysadm.id sysadm.role ssh_client.home_user_file (systemlow systemlow))))

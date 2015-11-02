@@ -684,11 +684,14 @@
 	(optional sysadm_optional_setools
 		(call setools.run (subj_type_attribute role)))
 
-	(optional sysadm_optional_ssh
-		(call ssh.adm (subj_type_attribute role))
-		(call ssh_sftpserver.run (subj_type_attribute role))
+	(optional sysadm_optional_ssh_client
+		(call ssh_client.manage_config (subj))
 		(call ssh_keygen.run (subj_type_attribute role))
-		(call ssh.priv_login_subj_type (subj)))
+		(call ssh_sftpserver.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sshd
+		(call sshd.adm (subj_type_attribute role))
+		(call sshd.priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_sysbus
 		(call sysbus.adm (subj role)))

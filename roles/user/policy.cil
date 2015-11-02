@@ -161,10 +161,12 @@
 		(call scdaemon.manage_tmpfs_user (subj))
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
-	(optional user_optional_ssh
+	(optional user_optional_ssh_client
 		(call ssh_sftpserver.run (subj_type_attribute role))
-		(call ssh_keygen.run (subj_type_attribute role))
-		(call ssh.login_subj_type (subj)))
+		(call ssh_keygen.run (subj_type_attribute role)))
+
+	(optional user_optional_sshd
+		(call sshd.login_subj_type (subj)))
 
 	(optional user_optional_systemctl
 		(call systemctl.exec (subj)))

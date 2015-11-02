@@ -1,0 +1,136 @@
+(block ssh_agent
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self (capability (setgid)))
+	(allow subj_type_attribute self (process (setrlimit)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call ssh_client.read_home_user (subj_type_attribute)))
+
+(block ssh_client
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setfscreate signal)))
+	(allow subj_type_attribute self rw_key_perms)
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.read_net_proc_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
+
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
+
+	(call terminfo.read_all (subj_type_attribute))
+	(call cert.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call ssh.tcp_connect_port (subj_type_attribute))
+
+	(call ssh_client.exec (subj_type_attribute))
+	(call ssh_agent.stream_connect_all_subj (subj_type_attribute))
+
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+
+	(call usersubj.manage_tmpfs_user_files (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
+
+	(optional ssh_client_subj_type_optional_analyze
+		(call analyze.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_busctl
+		(call busctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_fuse
+		(call sshfs.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_gpg_agent
+		(call gpg_agent.stream_connect_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_hostnamectl
+		(call hostnamectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_localectl
+		(call localectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_loginctl
+		(call loginctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_machinectl
+		(call machinectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_run
+		(call run.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_sshd
+		(call sshd.tcp_connect_all_port (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_systemctl
+		(call systemctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_timedatectl
+		(call timedatectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))))
+
+(block ssh_keygen
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call ssh_client.manage_home_user (subj))
+	(call ssh_client.home_dir_obj_type_transition_home (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call cert.read_all (subj))
+
+	(call nss.client_subj_type (subj)))
+
+(block ssh_sftpserver
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.manage_home_user (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user (subj)))

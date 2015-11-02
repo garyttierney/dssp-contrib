@@ -54,6 +54,7 @@
 
 	(call ssh.tcp_bind_reserved_port (sshd.subj))
 
+	(call ssh_client.search_config (subj_type_attribute))
 	(call ssh_client.read_home_user_files (subj_type_attribute))
 
 	(call usersubj.dontaudit_create_keyring_common_subj (subj_type_attribute))
@@ -107,3 +108,6 @@
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_dir_perms)
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_file_perms)
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_lnk_file_perms)
+
+(optional sshd_adm_subj_type_optional_sd
+	(allow sshd.adm_subj_type_attribute sshd.unit_obj_type_attribute (service (stop status disable enable reload start))))

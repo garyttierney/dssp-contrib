@@ -5,6 +5,8 @@
 
 	(roletype role_attribute subj)
 
+	(allow subj self (capability (dac_override dac_read_search)))
+
 	(call sec.read_policy (subj))
 
 	(call selinux_config.read_config_files (subj)))

@@ -209,3 +209,6 @@
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_fifo_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_lnk_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_sock_file_perms)
+
+(optional httpd_adm_subj_type_optional_sd
+	(allow httpd.adm_subj_type_attribute httpd.unit_obj_type_attribute (service (stop status disable enable reload start))))

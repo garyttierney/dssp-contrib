@@ -755,6 +755,10 @@
 	(optional sysadm_optional_utempter
 		(call utempter.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_varnishd
+		(call varnishadm.run (subj_type_attribute role))
+		(call varnishd.adm (subj role)))
+
 	(optional sysadm_optional_web_content
 		(call web_content.manage_all (subj))
 		(call web_content.cgi_client (subj_type_attribute role)))

@@ -1,0 +1,35 @@
+(in varnishd
+	(block varnishd
+		(filecon "/usr/sbin/varnishd" file cmd_file_context)
+		(filecon "/etc/varnish(/.*)" any config_file_context)
+		(filecon "/var/run/varnish\.pid" file runtime_file_context)
+		(filecon "/var/lib/varnish(/.*)?" any var_lib_file_context)
+
+		(optional varnishd_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnish.*" file unit_file_context)))
+
+	(block varnish_reload_vcl
+		(filecon "/usr/sbin/varnish_reload_vcl" file cmd_file_context))
+
+	(block varnishlog
+		(filecon "/usr/bin/varnishlog" file cmd_file_context)
+		(filecon "/var/run/varnishlog\.pid" file runtime_file_context)
+		(filecon "/var/log/varnish(/.*)?" any var_log_file_context)
+
+		(optional varnishlog_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnishlog.*" file unit_file_context)))
+
+	(block varnishncsa
+		(filecon "/usr/bin/varnishncsa" file cmd_file_context)
+		(filecon "/var/run/varnishncsa\.pid" file runtime_file_context)
+		(filecon "/var/log/varnish/varnishncsa\.log.*" file var_log_file_context)
+
+		(optional varnishncsa_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnishncsa.*" file unit_file_context))))
+
+(in varnishadm
+	(filecon "/usr/bin/varnishadm" file cmd_file_context)
+	(filecon "/usr/bin/varnishhist" file cmd_file_context)
+	(filecon "/usr/bin/varnishstat" file cmd_file_context)
+	(filecon "/usr/bin/varnishtest" file cmd_file_context)
+	(filecon "/usr/bin/varnishtop" file cmd_file_context))

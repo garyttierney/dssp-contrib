@@ -13,9 +13,7 @@
 	(dontaudit subj self (capability (sys_ptrace)))
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
 	(allow subj self (process (getcap setcap setfscreate)))
-	(allow subj self r_netlink_route_socket_perms)
 
-	(call sys.audit_client_subj_type (subj))
 	(call sys.manage_var_log_files (subj))
 	(call sys.read_all_proc_files (subj))
 	(call sys.read_all_sysctl (subj))

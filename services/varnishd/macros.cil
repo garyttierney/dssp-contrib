@@ -14,6 +14,7 @@
 		(typeattribute unit_obj_type_attribute)
 		(typeattribute var_lib_obj_type_attribute)
 		(typeattribute var_log_obj_type_attribute)
+		(typeattribute tmpfs_obj_type_attribute)
 
 		(typeattributeset .varnishd.adm_subj_type_attribute adm_subj_type_attribute)
 
@@ -25,6 +26,7 @@
 		(typeattributeset .varnishd.unit_obj_type_attribute unit_obj_type_attribute)
 		(typeattributeset .varnishd.var_lib_obj_type_attribute var_lib_obj_type_attribute)
 		(typeattributeset .varnishd.var_log_obj_type_attribute var_log_obj_type_attribute)
+		(typeattributeset .varnishd.tmpfs_obj_type_attribute tmpfs_obj_type_attribute)
 
 		(blockinherit subj.common_subj_blk)
 
@@ -68,8 +70,19 @@
 		(typeattributeset var_lib_obj_type_attribute var_lib_file)
 
 		(allow subj var_lib_file manage_dir_perms)
+		(allow subj var_lib_file mmap_file_perms)
+		(allow subj var_lib_file manage_file_perms)
 
 		(call file.var_lib_obj_type_transition (subj var_lib_file dir "*"))
+
+		(blockinherit file.tmpfs_obj_blk)
+
+		(typeattributeset obj_type_attribute tmpfs_file)
+		(typeattributeset tmpfs_obj_type_attribute tmpfs_file)
+
+		(allow subj tmpfs_file manage_file_perms)
+
+		(call fs.tmpfs_obj_type_transition (subj tmpfs_file file "*"))
 
 		(optional varnishd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
@@ -82,6 +95,9 @@
 			(typeattributeset unit_obj_type_attribute unit_file)
 
 			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+		(optional varnishd_blk_optional_sd_journald
+			(call sd_journald.client_subj_type (subj)))
 
 		(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 		(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
@@ -129,6 +145,10 @@
 		(blockinherit file.read_var_lib_blk)
 		(blockinherit file.manage_var_lib_blk)
 		(blockinherit file.relabel_var_lib_blk)
+
+		(blockinherit file.read_tmpfs_files_blk)
+		(blockinherit file.manage_tmpfs_files_blk)
+		(blockinherit file.relabel_tmpfs_files_blk)
 
 		(macro adm ((type ARG1)(role ARG2))
 			(typeattributeset adm_subj_type_attribute ARG1)
@@ -199,6 +219,8 @@
 
 		(optional varnishd_blk_optional_logrotate
 			(call logrotate.var_log_obj_type (var_log_file)))
+
+		(call varnishd.read_var_lib_files (subj))
 
 		(optional varnishlog_optional_sd
 			(call sd.daemon (subj cmd_file))
@@ -278,6 +300,8 @@
 		(optional varnishncsa_blk_optional_logrotate
 			(call logrotate.var_log_obj_type (var_log_file)))
 
+		(call varnishd.read_var_lib_files (subj))
+
 		(optional varnishncsa_optional_sd
 			(call sd.daemon (subj cmd_file))
 
@@ -347,6 +371,10 @@
 	(blockinherit file.read_all_var_log_blk)
 	(blockinherit file.manage_all_var_log_blk)
 	(blockinherit file.relabel_all_var_log_blk)
+
+	(blockinherit file.read_all_tmpfs_files_blk)
+	(blockinherit file.manage_all_tmpfs_files_blk)
+	(blockinherit file.relabel_all_tmpfs_files_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset varnishd.adm_subj_type_attribute ARG1)

@@ -434,6 +434,11 @@
 	(optional sysadm_optional_pcscd
 		(call pcscd.adm (subj role)))
 
+	(optional sysadm_optional_php
+		(call php.manage_config (subj))
+		(call php.manage_var_cache (subj))
+		(call php.manage_var_lib (subj)))
+
 	(optional sysadm_optional_phpcli
 		(call phpcli.exec (subj_type_attribute))
 		(call phpcli.manage_home_user_files (subj))

@@ -1,6 +1,11 @@
 (in php
+	(filecon "/etc/pear(/.*)?" any config_file_context)
+	(filecon "/etc/pear\.conf" file config_file_context)
 	(filecon "/etc/php-zts\.d(/.*)?" any config_file_context)
 	(filecon "/etc/php\.d(/.*)?" any config_file_context)
 	(filecon "/etc/php\.ini" file config_file_context)
 
+	(filecon "/var/cache/php-pear(/.*)?" any var_cache_file_context)
+
+	(filecon "/var/lib/pear(/.*)?" any var_lib_file_context)
 	(filecon "/var/lib/php(/.*)?" any var_lib_file_context))

@@ -17,3 +17,12 @@
 	(block web_content_rw
 		(filecon "HOME_DIR/public_html(/.*)?/incoming(/.*)?" any file_file_context)
 		(filecon "HOME_DIR/public_html(/.*)?/uploads(/.*)?" any file_file_context)))
+
+(in web_content_home_cgi_tcp_connect_http
+	(genfscon "selinuxfs" "/booleans/web_content_home_cgi_tcp_connect_http" bool_obj_context))
+
+(in web_content_home_cgi_tcp_connect_memcache
+	(genfscon "selinuxfs" "/booleans/web_content_home_cgi_tcp_connect_memcache" bool_obj_context))
+
+(in web_content_home_cgi_tcp_connect_mysql
+	(genfscon "selinuxfs" "/booleans/web_content_home_cgi_tcp_connect_mysql" bool_obj_context))

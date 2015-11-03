@@ -1,0 +1,64 @@
+(block memcached
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+	(typeattribute config_obj_type_attribute)
+	(typeattribute port_obj_type_attribute)
+	(typeattribute var_lib_obj_type_attribute)
+	(typeattribute unit_obj_type_attribute)
+
+	(blockinherit memcached_blk)
+
+	(allow subj_type_attribute self (capability (setgid setuid)))
+	(allow subj_type_attribute self (process (setrlimit)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.udp_bind_generic_node (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call memcache.tcp_bind_port (subj_type_attribute))
+	(call memcache.udp_bind_port (subj_type_attribute)))
+
+(block memcachedtool
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self create_tcp_socket_perms)
+
+	(call cmd.mmap (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_data_files (subj))
+
+	(call locale.read (subj))
+
+	(call memcache.tcp_connect_port (subj))
+
+	(call memcached.tcp_connect_all_ports (subj)))
+
+(allow memcached.adm_subj_type_attribute memcached.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (memcached.adm_subj_type_attribute memcached.subj_type_attribute))
+
+(call file.search_config (memcached.adm_subj_type_attribute))
+(call file.search_var_lib (memcached.adm_subj_type_attribute))
+
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_dir_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_sock_file_perms)
+
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_dir_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_sock_file_perms)
+
+(optional memcached_adm_subj_type_optional_sd
+	(allow memcached.adm_subj_type_attribute memcached.unit_obj_type_attribute (service (stop status disable enable reload start))))

@@ -155,6 +155,20 @@
 			(optional varnishd_adm_optional_sd_askpwd
 				(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
+	(block varnishd_adm
+		(typeattribute port_obj_type_attribute)
+
+		(blockinherit net.unreserved_port_obj_blk)
+
+		(typeattributeset port_obj_type_attribute port)
+
+		(typeattributeset .varnishd_adm.port_obj_type_attribute port_obj_type_attribute)
+
+		(allow varnishd.subj port (tcp_socket (name_bind)))
+
+		(blockinherit net.tcp_connect_port_blk)
+		(blockinherit net.tcp_bind_port_blk))
+
 	(block varnish_reload_vcl
 		(typeattribute subj_type_attribute)
 
@@ -380,6 +394,10 @@
 			(call sd.daemon_adm_subj_type (ARG1)))
 		(optional varnishd_adm_optional_sd_askpwd
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in varnishd_adm
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk))
 
 (in varnishadm
 	(blockinherit exec_blk)

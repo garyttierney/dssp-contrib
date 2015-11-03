@@ -8,6 +8,10 @@
 		(optional varnishd_unit_optional_sd
 			(filecon "/usr/lib/systemd/system/[^/]*varnish.*" file unit_file_context)))
 
+	(block varnishd_adm
+		(portcon tcp 6082 port_obj_context)
+		(portcon tcp 6082 port_obj_context))
+
 	(block varnish_reload_vcl
 		(filecon "/usr/sbin/varnish_reload_vcl" file cmd_file_context))
 

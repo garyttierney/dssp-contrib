@@ -58,7 +58,10 @@
 
 	(call net.tcp_bind_generic_node (subj))
 	(call net.udp_bind_generic_node (subj))
+	(call net.tcp_connect_ephemeral_port (subj))
 	(call net.tcp_connect_unreserved_port (subj))
+
+	(call http_alt.tcp_connect_port (subj))
 
 	(call mdns.udp_bind_port (subj))
 

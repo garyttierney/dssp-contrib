@@ -24,6 +24,11 @@
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute "*"))
 
+	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(call manage_var_tmp_user_files (subj_type_attribute))
+	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute "*"))
+
 	(allow subj_type_attribute self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
 	(allow subj_type_attribute self (process (setsched setrlimit setexec)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
@@ -71,6 +76,7 @@
 	(call usersubj.relabel_term (subj_type_attribute))
 	(call usersubj.send_signal_priv_subj (subj_type_attribute))
 	(call usersubj.setattr_term (subj_type_attribute))
+	(call usersubj.setattr_var_tmp_user_files (subj_type_attribute))
 	(call usersubj.shell_manual_subj_type_transition_priv_subj (subj_type_attribute))
 	(call usersubj.use_term (subj_type_attribute))
 

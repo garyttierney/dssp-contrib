@@ -2084,6 +2084,10 @@
 		(call file.search_var_tmp (ARG1))
 		(call read_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
 
+	(macro setattr_var_tmp_user_files ((type ARG1))
+		(call file.search_var_tmp (ARG1))
+		(call setattr_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+
 	(macro manage_var_tmp_user_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
 		(call manage_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))

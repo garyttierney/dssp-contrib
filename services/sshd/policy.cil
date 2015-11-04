@@ -93,6 +93,8 @@
 (call sshd.rw_inherited_unix_stream_sockets_all_subj (sshd.login_subj_type_attribute))
 (call sshd.rw_inherited_unix_dgram_sockets_all_subj (sshd.login_subj_type_attribute))
 
+(call ssh_client.read_config_files (sshd.login_subj_type_attribute))
+
 (call sshd.login_subj_type (sshd.priv_login_subj_type_attribute))
 
 (allow sshd.adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))

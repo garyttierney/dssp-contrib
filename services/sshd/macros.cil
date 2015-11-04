@@ -4,6 +4,9 @@
 	(block sshd
 		(typeattribute adm_subj_type_attribute)
 
+		(typeattribute login_subj_type_attribute)
+		(typeattribute priv_login_subj_type_attribute)
+
 		(typeattribute subj_type_attribute)
 
 		(typeattribute obj_type_attribute)
@@ -80,6 +83,14 @@
 
 			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
+		(call rw_inherited_tcp_sockets (login_subj_type_attribute))
+		(call rw_inherited_unix_stream_sockets (login_subj_type_attribute))
+		(call rw_inherited_unix_dgram_sockets (login_subj_type_attribute))
+
+		(call ssh_client.read_config_files (login_subj_type_attribute))
+
+		(call login_subj_type (priv_login_subj_type_attribute))
+
 	        (allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	        (call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
@@ -93,6 +104,12 @@
 	        (allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
 	        (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	        (allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+
+		(macro login_subj_type ((type ARG1))
+			(typeattributeset login_subj_type_attribute ARG1))
+
+		(macro priv_login_subj_type ((type ARG1))
+			(typeattributeset priv_login_subj_type_attribute ARG1))
 
 		(blockinherit exec_blk)
 

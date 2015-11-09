@@ -1,6 +1,8 @@
 (block sysadm_screen
 	(blockinherit screen.subj_blk)
 
+	(allow subj self (capability (dac_override setuid setgid)))
+
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 

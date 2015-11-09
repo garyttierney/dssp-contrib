@@ -33,6 +33,8 @@
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))
 
+	(call bootloader.read_config_files (subj))
+
 	(call modules.read (subj))
 	(call modules_dep.manage_files (subj))
 	(call modules_dep.modules_obj_type_transition_modules_dep (subj))

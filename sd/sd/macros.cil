@@ -352,6 +352,11 @@
 		(call search_config (ARG1))
 		(call manage_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
 
+	(macro manage_unit_lnk_files ((type ARG1))
+		(call lib.search_lib (ARG1))
+		(call search_config (ARG1))
+		(call manage_lnk_files_pattern (ARG1 sd_unit.unit_file sd_unit.unit_file)))
+
 	(macro getattr_unit_dirs ((type ARG1))
 		(call lib.search_lib (ARG1))
 		(call search_config (ARG1))

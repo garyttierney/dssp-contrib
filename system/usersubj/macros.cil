@@ -2221,6 +2221,9 @@
 		(call fs.search_tmpfs (ARG1))
 		(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
 
+	(macro read_inherited_tmpfs_user_files ((type ARG1))
+		(allow ARG1 tmpfs_user.tmpfs_user_file read_inherited_file_perms))
+
 	(macro dontaudit_relabel_tmpfs_user_files ((type ARG1))
 		(dontaudit ARG1 tmpfs_user.tmpfs_user_file relabel_file_perms))
 

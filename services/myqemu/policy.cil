@@ -81,12 +81,10 @@
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call sys.list_cpu_sysfs (subj))
-	(call sys.list_node_sysfs (subj))
-	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpu_sysfs (subj))
 	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_crypto_sysctl_files (subj))
-	(call sys.read_node_sysfs_files (subj))
+	(call sys.read_node_sysfs (subj))
 	(call sys.read_net_proc_files (subj))
 
 	(call cmd.audit_read_access_shell_files (subj))

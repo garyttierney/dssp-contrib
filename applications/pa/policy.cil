@@ -85,13 +85,12 @@
 	(allow client_subj_type_attribute subj_type_attribute (fd (use)))
 	(allow client_subj_type_attribute subj_type_attribute (unix_stream_socket (connectto)))
 
-	(call sys.list_cpu_sysfs (client_subj_type_attribute))
-	(call sys.read_cpu_sysfs_files (client_subj_type_attribute))
+	(call sys.read_cpu_sysfs (client_subj_type_attribute))
 
 	(call dev.read_urandom (client_subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (client_subj_type_attribute))
-	(call fs.read_sysfs (client_subj_type_attribute))
+	; (call fs.read_sysfs (client_subj_type_attribute))
 
 	(call alsactl.read_config (client_subj_type_attribute))
 

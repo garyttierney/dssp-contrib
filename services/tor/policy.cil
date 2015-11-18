@@ -47,8 +47,7 @@
 	(allow subj self (capability (setgid setuid)))
 	(allow subj self create_tcp_stream_socket_perms)
 
-	(call sys.list_cpu_sysfs (subj))
-	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpu_sysfs (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))

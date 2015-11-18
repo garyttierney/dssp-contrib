@@ -36,14 +36,11 @@
 	(allow subj self (capability (sys_nice)))
 	(allow subj self create_msgq_perms)
 
-	(call sys.list_cpu_sysfs (subj))
-	(call sys.list_node_sysfs (subj))
-	(call sys.read_cpu_sysfs_files (subj))
-	(call sys.read_node_sysfs_files (subj))
+	(call sys.read_cpu_sysfs (subj))
+	(call sys.read_node_sysfs (subj))
 
 	(call fs.list_sysfs (subj))
 	(call fs.rw_sysfs_files (subj))
-	(call fs.read_sysfs_lnk_files (subj))
 
 	(call subj.ptrace_uncond_subj_type (subj))
 	(call subj.getsched_common_subj (subj))

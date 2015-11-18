@@ -10,16 +10,13 @@
 
 	(call exec (subj_type_attribute))
 
-	(call sys.list_cpu_sysfs (subj_type_attribute))
-	(call sys.list_node_sysfs (subj_type_attribute))
-	(call sys.read_cpu_sysfs_files (subj_type_attribute))
-	(call sys.read_node_sysfs_files (subj_type_attribute))
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+	(call sys.read_node_sysfs (subj_type_attribute))
 
 	(call cmd.exec_shell (subj_type_attribute))
 
 	(call fs.list_sysfs (subj_type_attribute))
 	(call fs.rw_sysfs_files (subj_type_attribute))
-	(call fs.read_sysfs_lnk_files (subj_type_attribute))
 
 	(call subj.ptrace_uncond_subj_type (subj_type_attribute))
 	(call subj.getsched_common_subj (subj_type_attribute))

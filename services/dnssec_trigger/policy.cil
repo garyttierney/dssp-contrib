@@ -61,6 +61,8 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call resolv.setattr_config_files (subj))
+
 	(optional dnssec_triggerd_optional_sd
 		(call sd.daemon (subj cmd_file))
 

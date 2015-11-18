@@ -32,6 +32,10 @@
 		(call file.read_config_lnk_files (ARG1))
 		(allow ARG1 config_file relabel_file_perms))
 
+	(macro setattr_config_files ((type ARG1))
+		(call file.read_config_lnk_files (ARG1))
+		(allow ARG1 config_file (file (setattr))))
+
 	(macro read_config_files ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
 		(allow ARG1 config_file read_file_perms)

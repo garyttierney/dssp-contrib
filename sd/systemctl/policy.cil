@@ -17,7 +17,7 @@
 	(optional systemctl_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 
-	(allow subj_type_attribute self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin)))
+	(allow subj_type_attribute self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin fsetid)))
 	(allow subj_type_attribute self (process (setfscreate)))
 
 	(call sys.read_state_files (subj_type_attribute))

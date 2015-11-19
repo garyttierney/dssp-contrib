@@ -279,7 +279,9 @@
 
 	(optional sd_optional_sd_nspawn_container
 		(call sd_nspawn_container.audit_write_access_all_dirs (subj))
-		(call sd_nspawn_container.read_all (subj)))
+		(call sd_nspawn_container.read_all (subj))
+		(call sd_nspawn.manage_runtime_dirs (subj))
+		(call sd_nspawn.sd_runtime_obj_type_transition_runtime (subj)))
 
 	(optional sd_optional_sd_tmpfiles
 		(call sd_tmpfiles.read_runtime (subj)))

@@ -61,6 +61,10 @@
 		(call sd.search_runtime (ARG1))
 		(allow ARG1 runtime_file list_dir_perms))
 
+	(macro manage_runtime_dirs ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_dir_perms))
+
 	(macro read_runtime_files ((type ARG1))
 		(call sd.search_runtime (ARG1))
 		(call read_files_pattern (ARG1 runtime_file runtime_file)))

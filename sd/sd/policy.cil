@@ -340,6 +340,9 @@
 
 	(call usersubj.use_term (subj_type_attribute))
 
+	(optional sd_subj_type_optional_sd_machined
+		(call sd_machined.use_fd (subj_type_attribute)))
+
 	(allow daemon_adm_subj_type_attribute self (capability (kill sys_resource net_admin)))
 
 	(call subj.ptrace_subj_type (daemon_adm_subj_type_attribute))

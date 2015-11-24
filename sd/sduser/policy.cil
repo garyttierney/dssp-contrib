@@ -87,6 +87,9 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
+	(optional_sduser_subj_type_optional_sd_machined
+		(call sd_machined.use_fd (subj_type_attribute)))
+
 	(optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus
 		(allow subj_type_attribute sysbus_chat_client_all_subj_type_attribute (dbus (send_msg)))
 		(allow sysbus_chat_client_all_subj_type_attribute subj_type_attribute (dbus (send_msg))))

@@ -72,6 +72,7 @@
 		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
 
 	(optional sysbus_optional_sd_machined
+		(call sd_machined.rw_inherited_login_ptys (subj))
 		(call sd_machined.use_fd (subj))
 		(call sd_machined.write_inherited_var_lib_files (subj)))
 

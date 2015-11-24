@@ -111,6 +111,9 @@
 	(blockinherit term.relabelfrom_login_ptys_blk)
 	(blockinherit term.use_login_ptys_blk)
 
+	(macro rw_inherited_login_ptys ((type ARG1))
+		(allow ARG1 login_pty_dev rw_inherited_term_perms))
+
 	(macro dontaudit_rw_inherited_login_ptys ((type ARG1))
 		(dontaudit ARG1 login_pty_dev rw_inherited_term_perms))
 

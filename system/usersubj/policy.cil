@@ -55,9 +55,6 @@
 
 	(call nss.read_config_files (common_type_attribute))
 
-	(optional usersubj_common_type_optional_sd_machined
-		(call sd_machined.use_fd (common_type_attribute)))
-
 	(optional usersubj_priv_type_optional_sudo
 		(call rw_inherited_fifo_files_unpriv_subj (priv_type_attribute))
 		(call rw_inherited_unix_stream_sockets_unpriv_subj (priv_type_attribute))

@@ -50,6 +50,8 @@
 	(allow subj self (process (getcap setcap)))
 	(allow subj self create_rawip_socket_perms)
 
+	(call sys.read_net_proc_files (subj))
+
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj)))

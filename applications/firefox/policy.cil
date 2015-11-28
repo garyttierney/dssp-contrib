@@ -42,6 +42,7 @@
 
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
 
 	(call cmd.exec (subj_type_attribute))
 	(call cmd.exec_shell (subj_type_attribute))
@@ -104,6 +105,9 @@
 
 	(optional firefox_subj_type_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.sessbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional firefox_subj_type_optional_dunst
+		(call dunst.sessbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional firefox_subj_type_optional_gstreamer
 		(call gstreamer.client_subj_type (subj_type_attribute)))

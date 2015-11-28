@@ -50,6 +50,10 @@
 	(blockinherit file.manage_var_log_files_blk)
 	(blockinherit file.relabel_var_log_files_blk)
 
+	(macro append_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(call append_files_pattern (ARG1 var_log_file var_log_file)))
+
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
 		(call file.var_log_obj_type_transition (ARG1 var_log_file file "dnf.log"))
 		(call file.var_log_obj_type_transition (ARG1 var_log_file file "dnf.librepo.log"))

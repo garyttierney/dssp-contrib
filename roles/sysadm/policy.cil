@@ -249,6 +249,8 @@
 
 	(optional sysadm_optional_fpaste
 		(call fpaste.run (subj_type_attribute role))
+		(call fpaste.manage_tmpfs_user_files (subj))
+		(call fpaste.relabel_tmpfs_user_files (subj))
 		(call fpaste.manage_var_tmp_user (subj))
 		(call fpaste.relabel_var_tmp_user (subj)))
 

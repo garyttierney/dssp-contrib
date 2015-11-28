@@ -92,6 +92,9 @@
 	(optional fpaste_optional_rpmdev
 		(call rpmdev.read_home_user_files (subj)))
 
+	(optional fpaste_optional_sd
+		(call sd.search_config (subj)))
+
 	(optional fpaste_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 

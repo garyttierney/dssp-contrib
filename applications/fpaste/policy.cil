@@ -10,9 +10,12 @@
 	(call manage_var_tmp_user (subj))
 	(call var_tmp_obj_type_transition_var_tmp (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.read_cpu_online_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.list_mountpoints (subj))
 	(call sys.read_ring_buffer (subj))
@@ -33,15 +36,19 @@
 
 	(call sec.get_enforce_mode (subj))
 
-	(call storage.getattr_all (subj))
+	(call storage.read_all (subj))
 
 	(call subj.read_state_common_subj (subj))
 
 	(call dmesg.exec (subj))
 
 	(call fstools.exec (subj))
+	(call fstools.manage_runtime (subj))
+	(call fstools.runtime_obj_type_transition_runtime (subj))
 
 	(call http.tcp_connect_port (subj))
+
+	(call ldconfig.exec (subj))
 
 	(call hwdata.read_data (subj))
 	(call locale.read (subj))
@@ -67,6 +74,9 @@
 
 	(optional fpaste_optional_httpd
 		(call httpd.tcp_connect_all_ports (subj)))
+
+	(optional fpaste_optional_journalctl
+		(call journalctl.exec (subj)))
 
 	(optional fpaste_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))

@@ -12,6 +12,8 @@
 
 	(allow subj self create_unix_dgram_socket_perms)
 
+	(call sys.read_net_proc_files (subj))
+
 	(call fs.getattr_fs (subj))
 	(call fs.read_sysfs (subj))
 

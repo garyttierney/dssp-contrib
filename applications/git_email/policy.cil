@@ -1,11 +1,11 @@
 (block git_email
 	(typeattribute subj_type_attribute)
 
-        (blockinherit app.application_cmd_obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(call manage_home_user_files (subj_type_attribute))
 	(call git_home_user_obj_type_transition_home (subj_type_attribute))

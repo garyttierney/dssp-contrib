@@ -287,6 +287,9 @@
 		(call hwclock.manage_config_files (subj))
 		(call hwclock.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_inhibit
+		(call inhibit.client_subj_type (subj_type_attribute)))
+
 	(optional sysadm_optional_iotop
 		(call iotop.run (subj_type_attribute role)))
 

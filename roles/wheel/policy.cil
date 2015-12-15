@@ -75,6 +75,9 @@
 		(call gstreamer.relabel_home_cache (subj))
 		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
 
+	(optional wheel_optional_inhibit
+		(call inhibit.client_subj_type (subj_type_attribute)))
+
 	(optional wheel_optional_java
 		(call java.manage_tmpfs_user (subj))
 		(call java.relabel_tmpfs_user (subj))

@@ -53,6 +53,7 @@
 
 	(allow subj self (capability (setgid setuid)))
 	(allow subj self create_tcp_stream_socket_perms)
+	(allow subj self (unix_stream_socket (listen accept)))
 
 	(call sys.read_cpu_sysfs (subj))
 	(call sys.read_kernel_sysctl_files (subj))
@@ -104,6 +105,7 @@
 
 		(call sd.daemon_rwdir_obj_type (var_log_file))
 		(call sd.daemon_rwdir_obj_type (var_lib_file))
+		(call sd.daemon_rwdir_obj_type (runtime_file))
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 

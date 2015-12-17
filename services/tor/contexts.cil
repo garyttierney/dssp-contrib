@@ -3,6 +3,7 @@
 	(filecon "/usr/bin/tor" file cmd_file_context)
 	(filecon "/var/lib/tor(/.*)?" any var_lib_file_context)
 	(filecon "/var/log/tor(/.*)?" any var_log_file_context)
+	(filecon "/var/run/tor(/.*)?" any runtime_file_context)
 	(filecon "HOME_DIR/\.tor(/.*)?" any home_user_file_context)
 
 	(optional tor_unit_optional_sd

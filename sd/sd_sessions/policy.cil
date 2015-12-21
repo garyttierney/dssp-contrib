@@ -5,6 +5,8 @@
 
 	(blockinherit sd.unit_obj_blk)
 
+	(allow subj self (process (setfscreate)))
+
 	(call dev.write_kmsg (subj))
 
 	(call file.search_config (subj))
@@ -15,6 +17,9 @@
 	(call nologin.runtime_obj_type_transition_runtime (subj))
 
 	(call sd_journald.client_subj_type (subj))
+
+	(call file_context.read_config_files (subj))
+	(call selinux_config.read_config_files (subj))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

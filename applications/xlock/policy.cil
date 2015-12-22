@@ -38,6 +38,10 @@
 
 	(call xserver.client_subj_type (subj))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_target_subj_type (subj))))
+
 	(optional xlock_optional_sd
 		(call sd.daemon (subj cmd_file)))
 

@@ -110,6 +110,10 @@
 
 	(call xserver_backlight_helper.run (subj role_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj))))
+
 	(optional xserver_optional_sd_logind
 		(call sd_logind.client_subj_type (subj)))
 

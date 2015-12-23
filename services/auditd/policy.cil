@@ -100,6 +100,19 @@
 
 	(roletype role_attribute subj)
 
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset auditd.obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call auditctl.auto_subj_type_transition (subj))
+
+	(call auditd.manage_config_files (subj))
+
 	(call locale.read (subj))
 
 	(call nss.read_config_files (subj))

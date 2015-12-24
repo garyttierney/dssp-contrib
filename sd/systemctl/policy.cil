@@ -34,9 +34,9 @@
 	(call app.getattr (subj_type_attribute))
 	(call app.read_state (subj_type_attribute))
 
-	(call utmp.read_runtime_files (subj_type_attribute))
-
 	(call fstab.sd_status_subj_type (subj_type_attribute))
+	(call man.read (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

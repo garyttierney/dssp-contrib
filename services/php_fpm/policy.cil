@@ -26,9 +26,10 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
+	(call php.manage_var_lib (subj_type_attribute))
 	(call php.read_config (subj_type_attribute))
 
-        (call usersubj.search_home_dir (subj_type_attribute))
+	(call usersubj.search_home_dir (subj_type_attribute))
 
 	(call web_content_htaccess.read_all_files (php_fpm.subj))
 

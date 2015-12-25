@@ -1,0 +1,72 @@
+(block php_fpm
+	(typeattribute status_start_stop_reload_all_sd_unit_subj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+	(typeattribute exec_obj_type_attribute)
+	(typeattribute unit_obj_type_attribute)
+	(typeattribute config_obj_type_attribute)
+	(typeattribute runtime_obj_type_attribute)
+	(typeattribute var_log_obj_type_attribute)
+
+	(blockinherit php_fpm_blk)
+
+	(allow subj_type_attribute self (capability (setuid setgid kill)))
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call php.read_config (subj_type_attribute))
+
+        (call usersubj.search_home_dir (subj_type_attribute))
+
+	(call web_content_htaccess.read_all_files (php_fpm.subj))
+
+	(call web_content_ra.list_all (php_fpm.subj))
+	(call web_content_ra.append_all_files (php_fpm.subj))
+	(call web_content_ra.read_all_files (php_fpm.subj))
+
+	(call web_content_ro.list_all (php_fpm.subj))
+	(call web_content_ro.read_all_files (php_fpm.subj))
+	(call web_content_ro.read_all_lnk_files (php_fpm.subj))
+
+	(call web_content_rw.manage_all (php_fpm.subj))
+
+	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (php_fpm.subj))
+
+	(optional php_fpm_optional_sd
+		(call sd.daemon_pid_obj_type (subj_type_attribute))
+		(call sd.notify_subj_type (subj_type_attribute))
+		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
+
+		(allow status_start_stop_reload_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload)))))
+
+(allow php_fpm.adm_subj_type_attribute php_fpm.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (php_fpm.adm_subj_type_attribute php_fpm.subj_type_attribute))
+
+(call file.search_config (php_fpm.adm_subj_type_attribute))
+(call file.search_runtime (php_fpm.adm_subj_type_attribute))
+(call file.search_var_log (php_fpm.adm_subj_type_attribute))
+
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute manage_dir_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute manage_file_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute manage_lnk_file_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute manage_sock_file_perms)
+
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute relabel_dir_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute relabel_file_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute relabel_lnk_file_perms)
+(allow php_fpm.adm_subj_type_attribute php_fpm.obj_type_attribute relabel_sock_file_perms)
+
+(optional php_fpm_adm_subj_type_optional_sd
+	(allow php_fpm.adm_subj_type_attribute php_fpm.unit_obj_type_attribute (service (stop status disable enable reload start))))

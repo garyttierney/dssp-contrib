@@ -1,7 +1,7 @@
 (in httpd
 	(block httpd
 		(filecon "/usr/sbin/httpd" file cmd_file_context)
-		(filecon "/etc/httpd(/.*)" any config_file_context)
+		(filecon "/etc/httpd(/.*)?" any config_file_context)
 		(filecon "/etc/sysconfig/httpd" file config_file_context)
 		(filecon "/var/run/httpd(/.*)?" any runtime_file_context)
 		(filecon "/var/run/mod_fcgid(/.*)?" any runtime_file_context)
@@ -9,7 +9,7 @@
 		(filecon "/var/lib/dav(/.*)?" any var_lib_file_context)
 		(filecon "/var/log/httpd(/.*)?" any var_log_file_context)
 
-		(optional http_unit_optional_sd
+		(optional httpd_unit_optional_sd
 			(filecon "/usr/lib/systemd/system/[^/]*httpd.*" file unit_file_context)))
 
 	(block htcacheclean

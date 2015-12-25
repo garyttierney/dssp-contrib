@@ -407,6 +407,9 @@
 		(call ping.run (subj_type_attribute role))
 		(call traceroute.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_nginx
+		(call nginx.adm (subj role)))
+
 	(optional sysadm_optional_nmcli
 		(call nmcli.run (subj_type_attribute role)))
 
@@ -441,6 +444,9 @@
 		(call php.manage_config (subj))
 		(call php.manage_var_cache (subj))
 		(call php.manage_var_lib (subj)))
+
+	(optional sysadm_optional_php_fpm
+		(call php_fpm.adm (subj role)))
 
 	(optional sysadm_optional_phpcli
 		(call phpcli.exec (subj_type_attribute))

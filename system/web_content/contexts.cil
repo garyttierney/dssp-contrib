@@ -1,6 +1,7 @@
 (in web_sys
 	(block web_content_ro
-		(filecon "/var/www(/.*)?" any file_file_context))
+		(filecon "/var/www(/.*)?" any file_file_context)
+		(filecon "/usr/share/nginx/html(/.*)?" any file_file_context))
 
 	(block web_content_cgi
 		(filecon "/var/www(/.*)?/cgi-bin(/.*)?" any cmd_file_context)

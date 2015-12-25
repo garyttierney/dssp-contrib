@@ -67,7 +67,7 @@
 (block httpd
 	(typeattribute status_start_stop_reload_all_sd_unit_subj_type_attribute)
 
-        (typeattribute adm_subj_type_attribute)
+	(typeattribute adm_subj_type_attribute)
 
 	(typeattribute subj_type_attribute)
 
@@ -107,6 +107,7 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
+	(call cert.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 	(call mime_types.read_config_files (subj_type_attribute))
 
@@ -134,7 +135,10 @@
 		(call sd.notify_subj_type (subj_type_attribute))
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
-		(allow status_start_stop_reload_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload)))))
+		(allow status_start_stop_reload_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload))))
+
+	(optional httpd_optional_php_fpm
+		(call php_fpm.php_fpm.stream_connect (httpd.subj))))
 
 (block rotatelogs
 	(typeattribute subj_type_attribute)
@@ -170,13 +174,11 @@
 
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_dir_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_fifo_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_lnk_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_sock_file_perms)
 
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_dir_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_fifo_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_lnk_file_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_sock_file_perms)
 

@@ -1,0 +1,196 @@
+(block php_fpm_blk
+	(blockabstract php_fpm_blk)
+
+	(block php_fpm
+		(typeattribute adm_subj_type_attribute)
+
+		(typeattribute subj_type_attribute)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattribute config_obj_type_attribute)
+		(typeattribute exec_obj_type_attribute)
+		(typeattribute runtime_obj_type_attribute)
+		(typeattribute unit_obj_type_attribute)
+		(typeattribute var_log_obj_type_attribute)
+
+		(typeattributeset .php_fpm.adm_subj_type_attribute adm_subj_type_attribute)
+
+		(typeattributeset .php_fpm.obj_type_attribute obj_type_attribute)
+
+		(typeattributeset .php_fpm.config_obj_type_attribute config_obj_type_attribute)
+		(typeattributeset .php_fpm.exec_obj_type_attribute exec_obj_type_attribute)
+		(typeattributeset .php_fpm.runtime_obj_type_attribute runtime_obj_type_attribute)
+		(typeattributeset .php_fpm.unit_obj_type_attribute unit_obj_type_attribute)
+		(typeattributeset .php_fpm.var_log_obj_type_attribute var_log_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .php_fpm.subj_type_attribute subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(typeattributeset exec_obj_type_attribute cmd_file)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit file.config_obj_blk)
+
+		(typeattributeset obj_type_attribute config_file)
+		(typeattributeset config_obj_type_attribute config_file)
+
+		(allow subj config_file read_file_perms)
+		(allow subj config_file list_dir_perms)
+		(allow subj config_file read_lnk_file_perms)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset obj_type_attribute runtime_file)
+		(typeattributeset runtime_obj_type_attribute runtime_file)
+
+		(allow subj runtime_file manage_dir_perms)
+		(allow subj runtime_file manage_file_perms)
+		(allow subj runtime_file manage_sock_file_perms)
+
+		(call file.runtime_obj_type_transition (subj runtime_file dir "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file sock_file "*"))
+
+		(blockinherit file.var_log_obj_blk)
+
+		(typeattributeset obj_type_attribute var_log_file)
+		(typeattributeset var_log_obj_type_attribute var_log_file)
+
+		(allow subj var_log_file manage_dir_perms)
+		(allow subj var_log_file (file (setattr rename)))
+		(allow subj var_log_file append_file_perms)
+		(allow subj var_log_file create_file_perms)
+		(allow subj var_log_file delete_file_perms)
+		(allow subj var_log_file read_file_perms)
+
+		(call file.var_log_obj_type_transition (subj var_log_file dir "*"))
+
+		(optional php_fpm_blk_optional_logrotate
+			(call logrotate.var_log_obj_type (var_log_file)))
+
+		(optional php_fpm_blk_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset obj_type_attribute unit_file)
+			(typeattributeset unit_obj_type_attribute unit_file)
+
+			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+		(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+		(call file.search_config (adm_subj_type_attribute))
+		(call file.search_runtime (adm_subj_type_attribute))
+		(call file.search_var_log (adm_subj_type_attribute))
+
+		(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+
+		(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit file.search_config_blk)
+		(blockinherit file.list_config_blk)
+		(blockinherit file.read_config_files_blk)
+		(blockinherit file.read_config_lnk_files_blk)
+		(blockinherit file.read_config_blk)
+		(blockinherit file.manage_config_blk)
+		(blockinherit file.relabel_config_blk)
+
+		(blockinherit file.search_runtime_blk)
+		(blockinherit file.list_runtime_blk)
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.read_runtime_lnk_files_blk)
+		(blockinherit file.read_runtime_blk)
+		(blockinherit file.manage_runtime_blk)
+		(blockinherit file.relabel_runtime_blk)
+
+		(macro stream_connect ((type ARG1))
+			(call file.search_runtime (ARG1))
+			(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
+
+		(macro append_var_log_files ((type ARG1))
+			(call search_var_log (ARG1))
+			(allow ARG1 var_log_file append_file_perms))
+
+		(blockinherit file.search_var_log_blk)
+		(blockinherit file.list_var_log_blk)
+		(blockinherit file.read_var_log_files_blk)
+		(blockinherit file.read_var_log_lnk_files_blk)
+		(blockinherit file.read_var_log_blk)
+		(blockinherit file.manage_var_log_blk)
+		(blockinherit file.relabel_var_log_blk)
+
+		(macro adm ((type ARG1)(role ARG2))
+			(typeattributeset adm_subj_type_attribute ARG1)
+			(optional php_fpm_adm_optional_sd
+				(call sd.daemon_adm_subj_type (ARG1)))
+			(optional php_fpm_adm_optional_sd_askpwd
+				(call sd_askpwd_agent.run (ARG1 ARG2))))))
+
+(in php_fpm
+	(macro exec_all ((type ARG1))
+		(call can_exec (ARG1 exec_obj_type_attribute)))
+
+	(macro status_start_stop_reload_all_sd_unit_subj_type ((type ARG1))
+		(typeattributeset status_start_stop_reload_all_sd_unit_subj_type_attribute ARG1))
+
+	(blockinherit file.search_all_config_blk)
+	(blockinherit file.list_all_config_blk)
+	(blockinherit file.read_all_config_files_blk)
+	(blockinherit file.read_all_config_lnk_files_blk)
+	(blockinherit file.read_all_config_blk)
+	(blockinherit file.manage_all_config_blk)
+	(blockinherit file.relabel_all_config_blk)
+
+	(blockinherit file.search_all_runtime_blk)
+	(blockinherit file.list_all_runtime_blk)
+	(blockinherit file.read_all_runtime_files_blk)
+	(blockinherit file.read_all_runtime_lnk_files_blk)
+	(blockinherit file.read_all_runtime_blk)
+	(blockinherit file.manage_all_runtime_blk)
+	(blockinherit file.relabel_all_runtime_blk)
+
+	(macro stream_connect_all ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_obj_type_attribute runtime_obj_type_attribute subj_type_attribute)))
+
+	(blockinherit file.search_all_var_log_blk)
+	(blockinherit file.list_all_var_log_blk)
+	(blockinherit file.read_all_var_log_files_blk)
+	(blockinherit file.read_all_var_log_lnk_files_blk)
+	(blockinherit file.read_all_var_log_blk)
+	(blockinherit file.manage_all_var_log_blk)
+	(blockinherit file.relabel_all_var_log_blk)
+
+	(macro append_all_var_log_files ((type ARG1))
+		(call search_all_var_log (ARG1))
+		(allow ARG1 var_log_obj_type_attribute append_file_perms))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset php_fpm.adm_subj_type_attribute ARG1)
+		(optional php_fpm_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional php_fpm_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))

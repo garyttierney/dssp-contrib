@@ -1,0 +1,10 @@
+(in php_fpm
+	(block php_fpm
+		(filecon "/usr/sbin/php-fpm" file cmd_file_context)
+		(filecon "/etc/php-fpm\.conf" file config_file_context)
+		(filecon "/etc/php-fpm\.d(/.*)?" any config_file_context)
+		(filecon "/var/run/php-fpm(/.*)?" any runtime_file_context)
+		(filecon "/var/log/php-fpm(/.*)?" any var_log_file_context)
+
+		(optional php_fpm_php_fpm_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*php-fpm.*" file unit_file_context))))

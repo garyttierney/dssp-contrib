@@ -190,7 +190,7 @@
 		(call search_all_var_log (ARG1))
 		(allow ARG1 var_log_obj_type_attribute append_file_perms))
 
-	(macro create_var_log_files ((type ARG1))
+	(macro create_all_var_log_files ((type ARG1))
 		(call file.add_entry_var_log (ARG1))
 		(call create_files_pattern (ARG1 var_log_obj_type_attribute var_log_obj_type_attribute)))
 

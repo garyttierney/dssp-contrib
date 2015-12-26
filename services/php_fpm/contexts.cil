@@ -8,3 +8,12 @@
 
 		(optional php_fpm_php_fpm_unit_optional_sd
 			(filecon "/usr/lib/systemd/system/[^/]*php-fpm.*" file unit_file_context))))
+
+(in php_fpm_tcp_connect_http
+        (genfscon "selinuxfs" "/booleans/php_fpm_tcp_connect_http" bool_obj_context))
+
+(in php_fpm_tcp_connect_memcache
+        (genfscon "selinuxfs" "/booleans/php_fpm_tcp_connect_memcache" bool_obj_context))
+
+(in php_fpm_tcp_connect_mysql
+        (genfscon "selinuxfs" "/booleans/php_fpm_tcp_connect_mysql" bool_obj_context))

@@ -18,6 +18,8 @@
 
 	(blockinherit php_fpm_blk)
 
+	(call subj.entry (subj_type_attribute php_fpm.cmd_file))
+
 	(allow subj_type_attribute self (capability (setuid setgid kill)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))

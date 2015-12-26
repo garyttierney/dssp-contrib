@@ -34,8 +34,6 @@
 
 		(typeattributeset exec_obj_type_attribute cmd_file)
 
-		(call subj.entry (subj cmd_file))
-
 		(roletype sys.role subj)
 
 		(blockinherit file.config_obj_blk)
@@ -134,6 +132,10 @@
 			(call search_var_log (ARG1))
 			(allow ARG1 var_log_file append_file_perms))
 
+		(macro create_var_log_files ((type ARG1))
+			(call file.add_entry_var_log (ARG1))
+			(call create_files_pattern (ARG1 var_log_file var_log_file)))
+
 		(blockinherit file.search_var_log_blk)
 		(blockinherit file.list_var_log_blk)
 		(blockinherit file.read_var_log_files_blk)
@@ -187,6 +189,10 @@
 	(macro append_all_var_log_files ((type ARG1))
 		(call search_all_var_log (ARG1))
 		(allow ARG1 var_log_obj_type_attribute append_file_perms))
+
+	(macro create_var_log_files ((type ARG1))
+		(call file.add_entry_var_log (ARG1))
+		(call create_files_pattern (ARG1 var_log_obj_type_attribute var_log_obj_type_attribute)))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset php_fpm.adm_subj_type_attribute ARG1)

@@ -35,7 +35,9 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
 	(call usersubj.rw_var_spool_user_files (subj_type_attribute))
 	(call usersubj.setattr_var_spool_user_files (subj_type_attribute))

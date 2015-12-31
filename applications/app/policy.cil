@@ -19,7 +19,8 @@
 		(call sduser.send_sigchld_all_subj (subj_type_attribute)))
 
 	(optional app_optional_sudo
-		(call sudo.send_sigchld_all_subj (subj_type_attribute)))
+		(call sudo.send_sigchld_all_subj (subj_type_attribute))
+		(call usersubj.write_inherited_fifo_files_unpriv_subj (subj_type_attribute)))
 
 	(optional app_optional_usersubj
 		(call usersubj.list_home_cmd (subj_type_attribute))

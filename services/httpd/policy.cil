@@ -132,8 +132,8 @@
 	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (httpd.subj))
 
 	(optional httpd_optional_logrotate
-		(call logrotate.reload_sd_unit_obj_type (unit_obj_type_attribute))
-		(call logrotate.var_log_obj_type (var_log_obj_type_attribute)))
+		(call logrotate.client_reload_sd_unit_obj_type (unit_obj_type_attribute))
+		(call logrotate.client_var_log_obj_type (var_log_obj_type_attribute)))
 
 	(optional httpd_optional_sd
 		(call sd.notify_subj_type (subj_type_attribute))

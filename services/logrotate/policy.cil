@@ -5,9 +5,9 @@
 
 	(typeattribute obj_type_attribute)
 
-	(typeattribute runtime_obj_type_attribute)
-	(typeattribute reload_sd_unit_obj_type_attribute)
-	(typeattribute var_log_obj_type_attribute)
+	(typeattribute client_runtime_obj_type_attribute)
+	(typeattribute client_reload_sd_unit_obj_type_attribute)
+	(typeattribute client_var_log_obj_type_attribute)
 
 	(typeattribute client_subj_type_attribute)
 
@@ -64,7 +64,7 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 
-		(allow subj reload_sd_unit_obj_type_attribute (service (reload))))
+		(allow subj client_reload_sd_unit_obj_type_attribute (service (reload))))
 
 	(optional logrotate_optional_systemctl
 		(call systemctl.exec (subj)))
@@ -72,10 +72,10 @@
 	(allow subj client_subj_type_attribute (process (signal)))
 
 	(call file.search_runtime (subj))
-	(call read_files_pattern (subj runtime_obj_type_attribute runtime_obj_type_attribute))
+	(call read_files_pattern (subj client_runtime_obj_type_attribute client_runtime_obj_type_attribute))
 
-	(allow subj var_log_obj_type_attribute rw_dir_perms)
-	(allow subj var_log_obj_type_attribute manage_file_perms)
+	(allow subj client_var_log_obj_type_attribute rw_dir_perms)
+	(allow subj client_var_log_obj_type_attribute manage_file_perms)
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

@@ -31,7 +31,7 @@
 	(call var_log_obj_type_transition_var_log (subj))
 
 	(optional numad_var_log_optional_logrotate
-		(call logrotate.var_log_obj_type (var_log_file)))
+		(call logrotate.client_var_log_obj_type (var_log_file)))
 
 	(allow subj self (capability (sys_nice)))
 	(allow subj self create_msgq_perms)

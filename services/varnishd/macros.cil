@@ -229,9 +229,6 @@
 
 		(call file.var_log_obj_type_transition (subj var_log_file dir "*"))
 
-		(optional varnishd_blk_optional_logrotate
-			(call logrotate.var_log_obj_type (var_log_file)))
-
 		(call varnishd.read_var_lib_files (subj))
 
 		(optional varnishlog_optional_sd
@@ -308,9 +305,6 @@
 		(allow subj var_log_file read_file_perms)
 
 		(call obj_type_transition_pattern (subj varnishlog.var_log_file var_log_file file "*"))
-
-		(optional varnishncsa_blk_optional_logrotate
-			(call logrotate.var_log_obj_type (var_log_file)))
 
 		(call varnishd.read_var_lib_files (subj))
 

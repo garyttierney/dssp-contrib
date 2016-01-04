@@ -105,9 +105,6 @@
 		(call rotatelogs.auto_subj_type_transition (subj))
 		(call suexec.auto_subj_type_transition (subj))
 
-		(optional httpd_blk_optional_logrotate
-			(call logrotate.var_log_obj_type (var_log_file)))
-
 		(optional httpd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
 

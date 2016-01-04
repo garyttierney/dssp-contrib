@@ -36,9 +36,6 @@
 
 	(call var_log_obj_type_transition_var_log (subj))
 
-	(optional tor_var_log_optional_logrotate
-		(call logrotate.var_log_obj_type (var_log_file)))
-
 	(blockinherit usersubj.home_user_obj_blk)
 
 	(call manage_home_user (subj))
@@ -93,6 +90,9 @@
 	(optional tor_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
+	(optional tor_optional_logrotate
+		(call logrotate.var_log_obj_type (var_log_file)))
+
 	(optional tor_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -107,7 +107,10 @@
 		(call sd.daemon_rwdir_obj_type (var_lib_file))
 		(call sd.daemon_rwdir_obj_type (runtime_file))
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+
+		(optional tor_sd_optional_logrotate
+			(call logrotate.reload_sd_unit_obj_type (unit_file))))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

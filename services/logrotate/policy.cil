@@ -4,7 +4,12 @@
 	(typeattribute adm_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
+
+	(typeattribute runtime_obj_type_attribute)
+	(typeattribute reload_sd_unit_obj_type_attribute)
 	(typeattribute var_log_obj_type_attribute)
+
+	(typeattribute client_subj_type_attribute)
 
 	(blockinherit app.application_blk)
 
@@ -30,7 +35,8 @@
 
 	(call standard.obj_sys_change_exemption_subj_type (subj))
 
-	(call cmd.mmap_shell (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
 	(call file.read_config (subj))
 	(call file.rw_var_log_dirs (subj))
@@ -46,6 +52,9 @@
 	(optional logrotate_optional_chronyd
 		(call chronyc.auto_subj_type_transition (subj)))
 
+	(optional logrotate_optional_mariadb
+		(call mariadb.exec (subj)))
+
 	(optional logrotate_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -53,7 +62,17 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+
+		(allow subj reload_sd_unit_obj_type_attribute (service (reload))))
+
+	(optional logrotate_optional_systemctl
+		(call systemctl.exec (subj)))
+
+	(allow subj client_subj_type_attribute (process (signal)))
+
+	(call file.search_runtime (subj))
+	(call read_files_pattern (subj runtime_obj_type_attribute runtime_obj_type_attribute))
 
 	(allow subj var_log_obj_type_attribute rw_dir_perms)
 	(allow subj var_log_obj_type_attribute manage_file_perms)

@@ -40,7 +40,12 @@
 
 	(call locale.read (subj_type_attribute))
 
-	(call nss.client_subj_type (subj_type_attribute)))
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional varnishd_optional_logrotate
+		(call logrotate.client_subj_type (subj_type_attribute))
+		(call logrotate.runtime_obj_type (runtime_obj_type_attribute))
+		(call logrotate.var_log_obj_type (var_log_obj_type_attribute))))
 
 (block varnishd_adm
 	(typeattribute port_obj_type_attribute))
@@ -49,7 +54,9 @@
 	(typeattribute subj_type_attribute))
 
 (block varnishncsa
-	(typeattribute subj_type_attribute))
+	(typeattribute subj_type_attribute)
+
+	(typeattribute runtime_obj_type_attribute))
 
 (block varnishlog
 	(typeattribute subj_type_attribute))

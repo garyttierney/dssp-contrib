@@ -58,6 +58,11 @@
 
 	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (nginx.subj))
 
+	(optional nginx_optional_logrotate
+		(call logrotate.client_subj_type (subj_type_attribute))
+		(call logrotate.runtime_obj_type (runtime_obj_type_attribute))
+		(call logrotate.var_log_obj_type (var_log_obj_type_attribute)))
+
 	(optional nginx_optional_sd
 		(call sd.daemon_pid_obj_type (runtime_obj_type_attribute))
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))

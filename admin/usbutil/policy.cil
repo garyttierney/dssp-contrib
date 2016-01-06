@@ -19,4 +19,7 @@
 	(call hwdata.read_data (subj))
 	(call locale.read (subj))
 
-	(call udev.client_subj_type (subj)))
+	(call udev.client_subj_type (subj))
+
+	(optional usbutil_optional_sd
+		(call sd.search_config (subj))))

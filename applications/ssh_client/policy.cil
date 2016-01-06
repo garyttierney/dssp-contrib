@@ -20,7 +20,10 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call ssh_client.read_home_user (subj_type_attribute)))
+	(call ssh_client.read_home_user (subj_type_attribute))
+
+	(optional ssh_agent_optional_gpg_agent
+		(call gpg_agent.stream_connect_all_subj (subj_type_attribute))))
 
 (block ssh_client
 	(typeattribute subj_type_attribute)

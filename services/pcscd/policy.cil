@@ -28,6 +28,8 @@
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.read_cpu_online_sysfs_files (subj))
+
 	(call dev.rw_usb (subj))
 
 	(call fs.list_devtmpfs (subj))

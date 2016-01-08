@@ -1,5 +1,3 @@
-(typepermissive gdm.subj)
-
 (boolean gdm_priv_login true)
 
 (block gdm_priv_login
@@ -8,7 +6,6 @@
 	(booleanif gdm_priv_login
 		(true
 			(call xsession.manual_subj_type_transition_common_login_subj (gdm.subj)))
-
 		(false
 			(call xsession.manual_subj_type_transition_unpriv_login_subj (gdm.subj)))))
 

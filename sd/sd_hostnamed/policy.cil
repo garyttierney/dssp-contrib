@@ -9,6 +9,7 @@
 	(allow subj self (capability (sys_admin)))
 	(allow subj self (process (setfscreate)))
 
+	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))

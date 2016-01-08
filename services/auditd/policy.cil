@@ -109,6 +109,8 @@
 
 	(allow subj self rw_fifo_file_perms)
 
+	(call cmd.audit_read_access_shell_files (subj))
+
 	(call auditctl.auto_subj_type_transition (subj))
 
 	(call auditd.manage_config_files (subj))

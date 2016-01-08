@@ -1,2 +1,8 @@
 (in xsession
-	(blockinherit exec_blk))
+	(blockinherit exec_blk)
+
+	(macro manual_subj_type_transition_common_login_subj ((type ARG1))
+		(call usersubj.spec_manual_subj_type_transition_common_login_subj (ARG1 cmd_file)))
+
+	(macro manual_subj_type_transition_unpriv_login_subj ((type ARG1))
+		(call usersubj.spec_manual_subj_type_transition_unpriv_login_subj (ARG1 cmd_file))))

@@ -239,6 +239,10 @@
 		(call fusermount.run (subj_type_attribute role))
 		(call ulockmgr.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_gdm
+		(call gdm.adm (subj role))
+		(call gdm_helper.exec (subj)))
+
 	(optional sysadm_optional_git
 		(call git.home_user_obj_entry_subj (subj))
 		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))

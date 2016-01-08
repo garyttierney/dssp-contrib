@@ -1375,8 +1375,14 @@
 	(macro shell_manual_subj_type_transition_common_login_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1 common_login_type_attribute)))
 
+	(macro spec_manual_subj_type_transition_common_login_subj ((type ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2 common_login_type_attribute)))
+
 	(macro shell_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_login_type_attribute)))
+
+	(macro spec_manual_subj_type_transition_unpriv_login_subj ((type ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2 unpriv_login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_type_attribute)))

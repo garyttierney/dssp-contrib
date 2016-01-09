@@ -5,6 +5,11 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit subj.use_fd_blk)
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)
@@ -31,6 +36,10 @@
 	(blockinherit file.read_var_lib_blk)
 	(blockinherit file.manage_var_lib_blk)
 	(blockinherit file.relabel_var_lib_blk)
+
+	(macro read_inherited_var_lib_files ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 var_lib_file read_inherited_file_perms))
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "gdm")))
@@ -82,6 +91,7 @@
 		(call fs.search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_file list_dir_perms)
 		(allow ARG1 tmpfs_file read_file_perms)
+		(allow ARG1 tmpfs_file read_sock_file_perms)
 		(allow ARG1 tmpfs_file read_lnk_file_perms))
 
 	(macro manage_tmpfs ((type ARG1))
@@ -89,17 +99,30 @@
 		(call fs.rw_tmpfs_dirs (ARG1))
 		(allow ARG1 tmpfs_file manage_dir_perms)
 		(allow ARG1 tmpfs_file manage_file_perms)
+		(allow ARG1 tmpfs_file manage_sock_file_perms)
 		(allow ARG1 tmpfs_file manage_lnk_file_perms))
+
+	(macro delete_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.del_entry_tmpfs (ARG1))
+		(allow ARG1 tmpfs_file del_entry_dir_perms)
+		(allow ARG1 tmpfs_file delete_dir_perms)
+		(allow ARG1 tmpfs_file delete_file_perms)
+		(allow ARG1 tmpfs_file delete_sock_file_perms)
+		(allow ARG1 tmpfs_file delete_lnk_file_perms))
 
 	(macro relabel_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_file relabel_dir_perms)
 		(allow ARG1 tmpfs_file relabel_file_perms)
+		(allow ARG1 tmpfs_file relabel_sock_file_perms)
 		(allow ARG1 tmpfs_file relabel_lnk_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file sock_file "*")))
 
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 gdm_priv_login.bool))

@@ -11,6 +11,7 @@
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -66,9 +67,83 @@
 	(typeattributeset obj_type_attribute tmpfs_file)
 
 	(call manage_tmpfs (subj))
+	(allow subj tmpfs_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(allow subj self (capability (fsetid sys_tty_config)))
+	(allow subj self (process (getcap getsched setsched setcap setrlimit)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self create_netlink_selinux_socket_perms)
+	(allow subj self (unix_stream_socket (listen accept connectto)))
+
+	(call sys.read_cpu_online_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.search_keyring (subj))
+
+	(call cmd.audit_exec_access_all_cmd_files (subj))
+	(call cmd.getattr_all_cmd_files (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.rw_dri (subj))
+	(call dev.rw_event (subj))
+	(call dev.rw_sound (subj))
+	(call dev.read_urandom (subj))
+
+	(call file.list_var_tmp (subj))
+	(call file.read_config_files (subj))
+	(call file.read_data (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_proc_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call sec.compute_access_vector (subj))
+	(call sec.list_fs (subj))
+
+	(call subj.execmem_uncond_subj_type (subj))
+	(call subj.ptrace_uncond_subj_type (subj))
+
+	(call term.use_unallocated_ttys (subj))
+
+	(call gdm_helper.exec (subj))
+
+	(call cert.read (subj))
+	(call fonts.read (subj))
+	(call fstab.read (subj))
+
 	(call pam.login_prog_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(call usersubj.search_home_dir (subj))
+
+	(optional gdm_optional_alsactl
+		(call alsactl.read_config_files (subj)))
+
+	(optional gdm_optional_atspi_sessbus_launch
+		(call atspi_sessbus_launch.exec (subj)))
+
+	(optional gdm_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_pa
+		(call pa.exec (subj))
+		(call pa.read_config (subj)))
+
+	(optional gdm_optional_plymouth
+		(call plymouth.exec (subj)))
+
+	(optional gdm_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj))
+		(call polkit_exec.exec (subj)))
+
+	(optional gdm_optional_rtkitd
+		(call rtkitd.client_subj_type (subj)))
 
 	(optional gdm_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -77,7 +152,43 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
+		(call sd.getattr_unit_runtime_dirs (subj))
+
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(optional gdm_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_sd_localed
+		(call sd_localed.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_sd_logind
+		(call sd_logind.read_runtime (subj)))
+
+	(optional gdm_optional_sd_machined
+		(call sd_machined.read_config_files (subj)))
+
+	(optional gdm_optional_sysbus
+		(allow subj self (dbus (acquire_svc)))
+		(call sysbus.exec (subj))
+		(call sysbus.service_subj_type (subj)))
+
+	(optional gdm_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+	(optional gdm_optional_xserver
+		(call xserver.exec (subj))
+		(call xserver.read_config (subj)))
+
+	(optional gdm_optional_xserver_backlight_helper
+		(call xserver_backlight_helper.exec (subj)))
+
+	(optional gdm_optional_xserver_wrap
+		(call xserver_wrap.exec (subj)))
+
+	(optional gdm_optional_xutil
+		(call xutil.exec (subj)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

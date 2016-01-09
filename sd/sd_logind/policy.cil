@@ -118,6 +118,9 @@
 	(call usersubj.setattr_term (subj))
 	(call usersubj.use_term (subj))
 
+	(optional sd_logind_optional_gdm
+		(call gdm.delete_tmpfs (subj)))
+
 	(optional sd_logind_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 

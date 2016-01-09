@@ -65,6 +65,9 @@
 
 	(call pam_console.read_runtime_files (subj))
 
+	(optional sysbus_optional_gdm
+		(call gdm.read_inherited_var_lib_files (subj)))
+
 	(optional sysbus_optional_machinectl
 		(call machinectl.use_fd_all_subj (subj)))
 

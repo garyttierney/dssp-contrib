@@ -1,5 +1,6 @@
 (block accountsd
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -18,6 +19,28 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(allow subj self (capability (dac_override)))
+
+	(call dev.read_urandom (subj))
+
+	(call file.list_config (subj))
+	(call file.list_var_log (subj))
+
+	(call fs.getattr_fs (subj))
+
+	(call locale.read (subj))
+	(call wtmp.read_var_log_files (subj))
+	(call shadow.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional accountsd_optional_gdm
+		(call gdm.read_config (subj))
+		(call gdm.sysbus_chat_client_subj_type (subj)))
+
+	(optional accountsd_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj)))
+
 	(optional accountsd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -26,6 +49,16 @@
 		(typeattributeset obj_type_attribute unit_file)
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(optional accountsd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional accountsd_optional_sysbus
+		(call sysbus.service_subj_type (subj)))
+
+	(optional accountsd_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

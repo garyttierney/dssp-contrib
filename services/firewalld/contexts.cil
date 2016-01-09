@@ -2,6 +2,7 @@
 	(filecon "/usr/sbin/firewalld" file cmd_file_context)
 	(filecon "/etc/firewalld(/.*)?" any config_file_context)
 	(filecon "/etc/sysconfig/firewalld" file config_file_context)
+	(filecon "/var/log/firewalld.*" file var_log_file_context)
 
 	(optional firewalld_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*firewalld.*" file unit_file_context)))

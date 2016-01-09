@@ -5,6 +5,9 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)
@@ -12,6 +15,23 @@
 	(blockinherit file.read_config_blk)
 	(blockinherit file.manage_config_blk)
 	(blockinherit file.relabel_config_blk)
+
+        (blockinherit file.read_var_log_files_blk)
+	(blockinherit file.manage_var_log_files_blk)
+	(blockinherit file.relabel_var_log_files_blk)
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file "firewalld")))
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.write_inherited_fifo_files_blk)
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

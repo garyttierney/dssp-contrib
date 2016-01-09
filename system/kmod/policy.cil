@@ -39,6 +39,9 @@
 
 	(call nss.client_subj_type (subj))
 
+	(optional kmod_optional_firewalld
+		(call firewalld.write_inherited_fifo_files (subj)))
+
 	(optional kmod_optional_iptables
 		(call iptables.dontaudit_rw_rawip_sockets (subj))
 		(call iptables.dontaudit_rw_unix_stream_sockets (subj)))

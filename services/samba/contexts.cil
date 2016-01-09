@@ -1,0 +1,6 @@
+(in samba
+	(filecon "/etc/samba(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/samba" file config_file_context)
+        (filecon "/var/lib/samba(/.*)?" any var_lib_file_context)
+        (filecon "/var/log/samba(/.*)?" any var_log_file_context)
+        (filecon "/var/run/samba(/.*)?" any runtime_file_context))

@@ -114,6 +114,9 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj))))
 
+	(optional xserver_optional_gdm
+		(call gdm.read_tmpfs_user_files (subj)))
+
 	(optional xserver_optional_sd_logind
 		(call sd_logind.client_subj_type (subj)))
 
@@ -141,6 +144,9 @@
 	(call xauth.read_home_user_files (client_subj_type_attribute))
 
 	(call xinit.use_fd_all_subj (client_subj_type_attribute))
+
+	(optional xserver_client_subj_type_optional_gdm
+		(call gdm.read_tmpfs_user_files (client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_rp
 		(call rp.client_subj_type (client_subj_type_attribute))))

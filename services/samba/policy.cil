@@ -1,0 +1,11 @@
+(block samba
+	(blockinherit file.config_obj_blk)
+
+        (blockinherit file.var_lib_obj_blk)
+
+        (blockinherit file.var_log_obj_blk)
+
+	(optional samba_optional_logrotate
+		(call logrotate.client_var_log_obj_type (var_log_file)))
+
+        (blockinherit file.runtime_obj_blk))

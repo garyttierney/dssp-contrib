@@ -67,6 +67,9 @@
 
 	(call sysbus_helper.exec (subj))
 
+	(optional sysbus_optional_colord
+		(call colormgr.read_inherited_home_data_files (subj)))
+
 	(optional sysbus_optional_gdm
 		(call gdm.read_inherited_var_lib_files (subj)))
 

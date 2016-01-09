@@ -11,7 +11,6 @@
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
-	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -142,8 +141,14 @@
 	(optional gdm_optional_bluetoothd
 		(call bluetoothd.sysbus_chat_client_subj_type (subj)))
 
+	(optional gdm_optional_colord
+		(call colord.client_subj_type (subj)))
+
 	(optional gdm_optional_geoclue
 		(call geoclue.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_nm
+		(call nm.client_subj_type (subj)))
 
 	(optional gdm_optional_pa
 		(call pa.exec (subj))
@@ -205,12 +210,6 @@
 
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
-
-	(allow client_subj_type_attribute subj list_dir_perms)
-	(allow client_subj_type_attribute subj read_file_perms)
-	(allow client_subj_type_attribute subj read_lnk_file_perms)
-
-	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

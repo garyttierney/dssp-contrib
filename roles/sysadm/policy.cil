@@ -234,6 +234,10 @@
 		(call fedpkg.manage_config (subj))
 		(call fedpkg.relabel_config (subj)))
 
+	(optional sysadm_optional_firewalld
+		(call firewalld.adm (subj role))
+		(call firewallcmd.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_fop
 		(call fop.run (subj_type_attribute role))
 		(call fop.manage_config_files (subj))

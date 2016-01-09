@@ -29,7 +29,10 @@
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional wheel_optional_colord
-		(call colormgr.run (subj_type_attribute role)))
+		(call colormgr.run (subj_type_attribute role))
+		(call colormgr.manage_home_data (subj))
+		(call colormgr.relabel_home_data (subj))
+		(call colormgr.home_data_obj_type_transition_home_data (subj)))
 
 	(optional wheel_optional_dd
 		(call dd.exec (subj_type_attribute)))

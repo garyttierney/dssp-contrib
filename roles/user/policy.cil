@@ -20,7 +20,10 @@
 		(call cgtop.exec (subj)))
 
 	(optional user_optional_colord
-		(call colormgr.run (subj_type_attribute role)))
+		(call colormgr.run (subj_type_attribute role))
+		(call colormgr.manage_home_data (subj))
+		(call colormgr.relabel_home_data (subj))
+		(call colormgr.home_data_obj_type_transition_home_data (subj)))
 
 	(optional user_optional_curl
 		(call curl.run (subj_type_attribute role))

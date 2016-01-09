@@ -65,11 +65,16 @@
 
 	(call pam_console.read_runtime_files (subj))
 
+	(call sysbus_helper.exec (subj))
+
 	(optional sysbus_optional_gdm
 		(call gdm.read_inherited_var_lib_files (subj)))
 
 	(optional sysbus_optional_machinectl
 		(call machinectl.use_fd_all_subj (subj)))
+
+	(optional sysbus_optional_realmd
+		(call realmd.auto_subj_type_transition (subj)))
 
 	(optional sysbus_optional_sd_logind
 		(call sd_logind.write_inherited_runtime_fifo_files (subj)))
@@ -129,10 +134,10 @@
 		(call sd_logind.read_runtime (dbus_subj_type_attribute)))
 
 	(allow service_subj_type_attribute subj (dbus (acquire_svc)))
+	(call client_subj_type (service_subj_type_attribute))
 	(call read_config_files (service_subj_type_attribute))
 
 	(call service_subj_type (daemon_subj_type_attribute))
-	(call client_subj_type (daemon_subj_type_attribute))
 
 	(allow client_subj_type_attribute self (dbus (send_msg)))
 	(allow client_subj_type_attribute sysbus.subj (dbus (send_msg)))
@@ -179,3 +184,6 @@
 			(eq r1 rbacsep.exempt_role_attribute))
 			(eq r2 rbacsep.exempt_role_attribute))
 			(eq t1 rbacsep.exempt_subj_type_attribute))))))
+
+(block sysbus_helper
+	(blockinherit cmd.obj_blk))

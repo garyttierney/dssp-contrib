@@ -78,6 +78,7 @@
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
+	(call sys.list_cpu_sysfs (subj))
 	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
@@ -93,7 +94,7 @@
 	(call dev.read_urandom (subj))
 
 	(call file.list_var_tmp (subj))
-	(call file.read_config_files (subj))
+	(call file.read_config (subj))
 	(call file.read_data (subj))
 
 	(call fs.getattr_fs (subj))
@@ -134,6 +135,12 @@
 
 	(optional gdm_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.exec (subj)))
+
+	(optional gdm_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_geoclue
+		(call geoclue.sysbus_chat_client_subj_type (subj)))
 
 	(optional gdm_optional_pa
 		(call pa.exec (subj))

@@ -49,6 +49,9 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
+	(optional upowerd_optional_sd_logind
+		(call sd_logind.sysbus_chat_client_subj_type (subj)))
+
 	(optional upowerd_optional_sysbus
 		(call sysbus.service_subj_type (subj)))
 

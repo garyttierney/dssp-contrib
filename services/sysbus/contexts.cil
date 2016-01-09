@@ -6,3 +6,6 @@
 
 	(optional sysbus_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*dbus.*" file unit_file_context)))
+
+(in sysbus_helper
+	(filecon "/usr/libexec/dbus-1/dbus-daemon-launch-helper" file cmd_file_context))

@@ -65,6 +65,7 @@
 	(call fs.list_tmpfs (subj))
 	(call fs.read_sysfs (subj))
 	(call fs.read_cgroup_files (subj))
+	(call fs.trace_client_subj_type (subj))
 
 	(call resolv.manage_config_files (subj))
 	(call resolv.config_obj_type_transition_config (subj))
@@ -211,8 +212,7 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional nm_disp_optional_sysbus
-		(call sysbus.service_subj_type (subj))
-		(call sysbus.client_subj_type (subj)))
+		(call sysbus.service_subj_type (subj)))
 
 	(optional nm_disp_optional_systemctl
 		(call systemctl.exec (subj))))

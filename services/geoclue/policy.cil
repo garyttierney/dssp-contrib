@@ -50,6 +50,9 @@
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
 
+	(optional geoclue_optional_wpa
+		(call wpa.sysbus_chat_client_subj_type (subj)))
+
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 

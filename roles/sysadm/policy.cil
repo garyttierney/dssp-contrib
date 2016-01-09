@@ -734,7 +734,8 @@
 		(call sshd.priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_sysbus
-		(call sysbus.adm (subj role)))
+		(call sysbus.adm (subj role))
+		(call sysbus_helper.exec (subj_type_attribute)))
 
 	(optional sysadm_optional_tcsd
 		(call tcsd.adm (subj role)))

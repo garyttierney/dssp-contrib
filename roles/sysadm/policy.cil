@@ -538,6 +538,10 @@
 	(optional sysadm_optional_rdisc
 		(call rdisc.adm (subj role)))
 
+	(optional sysadm_optional_realmd
+		(call realmd.adm (subj role))
+		(call realm.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_rfkill
 		(call rfkill.run (subj_type_attribute role)))
 

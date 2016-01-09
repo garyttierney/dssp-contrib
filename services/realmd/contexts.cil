@@ -1,0 +1,9 @@
+(in realmd
+	(filecon "/usr/lib/realmd/realmd" file cmd_file_context)
+	(filecon "/var/cache/realmd(/.*)?" any var_cache_file_context)
+
+	(optional realmd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*realmd.*" file unit_file_context)))
+
+(in realm
+	(filecon "/usr/sbin/realm" file cmd_file_context))

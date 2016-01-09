@@ -131,6 +131,23 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file sock_file "*")))
 
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4)))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "gdm")))
+
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 gdm_priv_login.bool))
 		(optional gdm_set_priv_login_boolean_optional_seutil

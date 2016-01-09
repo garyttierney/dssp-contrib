@@ -71,6 +71,8 @@
 	(allow subj tmpfs_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
 	(allow subj self (capability (fsetid sys_tty_config)))
 	(allow subj self (process (getcap getsched setsched setcap setrlimit)))
 	(allow subj self rw_fifo_file_perms)

@@ -76,6 +76,11 @@
 		(call fpaste.manage_var_tmp_user (subj))
 		(call fpaste.relabel_var_tmp_user (subj)))
 
+	(optional wheel_optional_gdm
+		(call gdm.manage_tmpfs_user (subj))
+		(call gdm.relabel_tmpfs_user (subj))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+
 	(optional wheel_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 

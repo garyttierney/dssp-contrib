@@ -63,6 +63,11 @@
 		(call fusermount.run (subj_type_attribute role))
 		(call ulockmgr.run (subj_type_attribute role)))
 
+	(optional user_optional_gdm
+		(call gdm.manage_tmpfs_user (subj))
+		(call gdm.relabel_tmpfs_user (subj))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+
 	(optional user_optional_git
 		(call git.home_user_obj_entry_subj (subj))
 		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))

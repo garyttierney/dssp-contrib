@@ -255,7 +255,10 @@
 
 	(optional sysadm_optional_gdm
 		(call gdm.adm (subj role))
-		(call gdm_helper.exec (subj)))
+		(call gdm_helper.exec (subj))
+		(call gdm.manage_tmpfs_user (subj))
+		(call gdm.relabel_tmpfs_user (subj))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
 
 	(optional sysadm_optional_git
 		(call git.home_user_obj_entry_subj (subj))

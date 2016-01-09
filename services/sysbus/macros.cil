@@ -6,13 +6,7 @@
 
 		(blockinherit cmd.obj_blk)
 
-		(call subj.entry (subj cmd_file))
-
-		(roletype sys.role subj)
-
-		(call daemon_subj_type (subj))
-
-		(call auto_subj_type_transition_pattern (subj cmd_file subj)))
+		(call daemon (subj cmd_file)))
 
 	(macro mls_recv_subj_type ((type ARG1))
 		(typeattributeset mls_recv_subj_type_attribute ARG1))
@@ -44,7 +38,7 @@
 		(call subj.common_subj_type (ARG1))
 		(call subj.entry (ARG1 ARG2))
 		(call daemon_subj_type (ARG1))
-		(call auto_subj_type_transition_pattern (subj ARG1 ARG2))
+		(call auto_subj_type_transition_pattern (subj ARG2 ARG1))
 		(roletype sys.role ARG1))
 
 	(blockinherit file.search_config_blk)

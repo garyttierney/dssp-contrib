@@ -182,6 +182,14 @@
 		(call curl.relabel_home_user_files (subj))
 		(call curl.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_dconf
+		(call dconf.manage_tmpfs_user (subj))
+		(call dconf.relabel_tmpfs_user (subj))
+		(call dconf.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call dconf.manage_home_config (subj))
+		(call dconf.relabel_home_config (subj))
+		(call dconf.home_config_obj_type_transition_home_config (subj)))
+
 	(optional sysadm_optional_dd
 		(call dd.run (subj_type_attribute role)))
 

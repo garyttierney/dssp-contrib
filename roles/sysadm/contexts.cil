@@ -70,6 +70,15 @@
 	(filecon "/root/\.bti" file root_bti_home)
 	(filecon "/root/\.bti\.log.*" file root_bti_home))
 
+(optional sysadm_dconf_home_optional_dconf
+	(tunableif enable_rbacsep
+		(true
+			(context root_dconf_home (sysadm.id sysadm.role dconf.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dconf_home (sysadm.id object_r dconf.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/dconf(/.*)?" any root_dconf_home))
+
 (optional sysadm_dirmngr_home_optional_dirmgr
 	(tunableif enable_rbacsep
 		(true

@@ -5,9 +5,13 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
+	(blockinherit subj.read_state_blk)
 	(blockinherit subj.use_fd_blk)
 
 	(blockinherit file.search_config_blk)
@@ -137,4 +141,6 @@
 			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
 (in gdm_helper
-	(blockinherit exec_blk))
+	(blockinherit exec_blk)
+
+	(blockinherit cmd.obj_entry_subj_blk))

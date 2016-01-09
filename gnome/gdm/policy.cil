@@ -11,6 +11,7 @@
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -73,6 +74,7 @@
 	(allow subj self (capability (fsetid sys_tty_config)))
 	(allow subj self (process (getcap getsched setsched setcap setrlimit)))
 	(allow subj self rw_fifo_file_perms)
+	(allow subj self rw_shm_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
@@ -103,16 +105,19 @@
 	(call fs.read_sysfs_lnk_files (subj))
 
 	(call sec.compute_access_vector (subj))
+	(call sec.compute_create_context (subj))
 	(call sec.list_fs (subj))
 
 	(call subj.execmem_uncond_subj_type (subj))
 	(call subj.ptrace_uncond_subj_type (subj))
 
+	(call term.relabel_unallocated_ttys (subj))
 	(call term.use_unallocated_ttys (subj))
 
 	(call gdm_helper.exec (subj))
 
 	(call cert.read (subj))
+	(call hwdata.read_data_files (subj))
 	(call fonts.read (subj))
 	(call fstab.read (subj))
 
@@ -120,16 +125,15 @@
 
 	(call udev.client_subj_type (subj))
 
-	(call usersubj.search_home_dir (subj))
+	(call usersubj.relabel_ttys (subj))
+	(call usersubj.use_ttys (subj))
+	(call usersubj.search_home_user (subj))
 
 	(optional gdm_optional_alsactl
 		(call alsactl.read_config_files (subj)))
 
 	(optional gdm_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.exec (subj)))
-
-	(optional gdm_optional_nm
-		(call nm.sysbus_chat_client_subj_type (subj)))
 
 	(optional gdm_optional_pa
 		(call pa.exec (subj))
@@ -153,6 +157,8 @@
 		(typeattributeset obj_type_attribute unit_file)
 
 		(call sd.getattr_unit_runtime_dirs (subj))
+		(call sd.status (subj))
+		(call sd.sysbus_chat_client_subj_type (subj))
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
@@ -189,6 +195,12 @@
 
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
+
+	(allow client_subj_type_attribute subj list_dir_perms)
+	(allow client_subj_type_attribute subj read_file_perms)
+	(allow client_subj_type_attribute subj read_lnk_file_perms)
+
+	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

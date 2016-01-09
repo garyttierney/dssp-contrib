@@ -134,8 +134,8 @@
 		(call sd_logind.read_runtime (dbus_subj_type_attribute)))
 
 	(allow service_subj_type_attribute subj (dbus (acquire_svc)))
+
 	(call client_subj_type (service_subj_type_attribute))
-	(call read_config_files (service_subj_type_attribute))
 
 	(allow daemon_subj_type_attribute subj rw_inherited_unix_stream_socket_perms)
 

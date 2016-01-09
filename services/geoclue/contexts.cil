@@ -1,0 +1,7 @@
+(in geoclue
+	(filecon "/usr/libexec/geoclue" file cmd_file_context)
+	(filecon "/etc/geoclue(/.*)?" any config_file_context)
+	(filecon "/var/lib/geoclue(/.*)?" any var_lib_file_context)
+
+	(optional geoclue_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*geoclue.*" file unit_file_context)))

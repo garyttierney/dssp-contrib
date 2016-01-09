@@ -10,6 +10,9 @@
 		(call emacs.send_sigchld_all_subj (subj_type_attribute))
 		(call emacs.rw_inherited_fifo_files_all_subj (subj_type_attribute)))
 
+	(optional app_optional_gdm
+		(call gdm.rw_inherited_unix_stream_sockets (subj_type_attribute)))
+
 	(optional app_optional_irssi
 		(call irssi.send_sigchld_all_subj (subj_type_attribute))
 		(call irssi.rw_inherited_fifo_files_all_subj (subj_type_attribute)))

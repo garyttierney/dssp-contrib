@@ -49,6 +49,9 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
+	(optional colord_optional_sd_logind
+		(call sd_logind.read_runtime_files (subj)))
+
 	(optional colord_optional_sysbus
 		(call sysbus.service_subj_type (subj)))
 

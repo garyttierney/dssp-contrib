@@ -27,6 +27,9 @@
 	(blockinherit file.manage_tmpfs_files_blk)
 	(blockinherit file.relabel_tmpfs_files_blk)
 
+	(macro rw_inherited_tmpfs_files ((type ARG1))
+		(allow ARG1 tmpfs_file rw_inherited_file_perms))
+
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
 

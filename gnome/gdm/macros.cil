@@ -14,6 +14,9 @@
 	(blockinherit subj.read_state_blk)
 	(blockinherit subj.use_fd_blk)
 
+	(macro rw_inherited_unix_stream_sockets ((type ARG1))
+		(allow ARG1 subj (unix_stream_socket (read write))))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)

@@ -74,7 +74,7 @@
 	(allow subj self (capability (fsetid sys_tty_config)))
 	(allow subj self (process (getcap getsched setsched setcap setrlimit)))
 	(allow subj self rw_fifo_file_perms)
-	(allow subj self rw_shm_perms)
+	(allow subj self create_shm_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
@@ -126,6 +126,7 @@
 
 	(call udev.client_subj_type (subj))
 
+	(call usersubj.read_state_common_login_subj (subj))
 	(call usersubj.relabel_ttys (subj))
 	(call usersubj.use_ttys (subj))
 	(call usersubj.search_home_user (subj))

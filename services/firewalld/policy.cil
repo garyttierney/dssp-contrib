@@ -53,6 +53,12 @@
 	(optional firewalld_optional_iptables
 		(call iptables.auto_subj_type_transition (subj)))
 
+	(optional firewalld_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj)))
+
+	(optional firewalld_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj)))
+
 	(optional firewalld_optional_sd
 		(call sd.daemon (subj cmd_file))
 

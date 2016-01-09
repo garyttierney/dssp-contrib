@@ -124,6 +124,9 @@
 		(call unconfinedsubj.rw_shm_all_subj (subj))
 		(call unconfinedsubj.read_state_all_subj (subj)))
 
+	(optional xserver_optional_xutil
+		(call xutil.exec (subj)))
+
 	(allow tmpfs_client_subj_type_attribute self create_shm_perms)
 
 	(call fs.rw_inherited_tmpfs_files (tmpfs_client_subj_type_attribute))

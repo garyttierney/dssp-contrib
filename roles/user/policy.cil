@@ -19,6 +19,9 @@
 	(optional user_optional_cgtop
 		(call cgtop.exec (subj)))
 
+	(optional user_optional_colord
+		(call colormgr.run (subj_type_attribute role)))
+
 	(optional user_optional_curl
 		(call curl.run (subj_type_attribute role))
 		(call curl.manage_home_user_files (subj))

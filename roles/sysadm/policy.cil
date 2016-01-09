@@ -155,6 +155,10 @@
 		(call chronyd.adm (subj role))
 		(call chronyc.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_colord
+		(call colord.adm (subj role))
+		(call colormgr.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_conntrack
 		(call conntrack.run (subj_type_attribute role))
 		(call conntrackd.run (subj_type_attribute role))

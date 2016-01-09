@@ -121,6 +121,9 @@
 				(call sudo.manage_var_db (subj))
 				(call sudo.manage_runtime (subj)))))
 
+	(optional sysadm_optional_accountsd
+		(call accountsd.adm (subj role)))
+
 	(optional sysadm_optional_alsactl
 		(call alsactl.adm (subj role)))
 

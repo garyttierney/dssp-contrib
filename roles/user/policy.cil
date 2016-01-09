@@ -184,6 +184,9 @@
 		(call tor.relabel_home_user (subj))
 		(call tor.home_dir_obj_type_transition_home (subj)))
 
+	(optional user_optional_upowerd
+		(call upower.run (subj_type_attribute role)))
+
 	(optional user_optional_web_content_home
 		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))
 		(call web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi (subj))

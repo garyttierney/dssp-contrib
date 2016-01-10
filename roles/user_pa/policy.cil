@@ -1,5 +1,8 @@
 (block user_pa
 	(blockinherit pa.subj_blk)
 
+	(optional user_pa_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj)))
+
 	(optional user_pa_optional_user_sessbus_launch
 		(call user_sessbus_launch.auto_subj_type_transition (subj))))

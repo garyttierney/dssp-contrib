@@ -1,9 +1,8 @@
 (block sessbus
 	(typeattribute subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
-	(typeattribute daemon_subj_type_attribute)
 
-        (blockinherit usersubj.tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))

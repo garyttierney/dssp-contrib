@@ -1,4 +1,8 @@
 (block wheel_sessbus
+	(typeattribute client_subj_type_attribute)
+	(typeattribute daemon_subj_type_attribute)
+	(typeattribute service_subj_type_attribute)
+
 	(typeattribute unix_stream_socket_activation_sduser_subj_type_attribute)
 
 	(blockinherit sessbus.subj_blk)
@@ -18,4 +22,9 @@
 
 	(optional wheel_sessbus_optional_wheel_sduser
 		(call sduser.unix_stream_socket_activated_subj_pattern
-			(unix_stream_socket_activation_sduser_subj_type_attribute subj))))
+			(unix_stream_socket_activation_sduser_subj_type_attribute subj)))
+
+	(call client_subj_type (service_subj_type_attribute))
+
+	(call sessbus.client_pattern (client_subj_type_attribute subj))
+	(call sessbus.acquire_service_pattern (service_subj_type_attribute subj)))

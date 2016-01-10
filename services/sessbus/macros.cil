@@ -17,21 +17,16 @@
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
-	(macro daemon_subj_type ((type ARG1))
-		(typeattributeset daemon_subj_type_attribute ARG1))
+	(macro daemon_pattern ((type ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 ARG3 ARG1))
+		(call service_pattern (ARG1 ARG2)))
 
-	(macro acquire_service_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (dbus (acquire_svc))))
+	(macro service_pattern ((type ARG1)(type ARG2))
+		(call acquire_service_pattern (ARG1 ARG2))
+		(call client_pattern (ARG1 ARG2)))
 
 	(macro acquire_service_pattern ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (dbus (acquire_svc))))
-
-	(macro client_all_subj ((type ARG1))
-		(call client_subj_type (ARG1))
-		(call dbus_send_all_subj (ARG1))
-		(call rw_inherited_unix_stream_sockets_all_subj (ARG1))
-		(call send_signal_all_subj (ARG1))
-		(call stream_connect_all_subj (ARG1)))
 
 	(macro client_pattern ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -43,11 +38,6 @@
 
 		(call client_subj_type (ARG1))
 		(call spec_stream_connect (ARG1 ARG2)))
-
-	(macro stream_connect_all_subj ((type ARG1))
-		(call file.search_runtime_user (ARG1))
-		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))

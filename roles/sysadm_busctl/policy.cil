@@ -5,8 +5,7 @@
 		(call sysadm_sduser.control (subj)))
 
 	(optional sysadm_busctl_optional_sysadm_sessbus
-		(call sessbus.chat_all_client_subj (subj))
-		(call sysadm_sessbus.client (subj)))
+		(call sysadm_sessbus.client_subj_type (subj)))
 
 	(optional sysadm_busctl_optional_sysadm_ssh_client
 		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

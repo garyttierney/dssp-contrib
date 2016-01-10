@@ -159,6 +159,15 @@
 	(filecon "/root/.*/\.git(/.*)?" any root_git_home)
 	(filecon "/root/\.config/git(/.*)?" any root_git_home_config))
 
+(optional sysadm_gkr_home_optional_gkr
+	(tunableif enable_rbacsep
+		(true
+			(context root_gkr_home_data (sysadm.id sysadm.role gkrd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gkr_home_data (sysadm.id object_r gkrd.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/keyrings(/.*)?" any root_gkr_home_data))
+
 (optional sysadm_gpg_home_optional_gpg
 	(tunableif enable_rbacsep
 		(true

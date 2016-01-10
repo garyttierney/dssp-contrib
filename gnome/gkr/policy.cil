@@ -1,0 +1,26 @@
+(block gkrd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+        (call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute)))
+
+(block gkr
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

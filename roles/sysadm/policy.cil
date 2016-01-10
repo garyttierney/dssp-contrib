@@ -272,6 +272,9 @@
 		(call git.home_user_obj_entry_subj (subj))
 		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj)))
 
+	(optional sysadm_optional_gkr
+		(call gkr.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_gpg
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))

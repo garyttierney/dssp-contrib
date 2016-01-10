@@ -103,6 +103,9 @@
 	(call file_context.read_config_files (common_login_type_attribute))
 	(call selinux_config.read_config_files (common_login_type_attribute))
 
+	(optional usersubj_common_login_type_optional_gdm
+		(call gdm_helper.dontaudit_entrypoint_cmd_files (common_login_type_attribute)))
+
 	(optional usersubj_common_login_type_optional_sd
 		(call sd.dontaudit_search_runtime (common_login_type_attribute)))
 

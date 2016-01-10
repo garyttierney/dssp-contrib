@@ -11,6 +11,7 @@
 		(filecon "/usr/lib/systemd/system/[^/]*gdm.*" file unit_file_context)))
 
 (in gdm_helper
+	(filecon "/etc/gdm/PreSession/Default" file cmd_file_context)
 	(filecon "/usr/libexec/gdm-host-chooser" file cmd_file_context)
 	(filecon "/usr/libexec/gdm-session-worker" file cmd_file_context)
 	(filecon "/usr/libexec/gdm-simple-chooser" file cmd_file_context)

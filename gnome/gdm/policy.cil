@@ -135,6 +135,9 @@
 	(optional gdm_optional_alsactl
 		(call alsactl.read_config_files (subj)))
 
+	(optional gdm_optional_atspi
+		(call atspi.read_config (subj)))
+
 	(optional gdm_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.exec (subj)))
 
@@ -146,6 +149,9 @@
 
 	(optional gdm_optional_geoclue
 		(call geoclue.sysbus_chat_client_subj_type (subj)))
+
+	(optional gdm_optional_gkr
+		(call gkrd.manual_subj_type_transition_all_subj (subj)))
 
 	(optional gdm_optional_nm
 		(call nm.client_subj_type (subj)))

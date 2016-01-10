@@ -191,6 +191,15 @@
 	(filecon "/root/\.gnupg/sshcontrol" file root_gpg_agent_home)
 	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any root_gpg_agent_home))
 
+(optional sysadm_gs_home_optional_gs
+	(tunableif enable_rbacsep
+		(true
+			(context root_gs_home_config (sysadm.id sysadm.role gs.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gs_home_config (sysadm.id object_r gs.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/gnome-session(/.*)?" any root_gs_home_config))
+
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(tunableif enable_rbacsep
 		(true

@@ -1,2 +1,6 @@
 (block sysadm_gkrd
-	(blockinherit gkrd.subj_blk))
+	(blockinherit gkrd.subj_blk)
+
+	(optional sysadm_gkrd_optional_sysadm_sessbus
+		(call sysadm_sessbus.acquire_service (subj))
+		(call sysadm_sessbus.client (subj))))

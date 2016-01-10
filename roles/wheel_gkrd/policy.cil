@@ -1,2 +1,6 @@
 (block wheel_gkrd
-	(blockinherit gkrd.subj_blk))
+	(blockinherit gkrd.subj_blk)
+
+	(optional wheel_gkrd_optional_wheel_sessbus
+		(call wheel_sessbus.acquire_service (subj))
+		(call wheel_sessbus.client (subj))))

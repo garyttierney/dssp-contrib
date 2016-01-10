@@ -1,2 +1,6 @@
 (block user_gkrd
-	(blockinherit gkrd.subj_blk))
+	(blockinherit gkrd.subj_blk)
+
+	(optional user_gkrd_optional_user_sessbus
+		(call user_sessbus.acquire_service (subj))
+		(call user_sessbus.client (subj))))

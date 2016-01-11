@@ -273,6 +273,11 @@
 		(call fusermount.run (subj_type_attribute role))
 		(call ulockmgr.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_gconf
+		(call gconf.manage_home_config (subj))
+		(call gconf.relabel_home_config (subj))
+		(call gconf.home_config_obj_type_transition_home_config (subj)))
+
 	(optional sysadm_optional_gdm
 		(call gdm.adm (subj role))
 		(call gdm_helper.exec (subj))

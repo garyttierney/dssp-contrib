@@ -73,11 +73,11 @@
 (optional sysadm_dconf_home_optional_dconf
 	(tunableif enable_rbacsep
 		(true
-			(context root_dconf_home (sysadm.id sysadm.role dconf.home_config_file (systemlow systemlow))))
+			(context root_dconf_home_config (sysadm.id sysadm.role dconf.home_config_file (systemlow systemlow))))
 		(false
-			(context root_dconf_home (sysadm.id object_r dconf.home_config_file (systemlow systemlow)))))
+			(context root_dconf_home_config (sysadm.id object_r dconf.home_config_file (systemlow systemlow)))))
 
-	(filecon "/root/\.config/dconf(/.*)?" any root_dconf_home))
+	(filecon "/root/\.config/dconf(/.*)?" any root_dconf_home_config))
 
 (optional sysadm_dirmngr_home_optional_dirmgr
 	(tunableif enable_rbacsep
@@ -161,6 +161,15 @@
 			(context root_fop_home (sysadm.id object_r fop.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.fop(/.*)?" any root_fop_home))
+
+(optional sysadm_gconf_home_optional_gconf
+	(tunableif enable_rbacsep
+		(true
+			(context root_gconf_home_config (sysadm.id sysadm.role gconf.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gconf_home_config (sysadm.id object_r gconf.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config))
 
 (optional sysadm_gtk_home_optional_gtk
 	(tunableif enable_rbacsep

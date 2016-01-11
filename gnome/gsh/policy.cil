@@ -5,6 +5,11 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
 	(blockinherit usersubj.home_data_obj_blk)
 
 	(call usersubj.create_home_data_dirs (subj_type_attribute))

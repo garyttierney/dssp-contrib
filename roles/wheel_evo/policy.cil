@@ -1,0 +1,17 @@
+(block wheel_evoaf
+	(blockinherit evoaf.subj_blk)
+
+	(optional wheel_evoaf_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj evoaf.cmd_file))))
+
+(block wheel_evocf
+	(blockinherit evocf.subj_blk)
+
+	(optional wheel_evocf_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj evocf.cmd_file))))
+
+(block wheel_evosr
+	(blockinherit evosr.subj_blk)
+
+	(optional wheel_evosr_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj evosr.cmd_file))))

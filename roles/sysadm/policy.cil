@@ -241,6 +241,18 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs.adm (subj role)))
 
+	(optional sysadm_optional_evo
+		(call evo_helper.exec (subj))
+		(call evo.manage_home_cache (subj))
+		(call evo.relabel_home_cache (subj))
+		(call evo.home_cache_obj_type_transition_home_cache (subj))
+		(call evo.manage_home_config (subj))
+		(call evo.relabel_home_config (subj))
+		(call evo.home_config_obj_type_transition_home_config (subj))
+		(call evo.manage_home_data (subj))
+		(call evo.relabel_home_data (subj))
+		(call evo.home_data_obj_type_transition_home_data (subj)))
+
 	(optional sysadm_optional_fedpkg
 		(call fedpkg.manage_config (subj))
 		(call fedpkg.relabel_config (subj)))
@@ -281,6 +293,11 @@
 	(optional sysadm_optional_gpg
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))
+
+	(optional sysadm_optional_gtk
+		(call gtk.manage_home_config (subj))
+		(call gtk.relabel_home_config (subj))
+		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
 	(optional sysadm_optional_fpaste
 		(call fpaste.run (subj_type_attribute role))
@@ -924,6 +941,11 @@
 
 	(optional sysadm_optional_sysadm_emacsclient
 		(call sysadm_emacsclient.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_evo
+		(call sysadm_evoaf.role_pattern (role subj_type_attribute))
+		(call sysadm_evocf.role_pattern (role subj_type_attribute))
+		(call sysadm_evosr.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_festival
 		(call festival.manage_config (subj))

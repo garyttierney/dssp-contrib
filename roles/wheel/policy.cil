@@ -57,6 +57,17 @@
 	(optional wheel_optional_dmesg
 		(call dmesg.run (subj_type_attribute role)))
 
+	(optional wheel_optional_evo
+		(call evo.manage_home_cache (subj))
+		(call evo.relabel_home_cache (subj))
+		(call evo.home_cache_obj_type_transition_home_cache (subj))
+		(call evo.manage_home_config (subj))
+		(call evo.relabel_home_config (subj))
+		(call evo.home_config_obj_type_transition_home_config (subj))
+		(call evo.manage_home_data (subj))
+		(call evo.relabel_home_data (subj))
+		(call evo.home_data_obj_type_transition_home_data (subj)))
+
 	(optional wheel_optional_firewalld
 		(call firewallcmd.run (subj_type_attribute role)))
 
@@ -102,6 +113,11 @@
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))
 		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional wheel_optional_gtk
+		(call gtk.manage_home_config (subj))
+		(call gtk.relabel_home_config (subj))
+		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
 	(optional wheel_optional_inhibit
 		(call inhibit.client_subj_type (subj_type_attribute)))
@@ -350,6 +366,11 @@
 
 	(optional wheel_optional_wheel_emacsclient
 		(call wheel_emacsclient.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_evo
+		(call wheel_evoaf.role_pattern (role subj_type_attribute))
+		(call wheel_evocf.role_pattern (role subj_type_attribute))
+		(call wheel_evosr.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_fedpkg
 		(call wheel_fedpkg.role_pattern (role subj_type_attribute)))

@@ -61,6 +61,17 @@
 	(optional user_optional_dmenu
 		(call dmenu.run (subj_type_attribute role)))
 
+	(optional user_optional_evo
+		(call evo.manage_home_cache (subj))
+		(call evo.relabel_home_cache (subj))
+		(call evo.home_cache_obj_type_transition_home_cache (subj))
+		(call evo.manage_home_config (subj))
+		(call evo.relabel_home_config (subj))
+		(call evo.home_config_obj_type_transition_home_config (subj))
+		(call evo.manage_home_data (subj))
+		(call evo.relabel_home_data (subj))
+		(call evo.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_fop
 		(call fop.run (subj_type_attribute role))
 		(call fop.manage_home_user (subj))
@@ -96,6 +107,11 @@
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))
 		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional user_optional_gtk
+		(call gtk.manage_home_config (subj))
+		(call gtk.relabel_home_config (subj))
+		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
 	(optional user_optional_java
 		(call java.manage_tmpfs_user (subj))
@@ -282,6 +298,11 @@
 
 	(optional user_optional_user_emacsclient
 		(call user_emacsclient.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_evo
+		(call user_evoaf.role_pattern (role subj_type_attribute))
+		(call user_evocf.role_pattern (role subj_type_attribute))
+		(call user_evosr.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_firefox
 		(call user_firefox.role_pattern (role subj_type_attribute)))

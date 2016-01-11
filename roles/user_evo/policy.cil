@@ -1,0 +1,17 @@
+(block user_evoaf
+	(blockinherit evoaf.subj_blk)
+
+	(optional user_evoaf_optional_user_sessbus
+		(call user_sessbus.daemon (subj evoaf.cmd_file))))
+
+(block user_evocf
+	(blockinherit evocf.subj_blk)
+
+	(optional user_evocf_optional_user_sessbus
+		(call user_sessbus.daemon (subj evocf.cmd_file))))
+
+(block user_evosr
+	(blockinherit evosr.subj_blk)
+
+	(optional user_evosr_optional_user_sessbus
+		(call user_sessbus.daemon (subj evosr.cmd_file))))

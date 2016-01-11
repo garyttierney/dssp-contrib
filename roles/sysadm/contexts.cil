@@ -116,6 +116,21 @@
 	(filecon "/root/\.profile" file root_emacs_home)
 	(filecon "/root/\.emacs\.d(/.*)?" any root_emacs_home))
 
+(optional sysadm_evo_home_optional_evo
+	(tunableif enable_rbacsep
+		(true
+			(context root_evo_home_cache (sysadm.id sysadm.role evo.home_cache_file (systemlow systemlow)))
+			(context root_evo_home_config (sysadm.id sysadm.role evo.home_config_file (systemlow systemlow)))
+			(context root_evo_home_data (sysadm.id sysadm.role evo.home_data_file (systemlow systemlow))))
+		(false
+			(context root_evo_home_cache (sysadm.id object_r evo.home_cache_file (systemlow systemlow)))
+			(context root_evo_home_config (sysadm.id object_r evo.home_config_file (systemlow systemlow)))
+			(context root_evo_home_data (sysadm.id object_r evo.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/evolution(/.*)?" any root_evo_home_cache)
+	(filecon "/root/\.config/evolution(/.*)?" any root_evo_home_config)
+	(filecon "/root/\.local/share/evolution(/.*)?" any root_evo_home_data))
+
 (optional sysadm_festival_home_optional_festival
 	(tunableif enable_rbacsep
 		(true
@@ -146,6 +161,17 @@
 			(context root_fop_home (sysadm.id object_r fop.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.fop(/.*)?" any root_fop_home))
+
+(optional sysadm_gtk_home_optional_gtk
+	(tunableif enable_rbacsep
+		(true
+			(context root_gtk_home_config (sysadm.id sysadm.role gtk.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gtk_home_config (sysadm.id object_r gtk.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/gtk-1\.0(/.*)?" any root_gtk_home_config)
+	(filecon "/root/\.config/gtk-2\.0(/.*)?" any root_gtk_home_config)
+	(filecon "/root/\.config/gtk-3\.0(/.*)?" any root_gtk_home_config))
 
 (optional sysadm_gdm_home_optional_gdm
 	(tunableif enable_rbacsep

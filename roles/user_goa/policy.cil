@@ -1,0 +1,11 @@
+(block user_goad
+	(blockinherit goad.subj_blk)
+
+	(optional user_goad_optional_user_sessbus
+		(call user_sessbus.daemon (subj goad.cmd_file))))
+
+(block user_goais
+	(blockinherit goais.subj_blk)
+
+	(optional user_goais_optional_user_sessbus
+		(call user_sessbus.daemon (subj goais.cmd_file))))

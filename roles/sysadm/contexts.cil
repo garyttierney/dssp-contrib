@@ -171,6 +171,15 @@
 
 	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config))
 
+(optional sysadm_goa_home_optional_goa
+	(tunableif enable_rbacsep
+		(true
+			(context root_goa_home_config (sysadm.id sysadm.role goa.home_config_file (systemlow systemlow))))
+		(false
+			(context root_goa_home_config (sysadm.id object_r goa.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
+
 (optional sysadm_gtk_home_optional_gtk
 	(tunableif enable_rbacsep
 		(true

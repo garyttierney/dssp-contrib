@@ -61,17 +61,6 @@
 	(optional user_optional_dmenu
 		(call dmenu.run (subj_type_attribute role)))
 
-	(optional user_optional_evo
-		(call evo.manage_home_cache (subj))
-		(call evo.relabel_home_cache (subj))
-		(call evo.home_cache_obj_type_transition_home_cache (subj))
-		(call evo.manage_home_config (subj))
-		(call evo.relabel_home_config (subj))
-		(call evo.home_config_obj_type_transition_home_config (subj))
-		(call evo.manage_home_data (subj))
-		(call evo.relabel_home_data (subj))
-		(call evo.home_data_obj_type_transition_home_data (subj)))
-
 	(optional user_optional_fop
 		(call fop.run (subj_type_attribute role))
 		(call fop.manage_home_user (subj))
@@ -335,6 +324,10 @@
 
 	(optional user_optional_user_gkrd
 		(call user_gkrd.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_goa
+		(call user_goad.role_pattern (role subj_type_attribute))
+		(call user_goais.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gpg
 		(call user_gpg.role_pattern (role subj_type_attribute)))

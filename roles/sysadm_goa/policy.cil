@@ -1,0 +1,11 @@
+(block sysadm_goad
+	(blockinherit goad.subj_blk)
+
+	(optional sysadm_goad_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj goad.cmd_file))))
+
+(block sysadm_goais
+	(blockinherit goais.subj_blk)
+
+	(optional sysadm_goais_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj goais.cmd_file))))

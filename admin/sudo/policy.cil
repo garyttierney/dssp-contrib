@@ -83,13 +83,11 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.obj_role_change_exemption_subj_type (subj_type_attribute))
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.obj_role_change_exemption_subj_type (subj_type_attribute))))
 
 	(optional sudo_subj_type_optional_sd
 		(call sd.getpgid (subj_type_attribute))
-		(call sd.link_keyring (subj_type_attribute))
-		(call sd.read_state (subj_type_attribute)))
+		(call sd.link_keyring (subj_type_attribute)))
 
 	(optional sudo_subj_type_optional_sd_initctl
 		(call sd_initctl.getattr_runtime_fifo_files (subj_type_attribute)))

@@ -50,10 +50,6 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
-	(optional gs_subj_type_optional_sd
-		(call sd.getattr_unit_runtime_dirs (subj_type_attribute))
-		(call sd.read_state (subj_type_attribute)))
-
 	(optional gs_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))
 

@@ -266,7 +266,10 @@
 		(call gdm_helper.exec (subj))
 		(call gdm.manage_tmpfs_user (subj))
 		(call gdm.relabel_tmpfs_user (subj))
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.manage_home_cache (subj))
+		(call gdm.relabel_home_cache (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional sysadm_optional_git
 		(call git.home_user_obj_entry_subj (subj))
@@ -953,6 +956,11 @@
 		(call gsd_helper.exec (subj))
 		(call sysadm_gsd.role_pattern (role subj_type_attribute))
 		(call sysadm_gsdprinter.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsh
+		(call gsh_helper.exec (subj))
+		(call sysadm_gsh.role_pattern (role subj_type_attribute))
+		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_busctl
 		(call sysadm_busctl.role_pattern (role subj_type_attribute)))

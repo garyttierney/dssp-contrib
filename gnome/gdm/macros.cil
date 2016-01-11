@@ -145,6 +145,19 @@
 		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "gdm")))
 
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "gdm")))
+
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 gdm_priv_login.bool))
 		(optional gdm_set_priv_login_boolean_optional_seutil

@@ -1,0 +1,11 @@
+(block sysadm_gsh
+	(blockinherit gsh.subj_blk)
+
+	(optional sysadm_gsh_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj gsh.cmd_file))))
+
+(block sysadm_gshcs
+	(blockinherit gshcs.subj_blk)
+
+	(optional sysadm_gshcs_optional_sysadm_gs
+		(call sysadm_sessbus.daemon (subj gshcs.cmd_file))))

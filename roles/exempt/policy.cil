@@ -44,7 +44,8 @@
 		(call fop.home_dir_obj_type_transition_home (subj)))
 
 	(optional exempt_optional_gdm
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional exempt_optional_git
 		(call git.home_user_obj_type_transition_home (subj))
@@ -65,6 +66,9 @@
 
 	(optional exempt_optional_gsd
 		(call gsd.home_data_obj_type_transition_home_data (subj)))
+
+	(optional exempt_optional_gsh
+		(call gsh.home_data_obj_type_transition_home_data (subj)))
 
 	(optional exempt_optional_gstreamer
                 (call gstreamer.home_cache_obj_type_transition_home_cache (subj)))

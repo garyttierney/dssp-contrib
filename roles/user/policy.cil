@@ -74,7 +74,10 @@
 	(optional user_optional_gdm
 		(call gdm.manage_tmpfs_user (subj))
 		(call gdm.relabel_tmpfs_user (subj))
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.manage_home_cache (subj))
+		(call gdm.relabel_home_cache (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional user_optional_git
 		(call git.home_user_obj_entry_subj (subj))
@@ -317,6 +320,10 @@
 	(optional user_optional_user_gsd
 		(call user_gsd.role_pattern (role subj_type_attribute))
 		(call user_gsdprinter.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gsh
+		(call user_gsh.role_pattern (role subj_type_attribute))
+		(call user_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_irssi
 		(call user_irssi.role_pattern (role subj_type_attribute)))

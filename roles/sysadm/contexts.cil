@@ -147,6 +147,15 @@
 
 	(filecon "/root/\.fop(/.*)?" any root_fop_home))
 
+(optional sysadm_gdm_home_optional_gdm
+	(tunableif enable_rbacsep
+		(true
+			(context root_gdm_home_cache (sysadm.id sysadm.role gdm.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gdm_home_cache (sysadm.id object_r gdm.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gdm(/.*)?" any root_gdm_home_cache))
+
 (optional sysadm_git_home_optional_git
 	(tunableif enable_rbacsep
 		(true
@@ -208,6 +217,15 @@
 			(context root_gsd_home_data (sysadm.id object_r gsd.home_data_file (systemlow systemlow)))))
 
 	(filecon "/root/\.local/share/gnome-settings-daemon(/.*)?" any root_gsd_home_data))
+
+(optional sysadm_gsh_home_optional_gsh
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsh_home_data (sysadm.id sysadm.role gsh.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsh_home_data (sysadm.id object_r gsh.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-shell(/.*)?" any root_gsh_home_data))
 
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(tunableif enable_rbacsep

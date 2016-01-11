@@ -1,0 +1,11 @@
+(block user_gsh
+	(blockinherit gsh.subj_blk)
+
+	(optional user_gsh_optional_user_gs
+		(call user_gs.daemon (subj gsh.cmd_file))))
+
+(block user_gshcs
+	(blockinherit gshcs.subj_blk)
+
+	(optional user_gshcs_optional_user_gs
+		(call user_sessbus.daemon (subj gshcs.cmd_file))))

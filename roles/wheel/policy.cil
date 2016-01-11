@@ -90,7 +90,10 @@
 	(optional wheel_optional_gdm
 		(call gdm.manage_tmpfs_user (subj))
 		(call gdm.relabel_tmpfs_user (subj))
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj)))
+		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.manage_home_cache (subj))
+		(call gdm.relabel_home_cache (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional wheel_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
@@ -379,6 +382,10 @@
 	(optional wheel_optional_wheel_gsd
 		(call wheel_gsd.role_pattern (role subj_type_attribute))
 		(call wheel_gsdprinter.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gsh
+		(call wheel_gsh.role_pattern (role subj_type_attribute))
+		(call wheel_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_busctl
 		(call wheel_busctl.role_pattern (role subj_type_attribute)))

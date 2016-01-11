@@ -325,6 +325,11 @@
 	(optional user_optional_user_gkrd
 		(call user_gkrd.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_glib
+		(call user_gapp.role_pattern (role subj_type_attribute))
+		(call user_gdbus.role_pattern (role subj_type_attribute))
+		(call user_gsettings.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_goa
 		(call user_goad.role_pattern (role subj_type_attribute))
 		(call user_goais.role_pattern (role subj_type_attribute)))

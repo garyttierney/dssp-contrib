@@ -1,0 +1,10 @@
+(block user_gapp
+	(blockinherit gapp.subj_blk))
+
+(block user_gdbus
+	(blockinherit gdbus.subj_blk))
+
+(block user_gsettings
+	(blockinherit gsettings.subj_blk)
+
+	(call user_gs.daemon (subj gsettings.cmd_file)))

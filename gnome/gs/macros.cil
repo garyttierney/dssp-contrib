@@ -23,6 +23,11 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
+
+		(call home_dir_obj_type_transition_home_user (ARG2))
+
 		(call manage_home_config (ARG2))
 		(call relabel_home_config (ARG2))
 
@@ -31,6 +36,14 @@
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home_user ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".ICEauthority"))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".ICEauthority-c")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)

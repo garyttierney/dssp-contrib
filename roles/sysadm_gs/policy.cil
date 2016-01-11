@@ -1,7 +1,10 @@
 (block sysadm_gs
 	(typeattribute daemon_subj_type_attribute)
 
-	(blockinherit gs.subj_blk))
+	(blockinherit gs.subj_blk)
+
+	(optional sysadm_gs_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))
 
 (block sysadm_gsquit
 	(blockinherit gsquit.subj_blk))

@@ -1,5 +1,7 @@
 (in gs
 	(filecon "/usr/bin/gnome-session" file cmd_file_context)
+	(filecon "HOME_DIR/\.ICEauthority" file home_user_file_context)
+	(filecon "HOME_DIR/\.ICEauthority-c" file home_user_file_context)
 	(filecon "HOME_DIR/\.config/gnome-session(/.*)?" any home_config_file_context))
 
 (in gsquit

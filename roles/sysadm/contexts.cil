@@ -171,6 +171,15 @@
 
 	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config))
 
+(optional sysadm_glib_home_optional_glib
+	(tunableif enable_rbacsep
+		(true
+			(context root_glib_home_cache (sysadm.id sysadm.role glib.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_glib_home_cache (sysadm.id object_r glib.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/geocode-glib(/.*)?" any root_glib_home_cache))
+
 (optional sysadm_goa_home_optional_goa
 	(tunableif enable_rbacsep
 		(true
@@ -244,13 +253,17 @@
 	(filecon "/root/\.gnupg/sshcontrol" file root_gpg_agent_home)
 	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any root_gpg_agent_home))
 
-(optional sysadm_gs_home_optional_gs
+(optional sysadm_gs_home_optional_gs_home
 	(tunableif enable_rbacsep
 		(true
+			(context root_gs_home (sysadm.id sysadm.role gs.home_user_file (systemlow systemlow)))
 			(context root_gs_home_config (sysadm.id sysadm.role gs.home_config_file (systemlow systemlow))))
 		(false
+			(context root_gs_home (sysadm.id object_r gs.home_user_file (systemlow systemlow)))
 			(context root_gs_home_config (sysadm.id object_r gs.home_config_file (systemlow systemlow)))))
 
+	(filecon "/root/\.ICEauthority" file root_gs_home)
+	(filecon "/root/\.ICEauthority-c" file root_gs_home)
 	(filecon "/root/\.config/gnome-session(/.*)?" any root_gs_home_config))
 
 (optional sysadm_gsd_home_optional_gsd

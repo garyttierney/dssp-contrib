@@ -1,0 +1,10 @@
+(block sysadm_gapp
+	(blockinherit gapp.subj_blk))
+
+(block sysadm_gdbus
+	(blockinherit gdbus.subj_blk))
+
+(block sysadm_gsettings
+	(blockinherit gsettings.subj_blk)
+
+	(call sysadm_gs.daemon (subj gsettings.cmd_file)))

@@ -1,5 +1,7 @@
 (block wheel_gkrd
 	(blockinherit gkrd.subj_blk)
 
+	(call wheel_gs.daemon (subj gkrd.cmd_file))
+
 	(optional wheel_gkrd_optional_wheel_sessbus
 		(call wheel_sessbus.service_subj_type (subj))))

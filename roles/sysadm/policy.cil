@@ -286,6 +286,9 @@
 	(optional sysadm_optional_gkr
 		(call gkr.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_glib
+		(call glib_helper.exec (subj)))
+
 	(optional sysadm_optional_gpg
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))
@@ -961,6 +964,11 @@
 
 	(optional sysadm_optional_sysadm_gkrd
 		(call sysadm_gkrd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_glib
+		(call sysadm_gapp.role_pattern (role subj_type_attribute))
+		(call sysadm_gdbus.role_pattern (role subj_type_attribute))
+		(call sysadm_gsettings.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_goa
 		(call sysadm_goad.role_pattern (role subj_type_attribute))

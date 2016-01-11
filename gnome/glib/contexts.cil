@@ -1,0 +1,15 @@
+(in glib
+        (filecon "HOME_DIR/\.cache/geocode-glib(/.*)?" any home_cache_file_context))
+
+(in gapp
+	(filecon "/usr/bin/gapplication" file cmd_file_context))
+
+(in gdbus
+	(filecon "/usr/bin/gdbus" file cmd_file_context))
+
+(in gsettings
+	(filecon "/usr/bin/gsettings" file cmd_file_context))
+
+(in glib_helper
+	(filecon "/usr/bin/gio-querymodules-64" file cmd_file_context)
+	(filecon "/usr/bin/glib-compile-schemas" file cmd_file_context))

@@ -1,11 +1,13 @@
 (block user_gsd
 	(blockinherit gsd.subj_blk)
 
+	(call user_gsdprinter.auto_subj_type_transition (subj))
+
 	(optional user_gsd_optional_user_gs
-		(call user_gs.daemon (subj gsd.cmd_file))))
+		(call user_gs.daemon (subj gsd.cmd_file)))
+
+	(optional user_gsd_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))
 
 (block user_gsdprinter
-	(blockinherit gsdprinter.subj_blk)
-
-	(optional user_gsdprinter_optional_user_gs
-		(call user_gs.daemon (subj gsdprinter.cmd_file))))
+	(blockinherit gsdprinter.subj_blk))

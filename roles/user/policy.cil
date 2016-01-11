@@ -193,6 +193,9 @@
 	(optional user_optional_sshd
 		(call sshd.login_subj_type (subj)))
 
+	(optional user_optional_syndaemon
+		(call syndaemon.run (subj_type_attribute role)))
+
 	(optional user_optional_systemctl
 		(call systemctl.exec (subj)))
 

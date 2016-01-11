@@ -5,13 +5,24 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
 	(blockinherit usersubj.home_data_obj_blk)
 
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
 
 	(call manage_home_data (subj_type_attribute))
-	(call home_data_obj_type_transition_home_data (subj_type_attribute)))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(optional gsd_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gsd_optional_syndaemon
+		(call syndaemon.auto_subj_type_transition (subj_type_attribute))))
 
 (block gsdprinter
 	(typeattribute subj_type_attribute)

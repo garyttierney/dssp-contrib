@@ -1,11 +1,13 @@
 (block sysadm_gsd
 	(blockinherit gsd.subj_blk)
 
+	(call sysadm_gsdprinter.auto_subj_type_transition (subj))
+
 	(optional sysadm_gsd_optional_sysadm_gs
-		(call sysadm_gs.daemon (subj gsd.cmd_file))))
+		(call sysadm_gs.daemon (subj gsd.cmd_file)))
+
+	(optional sysadm_gsd_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))
 
 (block sysadm_gsdprinter
-	(blockinherit gsdprinter.subj_blk)
-
-	(optional sysadm_gsdprinter_optional_sysadm_gs
-		(call sysadm_gs.daemon (subj gsdprinter.cmd_file))))
+	(blockinherit gsdprinter.subj_blk))

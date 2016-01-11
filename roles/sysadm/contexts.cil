@@ -200,6 +200,15 @@
 
 	(filecon "/root/\.config/gnome-session(/.*)?" any root_gs_home_config))
 
+(optional sysadm_gsd_home_optional_gsd
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsd_home_data (sysadm.id sysadm.role gsd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsd_home_data (sysadm.id object_r gsd.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-settings-daemon(/.*)?" any root_gsd_home_data))
+
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(tunableif enable_rbacsep
 		(true

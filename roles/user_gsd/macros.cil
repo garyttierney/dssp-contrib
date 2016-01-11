@@ -1,0 +1,13 @@
+(in user_gsd
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gsd.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gsd.role_pattern (ARG1 ARG2 subj))))
+
+(in user_gsdprinter
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gsdprinter.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gsdprinter.role_pattern (ARG1 ARG2 subj))))

@@ -1,0 +1,13 @@
+(in gsd
+	(filecon "/usr/libexec/gnome-settings-daemon" file cmd_file_context)
+	(filecon "HOME_DIR/\.local/share/gnome-settings-daemon(/.*)?" any home_data_file_context))
+
+(in gsdprinter
+	(filecon "/usr/libexec/gsd-printer" file cmd_file_context))
+
+(in gsd_helper
+	(filecon "/usr/libexec/gnome-settings-daemon-localeexec" file cmd_file_context)
+	(filecon "/usr/libexec/gsd-backlight-helper" file cmd_file_context)
+	(filecon "/usr/libexec/gsd-locate-pointer" file cmd_file_context)
+	(filecon "/usr/libexec/gsd-wacom-led-helper" file cmd_file_context)
+	(filecon "/usr/libexec/gsd-wacom-oled-helper" file cmd_file_context))

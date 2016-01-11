@@ -1,0 +1,11 @@
+(block user_gsd
+	(blockinherit gsd.subj_blk)
+
+	(optional user_gsd_optional_user_gs
+		(call user_gs.daemon (subj gsd.cmd_file))))
+
+(block user_gsdprinter
+	(blockinherit gsdprinter.subj_blk)
+
+	(optional user_gsdprinter_optional_user_gs
+		(call user_gs.daemon (subj gsdprinter.cmd_file))))

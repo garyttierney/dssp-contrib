@@ -945,8 +945,14 @@
 		(call sysadm_gpg_agent.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gs
+		(call gs_helper.exec (subj))
 		(call sysadm_gs.role_pattern (role subj_type_attribute))
 		(call sysadm_gsquit.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsd
+		(call gsd_helper.exec (subj))
+		(call sysadm_gsd.role_pattern (role subj_type_attribute))
+		(call sysadm_gsdprinter.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_busctl
 		(call sysadm_busctl.role_pattern (role subj_type_attribute)))

@@ -1,0 +1,11 @@
+(block sysadm_gsd
+	(blockinherit gsd.subj_blk)
+
+	(optional sysadm_gsd_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj gsd.cmd_file))))
+
+(block sysadm_gsdprinter
+	(blockinherit gsdprinter.subj_blk)
+
+	(optional sysadm_gsdprinter_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj gsdprinter.cmd_file))))

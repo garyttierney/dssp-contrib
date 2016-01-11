@@ -1,0 +1,11 @@
+(block wheel_gsd
+	(blockinherit gsd.subj_blk)
+
+	(optional wheel_gsd_optional_wheel_gs
+		(call wheel_gs.daemon (subj gsd.cmd_file))))
+
+(block wheel_gsdprinter
+	(blockinherit gsdprinter.subj_blk)
+
+	(optional wheel_gsdprinter_optional_wheel_gs
+		(call wheel_gs.daemon (subj gsdprinter.cmd_file))))

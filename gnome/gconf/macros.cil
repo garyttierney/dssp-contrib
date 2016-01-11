@@ -120,7 +120,9 @@
 		(call gconf.home_config_obj_type_transition_home_config (ARG2))
 
 		(call manage_home_data_files (ARG2))
-		(call relabel_home_data_files (ARG2)))
+		(call relabel_home_data_files (ARG2))
+
+		(call home_data_obj_type_transition_home_data_files (ARG2)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -131,4 +133,7 @@
 	(blockinherit usersubj.relabel_home_data_files_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file file "*"))))
+		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file file "*")))
+
+	(macro home_data_obj_type_transition_home_data_files ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file file "gsettings-data-convert"))))

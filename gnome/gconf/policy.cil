@@ -3,13 +3,7 @@
 
 	(blockinherit file.config_obj_blk)
 
-	(blockinherit usersubj.home_config_obj_blk)
-
-	(call usersubj.create_home_config_dirs (client_subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_config (client_subj_type_attribute))
-
-	(call manage_home_config (client_subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (client_subj_type_attribute)))
+	(blockinherit usersubj.home_config_obj_blk))
 
 (block gconfdm
 	(blockinherit subj.common_subj_blk)
@@ -52,4 +46,22 @@
 	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
 
 	(call manage_home_data_files (subj_type_attribute))
-	(call home_data_obj_type_transition_home_data (subj_type_attribute)))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call usersubj.create_home_config_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
+
+	(call gconf.manage_home_config (subj_type_attribute))
+	(call gconf.home_config_obj_type_transition_home_config (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call gconf.read_config (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))

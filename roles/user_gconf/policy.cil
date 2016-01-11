@@ -10,4 +10,7 @@
 (block user_gsettingsdc
 	(blockinherit gsettingsdc.subj_blk)
 
-	(call user_gs.daemon (subj gsettingsdc.cmd_file)))
+	(call user_gs.daemon (subj gsettingsdc.cmd_file))
+
+	(optional user_gesettingsdc_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))

@@ -10,4 +10,7 @@
 (block wheel_gsettingsdc
 	(blockinherit gsettingsdc.subj_blk)
 
-	(call wheel_gs.daemon (subj gsettingsdc.cmd_file)))
+	(call wheel_gs.daemon (subj gsettingsdc.cmd_file))
+
+	(optional wheel_gesettingsdc_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))

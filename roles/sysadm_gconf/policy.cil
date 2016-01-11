@@ -10,4 +10,7 @@
 (block sysadm_gsettingsdc
 	(blockinherit gsettingsdc.subj_blk)
 
-	(call sysadm_gs.daemon (subj gsettingsdc.cmd_file)))
+	(call sysadm_gs.daemon (subj gsettingsdc.cmd_file))
+
+	(optional sysadm_gesettingsdc_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

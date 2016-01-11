@@ -1,8 +1,14 @@
 (block user_gsh
 	(blockinherit gsh.subj_blk)
 
+	(optional user_gsh_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gsh_optional_user_gs
-		(call user_gs.daemon (subj gsh.cmd_file))))
+		(call user_gs.daemon (subj gsh.cmd_file)))
+
+	(optional user_gsh_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj))))
 
 (block user_gshcs
 	(blockinherit gshcs.subj_blk)

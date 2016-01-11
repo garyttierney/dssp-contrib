@@ -10,13 +10,47 @@
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
+	(call tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
+
 	(blockinherit usersubj.home_data_obj_blk)
 
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
 
 	(call manage_home_data (subj_type_attribute))
-	(call home_data_obj_type_transition_home_data (subj_type_attribute)))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_dri (subj_type_attribute))
+
+	(call sec.list_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(optional gsh_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gsh_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_upowerd		
+		(call upowerd.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
 
 (block gshcs
 	(typeattribute subj_type_attribute)

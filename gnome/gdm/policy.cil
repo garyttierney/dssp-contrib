@@ -75,13 +75,11 @@
 	(blockinherit usersubj.home_cache_obj_blk)
 
 	(allow subj self (capability (fsetid sys_tty_config)))
-	(allow subj self (process (getcap getsched setsched setcap setrlimit)))
-	(allow subj self rw_fifo_file_perms)
+	(allow subj self (process (getcap setsched setcap setrlimit)))
 	(allow subj self create_shm_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
-	(call sys.list_cpu_sysfs (subj))
 	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
@@ -94,7 +92,6 @@
 	(call dev.rw_dri (subj))
 	(call dev.rw_event (subj))
 	(call dev.rw_sound (subj))
-	(call dev.read_urandom (subj))
 
 	(call file.list_var_tmp (subj))
 	(call file.read_config (subj))
@@ -102,7 +99,6 @@
 
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_proc_fs (subj))
-	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.list_devtmpfs (subj))
 	(call fs.list_sysfs (subj))
 	(call fs.rw_sysfs_files (subj))
@@ -169,7 +165,7 @@
 
 	(optional gdm_optional_pa
 		(call pa.exec (subj))
-		(call pa.read_config (subj)))
+		(call pa.tmpfs_client (subj tmpfs_file)))
 
 	(optional gdm_optional_plymouth
 		(call plymouth.exec (subj)))
@@ -202,9 +198,6 @@
 
 	(optional gdm_optional_sd_logind
 		(call sd_logind.read_runtime (subj)))
-
-	(optional gdm_optional_sd_machined
-		(call sd_machined.read_config_files (subj)))
 
 	(optional gdm_optional_sysbus
 		(allow subj self (dbus (acquire_svc)))

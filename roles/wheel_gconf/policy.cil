@@ -1,0 +1,13 @@
+(block wheel_gconfd
+	(blockinherit gconfd.subj_blk)
+
+	(optional wheel_gconfd_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gconfd.cmd_file))))
+
+(block wheel_gconftool
+	(blockinherit gconftool.subj_blk))
+
+(block wheel_gsettingsdc
+	(blockinherit gsettingsdc.subj_blk)
+
+	(call wheel_gs.daemon (subj gsettingsdc.cmd_file)))

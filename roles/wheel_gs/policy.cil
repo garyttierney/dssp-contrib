@@ -1,10 +1,18 @@
 (block wheel_gs
 	(typeattribute daemon_subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit gs.subj_blk)
 
+	(optional wheel_gs_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_gs_optional_wheel_sessbus
-		(call wheel_sessbus.client_subj_type (subj))))
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_gs_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gsquit
 	(blockinherit gsquit.subj_blk))

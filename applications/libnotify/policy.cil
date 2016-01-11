@@ -7,8 +7,5 @@
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(optional libnotify_subj_type_optional_dunst
-		(call dunst.sessbus_chat_client_subj_type (subj_type_attribute)))
-
 	(optional libnotify_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files (subj_type_attribute))))

@@ -1,6 +1,5 @@
 (block atspi_sessbus_launch
 	(typeattribute subj_type_attribute)
-	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
@@ -18,8 +17,4 @@
 		(call dconf.client_subj_type (subj_type_attribute)))
 
 	(optional atspi_sessbus_launch_subj_type_optional_xserver
-		(call xserver.client_subj_type (subj_type_attribute)))
-
-	(optional atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj_type_attribute (dbus (send_msg)))
-		(allow subj_type_attribute sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call xserver.client_subj_type (subj_type_attribute))))

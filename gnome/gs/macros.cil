@@ -28,6 +28,9 @@
 
 		(call home_dir_obj_type_transition_home_user (ARG2))
 
+		(call manage_tmpfs_user (ARG2))
+		(call relabel_tmpfs_user (ARG2))
+
 		(call manage_home_config (ARG2))
 		(call relabel_home_config (ARG2))
 
@@ -36,6 +39,18 @@
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*")))
 
 	(blockinherit usersubj.read_home_user_files_blk)
 	(blockinherit usersubj.manage_home_user_files_blk)

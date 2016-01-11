@@ -1,0 +1,13 @@
+(block user_gconfd
+	(blockinherit gconfd.subj_blk)
+
+	(optional user_gconfd_optional_user_sessbus
+		(call user_sessbus.daemon (subj gconfd.cmd_file))))
+
+(block user_gconftool
+	(blockinherit gconftool.subj_blk))
+
+(block user_gsettingsdc
+	(blockinherit gsettingsdc.subj_blk)
+
+	(call user_gs.daemon (subj gsettingsdc.cmd_file)))

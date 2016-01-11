@@ -265,6 +265,7 @@
 		(call ulockmgr.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_gconf
+		(call gconf.manage_config (subj))
 		(call gconf.manage_home_config (subj))
 		(call gconf.relabel_home_config (subj))
 		(call gconf.home_config_obj_type_transition_home_config (subj)))
@@ -955,6 +956,11 @@
 
 	(optional sysadm_optional_sysadm_fuse_sshfs
 		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gconf
+		(call sysadm_gconfd.role_pattern (role subj_type_attribute))
+		(call sysadm_gconftool.role_pattern (role subj_type_attribute))
+		(call sysadm_gsettingsdc.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git
 		(call sysadm_git.role_pattern (role subj_type_attribute)))

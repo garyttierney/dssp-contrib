@@ -1,0 +1,13 @@
+(block sysadm_gconfd
+	(blockinherit gconfd.subj_blk)
+
+	(optional sysadm_gconfd_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gconfd.cmd_file))))
+
+(block sysadm_gconftool
+	(blockinherit gconftool.subj_blk))
+
+(block sysadm_gsettingsdc
+	(blockinherit gsettingsdc.subj_blk)
+
+	(call sysadm_gs.daemon (subj gsettingsdc.cmd_file)))

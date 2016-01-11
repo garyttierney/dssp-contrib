@@ -316,6 +316,11 @@
 	(optional user_optional_user_fuse_sshfs
 		(call user_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gconf
+		(call user_gconfd.role_pattern (role subj_type_attribute))
+		(call user_gconftool.role_pattern (role subj_type_attribute))
+		(call user_gsettingsdc.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_git
 		(call user_git.role_pattern (role subj_type_attribute)))
 

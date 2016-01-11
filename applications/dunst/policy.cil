@@ -1,6 +1,5 @@
 (block dunst
 	(typeattribute subj_type_attribute)
-	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
@@ -24,8 +23,4 @@
 	(call fonts.read_all (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
-	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
-
-	(optional dunst_sessbus_chat_client_subj_type_optional_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj_type_attribute (dbus (send_msg)))
-		(allow subj_type_attribute sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))

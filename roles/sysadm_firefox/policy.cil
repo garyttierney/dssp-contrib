@@ -1,6 +1,12 @@
 (block sysadm_firefox
 	(blockinherit firefox.subj_blk)
 
+	(optional sysadm_firefox_optional_sysadm_atspi_sessbus_launch
+		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_firefox_optional_sysadm_dunst
+		(call sysadm_dunst.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_firefox_optional_sysadm_firefox_plugins
 		(call sysadm_firefox_plugins.auto_subj_type_transition (subj)))
 

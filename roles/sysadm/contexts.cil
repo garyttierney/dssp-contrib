@@ -165,11 +165,14 @@
 (optional sysadm_gconf_home_optional_gconf
 	(tunableif enable_rbacsep
 		(true
-			(context root_gconf_home_config (sysadm.id sysadm.role gconf.home_config_file (systemlow systemlow))))
+			(context root_gconf_home_config (sysadm.id sysadm.role gconf.home_config_file (systemlow systemlow)))
+			(context root_gsettingsdc_home_data (sysadm.id sysadm.role gsettingsdc.home_data_file (systemlow systemlow))))
 		(false
-			(context root_gconf_home_config (sysadm.id object_r gconf.home_config_file (systemlow systemlow)))))
+			(context root_gconf_home_config (sysadm.id object_r gconf.home_config_file (systemlow systemlow)))
+			(context root_gsettingsdc_home_data (sysadm.id object_r gsettingsdc.home_data_file (systemlow systemlow)))))
 
-	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config))
+	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config)
+	(filecon "/root/\.local/share/gsettings-data-convert" file root_gsettingsdc_home_data))
 
 (optional sysadm_glib_home_optional_glib
 	(tunableif enable_rbacsep

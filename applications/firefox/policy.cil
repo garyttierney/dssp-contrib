@@ -97,17 +97,9 @@
 	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
 	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
-	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
-
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
-
-	(optional firefox_subj_type_optional_atspi_sessbus_launch
-		(call atspi_sessbus_launch.sessbus_chat_client_subj_type (subj_type_attribute)))
-
-	(optional firefox_subj_type_optional_dunst
-		(call dunst.sessbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional firefox_subj_type_optional_gstreamer
 		(call gstreamer.client_subj_type (subj_type_attribute)))
@@ -132,6 +124,9 @@
 
 	(optional firefox_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional firefox_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
 
 	(optional firefox_optional_znc
 		(call znc.tcp_connect_port (subj_type_attribute))))

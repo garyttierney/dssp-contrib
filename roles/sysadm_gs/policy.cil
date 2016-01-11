@@ -1,10 +1,18 @@
 (block sysadm_gs
 	(typeattribute daemon_subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit gs.subj_blk)
 
+	(optional sysadm_gs_optional_sysadm_atspi_sessbus_launch
+		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gs_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj))))
+		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional sysadm_gs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block sysadm_gsquit
 	(blockinherit gsquit.subj_blk))

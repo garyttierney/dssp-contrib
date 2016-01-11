@@ -95,14 +95,11 @@
 
 	(call file.list_var_tmp (subj))
 	(call file.read_config (subj))
-	(call file.read_data (subj))
 
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_proc_fs (subj))
 	(call fs.list_devtmpfs (subj))
-	(call fs.list_sysfs (subj))
 	(call fs.rw_sysfs_files (subj))
-	(call fs.read_sysfs_lnk_files (subj))
 
 	(call sec.compute_access_vector (subj))
 	(call sec.compute_create_context (subj))

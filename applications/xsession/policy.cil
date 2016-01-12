@@ -29,6 +29,10 @@
 
 	(call xutil.exec (subj_type_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+
 	(optional xsession_subj_type_optional_gdm
 		(call gdm.read_config_lnk_files (subj_type_attribute)))
 
@@ -36,7 +40,7 @@
 		(call hostname.exec (subj_type_attribute)))
 
 	(optional xsession_subj_type_optional_sd
-		(call sd.dontaudit_read_state (subj_type_attribute)))
+		(call sd.read_state (subj_type_attribute)))
 
 	(optional xsession_subj_type_optional_sduser
 		(call sduser.reload_all_subj (subj_type_attribute))

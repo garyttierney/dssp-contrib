@@ -3,6 +3,12 @@
 
 	(blockinherit gcs.subj_blk)
 
+	(optional user_gcs_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gcs_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gcs_optional_user_sessbus
 		(call user_sessbus.daemon (subj gcs.cmd_file)))
 

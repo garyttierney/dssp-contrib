@@ -17,6 +17,8 @@
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
 	(call file.list_config (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))

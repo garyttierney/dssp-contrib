@@ -23,6 +23,9 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2))
+
 		(call manage_home_config (ARG2))
 		(call relabel_home_config (ARG2))
 
@@ -43,7 +46,15 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gnome-control-center"))))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gnome-control-center")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))
 
 (in gcs_helper
 	(blockinherit exec_blk))

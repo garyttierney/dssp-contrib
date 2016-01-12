@@ -44,6 +44,8 @@
 
 	(call locale.read (subj_type_attribute))
 
+	(call nss.client_subj_type (subj_type_attribute))
+
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(tunableif enable_rbacsep
@@ -55,7 +57,7 @@
 
 	(optional gs_subj_type_optional_sd_logind
 		(call sd_logind.read_runtime (subj_type_attribute))
-		(call sd_logind.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_logind.client_subj_type (subj_type_attribute)))
 
 	(optional gs_subj_type_optional_sd_machined
 		(call sd_machined.read_runtime (subj_type_attribute)))

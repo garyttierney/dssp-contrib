@@ -21,8 +21,12 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(allow subj_type_attribute self create_shm_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call exec (subj_type_attribute))
 
@@ -46,4 +50,4 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional gts_subj_type_optional_xserver
-		(call xserver.client_subj_type (subj_type_attribute))))
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

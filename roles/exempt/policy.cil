@@ -52,6 +52,9 @@
 		(call gconf.home_config_obj_type_transition_home_config (subj))
 		(call gsettingsdc.home_data_obj_type_transition_home_data_files (subj)))
 
+	(optional exempt_optional_gcs
+		(call gcs.home_config_obj_type_transition_home_config (subj)))
+
 	(optional exempt_optional_gdm
 		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))

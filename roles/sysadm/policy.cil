@@ -262,6 +262,9 @@
 	(optional sysadm_optional_gconf
 		(call gconf.manage_config (subj)))
 
+	(optional sysadm_optional_gcs
+		(call gcs_helper.exec (subj)))
+
 	(optional sysadm_optional_gdm
 		(call gdm.adm (subj role))
                 (call gdm.client_subj_type (subj))
@@ -965,6 +968,9 @@
 		(call sysadm_gconfd.role_pattern (role subj_type_attribute))
 		(call sysadm_gconftool.role_pattern (role subj_type_attribute))
 		(call sysadm_gsettingsdc.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcs
+		(call sysadm_gcs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git
 		(call sysadm_git.role_pattern (role subj_type_attribute)))

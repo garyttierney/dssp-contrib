@@ -1,0 +1,14 @@
+(block user_dconfs
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit dconfs.subj_blk)
+
+	(optional user_dconfs_optional_user_sessbus
+		(call user_sessbus.daemon (subj dconfs.cmd_file)))
+
+	(optional user_dconfs_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block user_dconf
+	(blockinherit dconf.subj_blk))

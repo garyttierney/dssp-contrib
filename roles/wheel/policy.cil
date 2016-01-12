@@ -34,14 +34,6 @@
 		(call colormgr.relabel_home_data (subj))
 		(call colormgr.home_data_obj_type_transition_home_data (subj)))
 
-	(optional wheel_optional_dconf
-		(call dconf.manage_tmpfs_user (subj))
-		(call dconf.relabel_tmpfs_user (subj))
-		(call dconf.tmpfs_obj_type_transition_tmpfs_user (subj))
-		(call dconf.manage_home_config (subj))
-		(call dconf.relabel_home_config (subj))
-		(call dconf.home_config_obj_type_transition_home_config (subj)))
-
 	(optional wheel_optional_dd
 		(call dd.exec (subj_type_attribute)))
 
@@ -353,6 +345,10 @@
 
 	(optional wheel_optional_wheel_dbus_send
 		(call wheel_dbus_send.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dconf
+		(call wheel_dconf.role_pattern (role subj_type_attribute))
+		(call wheel_dconfs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_dunst
 		(call wheel_dunst.role_pattern (role subj_type_attribute)))

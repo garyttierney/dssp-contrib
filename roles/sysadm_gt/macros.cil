@@ -6,6 +6,9 @@
 		(call gt.role_pattern (ARG1 ARG2 subj))))
 
 (in sysadm_gts
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gts.spec_auto_subj_type_transition (ARG1 subj)))
 

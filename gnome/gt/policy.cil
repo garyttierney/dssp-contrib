@@ -3,7 +3,16 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gt_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
 
 (block gts
 	(typeattribute subj_type_attribute)
@@ -12,15 +21,25 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute self create_shm_perms)
+
 	(call exec (subj_type_attribute))
 
+	(call dev.read_random (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_data_files (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
+
 	(call dconf.client_subj_type (subj_type_attribute))
 
+	(call fonts.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional gts_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute))))

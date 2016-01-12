@@ -115,6 +115,13 @@
 	(call atspi.read_config (subj))
 	(call atspird.exec (subj))
 
+	(call canberra.exec (subj))
+
+	(call caribou.exec (subj))
+
+	(call dconf.exec (subj))
+	(call dconf.read_config (subj))
+
 	(call gdm_helper.exec (subj))
 
 	(call gkrd.manual_subj_type_transition_all_subj (subj))
@@ -148,12 +155,6 @@
 
 	(optional gdm_optional_bluetoothd
 		(call bluetoothd.sysbus_chat_client_subj_type (subj)))
-
-	(optional gdm_optional_canberra
-		(call canberra.exec (subj)))
-
-	(optional gdm_optional_caribou
-		(call caribou.exec (subj)))
 
 	(optional gdm_optional_colord
 		(call colord.client_subj_type (subj)))

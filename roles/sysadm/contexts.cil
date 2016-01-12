@@ -616,6 +616,15 @@
 	(filecon "/root/\.xserverrc" file root_xserver_home)
 	(filecon "/root/\.local/share/xorg(/.*)?" any root_xserver_home_data))
 
+(optional sysadm_xsession_home_optional_xsession
+	(tunableif enable_rbacsep
+		(true
+			(context root_xsession_home (sysadm.id sysadm.role xsession.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xsession_home (sysadm.id object_r xsession.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xsession-errors" file root_xsession_home))
+
 (optional sysadm_xutil_home_optional_xutil
 	(tunableif enable_rbacsep
 		(true

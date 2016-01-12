@@ -103,12 +103,6 @@
 	(call file_context.read_config_files (common_login_type_attribute))
 	(call selinux_config.read_config_files (common_login_type_attribute))
 
-	(optional usersubj_common_login_type_optional_gdm
-		(call gdm_helper.obj_entry_subj (common_login_type_attribute)))
-
-	(optional usersubj_common_login_type_optional_sd
-		(call sd.dontaudit_search_runtime (common_login_type_attribute)))
-
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type (home_user_obj_type_attribute)))
 

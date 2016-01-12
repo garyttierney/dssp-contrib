@@ -64,6 +64,7 @@
 		(call ulockmgr.run (subj_type_attribute role)))
 
 	(optional user_optional_gdm
+		(call gdm.client_subj_type (subj))
 		(call gdm.manage_tmpfs_user (subj))
 		(call gdm.relabel_tmpfs_user (subj))
 		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))

@@ -1,2 +1,16 @@
 (block sysadm_xsession
-	(blockinherit xsession.subj_blk))
+	(blockinherit xsession.subj_blk)
+
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(optional sysadm_xsession_optional_sysadm_gpg_agent
+		(call sysadm_gpg_agent.auto_subj_type_transition (subj)))
+
+	(optional sysadm_xsession_optional_sysadm_gs
+		(call sysadm_gs.auto_subj_type_transition (subj)))
+
+	(optional sysadm_xsession_optional_sysadm_ssh_agent
+		(call sysadm_ssh_agent.auto_subj_type_transition (subj)))
+
+	(optional sysadm_xsession_optional_sysadm_xterm
+		(call sysadm_xterm.auto_subj_type_transition (subj))))

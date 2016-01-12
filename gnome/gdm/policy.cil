@@ -11,6 +11,7 @@
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -119,7 +120,7 @@
 
 	(call caribou.exec (subj))
 
-	(call dconf.exec (subj))
+	(call dconfs.exec (subj))
 	(call dconf.read_config (subj))
 
 	(call gdm_helper.exec (subj))
@@ -225,6 +226,21 @@
 
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
+
+	(allow client_subj_type_attribute subj (unix_stream_socket (read write)))
+
+	(call read_config_files (client_subj_type_attribute))
+	(call read_config_lnk_files (client_subj_type_attribute))
+
+	(call gdm_helper.obj_entry_subj (client_subj_type_attribute))
+
+	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(optional client_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (client_subj_type_attribute)))
+
+	(optional client_subj_type_optional_xserver
+		(call xserver.search_config (client_subj_type_attribute)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))

@@ -264,6 +264,7 @@
 
 	(optional sysadm_optional_gdm
 		(call gdm.adm (subj role))
+                (call gdm.client_subj_type (subj))
 		(call gdm_helper.exec (subj))
 		(call gdm.manage_tmpfs_user (subj))
 		(call gdm.relabel_tmpfs_user (subj))

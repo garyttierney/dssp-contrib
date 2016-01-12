@@ -3,4 +3,43 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call cmd.exec_shell (subj_type_attribute))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	;(call file.list_config (subj_type_attribute))
+
+	;(call nss.client_subj_type (subj_type_attribute))
+
+	;(call usersubj.read_home_user_files (subj_type_attribute))
+
+	;(call xserver.client_subj_type (subj_type_attribute))
+
+	;(call xutil.exec (subj_type_attribute))
+
+	;(optional xsession_subj_type_optional_gdm
+	;	(call gdm.read_config_lnk_files (subj_type_attribute)))
+
+	;(optional xsession_subj_type_optional_hostname
+	;	(call hostname.exec (subj_type_attribute)))
+
+	;(optional xsession_subj_type_optional_sd
+	;	(call sd.dontaudit_read_state (subj_type_attribute)))
+
+	;(optional xsession_subj_type_optional_sduser
+	;	(call sduser.reload_all_subj (subj_type_attribute))
+	;	(call sduser.stream_connect_all_subj (subj_type_attribute)))
+
+	;(optional xsession_subj_type_optional_systemctl
+	;	(call systemctl.exec (subj_type_attribute))))
+)

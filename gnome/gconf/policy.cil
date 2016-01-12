@@ -24,7 +24,13 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call gconf.read_config (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
 
 (block gconftool
 	(typeattribute subj_type_attribute)

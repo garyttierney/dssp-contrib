@@ -148,11 +148,6 @@
 		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
-	(optional sysadm_optional_canberra
-		(call canberra.run (subj_type_attribute role))
-		(call canberra.manage_tmpfs_user_files (subj))
-		(call canberra.relabel_tmpfs_user_files (subj)))
-
 	(optional sysadm_optional_chkpwd
 		(call chkpwd.run (subj_type_attribute role)))
 
@@ -926,6 +921,9 @@
 	(optional sysadm_optional_sysadm_atspi_sessbus_launch
 		(call sysadm_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_canberra
+		(call sysadm_canberra.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_cgtop
 		(call sysadm_cgtop.role_pattern (role subj_type_attribute)))
 
@@ -1004,6 +1002,7 @@
 		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gt
+		(call sysadm_gt.role_pattern (role subj_type_attribute))
 		(call sysadm_gts.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_busctl

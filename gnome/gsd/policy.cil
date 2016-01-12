@@ -28,6 +28,10 @@
 
 	(call dconf.client_subj_type (subj_type_attribute))
 
+	(call gsd_helper.exec (subj_type_attribute))
+
+	(call ipp.tcp_connect_port (subj_type_attribute))
+
 	(call fonts.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
@@ -38,13 +42,16 @@
 	(optional gsd_optional_colord
 		(call colormgr.manage_home_data (subj_type_attribute))
 		(call colormgr.home_data_obj_type_transition_home_data (subj_type_attribute))
-		(call colord.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call colord.client_subj_type (subj_type_attribute)))
 
 	(optional gsd_optional_nm
 		(call nm.client_subj_type (subj_type_attribute)))
 
 	(optional gsd_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gsd_optional_sd
+		(call sd.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional gsd_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
@@ -73,6 +80,8 @@
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 

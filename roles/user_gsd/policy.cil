@@ -26,6 +26,7 @@
 	(blockinherit gsdprinter.subj_blk)
 
 	(optional user_gsdprinter_optional_user_gs
+		(call user_gs.daemon (subj gsdprinter.cmd_file))
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsdprinter_optional_user_sessbus

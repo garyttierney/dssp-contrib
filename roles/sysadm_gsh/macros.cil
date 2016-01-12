@@ -1,4 +1,7 @@
 (in sysadm_gsh
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gsh.spec_auto_subj_type_transition (ARG1 subj)))
 
@@ -6,6 +9,9 @@
 		(call gsh.role_pattern (ARG1 ARG2 subj))))
 
 (in sysadm_gshcs
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gshcs.spec_auto_subj_type_transition (ARG1 subj)))
 

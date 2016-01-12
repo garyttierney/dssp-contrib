@@ -16,11 +16,6 @@
 	(optional user_optional_busctl
 		(call busctl.exec (subj_type_attribute)))
 
-	(optional user_optional_canberra
-		(call canberra.run (subj_type_attribute role))
-		(call canberra.manage_tmpfs_user_files (subj))
-		(call canberra.relabel_tmpfs_user_files (subj)))
-
 	(optional user_optional_cgtop
 		(call cgtop.exec (subj)))
 
@@ -281,6 +276,9 @@
 	(optional user_optional_user_atspi_sessbus_launch
 		(call user_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_canberra
+		(call user_canberra.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_chfn
 		(call user_chfn.role_pattern (role subj_type_attribute)))
 
@@ -358,6 +356,7 @@
 		(call user_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gt
+		(call user_gt.role_pattern (role subj_type_attribute))
 		(call user_gts.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_irssi

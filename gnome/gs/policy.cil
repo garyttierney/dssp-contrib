@@ -36,6 +36,8 @@
 
 	(call fs.read_sysfs (subj_type_attribute))
 
+	(call canberra.auto_subj_type_transition (subj_type_attribute))
+
 	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call gs_helper.exec (subj_type_attribute))

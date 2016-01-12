@@ -4,8 +4,14 @@
 	(optional sysadm_gsh_optional_sysadm_atspird
 		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
 
+	(optional sysadm_gsh_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
 	(optional sysadm_gsh_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj gsh.cmd_file)))
+
+	(optional sysadm_gsh_optional_sysadm_gsd
+		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gsh_optional_wheel_sessbus
 		(call sysadm_sessbus.service_subj_type (subj))))
@@ -14,4 +20,7 @@
 	(blockinherit gshcs.subj_blk)
 
 	(optional sysadm_gshcs_optional_sysadm_gs
-		(call sysadm_sessbus.daemon (subj gshcs.cmd_file))))
+		(call sysadm_sessbus.daemon (subj gshcs.cmd_file)))
+
+	(optional sysadm_gshcs_optional_sysadm_evosr
+		(call sysadm_evosr.sessbus_chat_client_subj_type (subj))))

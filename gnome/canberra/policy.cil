@@ -1,0 +1,15 @@
+(block canberra
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj))
+
+	(optional canberra_optional_pa
+		(call pa.exec (subj))
+		(call pa.tmpfs_client (subj tmpfs_user_file))))

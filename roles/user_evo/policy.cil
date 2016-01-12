@@ -11,7 +11,13 @@
 		(call user_sessbus.daemon (subj evocf.cmd_file))))
 
 (block user_evosr
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit evosr.subj_blk)
 
 	(optional user_evosr_optional_user_sessbus
-		(call user_sessbus.daemon (subj evosr.cmd_file))))
+		(call user_sessbus.daemon (subj evosr.cmd_file)))
+
+	(optional user_evosr_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

@@ -49,6 +49,9 @@
 	(optional gsd_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
 
+	(optional gsd_optional_sd_localed
+		(call sd_localed.sysbus_chat_client_subj_type (subj_type_attribute)))
+
 	(optional gsd_optional_sd_logind
 		(call sd_logind.client_subj_type (subj_type_attribute)))
 
@@ -69,7 +72,12 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gsdprinter_optional_sysbus
+		(call sysbus.service_subj_type (subj_type_attribute))))
 
 (block gsd_helper
 	(blockinherit cmd.obj_blk))

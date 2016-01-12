@@ -39,6 +39,9 @@
 	(optional colord_optional_gdm
 		(call gdm.read_inherited_var_lib_files (subj)))
 
+	(optional sysbus_optional_gsd
+		(call gsd.use_fd_all_subj (subj)))
+
 	(optional colord_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 

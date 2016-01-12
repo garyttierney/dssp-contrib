@@ -6,11 +6,39 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call usersubj.create_home_config_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
+
+	(call goa.manage_home_config (subj_type_attribute))
+	(call goa.home_config_obj_type_transition_home_config (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional goad_subj_type_attribute_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional goad_subj_type_attribute_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
 
 (block goais
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self rw_key_perms)
+
+	(call file.read_config (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute)))

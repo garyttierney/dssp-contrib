@@ -22,15 +22,18 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self create_shm_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call exec (subj_type_attribute))
 
 	(call dev.read_random (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call file.read_data_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
+
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call dconf.client_subj_type (subj_type_attribute))
 
@@ -38,6 +41,7 @@
 	(call locale.read (subj_type_attribute))
 
 	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

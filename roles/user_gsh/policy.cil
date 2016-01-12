@@ -13,10 +13,14 @@
 
 	(optional user_gsh_optional_user_gs
 		(call user_gs.daemon (subj gsh.cmd_file))
-		(call user_gs.sessbus_chat_client_subj_type (subj)))
+		(call user_gs.sessbus_chat_client_subj_type (subj))
+		(call user_gs.stream_connect (subj)))
 
 	(optional user_gsh_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gsh_optional_user_gts
+		(call user_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsh_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))

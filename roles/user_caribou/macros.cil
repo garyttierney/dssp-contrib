@@ -1,0 +1,16 @@
+(in user_caribou
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call caribou.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call caribou.role_pattern (ARG1 ARG2 subj))))
+
+(in user_cariboup
+	(macro auto_subj_type_transition ((type ARG1))
+		(call cariboup.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call cariboup.role_pattern (ARG1 ARG2 subj))))

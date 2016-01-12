@@ -74,7 +74,11 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gnome-session"))))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gnome-session")))
+
+	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2))))
 
 (in gsquit
 	(block subj_blk

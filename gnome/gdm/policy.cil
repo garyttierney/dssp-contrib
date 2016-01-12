@@ -152,6 +152,9 @@
 	(optional gdm_optional_canberra
 		(call canberra.exec (subj)))
 
+	(optional gdm_optional_caribou
+		(call caribou.exec (subj)))
+
 	(optional gdm_optional_colord
 		(call colord.client_subj_type (subj)))
 
@@ -205,6 +208,9 @@
 	(optional gdm_sysbus_chat_client_subj_type_optional_sysbus
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+	(optional gdm_optional_xwayland
+		(call xwayland.exec (subj)))
 
 	(optional gdm_optional_xserver
 		(call xserver.exec (subj))

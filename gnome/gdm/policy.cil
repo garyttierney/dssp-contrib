@@ -77,7 +77,6 @@
 
 	(allow subj self (capability (fsetid sys_tty_config kill sys_admin)))
 	(allow subj self (process (getcap setsched setcap setrlimit)))
-	(allow subj self create_shm_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
@@ -217,7 +216,7 @@
 
 	(optional gdm_optional_xserver
 		(call xserver.exec (subj))
-		(call xserver.read_config (subj)))
+		(call xserver.tmpfs_client (subj tmpfs_file)))
 
 	(optional gdm_optional_xserver_backlight_helper
 		(call xserver_backlight_helper.exec (subj)))

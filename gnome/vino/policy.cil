@@ -3,4 +3,26 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call vnc.tcp_bind_port (subj_type_attribute))
+
+	(optional vino_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional vino_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))

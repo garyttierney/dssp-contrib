@@ -3,6 +3,15 @@
 
 	(blockinherit vino.subj_blk)
 
+	(optional user_vino_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_vino_optional_user_gs
+		(call user_gs.daemon (subj vino.cmd_file)))
+
+	(optional user_vino_optional_user_gsd
+		(call user_gsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_vino_optional_user_sessbus
 		(call user_sessbus.daemon (subj vino.cmd_file)))
 

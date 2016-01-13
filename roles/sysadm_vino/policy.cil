@@ -3,6 +3,15 @@
 
 	(blockinherit vino.subj_blk)
 
+	(optional sysadm_vino_optional_sysadm_atspird
+		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vino_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj vino.cmd_file)))
+
+	(optional sysadm_vino_optional_sysadm_gsd
+		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_vino_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj vino.cmd_file)))
 

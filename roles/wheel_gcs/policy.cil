@@ -15,3 +15,21 @@
 	(optional wheel_gcs_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_gcsp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gcsp.subj_blk)
+
+	(optional wheel_gcsp_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcsp_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcsp_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gcsp.cmd_file)))
+
+	(optional wheel_gcsp_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

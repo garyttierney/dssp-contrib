@@ -29,5 +29,31 @@
 	(optional gcs_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
 
+(block gcsp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.list_rootfs (subj_type_attribute))
+
+	(call gcs.audit_exec_access_cmd_files (subj_type_attribute))
+	(call gcs.getattr_cmd_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.list_home_config (subj_type_attribute))
+	(call usersubj.list_home_data (subj_type_attribute))
+
+	(optional gcsp_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
+
 (block gcs_helper
 	(blockinherit cmd.obj_blk))

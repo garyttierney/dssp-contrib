@@ -99,6 +99,16 @@
 	(call usersubj.delete_tmpfs_user_files (client_subj_type_attribute))
 	(call usersubj.read_tmpfs_user_files (client_subj_type_attribute))
 
+	(call usersubj.create_home_data_dirs (client_subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (client_subj_type_attribute))
+
+	(call usersubj.manage_home_data_files (client_subj_type_attribute))
+
+	(call usersubj.create_home_cache_dirs (client_subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (client_subj_type_attribute))
+
+	(call usersubj.manage_home_cache_files (client_subj_type_attribute))
+
 	(optional pa_client_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files (client_subj_type_attribute)))
 

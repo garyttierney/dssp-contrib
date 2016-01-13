@@ -1,0 +1,25 @@
+(block obexd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call evo.manage_home_cache (subj_type_attribute))
+	(call evo.home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional obexd_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional obexd_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional obexd_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

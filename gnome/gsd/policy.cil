@@ -26,6 +26,7 @@
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_all_fs (subj_type_attribute))
+	(call fs.rw_sysfs_files (subj_type_attribute))
 
 	(call dconf.client_subj_type (subj_type_attribute))
 
@@ -41,8 +42,6 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
-
-	(call usersubj.manage_home_cache_files (subj_type_attribute))
 
 	(optional gsd_optional_colord
 		(call colormgr.manage_home_data (subj_type_attribute))

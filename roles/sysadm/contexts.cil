@@ -386,6 +386,15 @@
 
 	(filecon "/root/\.newsbeuter(/.*)?" any root_nb_home))
 
+(optional sysadm_obexd_home_optional_obexd
+	(tunableif enable_rbacsep
+		(true
+			(context root_obexd_home_cache (sysadm.id sysadm.role obexd.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_obexd_home_cache (sysadm.id object_r obexd.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/obexd(/.*)?" any root_obexd_home_cache))
+
 (optional sysadm_openssl_home_optional_openssl
 	(tunableif enable_rbacsep
 		(true

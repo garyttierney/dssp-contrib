@@ -50,6 +50,7 @@
 	(call cert.manage (subj))
 	(call hwdata.read_data (subj))
 	(call modules.read (subj))
+	(call wtmp.manage_var_log_files (subj))
 
 	(call usersubj.setattr_home_dir (subj))
 
@@ -622,6 +623,12 @@
 
 	(optional sysadm_optional_rygel
 		(call rygel_helper.exec (subj)))
+
+	(optional sysadm_optional_samba
+		(call samba.manage_config (subj))
+		(call samba.manage_runtime (subj))
+		(call samba.manage_var_lib (subj))
+		(call samba.manage_var_log (subj)))
 
 	(optional sysadm_optional_scdaemon
 		(call scdaemon.run (subj_type_attribute role))

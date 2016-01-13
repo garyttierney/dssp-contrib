@@ -18,11 +18,25 @@
         (call manage_home_config (subj_type_attribute))
         (call home_config_obj_type_transition_home_config (subj_type_attribute))
 
+	(call dev.read_urandom (subj_type_attribute))
 	(call dev.rw_dri (subj_type_attribute))
 
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call gstreamer.client_subj_type (subj_type_attribute))
+
 	(call fonts.read (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.read_home_data (subj_type_attribute))
 

@@ -12,5 +12,8 @@
 
         (call sysadm.shell_auto_subj_type_transition (subj))
 
+	(optional sysadm_ssh_client_optional_sysadm_gpg_agent
+		(call sysadm_gpg_agent.stream_connect (subj)))
+
 	(optional sysadm_ssh_client_optional_tor_socks
 		(call tor_socks.client_subj_type (subj))))

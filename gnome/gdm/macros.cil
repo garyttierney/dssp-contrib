@@ -161,6 +161,10 @@
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
 		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "gdm")))
 
+	(macro stream_connect ((type ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_file tmpfs_file subj)))
+
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 gdm_priv_login.bool))
 		(optional gdm_set_priv_login_boolean_optional_seutil

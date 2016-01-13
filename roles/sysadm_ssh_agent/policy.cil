@@ -4,4 +4,7 @@
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
-	(call sysadm.home_cmd_auto_subj_type_transition (subj)))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_ssh_agent_optional_sysadm_gpg_agent
+		(call sysadm_gpg_agent.stream_connect (subj))))

@@ -83,6 +83,10 @@
 		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent"))
 		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent.ssh")))
 
+	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call gpg.search_home_user (ARG1))
+		(call stream_connect_pattern (ARG1 home_user_file home_user_file ARG2)))
+
 	(macro stream_connect_all_subj ((type ARG1))
 		(call gpg.search_home_user (ARG1))
 		(call stream_connect_pattern (ARG1 home_user_file home_user_file subj_type_attribute)))

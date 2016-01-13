@@ -4,4 +4,7 @@
 	(call user.cmd_auto_subj_type_transition (subj))
 	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user.home_cmd_auto_subj_type_transition (subj)))
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_ssh_agent_optional_user_gpg_agent
+		(call user_gpg_agent.stream_connect (subj))))

@@ -40,6 +40,7 @@
 	(call nss.client_subj_type (subj))
 
 	(optional kmod_optional_firewalld
+		(call firewalld.rw_inherited_tmpfs_files (subj))
 		(call firewalld.write_inherited_fifo_files (subj)))
 
 	(optional kmod_optional_iptables

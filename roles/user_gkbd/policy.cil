@@ -1,2 +1,11 @@
 (block user_gkbd
-	(blockinherit gkbd.subj_blk))
+	(blockinherit gkbd.subj_blk)
+
+	(optional user_gkbd_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gkbd_optional_user_gs
+		(call user_gs.daemon (subj gkbd.cmd_file)))
+
+	(optional user_gkbd_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))

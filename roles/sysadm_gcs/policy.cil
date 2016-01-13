@@ -21,11 +21,17 @@
 	(optional sysadm_gcs_optional_sysadm_obexd
 		(call sysadm_obexd.sessbus_chat_client_subj_type (subj)))
 
+	(optional sysadm_gsd_optional_sysadm_polkit_exec
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
+
 	(optional sysadm_gcs_optional_sysadm_pa
 		(call sysadm_pa.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gcs_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gcs.cmd_file)))
+
+        (optional sysadm_gcs_optional_sshd
+                (call sshd.control_all_sd_unit_subj_type (subj)))
 
 	(optional sysadm_gcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

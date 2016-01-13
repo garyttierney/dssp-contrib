@@ -4,4 +4,12 @@
 	(call wheel.cmd_auto_subj_type_transition (subj))
 	(call wheel.shell_auto_subj_type_transition (subj))
 
-	(call wheel.home_cmd_auto_subj_type_transition (subj)))
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_polkit_exec_optional_wheel_gcs
+		(call wheel_gcs.auto_subj_type_transition_gcs_helper (subj))
+		(call wheel_gcs.read_state (subj)))
+
+	(optional wheel_polkit_exec_optional_wheel_gsd
+		(call wheel_gsd.auto_subj_type_transition_gsd_helper (subj))
+		(call wheel_gsd.read_state (subj))))

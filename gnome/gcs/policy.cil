@@ -39,6 +39,8 @@
 
 	(call dconf.client_subj_type (subj_type_attribute))
 
+	(call gcs_helper.obj_entry_subj (subj_type_attribute))
+
 	(call gstreamer.client_subj_type (subj_type_attribute))
 
 	(call fonts.read (subj_type_attribute))
@@ -81,6 +83,9 @@
 
 	(optional gcs_subj_type_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gcs_subj_type_optional_sd_localed
+		(call sd_localed.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd_logind
 		(call sd_logind.read_runtime (subj_type_attribute)))

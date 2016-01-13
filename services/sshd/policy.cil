@@ -12,6 +12,8 @@
 			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (sshd.subj_type_attribute)))))
 
 (block sshd
+	(typeattribute control_all_sd_unit_subj_type_attribute)
+
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute login_subj_type_attribute)
 	(typeattribute priv_login_subj_type_attribute)
@@ -65,7 +67,9 @@
 	(call usersubj.use_ptys (subj_type_attribute))
 
 	(optional sshd_optional_sd
-		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))))
+		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
+
+		(allow control_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload enable disable)))))
 
 (block sshd_key
 	(typeattribute obj_type_attribute))

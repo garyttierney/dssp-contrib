@@ -4,4 +4,12 @@
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
-	(call sysadm.home_cmd_auto_subj_type_transition (subj)))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_polkit_exec_optional_sysadm_gcs
+		(call sysadm_gcs.auto_subj_type_transition_gcs_helper (subj))
+		(call sysadm_gcs.read_state (subj)))
+
+	(optional sysadm_polkit_exec_optional_sysadm_gsd
+		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj))
+		(call sysadm_gsd.read_state (subj))))

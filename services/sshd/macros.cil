@@ -234,6 +234,9 @@
 	(blockinherit net.tcp_connect_all_ports_blk)
 	(blockinherit net.tcp_bind_all_ports_blk)
 
+	(macro control_all_sd_unit_subj_type ((type ARG1))
+		(typeattributeset control_all_sd_unit_subj_type_attribute ARG1))
+
 	(macro read_all_config_files ((type ARG1))
 		(call ssh_client.search_config (ARG1))
 		(allow ARG1 obj_type_attribute read_file_perms))

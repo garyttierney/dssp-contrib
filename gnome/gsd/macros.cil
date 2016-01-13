@@ -87,4 +87,10 @@
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
 
 (in gsd_helper
-	(blockinherit exec_blk))
+	(blockinherit exec_blk)
+
+	(blockinherit cmd.obj_entry_subj_blk)
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

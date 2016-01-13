@@ -21,7 +21,17 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal))))
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call manage_home_config (ARG2))
+		(call relabel_home_config (ARG2))
+
+		(call home_config_obj_type_transition_home_config (ARG2))
+
+		(call manage_home_cache (ARG2))
+		(call relabel_home_cache (ARG2))
+
+		(call home_cache_obj_type_transition_home_cache (ARG2)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -29,7 +39,34 @@
 
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
-	(blockinherit file.relabel_config_files_blk))
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "rygel.conf"))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "Rygel")))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "rygel"))))
 
 (in rygelp
 	(block subj_blk

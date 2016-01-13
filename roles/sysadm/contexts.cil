@@ -462,6 +462,19 @@
 
 	(filecon "/root/\.rpmmacros" file root_rpmdev_home))
 
+(optional sysadm_rygel_home_optional_rygel
+	(tunableif enable_rbacsep
+		(true
+			(context root_rygel_home_config (sysadm.id sysadm.role rygel.home_config_file (systemlow systemlow)))
+			(context root_rygel_home_cache (sysadm.id sysadm.role rygel.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_rygel_home_config (sysadm.id object_r rygel.home_config_file (systemlow systemlow)))
+			(context root_rygel_home_cache (sysadm.id object_r rygel.home_cache_file (systemlow systemlow)))))
+
+        (filecon "/root/\.config/rygel\.conf" file root_rygel_home_config)
+        (filecon "/root/\.config/Rygel(/.*)?" any root_rygel_home_config)
+        (filecon "/root/\.cache/rygel(/.*)?" any root_rygel_home_cache))
+
 (optional sysadm_rtorrent_home_optional_rtorrent
 	(tunableif enable_rbacsep
 		(true

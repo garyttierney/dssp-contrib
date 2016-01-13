@@ -507,6 +507,20 @@
 			(call mandb.relabel_var_cache (ARG1)))))
 
 (in mime_types
+	(macro miscfile_data_obj_type ((type ARG1))
+		(typeattributeset miscfile_data_obj_type_attribute ARG1))
+
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk)
+
+	(macro miscfile_config_obj_type ((type ARG1))
+		(typeattributeset miscfile_config_obj_type_attribute ARG1))
+
 	(macro read_config_files ((type ARG1))
 		(call file.search_config (ARG1))
 		(allow ARG1 config_file read_file_perms))
@@ -517,7 +531,19 @@
 
 	(macro relabel_config_files ((type ARG1))
 		(call file.search_config (ARG1))
-		(allow ARG1 config_file relabel_file_perms)))
+		(allow ARG1 config_file relabel_file_perms))
+
+	(macro read ((type ARG1))
+		(call read_config_files(ARG1))
+		(call read_data (ARG1)))
+
+	(macro manage ((type ARG1))
+		(call manage_config_files (ARG1))
+		(call manage_data (ARG1)))
+
+	(macro relabel ((type ARG1))
+		(call relabel_config_files (ARG1))
+		(call relabel_data (ARG1))))
 
 (in modules
 	(macro search ((type ARG1))

@@ -1435,6 +1435,9 @@
 		(allow ARG1 common_login_type_attribute list_dir_perms)
 		(allow ARG1 common_login_type_attribute read_lnk_file_perms))
 
+	(macro setpgid_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (getpgid))))
+
 	(macro send_signal_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (process (signal))))
 

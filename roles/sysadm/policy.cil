@@ -290,6 +290,15 @@
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))
 
+	(optional sysadm_optional_gs
+		(call gs_helper.exec (subj)))
+
+	(optional sysadm_optional_gsd
+		(call gsd_helper.exec (subj)))
+
+	(optional sysadm_optional_gsh
+		(call gsh_helper.exec (subj)))
+
 	(optional sysadm_optional_gtk
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
@@ -1002,18 +1011,16 @@
 		(call sysadm_gpinentry.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gs
-		(call gs_helper.exec (subj))
 		(call sysadm_gs.role_pattern (role subj_type_attribute))
 		(call sysadm_gsquit.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gsd
-		(call gsd_helper.exec (subj))
 		(call sysadm_gsd.role_pattern (role subj_type_attribute))
 		(call sysadm_gsdprinter.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gsh
-		(call gsh_helper.exec (subj))
 		(call sysadm_gsh.role_pattern (role subj_type_attribute))
+		(call sysadm_gshep.role_pattern (role subj_type_attribute))
 		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gt

@@ -1,4 +1,7 @@
 (in user_gpg_agent
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gpg_agent.spec_auto_subj_type_transition (ARG1 subj)))
 

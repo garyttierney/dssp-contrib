@@ -360,6 +360,9 @@
 		(call java.relabel_home_user (subj))
 		(call java.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_mutter
+		(call mutter_helper.exec (subj)))
+
 	(optional sysadm_optional_networkctl
 		(call networkctl.run (subj_type_attribute role)))
 
@@ -1064,6 +1067,9 @@
 
 	(optional sysadm_optional_sysadm_mutt_pgp_ewrap
 		(call sysadm_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mutter
+		(call sysadm_mutter.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_nb
 		(call sysadm_nb.role_pattern (role subj_type_attribute)))

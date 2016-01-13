@@ -1,0 +1,14 @@
+(block user_gcrv
+	(blockinherit gcrv.subj_blk))
+
+(block user_gcrp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gcrp.subj_blk)
+
+	(optional user_gcrp_optional_user_sessbus
+		(call user_sessbus.daemon (subj gcrp.cmd_file)))
+
+	(optional user_gcrp_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

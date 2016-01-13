@@ -135,11 +135,6 @@
 		(call phpcli.relabel_home_user_files (subj))
 		(call phpcli.home_dir_obj_type_transition_home_user (subj)))
 
-	(optional user_optional_pinentry
-		(call pinentry.run (subj_type_attribute role))
-		(call pinentry.manage_tmpfs_user_files (subj))
-		(call pinentry.relabel_tmpfs_user_files (subj)))
-
 	(optional user_optional_polkit
 		(call polkit_tty_agent.exec (subj)))
 
@@ -398,6 +393,9 @@
 
 	(optional user_optional_user_passwd
 		(call user_passwd.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_pinentry
+		(call user_pinentry.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_rp
 		(call user_rp.role_pattern (role subj_type_attribute)))

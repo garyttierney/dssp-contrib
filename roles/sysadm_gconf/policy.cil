@@ -3,6 +3,9 @@
 
 	(blockinherit gconfd.subj_blk)
 
+	(optional sysadm_gconfd_optional_sysadm_gts
+		(call sysadm_gts.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gconfd_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gconfd.cmd_file)))
 

@@ -1,2 +1,11 @@
 (block wheel_gpinentry
-	(blockinherit gpinentry.subj_blk))
+	(blockinherit gpinentry.subj_blk)
+
+	(optional wheel_gpinentry_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gpinentry_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gpinentry_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))

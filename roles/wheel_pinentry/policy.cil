@@ -1,0 +1,8 @@
+(block wheel_pinentry
+	(blockinherit pinentry.subj_blk)
+
+	(optional wheel_pinentry_optional_wheel_gpinentry
+		(call wheel_gpinentry.auto_subj_type_transition (subj)))
+
+	(optional wheel_pinentry_optional_wheel_gpg_agent
+		(call wheel_gpg_agent.stream_connect (subj))))

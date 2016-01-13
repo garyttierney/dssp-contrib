@@ -505,11 +505,6 @@
 		(call phpcli.relabel_home_user_files (subj))
 		(call phpcli.home_dir_obj_type_transition_home_user (subj)))
 
-	(optional sysadm_optional_pinentry
-		(call pinentry.run (subj_type_attribute role))
-		(call pinentry.manage_tmpfs_user_files (subj))
-		(call pinentry.relabel_tmpfs_user_files (subj)))
-
 	(optional sysadm_optional_plymouth
 		(call plymouth.adm (subj role))
 		(call plymouth.run (subj_type_attribute role)))
@@ -1083,6 +1078,9 @@
 
 	(optional sysadm_optional_sysadm_passwd
 		(call sysadm_passwd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pinentry
+		(call sysadm_pinentry.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_polkit_exec
 		(call sysadm_polkit_exec.role_pattern (role subj_type_attribute)))

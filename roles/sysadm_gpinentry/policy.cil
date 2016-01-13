@@ -1,2 +1,11 @@
 (block sysadm_gpinentry
-	(blockinherit gpinentry.subj_blk))
+	(blockinherit gpinentry.subj_blk)
+
+	(optional sysadm_gpinentry_optional_sysadm_atspird
+		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gpinentry_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gpinentry_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

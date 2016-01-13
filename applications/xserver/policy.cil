@@ -134,9 +134,6 @@
 
 	(call fs.rw_inherited_tmpfs_files (tmpfs_client_subj_type_attribute))
 
-	(optional tmpfs_client_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (tmpfs_client_subj_type_attribute)))
-
 	(call usersubj.search_home_config (client_subj_type_attribute))
 
 	(call read_config (client_subj_type_attribute))
@@ -150,6 +147,9 @@
 
 	(optional xserver_client_subj_type_optional_gdm
 		(call gdm.read_tmpfs_user_files (client_subj_type_attribute)))
+
+	(optional xserver_client_subj_type_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj (client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_rp
 		(call rp.client_subj_type (client_subj_type_attribute))))

@@ -5,7 +5,9 @@
 		(call user_atspird.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gpinentry_optional_user_gpg_agent
-		(call user_gpg_agent.rw_inherited_unix_stream_sockets (subj)))
+		(call user_gpg_agent.rw_inherited_fifo_files (subj))
+		(call user_gpg_agent.rw_inherited_unix_stream_sockets (subj))
+		(call user_gpg_agent.send_sigchld (subj)))
 
 	(optional user_gpinentry_optional_user_gsh
 		(call user_gsh.sessbus_chat_client_subj_type (subj)))

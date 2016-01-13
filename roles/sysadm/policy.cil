@@ -611,6 +611,9 @@
 		(call rtorrent.home_config_obj_type_transition_home_config (subj))
 		(call rtorrent.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_rygel
+		(call rygel_helper.exec (subj)))
+
 	(optional sysadm_optional_scdaemon
 		(call scdaemon.run (subj_type_attribute role))
 		(call scdaemon.manage_home_user (subj))
@@ -1100,6 +1103,10 @@
 
 	(optional sysadm_optional_sysadm_run
 		(call sysadm_run.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_rygel
+		(call sysadm_rygel.role_pattern (role subj_type_attribute))
+		(call sysadm_rygelp.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_screen
 		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))

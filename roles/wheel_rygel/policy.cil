@@ -1,0 +1,14 @@
+(block wheel_rygel
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit rygel.subj_blk)
+
+	(optional wheel_rygel_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj rygel.cmd_file)))
+
+	(optional wheel_rygel_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_rygelp
+	(blockinherit rygelp.subj_blk))

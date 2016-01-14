@@ -56,6 +56,7 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file socket "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(blockinherit usersubj.search_home_data_blk)
@@ -69,7 +70,17 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "gnome-shell"))))
+		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "gnome-shell")))
+
+	(macro stream_connect_all_subj ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
+
+	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2))))
 
 (in gshcs
 	(block subj_blk

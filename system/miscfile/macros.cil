@@ -99,6 +99,9 @@
 	(macro dontaudit_setattr_var_cache_dirs ((type ARG1))
 		(dontaudit ARG1 var_cache_file (dir (setattr))))
 
+	(macro setattr_var_cache_dirs ((type ARG1))
+		(allow ARG1 var_cache_file (dir (setattr))))
+
 	(macro search_all_cache ((type ARG1))
 		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute search_dir_perms)

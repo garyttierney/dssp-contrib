@@ -25,7 +25,13 @@
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(macro spec_send_signal ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal))))
+
+	(macro send_signal_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (process (signal)))))
 
 (in cariboup
 	(block subj_blk

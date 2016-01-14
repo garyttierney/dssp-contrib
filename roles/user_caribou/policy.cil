@@ -3,8 +3,24 @@
 
 	(blockinherit caribou.subj_blk)
 
+	(optional user_caribou_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_caribou_optional_user_gcs
+		(call user_gcs.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_caribou_optional_user_gs
+		(call user_gs.send_signal (subj))
 		(call user_gs.daemon (subj caribou.cmd_file)))
+
+	(optional user_caribou_optional_user_gsd
+		(call user_gsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_caribou_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_caribou_optional_user_gts
+		(call user_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_caribou_optional_user_sessbus
 		(call user_sessbus.daemon (subj caribou.cmd_file)))

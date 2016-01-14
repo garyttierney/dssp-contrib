@@ -85,11 +85,6 @@
 	(optional user_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
-	(optional user_optional_gstreamer
-		(call gstreamer.manage_home_cache (subj))
-		(call gstreamer.relabel_home_cache (subj))
-		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
-
 	(optional user_optional_gtk
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
@@ -368,6 +363,10 @@
 		(call user_gsh.role_pattern (role subj_type_attribute))
 		(call user_gshep.role_pattern (role subj_type_attribute))
 		(call user_gshcs.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gstreamer
+		(call user_gst.role_pattern (role subj_type_attribute))
+		(call user_gstps.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gt
 		(call user_gt.role_pattern (role subj_type_attribute))

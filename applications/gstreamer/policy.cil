@@ -8,3 +8,20 @@
 
 	(call usersubj.create_home_cache_dirs (client_subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_cache (client_subj_type_attribute)))
+
+(block gst
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gstps
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gst_helper
+	(blockinherit cmd.obj_blk))

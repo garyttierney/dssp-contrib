@@ -333,9 +333,7 @@
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_gstreamer
-		(call gstreamer.manage_home_cache (subj))
-		(call gstreamer.relabel_home_cache (subj))
-		(call gstreamer.home_cache_obj_type_transition_home_cache (subj)))
+		(call gst_helper.exec (subj)))
 
 	(optional sysadm_optional_hostname
 		(call hostname.manage_config_files (subj))
@@ -1042,6 +1040,10 @@
 		(call sysadm_gsh.role_pattern (role subj_type_attribute))
 		(call sysadm_gshep.role_pattern (role subj_type_attribute))
 		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gstreamer
+		(call sysadm_gst.role_pattern (role subj_type_attribute))
+		(call sysadm_gstps.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gt
 		(call sysadm_gt.role_pattern (role subj_type_attribute))

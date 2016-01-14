@@ -4,4 +4,7 @@
         (call user.shell_auto_subj_type_transition (subj))
 
 	(optional user_ssh_client_optional_user_gpg_agent
-		(call user_gpg_agent.stream_connect (subj))))
+		(call user_gpg_agent.stream_connect (subj)))
+
+	(optional user_ssh_client_optional_user_goais
+		(call user_goais.read_keyring (subj))))

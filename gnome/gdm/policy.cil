@@ -139,9 +139,10 @@
 	(call gsh.read_state_all_subj (subj))
 
 	(call cert.read (subj))
-	(call hwdata.read_data_files (subj))
 	(call fonts.read (subj))
 	(call fstab.read (subj))
+	(call hwdata.read_data_files (subj))
+	(call mime_types.read_data (subj))
 
 	(call pam.login_prog_subj_type (subj))
 

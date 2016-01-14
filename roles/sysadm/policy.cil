@@ -129,9 +129,7 @@
 		(call alsactl.adm (subj role)))
 
 	(optional sysadm_optional_atspi
-		(call atspi.manage_config (subj))
-	        (call atspi.manage_tmpfs_user_sock_files (subj))
-		(call atspi.relabel_tmpfs_user_sock_files (subj)))
+		(call atspi.manage_config (subj)))
 
 	(optional sysadm_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))

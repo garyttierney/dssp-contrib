@@ -25,7 +25,7 @@
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
-	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call exec (subj_type_attribute))
@@ -38,6 +38,8 @@
 	(call fs.getattr_fs (subj_type_attribute))
 
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 
 	(call dconf.client_subj_type (subj_type_attribute))
 

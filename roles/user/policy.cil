@@ -90,6 +90,11 @@
 		(call gtk.relabel_home_config (subj))
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
+	(optional user_optional_ibus
+		(call ibus.manage_home_config (subj))
+		(call ibus.relabel_home_config (subj))
+		(call ibus.home_config_obj_type_transition_home_config (subj)))
+
 	(optional user_optional_java
 		(call java.manage_tmpfs_user (subj))
 		(call java.relabel_tmpfs_user (subj))

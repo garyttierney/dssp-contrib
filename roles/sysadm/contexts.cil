@@ -308,6 +308,15 @@
 
 	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any root_gstreamer_home_cache))
 
+(optional sysadm_ibus_home_optional_ibus
+	(tunableif enable_rbacsep
+		(true
+			(context root_ibus_home_config (sysadm.id sysadm.role ibus.home_config_file (systemlow systemlow))))
+		(false
+			(context root_ibus_home_config (sysadm.id object_r ibus.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/ibus(/.*)?" any root_ibus_home_config))
+
 (optional sysadm_irssi_home_optional_irssi
 	(tunableif enable_rbacsep
 		(true

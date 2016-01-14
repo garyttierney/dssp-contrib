@@ -96,6 +96,11 @@
 		(call gtk.relabel_home_config (subj))
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
+	(optional wheel_optional_ibus
+		(call ibus.manage_home_config (subj))
+		(call ibus.relabel_home_config (subj))
+		(call ibus.home_config_obj_type_transition_home_config (subj)))
+
 	(optional wheel_optional_inhibit
 		(call inhibit.client_subj_type (subj_type_attribute)))
 

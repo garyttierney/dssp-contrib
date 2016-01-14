@@ -1,5 +1,19 @@
 (block atspi
-	(blockinherit file.config_obj_blk))
+	(typeattribute client_subj_type_attribute)
+	(typeattribute tmpfs_obj_type_attribute)
+
+	(blockinherit file.config_obj_blk)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call tmpfs_obj_type (tmpfs_user_file))
+
+	(call manage_tmpfs_user_sock_files (client_subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (client_subj_type_attribute))
+
+	(allow client_subj_type_attribute self create_unix_stream_stream_socket_perms)
+
+	(call stream_connect_pattern (client_subj_type_attribute tmpfs_obj_type_attribute tmpfs_obj_type_attribute client_subj_type_attribute)))
 
 (block atspird
 	(typeattribute subj_type_attribute)

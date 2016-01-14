@@ -33,6 +33,9 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
+	(optional xsession_subj_type_optional_emacs
+		(call emacs.read_home_user_files (subj_type_attribute)))
+
 	(optional xsession_subj_type_optional_gdm
 		(call gdm.read_config_lnk_files (subj_type_attribute)))
 

@@ -1,4 +1,28 @@
 (in atspi
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro tmpfs_obj_type ((type ARG1))
+		(typeattributeset tmpfs_obj_type_attribute ARG1))
+
+	(macro tmpfs_client ((type ARG1)(type ARG2))
+		(call client_subj_type (ARG1))
+		(call tmpfs_obj_type (ARG2)))
+
+	(macro manage_tmpfs_user_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.rw_tmpfs_dirs (ARG1))
+		(allow ARG1 tmpfs_user_file manage_sock_file_perms))
+
+	(macro relabel_tmpfs_user_sock_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file relabel_sock_file_perms))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*")))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)

@@ -56,7 +56,7 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file socket "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
 
 	(blockinherit usersubj.search_home_data_blk)

@@ -44,6 +44,8 @@
 	(call fonts.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
+	(call usersubj.dontaudit_read_state_common_subj (subj_type_attribute))
+	(call usersubj.read_state_common_login_subj (subj_type_attribute))
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.setpgid_common_login_subj (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))

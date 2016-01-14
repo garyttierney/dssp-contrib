@@ -21,7 +21,17 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (process (getsched)))
+
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_v4l (subj_type_attribute))
+
+	(optional gstps_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))))
 
 (block gst_helper
 	(blockinherit cmd.obj_blk))

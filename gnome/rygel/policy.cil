@@ -25,6 +25,7 @@
         (call manage_home_cache (subj_type_attribute))
         (call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 
 	(call sys.read_net_proc_files (subj_type_attribute))
@@ -32,7 +33,7 @@
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config (subj_type_attribute))
-	(call file.read_data_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
 
@@ -48,6 +49,8 @@
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
+
+	(call ssdp.udp_bind_port (subj_type_attribute))
 
 	(optional rygel_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))

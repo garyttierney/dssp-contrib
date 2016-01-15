@@ -2481,6 +2481,9 @@
 		(call home_data_obj_type_transition_home_cmd (ARG1))
 		(call home_dir_obj_type_transition_home_cmd (ARG1)))
 
+	(macro dontaudit_read_home_history_files ((type ARG1))
+		(dontaudit ARG1 home_history.home_user_file read_file_perms))
+
 	(macro read_home_history_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_history.home_user_file read_file_perms))

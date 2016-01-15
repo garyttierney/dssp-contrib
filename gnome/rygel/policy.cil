@@ -9,6 +9,10 @@
 
 	(call read_config_files (subj_type_attribute))
 
+        (blockinherit usersubj.home_user_obj_blk)
+
+        (call manage_home_user (subj_type_attribute))
+
         (blockinherit usersubj.home_config_obj_blk)
 
         (call usersubj.create_home_config_dirs (subj_type_attribute))

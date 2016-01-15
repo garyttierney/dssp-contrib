@@ -23,6 +23,9 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
+		(call manage_home_user (ARG2))
+		(call relabel_home_user (ARG2))
+
 		(call manage_home_config (ARG2))
 		(call relabel_home_config (ARG2))
 
@@ -40,6 +43,15 @@
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
 	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)

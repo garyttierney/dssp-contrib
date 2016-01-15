@@ -87,7 +87,10 @@
 
 	(call mount.exec (subj_type_attribute))
 
-	(call setfiles.exec (subj_type_attribute)))
+	(call file_context.read_config_files (subj_type_attribute))
+	(call setfiles.exec (subj_type_attribute))
+
+	(call ssh_keygen.exec (subj_type_attribute)))
 
 (block sshd_net
 	(typeattribute subj_type_attribute)

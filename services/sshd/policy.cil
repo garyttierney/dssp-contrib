@@ -81,7 +81,13 @@
 
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
-	(call cmd.exec (subj_type_attribute)))
+	(call cmd.exec (subj_type_attribute))
+
+	(call fs.getattr_all_fs (subj_type_attribute))
+
+	(call mount.exec (subj_type_attribute))
+
+	(call setfiles.exec (subj_type_attribute)))
 
 (block sshd_net
 	(typeattribute subj_type_attribute)

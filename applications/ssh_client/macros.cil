@@ -68,6 +68,10 @@
 	(blockinherit file.manage_config_blk)
 	(blockinherit file.relabel_config_blk)
 
+	(macro config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(call file.search_config (ARG1))
+		(call obj_type_transition_pattern (ARG1 config_file ARG2 ARG3 ARG4)))
+
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))

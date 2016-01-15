@@ -193,7 +193,7 @@
 		(roletype role_attribute subj)
 
 		(allow subj sshd_key.file manage_file_perms)
-		(call obj_type_transition_pattern (subj sshd.config_file sshd_key.file file "*"))
+		(call ssh_client.config_obj_type_transition (subj sshd_key.file file "*"))
 
 		(call sshd.read_config_files (subj))
 

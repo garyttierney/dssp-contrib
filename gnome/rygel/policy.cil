@@ -25,6 +25,7 @@
         (call manage_home_cache (subj_type_attribute))
         (call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
+	(allow subj_type_attribute self (process (setsched)))
 	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 	(allow subj_type_attribute self rw_fifo_file_perms)

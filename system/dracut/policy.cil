@@ -44,6 +44,7 @@
 	(call file.read_config (subj))
 	(call file.read_data (subj))
 
+	(call fs.getattr_all_fs (subj))
 	(call fs.list_devtmpfs (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
@@ -77,6 +78,7 @@
 	(call nss.read_config_files (subj))
 
 	(call selinux_config.read_config_files (subj))
+	(call setfiles.exec (subj))
 	(call file_context.read_config (subj))
 
 	(call udev.read_config_files (subj))

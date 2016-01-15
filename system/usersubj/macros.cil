@@ -2024,6 +2024,14 @@
 		(call search_home_dir (ARG1))
 		(call read_lnk_files_pattern (ARG1 home_user_obj_type_attribute home_user_obj_type_attribute)))
 
+	(macro getattr_all_home_user ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_user_obj_type_attribute (file (getattr)))
+		(allow ARG1 home_user_obj_type_attribute (dir (getattr)))
+		(allow ARG1 home_user_obj_type_attribute (fifo_file (getattr)))
+		(allow ARG1 home_user_obj_type_attribute (lnk_file (getattr)))
+		(allow ARG1 home_user_obj_type_attribute (sock_file (getattr))))
+
 	(macro read_all_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user_obj_type_attribute read_file_perms)

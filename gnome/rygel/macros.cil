@@ -44,6 +44,7 @@
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
 	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.manage_home_config_files_blk)
 	(blockinherit usersubj.read_home_config_lnk_files_blk)
 	(blockinherit usersubj.read_home_config_blk)
 	(blockinherit usersubj.manage_home_config_blk)
@@ -54,6 +55,9 @@
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
 		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "rygel.conf"))
 		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "Rygel")))
+
+	(macro home_config_obj_type_transition_home_config_files ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "*")))
 
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)

@@ -107,9 +107,13 @@
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+
+	(call dev.read_urandom (subj))
 
 	(call auditctl.auto_subj_type_transition (subj))
 

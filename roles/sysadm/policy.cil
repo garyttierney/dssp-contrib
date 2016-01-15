@@ -787,6 +787,7 @@
 
 	(optional sysadm_optional_sshd
 		(call sshd.adm (subj_type_attribute role))
+		(call sshd.sshd_keygen.run (subj_type_attribute role))
 		(call sshd.priv_login_subj_type (subj)))
 
 	(optional sysadm_optional_syndaemon

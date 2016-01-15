@@ -77,7 +77,11 @@
 (block sshd_keygen
 	(typeattribute subj_type_attribute)
 
-	(call ssh_client.search_config (subj_type_attribute)))
+	(call ssh_client.search_config (subj_type_attribute))
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute)))
 
 (block sshd_net
 	(typeattribute subj_type_attribute)

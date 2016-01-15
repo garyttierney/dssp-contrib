@@ -47,6 +47,7 @@
 	(call gstreamer.client_subj_type (subj_type_attribute))
 
 	(call cert.read (subj_type_attribute))
+	(call fstab.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
@@ -55,6 +56,10 @@
 	(call rygel_helper.exec (subj_type_attribute))
 
 	(call ssdp.udp_bind_port (subj_type_attribute))
+
+	(call usersubj.list_home_user (subj_type_attribute))
+	(call usersubj.read_home_user_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
 
 	(optional rygel_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))

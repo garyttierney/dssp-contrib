@@ -1,6 +1,8 @@
 (block user_ssh_client
 	(blockinherit ssh_client.subj_blk)
 
+	(call user_ssh_agent.stream_connect (subj))
+
         (call user.shell_auto_subj_type_transition (subj))
 
 	(optional user_ssh_client_optional_user_gpg_agent

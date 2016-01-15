@@ -10,6 +10,8 @@
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 
+	(call sysadm_ssh_agent.stream_connect (subj))
+
         (call sysadm.shell_auto_subj_type_transition (subj))
 
 	(optional sysadm_ssh_client_optional_sysadm_gpg_agent

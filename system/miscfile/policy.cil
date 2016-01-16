@@ -34,6 +34,9 @@
 		(allow miscfile_sd_status_subj_type_attribute file (service (status)))
 		(call file.search_config (miscfile_sd_status_subj_type_attribute))))
 
+(block hosts
+	(blockinherit file.config_obj_blk))
+
 (block hwdata
 	(blockinherit file.data_obj_blk))
 

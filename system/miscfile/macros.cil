@@ -419,6 +419,14 @@
 	(macro sd_status_subj_type ((type ARG1))
 		(typeattributeset miscfile_sd_status_subj_type_attribute ARG1)))
 
+(in hosts
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro config_obj_type_transition_config ((type ARG1))
+		(call file.config_obj_type_transition (ARG1 config_file file "hosts"))))
+
 (in hwdata
 	(blockinherit file.search_data_blk)
 	(blockinherit file.list_data_blk)

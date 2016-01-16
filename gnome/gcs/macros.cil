@@ -32,6 +32,11 @@
 		(call manage_tmpfs_user (ARG2))
 		(call relabel_tmpfs_user (ARG2))
 
+		(call manage_home_cache (ARG2))
+		(call relabel_home_cache (ARG2))
+
+		(call home_cache_obj_type_transition_home_cache (ARG2))
+
 		(call manage_home_config (ARG2))
 		(call relabel_home_config (ARG2))
 
@@ -45,6 +50,19 @@
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "gnome-control-center")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)

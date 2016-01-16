@@ -178,12 +178,15 @@
 (optional sysadm_gcs_home_optional_gcs
 	(tunableif enable_rbacsep
 		(true
+			(context root_gcs_home_cache (sysadm.id sysadm.role gcs.home_cache_file (systemlow systemlow)))
 			(context root_gcs_home_config (sysadm.id sysadm.role gcs.home_config_file (systemlow systemlow)))
 			(context root_gcs_home_data (sysadm.id sysadm.role gcs.home_data_file (systemlow systemlow))))
 		(false
+			(context root_gcs_home_cache (sysadm.id object_r gcs.home_cache_file (systemlow systemlow)))
 			(context root_gcs_home_config (sysadm.id object_r gcs.home_config_file (systemlow systemlow)))
 			(context root_gcs_home_data (sysadm.id object_r gcs.home_data_file (systemlow systemlow)))))
 
+	(filecon "/root/\.cache/gnome-control-center(/.*)?" any root_gcs_home_cache)
 	(filecon "/root/\.config/gnome-control-center(/.*)?" any root_gcs_home_config)
 	(filecon "/root/\.local/share/sounds(/.*)?" any root_gcs_home_data))
 

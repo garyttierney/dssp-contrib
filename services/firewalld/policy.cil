@@ -39,7 +39,6 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self rw_fifo_file_perms)
-	(allow subj self create_unix_dgram_socket_perms)
 
 	(call sys.read_net_proc_files (subj))
 
@@ -71,6 +70,9 @@
 		(typeattributeset obj_type_attribute unit_file)
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(optional firewalld_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional firewalld_optional_sysbus
                 (call sysbus.service_subj_type (subj)))

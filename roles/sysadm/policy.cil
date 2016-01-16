@@ -50,6 +50,7 @@
 	(call cert.manage (subj))
 	(call hwdata.read_data (subj))
 	(call modules.read (subj))
+	(call network.manage_config_files (subj))
 	(call wtmp.manage_var_log_files (subj))
 
 	(call usersubj.setattr_home_dir (subj))

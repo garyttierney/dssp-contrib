@@ -1,2 +1,14 @@
 (block wheel_nmce
-	(blockinherit nmce.subj_blk))
+	(blockinherit nmce.subj_blk)
+
+	(optional wheel_nmce_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_nmce_optional_wheel_dconfs
+		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_nmce_optional_wheel_gs
+		(call wheel_gs.daemon (subj nmce.cmd_file)))
+
+	(optional wheel_nmce_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj))))

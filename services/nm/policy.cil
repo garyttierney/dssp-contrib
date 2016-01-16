@@ -64,7 +64,9 @@
 	(call fs.dontaudit_audit_access_sysfs_dirs (subj))
 	(call fs.getattr_fs (subj))
 	(call fs.list_tmpfs (subj))
-	(call fs.read_sysfs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
 	(call fs.read_cgroup_files (subj))
 	(call fs.trace_client_subj_type (subj))
 

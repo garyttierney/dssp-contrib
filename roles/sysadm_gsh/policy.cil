@@ -4,6 +4,8 @@
 	(blockinherit gsh.subj_blk)
 
 	(call sysadm.sysadm_subj_type (subj))
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_gsh_optional_sysadm_atspird
 		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))

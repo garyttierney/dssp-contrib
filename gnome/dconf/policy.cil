@@ -2,9 +2,9 @@
 	(typeattribute subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
 
-        (blockinherit app.application_cmd_obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-        (call subj.entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(blockinherit usersubj.home_config_obj_blk)
 
@@ -33,11 +33,11 @@
 	(call tmpfs_obj_type_transition_tmpfs_user (client_subj_type_attribute)))
 
 (block dconfs
-        (typeattribute subj_type_attribute)
+	(typeattribute subj_type_attribute)
 
-        (blockinherit app.application_cmd_obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-        (call subj.entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call fs.getattr_fs (subj_type_attribute))
 

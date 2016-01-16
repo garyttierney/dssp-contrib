@@ -10,29 +10,29 @@
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
-        (blockinherit usersubj.home_cache_obj_blk)
+	(blockinherit usersubj.home_cache_obj_blk)
 
-        (call usersubj.create_home_cache_dirs (subj_type_attribute))
-        (call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
 
-        (call manage_home_cache (subj_type_attribute))
-        (call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
-        (blockinherit usersubj.home_config_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk)
 
-        (call usersubj.create_home_config_dirs (subj_type_attribute))
-        (call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
+	(call usersubj.create_home_config_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
 
-        (call manage_home_config (subj_type_attribute))
-        (call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config (subj_type_attribute))
 
-        (blockinherit usersubj.home_data_obj_blk)
+	(blockinherit usersubj.home_data_obj_blk)
 
-        (call usersubj.create_home_data_dirs (subj_type_attribute))
-        (call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
 
-        (call manage_home_data (subj_type_attribute))
-        (call home_data_obj_type_transition_home_data (subj_type_attribute))
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 

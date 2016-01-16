@@ -2042,6 +2042,13 @@
 		(allow ARG1 home_user_obj_type_attribute (lnk_file (getattr)))
 		(allow ARG1 home_user_obj_type_attribute (sock_file (getattr))))
 
+	(macro dontaudit_read_all_home_user ((type ARG1))
+		(dontaudit ARG1 home_user_obj_type_attribute read_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute list_dir_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute read_fifo_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute read_lnk_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute read_sock_file_perms))
+
 	(macro read_all_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user_obj_type_attribute read_file_perms)

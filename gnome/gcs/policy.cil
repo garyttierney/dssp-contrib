@@ -85,8 +85,7 @@
 
 	(call usersubj.read_home_data (subj_type_attribute))
 
-	(call usersubj.dontaudit_list_all_home_user (subj_type_attribute))
-	(call usersubj.dontaudit_getattr_all_home_user (subj_type_attribute))
+	(call usersubj.dontaudit_read_all_home_user (subj_type_attribute))
 
 	(call usersubj.manage_home_user_dirs (subj_type_attribute))
 	(call usersubj.read_home_user_files (subj_type_attribute))
@@ -122,6 +121,7 @@
 		(call rygel.home_config_obj_type_transition_home_config_files (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd
+		(call sd.search_config (subj_type_attribute))
 		(call sd.status (subj_type_attribute))
 		(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 		(call sd.read_state (subj_type_attribute)))

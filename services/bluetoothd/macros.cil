@@ -13,8 +13,8 @@
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
-	(macro setopt_socket ((type ARG1))
-		(allow ARG1 subj (socket (setopt))))
+	(macro rw_socket ((type ARG1))
+		(allow ARG1 subj rw_socket_perms))
 
 	(blockinherit file.search_var_lib_blk)
 	(blockinherit file.list_var_lib_blk)

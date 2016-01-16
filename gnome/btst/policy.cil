@@ -3,4 +3,48 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call gtk.client_subj_type (subj_type_attribute))
+
+	(call fonts.read_all (subj_type_attribute))
+	(call fonts.setattr_var_cache_dirs (subj_type_attribute))
+	(call fstab.read (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_data (subj_type_attribute))
+
+	(call usersubj.manage_home_data_files (subj_type_attribute))
+
+        (call usersubj.dontaudit_read_all_home_user (subj_type_attribute))
+	(call usersubj.list_home_user (subj_type_attribute))
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(optional btst_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional btst_subj_type_optional_sysbys
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional btst_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

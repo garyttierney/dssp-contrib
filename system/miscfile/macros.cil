@@ -425,7 +425,8 @@
 	(blockinherit file.relabel_config_files_blk)
 
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file.config_obj_type_transition (ARG1 config_file file "hosts"))))
+		(call file.config_obj_type_transition (ARG1 config_file file "hosts"))
+		(call file.config_obj_type_transition (ARG1 config_file file "services"))))
 
 (in hwdata
 	(blockinherit file.search_data_blk)

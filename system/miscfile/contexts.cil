@@ -63,11 +63,11 @@
 
 (in network
 	(filecon "/etc/sysconfig/network" file config_file_context)
-	(filecon "/etc/sysconfig/network-scripts(/.*)?" file config_file_context)
-	(filecon "/etc/services" file config_file_context))
+	(filecon "/etc/sysconfig/network-scripts(/.*)?" file config_file_context))
 
 (in hosts
-	(filecon "/etc/hosts" file config_file_context))
+	(filecon "/etc/hosts" file config_file_context)
+	(filecon "/etc/services" file config_file_context))
 
 (in nologin
 	(filecon "/var/run/\.nologin.*" file runtime_file_context)

@@ -8,7 +8,7 @@
 
 	(call usersubj.mls (id systemlow (systemlow systemlow)))
 
-        (typeattributeset subj_type_attribute subj)
+	(typeattributeset subj_type_attribute subj)
 
 	(optional user_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))
@@ -351,10 +351,10 @@
 		(call user_gpg.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gpg_agent
-                (call user_gpg_agent.role_pattern (role subj_type_attribute)))
+		(call user_gpg_agent.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gpinentry
-                (call user_gpinentry.role_pattern (role subj_type_attribute)))
+		(call user_gpinentry.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gs
 		(call user_gs.role_pattern (role subj_type_attribute))

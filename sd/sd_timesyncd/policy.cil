@@ -1,4 +1,5 @@
 (block sd_timesyncd
+	(typeattribute control_sd_unit_subj_type_attribute)
 	(typeattribute adm_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -42,6 +43,9 @@
 	(call sd_networkd.read_runtime (subj))
 
 	(call sd_journald.client_subj_type (subj))
+
+	(call sd.reload (control_sd_unit_subj_type_attribute))
+	(allow control_sd_unit_subj_type_attribute unit_file (service (start status stop reload enable disable)))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

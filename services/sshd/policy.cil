@@ -69,6 +69,7 @@
 	(optional sshd_optional_sd
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
+		(call sd.reload (control_all_sd_unit_subj_type_attribute))
 		(allow control_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload enable disable)))))
 
 (block sshd_key

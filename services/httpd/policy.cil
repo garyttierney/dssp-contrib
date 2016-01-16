@@ -23,7 +23,7 @@
 	(call sec.validate_context (subj))
 
 	(call httpd.exec_all (subj))
-	(call httpd.status_start_stop_reload_all_sd_unit_subj_type (subj))
+	(call httpd.control_all_sd_unit_subj_type (subj))
 	(call httpd.read_all_config (subj))
 	(call httpd.search_all_var_log (subj))
 	(call suexec.mmap_all (subj))
@@ -64,7 +64,7 @@
 	(typeattribute subj_type_attribute))
 
 (block httpd
-	(typeattribute status_start_stop_reload_all_sd_unit_subj_type_attribute)
+	(typeattribute control_all_sd_unit_subj_type_attribute)
 
 	(typeattribute adm_subj_type_attribute)
 
@@ -138,7 +138,8 @@
 		(call sd.notify_subj_type (subj_type_attribute))
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
-		(allow status_start_stop_reload_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload))))
+		(call sd.reload (control_all_sd_unit_subj_type_attribute))
+		(allow control_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload enable disable))))
 
 	(optional httpd_optional_php_fpm
 		(call php_fpm.php_fpm.stream_connect (httpd.subj))))

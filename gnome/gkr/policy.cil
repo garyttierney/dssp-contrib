@@ -32,7 +32,10 @@
 	(call locale.read (subj_type_attribute))
 
 	(optional gkrd_subj_type_optional_sd_journald
-		(call sd_journald.client_subj_type (subj_type_attribute))))
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional gkrd_subj_type_optional_ssh_client
+		(call ssh_client.read_home_user (subj_type_attribute))))
 
 (block gkr
 	(roleattribute role_attribute)

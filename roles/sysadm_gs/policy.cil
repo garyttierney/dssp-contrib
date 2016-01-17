@@ -23,6 +23,8 @@
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
 
 	(call forked_subj_type (daemon_subj_type_attribute))
+	(call send_signal (daemon_subj_type_attribute))
+
 	(call rw_inherited_unix_stream_sockets (forked_subj_type_attribute)))
 
 (block sysadm_gsquit

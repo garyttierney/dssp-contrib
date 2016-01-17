@@ -2,4 +2,13 @@
 	(blockinherit gst.subj_blk))
 
 (block user_gstps
-	(blockinherit gstps.subj_blk))
+	(blockinherit gstps.subj_blk)
+
+	(call user_gs.forked_subj_type (subj))
+
+	(optional user_gstps_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gstps_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))
+

@@ -17,7 +17,7 @@
 		(call wheel_gkrd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsh_optional_wheel_gs
-		(call wheel_gs.forked_subj_type (subj))
+		(call wheel_gs.daemon (subj gsh.cmd_file))
 		(call wheel_gs.sessbus_chat_client_subj_type (subj))
 		(call wheel_gs.stream_connect (subj)))
 
@@ -26,6 +26,12 @@
 
 	(optional wheel_gsh_optional_wheel_gts
 		(call wheel_gts.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gsh_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gsh_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsh_optional_wheel_polkit_agent
 		(call polkit_agent.auto_subj_type_transition (subj)))

@@ -12,6 +12,9 @@
 		(call user_gs.daemon (subj gsd.cmd_file))
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
 
+	(optional user_gsd_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gsd_optional_user_pa
 		(call user_pa.auto_subj_type_transition (subj)))
 

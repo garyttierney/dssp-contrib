@@ -590,6 +590,15 @@
 
 	(filecon "/root/\.texlive2015(/.*)?" any root_tetex_home))
 
+(optional sysadm_thumbnails_home_optional_thumbnails
+	(tunableif enable_rbacsep
+		(true
+			(context root_thumbnails_home_cache (sysadm.id sysadm.role thumbnails.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_thumbnails_home_cache (sysadm.id object_r thumbnails.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/thumbnails(/.*)?" any root_thumbnails_home_cache))
+
 (optional sysadm_tor_home_optional_tor
 	(tunableif enable_rbacsep
 		(true

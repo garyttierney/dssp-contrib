@@ -811,6 +811,11 @@
 	(optional sysadm_optional_tcsd
 		(call tcsd.adm (subj role)))
 
+	(optional sysadm_optional_thumbnails
+		(call thumbnails.manage_home_cache (subj))
+		(call thumbnails.relabel_home_cache (subj))
+		(call thumbnails.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional sysadm_optional_timedatex
 		(call timedatex.adm (subj role)))
 

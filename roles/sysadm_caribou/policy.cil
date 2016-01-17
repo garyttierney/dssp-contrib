@@ -11,7 +11,7 @@
 
 	(optional sysadm_caribou_optional_sysadm_gs
 		(call sysadm_gs.send_signal (subj))
-		(call sysadm_gs.daemon (subj caribou.cmd_file)))
+		(call sysadm_gs.forked_subj_type (subj)))
 
 	(optional sysadm_caribou_optional_sysadm_gsd
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))

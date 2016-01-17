@@ -11,7 +11,7 @@
 
 	(optional user_caribou_optional_user_gs
 		(call user_gs.send_signal (subj))
-		(call user_gs.daemon (subj caribou.cmd_file)))
+		(call user_gs.forked_subj_type (subj)))
 
 	(optional user_caribou_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))

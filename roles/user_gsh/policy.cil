@@ -17,7 +17,7 @@
 		(call user_gkrd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsh_optional_user_gs
-		(call user_gs.daemon (subj gsh.cmd_file))
+		(call user_gs.forked_subj_type (subj))
 		(call user_gs.sessbus_chat_client_subj_type (subj))
 		(call user_gs.stream_connect (subj)))
 

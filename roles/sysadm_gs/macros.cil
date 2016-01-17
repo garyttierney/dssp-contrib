@@ -8,6 +8,9 @@
 	(macro daemon_subj_type ((type ARG1))
 		(typeattributeset daemon_subj_type_attribute ARG1))
 
+	(macro forked_subj_type ((type ARG1))
+		(typeattributeset forked_subj_type_attribute ARG1))
+
 	(macro daemon ((type ARG1)(type ARG2))
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))

@@ -392,6 +392,10 @@
 		(call ldconfig.adm (subj role))
 		(call ldconfig.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_libatasmart
+		(call skdump.run (subj_type_attribute role))
+		(call sktest.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_lirc
 		(call lirc.run (subj_type_attribute role))
 		(call lirc_lsplugins.run (subj_type_attribute role)))

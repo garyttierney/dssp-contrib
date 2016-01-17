@@ -20,7 +20,7 @@
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call file.read_data_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 
@@ -34,6 +34,20 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
 	(optional gvfsdmd_subj_type_optional_sduser
 		(blockinherit sduser.unit_obj_blk)))
 
@@ -44,8 +58,30 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(call file.list_config (subj_type_attribute))
+
+	(call fstab.read (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+
+	(optional gvfsdud2_subj_type_optional_sd
+		(call sd.read_state (subj_type_attribute)))
+
+	(optional gvfsdud2_subj_type_optional_sd_logind
+		(call sd_logind.read_runtime_files (subj_type_attribute)))
+
 	(optional gvfsdud2_subj_type_optional_sduser
-		(blockinherit sduser.unit_obj_blk)))
+		(blockinherit sduser.unit_obj_blk))
+
+	(optional gvfsdud2_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
 
 (block gvfsdburn
 	(typeattribute subj_type_attribute)
@@ -80,7 +116,16 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gvfsddnssd_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
 
 (block gvfsdftp
 	(typeattribute subj_type_attribute)
@@ -108,7 +153,17 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))
 
 (block gvfsdrecent
 	(typeattribute subj_type_attribute)
@@ -129,4 +184,12 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.read_home_data_files (subj_type_attribute)))

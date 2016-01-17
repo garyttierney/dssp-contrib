@@ -7,6 +7,8 @@
 
 	(blockinherit gvfsd.subj_blk)
 
+	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
+
 	(optional wheel_gvfsd_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj gvfsd.cmd_file)))
 
@@ -39,61 +41,149 @@
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdburn
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdburn.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdburn.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdburn.cmd_file))
+
+	(optional wheel_gvfsdburn_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdcdda
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdcdda.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdcdda.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdcdda.cmd_file))
+
+	(optional wheel_gvfsdcdda_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdcomputer
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdcomputer.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdcomputer.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdcomputer.cmd_file))
+
+	(optional wheel_gvfsdcomputer_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsddav
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsddav.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsddav.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsddav.cmd_file))
+
+	(optional wheel_gvfsddav_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsddnssd
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsddnssd.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsddnssd.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsddnssd.cmd_file))
+
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gvfsddnssd_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
+
+	(optional wheel_gvfsddnssd_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdftp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdftp.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdftp.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdftp.cmd_file))
+
+	(optional wheel_gvfsdftp_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdhttp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdhttp.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdhttp.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdhttp.cmd_file))
+
+	(optional wheel_gvfsdhttp_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdlocaltest
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdlocaltest.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdlocaltest.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdlocaltest.cmd_file))
+
+	(optional wheel_gvfsdlocaltest_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdnetwork
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdnetwork.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdnetwork.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdnetwork.cmd_file))
+
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gvfsdnetwork_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
+
+	(optional wheel_gvfsdnetwork_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdrecent
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdrecent.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdrecent.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdrecent.cmd_file))
+
+	(optional wheel_gvfsdrecent_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdsftp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdsftp.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdsftp.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdsftp.cmd_file))
+
+	(optional wheel_gvfsdsftp_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdtrash
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvfsdtrash.subj_blk)
 
-	(call wheel_gvfsd.daemon (subj gvfsdtrash.cmd_file)))
+	(call wheel_gvfsd.daemon (subj gvfsdtrash.cmd_file))
+
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gvfsdtrash_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
+
+	(optional wheel_gvfsdtrash_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

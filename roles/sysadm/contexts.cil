@@ -117,6 +117,15 @@
 	(filecon "/root/\.profile" file root_emacs_home)
 	(filecon "/root/\.emacs\.d(/.*)?" any root_emacs_home))
 
+(optional sysadm_enchant_home_optional_enchant
+	(tunableif enable_rbacsep
+		(true
+			(context root_enchant_home_config (sysadm.id sysadm.role enchant.home_config_file (systemlow systemlow))))
+		(false
+			(context root_enchant_home_config (sysadm.id object_r enchant.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/enchant(/.*)?" any root_enchant_home_config))
+
 (optional sysadm_evo_home_optional_evo
 	(tunableif enable_rbacsep
 		(true
@@ -189,6 +198,15 @@
 	(filecon "/root/\.cache/gnome-control-center(/.*)?" any root_gcs_home_cache)
 	(filecon "/root/\.config/gnome-control-center(/.*)?" any root_gcs_home_config)
 	(filecon "/root/\.local/share/sounds(/.*)?" any root_gcs_home_data))
+
+(optional sysadm_gedit_home_optional_gedit
+	(tunableif enable_rbacsep
+		(true
+			(context root_gedit_home_config (sysadm.id sysadm.role gedit.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gedit_home_config (sysadm.id object_r gedit.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/gedit(/.*)?" any root_gedit_home_config))
 
 (optional sysadm_glib_home_optional_glib
 	(tunableif enable_rbacsep
@@ -311,6 +329,15 @@
 			(context root_gstreamer_home_cache (sysadm.id object_r gstreamer.home_cache_file (systemlow systemlow)))))
 
 	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any root_gstreamer_home_cache))
+
+(optional sysadm_gvfsdmd_home_optional_gvfsdmd
+	(tunableif enable_rbacsep
+		(true
+			(context root_gvfsdmd_home_data (sysadm.id sysadm.role gvfsdmd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gvfsdmd_home_data (sysadm.id object_r gvfsdmd.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gvfs-metadata(/.*)?" any root_gvfsdmd_home_data))
 
 (optional sysadm_ibus_home_optional_ibus
 	(tunableif enable_rbacsep

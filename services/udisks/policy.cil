@@ -28,6 +28,28 @@
 
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call relabel_runtime (subj))
+
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(allow subj self (capability (sys_rawio)))
+
+	(call fs.read_sysfs (subj))
+
+	(call storage.read_all (subj))
+
+	(call fstab.read (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
 	(optional udisksd_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))
 
@@ -39,6 +61,9 @@
 		(typeattributeset obj_type_attribute unit_file)
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(optional udisksd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional udisksd_optional_sysbus
                 (call sysbus.service_subj_type (subj)))

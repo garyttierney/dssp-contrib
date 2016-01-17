@@ -242,6 +242,11 @@
 	(optional sysadm_optional_dracut_initramfs
 		(call dracut_initramfs.adm (subj role)))
 
+	(optional sysadm_optional_enchant
+		(call enchant.manage_home_config (subj))
+		(call enchant.relabel_home_config (subj))
+		(call enchant.home_config_obj_type_transition_home_config (subj)))
+
 	(optional sysadm_optional_evo
 		(call evo_helper.exec (subj)))
 
@@ -1013,6 +1018,9 @@
 	(optional sysadm_optional_sysadm_gcs
 		(call sysadm_gcs.role_pattern (role subj_type_attribute))
 		(call sysadm_gcsp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gedit
+		(call sysadm_gedit.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git
 		(call sysadm_git.role_pattern (role subj_type_attribute)))

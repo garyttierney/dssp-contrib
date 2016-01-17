@@ -33,6 +33,9 @@
 	(optional exempt_optional_emacs
 		(call emacs.home_dir_obj_type_transition_home (subj)))
 
+	(optional exempt_optional_enchant
+		(call enchant.home_config_obj_type_transition_home_config (subj)))
+
 	(optional exempt_optional_evo
 		(call evo.home_cache_obj_type_transition_home_cache (subj))
 		(call evo.home_config_obj_type_transition_home_config (subj))
@@ -60,6 +63,9 @@
 	(optional exempt_optional_gdm
 		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional exempt_optional_gedit
+		(call gedit.home_config_obj_type_transition_home_config (subj)))
 
 	(optional exempt_optional_git
 		(call git.home_user_obj_type_transition_home (subj))
@@ -99,7 +105,8 @@
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
 	(optional exempt_optional_gvfs
-		(call gvfsd.tmpfs_obj_type_transition_tmpfs (subj)))
+		(call gvfsd.tmpfs_obj_type_transition_tmpfs (subj))
+		(call gvfsdmd.home_data_obj_type_transition_home_data (subj)))
 
 	(optional exempt_optional_ibus
 		(call ibus.home_config_obj_type_transition_home_config (subj)))

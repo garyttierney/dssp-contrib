@@ -1,0 +1,61 @@
+(in gedit
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset gedit.subj_type_attribute subj))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call manage_home_config (ARG2))
+		(call relabel_home_config (ARG2))
+
+		(call manage_tmpfs_user (ARG2))
+		(call relabel_tmpfs_user (ARG2)))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gedit")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))

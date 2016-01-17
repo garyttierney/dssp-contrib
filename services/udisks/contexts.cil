@@ -2,6 +2,7 @@
 	(filecon "/usr/libexec/udisks2/udisksd" file cmd_file_context)
 	(filecon "/etc/udisks2(/.*)?" any config_file_context)
 	(filecon "/var/lib/udisks2(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/udisks2(/.*)?" any runtime_file_context)
 
 	(optional udisksd_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*udisks2.*" file unit_file_context)))

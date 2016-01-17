@@ -19,6 +19,7 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
 	(call file.read_data (subj_type_attribute))
 
@@ -42,6 +43,8 @@
 	(call manage_home_data (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -57,6 +60,8 @@
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
 	(call file.list_config (subj_type_attribute))
 
@@ -88,28 +93,36 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdcdda
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdcomputer
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsddav
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsddnssd
 	(typeattribute subj_type_attribute)
@@ -132,21 +145,27 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdhttp
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdlocaltest
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdnetwork
 	(typeattribute subj_type_attribute)
@@ -170,14 +189,18 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdsftp
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
 
 (block gvfsdtrash
 	(typeattribute subj_type_attribute)

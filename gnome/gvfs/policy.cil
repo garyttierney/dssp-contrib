@@ -203,9 +203,12 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute)))
 
 (block gvfsdtrash
 	(typeattribute subj_type_attribute)

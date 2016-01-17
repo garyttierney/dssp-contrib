@@ -1,0 +1,73 @@
+(in gvfs
+	(filecon "/usr/bin/gvfs-cat" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-copy" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-info" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-less" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-ls" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mime" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mkdir" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-monitor-dir" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-monitor-file" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mount" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-move" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-open" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-rename" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-rm" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-save" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-set-attribute" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-trash" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-tree" file cmd_file_context))
+
+(in gvfsd
+	(filecon "/usr/libexec/gvfsd" file cmd_file_context)
+
+	(optional gvfsd_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-daemon.*" file unit_file_context)))
+
+(in gvfsdmd
+	(filecon "/usr/libexec/gvfsd-metadata" file cmd_file_context)
+
+	(optional gvfsdmd_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-metadata.*" file unit_file_context)))
+
+(in gvfsdud2
+	(filecon "/usr/libexec/gvfs-udisks2-volume-monitor" file cmd_file_context)
+
+	(optional gvfsdud2_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-udisks2-volume-monitor.*" file unit_file_context)))
+
+(in gvfsdburn
+	(filecon "/usr/libexec/gvfsd-burn" file cmd_file_context))
+
+(in gvfsdcdda
+	(filecon "/usr/libexec/gvfsd-cdda" file cmd_file_context))
+
+(in gvfsdcomputer
+	(filecon "/usr/libexec/gvfsd-computer" file cmd_file_context))
+
+(in gvfsddav
+	(filecon "/usr/libexec/gvfsd-dav" file cmd_file_context))
+
+(in gvfsddnssd
+	(filecon "/usr/libexec/gvfsd-dnssd" file cmd_file_context))
+
+(in gvfsdftp
+	(filecon "/usr/libexec/gvfsd-ftp" file cmd_file_context))
+
+(in gvfsdhttp
+	(filecon "/usr/libexec/gvfsd-http" file cmd_file_context))
+
+(in gvfsdlocaltest
+	(filecon "/usr/libexec/gvfsd-localtest" file cmd_file_context))
+
+(in gvfsdnetwork
+	(filecon "/usr/libexec/gvfsd-network" file cmd_file_context))
+
+(in gvfsdrecent
+	(filecon "/usr/libexec/gvfsd-recent" file cmd_file_context))
+
+(in gvfsdsftp
+	(filecon "/usr/libexec/gvfsd-sftp" file cmd_file_context))
+
+(in gvfsdtrash
+	(filecon "/usr/libexec/gvfsd-trash" file cmd_file_context))

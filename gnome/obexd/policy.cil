@@ -22,6 +22,9 @@
 	(optional obexd_subj_type_optional_bluetoothd
 		(call bluetoothd.sysbus_chat_client_subj_type (subj_type_attribute)))
 
+	(optional obexd_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
+
 	(optional obexd_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))
 

@@ -1,0 +1,127 @@
+(in sysadm_gvfs
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfs.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfs.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsd
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro daemon_subj_type ((type ARG1))
+		(typeattributeset daemon_subj_type_attribute ARG1))
+
+	(macro daemon ((type ARG1)(type ARG2))
+		(call daemon_subj_type (ARG1))
+		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsd.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsd.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdmd
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdmd.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdmd.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdud2
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdud2.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdud2.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdburn
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdburn.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdburn.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdcdda
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdcdda.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdcdda.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdcomputer
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdcomputer.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdcomputer.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsddav
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsddav.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsddav.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsddnssd
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsddnssd.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsddnssd.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdftp
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdftp.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdftp.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdhttp
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdhttp.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdhttp.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdlocaltest
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdlocaltest.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdlocaltest.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdnetwork
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdnetwork.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdnetwork.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdrecent
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdrecent.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdrecent.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdsftp
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdsftp.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdsftp.role_pattern (ARG1 ARG2 subj))))
+
+(in sysadm_gvfsdtrash
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gvfsdtrash.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gvfsdtrash.role_pattern (ARG1 ARG2 subj))))

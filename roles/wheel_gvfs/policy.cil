@@ -1,0 +1,99 @@
+(block wheel_gvfs
+	(blockinherit gvfs.subj_blk))
+
+(block wheel_gvfsd
+	(typeattribute daemon_subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsd.subj_blk)
+
+	(optional wheel_gvfsd_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gvfsd.cmd_file)))
+
+	(optional wheel_gvfsd_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_gvfsdmd
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdmd.subj_blk)
+
+	(optional wheel_gvfsdmd_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gvfsdmd.cmd_file)))
+
+	(optional wheel_gvfsdmd_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_gvfsdud2
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdud2.subj_blk)
+
+	(optional wheel_gvfsdud2_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gvfsdud2.cmd_file)))
+
+	(optional wheel_gvfsdud2_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_gvfsdburn
+	(blockinherit gvfsdburn.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdburn.cmd_file)))
+
+(block wheel_gvfsdcdda
+	(blockinherit gvfsdcdda.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdcdda.cmd_file)))
+
+(block wheel_gvfsdcomputer
+	(blockinherit gvfsdcomputer.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdcomputer.cmd_file)))
+
+(block wheel_gvfsddav
+	(blockinherit gvfsddav.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsddav.cmd_file)))
+
+(block wheel_gvfsddnssd
+	(blockinherit gvfsddnssd.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsddnssd.cmd_file)))
+
+(block wheel_gvfsdftp
+	(blockinherit gvfsdftp.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdftp.cmd_file)))
+
+(block wheel_gvfsdhttp
+	(blockinherit gvfsdhttp.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdhttp.cmd_file)))
+
+(block wheel_gvfsdlocaltest
+	(blockinherit gvfsdlocaltest.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdlocaltest.cmd_file)))
+
+(block wheel_gvfsdnetwork
+	(blockinherit gvfsdnetwork.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdnetwork.cmd_file)))
+
+(block wheel_gvfsdrecent
+	(blockinherit gvfsdrecent.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdrecent.cmd_file)))
+
+(block wheel_gvfsdsftp
+	(blockinherit gvfsdsftp.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdsftp.cmd_file)))
+
+(block wheel_gvfsdtrash
+	(blockinherit gvfsdtrash.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdtrash.cmd_file)))

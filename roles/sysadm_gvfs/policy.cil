@@ -1,0 +1,99 @@
+(block sysadm_gvfs
+	(blockinherit gvfs.subj_blk))
+
+(block sysadm_gvfsd
+	(typeattribute daemon_subj_type_attribute)
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsd.subj_blk)
+
+	(optional sysadm_gvfsd_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gvfsd.cmd_file)))
+
+	(optional sysadm_gvfsd_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_gvfsdmd
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdmd.subj_blk)
+
+	(optional sysadm_gvfsdmd_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gvfsdmd.cmd_file)))
+
+	(optional sysadm_gvfsdmd_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_gvfsdud2
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdud2.subj_blk)
+
+	(optional sysadm_gvfsdud2_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gvfsdud2.cmd_file)))
+
+	(optional sysadm_gvfsdud2_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_gvfsdburn
+	(blockinherit gvfsdburn.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdburn.cmd_file)))
+
+(block sysadm_gvfsdcdda
+	(blockinherit gvfsdcdda.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdcdda.cmd_file)))
+
+(block sysadm_gvfsdcomputer
+	(blockinherit gvfsdcomputer.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdcomputer.cmd_file)))
+
+(block sysadm_gvfsddav
+	(blockinherit gvfsddav.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsddav.cmd_file)))
+
+(block sysadm_gvfsddnssd
+	(blockinherit gvfsddnssd.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsddnssd.cmd_file)))
+
+(block sysadm_gvfsdftp
+	(blockinherit gvfsdftp.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdftp.cmd_file)))
+
+(block sysadm_gvfsdhttp
+	(blockinherit gvfsdhttp.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdhttp.cmd_file)))
+
+(block sysadm_gvfsdlocaltest
+	(blockinherit gvfsdlocaltest.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdlocaltest.cmd_file)))
+
+(block sysadm_gvfsdnetwork
+	(blockinherit gvfsdnetwork.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdnetwork.cmd_file)))
+
+(block sysadm_gvfsdrecent
+	(blockinherit gvfsdrecent.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdrecent.cmd_file)))
+
+(block sysadm_gvfsdsftp
+	(blockinherit gvfsdsftp.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdsftp.cmd_file)))
+
+(block sysadm_gvfsdtrash
+	(blockinherit gvfsdtrash.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdtrash.cmd_file)))

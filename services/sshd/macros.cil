@@ -164,6 +164,9 @@
 		(typeattributeset .sshd.obj_type_attribute obj_type_attribute)
 		(typeattributeset .sshd_key.obj_type_attribute obj_type_attribute)
 
+		(optional sshd_key_optional_sd
+			(call sd.daemon_condition_obj_type (file)))
+
 		(macro read_files ((type ARG1))
 			(call ssh_client.search_config (ARG1))
 			(allow ARG1 file read_file_perms))

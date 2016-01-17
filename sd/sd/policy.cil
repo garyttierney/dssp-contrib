@@ -16,6 +16,7 @@
 	(typeattribute daemon_pid_obj_type_attribute)
 	(typeattribute daemon_rwdir_obj_type_attribute)
 	(typeattribute daemon_pvt_devices_subj_type_attribute)
+	(typeattribute daemon_condition_obj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 	(typeattribute unit_obj_type_attribute)
@@ -99,6 +100,14 @@
 	(allow subj daemon_rwdir_obj_type_attribute (dir (mounton)))
 
 	(call fs.read_tmpfs_lnk_files (daemon_pvt_devices_subj_type_attribute))
+
+	(allow subj daemon_condition_obj_type_attribute search_dir_perms)
+	(allow subj daemon_condition_obj_type_attribute (file (getattr)))
+	(allow subj daemon_condition_obj_type_attribute (fifo_file (getattr)))
+	(allow subj daemon_condition_obj_type_attribute read_lnk_file_perms)
+	(allow subj daemon_condition_obj_type_attribute (sock_file (getattr)))
+	(allow subj daemon_condition_obj_type_attribute (blk_file (getattr)))
+	(allow subj daemon_condition_obj_type_attribute (chr_file (getattr)))
 
 	(call cmd.auto_subj_type_transition (subj sd_unknown.subj))
 	(call cmd.exec (subj))

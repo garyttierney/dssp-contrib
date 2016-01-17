@@ -203,7 +203,9 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call locale.read (subj_type_attribute)))
 
 (block gvfsdtrash
 	(typeattribute subj_type_attribute)

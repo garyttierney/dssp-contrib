@@ -12,6 +12,18 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+        (call manage_tmpfs_user (subj_type_attribute))
+
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
 	(optional gvfsd_subj_type_optional_sduser
 		(blockinherit sduser.unit_obj_blk)))
 

@@ -25,6 +25,7 @@
 	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
+	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 
 	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))

@@ -834,6 +834,10 @@
 	(optional sysadm_optional_udevadm
 		(call udevadm.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_udisksd
+		(call udisksctl.run (subj_type_attribute role))
+		(call udisksd.adm (subj role)))
+
 	(optional sysadm_optional_unbound
 		(call unbound.adm (subj role)))
 

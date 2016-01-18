@@ -87,6 +87,7 @@
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.read_home_data (subj_type_attribute))
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.dontaudit_read_all_home_user (subj_type_attribute))
 
@@ -183,8 +184,8 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call usersubj.list_home_config (subj_type_attribute))
-	(call usersubj.list_home_data (subj_type_attribute))
+	(call usersubj.read_home_config (subj_type_attribute))
+	(call usersubj.read_home_data (subj_type_attribute))
 
 	(optional gcsp_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute))))

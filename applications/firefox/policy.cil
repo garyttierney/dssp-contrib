@@ -84,8 +84,7 @@
 
 	(call udev.client_subj_type (subj_type_attribute))
 
-	(call usersubj.dontaudit_getattr_all_home_user_files (subj_type_attribute))
-
+        (call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.manage_home_user_dirs (subj_type_attribute))
 	(call usersubj.read_home_user_lnk_files (subj_type_attribute))

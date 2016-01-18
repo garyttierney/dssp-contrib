@@ -1,0 +1,35 @@
+(block user_nautilus
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit nautilus.subj_blk)
+
+	(optional user_nautilus_optional_user_sessbus
+		(call user_sessbus.daemon (subj nautilus.cmd_file)))
+
+	(optional user_nautilus_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block user_nautilusas
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit nautilusas.subj_blk)
+
+	(optional user_nautilusas_optional_user_sessbus
+		(call user_sessbus.daemon (subj nautilusas.cmd_file)))
+
+	(optional user_nautilusas_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block user_nautiluscm
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit nautiluscm.subj_blk)
+
+	(optional user_nautiluscm_optional_user_sessbus
+		(call user_sessbus.daemon (subj nautiluscm.cmd_file)))
+
+	(optional user_nautiluscm_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

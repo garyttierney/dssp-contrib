@@ -210,6 +210,11 @@
 		(call thumbnails.relabel_home_cache (subj))
 		(call thumbnails.home_cache_obj_type_transition_home_cache (subj)))
 
+	(optional user_optional_trash
+		(call trash.manage_home_data (subj))
+		(call trash.relabel_home_data (subj))
+		(call trash.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_tor
 		(call tor.manage_home_user (subj))
 		(call tor.relabel_home_user (subj))

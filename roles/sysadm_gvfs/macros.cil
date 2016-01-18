@@ -153,6 +153,9 @@
 		(call gvfsdsftp.role_pattern (ARG1 ARG2 subj))))
 
 (in sysadm_gvfsdtrash
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
 	(macro sessbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 

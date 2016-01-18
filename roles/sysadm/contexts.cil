@@ -429,6 +429,19 @@
 
 	(filecon "/root/\.newsbeuter(/.*)?" any root_nb_home))
 
+(optional sysadm_nautilus_home_optional_nautilus
+	(tunableif enable_rbacsep
+		(true
+			(context root_nautilus_home_data (sysadm.id sysadm.role nautilus.home_data_file (systemlow systemlow)))
+			(context root_nautilus_home_config (sysadm.id sysadm.role nautilus.home_config_file (systemlow systemlow))))
+		(false
+			(context root_nautilus_home_data (sysadm.id object_r nautilus.home_data_file (systemlow systemlow)))
+			(context root_nautilus_home_config (sysadm.id object_r nautilus.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/\.converted-launchers.*" file root_nautilus_home_data)
+	(filecon "/root/\.local/share/nautilus(/.*)?" any root_nautilus_home_data)
+	(filecon "/root/\.config/nautilus(/.*)?" any root_nautilus_home_config))
+
 (optional sysadm_obexd_home_optional_obexd
 	(tunableif enable_rbacsep
 		(true
@@ -607,6 +620,15 @@
 			(context root_tor_home (sysadm.id object_r tor.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.tor(/.*)?" any root_tor_home))
+
+(optional sysadm_trash_home_optional_trash
+	(tunableif enable_rbacsep
+		(true
+			(context root_trash_home_data (sysadm.id sysadm.role trash.home_data_file (systemlow systemlow))))
+		(false
+			(context root_trash_home_data (sysadm.id object_r trash.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/Trash(/.*)?" any root_trash_home_data))
 
 (optional sysadm_vlock_home_optional_vlock
 	(tunableif enable_rbacsep

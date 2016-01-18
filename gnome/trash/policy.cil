@@ -1,0 +1,13 @@
+(block trash
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.create_home_data_dirs (client_subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data (client_subj_type_attribute))
+
+	(call manage_home_data (client_subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (client_subj_type_attribute))
+
+	(optional trash_client_subj_type_optional_gvfs
+		(call gvfsdtrash.rw_inherited_unix_stream_sockets_all_subj (client_subj_type_attribute))))

@@ -842,6 +842,11 @@
 	(optional sysadm_optional_tor_resolve
 		(call tor_resolve.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_trash
+		(call trash.manage_home_data (subj))
+		(call trash.relabel_home_data (subj))
+		(call trash.home_data_obj_type_transition_home_data (subj)))
+
 	(optional sysadm_optional_tunctl
 		(call tunctl.run (subj role)))
 

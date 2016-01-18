@@ -5,7 +5,10 @@
 	(blockinherit gdbus.subj_blk)
 
 	(optional sysadm_gdbus_optional_sysadm_gs
-		(call sysadm_gs.daemon (subj gdbus.cmd_file))))
+		(call sysadm_gs.daemon (subj gdbus.cmd_file)))
+
+	(optional sysadm_gdbus_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))
 
 (block sysadm_gsettings
 	(blockinherit gsettings.subj_blk)

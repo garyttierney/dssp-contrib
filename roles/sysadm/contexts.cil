@@ -398,6 +398,15 @@
 	(filecon "/root/\.mysql_history" file root_mariadb_home)
 	(filecon "/root/\.my\.cnf" file root_mariadb_home))
 
+(optional sysadm_mediaart_home_optional_mediaart
+	(tunableif enable_rbacsep
+		(true
+			(context root_mediaart_home_cache (sysadm.id sysadm.role mediaart.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_mediaart_home_cache (sysadm.id object_r mediaart.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/media-art(/.*)?" any root_mediaart_home_cache))
+
 (optional sysadm_mplayer_home_optional_mplayer
 	(tunableif enable_rbacsep
 		(true
@@ -529,7 +538,6 @@
 
 	(filecon "/root/\.config/rygel\.conf" file root_rygel_home_config)
 	(filecon "/root/\.config/Rygel(/.*)?" any root_rygel_home_config)
-	(filecon "/root/\.cache/media-art(/.*)?" any root_rygel_home_cache)
 	(filecon "/root/\.cache/rygel(/.*)?" any root_rygel_home_cache))
 
 (optional sysadm_rtorrent_home_optional_rtorrent
@@ -620,6 +628,18 @@
 			(context root_tor_home (sysadm.id object_r tor.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.tor(/.*)?" any root_tor_home))
+
+(optional sysadm_trackers_home_optional_trackers
+	(tunableif enable_rbacsep
+		(true
+			(context root_trackers_home_cache (sysadm.id sysadm.role trackers.home_cache_file (systemlow systemlow)))
+			(context root_trackers_home_data (sysadm.id sysadm.role trackers.home_data_file (systemlow systemlow))))
+		(false
+			(context root_trackers_home_cache (sysadm.id object_r trackers.home_cache_file (systemlow systemlow)))
+			(context root_trackers_home_data (sysadm.id object_r trackers.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/tracker(/.*)?" any root_trackers_home_cache)
+	(filecon "/root/\.local/share/tracker(/.*)?" any root_trackers_home_data))
 
 (optional sysadm_trash_home_optional_trash
 	(tunableif enable_rbacsep

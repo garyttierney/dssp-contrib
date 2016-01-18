@@ -6,8 +6,22 @@
 
 	(blockinherit trackere.subj_blk)
 
+	(call user_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional user_trackere_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_trackere_optional_user_gvfsdud2
+		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_trackere_optional_user_gvfsdmd
+		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_trackere_optional_user_gs
 		(call user_gs.daemon (subj trackere.cmd_file)))
+
+	(optional user_trackere_optional_user_gstps
+                (call user_gstps.auto_subj_type_transition (subj)))
 
 	(optional user_trackere_optional_user_sessbus
 		(call user_sessbus.daemon (subj trackere.cmd_file)))
@@ -20,6 +34,11 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackerma.subj_blk)
+
+	(call user_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional user_trackerma_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_trackerma_optional_user_gs
 		(call user_gs.daemon (subj trackerma.cmd_file)))
@@ -35,6 +54,14 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackermf.subj_blk)
+
+	(call user_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional user_trackermf_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_trackermf_optional_user_gvfsdud2
+		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_trackermf_optional_user_gs
 		(call user_gs.daemon (subj trackermf.cmd_file)))
@@ -66,6 +93,11 @@
 
 	(blockinherit trackermug.subj_blk)
 
+	(call user_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional user_trackermug_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_trackermug_optional_user_gs
 		(call user_gs.daemon (subj trackermug.cmd_file)))
 
@@ -80,6 +112,14 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackers.subj_blk)
+
+	(call user_trackere.rw_inherited_fifo_files (subj))
+	(call user_trackerma.rw_inherited_fifo_files (subj))
+	(call user_trackermf.rw_inherited_fifo_files (subj))
+	(call user_trackermug.rw_inherited_fifo_files (subj))
+
+	(optional user_trackers_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_trackers_optional_user_gs
 		(call user_gs.daemon (subj trackers.cmd_file)))

@@ -54,7 +54,19 @@
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))))
 
 (in trackerma
 	(block subj_blk
@@ -199,7 +211,45 @@
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.manage_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(macro rw_home_cache_files ((type ARG1))
+		(call usersubj.search_home_cache (ARG1))
+		(call rw_files_pattern (ARG1 home_cache_file home_cache_file)))
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "tracker")))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "tracker")))
+
+	(blockinherit usersubj.read_var_tmp_user_files_blk)
+	(blockinherit usersubj.manage_var_tmp_user_files_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_files_blk)
+
+	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file file "*"))))
 
 (in trackerw
 	(block subj_blk

@@ -13,7 +13,9 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call locale.read (subj_type_attribute)))
 
 (block gsettings
 	(typeattribute subj_type_attribute)

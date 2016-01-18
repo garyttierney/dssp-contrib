@@ -24,6 +24,12 @@
 		(call sduser.unix_stream_socket_activated_subj_pattern
 			(unix_stream_socket_activation_sduser_subj_type_attribute subj)))
 
+	(optional user_sessbus_optional_user_tracker
+		(call user_trackere.rw_inherited_fifo_files (subj))
+		(call user_trackerma.rw_inherited_fifo_files (subj))
+		(call user_trackermf.rw_inherited_fifo_files (subj))
+		(call user_trackermug.rw_inherited_fifo_files (subj)))
+
 	(call client_subj_type (service_subj_type_attribute))
 
 	(call service_subj_type (daemon_subj_type_attribute))

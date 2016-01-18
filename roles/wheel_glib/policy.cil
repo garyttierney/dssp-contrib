@@ -5,7 +5,10 @@
 	(blockinherit gdbus.subj_blk)
 
 	(optional wheel_gdbus_optional_wheel_gs
-		(call wheel_gs.daemon (subj gdbus.cmd_file))))
+		(call wheel_gs.daemon (subj gdbus.cmd_file)))
+
+	(optional wheel_gdbus_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))
 
 (block wheel_gsettings
 	(blockinherit gsettings.subj_blk)

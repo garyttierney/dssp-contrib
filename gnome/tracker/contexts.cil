@@ -24,7 +24,9 @@
 	(filecon "/usr/libexec/tracker-miner-user-guides" file cmd_file_context))
 
 (in trackers
-	(filecon "/usr/libexec/tracker-store" file cmd_file_context))
+	(filecon "/usr/libexec/tracker-store" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/tracker(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.local/share/tracker(/.*)?" any home_data_file_context))
 
 (in trackerw
 	(filecon "/usr/libexec/tracker-writeback" file cmd_file_context))

@@ -428,6 +428,12 @@
 		(call mandb.adm (subj role))
 		(call mandb.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_mediaart
+		(call mediaart.manage_home_cache (subj))
+		(call mediaart.relabel_home_cache (subj))
+
+		(call mediaart.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional sysadm_optional_md
 		(call md.adm (subj role))
 		(call mdadm.run (subj_type_attribute role)))
@@ -1596,11 +1602,29 @@
 
 	(optional sysadm_optional_sysadm_tracker
 		(call sysadm_tracker.role_pattern (role subj_type_attribute))
+
+		(call trackere.manage_tmpfs_user (subj))
+		(call trackere.relabel_tmpfs_user (subj))
+
 		(call sysadm_trackere.role_pattern (role subj_type_attribute))
 		(call sysadm_trackerma.role_pattern (role subj_type_attribute))
 		(call sysadm_trackermf.role_pattern (role subj_type_attribute))
 		(call sysadm_trackermr.role_pattern (role subj_type_attribute))
 		(call sysadm_trackermug.role_pattern (role subj_type_attribute))
+
+		(call trackers.manage_home_cache (subj))
+		(call trackers.relabel_home_cache (subj))
+
+		(call trackers.home_cache_obj_type_transition_home_cache (subj))
+
+		(call trackers.manage_home_data (subj))
+		(call trackers.relabel_home_data (subj))
+
+		(call trackers.home_data_obj_type_transition_home_data (subj))
+
+		(call trackers.manage_var_tmp_user_files (subj))
+		(call trackers.relabel_var_tmp_user_files (subj))
+
 		(call sysadm_trackers.role_pattern (role subj_type_attribute))
 		(call sysadm_trackerw.role_pattern (role subj_type_attribute)))
 

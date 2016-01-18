@@ -6,8 +6,22 @@
 
 	(blockinherit trackere.subj_blk)
 
+	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_trackere_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_trackere_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_trackere_optional_wheel_gvfsdmd
+		(call wheel_gvfsdmd.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_trackere_optional_wheel_gs
 		(call wheel_gs.daemon (subj trackere.cmd_file)))
+
+	(optional wheel_trackere_optional_wheel_gstps
+		(call wheel_gstps.auto_subj_type_transition (subj)))
 
 	(optional wheel_trackere_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj trackere.cmd_file)))
@@ -20,6 +34,11 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackerma.subj_blk)
+
+	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_trackerma_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_trackerma_optional_wheel_gs
 		(call wheel_gs.daemon (subj trackerma.cmd_file)))
@@ -35,6 +54,14 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackermf.subj_blk)
+
+	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_trackermf_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_trackermf_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_trackermf_optional_wheel_gs
 		(call wheel_gs.daemon (subj trackermf.cmd_file)))
@@ -66,6 +93,11 @@
 
 	(blockinherit trackermug.subj_blk)
 
+	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_trackermug_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_trackermug_optional_wheel_gs
 		(call wheel_gs.daemon (subj trackermug.cmd_file)))
 
@@ -80,6 +112,14 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit trackers.subj_blk)
+
+	(call wheel_trackere.rw_inherited_fifo_files (subj))
+	(call wheel_trackerma.rw_inherited_fifo_files (subj))
+	(call wheel_trackermf.rw_inherited_fifo_files (subj))
+	(call wheel_trackermug.rw_inherited_fifo_files (subj))
+
+	(optional wheel_trackers_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_trackers_optional_wheel_gs
 		(call wheel_gs.daemon (subj trackers.cmd_file)))

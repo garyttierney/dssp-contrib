@@ -1689,6 +1689,10 @@
 		(call search_home_dir (ARG1))
 		(call read_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))
 
+	(macro manage_home_config_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(call manage_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))
+
 	(macro read_home_config_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(call read_lnk_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))

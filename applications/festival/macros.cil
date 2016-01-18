@@ -21,14 +21,7 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal)))
-
-		(call manage_tmpfs_user_files (ARG2))
-		(call relabel_tmpfs_user_files (ARG2))
-
-		(call manage_home_user_files (ARG2))
-		(call relabel_home_user_files (ARG2))
-		(call home_dir_obj_type_transition_home (ARG2)))
+		(allow ARG3 ARG2 (process (signal))))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))

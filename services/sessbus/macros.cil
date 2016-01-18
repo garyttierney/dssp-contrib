@@ -57,11 +57,6 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(call manage_tmpfs_user (ARG2))
-		(call relabel_tmpfs_user (ARG2))
-
-		(call tmpfs_obj_type_transition_tmpfs (ARG2))
-
 		(call client_pattern (ARG2 ARG3)))
 
 	(macro spec_sysbus_auto_subj_type_transition ((type ARG1)(type ARG2))

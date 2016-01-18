@@ -23,14 +23,6 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call manage_home_config (ARG2))
-		(call relabel_home_config (ARG2))
-
-		(call home_config_obj_type_transition_home_config (ARG2))
-
-		(call manage_tmpfs_user_files (ARG2))
-		(call relabel_tmpfs_user_files (ARG2))
-
 		(optional dunst_role_pattern_optional_dmenu
 			(call dmenu.run (ARG3 ARG1))))
 

@@ -23,12 +23,7 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call spec_dontaudit_rw_inherited_tcp_sockets (ARG2 ARG3))
-
-		(call manage_home_user (ARG2))
-		(call relabel_home_user (ARG2))
-
-		(call home_dir_obj_type_transition_home (ARG2)))
+		(call spec_dontaudit_rw_inherited_tcp_sockets (ARG2 ARG3)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))

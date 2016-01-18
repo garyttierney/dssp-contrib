@@ -23,13 +23,6 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call manage_home_user_files (ARG2))
-		(call relabel_home_user_files (ARG2))
-		(call home_dir_obj_type_transition_home_files (ARG2))
-
-		(call manage_tmpfs_user_files (ARG2))
-		(call relabel_tmpfs_user_files (ARG2))
-
 		(call chkpwd.run (ARG3 ARG1))
 
 		(call utempter.run (ARG3 ARG1))

@@ -23,11 +23,6 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call manage_home_user_files (ARG2))
-		(call relabel_home_user_files (ARG2))
-
-		(call home_dir_obj_type_transition_home (ARG2))
-
 		(optional vlock_role_pattern_optional_chkpwd
 			(call chkpwd.run (ARG3 ARG1))))
 

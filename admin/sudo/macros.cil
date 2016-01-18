@@ -24,12 +24,6 @@
 		(allow ARG3 ARG2 (process (signal)))
 		(allow ARG3 ARG2 rw_key_perms)
 
-		(call manage_tmpfs_user_files (ARG2))
-		(call relabel_tmpfs_user_files (ARG2))
-
-		(call manage_var_tmp_user_files (ARG2))
-		(call relabel_var_tmp_user_files (ARG2))
-
 		(call chkpwd.run (ARG3 ARG1))
 
 		(call usersubj.send_signal_priv_subj (ARG2)))

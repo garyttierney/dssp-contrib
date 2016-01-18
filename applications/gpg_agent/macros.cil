@@ -23,11 +23,6 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
-		(call manage_home_user (ARG2))
-		(call relabel_home_user (ARG2))
-
-		(call gpg_home_user_obj_type_transition_home (ARG2))
-
 		(optional gpg_agent_role_pattern_optional_scdaemon
 			(call scdaemon.run (ARG3 ARG1))))
 

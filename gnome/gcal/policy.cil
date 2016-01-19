@@ -10,7 +10,15 @@
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
 	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call gtk.client_subj_type (subj_type_attribute))
 
@@ -18,6 +26,8 @@
 	(call fonts.setattr_var_cache_dirs (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional gcal_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

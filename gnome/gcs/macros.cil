@@ -9,6 +9,8 @@
 	(blockinherit exec_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
 
 	(macro audit_exec_access_cmd_files ((type ARG1))
 		(allow ARG1 cmd_file (file (execute))))
@@ -79,6 +81,10 @@
 	(blockinherit usersubj.read_tmpfs_user_blk)
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))

@@ -39,6 +39,7 @@
 	(call fs.getattr_cgroup_fs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.search_cgroup (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
@@ -48,6 +49,7 @@
 	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call gcs.manage_home_cache (subj_type_attribute))
+	(call gcs.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
 	(call goa.manage_home_cache (subj_type_attribute))
 

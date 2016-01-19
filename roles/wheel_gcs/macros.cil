@@ -3,6 +3,8 @@
 		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 
 	(blockinherit subj.read_state_blk)
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gcs.spec_auto_subj_type_transition (ARG1 subj)))

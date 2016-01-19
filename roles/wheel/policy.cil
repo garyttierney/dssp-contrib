@@ -557,6 +557,11 @@
 		(call wheel_gsettings.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_goa
+		(call goa.manage_home_cache (subj))
+		(call goa.relabel_home_cache (subj))
+
+		(call goa.home_cache_obj_type_transition_home_cache (subj))
+
 		(call goa.manage_home_config (subj))
 		(call goa.relabel_home_config (subj))
 
@@ -1005,6 +1010,22 @@
 		(call vlock.home_dir_obj_type_transition_home (subj))
 
 		(call wheel_vlock.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_webkitwp
+		(call webkitwp.manage_tmpfs_user (subj))
+		(call webkitwp.relabel_tmpfs_user (subj))
+
+		(call webkitwp.manage_home_cache (subj))
+		(call webkitwp.relabel_home_cache (subj))
+
+		(call webkitwp.home_cache_obj_type_transition_home_cache (subj))
+
+		(call webkitwp.manage_home_data (subj))
+		(call webkitwp.relabel_home_data (subj))
+
+		(call webkitwp.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_webkitwp.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xbindkeys
 		(call xbindkeys.manage_home_user_files (subj))

@@ -1,4 +1,5 @@
 (block goa
+	(blockinherit usersubj.home_cache_obj_blk)
 	(blockinherit usersubj.home_config_obj_blk))
 
 (block goad
@@ -7,6 +8,12 @@
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call goa.manage_home_cache (subj_type_attribute))
+	(call goa.home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
 	(call usersubj.create_home_config_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))

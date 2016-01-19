@@ -79,6 +79,7 @@
 		(call glib.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional exempt_optional_goa
+		(call goa.home_cache_obj_type_transition_home_cache (subj))
 		(call goa.home_config_obj_type_transition_home_config (subj)))
 
 	(optional exempt_optional_gpg
@@ -221,6 +222,10 @@
 
 	(optional exempt_optional_vlock
 		(call vlock.home_dir_obj_type_transition_home (subj)))
+
+	(optional exempt_optional_webkit
+		(call webkitwp.home_cache_obj_type_transition_home_cache (subj))
+		(call webkitwp.home_data_obj_type_transition_home_data (subj)))
 
 	(optional exempt_optional_web_content_home
 		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))

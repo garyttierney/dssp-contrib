@@ -220,10 +220,13 @@
 (optional sysadm_goa_home_optional_goa
 	(tunableif enable_rbacsep
 		(true
+			(context root_goa_home_cache (sysadm.id sysadm.role goa.home_cache_file (systemlow systemlow)))
 			(context root_goa_home_config (sysadm.id sysadm.role goa.home_config_file (systemlow systemlow))))
 		(false
+			(context root_goa_home_cache (sysadm.id object_r goa.home_cache_file (systemlow systemlow)))
 			(context root_goa_home_config (sysadm.id object_r goa.home_config_file (systemlow systemlow)))))
 
+	(filecon "/root/\.cache/goa-1\.0(/.*)?" any root_goa_home_cache)
 	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
 
 (optional sysadm_gtk_home_optional_gtk
@@ -661,6 +664,18 @@
 			(context root_vlock_home (sysadm.id object_r vlock.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.vlockrc" file root_vlock_home))
+
+(optional sysadm_webkit_home_optional_webkit
+	(tunableif enable_rbacsep
+		(true
+			(context root_webkit_home_cache (sysadm.id sysadm.role webkitwp.home_cache_file (systemlow systemlow)))
+			(context root_webkit_home_data (sysadm.id sysadm.role webkitwp.home_data_file (systemlow systemlow))))
+		(false
+			(context root_webkit_home_cache (sysadm.id object_r webkitwp.home_cache_file (systemlow systemlow)))
+			(context root_webkit_home_data (sysadm.id object_r webkitwp.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/webkitgtk(/.*)?" any root_webkit_home_cache)
+	(filecon "/root/\.local/share/webkitgtk(/.*)?" any root_webkit_home_data))
 
 (optional sysadm_web_home_optional_web_content_home
 	(tunableif enable_rbacsep

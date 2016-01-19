@@ -59,6 +59,8 @@
 
 	(call dconf.client_subj_type (subj_type_attribute))
 
+	(call http.tcp_connect_port (subj_type_attribute))
+
 	(call gcs_helper.obj_entry_subj (subj_type_attribute))
 
 	(call gs.read_home_user_files (subj_type_attribute))
@@ -71,6 +73,7 @@
 
 	(call ipp.tcp_connect_port (subj_type_attribute))
 
+	(call cert.read_all (subj_type_attribute))
 	(call fonts.read (subj_type_attribute))
 	(call fstab.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
@@ -147,6 +150,9 @@
 
 	(optional gcs_subj_type_optional_upowerd
 		(call upowerd.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gcs_subj_type_optional_webkit
+		(call webkitwp.read_home_data (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

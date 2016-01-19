@@ -61,6 +61,9 @@
 	(optional sysadm_gcs_optional_sshd
 		(call sshd.control_all_sd_unit_subj_type (subj)))
 
+	(optional sysadm_gcs_optional_sysadm_webkitwp
+		(call sysadm_webkitwp.auto_subj_type_transition (subj)))
+
 	(optional sysadm_gcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

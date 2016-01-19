@@ -8,6 +8,7 @@
 	(blockinherit gvfsd.subj_blk)
 
 	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
 	(optional wheel_gvfsd_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj gvfsd.cmd_file)))
@@ -140,6 +141,9 @@
 	(blockinherit gvfsdhttp.subj_blk)
 
 	(call wheel_gvfsd.daemon (subj gvfsdhttp.cmd_file))
+
+	(optional wheel_gvfsdhttp_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
 
 	(optional wheel_gvfsdhttp_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))

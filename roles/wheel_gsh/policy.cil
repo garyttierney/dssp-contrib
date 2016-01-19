@@ -10,8 +10,20 @@
 	(optional wheel_gsh_optional_wheel_atspird
 		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
 
+	(optional wheel_gsh_optional_wheel_firefox
+		(call wheel_firefox.send_sigkill (subj)))
+
 	(optional wheel_gsh_optional_wheel_pa
 		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_gsh_optional_wheel_gcal
+		(call wheel_gcal.send_sigkill (subj)))
+
+	(optional wheel_gsh_optional_wheel_gedit
+		(call wheel_gedit.send_sigkill (subj)))
+
+	(optional wheel_gsh_optional_wheel_gcs
+		(call wheel_gcs.send_sigkill (subj)))
 
 	(optional wheel_gsh_optional_wheel_gkrd
 		(call wheel_gkrd.sessbus_chat_client_subj_type (subj)))
@@ -25,6 +37,7 @@
 		(call wheel_gsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsh_optional_wheel_gts
+		(call wheel_gts.send_sigkill (subj))
 		(call wheel_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsh_optional_wheel_gvfsd

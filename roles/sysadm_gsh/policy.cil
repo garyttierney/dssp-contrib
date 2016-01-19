@@ -10,8 +10,20 @@
 	(optional sysadm_gsh_optional_sysadm_atspird
 		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
 
+	(optional sysadm_gsh_optional_sysadm_firefox
+		(call sysadm_firefox.send_sigkill (subj)))
+
 	(optional sysadm_gsh_optional_sysadm_pa
 		(call sysadm_pa.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gsh_optional_sysadm_gcs
+		(call sysadm_gcs.send_sigkill (subj)))
+
+	(optional sysadm_gsh_optional_sysadm_gedit
+		(call sysadm_gedit.send_sigkill (subj)))
+
+	(optional sysadm_gsh_optional_sysadm_gcal
+		(call sysadm_gcal.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gkrd
 		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))
@@ -25,6 +37,7 @@
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gts
+		(call sysadm_gts.send_sigkill (subj))
 		(call sysadm_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gvfsd

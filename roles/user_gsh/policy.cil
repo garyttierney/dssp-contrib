@@ -13,6 +13,18 @@
 	(optional user_gsh_optional_user_pa
 		(call user_pa.auto_subj_type_transition (subj)))
 
+	(optional user_gsh_optional_user_gcal
+		(call user_gcal.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_gedit
+		(call user_gedit.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_gcs
+		(call user_gcs.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_firefox
+		(call user_firefox.send_sigkill (subj)))
+
 	(optional user_gsh_optional_user_gkrd
 		(call user_gkrd.sessbus_chat_client_subj_type (subj)))
 
@@ -25,6 +37,7 @@
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsh_optional_user_gts
+		(call user_gts.send_sigkill (subj))
 		(call user_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsh_optional_user_gvfsd

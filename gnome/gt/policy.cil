@@ -30,9 +30,10 @@
 
 	(call exec (subj_type_attribute))
 
-	(call dev.read_random (subj_type_attribute))
+	(call dev.getattr_random (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -56,6 +57,7 @@
 	(call usersubj.setpgid_common_login_subj (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
 
+	(call usersubj.read_home_config_files (subj_type_attribute))
 	(call usersubj.read_home_data (subj_type_attribute))
 
 	(call usersubj.create_home_cache_dirs (subj_type_attribute))

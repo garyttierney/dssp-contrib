@@ -58,7 +58,13 @@
 	(macro dontaudit_rw_inherited_tmpfs_user_files ((type ARG1))
 		(dontaudit ARG1 tmpfs_user_file rw_inherited_file_perms))
 
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
+
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*")))
 

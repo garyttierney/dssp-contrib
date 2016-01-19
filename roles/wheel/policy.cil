@@ -964,19 +964,20 @@
 	(optional wheel_optional_wheel_tracker
 		(call wheel_tracker.role_pattern (role subj_type_attribute))
 
-		(call trackere.manage_tmpfs_user (subj))
-		(call trackere.relabel_tmpfs_user (subj))
+		(call trackerm.manage_tmpfs_user (subj))
+		(call trackerm.relabel_tmpfs_user (subj))
 
-		(call wheel_trackere.role_pattern (role subj_type_attribute))
-		(call wheel_trackerma.role_pattern (role subj_type_attribute))
-		(call wheel_trackermf.role_pattern (role subj_type_attribute))
-		(call wheel_trackermr.role_pattern (role subj_type_attribute))
-		(call wheel_trackermug.role_pattern (role subj_type_attribute))
+		(call wheel_trackerm.role_pattern (role subj_type_attribute))
 
 		(call trackers.manage_home_cache (subj))
 		(call trackers.relabel_home_cache (subj))
 
 		(call trackers.home_cache_obj_type_transition_home_cache (subj))
+
+		(call trackers.manage_home_config (subj))
+		(call trackers.relabel_home_config (subj))
+
+		(call trackers.home_config_obj_type_transition_home_config (subj))
 
 		(call trackers.manage_home_data (subj))
 		(call trackers.relabel_home_data (subj))
@@ -986,8 +987,7 @@
 		(call trackers.manage_var_tmp_user_files (subj))
 		(call trackers.relabel_var_tmp_user_files (subj))
 
-		(call wheel_trackers.role_pattern (role subj_type_attribute))
-		(call wheel_trackerw.role_pattern (role subj_type_attribute)))
+		(call wheel_trackers.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_vino
 		(call vino.manage_tmpfs_user (subj))

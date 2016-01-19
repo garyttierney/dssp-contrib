@@ -909,7 +909,12 @@
 
 		(call webkitwp.home_data_obj_type_transition_home_data (subj))
 
-		(call user_webkitwp.role_pattern (role subj_type_attribute)))
+		(call user_webkitwp.role_pattern (role subj_type_attribute))
+
+		(call webkitpp.manage_tmpfs_user (subj))
+		(call webkitpp.relabel_tmpfs_user (subj))
+
+		(call user_webkitpp.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xbindkeys
 		(call xbindkeys.manage_home_user_files (subj))

@@ -52,10 +52,13 @@
 	(call gcs.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
 	(call goa.manage_home_cache (subj_type_attribute))
+	(call goa.home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
 	(call gstreamer.client_subj_type (subj_type_attribute))
 
 	(call gtk.client_subj_type (subj_type_attribute))
+
+	(call gvfsdmd.read_home_data_files (subj_type_attribute))
 
 	(call http.tcp_connect_port (subj_type_attribute))
 
@@ -69,4 +72,29 @@
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(optional webkitwp_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+
+(block webkitpp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (getsched)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional webkitpp_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

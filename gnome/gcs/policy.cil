@@ -63,7 +63,8 @@
 
 	(call gcs_helper.obj_entry_subj (subj_type_attribute))
 
-	(call goa.manage_home_cache_files (subj_type_attribute))
+	(call goa.manage_home_cache (subj_type_attribute))
+	(call goa.home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
 	(call gs.read_home_user_files (subj_type_attribute))
 
@@ -155,7 +156,10 @@
 
 	(optional gcs_subj_type_optional_webkit
 		(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
-		(call webkitwp.read_home_data (subj_type_attribute)))
+		(call webkitwp.manage_home_cache (subj_type_attribute))
+		(call webkitwp.home_cache_obj_type_transition_home_cache (subj_type_attribute))
+		(call webkitwp.manage_home_data (subj_type_attribute))
+		(call webkitwp.home_data_obj_type_transition_home_data (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

@@ -58,6 +58,15 @@
 		(call enchant.relabel_home_config (subj))
 		(call enchant.home_config_obj_type_transition_home_config (subj)))
 
+	(optional user_optional_folks
+		(call folks.manage_home_cache (subj))
+		(call folks.relabel_home_cache (subj))
+		(call folks.home_cache_obj_type_transition_home_cache (subj))
+
+		(call folks.manage_home_data (subj))
+		(call folks.relabel_home_data (subj))
+		(call folks.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_fop
 		(call fop.run (subj_type_attribute role))
 		(call fop.manage_home_user (subj))
@@ -408,6 +417,17 @@
 
 	(optional user_optional_user_gcal
 		(call user_gcal.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gcon
+		(call gcon.manage_tmpfs_user (subj))
+		(call gcon.relabel_tmpfs_user (subj))
+
+		(call user_gcon.role_pattern (role subj_type_attribute))
+
+		(call gconsp.manage_tmpfs_user (subj))
+		(call gconsp.relabel_tmpfs_user (subj))
+
+		(call user_gconsp.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gconf
 		(call gconf.manage_home_config (subj))

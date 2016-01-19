@@ -16,14 +16,17 @@
 	(optional sysadm_gsh_optional_sysadm_pa
 		(call sysadm_pa.auto_subj_type_transition (subj)))
 
+	(optional sysadm_gsh_optional_sysadm_gcal
+		(call sysadm_gcal.send_sigkill (subj)))
+
+	(optional sysadm_gsh_optional_sysadm_gcon
+		(call sysadm_gcon.send_sigkill (subj)))
+
 	(optional sysadm_gsh_optional_sysadm_gcs
 		(call sysadm_gcs.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gedit
 		(call sysadm_gedit.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcal
-		(call sysadm_gcal.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gkrd
 		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))
@@ -66,11 +69,14 @@
 
 	(call sysadm_gsh.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_gshcs_optional_sysadm_gs
-		(call sysadm_sessbus.daemon (subj gshcs.cmd_file)))
+	(optional sysadm_gshcs_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gshcs_optional_sysadm_evosr
 		(call sysadm_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gshcs_optional_sysadm_gs
+		(call sysadm_sessbus.daemon (subj gshcs.cmd_file)))
 
 	(optional sysadm_gshcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -5,6 +5,9 @@
 
 	(call sysadm_evosr.sessbus_chat_client_subj_type (subj))
 
+	(optional sysadm_evoaf_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_evoaf_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj evoaf.cmd_file)))
 
@@ -20,6 +23,9 @@
 
 	(call sysadm_evosr.sessbus_chat_client_subj_type (subj))
 	(call sysadm_evoaf.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_evocf_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_evocf_optional_sysadm_gshcs
 		(call sysadm_gshcs.sessbus_chat_client_subj_type (subj)))

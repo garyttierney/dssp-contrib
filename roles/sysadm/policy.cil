@@ -258,6 +258,15 @@
 		(call firewalld.adm (subj role))
 		(call firewallcmd.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_folks
+		(call folks.manage_home_cache (subj))
+		(call folks.relabel_home_cache (subj))
+		(call folks.home_cache_obj_type_transition_home_cache (subj))
+
+		(call folks.manage_home_data (subj))
+		(call folks.relabel_home_data (subj))
+		(call folks.home_data_obj_type_transition_home_data (subj)))
+
 	(optional sysadm_optional_fop
 		(call fop.run (subj_type_attribute role))
 		(call fop.manage_config_files (subj))
@@ -1073,6 +1082,17 @@
 
 	(optional sysadm_optional_sysadm_gcal
 		(call sysadm_gcal.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcon
+		(call gcon.manage_tmpfs_user (subj))
+		(call gcon.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcon.role_pattern (role subj_type_attribute))
+
+		(call gconsp.manage_tmpfs_user (subj))
+		(call gconsp.relabel_tmpfs_user (subj))
+
+		(call sysadm_gconsp.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gconf
 		(call gconf.manage_home_config (subj))

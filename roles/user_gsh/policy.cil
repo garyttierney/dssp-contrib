@@ -16,6 +16,9 @@
 	(optional user_gsh_optional_user_gcal
 		(call user_gcal.send_sigkill (subj)))
 
+	(optional user_gsh_optional_user_gcon
+		(call user_gcon.send_sigkill (subj)))
+
 	(optional user_gsh_optional_user_gedit
 		(call user_gedit.send_sigkill (subj)))
 
@@ -63,11 +66,14 @@
 
 	(call user_gsh.sessbus_chat_client_subj_type (subj))
 
-	(optional user_gshcs_optional_user_gs
-		(call user_sessbus.daemon (subj gshcs.cmd_file)))
+	(optional user_gshcs_optional_user_dconfs
+		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gshcs_optional_user_evosr
 		(call user_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gshcs_optional_user_gs
+		(call user_sessbus.daemon (subj gshcs.cmd_file)))
 
 	(optional user_gshcs_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

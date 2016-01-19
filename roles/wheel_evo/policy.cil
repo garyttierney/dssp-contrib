@@ -5,6 +5,9 @@
 
 	(call wheel_evosr.sessbus_chat_client_subj_type (subj))
 
+	(optional wheel_evoaf_optional_wheel_dconfs
+		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_evoaf_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj evoaf.cmd_file)))
 
@@ -19,6 +22,9 @@
 
 	(call wheel_evosr.sessbus_chat_client_subj_type (subj))
 	(call wheel_evoaf.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_evocf_optional_wheel_dconfs
+		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_evocf_optional_wheel_gshcs
 		(call wheel_gshcs.sessbus_chat_client_subj_type (subj)))

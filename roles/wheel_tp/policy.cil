@@ -35,6 +35,9 @@
 
 	(call wheel_tpi.sessbus_chat_client_subj_type (subj))
 
+	(optional wheel_tpl_optional_wheel_gcon
+		(call wheel_gcon.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_tpl_optional_wheel_gconsp
 		(call wheel_gconsp.sessbus_chat_client_subj_type (subj)))
 
@@ -52,6 +55,9 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit tpi.subj_blk)
+
+	(optional wheel_tpi_optional_wheel_gcon
+		(call wheel_gcon.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_tpi_optional_wheel_gconsp
 		(call wheel_gconsp.sessbus_chat_client_subj_type (subj)))

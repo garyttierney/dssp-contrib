@@ -7,9 +7,6 @@
 
 	(blockinherit usersubj.home_cache_obj_blk)
 
-	(call usersubj.create_home_cache_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj_type_attribute))
-
 	(call manage_home_cache (subj_type_attribute))
 	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
@@ -70,6 +67,10 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(optional webkitwp_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

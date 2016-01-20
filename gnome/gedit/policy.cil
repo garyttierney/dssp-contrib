@@ -7,9 +7,6 @@
 
 	(blockinherit usersubj.home_config_obj_blk)
 
-	(call usersubj.create_home_config_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
-
 	(call manage_home_config (subj_type_attribute))
 	(call home_config_obj_type_transition_home_config (subj_type_attribute))
 
@@ -52,6 +49,7 @@
 	(call usersubj.home_dir_obj_type_transition_home_data (subj_type_attribute))
 
 	(call usersubj.manage_home_data_files (subj_type_attribute))
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.dontaudit_read_all_home_user (subj_type_attribute))
         (call usersubj.manage_home_user_dirs (subj_type_attribute))
@@ -65,6 +63,13 @@
 	(call usersubj.read_home_cmd_lnk_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_cmd (subj_type_attribute))
 	(call usersubj.home_data_obj_type_transition_home_cmd (subj_type_attribute))
+
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(optional gedit_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))

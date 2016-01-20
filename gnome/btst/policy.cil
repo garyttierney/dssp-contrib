@@ -35,10 +35,18 @@
 	(call usersubj.home_dir_obj_type_transition_home_data (subj_type_attribute))
 
 	(call usersubj.manage_home_data_files (subj_type_attribute))
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.dontaudit_read_all_home_user (subj_type_attribute))
 	(call usersubj.list_home_user (subj_type_attribute))
 	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(call usersubj.create_home_cache_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(optional btst_subj_type_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))

@@ -115,6 +115,11 @@
 	(optional user_optional_journalctl
 		(call journalctl.exec (subj)))
 
+	(optional user_optional_libgweather
+		(call libgweather.manage_home_cache (subj))
+		(call libgweather.relabel_home_cache (subj))
+		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional user_optional_lirc
 		(call lirc.run (subj_type_attribute role))
 		(call lirc_lsplugins.run (subj_type_attribute role)))
@@ -421,6 +426,12 @@
 
 		(call user_gcal.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gcl
+		(call gcl.manage_tmpfs_user (subj))
+		(call gcl.relabel_tmpfs_user (subj))
+
+		(call user_gcl.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gcon
 		(call gcon.manage_tmpfs_user (subj))
 		(call gcon.relabel_tmpfs_user (subj))
@@ -622,6 +633,9 @@
 		(call user_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gsound
+		(call gsound.manage_tmpfs_user_files (subj))
+		(call gsound.relabel_tmpfs_user_files (subj))
+
 		(call user_gsound.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gstreamer

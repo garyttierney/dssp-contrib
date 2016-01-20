@@ -381,6 +381,15 @@
 
 	(filecon "/root/\.java(/.*)?" any root_java_home))
 
+(optional sysadm_libgweather_home_optional_libgweather
+	(tunableif enable_rbacsep
+		(true
+			(context root_libgweather_home_cache (sysadm.id sysadm.role libgweather.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_libgweather_home_cache (sysadm.id object_r libgweather.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/libgweather(/.*)?" any root_libgweather_home_cache))
+
 (optional sysadm_livestreamer_home_optional_livestreamer
 	(tunableif enable_rbacsep
 		(true

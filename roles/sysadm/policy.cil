@@ -388,6 +388,11 @@
 		(call java.relabel_home_user (subj))
 		(call java.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_libgweather
+		(call libgweather.manage_home_cache (subj))
+		(call libgweather.relabel_home_cache (subj))
+		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional sysadm_optional_mutter
 		(call mutter_helper.exec (subj)))
 
@@ -1086,6 +1091,12 @@
 
 		(call sysadm_gcal.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gcl
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcl.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gcon
 		(call gcon.manage_tmpfs_user (subj))
 		(call gcon.relabel_tmpfs_user (subj))
@@ -1287,6 +1298,9 @@
 		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gsound
+		(call gsound.manage_tmpfs_user_files (subj))
+		(call gsound.relabel_tmpfs_user_files (subj))
+
 		(call sysadm_gsound.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gstreamer

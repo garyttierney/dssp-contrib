@@ -121,6 +121,11 @@
 		(call java.relabel_home_user (subj))
 		(call java.home_dir_obj_type_transition_home (subj)))
 
+	(optional wheel_optional_libgweather
+		(call libgweather.manage_home_cache (subj))
+		(call libgweather.relabel_home_cache (subj))
+		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional wheel_optional_lirc
 		(call lirc.run (subj_type_attribute role))
 		(call lirc_lsplugins.run (subj_type_attribute role)))
@@ -459,6 +464,12 @@
 
 		(call wheel_gcal.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_gcl
+		(call gcl.manage_tmpfs_user (subj))
+		(call gcl.relabel_tmpfs_user (subj))
+
+		(call wheel_gcl.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_gcon
 		(call gcon.manage_tmpfs_user (subj))
 		(call gcon.relabel_tmpfs_user (subj))
@@ -660,6 +671,9 @@
 		(call wheel_gshcs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gsound
+		(call gsound.manage_tmpfs_user_files (subj))
+		(call gsound.relabel_tmpfs_user_files (subj))
+
 		(call wheel_gsound.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gstreamer

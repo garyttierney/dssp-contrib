@@ -1,0 +1,26 @@
+(block wheel_thunderbird
+	(blockinherit thunderbird.subj_blk)
+
+	(optional wheel_thunderbird_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_gedit
+		(call wheel_gedit.auto_subj_type_transition (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_gpg
+		(call wheel_gpg.auto_subj_type_transition (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_pa
+		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_thunderbird_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))

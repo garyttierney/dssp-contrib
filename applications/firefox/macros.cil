@@ -29,37 +29,6 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit usersubj.search_home_user_blk)
-	(blockinherit usersubj.list_home_user_blk)
-	(blockinherit usersubj.read_home_user_files_blk)
-	(blockinherit usersubj.setattr_home_user_dirs_blk)
-	(blockinherit usersubj.create_home_user_dirs_blk)
-	(blockinherit usersubj.delete_home_user_dirs_blk)
-	(blockinherit usersubj.rw_home_user_dirs_blk)
-	(blockinherit usersubj.manage_home_user_dirs_blk)
-	(blockinherit usersubj.read_home_user_lnk_files_blk)
-	(blockinherit usersubj.read_home_user_blk)
-	(blockinherit usersubj.manage_home_user_blk)
-	(blockinherit usersubj.relabel_home_user_blk)
-
-	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".mozilla")))
-
-	(macro home_dir_add_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_add_obj_type_transition (ARG1 home_user_file dir ".mozilla")))
-
-	(blockinherit usersubj.search_home_cache_blk)
-	(blockinherit usersubj.list_home_cache_blk)
-	(blockinherit usersubj.read_home_cache_files_blk)
-	(blockinherit usersubj.read_home_cache_lnk_files_blk)
-	(blockinherit usersubj.read_home_cache_blk)
-	(blockinherit usersubj.manage_home_cache_blk)
-	(blockinherit usersubj.relabel_home_cache_blk)
-
-	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "mozilla")))
-
-
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
 	(blockinherit usersubj.read_tmpfs_user_files_blk)

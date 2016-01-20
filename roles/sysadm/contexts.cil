@@ -160,17 +160,17 @@
 	(filecon "/root/\.festival_history" file root_festival_home)
 	(filecon "/root/\.festivalrc" file root_festival_home))
 
-(optional sysadm_firefox_home_optional_firefox
+(optional sysadm_mozilla_home_optional_mozilla
 	(tunableif enable_rbacsep
 		(true
-			(context root_firefox_home_cache (sysadm.id sysadm.role firefox.home_cache_file (systemlow systemlow)))
-			(context root_firefox_home (sysadm.id sysadm.role firefox.home_user_file (systemlow systemlow))))
+			(context root_mozilla_home_cache (sysadm.id sysadm.role mozilla.home_cache_file (systemlow systemlow)))
+			(context root_mozilla_home (sysadm.id sysadm.role mozilla.home_user_file (systemlow systemlow))))
 		(false
-			(context root_firefox_home_cache (sysadm.id object_r firefox.home_cache_file (systemlow systemlow)))
-			(context root_firefox_home (sysadm.id object_r firefox.home_user_file (systemlow systemlow)))))
+			(context root_mozilla_home_cache (sysadm.id object_r mozilla.home_cache_file (systemlow systemlow)))
+			(context root_mozilla_home (sysadm.id object_r mozilla.home_user_file (systemlow systemlow)))))
 
-	(filecon "/root/\.mozilla(/.*)?" any root_firefox_home)
-	(filecon "/root/\.cache/mozilla(/.*)?" any root_firefox_home_cache))
+	(filecon "/root/\.mozilla(/.*)?" any root_mozilla_home)
+	(filecon "/root/\.cache/mozilla(/.*)?" any root_mozilla_home_cache))
 
 (optional sysadm_folks_home_optional_folks
 	(tunableif enable_rbacsep
@@ -680,6 +680,18 @@
 			(context root_thumbnails_home_cache (sysadm.id object_r thumbnails.home_cache_file (systemlow systemlow)))))
 
 	(filecon "/root/\.cache/thumbnails(/.*)?" any root_thumbnails_home_cache))
+
+(optional sysadm_thunderbird_home_optional_thunderbird
+	(tunableif enable_rbacsep
+		(true
+			(context root_thunderbird_home_cache (sysadm.id sysadm.role thunderbird.home_cache_file (systemlow systemlow)))
+			(context root_thunderbird_home (sysadm.id sysadm.role thunderbird.home_user_file (systemlow systemlow))))
+		(false
+			(context root_thunderbird_home_cache (sysadm.id object_r thunderbird.home_cache_file (systemlow systemlow)))
+			(context root_thunderbird_home (sysadm.id object_r thunderbird.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.thunderbird(/.*)?" any root_thunderbird_home)
+	(filecon "/root/\.cache/thunderbird(/.*)?" any root_thunderbird_home_cache))
 
 (optional sysadm_tor_home_optional_tor
 	(tunableif enable_rbacsep

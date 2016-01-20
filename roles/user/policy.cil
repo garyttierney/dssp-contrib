@@ -378,16 +378,6 @@
 		(call user_evosr.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_firefox
-		(call firefox.manage_home_user (subj))
-		(call firefox.relabel_home_user (subj))
-
-		(call firefox.home_dir_obj_type_transition_home (subj))
-
-		(call firefox.manage_home_cache (subj))
-		(call firefox.relabel_home_cache (subj))
-
-		(call firefox.home_cache_obj_type_transition_home_cache (subj))
-
 		(call firefox.manage_tmpfs_user (subj))
 		(call firefox.relabel_tmpfs_user (subj))
 
@@ -739,6 +729,17 @@
 
 		(call user_lynx.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_mozilla
+		(call mozilla.manage_home_user (subj))
+		(call mozilla.relabel_home_user (subj))
+
+		(call mozilla.home_dir_obj_type_transition_home (subj))
+
+		(call mozilla.manage_home_cache (subj))
+		(call mozilla.relabel_home_cache (subj))
+
+		(call mozilla.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional user_optional_user_mplayer
 		(call mplayer.manage_home_user (subj))
 		(call mplayer.relabel_home_user (subj))
@@ -914,6 +915,25 @@
 		(call startx.relabel_tmpfs_user_files (subj))
 
 		(call user_startx.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_thunderbird
+		(call thunderbird.manage_home_user (subj))
+		(call thunderbird.relabel_home_user (subj))
+
+		(call thunderbird.home_dir_obj_type_transition_home (subj))
+
+		(call thunderbird.manage_home_cache (subj))
+		(call thunderbird.relabel_home_cache (subj))
+
+		(call thunderbird.home_cache_obj_type_transition_home_cache (subj))
+
+		(call thunderbird.manage_tmpfs_user (subj))
+		(call thunderbird.relabel_tmpfs_user (subj))
+
+		(call thunderbird.manage_var_tmp_user_files (subj))
+		(call thunderbird.relabel_var_tmp_user_files (subj))
+
+		(call user_thunderbird.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_tp
 		(call user_tpmct.role_pattern (role subj_type_attribute))

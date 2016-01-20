@@ -19,6 +19,11 @@
 	(optional user_optional_cgtop
 		(call cgtop.exec (subj)))
 
+	(optional user_optional_champlain
+		(call champlain.manage_home_cache (subj))
+		(call champlain.relabel_home_cache (subj))
+		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional user_optional_colord
 		(call colormgr.run (subj_type_attribute role))
 		(call colormgr.manage_home_data (subj))
@@ -551,6 +556,17 @@
 		(call user_gapp.role_pattern (role subj_type_attribute))
 		(call user_gdbus.role_pattern (role subj_type_attribute))
 		(call user_gsettings.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gm
+		(call gm.manage_tmpfs_user (subj))
+		(call gm.relabel_tmpfs_user (subj))
+
+		(call gm.manage_home_data_files (subj))
+		(call gm.relabel_home_data_files (subj))
+
+		(call gm.home_data_obj_type_transition_home_data (subj))
+
+		(call user_gm.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_goa
 		(call goa.manage_home_cache (subj))

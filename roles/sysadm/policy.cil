@@ -154,6 +154,11 @@
 		(call bti.relabel_home_user_files (subj))
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_champlain
+		(call champlain.manage_home_cache (subj))
+		(call champlain.relabel_home_cache (subj))
+		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional sysadm_optional_chkpwd
 		(call chkpwd.run (subj_type_attribute role)))
 
@@ -1216,6 +1221,17 @@
 		(call sysadm_gapp.role_pattern (role subj_type_attribute))
 		(call sysadm_gdbus.role_pattern (role subj_type_attribute))
 		(call sysadm_gsettings.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gm
+		(call gm.manage_tmpfs_user (subj))
+		(call gm.relabel_tmpfs_user (subj))
+
+		(call gm.manage_home_data_files (subj))
+		(call gm.relabel_home_data_files (subj))
+
+		(call gm.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gm.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_goa
 		(call goa.manage_home_cache (subj))

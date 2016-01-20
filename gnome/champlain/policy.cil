@@ -1,0 +1,10 @@
+(block champlain
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.create_home_cache_dirs (client_subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (client_subj_type_attribute))
+
+	(call manage_home_cache (client_subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (client_subj_type_attribute)))

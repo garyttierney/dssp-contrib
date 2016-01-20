@@ -41,6 +41,15 @@
 (filecon "/root/\.bash_history" file root_home_history)
 (filecon "/root/\.terminfo" file root_home_terminfo_data)
 
+(optional sysadm_champlain_home_optional_champlain
+	(tunableif enable_rbacsep
+		(true
+			(context root_champlain_home_cache (sysadm.id sysadm.role champlain.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_champlain_home_cache (sysadm.id object_r champlain.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/champlain(/.*)?" any root_champlain_home_cache))
+
 (optional sysadm_colord_home_optional_colord
 	(tunableif enable_rbacsep
 		(true
@@ -228,6 +237,15 @@
 			(context root_glib_home_cache (sysadm.id object_r glib.home_cache_file (systemlow systemlow)))))
 
 	(filecon "/root/\.cache/geocode-glib(/.*)?" any root_glib_home_cache))
+
+(optional sysadm_gm_home_optional_gm
+	(tunableif enable_rbacsep
+		(true
+			(context root_gm_home_data (sysadm.id sysadm.role gm.home_data_file (systemlow systemlow))))
+		(false
+			(context root_dconf_home_data (sysadm.id object_r gm.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/maps-places\.json" file root_gm_home_data))
 
 (optional sysadm_goa_home_optional_goa
 	(tunableif enable_rbacsep

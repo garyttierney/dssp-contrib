@@ -11,6 +11,9 @@
 		(true
 			(call rbacsep.exempt_role (role))))
 
+	(optional exempt_optional_champlain
+		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional exempt_optional_colord
 		(call colormgr.home_data_obj_type_transition_home_data (subj)))
 
@@ -81,6 +84,9 @@
 
 	(optional exempt_optional_glib
 		(call glib.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional exempt_optional_gm
+                (call gm.home_data_obj_type_transition_home_data (subj)))
 
 	(optional exempt_optional_goa
 		(call goa.home_cache_obj_type_transition_home_cache (subj))

@@ -621,6 +621,9 @@
 		(call user_gshep.role_pattern (role subj_type_attribute))
 		(call user_gshcs.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gsound
+		(call user_gsound.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gstreamer
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))

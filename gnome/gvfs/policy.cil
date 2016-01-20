@@ -169,7 +169,9 @@
 
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
 
 (block gvfsdlocaltest
 	(typeattribute subj_type_attribute)

@@ -13,7 +13,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call file.list_config (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -34,6 +34,8 @@
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(optional gcl_subj_type_optional_geoclue
 		(call geoclue.sysbus_chat_client_subj_type (subj_type_attribute)))

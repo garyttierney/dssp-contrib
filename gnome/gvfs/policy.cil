@@ -268,7 +268,9 @@
 	(call file.list_config (subj_type_attribute))
 	(call file.list_home (subj_type_attribute))
 
+	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))

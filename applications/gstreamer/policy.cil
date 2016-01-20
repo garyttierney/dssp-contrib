@@ -3,11 +3,10 @@
 
 	(blockinherit usersubj.home_cache_obj_blk)
 
-	(call manage_home_cache (client_subj_type_attribute))
-	(call home_cache_obj_type_transition_home_cache (client_subj_type_attribute))
+	(call usersubj.home_cache_creator_subj_type (client_subj_type_attribute))
 
-	(call usersubj.create_home_cache_dirs (client_subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_cache (client_subj_type_attribute)))
+	(call manage_home_cache (client_subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (client_subj_type_attribute)))
 
 (block gst
 	(typeattribute subj_type_attribute)

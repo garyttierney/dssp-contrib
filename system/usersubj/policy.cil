@@ -8,6 +8,11 @@
 	(typeattribute unpriv_login_type_attribute)
 
 	(typeattribute home_user_obj_type_attribute)
+
+	(typeattribute home_cache_creator_subj_type_attribute)
+	(typeattribute home_config_creator_subj_type_attribute)
+	(typeattribute home_data_creator_subj_type_attribute)
+
 	(typeattribute home_cache_obj_type_attribute)
 	(typeattribute home_config_obj_type_attribute)
 	(typeattribute home_data_obj_type_attribute)
@@ -108,7 +113,16 @@
 		(call sd_tmpfiles.obj_exception_type (home_user_obj_type_attribute)))
 
 	(typeattributeset unpriv_type_attribute (and (common_type_attribute) (not (priv_type_attribute))))
-	(typeattributeset unpriv_login_type_attribute (and (common_login_type_attribute) (not (priv_login_type_attribute)))))
+	(typeattributeset unpriv_login_type_attribute (and (common_login_type_attribute) (not (priv_login_type_attribute))))
+
+        (call usersubj.create_home_cache_dirs (home_cache_creator_subj_type_attribute))
+        (call usersubj.home_dir_add_obj_type_transition_home_cache (home_cache_creator_subj_type_attribute))
+
+        (call usersubj.create_home_config_dirs (home_config_creator_subj_type_attribute))
+        (call usersubj.home_dir_add_obj_type_transition_home_config (home_config_creator_subj_type_attribute))
+
+        (call usersubj.create_home_data_dirs (home_data_creator_subj_type_attribute))
+        (call usersubj.home_dir_add_obj_type_transition_home_data (home_data_creator_subj_type_attribute)))
 
 (block home_cache
 	(blockinherit usersubj.home_cache_obj_blk))

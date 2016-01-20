@@ -15,8 +15,7 @@
 
 	(blockinherit usersubj.home_data_obj_blk)
 
-	(call usersubj.create_home_data_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_data (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
@@ -79,8 +78,7 @@
 
 	(call usersubj.read_home_config_files (subj_type_attribute))
 
-	(call usersubj.create_home_cache_dirs (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_cache (subj_type_attribute))
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
 
 	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))

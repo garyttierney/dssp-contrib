@@ -39,13 +39,4 @@
 		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*")))
-
-	(blockinherit usersubj.read_home_data_files_blk)
-	(blockinherit usersubj.manage_home_data_files_blk)
-	(blockinherit usersubj.relabel_home_data_files_blk)
-
-	(blockinherit usersubj.home_data_obj_type_transition_blk)
-
-	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file file "maps-places.json"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))

@@ -19,7 +19,8 @@
 		(call user_firefox.auto_subj_type_transition (subj)))
 
 	(optional user_gm_optional_user_gcl
-		(call user_gcl.auto_subj_type_transition (subj)))
+		(call user_gcl.auto_subj_type_transition (subj))
+		(call user_gcl.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gm_optional_user_gsh
 		(call user_gsh.sessbus_chat_client_subj_type (subj)))

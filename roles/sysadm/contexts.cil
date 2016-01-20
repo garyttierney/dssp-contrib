@@ -238,15 +238,6 @@
 
 	(filecon "/root/\.cache/geocode-glib(/.*)?" any root_glib_home_cache))
 
-(optional sysadm_gm_home_optional_gm
-	(tunableif enable_rbacsep
-		(true
-			(context root_gm_home_data (sysadm.id sysadm.role gm.home_data_file (systemlow systemlow))))
-		(false
-			(context root_dconf_home_data (sysadm.id object_r gm.home_data_file (systemlow systemlow)))))
-
-	(filecon "/root/\.local/share/maps-places\.json" file root_gm_home_data))
-
 (optional sysadm_goa_home_optional_goa
 	(tunableif enable_rbacsep
 		(true

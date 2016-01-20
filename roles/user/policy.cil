@@ -416,6 +416,9 @@
 		(call user_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gcal
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
 		(call user_gcal.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gcon
@@ -795,6 +798,12 @@
 	(optional user_optional_user_passwd
 		(call user_passwd.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_polari
+		(call polari.manage_tmpfs_user (subj))
+		(call polari.relabel_tmpfs_user (subj))
+
+		(call user_polari.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_pinentry
 		(call user_pinentry.role_pattern (role subj_type_attribute)))
 
@@ -875,7 +884,29 @@
 
 	(optional user_optional_user_tp
 		(call user_tpmct.role_pattern (role subj_type_attribute))
+
+		(call tpmc.manage_home_cache (subj))
+		(call tpmc.relabel_home_cache (subj))
+
+		(call tpmc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpmc.manage_home_data (subj))
+		(call tpmc.relabel_home_data (subj))
+
+		(call tpmc.home_data_obj_type_transition_home_data (subj))
+
 		(call user_tpmc.role_pattern (role subj_type_attribute))
+
+		(call tpl.manage_home_cache (subj))
+		(call tpl.relabel_home_cache (subj))
+
+		(call tpl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpl.manage_home_data (subj))
+		(call tpl.relabel_home_data (subj))
+
+		(call tpl.home_data_obj_type_transition_home_data (subj))
+
 		(call user_tpl.role_pattern (role subj_type_attribute))
 		(call user_tpi.role_pattern (role subj_type_attribute)))
 

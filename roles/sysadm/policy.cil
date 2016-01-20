@@ -1081,6 +1081,9 @@
 		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gcal
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
 		(call sysadm_gcal.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gcon
@@ -1515,6 +1518,12 @@
 	(optional sysadm_optional_sysadm_pinentry
 		(call sysadm_pinentry.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_polari
+		(call polari.manage_tmpfs_user (subj))
+		(call polari.relabel_tmpfs_user (subj))
+
+		(call sysadm_polari.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_polkit_exec
 		(call sysadm_polkit_exec.role_pattern (role subj_type_attribute)))
 
@@ -1630,7 +1639,29 @@
 
 	(optional sysadm_optional_sysadm_tp
 		(call sysadm_tpmct.role_pattern (role subj_type_attribute))
+
+		(call tpmc.manage_home_cache (subj))
+		(call tpmc.relabel_home_cache (subj))
+
+		(call tpmc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpmc.manage_home_data (subj))
+		(call tpmc.relabel_home_data (subj))
+
+		(call tpmc.home_data_obj_type_transition_home_data (subj))
+
 		(call sysadm_tpmc.role_pattern (role subj_type_attribute))
+
+		(call tpl.manage_home_cache (subj))
+		(call tpl.relabel_home_cache (subj))
+
+		(call tpl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpl.manage_home_data (subj))
+		(call tpl.relabel_home_data (subj))
+
+		(call tpl.home_data_obj_type_transition_home_data (subj))
+
 		(call sysadm_tpl.role_pattern (role subj_type_attribute))
 		(call sysadm_tpi.role_pattern (role subj_type_attribute)))
 

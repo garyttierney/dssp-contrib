@@ -617,6 +617,25 @@
 
 	(filecon "/root/\.ssh(/.*)?" any root_ssh_client_home))
 
+(optional sysadm_tp_home_optional_tp
+	(tunableif enable_rbacsep
+		(true
+			(context root_tpmc_home_cache (sysadm.id sysadm.role tpmc.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_cache (sysadm.id sysadm.role tpl.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_data (sysadm.id sysadm.role tpl.home_data_file (systemlow systemlow)))
+			(context root_tpmc_home_data (sysadm.id sysadm.role tpmc.home_data_file (systemlow systemlow))))
+		(false
+			(context root_tpmc_home_cache (sysadm.id object_r tpmc.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_cache (sysadm.id object_r tpl.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_data (sysadm.id object_r tpl.home_data_file (systemlow systemlow)))
+			(context root_tpmc_home_data (sysadm.id object_r tpmc.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/telepathy(/.*)?" any root_tpmc_home_cache)
+	(filecon "/root/\.cache/\.mc_connections.*" file root_tpmc_home_cache)
+	(filecon "/root/\.cache/telepathy/logger(/.*)?" any root_tpl_home_cache)
+	(filecon "/root/\.local/share/TpLogger(/.*)?" any root_tpl_home_data)
+	(filecon "/root/\.local/share/telepathy(/.*)?" any root_tpmc_home_data))
+
 (optional sysadm_tetex_home_optional_tetex
 	(tunableif enable_rbacsep
 		(true

@@ -454,6 +454,9 @@
 		(call wheel_fuse_sshfs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gcal
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
 		(call wheel_gcal.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gcon
@@ -882,6 +885,12 @@
 	(optional wheel_optional_wheel_pinentry
 		(call wheel_pinentry.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_polari
+		(call polari.manage_tmpfs_user (subj))
+		(call polari.relabel_tmpfs_user (subj))
+
+		(call wheel_polari.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_polkit_exec
 		(call wheel_polkit_exec.role_pattern (role subj_type_attribute)))
 
@@ -986,9 +995,34 @@
 	(optional wheel_optional_wheel_timedatectl
 		(call wheel_timedatectl.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_tor_socks
+		(call wheel_tor_socks.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_tp
 		(call wheel_tpmct.role_pattern (role subj_type_attribute))
+
+		(call tpmc.manage_home_cache (subj))
+		(call tpmc.relabel_home_cache (subj))
+
+		(call tpmc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpmc.manage_home_data (subj))
+		(call tpmc.relabel_home_data (subj))
+
+		(call tpmc.home_data_obj_type_transition_home_data (subj))
+
 		(call wheel_tpmc.role_pattern (role subj_type_attribute))
+
+		(call tpl.manage_home_cache (subj))
+		(call tpl.relabel_home_cache (subj))
+
+		(call tpl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpl.manage_home_data (subj))
+		(call tpl.relabel_home_data (subj))
+
+		(call tpl.home_data_obj_type_transition_home_data (subj))
+
 		(call wheel_tpl.role_pattern (role subj_type_attribute))
 		(call wheel_tpi.role_pattern (role subj_type_attribute)))
 

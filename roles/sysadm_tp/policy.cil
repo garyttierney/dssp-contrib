@@ -6,6 +6,18 @@
 
 	(blockinherit tpmc.subj_blk)
 
+	(call sysadm_tpi.sessbus_chat_client_subj_type (subj))
+	(call sysadm_tpl.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_tpmc_optional_sysadm_gconsp
+		(call sysadm_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_tpmc_optional_sysadm_gs
+		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_tpmc_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_tpmc_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj tpmc.cmd_file)))
 
@@ -18,6 +30,14 @@
 
 	(blockinherit tpl.subj_blk)
 
+	(call sysadm_tpi.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_tpl_optional_sysadm_gconsp
+		(call sysadm_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_tpl_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_tpl_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj tpl.cmd_file)))
 
@@ -29,6 +49,9 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit tpi.subj_blk)
+
+	(optional sysadm_tpi_optional_sysadm_gconsp
+		(call sysadm_gconsp.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_tpi_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj tpi.cmd_file)))

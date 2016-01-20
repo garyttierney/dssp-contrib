@@ -6,6 +6,18 @@
 
 	(blockinherit tpmc.subj_blk)
 
+	(call user_tpi.sessbus_chat_client_subj_type (subj))
+	(call user_tpl.sessbus_chat_client_subj_type (subj))
+
+	(optional user_tpmc_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_gs
+		(call user_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_tpmc_optional_user_sessbus
 		(call user_sessbus.daemon (subj tpmc.cmd_file)))
 
@@ -18,6 +30,14 @@
 
 	(blockinherit tpl.subj_blk)
 
+	(call user_tpi.sessbus_chat_client_subj_type (subj))
+
+	(optional user_tpl_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpl_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_tpl_optional_user_sessbus
 		(call user_sessbus.daemon (subj tpl.cmd_file)))
 
@@ -29,6 +49,9 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit tpi.subj_blk)
+
+	(optional user_tpi_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_tpi_optional_user_sessbus
 		(call user_sessbus.daemon (subj tpi.cmd_file)))

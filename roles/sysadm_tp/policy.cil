@@ -1,0 +1,38 @@
+(block sysadm_tpmct
+	(blockinherit tpmct.subj_blk))
+
+(block sysadm_tpmc
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpmc.subj_blk)
+
+	(optional sysadm_tpmc_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj tpmc.cmd_file)))
+
+	(optional sysadm_tpmc_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_tpl
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpl.subj_blk)
+
+	(optional sysadm_tpl_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj tpl.cmd_file)))
+
+	(optional sysadm_tpl_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_tpi
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpi.subj_blk)
+
+	(optional sysadm_tpi_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj tpi.cmd_file)))
+
+	(optional sysadm_tpi_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

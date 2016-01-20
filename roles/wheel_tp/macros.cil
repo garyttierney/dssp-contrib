@@ -1,0 +1,36 @@
+(in wheel_tpmct
+	(macro auto_subj_type_transition ((type ARG1))
+		(call tpmct.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call tpmct.role_pattern (ARG1 ARG2 subj))))
+
+(in wheel_tpmc
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call tpmc.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call tpmc.role_pattern (ARG1 ARG2 subj))))
+
+(in wheel_tpl
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call tpl.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call tpl.role_pattern (ARG1 ARG2 subj))))
+
+(in wheel_tpi
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call tpi.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call tpi.role_pattern (ARG1 ARG2 subj))))

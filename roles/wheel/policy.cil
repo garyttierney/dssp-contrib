@@ -986,8 +986,11 @@
 	(optional wheel_optional_wheel_timedatectl
 		(call wheel_timedatectl.role_pattern (role subj_type_attribute)))
 
-	(optional wheel_optional_wheel_tor_socks
-		(call wheel_tor_socks.role_pattern (role subj_type_attribute)))
+	(optional wheel_optional_wheel_tp
+		(call wheel_tpmct.role_pattern (role subj_type_attribute))
+		(call wheel_tpmc.role_pattern (role subj_type_attribute))
+		(call wheel_tpl.role_pattern (role subj_type_attribute))
+		(call wheel_tpi.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_tracker
 		(call wheel_tracker.role_pattern (role subj_type_attribute))

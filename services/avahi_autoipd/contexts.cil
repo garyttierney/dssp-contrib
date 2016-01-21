@@ -1,0 +1,5 @@
+(in avahi_autoipd
+	(filecon "/usr/sbin/avahi-autoipd" file cmd_file_context)
+	(filecon "/var/lib/avahi-autoipd(/.*)?" any var_lib_file_context))
+
+(filecon "/etc/avahi/avahi-autoipd\.action" file cmd)

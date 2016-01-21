@@ -133,6 +133,16 @@
 	(optional sysadm_optional_atspi
 		(call atspi.manage_config (subj)))
 
+	(optional sysadm_optional_avahi
+		(call avahi.manage_config (subj))
+		(call avahi.relabel_config (subj))
+		(call avahitools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_avahi_autoipd
+		(call avahi_autoipd.manage_var_lib (subj))
+		(call avahi_autoipd.relabel_var_lib (subj))
+		(call avahi_autoipd.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))
 

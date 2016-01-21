@@ -11,6 +11,11 @@
 	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
+	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(call manage_var_tmp_user_files (subj_type_attribute))
+	(call var_tmp_obj_type_transition_var_tmp_user (subj_type_attribute))
+
         (blockinherit usersubj.home_data_obj_blk)
 
         (call manage_home_data (subj_type_attribute))

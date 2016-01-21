@@ -21,6 +21,8 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
 	(call file.read_data (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
@@ -144,6 +146,8 @@
 
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
@@ -193,6 +197,8 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 

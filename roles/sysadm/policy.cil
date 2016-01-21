@@ -325,11 +325,6 @@
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))
 
-	(optional sysadm_optional_grilo
-		(call grilo.manage_home_data (subj))
-		(call grilo.relabel_home_data (subj))
-		(call grilo.home_data_obj_type_transition_home_data (subj)))
-
 	(optional sysadm_optional_gs
 		(call gs_helper.exec (subj)))
 
@@ -1301,6 +1296,13 @@
 		(call gpinentry.relabel_tmpfs_user (subj))
 
 		(call sysadm_gpinentry.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_grilo
+		(call grilo.manage_home_data (subj))
+		(call grilo.relabel_home_data (subj))
+		(call grilo.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_grilo.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gs
 		(call gs.manage_home_user_files (subj))

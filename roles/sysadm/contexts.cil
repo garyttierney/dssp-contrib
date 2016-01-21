@@ -259,6 +259,15 @@
 	(filecon "/root/\.cache/goa-1\.0(/.*)?" any root_goa_home_cache)
 	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
 
+(optional sysadm_grilo_home_optional_grilo
+	(tunableif enable_rbacsep
+		(true
+			(context root_grilo_home_data (sysadm.id sysadm.role grilo.home_data_file (systemlow systemlow))))
+		(false
+			(context root_grilo_home_data (sysadm.id object_r grilo.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/grilo-plugins(/.*)?" any root_grilo_home_data))
+
 (optional sysadm_gtk_home_optional_gtk
 	(tunableif enable_rbacsep
 		(true
@@ -299,6 +308,15 @@
 			(context root_gkr_home_data (sysadm.id object_r gkrd.home_data_file (systemlow systemlow)))))
 
 	(filecon "/root/\.local/share/keyrings(/.*)?" any root_gkr_home_data))
+
+(optional sysadm_gkr_home_optional_gmusic
+	(tunableif enable_rbacsep
+		(true
+			(context root_gmusic_home_data (sysadm.id sysadm.role gmusic.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gmusic_home_data (sysadm.id object_r gmusic.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-music(/.*)?" any root_gmusic_home_data))
 
 (optional sysadm_gpg_home_optional_gpg
 	(tunableif enable_rbacsep

@@ -11,6 +11,11 @@
 	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
+        (blockinherit usersubj.home_data_obj_blk)
+
+        (call manage_home_data (subj_type_attribute))
+        (call home_data_obj_type_transition_home_data (subj_type_attribute))
+
 	(call cmd.list_cmd (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
 
@@ -25,6 +30,8 @@
 	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 
 	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call grilo.client_subj_type (subj_type_attribute))
 
 	(call gstreamer.client_subj_type (subj_type_attribute))
 

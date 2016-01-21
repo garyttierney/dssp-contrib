@@ -100,6 +100,11 @@
 	(optional user_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
+	(optional user_optional_grilo
+		(call grilo.manage_home_data (subj))
+		(call grilo.relabel_home_data (subj))
+		(call grilo.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_gtk
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
@@ -564,6 +569,11 @@
 	(optional user_optional_user_gmusic
 		(call gmusic.manage_tmpfs_user (subj))
 		(call gmusic.relabel_tmpfs_user (subj))
+
+		(call gmusic.manage_home_data (subj))
+		(call gmusic.relabel_home_data (subj))
+
+		(call gmusic.home_data_obj_type_transition_home_data (subj))
 
 		(call user_gmusic.role_pattern (role subj_type_attribute)))
 

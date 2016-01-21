@@ -101,6 +101,15 @@
 	(filecon "/root/\.gnupg/dirmngr\.conf" file root_dirmngr_home)
 	(filecon "/root/\.gnupg/S\.dirmngr" socket root_dirmngr_home))
 
+(optional sysadm_dleyna_home_optional_dleyna
+	(tunableif enable_rbacsep
+		(true
+			(context root_dleyna_home_config (sysadm.id sysadm.role dleyna.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dleyna_home_config (sysadm.id object_r dleyna.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/dleyna-server-service.conf" file root_dleyna_home_config))
+
 (optional sysadm_dunst_home_optional_dunst
 	(tunableif enable_rbacsep
 		(true

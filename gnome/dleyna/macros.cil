@@ -4,7 +4,7 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset obexd.subj_type_attribute subj))
+		(typeattributeset dleyna.subj_type_attribute subj))
 
 	(blockinherit exec_blk)
 
@@ -29,4 +29,13 @@
 
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
-	(blockinherit file.relabel_config_files_blk))
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.manage_home_config_files_blk)
+	(blockinherit usersubj.relabel_home_config_files_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "dleyna-server-service.conf"))))

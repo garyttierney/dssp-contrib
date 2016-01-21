@@ -333,6 +333,11 @@
 		(call user_dconfs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_dleyna
+		(call dleyna.manage_home_config_files (subj))
+		(call dleyna.relabel_home_config_files (subj))
+
+		(call dleyna.home_config_obj_type_transition_home_config (subj))
+
 		(call user_dleyna.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_dunst
@@ -555,6 +560,12 @@
 		(call gm.relabel_tmpfs_user (subj))
 
 		(call user_gm.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gmusic
+		(call gmusic.manage_tmpfs_user (subj))
+		(call gmusic.relabel_tmpfs_user (subj))
+
+		(call user_gmusic.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_goa
 		(call goa.manage_home_cache (subj))

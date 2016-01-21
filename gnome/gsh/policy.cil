@@ -76,6 +76,7 @@
 
 	(call udev.client_subj_type (subj_type_attribute))
 
+	(call usersubj.getattr_all_home_config_files (subj_type_attribute))
 	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
@@ -108,9 +109,6 @@
 
 	(optional gsh_subj_type_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj_type_attribute)))
-
-	(optional gsh_subj_type_optional_rygel
-		(call rygel.read_home_config_files (subj_type_attribute)))
 
 	(optional gsh_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))

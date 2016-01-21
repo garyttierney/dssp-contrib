@@ -1936,6 +1936,10 @@
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user.home_user_file list_dir_perms))
 
+	(macro create_home_user_dirs ((type ARG1))
+		(call add_entry_home_dir (ARG1))
+		(call create_dirs_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
 	(macro read_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(call read_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
@@ -2169,6 +2173,9 @@
 
 	(macro home_dir_obj_type_transition_home_user_dirs ((type ARG1))
 		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file dir "*")))
+
+	(macro home_dir_add_obj_type_transition_home_user_dirs ((type ARG1))
+		(call home_dir_add_obj_type_transition (ARG1 home_user.home_user_file dir "*")))
 
 	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 		(call search_home_dir (ARG1))

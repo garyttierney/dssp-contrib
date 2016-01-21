@@ -48,6 +48,9 @@
 
 	(call udev.client_subj_type (subj_type_attribute))
 
+	(call usersubj.create_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_user_dirs (subj_type_attribute))
+
 	(call usersubj.manage_home_config_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep

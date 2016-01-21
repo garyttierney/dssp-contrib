@@ -58,6 +58,9 @@
 	(optional user_gcs_optional_user_sessbus
 		(call user_sessbus.daemon (subj gcs.cmd_file)))
 
+	(optional user_gcs_optional_user_tpmc
+		(call user_tpmc.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gcs_optional_user_webkitwp
 		(call user_webkitwp.auto_subj_type_transition (subj))
 		(call user_webkitpp.auto_subj_type_transition (subj)))

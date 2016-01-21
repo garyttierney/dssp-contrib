@@ -64,6 +64,9 @@
 	(optional sysadm_gcs_optional_sshd
 		(call sshd.control_all_sd_unit_subj_type (subj)))
 
+	(optional sysadm_gcs_optional_sysadm_tpmc
+		(call sysadm_tpmc.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gcs_optional_sysadm_webkit
 		(call sysadm_webkitwp.auto_subj_type_transition (subj))
 		(call sysadm_webkitpp.auto_subj_type_transition (subj)))

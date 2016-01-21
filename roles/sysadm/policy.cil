@@ -143,6 +143,9 @@
 		(call avahi_autoipd.relabel_var_lib (subj))
 		(call avahi_autoipd.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_avahid
+		(call avahid.adm (subj role)))
+
 	(optional sysadm_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))
 

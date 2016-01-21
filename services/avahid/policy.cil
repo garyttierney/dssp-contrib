@@ -19,15 +19,19 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (chown setuid setgid)))
-	(allow subj self (process (setcap)))
+	(allow subj self (capability (chown setuid setgid sys_chroot)))
+	(allow subj self (process (setcap setrlimit)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
 
+	(call net.udp_bind_generic_node (subj))
+
 	(call avahi.read_config (subj))
+
+	(call mdns.udp_bind_port (subj))
 
 	(call locale.read (subj))
 

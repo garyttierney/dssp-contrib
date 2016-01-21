@@ -25,6 +25,7 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
+	(call cmd.exec (subj_type_attribute))
 	(call cmd.mmap_shell (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
@@ -46,6 +47,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_config_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true

@@ -1948,6 +1948,10 @@
 		(call search_home_dir (ARG1))
 		(call exec_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
 
+	(macro mmap_home_user_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(call mmap_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
 	(macro dontaudit_relabel_home_user_files ((type ARG1))
 		(dontaudit ARG1 home_user.home_user_file relabel_file_perms))
 

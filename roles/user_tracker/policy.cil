@@ -37,6 +37,9 @@
 
 	(call user_trackerm.rw_inherited_fifo_files (subj))
 
+	(optional user_trackers_optional_user_gmusic
+		(call user_gmusic.rw_inherited_fifo_files (subj)))
+
 	(optional user_trackers_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 

@@ -27,6 +27,7 @@
 	(call dev.getattr_random (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -42,9 +43,15 @@
 
 	(call trackers.manage_home_cache_files (subj_type_attribute))
 
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call trackers.manage_home_data (subj_type_attribute))
+	(call trackers.home_data_obj_type_transition_home_data (subj_type_attribute))
+
 	(call usersubj.list_home_dir (subj_type_attribute))
 	(call usersubj.read_home_user (subj_type_attribute))
 
+	(call usersubj.read_home_config_files (subj_type_attribute))
 	(call usersubj.read_home_data (subj_type_attribute))
 
 	(optional trackermf_subj_type_optional_sysbus

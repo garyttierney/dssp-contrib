@@ -4,6 +4,7 @@
 	(blockinherit gvfsdfuse.subj_blk)
 
 	(call sysadm_gvfsd.daemon (subj gvfsdfuse.cmd_file))
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_gvfsdfuse_optional_sysadm_sessbus
 		(call sysadm_sessbus.service_subj_type (subj)))

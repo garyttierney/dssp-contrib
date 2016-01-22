@@ -64,6 +64,17 @@
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
+	(macro dontaudit_audit_access_tmpfs_user_dirs ((type ARG1))
+		(dontaudit ARG1 tmpfs_user_file (dir (audit_access))))
+
+	(macro audit_write_access_tmpfs_user_dirs ((type ARG1))
+		(allow ARG1 tmpfs_user_file (dir (write))))
+
+	(macro mounton_tmpfs_user_dirs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file (dir (mounton))))
+
 	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))

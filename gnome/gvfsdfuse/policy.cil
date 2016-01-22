@@ -3,4 +3,23 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (capability (dac_override sys_admin)))
+
+	(call file.read_config_lnk_files (subj_type_attribute))
+
+	(call fs.mount_fuse_fs (subj_type_attribute))
+	(call fs.unmount_fuse_fs (subj_type_attribute))
+	(call fs.search_debugfs (subj_type_attribute))
+
+	(call storage.rw_fuse (subj_type_attribute))
+
+	(call fusermount.exec (subj_type_attribute))
+	(call fusermount.read_config_files (subj_type_attribute))
+
+	(call gvfsd.audit_write_access_tmpfs_user_dirs (subj_type_attribute))
+	(call gvfsd.list_tmpfs_user (subj_type_attribute))
+	(call gvfsd.mounton_tmpfs_user_dirs (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))

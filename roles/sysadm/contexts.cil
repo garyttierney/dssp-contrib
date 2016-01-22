@@ -230,6 +230,15 @@
 	(filecon "/root/\.config/telepathy-account-widgets(/.*)?" any root_gcs_home_config)
 	(filecon "/root/\.local/share/sounds(/.*)?" any root_gcs_home_data))
 
+(optional sysadm_gdocs_home_optional_gdocs
+	(tunableif enable_rbacsep
+		(true
+			(context root_gdocs_home_cache (sysadm.id sysadm.role gdocs.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gdocs_home_cache (sysadm.id object_r gdocs.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-documents(/.*)?" any root_gdocs_home_cache))
+
 (optional sysadm_gedit_home_optional_gedit
 	(tunableif enable_rbacsep
 		(true

@@ -20,8 +20,14 @@
 	(optional sysadm_sessbus_optional_sysadm_gcal
 		(call sysadm_gcal.use_fd (subj)))
 
+	(optional sysadm_sessbus_optional_sysadm_gdocs
+		(call sysadm_gdocs.rw_inherited_fifo_files (subj)))
+
 	(optional sysadm_sessbus_optional_sysadm_gmusic
 		(call sysadm_gmusic.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_sessbus_optional_sysadm_gom
+		(call sysadm_gom.rw_inherited_fifo_files (subj)))
 
 	(optional sysadm_sessbus_optional_sysadm_sessbus_launch
 		(call sysadm_sessbus_launch.auto_subj_type_transition (subj)))

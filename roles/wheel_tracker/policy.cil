@@ -40,8 +40,14 @@
 
 	(call wheel_trackerm.rw_inherited_fifo_files (subj))
 
+	(optional wheel_trackers_optional_wheel_gdocs
+		(call wheel_gdocs.rw_inherited_fifo_files (subj)))
+
 	(optional wheel_trackers_optional_wheel_gmusic
 		(call wheel_gmusic.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_trackers_optional_wheel_gom
+		(call wheel_gom.rw_inherited_fifo_files (subj)))
 
 	(optional wheel_trackers_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))

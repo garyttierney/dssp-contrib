@@ -496,6 +496,11 @@
 		(call gdocs.manage_tmpfs_user (subj))
 		(call gdocs.relabel_tmpfs_user (subj))
 
+		(call gdocs.manage_home_cache (subj))
+		(call gdocs.relabel_home_cache (subj))
+
+		(call gdocs.home_cache_obj_type_transition_home_cache (subj))
+
 		(call user_gdocs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gedit

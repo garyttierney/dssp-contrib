@@ -6,8 +6,45 @@
 	(optional user_gdocs_optional_user_atspird
 		(call user_atspird.sessbus_chat_client_subj_type (subj)))
 
+	(optional user_gdocs_optional_user_dconfs
+		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gcs
+		(call user_gcs.auto_subj_type_transition (subj)))
+
+	(optional user_gdocs_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_gdocs_optional_user_goad
+		(call user_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gs
+		(call user_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gvfsdhttp
+		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gvfsdmd
+		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_trackerm
+		(call user_trackerm.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_trackers
+		(call user_trackers.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gdocs_optional_user_sessbus
 		(call user_sessbus.daemon (subj gdocs.cmd_file)))
+
+	(optional user_gdocs_optional_user_webkitwp
+		(call user_webkitwp.auto_subj_type_transition (subj))
+		(call user_webkitwp.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gdocs_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

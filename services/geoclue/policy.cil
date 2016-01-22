@@ -25,6 +25,8 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(call sys.read_cpu_online_sysfs_files (subj))
+
 	(call dev.read_urandom (subj))
 
 	(call http.tcp_connect_port (subj))

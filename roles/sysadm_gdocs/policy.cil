@@ -6,8 +6,45 @@
 	(optional sysadm_gdocs_optional_sysadm_atspird
 		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
 
+	(optional sysadm_gdocs_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gcs
+		(call sysadm_gcs.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_goad
+		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gs
+		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gvfsdhttp
+		(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gvfsdmd
+		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_trackerm
+		(call sysadm_trackerm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gdocs_optional_sysadm_trackers
+		(call sysadm_trackers.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gdocs_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gdocs.cmd_file)))
+
+	(optional sysadm_gdocs_optional_sysadm_webkitwp
+		(call sysadm_webkitwp.auto_subj_type_transition (subj))
+		(call sysadm_webkitwp.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gdocs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

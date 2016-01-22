@@ -730,6 +730,9 @@
 		(call user_gvfsdsftp.role_pattern (role subj_type_attribute))
 		(call user_gvfsdtrash.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gvfsdfuse
+                (call user_gvfsdfuse.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_irssi
 		(call irssi.manage_home_user (subj))
 		(call irssi.relabel_home_user (subj))

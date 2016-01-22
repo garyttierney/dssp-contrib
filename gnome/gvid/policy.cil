@@ -1,0 +1,152 @@
+(block gvid
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call dev.getattr_random (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_dri (subj_type_attribute))
+
+	(call file.list_mnt (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.dontaudit_list_rootfs (subj_type_attribute))
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call sec.search_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call dconf.client_subj_type (subj_type_attribute))
+
+	(call grilo.client_subj_type (subj_type_attribute))
+
+	(call gstreamer.client_subj_type (subj_type_attribute))
+
+	(call gtk.client_subj_type (subj_type_attribute))
+
+	(call gvfsdmd.read_home_data_files (subj_type_attribute))
+
+	(call gvid_helper.exec (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
+	(call fonts.setattr_var_cache_dirs (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call thumbnails.client_subj_type (subj_type_attribute))
+
+	(call trackers.rw_home_cache_files (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
+	(call usersubj.read_home_data (subj_type_attribute))
+
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
+
+	(optional gvid_subj_type_optional_avahid
+		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gvid_subj_type_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gvid_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gvid_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gvid_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gvid_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+
+(block gvidap
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gvidvt
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (getsched setsched setrlimit)))
+
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call gstreamer.client_subj_type (subj_type_attribute))
+
+	(call gvid.write_tmpfs_user_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(optional gvidvt_subj_type_optional_nautilus
+		(call nautilus.write_tmpfs_user_files (subj_type_attribute))))
+
+(block gvid_helper
+	(blockinherit cmd.obj_blk))

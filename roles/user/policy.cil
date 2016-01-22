@@ -733,6 +733,28 @@
 	(optional user_optional_user_gvfsdfuse
                 (call user_gvfsdfuse.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gvid
+		(call gvid.manage_tmpfs_user (subj))
+		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_config (subj))
+		(call gvid.relabel_home_config (subj))
+
+		(call gvid.home_config_obj_type_transition_home_config (subj))
+
+		(call gvid.manage_home_data (subj))
+		(call gvid.relabel_home_data (subj))
+
+		(call gvid.home_data_obj_type_transition_home_data (subj))
+
+		(call user_gvid.role_pattern (role subj_type_attribute))
+		(call user_gvidap.role_pattern (role subj_type_attribute))
+
+		(call gvidvt.manage_tmpfs_user_files (subj))
+		(call gvidvt.relabel_tmpfs_user_files (subj))
+
+		(call user_gvidvt.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_irssi
 		(call irssi.manage_home_user (subj))
 		(call irssi.relabel_home_user (subj))

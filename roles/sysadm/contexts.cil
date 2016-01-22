@@ -400,6 +400,18 @@
 
 	(filecon "/root/\.local/share/gvfs-metadata(/.*)?" any root_gvfsdmd_home_data))
 
+(optional sysadm_gvid_home_optional_gvid
+	(tunableif enable_rbacsep
+		(true
+			(context root_gvid_home_config (sysadm.id sysadm.role gvid.home_config_file (systemlow systemlow)))
+			(context root_gvid_home_data (sysadm.id sysadm.role gvid.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gvid_home_config (sysadm.id object_r gvid.home_config_file (systemlow systemlow)))
+			(context root_gvid_home_data (sysadm.id object_r gvid.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/totem(/.*)?" any root_gvid_home_config)
+	(filecon "/root/\.local/share/totem(/.*)?" any root_gvid_home_data))
+
 (optional sysadm_ibus_home_optional_ibus
 	(tunableif enable_rbacsep
 		(true

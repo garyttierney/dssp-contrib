@@ -1,0 +1,82 @@
+(block sysadm_gvid
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvid.subj_blk)
+
+	(call sysadm_gvidap.auto_subj_type_transition (subj))
+	(call sysadm_gvidvt.auto_subj_type_transition (subj))
+
+	(optional sysadm_gvid_optional_sysadm_atspird
+		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_dleyna
+		(call sysadm_dleyna.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_goad
+		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gs
+		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsdhttp
+		(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
+		(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsdmd
+		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsdnetwork
+		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsdtrash
+		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gvfsdud2
+		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gsd
+		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_gstps
+		(call sysadm_gstps.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_nautilus
+		(call sysadm_nautilus.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gvid_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gvid.cmd_file)))
+
+	(optional sysadm_gvid_optional_sysadm_trackers
+		(call sysadm_trackers.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvid_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block sysadm_gvidap
+	(blockinherit gvidap.subj_blk))
+
+(block sysadm_gvidvt
+	(blockinherit gvidvt.subj_blk)
+
+	(optional sysadm_gvidvt_optional_sysadm_gstps
+		(call sysadm_gstps.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gvidvt_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvidvt_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))
+

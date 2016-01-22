@@ -1,0 +1,14 @@
+(in gvid
+	(filecon "/usr/bin/totem" file cmd_file_context)
+	(filecon "HOME_DIR/\.config/totem(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.local/share/totem(/.*)?" any home_data_file_context))
+
+(in gvidap
+	(filecon "/usr/bin/totem-audio-preview" file cmd_file_context))
+
+(in gvidvt
+	(filecon "/usr/bin/totem-video-thumbnailer" file cmd_file_context))
+
+(in gvid_helper
+	(filecon "/usr/libexec/totem-pl-parser-videosite" file cmd_file_context))
+

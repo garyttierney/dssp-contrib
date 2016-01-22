@@ -1422,6 +1422,28 @@
 	(optional sysadm_optional_sysadm_gvfsdfuse
 		(call sysadm_gvfsdfuse.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gvid
+		(call gvid.manage_tmpfs_user (subj))
+		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_config (subj))
+		(call gvid.relabel_home_config (subj))
+
+		(call gvid.home_config_obj_type_transition_home_config (subj))
+
+		(call gvid.manage_home_data (subj))
+		(call gvid.relabel_home_data (subj))
+
+		(call gvid.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gvid.role_pattern (role subj_type_attribute))
+		(call sysadm_gvidap.role_pattern (role subj_type_attribute))
+
+		(call gvidvt.manage_tmpfs_user_files (subj))
+		(call gvidvt.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_gvidvt.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_busctl
 		(call sysadm_busctl.role_pattern (role subj_type_attribute)))
 

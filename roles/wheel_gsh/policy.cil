@@ -86,6 +86,23 @@
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
+(block wheel_gshhs
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gshhs.subj_blk)
+
+	(call wheel_gsh.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gshhs_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gshhs_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gshhs.cmd_file)))
+
+	(optional wheel_gshhs_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
 (block wheel_gshcs
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 

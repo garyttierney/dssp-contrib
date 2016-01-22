@@ -38,7 +38,12 @@
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (sys_rawio)))
+	(allow subj self rw_fifo_file_perms)
 
+	(call file.manage_mnt_dirs (subj))
+	(call file.runtime_obj_type_transition_mnt (subj))
+
+	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.read_sysfs (subj))
 
 	(call storage.read_all (subj))
@@ -46,9 +51,14 @@
 	(call fstab.read (subj))
 	(call locale.read (subj))
 
+	(call mount.auto_subj_type_transition (subj))
+
 	(call nss.client_subj_type (subj))
 
 	(call udev.client_subj_type (subj))
+
+	(optional udisksd_optional_dm
+		(call dmcrypt.auto_subj_type_transition (subj)))
 
 	(optional udisksd_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))
@@ -64,6 +74,9 @@
 
 	(optional udisksd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
+
+	(optional udisksd_optiona_sd_logind
+		(call sd_logind.read_runtime_files (subj)))
 
 	(optional udisksd_optional_sysbus
                 (call sysbus.service_subj_type (subj)))

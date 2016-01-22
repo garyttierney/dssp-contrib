@@ -589,6 +589,9 @@
 		(call user_goad.role_pattern (role subj_type_attribute))
 		(call user_goais.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gom
+		(call user_gom.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gpg
 		(call gpg.manage_home_user (subj))
 		(call gpg.relabel_home_user (subj))

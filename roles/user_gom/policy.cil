@@ -1,0 +1,11 @@
+(block user_gom
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gom.subj_blk)
+
+	(optional user_gom_optional_user_sessbus
+		(call user_sessbus.daemon (subj gom.cmd_file)))
+
+	(optional user_gom_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

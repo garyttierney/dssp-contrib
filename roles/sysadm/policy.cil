@@ -1181,6 +1181,12 @@
 
 		(call sysadm_gcsp.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gdocs
+		(call gdocs.manage_tmpfs_user (subj))
+		(call gdocs.relabel_tmpfs_user (subj))
+
+		(call sysadm_gdocs.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gedit
 		(call gedit.manage_home_config (subj))
 		(call gedit.relabel_home_config (subj))

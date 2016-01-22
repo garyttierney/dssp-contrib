@@ -1,0 +1,18 @@
+(block gdocs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call gtk.client_subj_type (subj_type_attribute))
+
+	(optional gdocs_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

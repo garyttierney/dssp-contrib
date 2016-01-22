@@ -30,6 +30,7 @@
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)
 	(blockinherit usersubj.create_home_cache_dirs_blk)
+	(blockinherit usersubj.rw_home_cache_dirs_blk)
 	(blockinherit usersubj.read_home_cache_files_blk)
 	(blockinherit usersubj.read_home_cache_lnk_files_blk)
 	(blockinherit usersubj.read_home_cache_blk)
@@ -123,13 +124,43 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(blockinherit usersubj.search_home_cache_blk)
-	(blockinherit usersubj.list_home_cache_blk)
-	(blockinherit usersubj.read_home_cache_files_blk)
-	(blockinherit usersubj.read_home_cache_lnk_files_blk)
-	(blockinherit usersubj.read_home_cache_blk)
-	(blockinherit usersubj.manage_home_cache_blk)
-	(blockinherit usersubj.relabel_home_cache_blk)
+	(macro search_home_cache ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(allow ARG1 home_cache_file search_dir_perms))
+
+	(macro list_home_cache ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(allow ARG1 home_cache_file list_dir_perms))
+
+	(macro read_home_cache_files ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(call read_files_pattern (ARG1 home_cache_file home_cache_file)))
+
+	(macro rw_home_cache_files ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(call read_files_pattern (ARG1 home_cache_file home_cache_file)))
+
+	(macro read_home_cache_lnk_files ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(call read_lnk_files_pattern (ARG1 home_cache_file home_cache_file)))
+
+	(macro read_home_cache ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(allow ARG1 home_cache_file list_dir_perms)
+		(allow ARG1 home_cache_file read_file_perms)
+		(allow ARG1 home_cache_file read_lnk_file_perms))
+
+	(macro manage_home_cache ((type ARG1))
+		(call tpmc.rw_home_cache_dirs (ARG1))
+		(allow ARG1 home_cache_file manage_dir_perms)
+		(allow ARG1 home_cache_file manage_file_perms)
+		(allow ARG1 home_cache_file manage_lnk_file_perms))
+
+	(macro relabel_home_cache ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(allow ARG1 home_cache_file relabel_dir_perms)
+		(allow ARG1 home_cache_file relabel_file_perms)
+		(allow ARG1 home_cache_file relabel_lnk_file_perms))
 
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 

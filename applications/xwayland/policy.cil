@@ -46,11 +46,8 @@
 	(call xutil.delete_tmpfs_user_files (subj_type_attribute))
 	(call xutil.read_tmpfs_user_files (subj_type_attribute))
 
-	(optional xwayland_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
-
 	(allow subj_type_attribute compositor_subj_type_attribute (fd (use)))
-	(allow subj_type_attribute compositor_subj_type_attribute (unix_stream_socket (accept getopt shutdown)))
+	(allow subj_type_attribute compositor_subj_type_attribute (unix_stream_socket (accept read getattr write getopt shutdown)))
 
 	(allow subj_type_attribute client_subj_type_attribute list_dir_perms)
 	(allow subj_type_attribute client_subj_type_attribute read_file_perms)

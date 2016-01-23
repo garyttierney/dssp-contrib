@@ -18,6 +18,13 @@
 	(call manage_config (subj))
 	(call config_obj_type_transition_config (subj))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
 	(blockinherit file.runtime_lock_obj_blk)
 
 	(typeattributeset obj_type_attribute runtime_lock_file)

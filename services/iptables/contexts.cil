@@ -14,6 +14,7 @@
 	(filecon "/usr/sbin/nft" file cmd_file_context)
 	(filecon "/usr/sbin/xtables-multi" file cmd_file_context)
 	(filecon "/var/lib/ebtables(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/ebtables\.lock" file runtime_file_context)
 	(filecon "/var/run/lock/subsys/arptables" file runtime_lock_file_context)
 	(filecon "/var/run/lock/subsys/ebtables" file runtime_lock_file_context)
 	(filecon "/var/run/lock/subsys/ip6tables" file runtime_lock_file_context)

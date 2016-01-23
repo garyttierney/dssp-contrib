@@ -44,7 +44,9 @@
 	(call file.runtime_obj_type_transition_mnt (subj))
 
 	(call fs.getattr_tmpfs_fs (subj))
-	(call fs.read_sysfs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_sysfs_files (subj))
 
 	(call storage.read_all (subj))
 

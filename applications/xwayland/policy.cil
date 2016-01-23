@@ -64,7 +64,7 @@
 	(call file.search_runtime_user (client_subj_type_attribute))
 	(call fs.search_tmpfs (client_subj_type_attribute))
 
-	(call stream_connect_pattern (client_subj_type_attribute tmpfs_user_file tmpfs_user_file compositor_subj_type_attribute))
+	(call stream_connect_compositor (client_subj_type_attribute))
 
 	(call xserver.rw_inherited_fifo_files_tmpfs_client_subj (compositor_subj_type_attribute))
 	(call xserver.rw_inherited_tmpfs_client_files (compositor_subj_type_attribute))

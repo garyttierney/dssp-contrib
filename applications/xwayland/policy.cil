@@ -49,15 +49,18 @@
 	(optional xwayland_subj_type_optional_gsh
 		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
 
+	(allow subj_type_attribute compositor_subj_type_attribute (fd (use)))
 	(allow subj_type_attribute compositor_subj_type_attribute (unix_stream_socket (accept getopt shutdown)))
 
-	(call manage_tmpfs_user (compositor_subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs (compositor_subj_type_attribute))
+	(allow subj_type_attribute client_subj_type_attribute list_dir_perms)
+	(allow subj_type_attribute client_subj_type_attribute read_file_perms)
+	(allow subj_type_attribute client_subj_type_attribute read_lnk_file_perms)
 
-	(call xserver.read_state_client_subj (subj_type_attribute))
 	(call xserver.rw_inherited_tmpfs_client_files (subj_type_attribute))
-	(call xserver.rw_shm_client_subj (subj_type_attribute))
-	(call xserver.use_fd_client_subj (subj_type_attribute))
+	(call xserver.rw_shm_tmpfs_client_subj (subj_type_attribute))
+
+	(allow client_subj_type_attribute compositor_subj_type_attribute (fd (use)))
+	(allow client_subj_type_attribute compositor_tmpfs_obj_type_attribute (file (read write)))
 
 	(call file.read_data (client_subj_type_attribute))
 
@@ -66,15 +69,18 @@
 
 	(call stream_connect_compositor (client_subj_type_attribute))
 
+	(call client_subj_type (shared_client_subj_type_attribute))
+
+	(allow shared_client_subj_type_attribute client_subj_type_attribute (fd (use)))
+	(allow shared_client_subj_type_attribute client_subj_type_attribute (fifo_file (write)))
+
+	(call manage_tmpfs_user (compositor_subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (compositor_subj_type_attribute))
+
 	(call xserver.rw_inherited_fifo_files_tmpfs_client_subj (compositor_subj_type_attribute))
 	(call xserver.rw_inherited_tmpfs_client_files (compositor_subj_type_attribute))
 
-	(call client_subj_type (shared_client_subj_type_attribute))
-
 	(allow compositor_subj_type_attribute shared_client_subj_type_attribute (fd (use)))
-
-	(allow client_subj_type_attribute compositor_tmpfs_obj_type_attribute (file (read write)))
-
 	(allow compositor_subj_type_attribute shared_client_tmpfs_obj_type_attribute (file (read write)))
 
 	(optional xwayland_client_subj_type_optional_dconf

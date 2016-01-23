@@ -107,6 +107,10 @@
 		(allow ARG1 client_subj_type_attribute read_file_perms)
 		(allow ARG1 client_subj_type_attribute read_lnk_file_perms))
 
+	(macro rw_inherited_fifo_files_tmpfs_client_subj ((type ARG1))
+		(call use_fd_client_subj (ARG1))
+		(allow ARG1 tmpfs_client_subj_type_attribute rw_inherited_fifo_file_perms))
+
 	(blockinherit subj.use_fd_blk)
 
 	(macro stream_connect ((type ARG1))

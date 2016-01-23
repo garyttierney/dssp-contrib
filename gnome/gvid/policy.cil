@@ -39,6 +39,7 @@
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
+	(call fs.read_fuse_subj_type (subj_type_attribute))
 
 	(call sec.search_fs (subj_type_attribute))
 
@@ -135,6 +136,8 @@
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
+
+	(call fs.read_fuse_subj_type (subj_type_attribute))
 
 	(call gstreamer.client_subj_type (subj_type_attribute))
 

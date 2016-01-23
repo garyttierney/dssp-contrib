@@ -199,7 +199,10 @@
 	(call usersubj.read_home_data (subj_type_attribute))
 
 	(optional gcsp_subj_type_optional_xserver
-		(call xserver.client_subj_type (subj_type_attribute))))
+		(call xserver.client_subj_type (subj_type_attribute)))
+
+	(optional gcsp_subj_type_optional_xwayland
+		(call xwayland.shared_client (subj_type_attribute tmpfs_user_file))))
 
 (block gcs_helper
 	(blockinherit cmd.obj_blk))

@@ -48,6 +48,8 @@
 	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 	(call atspi.stream_connect_all_client_subj (subj_type_attribute))
 
+	(call canberra.write_inherited_tmpfs_user_files (subj_type_attribute))
+
 	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call gcs.read_home_data (subj_type_attribute))
@@ -129,7 +131,10 @@
 
 	(optional gsh_subj_type_optional_xserver
 		(call xserver.rw_inherited_tmpfs_user_files (subj_type_attribute))
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gsh_subj_type_optional_xwayland
+		(call xwayland.compositor (subj_type_attribute tmpfs_user_file))))
 
 (block gshcs
 	(typeattribute subj_type_attribute)

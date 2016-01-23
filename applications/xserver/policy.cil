@@ -152,4 +152,8 @@
 		(call gsh.rw_inherited_unix_stream_sockets_all_subj (client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_rp
-		(call rp.client_subj_type (client_subj_type_attribute))))
+		(call rp.client_subj_type (client_subj_type_attribute)))
+
+	(optional xserver_client_subj_type_optional_xwayland
+		(call xwayland.client_subj_type (client_subj_type_attribute))
+		(call xwayland.read_inherited_fifo_files_all_subj (client_subj_type_attribute))))

@@ -332,6 +332,8 @@
 		(call xserver.relabel_tmpfs_user_sock_files (subj)))
 
 	(optional wheel_optional_xutil
+		(call xutil.manage_tmpfs_user_files (subj))
+		(call xutil.relabel_tmpfs_user_files (subj))
 		(call xutil.run (subj_type_attribute role))
 		(call xutil.manage_home_user_files (subj))
 		(call xutil.relabel_home_user_files (subj))
@@ -741,6 +743,9 @@
 		(call wheel_gstps.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gt
+		(call gt.manage_tmpfs_user_files (subj))
+		(call gt.relabel_tmpfs_user_files (subj))
+
 		(call wheel_gt.role_pattern (role subj_type_attribute))
 
 		(call gts.manage_tmpfs_user (subj))
@@ -1240,7 +1245,10 @@
 		(call wheel_xsession.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xwayland
-		(call wheel_xwayland.role_pattern (role subj_type_attribute)))
+		(call xwayland.manage_tmpfs_user (subj))
+		(call xwayland.relabel_tmpfs_user (subj))
+
+		(call wheel_xwayland.role (role)))
 
 	(optional wheel_optional_wheel_xterm
 		(call wheel_xterm.role_pattern (role subj_type_attribute))))

@@ -11,5 +11,17 @@
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
+	(macro delete_tmpfs_user_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.del_entry_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file delete_file_perms))
+
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".Xresources"))))
+		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".Xresources")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))

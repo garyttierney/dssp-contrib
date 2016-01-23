@@ -9,6 +9,11 @@
 
 	(call read_home_user_files (subj))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
@@ -30,5 +35,11 @@
 		(true
 			(call rbacsep.read_state_target_subj_type (subj))))
 
+	(optional xutil_optional_gs
+		(call gs.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
 	(optional xutil_optional_sd
-		(call sd.getattr_unit_dirs (subj))))
+		(call sd.getattr_unit_dirs (subj)))
+
+	(optional xutil_optional_xwayland
+		(call xwayland.send_sigchld_all_subj (subj))))

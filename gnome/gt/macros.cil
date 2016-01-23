@@ -25,7 +25,15 @@
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))
 
 (in gts
 	(block subj_blk

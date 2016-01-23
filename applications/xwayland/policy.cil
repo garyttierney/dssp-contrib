@@ -1,9 +1,19 @@
 (block xwayland
+        (typeattribute client_subj_type_attribute)
+        (typeattribute shared_client_subj_type_attribute)
+        (typeattribute shared_client_tmpfs_obj_type_attribute)
+        (typeattribute compositor_subj_type_attribute)
+        (typeattribute compositor_tmpfs_obj_type_attribute)
         (typeattribute subj_type_attribute)
 
         (blockinherit app.application_cmd_obj_blk)
 
         (call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
 
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
@@ -16,12 +26,55 @@
 	(call file.read_data_files (subj_type_attribute))
 
 	(call fs.read_sysfs (subj_type_attribute))
+	(call fs.rw_inherited_tmpfs_files (subj_type_attribute))
 
 	(call sec.search_fs (subj_type_attribute))
+
+	(call fonts.read_data (subj_type_attribute))
+	(call passwords.read (subj_type_attribute))
+
+	(call nss.read_config_files (subj_type_attribute))
 
 	(call default_context.read_config_files (subj_type_attribute))
 	(call selinux_config.read_config_files (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
 
-	(call xserver.read_config (subj_type_attribute)))
+	(call xserver.read_config (subj_type_attribute))
+	(call xserver.read_var_lib (subj_type_attribute))
+
+	(call xutil.delete_tmpfs_user_files (subj_type_attribute))
+	(call xutil.read_tmpfs_user_files (subj_type_attribute))
+
+	(optional xwayland_subj_type_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+
+	(allow subj_type_attribute compositor_subj_type_attribute (unix_stream_socket (accept getopt shutdown)))
+
+	(call manage_tmpfs_user (compositor_subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (compositor_subj_type_attribute))
+
+	(call xserver.read_state_client_subj (subj_type_attribute))
+	(call xserver.rw_inherited_tmpfs_client_files (subj_type_attribute))
+	(call xserver.rw_shm_client_subj (subj_type_attribute))
+	(call xserver.use_fd_client_subj (subj_type_attribute))
+
+	(call file.read_data (client_subj_type_attribute))
+
+	(call file.search_runtime_user (client_subj_type_attribute))
+	(call fs.search_tmpfs (client_subj_type_attribute))
+
+	(call stream_connect_pattern (client_subj_type_attribute tmpfs_user_file tmpfs_user_file compositor_subj_type_attribute))
+
+	(call xserver.rw_inherited_tmpfs_client_files (compositor_subj_type_attribute))
+
+	(call client_subj_type (shared_client_subj_type_attribute))
+
+	(allow compositor_subj_type_attribute shared_client_subj_type_attribute (fd (use)))
+
+	(allow client_subj_type_attribute compositor_tmpfs_obj_type_attribute (file (read write)))
+
+	(allow compositor_subj_type_attribute shared_client_tmpfs_obj_type_attribute (file (read write)))
+
+	(optional xwayland_client_subj_type_optional_dconf
+		(call dconf.client_subj_type (client_subj_type_attribute))))

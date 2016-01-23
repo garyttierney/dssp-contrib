@@ -39,6 +39,9 @@
 		(call sysadm_gs.sessbus_chat_client_subj_type (subj))
 		(call sysadm_gs.stream_connect (subj)))
 
+	(optional sysadm_gsh_optional_sysadm_gstps
+		(call sysadm_gstps.auto_subj_type_transition (subj)))
+
 	(optional sysadm_gsh_optional_sysadm_gts
 		(call sysadm_gts.send_sigkill (subj)))
 

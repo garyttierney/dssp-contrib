@@ -95,6 +95,8 @@
 
 	(call udev.client_subj_type (subj))
 
+	(call usersubj.dontaudit_search_home_dir (subj))
+
 	(optional nm_optional_dhclient
 		(call dhclient.delete_runtime_files (subj))
 		(call dhclient.read_config_files (subj))

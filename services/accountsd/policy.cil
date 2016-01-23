@@ -36,6 +36,8 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call usersubj.dontaudit_search_home_dir (subj))
+
 	(optional accountsd_optional_gdm
 		(call gdm.manage_config (subj))
 		(call gdm.sysbus_chat_client_subj_type (subj)))

@@ -53,6 +53,8 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call usersubj.dontaudit_search_home_dir (subj))
+
 	(optional firewalld_optional_iptables
 		(call iptables.auto_subj_type_transition (subj)))
 

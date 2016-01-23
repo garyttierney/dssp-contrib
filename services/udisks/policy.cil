@@ -57,6 +57,8 @@
 
 	(call udev.client_subj_type (subj))
 
+	(call usersubj.dontaudit_search_home_dir (subj))
+
 	(optional udisksd_optional_dm
 		(call dmcrypt.auto_subj_type_transition (subj)))
 

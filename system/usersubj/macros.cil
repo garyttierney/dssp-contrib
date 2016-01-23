@@ -1518,6 +1518,9 @@
 		(call file.var_spool_obj_type (ARG1))
 		(typeattributeset var_spool_obj_type_attribute ARG1))
 
+	(macro dontaudit_search_home_dir ((type ARG1))
+		(dontaudit ARG1 home_dir.file search_dir_perms))
+
 	(macro search_home_dir ((type ARG1))
 		(call file.search_home (ARG1))
 		(allow ARG1 home_dir.file search_dir_perms))

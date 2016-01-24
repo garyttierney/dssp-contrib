@@ -1092,6 +1092,22 @@
 	(optional sysadm_optional_sysadm_emacsclient
 		(call sysadm_emacsclient.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_eog
+		(call eog.manage_tmpfs_user (subj))
+		(call eog.relabel_tmpfs_user (subj))
+
+		(call eog.manage_home_config (subj))
+		(call eog.relabel_home_config (subj))
+
+		(call eog.home_config_obj_type_transition_home_config (subj))
+
+		(call eog.manage_home_data_files (subj))
+		(call eog.relabel_home_data_files (subj))
+
+		(call eog.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_eog.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_evo
 		(call evo.manage_home_cache (subj))
 		(call evo.relabel_home_cache (subj))

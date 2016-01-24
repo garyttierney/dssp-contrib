@@ -52,7 +52,7 @@
 		(call user_nautilus.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gedit_optional_user_sessbus
-		(call user_sessbus.daemon (subj gedit.cmd_file)))
+		(call user_sessbus.service_subj_type (subj)))
 
         (optional user_gedit_sessbus_chat_client_subj_type_optional_user_sessbus
                 (allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

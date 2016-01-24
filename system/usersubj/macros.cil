@@ -2542,6 +2542,23 @@
 		(allow ARG1 home_cmd.home_user_file read_lnk_file_perms)
 		(allow ARG1 home_cmd.home_user_file read_sock_file_perms))
 
+	(macro delete_home_cmd ((type ARG1))
+		(call del_entry_home_dir (ARG1))
+		(call del_entry_home_data (ARG1))
+		(allow ARG1 home_cmd.home_user_file delete_file_perms)
+		(allow ARG1 home_cmd.home_user_file delete_dir_perms)
+		(allow ARG1 home_cmd.home_user_file delete_fifo_file_perms)
+		(allow ARG1 home_cmd.home_user_file delete_lnk_file_perms)
+		(allow ARG1 home_cmd.home_user_file delete_sock_file_perms))
+
+	(macro rename_home_cmd ((type ARG1))
+		(call search_home_data (ARG1))
+		(allow ARG1 home_cmd.home_user_file rename_file_perms)
+		(allow ARG1 home_cmd.home_user_file rename_dir_perms)
+		(allow ARG1 home_cmd.home_user_file rename_fifo_file_perms)
+		(allow ARG1 home_cmd.home_user_file rename_lnk_file_perms)
+		(allow ARG1 home_cmd.home_user_file rename_sock_file_perms))
+
 	(macro manage_home_cmd ((type ARG1))
 		(call rw_home_dir (ARG1))
 		(call rw_home_data_dirs (ARG1))

@@ -454,6 +454,7 @@
 			(context root_gvid_home_data (sysadm.id object_r gvid.home_data_file (systemlow systemlow)))))
 
 	(filecon "/root/\.cache/totem(/.*)?" any root_gvid_home_cache)
+	(filecon "/root/\.cache/totem-.*" file root_gvid_home_cache)
 	(filecon "/root/\.config/totem(/.*)?" any root_gvid_home_config)
 	(filecon "/root/\.local/share/totem(/.*)?" any root_gvid_home_data))
 

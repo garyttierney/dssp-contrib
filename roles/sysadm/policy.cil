@@ -1427,6 +1427,10 @@
 	(optional sysadm_optional_sysadm_gvfsdfuse
 		(call sysadm_gvfsdfuse.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gvfsdgoa
+		(call sysadm_gvfsdgoavm.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdgoogle.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gvid
 		(call gvid.manage_tmpfs_user (subj))
 		(call gvid.relabel_tmpfs_user (subj))

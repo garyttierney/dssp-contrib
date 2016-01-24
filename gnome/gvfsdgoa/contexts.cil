@@ -1,0 +1,8 @@
+(in gvfsdgoavm
+	(filecon "/usr/libexec/gvfs-goa-volume-monitor" file cmd_file_context)
+
+	(optional gvfsdgoavm_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-goa-volume-monitor.*" file unit_file_context)))
+
+(in gvfsdgoogle
+	(filecon "/usr/libexec/gvfsd-google" file cmd_file_context))

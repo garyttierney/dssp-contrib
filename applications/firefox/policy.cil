@@ -46,9 +46,11 @@
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
-	(call fs.manage_fuse_subj_type (subj_type_attribute))
 	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
+
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
 	(call net.udp_bind_generic_node (subj_type_attribute))
 	(call net.tcp_bind_generic_node (subj_type_attribute))

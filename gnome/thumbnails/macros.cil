@@ -10,6 +10,10 @@
 	(blockinherit usersubj.manage_home_cache_blk)
 	(blockinherit usersubj.relabel_home_cache_blk)
 
+	(macro getattr_home_cache_files ((type ARG1))
+		(call usersubj.search_home_cache (ARG1))
+		(call getattr_files_pattern (ARG1 home_cache_file home_cache_file)))
+
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))

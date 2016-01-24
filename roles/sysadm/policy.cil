@@ -213,6 +213,9 @@
 	(optional sysadm_optional_dleyna
 		(call dleyna.manage_config_files (subj)))
 
+	(optional sysadm_optional_dleynar
+		(call dleynar.manage_config_files (subj)))
+
 	(optional sysadm_optional_dhclient
 		(call dhclient.manage_config (subj))
 		(call dhclient.manage_runtime_files (subj))
@@ -314,6 +317,15 @@
 		(call gdm.manage_home_cache (subj))
 		(call gdm.relabel_home_cache (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional sysadm_optional_gegl
+		(call gegl.manage_home_cache (subj))
+		(call gegl.relabel_home_cache (subj))
+		(call gegl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gegl.manage_home_data (subj))
+		(call gegl.relabel_home_data (subj))
+		(call gegl.home_data_obj_type_transition_home_data (subj)))
 
 	(optional sysadm_optional_gkr
 		(call gkr.run (subj_type_attribute role)))
@@ -1047,6 +1059,14 @@
 
 		(call sysadm_dleyna.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_dleynar
+		(call dleynar.manage_home_config_files (subj))
+		(call dleynar.relabel_home_config_files (subj))
+
+		(call dleynar.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_dleynar.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_dunst
 		(call dunst.manage_home_config (subj))
 		(call dunst.relabel_home_config (subj))
@@ -1310,6 +1330,17 @@
 
 		(call sysadm_gpg_agent.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gph
+		(call gph.manage_tmpfs_user (subj))
+		(call gph.relabel_tmpfs_user (subj))
+
+		(call gph.manage_home_cache (subj))
+		(call gph.relabel_home_cache (subj))
+
+		(call gph.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gph.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gpinentry
 		(call gpinentry.manage_tmpfs_user (subj))
 		(call gpinentry.relabel_tmpfs_user (subj))
@@ -1434,6 +1465,11 @@
 	(optional sysadm_optional_sysadm_gvid
 		(call gvid.manage_tmpfs_user (subj))
 		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_cache (subj))
+		(call gvid.relabel_home_cache (subj))
+
+		(call gvid.home_cache_obj_type_transition_home_cache (subj))
 
 		(call gvid.manage_home_config (subj))
 		(call gvid.relabel_home_config (subj))

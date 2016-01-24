@@ -1,0 +1,12 @@
+(in sysadm_gph
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gph.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gph.role_pattern (ARG1 ARG2 subj)))
+
+	(macro send_sigkill ((type ARG1))
+		(allow ARG1 subj (process (sigkill)))))

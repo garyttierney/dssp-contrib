@@ -1,0 +1,14 @@
+(block sysadm_dleynar
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit dleynar.subj_blk)
+
+	(optional sysadm_dleynar_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_dleynar_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj dleynar.cmd_file)))
+
+	(optional sysadm_dleynar_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

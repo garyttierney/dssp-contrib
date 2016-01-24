@@ -110,6 +110,15 @@
 
 	(filecon "/root/\.config/dleyna-server-service.conf" file root_dleyna_home_config))
 
+(optional sysadm_dleynar_home_optional_dleynar
+	(tunableif enable_rbacsep
+		(true
+			(context root_dleynar_home_config (sysadm.id sysadm.role dleynar.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dleynar_home_config (sysadm.id object_r dleynar.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/dleyna-renderer-service.conf" file root_dleynar_home_config))
+
 (optional sysadm_dunst_home_optional_dunst
 	(tunableif enable_rbacsep
 		(true
@@ -248,6 +257,18 @@
 
 	(filecon "/root/\.config/gedit(/.*)?" any root_gedit_home_config))
 
+(optional sysadm_gegl_home_optional_gegl
+	(tunableif enable_rbacsep
+		(true
+			(context root_gegl_home_cache (sysadm.id sysadm.role gegl.home_cache_file (systemlow systemlow)))
+			(context root_gegl_home_data (sysadm.id sysadm.role gegl.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gegl_home_cache (sysadm.id object_r gegl.home_cache_file (systemlow systemlow)))
+			(context root_gegl_home_data (sysadm.id object_r gegl.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gegl-.*(/.*)?" any root_gegl_home_cache)
+	(filecon "/root/\.local/share/gegl-.*(/.*)?" any root_gegl_home_data))
+
 (optional sysadm_glib_home_optional_glib
 	(tunableif enable_rbacsep
 		(true
@@ -268,6 +289,15 @@
 
 	(filecon "/root/\.cache/goa-1\.0(/.*)?" any root_goa_home_cache)
 	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
+
+(optional sysadm_gph_home_optional_gph
+	(tunableif enable_rbacsep
+		(true
+			(context root_gph_home_cache (sysadm.id sysadm.role gph.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gph_home_cache (sysadm.id object_r gph.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-photos(/.*)?" any root_gph_home_cache))
 
 (optional sysadm_grilo_home_optional_grilo
 	(tunableif enable_rbacsep
@@ -403,12 +433,15 @@
 (optional sysadm_gvid_home_optional_gvid
 	(tunableif enable_rbacsep
 		(true
+			(context root_gvid_home_cache (sysadm.id sysadm.role gvid.home_cache_file (systemlow systemlow)))
 			(context root_gvid_home_config (sysadm.id sysadm.role gvid.home_config_file (systemlow systemlow)))
 			(context root_gvid_home_data (sysadm.id sysadm.role gvid.home_data_file (systemlow systemlow))))
 		(false
+			(context root_gvid_home_cache (sysadm.id object_r gvid.home_cache_file (systemlow systemlow)))
 			(context root_gvid_home_config (sysadm.id object_r gvid.home_config_file (systemlow systemlow)))
 			(context root_gvid_home_data (sysadm.id object_r gvid.home_data_file (systemlow systemlow)))))
 
+	(filecon "/root/\.cache/totem(/.*)?" any root_gvid_home_cache)
 	(filecon "/root/\.config/totem(/.*)?" any root_gvid_home_config)
 	(filecon "/root/\.local/share/totem(/.*)?" any root_gvid_home_data))
 

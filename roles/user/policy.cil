@@ -100,6 +100,15 @@
 	(optional user_optional_gpg_pcsc_wrapper
 		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
 
+	(optional user_optional_gegl
+		(call gegl.manage_home_cache (subj))
+		(call gegl.relabel_home_cache (subj))
+		(call gegl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gegl.manage_home_data (subj))
+		(call gegl.relabel_home_data (subj))
+		(call gegl.home_data_obj_type_transition_home_data (subj)))
+
 	(optional user_optional_gtk
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
@@ -341,6 +350,14 @@
 		(call dleyna.home_config_obj_type_transition_home_config (subj))
 
 		(call user_dleyna.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_dleynar
+		(call dleynar.manage_home_config_files (subj))
+		(call dleynar.relabel_home_config_files (subj))
+
+		(call dleynar.home_config_obj_type_transition_home_config (subj))
+
+		(call user_dleynar.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_dunst
 		(call dunst.manage_home_config (subj))
@@ -621,6 +638,16 @@
 
 		(call user_gpg_agent.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gph
+		(call gph.manage_tmpfs_user (subj))
+		(call gph.relabel_tmpfs_user (subj))
+
+		(call gph.manage_home_cache (subj))
+		(call gph.relabel_home_cache (subj))
+		(call gph.home_cache_obj_type_transition_home_cache (subj))
+
+		(call user_gph.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gpinentry
 		(call gpinentry.manage_tmpfs_user (subj))
 		(call gpinentry.relabel_tmpfs_user (subj))
@@ -745,6 +772,11 @@
 	(optional user_optional_user_gvid
 		(call gvid.manage_tmpfs_user (subj))
 		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_cache (subj))
+		(call gvid.relabel_home_cache (subj))
+
+		(call gvid.home_cache_obj_type_transition_home_cache (subj))
 
 		(call gvid.manage_home_config (subj))
 		(call gvid.relabel_home_config (subj))

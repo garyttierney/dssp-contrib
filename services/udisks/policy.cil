@@ -40,6 +40,8 @@
 	(allow subj self (capability (sys_rawio)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call cmd.exec (subj))
+
 	(call file.manage_mnt_dirs (subj))
 	(call file.runtime_obj_type_transition_mnt (subj))
 
@@ -48,12 +50,13 @@
 	(call fs.read_sysfs_lnk_files (subj))
 	(call fs.rw_sysfs_files (subj))
 
-	(call storage.read_all (subj))
+	(call storage.rw_fixed_disk (subj))
 
 	(call fstab.read (subj))
 	(call locale.read (subj))
 
 	(call mount.auto_subj_type_transition (subj))
+	(call mount.read_runtime_files (subj))
 
 	(call nss.client_subj_type (subj))
 

@@ -77,6 +77,7 @@
 
 	(allow subj self (capability (fsetid fowner sys_tty_config kill sys_admin)))
 	(allow subj self (process (getcap setsched setcap setrlimit)))
+	(allow subj self read_key_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept connectto)))
 
@@ -126,6 +127,9 @@
 
 	(call gkrd.manual_subj_type_transition_all_subj (subj))
 	(call gkrd.stream_connect_all_subj (subj))
+
+	(call goad.exec (subj))
+	(call goais.exec (subj))
 
 	(call gs.exec (subj))
 	(call gs_helper.exec (subj))
@@ -236,6 +240,9 @@
 	(optional gdm_sysbus_chat_client_subj_type_optional_sysbus
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+	(optional gdm_optional_tp
+		(call tpmc.exec (subj)))
 
 	(optional gdm_optional_udisks
 		(call udisksd.sysbus_chat_client_subj_type (subj)))

@@ -32,6 +32,8 @@
 	(call manage_home_cache (subj_type_attribute))
 	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
+	(call home_cache_obj_type_transition_home_cache_files (subj_type_attribute))
+
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
@@ -150,6 +152,7 @@
 
 	(call gstreamer.client_subj_type (subj_type_attribute))
 
+	(call gvid.read_home_cache (subj_type_attribute))
 	(call gvid.write_tmpfs_user_files (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))

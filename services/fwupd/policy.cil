@@ -69,7 +69,9 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+
+		(call sd.sysbus_chat_client_subj_type (subj)))
 
 	(optional fwupd_optional_sysbus
 		(call sysbus.daemon (subj fwupd.cmd_file)))
@@ -105,15 +107,22 @@
 
 	(typeattribute subj_type_attribute)
 
+	(blockinherit subj_blk)
+
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
+
+	(roleattributeset role_attribute sys.role)
 
 	(call locale.read (subj_type_attribute))
 
 	(call polkit_tty_agent.run (subj_type_attribute role_attribute))
 
 	(call fwupd.client_subj_type (subj_type_attribute))
+
+	(optional fwupdmgr_optional_sd
+		(call sd.daemon (subj cmd_file)))
 
 	(optional fwupdmgr_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

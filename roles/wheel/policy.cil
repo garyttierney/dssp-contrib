@@ -800,6 +800,22 @@
 
 		(call wheel_gsound.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_gsw
+		(call gsw.manage_tmpfs_user (subj))
+		(call gsw.relabel_tmpfs_user (subj))
+
+		(call gsw.manage_home_cache (subj))
+		(call gsw.relabel_home_cache (subj))
+
+		(call gsw.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gsw.manage_home_data (subj))
+		(call gsw.relabel_home_data (subj))
+
+		(call gsw.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gsw.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_gstreamer
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))

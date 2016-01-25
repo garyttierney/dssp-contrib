@@ -33,6 +33,29 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(allow subj self rw_fifo_file_perms)
+
+	(call dev.rw_usb (subj))
+
+	(call file.read_data (subj))
+
+	(call fs.getattr_efivarfs_fs (subj))
+	(call fs.list_efivarfs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call locale.read (subj))
+	(call mime_types.read_data (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call polkit.sysbus_chat_client_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional fwupd_optional_gsw
+		(call gsw.read_inherited_home_cache_files (subj)))
+
 	(optional fwupd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -43,7 +66,7 @@
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
 
 	(optional fwupd_optional_sysbus
-		(call sysbus.service_subj_type (subj)))
+		(call sysbus.daemon (subj fwupd.cmd_file)))
 
 	(optional fwupd_sysbus_chat_client_subj_type_attribute_optional_sysbus
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))

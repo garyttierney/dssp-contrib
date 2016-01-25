@@ -1451,6 +1451,22 @@
 
 		(call sysadm_gsound.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gsw
+		(call gsw.manage_tmpfs_user (subj))
+		(call gsw.relabel_tmpfs_user (subj))
+
+		(call gsw.manage_home_cache (subj))
+		(call gsw.relabel_home_cache (subj))
+
+		(call gsw.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gsw.manage_home_data (subj))
+		(call gsw.relabel_home_data (subj))
+
+		(call gsw.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gsw.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gstreamer
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))

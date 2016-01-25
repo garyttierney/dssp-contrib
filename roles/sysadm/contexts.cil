@@ -329,6 +329,18 @@
 
 	(filecon "/root/\.local/share/grilo-plugins(/.*)?" any root_grilo_home_data))
 
+(optional sysadm_gsw_home_optional_gsw
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsw_home_cache (sysadm.id sysadm.role gsw.home_cache_file (systemlow systemlow)))
+			(context root_gsw_home_data (sysadm.id sysadm.role gsw.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsw_home_cache (sysadm.id object_r gsw.home_cache_file (systemlow systemlow)))
+			(context root_gsw_home_data (sysadm.id object_r gsw.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-software(/.*)?" any root_gsw_home_cache)
+	(filecon "/root/\.local/share/gnome-software(/.*)?" any root_gsw_home_data))
+
 (optional sysadm_gtk_home_optional_gtk
 	(tunableif enable_rbacsep
 		(true

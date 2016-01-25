@@ -54,6 +54,7 @@
 
 	(allow subj self (process (setcap setrlimit)))
 	(allow subj self (capability (setgid setuid sys_resource)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sys.audit_client_subj_type (subj))
 
@@ -78,6 +79,9 @@
 
 	(optional sysbus_optional_gsd
 		(call gsd.use_fd_all_subj (subj)))
+
+	(optional sysbus_optional_gsw
+		(call gsw.read_inherited_home_cache_files (subj)))
 
 	(optional sysbus_optional_machinectl
 		(call machinectl.use_fd_all_subj (subj)))

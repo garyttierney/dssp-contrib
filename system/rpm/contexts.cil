@@ -1,6 +1,7 @@
 (in rpm
 	(filecon "/system-update" symlink var_lib_file_context)
 	(filecon "/etc/dnf(/.*)?" any config_file_context)
+	(filecon "/etc/PackageKit(/.*)?" any config_file_context)
 	(filecon "/etc/rpm(/.*)?" any config_file_context)
 	(filecon "/etc/yum(/.*)?" any config_file_context)
 	(filecon "/etc/yum\.conf.*" file config_file_context)
@@ -14,11 +15,16 @@
 	(filecon "/usr/lib/rpm/redhat/rpmrc" file config_file_context)
 	(filecon "/usr/lib/rpm/rpmrc" file config_file_context)
 	(filecon "/usr/lib/rpm/rpmpopt.*" file config_file_context)
+	(filecon "/usr/libexec/packagekit-direct" file cmd_file_context)
+	(filecon "/usr/libexec/packagekitd" file cmd_file_context)
+	(filecon "/usr/libexec/pk-offline-update" file cmd_file_context)
 	(filecon "/usr/sbin/yum-complete-transaction" file cmd_file_context)
 	(filecon "/usr/sbin/yumdb" file cmd_file_context)
 	(filecon "/var/cache/dnf(/.*)?" any var_cache_file_context)
+	(filecon "/var/cache/PackageKit(/.*)?" any var_cache_file_context)
 	(filecon "/var/cache/yum(/.*)?" any var_cache_file_context)
 	(filecon "/var/lib/dnf(/.*)?" any var_lib_file_context)
+	(filecon "/var/lib/PackageKit(/.*)?" any var_lib_file_context)
 	(filecon "/var/lib/rpm(/.*)?" any var_lib_file_context)
 	(filecon "/var/lib/rpmrebuilddb.*(/.*)?" any var_lib_file_context)
 	(filecon "/var/lib/rpm-state(/.*)?" any var_lib_file_context)
@@ -29,8 +35,11 @@
 	(filecon "/var/log/dnf\.rpm\.log.*" file var_log_file_context)
 	(filecon "/var/log/hawkey\.log.*" file var_log_file_context)
 	(filecon "/var/log/yum\.log.*" file var_log_file_context)
+	(filecon "/var/run/hif-rpmdb\.lock" file runtime_file_context)
 
 	(optional rpm_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*packagekit.*" file unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*packagekit-offline-update.*" file unit_file_context)
 		(filecon "/usr/lib/systemd/system/[^/]*yum-makecache.*" file unit_file_context)
 		(filecon "/usr/lib/systemd/system/[^/]*dnf-makecache.*" file unit_file_context)))
 

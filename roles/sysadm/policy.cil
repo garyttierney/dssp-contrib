@@ -130,6 +130,9 @@
 	(optional sysadm_optional_alsactl
 		(call alsactl.adm (subj role)))
 
+	(optional sysadm_optional_appstream
+		(call appstreamutil.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_atspi
 		(call atspi.manage_config (subj)))
 
@@ -350,6 +353,9 @@
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
+
+	(optional sysadm_optional_fwupd
+		(call fwupd.adm (subj role)))
 
 	(optional sysadm_optional_fpaste
 		(call fpaste.run (subj_type_attribute role))
@@ -1126,6 +1132,9 @@
 		(call sysadm_evincet.role_pattern (role subj_type_attribute))
 		(call sysadm_evinced.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_epiphany
+		(call sysadm_epiphany.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_evo
 		(call evo.manage_home_cache (subj))
 		(call evo.relabel_home_cache (subj))
@@ -1167,6 +1176,9 @@
 
 	(optional sysadm_optional_sysadm_fuse_sshfs
 		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_fwupd
+		(call sysadm_fwupdmgr.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gcal
 		(call gcal.manage_tmpfs_user (subj))
@@ -1708,6 +1720,9 @@
 
 	(optional sysadm_optional_sysadm_pinentry
 		(call sysadm_pinentry.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pkcon
+		(call sysadm_pkcon.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_polari
 		(call polari.manage_tmpfs_user (subj))

@@ -1,6 +1,8 @@
 (block rpm
 	(roleattribute role_attribute)
 
+	(typeattribute client_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute subj_type_attribute)
 
@@ -56,6 +58,13 @@
 
 	(call fs.rootfs_obj_type_transition (subj var_lib_file lnk_file "system-update"))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
 	(call rpm_script_shell_manual_subj_type_transition (subj))
 
 	(call shadow.manage (subj))
@@ -86,6 +95,16 @@
 		(call sd.start_unit_power (subj))
 
 		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+
+	(optional rpm_sysbus_chat_client_subj_type_attribute_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+
+	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
 	(call dev.unconfined_subj_type (subj_type_attribute))
 	(call file.unconfined_subj_type (subj_type_attribute))

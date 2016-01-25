@@ -33,17 +33,23 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(allow subj self (capability (sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call dev.rw_usb (subj))
 
+	(call file.list_boot (subj))
 	(call file.read_data (subj))
 
 	(call fs.getattr_efivarfs_fs (subj))
 	(call fs.list_efivarfs (subj))
 	(call fs.list_devtmpfs (subj))
-	(call fs.read_sysfs (subj))
+	(call fs.audit_write_access_sysfs_dirs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
 
+	(call cert.read (subj))
 	(call locale.read (subj))
 	(call mime_types.read_data (subj))
 

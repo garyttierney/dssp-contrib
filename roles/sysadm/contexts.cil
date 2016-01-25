@@ -165,6 +165,15 @@
 	(filecon "/root/\.config/eog(/.*)?" any root_eog_home_config)
 	(filecon "/root/\.local/share/eog-wallpaper\.png" file root_eog_home_data))
 
+(optional sysadm_evince_home_optional_evince
+	(tunableif enable_rbacsep
+		(true
+			(context root_evince_home_config (sysadm.id sysadm.role evince.home_config_file (systemlow systemlow))))
+		(false
+			(context root_evince_home_config (sysadm.id object_r evince.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/evince(/.*)?" any root_evince_home_config))
+
 (optional sysadm_evo_home_optional_evo
 	(tunableif enable_rbacsep
 		(true

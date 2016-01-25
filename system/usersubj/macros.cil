@@ -1638,6 +1638,10 @@
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_cache_obj_type_attribute list_dir_perms))
 
+	(macro getattr_all_home_cache_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(call getattr_files_pattern (ARG1 home_cache_obj_type_attribute home_cache_obj_type_attribute)))
+
 	(macro read_all_home_cache_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(call read_files_pattern (ARG1 home_cache_obj_type_attribute home_cache_obj_type_attribute)))

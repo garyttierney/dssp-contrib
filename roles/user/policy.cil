@@ -400,6 +400,24 @@
 
 		(call user_eog.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_evince
+		(call evince.manage_tmpfs_user (subj))
+		(call evince.relabel_tmpfs_user (subj))
+
+		(call evince.manage_home_config (subj))
+		(call evince.relabel_home_config (subj))
+
+		(call evince.home_config_obj_type_transition_home_config (subj))
+
+		(call user_evince.role_pattern (role subj_type_attribute))
+
+		(call evincep.manage_tmpfs_user (subj))
+		(call evincep.relabel_tmpfs_user (subj))
+
+		(call user_evincep.role_pattern (role subj_type_attribute))
+		(call user_evincet.role_pattern (role subj_type_attribute))
+		(call user_evinced.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_evo
 		(call evo.manage_home_cache (subj))
 		(call evo.relabel_home_cache (subj))

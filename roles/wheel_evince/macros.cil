@@ -1,0 +1,45 @@
+(in wheel_evince
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evince.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evince.role_pattern (ARG1 ARG2 subj)))
+
+	(macro send_sigkill ((type ARG1))
+		(allow ARG1 subj (process (sigkill)))))
+
+(in wheel_evincep
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evincep.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evincep.role_pattern (ARG1 ARG2 subj)))
+
+	(macro send_sigkill ((type ARG1))
+		(allow ARG1 subj (process (sigkill)))))
+
+(in wheel_evincet
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evincet.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evincet.role_pattern (ARG1 ARG2 subj))))
+
+(in wheel_evinced
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evinced.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evinced.role_pattern (ARG1 ARG2 subj))))

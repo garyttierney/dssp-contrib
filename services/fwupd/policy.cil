@@ -103,8 +103,6 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
 
 (block fwupdmgr
-	(roleattribute role_attribute)
-
 	(typeattribute subj_type_attribute)
 
 	(blockinherit subj_blk)
@@ -113,11 +111,7 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(roleattributeset role_attribute sys.role)
-
 	(call locale.read (subj_type_attribute))
-
-	(call polkit_tty_agent.run (subj_type_attribute role_attribute))
 
 	(call fwupd.client_subj_type (subj_type_attribute))
 

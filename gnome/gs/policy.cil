@@ -34,6 +34,7 @@
 	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
 	(call dconf.client_subj_type (subj_type_attribute))
@@ -42,6 +43,8 @@
 
 	(call gsd_helper.exec (subj_type_attribute))
 
+        (call fonts.read_all (subj_type_attribute))
+        (call fonts.setattr_var_cache_dirs (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
@@ -52,6 +55,12 @@
 	(call usersubj.home_dir_add_obj_type_transition_home_user_dirs (subj_type_attribute))
 
 	(call usersubj.manage_home_config_files (subj_type_attribute))
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+        (call usersubj.manage_home_fonts_cache (subj_type_attribute))
+        (call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
+        (call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true

@@ -121,6 +121,9 @@
 	(optional gcs_subj_type_optional_firewalld
 		(call firewalld.sysbus_chat_client_subj_type (subj_type_attribute)))
 
+	(optional gcs_subj_type_optional_gvfs
+		(call gvfsdrecent.read_data_home_files (subj_type_attribute)))
+
 	(optional gcs_subj_type_optional_nm
 		(call nm.client_subj_type (subj_type_attribute))
 		(call nm.read_config (subj_type_attribute)))

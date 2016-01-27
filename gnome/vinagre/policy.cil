@@ -24,6 +24,10 @@
 	(call manage_home_data (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+
+	(call sys.read_net_proc_files (subj_type_attribute))
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config (subj_type_attribute))

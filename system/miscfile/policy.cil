@@ -9,6 +9,8 @@
 	(blockinherit file.data_obj_blk))
 
 (block fonts
+	(typeattribute client_subj_type_attribute)
+
 	(typeattribute miscfile_cache_obj_type_attribute)
 	(typeattribute miscfile_config_obj_type_attribute)
 	(typeattribute miscfile_data_obj_type_attribute)
@@ -23,7 +25,17 @@
 
 	(blockinherit file.var_cache_obj_blk)
 
-	(call miscfile_cache_obj_type (var_cache_file)))
+	(call miscfile_cache_obj_type (var_cache_file))
+
+	(call read (client_subj_type_attribute))
+
+	(call setattr_var_cache_dirs (client_subj_type_attribute))
+
+	(optional miscfiles_fonts_client_subj_type_optional_usersubj
+		(call usersubj.home_cache_creator_subj_type (client_subj_type_attribute))
+		(call usersubj.manage_home_fonts_cache (client_subj_type_attribute))
+		(call usersubj.home_dir_obj_type_transition_home_fonts_cache (client_subj_type_attribute))
+		(call usersubj.home_cache_obj_type_transition_home_fonts_cache (client_subj_type_attribute))))
 
 (block fstab
 	(typeattribute miscfile_sd_status_subj_type_attribute)

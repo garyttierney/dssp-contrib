@@ -60,17 +60,12 @@
 	(call http.tcp_connect_port (subj_type_attribute))
 
 	(call cert.read_all (subj_type_attribute))
-	(call fonts.read_all (subj_type_attribute))
-	(call fonts.setattr_var_cache_dirs (subj_type_attribute))
+	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
-
-	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
-	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(optional webkitwp_subj_type_optional_gdocs
 		(call gdocs.manage_home_cache (subj_type_attribute))

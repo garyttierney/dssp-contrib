@@ -26,18 +26,11 @@
 
 	(call gtk.client_subj_type (subj_type_attribute))
 
-	(call fonts.read_all (subj_type_attribute))
-	(call fonts.setattr_var_cache_dirs (subj_type_attribute))
+	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
-
-	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
-
-	(call usersubj.manage_home_fonts_cache (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_fonts_cache (subj_type_attribute))
-	(call usersubj.home_cache_obj_type_transition_home_fonts_cache (subj_type_attribute))
 
 	(optional gcal_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))

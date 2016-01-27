@@ -19,6 +19,10 @@
 		(call gpg.search_home_user (ARG1))
 		(call read_files_pattern (ARG1 home_user_file home_user_file)))
 
+	(macro getattr_home_user_sock_files ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file (sock_file (getattr))))
+
 	(macro read_home_user_lnk_files ((type ARG1))
 		(call gpg.search_home_user (ARG1))
 		(call read_lnk_files_pattern (ARG1 home_user_file home_user_file)))

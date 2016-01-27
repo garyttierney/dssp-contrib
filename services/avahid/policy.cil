@@ -21,6 +21,7 @@
 
 	(allow subj self (capability (chown setuid setgid sys_chroot)))
 	(allow subj self (process (setcap setrlimit)))
+	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_kernel_sysctl_files (subj))

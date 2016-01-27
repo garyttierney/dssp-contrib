@@ -19,6 +19,10 @@
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "avahi-daemon")))
 
+	(macro stream_connect ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(optional avahid_adm_optional_sd

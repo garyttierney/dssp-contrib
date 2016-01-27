@@ -67,6 +67,10 @@
 		(allow ARG1 home_user_file relabel_lnk_file_perms)
 		(allow ARG1 home_user_file relabel_sock_file_perms))
 
+	(macro getattr_home_user_sock_files ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file (sock_file (getattr))))
+
 	(macro gpg_home_user_obj_type_transition_home ((type ARG1))
 		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.conf"))
 		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.log"))

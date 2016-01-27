@@ -103,20 +103,25 @@
 		(call timedatectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))))
 
 (block ssh_keygen
-	(roleattribute role_attribute)
+	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-	(roletype role_attribute subj)
+	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call ssh_client.manage_home_user (subj))
-	(call ssh_client.home_dir_obj_type_transition_home (subj))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call dev.read_urandom (subj))
+	(call ssh_client.manage_home_user (subj_type_attribute))
+	(call ssh_client.home_dir_obj_type_transition_home (subj_type_attribute))
 
-	(call cert.read_all (subj))
+	(call dev.read_urandom (subj_type_attribute))
 
-	(call nss.client_subj_type (subj)))
+	(call cert.read_all (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional ssh_keygen_subj_type_optional_seahorse
+		(call seahorse.rw_inherited_tmpfs_user_files (subj_type_attribute))))
 
 (block ssh_sftpserver
 	(roleattribute role_attribute)

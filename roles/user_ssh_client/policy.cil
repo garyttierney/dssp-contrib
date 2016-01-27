@@ -13,3 +13,9 @@
 
 	(optional user_ssh_client_optional_user_goais
 		(call user_goais.read_keyring (subj))))
+
+(block user_ssh_keygen
+	(blockinherit ssh_keygen.subj_blk)
+
+	(optional user_ssh_keygen_optional_seahorse
+		(call user_seahorsesap.auto_subj_type_transition (subj))))

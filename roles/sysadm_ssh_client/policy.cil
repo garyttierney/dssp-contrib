@@ -25,3 +25,9 @@
 
 	(optional sysadm_ssh_client_optional_tor_socks
 		(call tor_socks.client_subj_type (subj))))
+
+(block sysadm_ssh_keygen
+	(blockinherit ssh_keygen.subj_blk)
+
+	(optional sysadm_ssh_keygen_optional_seahorse
+		(call sysadm_seahorsesap.auto_subj_type_transition (subj)))) 

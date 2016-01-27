@@ -53,6 +53,7 @@
 		(call sysadm_gstps.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gsw
+		(call sysadm_gsw.auto_subj_type_transition (subj))
 		(call sysadm_gsw.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gts
@@ -93,6 +94,9 @@
 
 	(optional sysadm_gsh_optional_wheel_sessbus
 		(call sysadm_sessbus.service_subj_type (subj)))
+
+	(optional sysadm_gsh_optional_sysadm_seahorse
+		(call sysadm_seahorse.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_thunderbird
 		(call sysadm_thunderbird.send_sigkill (subj)))

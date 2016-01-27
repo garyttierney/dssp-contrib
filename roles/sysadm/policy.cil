@@ -425,6 +425,9 @@
 		(call java.relabel_home_user (subj))
 		(call java.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_ldap
+		(call ldap.manage_config (subj)))
+
 	(optional sysadm_optional_libgweather
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))
@@ -846,7 +849,6 @@
 
 	(optional sysadm_optional_ssh_client
 		(call ssh_client.manage_config (subj))
-		(call ssh_keygen.run (subj_type_attribute role))
 		(call ssh_sftpserver.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_sshd
@@ -1801,6 +1803,17 @@
 
 		(call sysadm_screen.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_seahorse
+		(call seahorse.manage_tmpfs_user (subj))
+		(call seahorse.relabel_tmpfs_user (subj))
+
+		(call sysadm_seahorse.role_pattern (role subj_type_attribute))
+
+		(call seahorsesap.manage_tmpfs_user (subj))
+		(call seahorsesap.relabel_tmpfs_user (subj))
+
+		(call sysadm_seahorsesap.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_sduser
 		(call sduser.manage_all_unit (subj))
 		(call sysadm_sduser.role_pattern (role sysadm.subj)))
@@ -1833,7 +1846,8 @@
 
 		(call ssh_client.home_dir_obj_type_transition_home (subj))
 
-		(call sysadm_ssh_client.role_pattern (role subj_type_attribute)))
+		(call sysadm_ssh_client.role_pattern (role subj_type_attribute))
+		(call sysadm_ssh_keygen.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_startx
 		(call startx.manage_tmpfs_user_files (subj))

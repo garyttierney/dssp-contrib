@@ -50,6 +50,10 @@
 	(blockinherit usersubj.manage_home_user_blk)
 	(blockinherit usersubj.relabel_home_user_blk)
 
+	(macro getattr_home_user_files ((type ARG1))
+		(call search_home_user (ARG1))
+		(allow ARG1 home_user_file (file (getattr))))
+
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
 

@@ -102,6 +102,7 @@
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
 
 	(optional gcs_subj_type_optional_accountsd
+		(call accountsd.read_var_lib (subj_type_attribute))
 		(call accountsd.client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_avahid

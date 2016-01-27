@@ -20,7 +20,12 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (capability (dac_override)))
+	(allow subj self (capability (dac_override setgid setuid)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call cmd.exec (subj))
 
 	(call dev.read_urandom (subj))
 
@@ -37,6 +42,9 @@
 	(call nss.client_subj_type (subj))
 
 	(call usersubj.dontaudit_search_home_dir (subj))
+
+	(optional accountsd_optional_gcs
+		(call gcs.read_tmpfs_user_files (subj)))
 
 	(optional accountsd_optional_gdm
 		(call gdm.manage_config (subj))

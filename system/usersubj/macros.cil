@@ -1947,6 +1947,10 @@
 		(call add_entry_home_dir (ARG1))
 		(call create_dirs_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
 
+	(macro rw_home_user_files ((type ARG1))
+		(call search_home_dir (ARG1))
+		(call rw_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+
 	(macro read_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
 		(call read_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
@@ -2518,6 +2522,10 @@
 		(call search_home_data (ARG1))
 		(call read_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
 
+	(macro rw_home_cmd_files ((type ARG1))
+		(call search_home_data (ARG1))
+		(call rw_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+
 	(macro manage_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
 		(call manage_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
@@ -2545,6 +2553,14 @@
 		(allow ARG1 home_cmd.home_user_file read_fifo_file_perms)
 		(allow ARG1 home_cmd.home_user_file read_lnk_file_perms)
 		(allow ARG1 home_cmd.home_user_file read_sock_file_perms))
+
+	(macro rw_home_cmd ((type ARG1))
+		(call search_home_data (ARG1))
+		(allow ARG1 home_cmd.home_user_file rw_file_perms)
+		(allow ARG1 home_cmd.home_user_file rw_dir_perms)
+		(allow ARG1 home_cmd.home_user_file rw_fifo_file_perms)
+		(allow ARG1 home_cmd.home_user_file rw_lnk_file_perms)
+		(allow ARG1 home_cmd.home_user_file rw_sock_file_perms))
 
 	(macro delete_home_cmd ((type ARG1))
 		(call del_entry_home_dir (ARG1))

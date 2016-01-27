@@ -17,7 +17,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call file.list_config (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
@@ -48,7 +48,7 @@
 	(call ssh_client.manage_home_user (subj_type_attribute))
 	(call ssh_client.home_dir_obj_type_transition_home (subj_type_attribute))
 
-	(call usersubj.manage_home_data (subj_type_attribute))
+	(call usersubj.manage_home_data_files (subj_type_attribute))
 	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.read_home_user (subj_type_attribute))

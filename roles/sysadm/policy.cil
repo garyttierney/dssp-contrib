@@ -1948,6 +1948,22 @@
 
 		(call sysadm_trackers.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_vinagre
+		(call vinagre.manage_tmpfs_user (subj))
+		(call vinagre.relabel_tmpfs_user (subj))
+
+		(call vinagre.manage_home_cache (subj))
+		(call vinagre.relabel_home_cache (subj))
+
+		(call vinagre.home_cache_obj_type_transition_home_cache (subj))
+
+		(call vinagre.manage_home_data (subj))
+		(call vinagre.relabel_home_data (subj))
+
+		(call vinagre.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_vinagre.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_vino
 		(call vino.manage_tmpfs_user (subj))
 		(call vino.relabel_tmpfs_user (subj))

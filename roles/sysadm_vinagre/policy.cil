@@ -1,0 +1,48 @@
+(block sysadm_vinagre
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit vinagre.subj_blk)
+
+	(optional sysadm_vinagre_optional_sysadm_atspird
+		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdud2
+		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdnetwork
+		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdgoavm
+		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdgoogle
+		(call sysadm_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdsftp
+		(call sysadm_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_gvfsdtrash
+		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_tpmc
+		(call sysadm_tpmc.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_tpi
+		(call sysadm_tpi.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj vinagre.cmd_file)))
+
+	(optional sysadm_vinagre_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+

@@ -1282,6 +1282,22 @@
 
 		(call wheel_trackers.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_vinagre
+		(call vinagre.manage_tmpfs_user (subj))
+		(call vinagre.relabel_tmpfs_user (subj))
+
+		(call vinagre.manage_home_cache (subj))
+		(call vinagre.relabel_home_cache (subj))
+
+		(call vinagre.home_cache_obj_type_transition_home_cache (subj))
+
+		(call vinagre.manage_home_data (subj))
+		(call vinagre.relabel_home_data (subj))
+
+		(call vinagre.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_vinagre.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_vino
 		(call vino.manage_tmpfs_user (subj))
 		(call vino.relabel_tmpfs_user (subj))

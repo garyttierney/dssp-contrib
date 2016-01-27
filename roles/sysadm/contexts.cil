@@ -842,6 +842,18 @@
 
 	(filecon "/root/\.vlockrc" file root_vlock_home))
 
+(optional sysadm_vinagre_home_optional_vinagre
+	(tunableif enable_rbacsep
+		(true
+			(context root_vinagre_home_cache (sysadm.id sysadm.role vinagre.home_cache_file (systemlow systemlow)))
+			(context root_vinagre_home_data (sysadm.id sysadm.role vinagre.home_data_file (systemlow systemlow))))
+		(false
+			(context root_vinagre_home_cache (sysadm.id object_r vinagre.home_cache_file (systemlow systemlow)))
+			(context root_vinagre_home_data (sysadm.id object_r vinagre.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/vinagre(/.*)?" any root_vinagre_home_cache)
+	(filecon "/root/\.local/share/vinagre(/.*)?" any root_vinagre_home_data))
+
 (optional sysadm_webkit_home_optional_webkit
 	(tunableif enable_rbacsep
 		(true

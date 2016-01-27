@@ -80,6 +80,7 @@
 		(call rpm_script_client_subj_type (subj)))
 
 	(optional bootloader_optional_sd
+		(call sd.rw_inherited_unix_stream_sockets (subj))
 		(call sd.search_unit_runtime (subj)))
 
 	(optional bootloader_optional_sd_journald

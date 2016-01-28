@@ -17,11 +17,7 @@
 	(call config_obj_type_transition_config (subj))
 	(call var_obj_type_transition_var (subj))
 
-	(call dev.write_kmsg (subj))
-
-	(call term.use_console (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))

@@ -1,6 +1,7 @@
 (block sd
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute forked_subj_type_attribute)
+	(typeattribute log_parse_env_subj_type_attribute)
 	(typeattribute notify_subj_type_attribute)
 	(typeattribute subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
@@ -108,6 +109,19 @@
 	(allow subj daemon_condition_obj_type_attribute (sock_file (getattr)))
 	(allow subj daemon_condition_obj_type_attribute (blk_file (getattr)))
 	(allow subj daemon_condition_obj_type_attribute (chr_file (getattr)))
+
+	(dontaudit log_parse_env_subj_type_attribute self (capability (net_admin)))
+
+	(call dev.write_kmsg (log_parse_env_subj_type_attribute))
+
+	(call fs.read_proc (log_parse_env_subj_type_attribute))
+
+	(call term.use_console (log_parse_env_subj_type_attribute))
+
+	(call read_state (log_parse_env_subj_type_attribute))
+	(call search_unit_runtime (log_parse_env_subj_type_attribute))
+
+	(call sd_journald.client_subj_type (log_parse_env_subj_type_attribute))
 
 	(call cmd.auto_subj_type_transition (subj sd_unknown.subj))
 	(call cmd.exec (subj))

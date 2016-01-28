@@ -55,7 +55,6 @@
 	(call dev.setattr_usb (subj))
 	(call dev.setattr_v4l (subj))
 	(call dev.setattr_wireless (subj))
-	(call dev.write_kmsg (subj))
 
 	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.list_sysfs (subj))
@@ -75,7 +74,6 @@
 	(call storage.getattr_all (subj))
 	(call storage.setattr_all (subj))
 
-	(call term.use_console (subj))
 	(call term.setattr_console (subj))
 	(call term.use_unallocated_ttys (subj))
 	(call term.setattr_unallocated_ttys (subj))
@@ -103,8 +101,7 @@
 	(call sd.stop (subj))
 	(call sd.stop_unit_runtime (subj))
 	(call sd.sysbus_chat_client_subj_type (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call sd_networkd.sysbus_chat_client_subj_type (subj))
 

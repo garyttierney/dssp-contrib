@@ -24,16 +24,13 @@
 
 	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev.write_kmsg (subj))
 	(call dev.rw_urandom (subj))
-
-	(call term.use_console (subj))
 
 	(call file.search_config (subj))
 
 	(call sec.list_fs (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(tunableif enable_mls
 		(true

@@ -21,7 +21,6 @@
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
-	(call dev.write_kmsg (subj))
 
 	(call file.read_data (subj))
 
@@ -29,11 +28,8 @@
 
 	(call sec.get_enforce_mode (subj))
 
-	(call term.use_console (subj))
-
 	(call sd.notify_subj_type (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call sd_vconsole.manage_config_files (subj))
 

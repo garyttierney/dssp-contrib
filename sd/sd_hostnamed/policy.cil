@@ -13,7 +13,6 @@
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
-	(call dev.write_kmsg (subj))
 
 	(call file.read_config (subj))
 
@@ -25,8 +24,7 @@
 	(call hostname.manage_config_files (subj))
 
 	(call sd.notify_subj_type (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call sd_machined.manage_config_files (subj))
 	(call sd_machined.config_obj_type_transition_config (subj))

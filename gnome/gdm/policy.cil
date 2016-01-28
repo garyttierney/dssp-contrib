@@ -161,6 +161,9 @@
 	(call usersubj.use_ttys (subj))
 	(call usersubj.search_home_user (subj))
 
+	(optional gdm_optional_accountsd
+		(call accountsd.read_var_lib (subj)))
+
 	(optional gdm_optional_atspi_sessbus_launch
 		(call atspi_sessbus_launch.exec (subj)))
 

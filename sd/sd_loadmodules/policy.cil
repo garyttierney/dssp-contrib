@@ -15,11 +15,7 @@
 
 	(call read_config (subj))
 
-	(call dev.write_kmsg (subj))
-
-	(call term.use_console (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

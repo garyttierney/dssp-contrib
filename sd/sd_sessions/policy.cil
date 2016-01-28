@@ -7,18 +7,14 @@
 
 	(allow subj self (process (setfscreate)))
 
-	(call dev.write_kmsg (subj))
-
 	(call file.search_config (subj))
 
 	(call sec.get_enforce_mode (subj))
 
-	(call term.use_console (subj))
-
 	(call nologin.manage_runtime_files (subj))
 	(call nologin.runtime_obj_type_transition_runtime (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call file_context.read_config_files (subj))
 	(call selinux_config.read_config_files (subj))

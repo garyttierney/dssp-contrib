@@ -1,20 +1,13 @@
 (block sd_cgagent
 	(blockinherit sd.daemon_blk)
 
-	(allow subj self (capability (net_admin)))
-
 	(call mls.range_trans_subj_type (subj))
-
-	(call dev.write_kmsg (subj))
 
 	(call file.search_config (subj))
 
-	(call term.use_console (subj))
-
-	(call sd.read_state (subj))
 	(call sd.stream_connect (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(optional sd_cgagent_optional_sysbus
 		(call sysbus.client_subj_type (subj))))

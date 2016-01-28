@@ -20,7 +20,6 @@
 	(call cmd.read_all_cmd_files (subj))
 
 	(call dev.read_urandom (subj))
-	(call dev.write_kmsg (subj))
 
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_tmpfs_fs (subj))
@@ -28,4 +27,4 @@
 	(call subj.ptrace_uncond_subj_type (subj))
 	(call subj.read_state_common_subj (subj))
 
-	(call sd_journald.client_subj_type (subj)))
+	(call sd.log_parse_env_subj_type (subj)))

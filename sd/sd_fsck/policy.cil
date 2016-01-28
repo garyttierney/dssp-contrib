@@ -20,15 +20,11 @@
 
 	(call fs.read_sysfs (subj))
 
-	(call dev.write_kmsg (subj))
-
 	(call storage.getattr_all (subj))
-
-	(call term.use_console (subj))
 
 	(call fstools.auto_subj_type_transition (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call udev.client_subj_type (subj))
 

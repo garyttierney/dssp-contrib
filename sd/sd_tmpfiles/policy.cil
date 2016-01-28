@@ -36,7 +36,6 @@
 
 	(allow subj self (capability (fowner fsetid dac_override chown)))
 	(allow subj self (process (getcap setfscreate)))
-	(allow subj self create_unix_stream_socket_perms)
 
 	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.read_net_proc_files (subj))
@@ -63,7 +62,7 @@
 	(call factory.read_data (subj))
 	(call locale.read (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(optional sd_tmpfiles_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

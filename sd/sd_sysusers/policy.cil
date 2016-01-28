@@ -31,16 +31,13 @@
 	(allow subj self (process (setfscreate)))
 
 	(call dev.read_urandom (subj))
-	(call dev.write_kmsg (subj))
 
 	(call sec.list_fs (subj))
-
-	(call term.use_console (subj))
 
 	(call passwords.manage (subj))
 	(call shadow.read (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))

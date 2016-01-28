@@ -29,11 +29,8 @@
 	(call cmd.exec (subj))
 
 	(call dev.read_urandom (subj))
-	(call dev.write_kmsg (subj))
 
 	(call fs.getattr_fs (subj))
-
-	(call term.use_console (subj))
 
 	(call locale.read (subj))
 
@@ -43,7 +40,7 @@
 
 	(call sd_helper.exec (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call sd_machined.manage_var_lib (subj))
 

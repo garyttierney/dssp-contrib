@@ -5,7 +5,7 @@
 
 	(blockinherit sd.unit_obj_blk)
 
-	(allow subj self (capability (net_admin sys_admin ipc_lock)))
+	(allow subj self (capability (sys_admin ipc_lock)))
 	(allow subj self (process (setfscreate)))
 	(allow subj self create_socket_perms)
 	(allow subj self (socket (accept)))
@@ -15,7 +15,6 @@
 	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_keyring (subj))
 
-	(call dev.write_kmsg (subj))
 	(call dev.rw_lvm_control (subj))
 	(call dev.read_random (subj))
 	(call dev.read_urandom (subj))
@@ -29,13 +28,11 @@
 
 	(call storage.rw_all (subj))
 
-	(call term.use_console (subj))
-
 	(call fstab.read (subj))
 
 	(call sd_askpwd.client_subj_type (subj))
 
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call udev.client_subj_type (subj))
 

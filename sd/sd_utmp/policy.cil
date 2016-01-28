@@ -7,18 +7,13 @@
 
 	(call sys.audit_client_subj_type (subj))
 
-	(call dev.write_kmsg (subj))
-
 	(call file.search_config (subj))
-
-	(call term.use_console (subj))
 
 	(call utmp.manage_runtime_files (subj))
 	(call utmp.runtime_obj_type_transition_runtime (subj))
 	(call wtmp.write_var_log_files (subj))
 
-	(call sd_journald.client_subj_type (subj))
-
+	(call sd.log_parse_env_subj_type (subj))
 	(call sd.status_unit (subj))
 	(call sd.status (subj))
 	(call sd.stream_connect (subj))

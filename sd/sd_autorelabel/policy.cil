@@ -16,15 +16,11 @@
 	(call manage_boot_flag_files (subj))
 	(call rootfs_obj_type_transition_boot_flag (subj))
 
-	(allow subj self (capability (dac_override net_admin)))
+	(allow subj self (capability (dac_override)))
 	(allow subj self (process (getsched)))
-
-	(call sys.unix_stream_connectto (subj))
 
 	(call cmd.exec (subj))
 	(call cmd.mmap_shell (subj))
-
-	(call dev.write_kmsg (subj))
 
 	(call file.getattr_all_tmpfs_files (subj))
 	(call file.list_all_tmpfs (subj))
@@ -34,12 +30,9 @@
 
 	(call fs.list_rootfs (subj))
 	(call fs.list_tmpfs (subj))
-	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 
 	(call sec.set_enforce_mode (subj))
-
-	(call term.use_console (subj))
 
 	(call sulogin.auto_subj_type_transition (subj))
 
@@ -53,6 +46,7 @@
 	(call setfiles.auto_subj_type_transition (subj))
 	(call selinux_config.read_config_files (subj))
 
+	(call sd.log_parse_env_subj_type (subj))
 	(call sd.reboot (subj))
 	(call sd.stream_connect (subj))
 

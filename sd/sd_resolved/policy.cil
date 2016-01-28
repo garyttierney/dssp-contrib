@@ -29,7 +29,6 @@
 
 	(call sys.read_kernel_sysctl_files (subj))
 
-	(call dev.write_kmsg (subj))
 	(call dev.read_urandom (subj))
 
 	(call fs.read_sysfs (subj))
@@ -38,8 +37,6 @@
 	(call net.udp_bind_generic_node (subj))
 
 	(call sec.get_enforce_mode (subj))
-
-	(call term.use_console (subj))
 
 	(call llmnr.tcp_bind_port (subj))
 	(call llmnr.udp_bind_port (subj))
@@ -50,8 +47,7 @@
 	(call file_context.read_config_files (subj))
 
 	(call sd.notify_subj_type (subj))
-
-	(call sd_journald.client_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
 
 	(call sd_networkd.read_runtime (subj))
 

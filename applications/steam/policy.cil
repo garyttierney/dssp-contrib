@@ -85,8 +85,6 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call pcitools.exec (subj_type_attribute))
-
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.manage_home_cert_files (subj_type_attribute))
@@ -114,6 +112,9 @@
 
 	(optional steam_subj_type_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional steam_subj_type_optional_pcitools
+		(call pcitools.exec (subj_type_attribute)))
 
 	(optional steam_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))

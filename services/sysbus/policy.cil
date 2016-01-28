@@ -137,6 +137,9 @@
 	(call selinux_config.read_config_files (dbus_subj_type_attribute))
 	(call default_context.read_config_files (dbus_subj_type_attribute))
 
+	(optional sysbus_dbus_subj_type_optional_sd
+		(call sd.getattr_unit_runtime_dirs (dbus_subj_type_attribute)))
+
 	(optional sysbus_dbus_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (dbus_subj_type_attribute)))
 

@@ -111,12 +111,7 @@
 
 	(call term.dontaudit_use_console (client_subj_type_attribute))
 
-	(call sd.read_state (client_subj_type_attribute))
-	(call sd.search_unit_runtime (client_subj_type_attribute))
-
-	(tunableif enable_rbacsep
-		(true
-			(call rbacsep.read_state_source_subj_type (client_subj_type_attribute))))
+	(call sd.search_runtime (client_subj_type_attribute))
 
 	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
 

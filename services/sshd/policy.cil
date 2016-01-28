@@ -28,7 +28,7 @@
 
         (blockinherit sshd_blk)
 
-	(allow subj_type_attribute self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service sys_chroot)))
+	(allow subj_type_attribute self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service sys_chroot net_admin)))
 	(allow subj_type_attribute self (process (setrlimit)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))

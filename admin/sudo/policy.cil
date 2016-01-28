@@ -30,6 +30,7 @@
 	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute "*"))
 
 	(allow subj_type_attribute self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
+	(dontaudit subj_type_attribute self (capability (net_admin)))
 	(allow subj_type_attribute self (process (setsched setrlimit setexec getpgid)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self link_key_perms)

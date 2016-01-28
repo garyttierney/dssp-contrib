@@ -448,10 +448,13 @@
 (optional sysadm_gstreamer_home_optional_gstreamer
 	(tunableif enable_rbacsep
 		(true
+			(context root_gstreamer_home_data (sysadm.id sysadm.role gstreamer.home_data_file (systemlow systemlow)))
 			(context root_gstreamer_home_cache (sysadm.id sysadm.role gstreamer.home_cache_file (systemlow systemlow))))
 		(false
+			(context root_gstreamer_home_data (sysadm.id object_r gstreamer.home_data_file (systemlow systemlow)))
 			(context root_gstreamer_home_cache (sysadm.id object_r gstreamer.home_cache_file (systemlow systemlow)))))
 
+	(filecon "/root/\.local/share/gstreamer-1\.0(/.*)?" any root_gstreamer_home_data)
 	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any root_gstreamer_home_cache))
 
 (optional sysadm_gvfsdmd_home_optional_gvfsdmd
@@ -754,15 +757,19 @@
 (optional sysadm_steam_home_optional_steam
 	(tunableif enable_rbacsep
 		(true
+			(context root_steam_home_config (sysadm.id sysadm.role steam.home_config_file (systemlow systemlow)))
 			(context root_steam_home_data (sysadm.id sysadm.role steam.home_data_file (systemlow systemlow)))
 			(context root_steam_home (sysadm.id sysadm.role steam.home_user_file (systemlow systemlow))))
 		(false
+			(context root_steam_home_config (sysadm.id object_r steam.home_config_file (systemlow systemlow)))
 			(context root_steam_home_data (sysadm.id object_r steam.home_data_file (systemlow systemlow)))
 			(context root_steam_home (sysadm.id object_r steam.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.steam(/.*)?" any root_steam_home)
 	(filecon "/root/\.steampath" symlink root_steam_home)
 	(filecon "/root/\.steampid" symlink root_steam_home)
+	(filecon "/root/\.config/cef_user_data(/.*)?" any root_steam_home_config)
+	(filecon "/root/\.local/share/Aspyr(/.*)?" any root_steam_home_data)
 	(filecon "/root/\.local/share/Steam(/.*)?" any root_steam_home_data))
 
 (optional sysadm_tp_home_optional_tp

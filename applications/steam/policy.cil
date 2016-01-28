@@ -24,6 +24,13 @@
 	(allow subj_type_attribute home_data_file exec_file_perms)
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
 	(call manage_var_tmp_user_files (subj_type_attribute))
@@ -65,6 +72,8 @@
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
+	(call gstreamer.client_subj_type (subj_type_attribute))
+
 	(call hostname.read_config_files (subj_type_attribute))
 
 	(call http.tcp_connect_port (subj_type_attribute))
@@ -75,6 +84,8 @@
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
+
+	(call pcitools.exec (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
 
@@ -108,6 +119,7 @@
 		(call sd_journald.client_subj_type (subj_type_attribute)))
 
 	(optional steam_subj_type_optional_sysbus
+		(call sysbus.list_var_lib (subj_type_attribute))
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional steam_subj_type_optional_xserver

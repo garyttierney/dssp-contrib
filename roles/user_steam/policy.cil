@@ -11,6 +11,9 @@
 		(call user_gs.daemon (subj steam.cmd_file))
 		(call user_gs.stream_connect (subj)))
 
+	(optional user_steam_optional_user_gstps
+		(call user_gstps.auto_subj_type_transition (subj)))
+
 	(optional user_steam_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 

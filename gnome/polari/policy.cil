@@ -21,6 +21,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -44,6 +45,8 @@
 
 	(call tpl.read_home_data (subj_type_attribute))
 	(call tpl.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(optional polari_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))

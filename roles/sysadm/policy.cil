@@ -46,6 +46,7 @@
 
 	(call term.use_inherited_unallocated_ttys (subj))
 
+	(call factory.read_data (subj))
 	(call fstab.manage (subj))
 	(call cert.manage (subj))
 	(call hosts.manage_config_files (subj))
@@ -53,6 +54,7 @@
 	(call modules.read (subj))
 	(call network.manage_config_files (subj))
 	(call wtmp.manage_var_log_files (subj))
+	(call mime_types.manage_config_files (subj))
 
 	(call usersubj.setattr_home_dir (subj))
 
@@ -695,6 +697,7 @@
 		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rygel
+		(call rygel.manage_config_files (subj))
 		(call rygel_helper.exec (subj)))
 
 	(optional sysadm_optional_samba

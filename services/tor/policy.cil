@@ -49,6 +49,7 @@
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (setgid setuid)))
+	(dontaudit subj self (capability (net_admin)))
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self (unix_stream_socket (listen accept)))
 

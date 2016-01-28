@@ -1,0 +1,9 @@
+(in user_steam
+	(macro auto_subj_type_transition ((type ARG1))
+		(call steam.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call steam.role_pattern (ARG1 ARG2 subj)))
+
+	(macro send_sigkill ((type ARG1))
+		(allow ARG1 subj (process (sigkill)))))

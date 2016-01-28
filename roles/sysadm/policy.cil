@@ -1819,6 +1819,25 @@
 
 		(call sysadm_seahorsesap.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_steam
+		(call steam.manage_tmpfs_user (subj))
+		(call steam.relabel_tmpfs_user (subj))
+
+		(call steam.manage_var_tmp_user_files (subj))
+		(call steam.relabel_var_tmp_user_files (subj))
+
+		(call steam.manage_home_user (subj))
+		(call steam.relabel_home_user (subj))
+
+		(call steam.home_dir_obj_type_transition_home_user (subj))
+
+		(call steam.manage_home_data (subj))
+		(call steam.relabel_home_data (subj))
+
+		(call steam.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_steam.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_sduser
 		(call sduser.manage_all_unit (subj))
 		(call sysadm_sduser.role_pattern (role sysadm.subj)))

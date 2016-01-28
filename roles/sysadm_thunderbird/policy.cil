@@ -1,8 +1,14 @@
 (block sysadm_thunderbird
 	(blockinherit thunderbird.subj_blk)
 
+	(optional sysadm_thunderbird_optional_sysadm_atspird
+		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_thunderbird_optional_sysadm_atspi_sessbus_launch
 		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_thunderbird_optional_sysadm_dconfs
+		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_thunderbird_optional_sysadm_firefox
 		(call sysadm_firefox.auto_subj_type_transition (subj)))

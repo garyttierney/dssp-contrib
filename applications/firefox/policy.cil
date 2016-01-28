@@ -17,6 +17,7 @@
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
 	(blockinherit usersubj.var_tmp_user_obj_blk)

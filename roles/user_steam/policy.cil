@@ -1,0 +1,25 @@
+(block user_steam
+	(blockinherit steam.subj_blk)
+
+	(optional user_steam_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_steam_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_steam_optional_user_gs
+		(call user_gs.daemon (subj steam.cmd_file))
+		(call user_gs.stream_connect (subj)))
+
+	(optional user_steam_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_steam_optional_user_nautilus
+		(call user_nautilus.sessbus_chat_client_subj_type (subj))
+		(call user_nautilus.auto_subj_type_transition (subj)))
+
+	(optional user_steam_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj)))
+
+	(optional user_steam_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))

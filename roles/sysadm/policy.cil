@@ -1620,6 +1620,8 @@
 		(call sysadm_loginctl.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_lynx
+		(call lynx.manage_config_files (subj))
+
 		(call lynx.manage_home_user_files (subj))
 		(call lynx.relabel_home_user_files (subj))
 

@@ -27,7 +27,7 @@
 (block chronyd
 	(typeattribute subj_type_attribute)
 	(typeattribute adm_subj_type_attribute)
-	(typeattribute enable_status_start_sd_unit_subj_type_attribute)
+	(typeattribute control_sd_unit_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -118,7 +118,7 @@
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional enable_status_start_sd_unit_subj_type_attribute_optional_sd
-		(allow enable_status_start_sd_unit_subj_type_attribute unit_file (service (enable status start))))
+		(allow control_sd_unit_subj_type_attribute unit_file (service (start status stop reload enable disable))))
 
 	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))

@@ -19,7 +19,7 @@
 	(call locale.read (subj))
 
 	(optional timedatex_optional_chronyd
-		(call chronyd.enable_status_start_sd_unit_subj_type (subj)))
+		(call chronyd.control_sd_unit_subj_type (subj)))
 
 	(optional timedatex_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj)))

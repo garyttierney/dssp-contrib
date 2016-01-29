@@ -53,10 +53,21 @@
 	(call pam.relabel_config (subj))
 
 	(call selinux_config.read_config_files (subj))
+	(call setfiles.run (subj role_attribute))
 	(call file_context.read_config_files (subj))
+
+	(optional authconfig_optional_ldap
+		(call ldap.read_config (subj)))
+
+	(optional authconfig_optional_polkit
+		(call polkit_tty_agent.run (subj role_attribute)))
+
+	(optional authconfig_optional_samba
+		(call samba.read_config (subj)))
 
 	(optional authconfig_optional_sd
 		(call sd.read_state (subj))
+		(call sd.search_unit (subj))
 		(call sd.status (subj))
 		(call sd.stream_connect (subj))
 		(call sd.stop (subj)))

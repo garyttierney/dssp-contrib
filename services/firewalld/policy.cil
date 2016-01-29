@@ -38,9 +38,11 @@
 	(allow subj tmpfs_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(allow subj self (capability (net_admin)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_net_proc_files (subj))
+	(call sys.rw_net_sysctl_files (subj))
 
 	(call cmd.list_cmd (subj))
 	(call cmd.read_cmd_files (subj))

@@ -93,6 +93,8 @@
 
 	(call udev.client_subj_type (subj_type_attribute))
 
+	(call usersubj.list_home_user (subj_type_attribute))
+
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))

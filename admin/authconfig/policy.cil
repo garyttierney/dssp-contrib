@@ -73,10 +73,7 @@
 		(call sd.stop (subj)))
 
 	(optional authconfig_optional_sd_askpwd_agent
-		(call sd_askpwd_agent.exec (subj))
-		(call sd_askpwd_agent.sd_runtime_obj_type_transition_runtime (subj))
-		(call sd_askpwd_agent.manage_runtime_fifo_files (subj))
-		(call sd_askpwd.list_runtime (subj)))
+		(call sd_askpwd_agent.run (subj role_attribute)))
 
 	(optional authconfig_optional_systemctl
 		(call systemctl.exec (subj))))

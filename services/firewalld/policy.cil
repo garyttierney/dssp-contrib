@@ -103,6 +103,8 @@
 
 	(roletype role_attribute subj)
 
+	(allow subj self (capability (dac_override)))
+
 	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
 

@@ -19,7 +19,7 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (chown setuid setgid sys_chroot)))
+	(allow subj self (capability (chown setuid setgid sys_chroot dac_override)))
 	(allow subj self (process (setcap setrlimit)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)

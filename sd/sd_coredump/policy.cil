@@ -27,4 +27,7 @@
 	(call subj.ptrace_uncond_subj_type (subj))
 	(call subj.read_state_common_subj (subj))
 
-	(call sd.log_parse_env_subj_type (subj)))
+	(call sd.log_parse_env_subj_type (subj))
+
+	(optional sd_coredump_optional_steam
+		(call steam.read_home_data_files (subj))))

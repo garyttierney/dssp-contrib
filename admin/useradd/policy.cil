@@ -31,6 +31,9 @@
 	(optional groupadd_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 
+	(optional groupadd_optional_sd
+		(call sd.use_fd (subj)))
+
 	(optional groupadd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))))
 
@@ -88,6 +91,9 @@
 	(call usersubj.write_home_user_files (subj))
 	(call usersubj.write_var_spool_user_files (subj))
 	(call usersubj.var_spool_obj_type_transition_var_spool_user (subj "*"))
+
+	(optional useradd_optional_sd
+		(call sd.use_fd (subj)))
 
 	(optional useradd_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

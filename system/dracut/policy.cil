@@ -19,7 +19,7 @@
 
 	(call exec (subj))
 
-	(allow subj self (capability (dac_override mknod sys_chroot sys_admin sys_resource)))
+	(allow subj self (capability (dac_override mknod sys_chroot sys_admin sys_resource net_admin)))
 	(allow subj self (process (getsched setfscreate)))
 
 	(call sys.list_cpu_sysfs (subj))

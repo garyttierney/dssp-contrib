@@ -36,7 +36,7 @@
 	(call manage_var_tmp_user_files (subj_type_attribute))
 	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute))
 
-	(allow subj_type_attribute self (process (setsched setcap ptrace)))
+	(allow subj_type_attribute self (process (setsched setcap ptrace setrlimit)))
 	(allow subj_type_attribute self create_sem_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
@@ -70,7 +70,7 @@
 	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
 	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
 
-	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+	(call subj.execstack_uncond_subj_type (subj_type_attribute))
 
 	(call gstreamer.client_subj_type (subj_type_attribute))
 

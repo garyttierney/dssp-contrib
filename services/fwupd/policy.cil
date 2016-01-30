@@ -36,6 +36,7 @@
 	(allow subj self (capability (sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call dev.read_urandom (subj))
 	(call dev.rw_usb (subj))
 
 	(call file.list_boot (subj))

@@ -15,8 +15,9 @@
 	(optional wheel_gsw_optional_wheel_firefox
 		(call wheel_firefox.auto_subj_type_transition (subj)))
 
-	(optional wheel_gsd_optional_wheel_gs
-		(call wheel_gs.daemon (subj gsw.cmd_file)))
+	(optional wheel_gsw_optional_wheel_gs
+		(call wheel_gs.daemon (subj gsw.cmd_file))
+		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsw_optional_wheel_gsh
 		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))

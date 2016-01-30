@@ -15,8 +15,9 @@
 	(optional sysadm_gsw_optional_sysadm_firefox
 		(call sysadm_firefox.auto_subj_type_transition (subj)))
 
-	(optional sysadm_gsd_optional_sysadm_gs
-		(call sysadm_gs.daemon (subj gsw.cmd_file)))
+	(optional sysadm_gsw_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj gsw.cmd_file))
+		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gsw_optional_sysadm_gsh
 		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))

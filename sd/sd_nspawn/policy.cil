@@ -255,7 +255,10 @@
 
 	(call mcs.constrained_subj_type (subj_type_attribute))
 
+	(call fs.dontaudit_audit_access_fuse_dirs (subj_type_attribute))
 	(call fs.dontaudit_audit_access_hugetlbfs_dirs (subj_type_attribute))
+	(call fs.dontaudit_setattr_fuse_dirs (subj_type_attribute))
+	(call fs.dontaudit_setattr_hugetlbfs_dirs (subj_type_attribute))
 	(call fs.dontaudit_setattr_proc_dirs (subj_type_attribute))
 	(call fs.getattr_cgroup_fs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
@@ -266,15 +269,16 @@
 	(call fs.list_hugetlbfs (subj_type_attribute))
 	(call fs.list_proc (subj_type_attribute))
 	(call fs.manage_cgroup_dirs (subj_type_attribute))
+	(call fs.mount_fuse_fs (subj_type_attribute))
 	(call fs.mount_hugetlbfs_fs (subj_type_attribute))
 	(call fs.mount_tmpfs_fs (subj_type_attribute))
+	(call fs.mounton_sysfs_dirs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 	(call fs.remount_fs (subj_type_attribute))
 	(call fs.remount_hugetlbfs_fs (subj_type_attribute))
 	(call fs.remount_tmpfs_fs (subj_type_attribute))
 	(call fs.rw_cgroup_files (subj_type_attribute))
 	(call fs.setattr_cgroup_files (subj_type_attribute))
-	(call fs.setattr_hugetlbfs_dirs (subj_type_attribute))
 	(call fs.unmount_tmpfs_fs (subj_type_attribute))
 	(call fs.unmount_sysfs_fs (subj_type_attribute))
 

@@ -28,6 +28,8 @@
 	(allow subj_type_attribute self create_tun_socket_perms)
 	(allow subj_type_attribute self (tun_socket (relabelto relabelfrom)))
 
+	(allow subj_type_attribute file search_dir_perms)
+
 	(allow subj_type_attribute subj (tun_socket (relabelfrom)))
 
 	(call sys.list_cpu_sysfs (subj_type_attribute))

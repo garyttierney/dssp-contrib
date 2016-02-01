@@ -75,8 +75,13 @@
 		(call qemu.spec_manual_subj_type_transition (ARG1 subj_type_attribute))
 		(roleattributeset role_attribute ARG2))
 
+	(macro manage_files ((type ARG1))
+		(call manage_files_pattern (ARG1 file file))
+		(optional qemu_guest_manage_files_optional_sd_machined
+			(call sd_machined.rw_var_lib_dirs (ARG1))))
+
 	(macro relabel_all_files ((type ARG1))
-		(allow ARG1 obj_type_attribute relabel_file_perms)
+		(call relabel_files_pattern (ARG1 file obj_type_attribute))
 		(optional qemu_guest_relabel_all_files_optional_sd_machined
 			(call sd_machined.search_var_lib (ARG1))))
 
@@ -84,7 +89,7 @@
 		(allow ARG1 obj_type_attribute read_inherited_file_perms))
 
 	(macro rw_all_files ((type ARG1))
-		(allow ARG1 obj_type_attribute rw_file_perms)
+		(call rw_files_pattern (ARG1 file obj_type_attribute))
 		(optional qemu_guest_rw_all_files_optional_sd_machined
 			(call sd_machined.search_var_lib (ARG1))))
 
@@ -112,7 +117,7 @@
 		(allow ARG1 subj_type_attribute (tun_socket (relabelfrom))))
 
 	(macro manage_all_files ((type ARG1))
-		(allow ARG1 obj_type_attribute manage_file_perms)
+		(call manage_files_pattern (ARG1 file obj_type_attribute))
 		(optional qemu_guest_manage_all_files_optional_sd_machined
 			(call sd_machined.rw_var_lib_dirs (ARG1))))
 

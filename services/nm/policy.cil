@@ -99,9 +99,12 @@
 
 	(optional nm_optional_dhclient
 		(call dhclient.delete_runtime_files (subj))
+		(call dhclient.read_runtime_files (subj))
+		(call dhclient.read_state (subj))
 		(call dhclient.read_config_files (subj))
 		(call dhclient.read_var_lib_files (subj))
 		(call dhclient.send_sigkill (subj))
+		(call dhclient.send_signull (subj))
 		(call dhclient.auto_subj_type_transition (subj)))
 
 	(optional nm_optional_httpd

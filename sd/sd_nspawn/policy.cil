@@ -1,4 +1,5 @@
 (boolean sd_nspawn_container_tcp_connect_all_ports false)
+(boolean sd_nspawn_container_network_bridge false)
 
 (block sd_nspawn
 	(roleattribute role_attribute)
@@ -322,3 +323,10 @@
 	(booleanif sd_nspawn_container_tcp_connect_all_ports
 		(true
 			(call net.tcp_connect_all_ports (sd_nspawn_container.subj)))))
+
+(block sd_nspawn_container_network_bridge
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif sd_nspawn_container_network_bridge
+		(true
+			(call fs.read_nsfs_files (sd_nspawn_container.subj)))))

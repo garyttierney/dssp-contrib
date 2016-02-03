@@ -2104,6 +2104,9 @@
 		(call search_home_dir (ARG1))
 		(call read_files_pattern (ARG1 home_user_obj_type_attribute home_user_obj_type_attribute)))
 
+	(macro dontaudit_mmap_all_home_user_files ((type ARG1))
+		(dontaudit ARG1 home_user_obj_type_attribute relabel_file_perms))
+
 	(macro dontaudit_relabel_all_home_user_files ((type ARG1))
 		(dontaudit ARG1 home_user_obj_type_attribute relabel_file_perms))
 

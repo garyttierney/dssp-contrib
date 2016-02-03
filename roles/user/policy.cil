@@ -469,6 +469,12 @@
 
 		(call user_festival.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_fileroller
+		(call fileroller.manage_tmpfs_user (subj))
+		(call fileroller.relabel_tmpfs_user (subj))
+
+		(call user_fileroller.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_ffmpeg
 		(call ffmpeg.manage_tmpfs_user_files (subj))
 		(call ffmpeg.relabel_tmpfs_user_files (subj))

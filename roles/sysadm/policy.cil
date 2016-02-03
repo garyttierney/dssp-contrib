@@ -1179,6 +1179,12 @@
 
 		(call sysadm_ffmpeg.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_fileroller
+		(call fileroller.manage_tmpfs_user (subj))
+		(call fileroller.relabel_tmpfs_user (subj))
+
+		(call sysadm_fileroller.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_fuse_sshfs
 		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
 

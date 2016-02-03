@@ -66,6 +66,8 @@
 	(call webkitwp.read_home_data (subj_type_attribute))
 	(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
+	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
+
         (call usersubj.manage_home_user_dirs (subj_type_attribute))
         (call usersubj.manage_home_user_files (subj_type_attribute))
         (call usersubj.manage_home_user_lnk_files (subj_type_attribute))

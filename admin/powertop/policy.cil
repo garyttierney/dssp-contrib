@@ -27,6 +27,7 @@
 
 	(allow subj self (capability (dac_override net_admin sys_rawio sys_resource sys_admin ipc_lock)))
 	(allow subj self (process (setrlimit)))
+	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_socket_perms)
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_netlink_generic_socket_perms)
@@ -68,6 +69,9 @@
 
 	(call usersubj.manage_home_user_files (subj))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional powertop_optional_bluetoothctl
+		(call bluetoothctl.run (subj role_attribute)))
 
 	(optional powertop_optional_sd
 		(call sd.daemon (subj cmd_file))

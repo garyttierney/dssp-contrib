@@ -300,7 +300,10 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
 
 	(call usersubj.create_ptys (subj_type_attribute))
-	(call usersubj.use_ptys (subj_type_attribute)))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional gvfsdsftp_subj_type_optional_evince
+		(call evince.read_tmpfs_user_files (subj_type_attribute))))
 
 (block gvfsdtrash
 	(typeattribute subj_type_attribute)

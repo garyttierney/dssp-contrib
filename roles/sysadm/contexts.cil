@@ -290,6 +290,15 @@
 	(filecon "/root/\.cache/gegl-.*(/.*)?" any root_gegl_home_cache)
 	(filecon "/root/\.local/share/gegl-.*(/.*)?" any root_gegl_home_data))
 
+(optional sysadm_gitg_home_optional_gitg
+	(tunableif enable_rbacsep
+		(true
+			(context root_gitg_home_cache (sysadm.id sysadm.role gitg.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gitg_home_cache (sysadm.id object_r gitg.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gitg(/.*)?" any root_gitg_home_cache))
+
 (optional sysadm_glib_home_optional_glib
 	(tunableif enable_rbacsep
 		(true

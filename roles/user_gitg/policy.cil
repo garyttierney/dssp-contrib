@@ -1,0 +1,51 @@
+(block user_gitg
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gitg.subj_blk)
+
+	(optional user_gitg_optional_user_atspird
+		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_dconfs
+		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_gitg_optional_user_gkrd
+		(call user_gkrd.stream_connect (subj)))
+
+	(optional user_gitg_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsdud2
+		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsdgoavm
+		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsdnetwork
+		(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsdtrash
+		(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_gvfsdhttp
+		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gitg_optional_user_webkitwp
+		(call user_webkitwp.sessbus_chat_client_subj_type (subj))
+		(call user_webkitwp.auto_subj_type_transition (subj)))
+
+	(optional user_gitg_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj)))
+
+	(optional user_gitg_optional_user_thunderbird
+		(call user_thunderbird.auto_subj_type_transition (subj)))
+
+	(optional user_gitg_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

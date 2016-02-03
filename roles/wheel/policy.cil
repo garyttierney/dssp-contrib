@@ -650,6 +650,17 @@
 	(optional wheel_optional_wheel_git_email
 		(call wheel_git_email.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_gitg
+		(call gitg.manage_tmpfs_user (subj))
+		(call gitg.relabel_tmpfs_user (subj))
+
+		(call gitg.manage_home_cache (subj))
+		(call gitg.relabel_home_cache (subj))
+
+		(call gitg.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gitg.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_gkbd
 		(call gkbd.manage_tmpfs_user_files (subj))
 		(call gkbd.relabel_tmpfs_user_files (subj))

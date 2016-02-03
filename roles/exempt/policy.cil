@@ -98,6 +98,9 @@
 		(call git.home_user_obj_type_transition_home (subj))
 		(call git.home_config_obj_type_transition_home_config (subj)))
 
+	(optional exempt_optional_gitg
+		(call gitg.home_cache_obj_type_transition_home_cache (subj)))
+
 	(optional exempt_optional_gkr
 		(call gkrd.tmpfs_obj_type_transition_tmpfs_user (subj))
 		(call gkrd.home_data_obj_type_transition_home_data (subj)))

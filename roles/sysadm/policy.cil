@@ -1299,6 +1299,17 @@
 	(optional sysadm_optional_sysadm_git_email
 		(call sysadm_git_email.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gitg
+		(call gitg.manage_tmpfs_user (subj))
+		(call gitg.relabel_tmpfs_user (subj))
+
+		(call gitg.manage_home_cache (subj))
+		(call gitg.relabel_home_cache (subj))
+
+		(call gitg.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gitg.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gkbd
 		(call gkbd.manage_tmpfs_user_files (subj))
 		(call gkbd.relabel_tmpfs_user_files (subj))

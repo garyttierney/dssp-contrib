@@ -61,11 +61,11 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
 
+	(optional evince_subj_type_optional_avahid
+		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
+
 	(optional evince_subj_type_optional_firefox
 		(call firefox.read_tmpfs_user_files (subj_type_attribute)))
-
-	(optional evince_subj_type_optional_sd_avahid
-		(call sd_avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional evince_subj_type_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))

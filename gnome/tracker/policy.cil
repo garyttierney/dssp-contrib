@@ -58,6 +58,8 @@
 	(call usersubj.read_home_config_files (subj_type_attribute))
 	(call usersubj.read_home_data (subj_type_attribute))
 
+	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
+
 	(optional trackerm_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute)))
 

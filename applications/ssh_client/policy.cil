@@ -139,5 +139,14 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call usersubj.dontaudit_rw_all_home_user (subj))
+
 	(call usersubj.manage_home_user (subj))
-	(call usersubj.home_dir_obj_type_transition_home_user (subj)))
+	(call usersubj.home_dir_obj_type_transition_home_user (subj))
+
+	(call usersubj.manage_home_cmd (subj))
+	(call usersubj.home_dir_obj_type_transition_home_cmd (subj))
+
+	(call usersubj.home_data_creator_subj_type (subj))
+
+	(call usersubj.home_data_obj_type_transition_home_cmd (subj)))

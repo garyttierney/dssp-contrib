@@ -397,6 +397,27 @@
 	(optional wheel_optional_wheel_chfn
 		(call wheel_chfn.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_corebird
+		(call corebird.manage_tmpfs_user (subj))
+		(call corebird.relabel_tmpfs_user (subj))
+
+		(call corebird.manage_home_cache (subj))
+		(call corebird.relabel_home_cache (subj))
+
+		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+
+		(call corebird.manage_home_config (subj))
+		(call corebird.relabel_home_config (subj))
+
+		(call corebird.home_config_obj_type_transition_home_config (subj))
+
+		(call corebird.manage_home_data (subj))
+		(call corebird.relabel_home_data (subj))
+
+		(call corebird.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_corebird.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_dbus_send
 		(call wheel_dbus_send.role_pattern (role subj_type_attribute)))
 
@@ -408,6 +429,8 @@
 
 		(call dconf.manage_home_config (subj))
 		(call dconf.relabel_home_config (subj))
+
+		(call dconf.home_config_obj_type_transition_home_config (subj))
 
 		(call wheel_dconf.role_pattern (role subj_type_attribute))
 		(call wheel_dconfs.role_pattern (role subj_type_attribute)))

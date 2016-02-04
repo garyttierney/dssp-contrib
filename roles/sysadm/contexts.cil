@@ -59,6 +59,21 @@
 
 	(filecon "/root/\.local/share/icc(/.*)?" any root_colord_home))
 
+(optional sysadm_corebird_home_optional_corebird
+	(tunableif enable_rbacsep
+		(true
+			(context root_corebird_home_cache (sysadm.id sysadm.role corebird.home_cache_file (systemlow systemlow)))
+			(context root_corebird_home_config (sysadm.id sysadm.role corebird.home_config_file (systemlow systemlow)))
+			(context root_corebird_home_data (sysadm.id sysadm.role corebird.home_data_file (systemlow systemlow))))
+		(false
+			(context root_corebird_home_cache (sysadm.id object_r corebird.home_cache_file (systemlow systemlow)))
+			(context root_corebird_home_config (sysadm.id object_r corebird.home_config_file (systemlow systemlow)))
+			(context root_corebird_home_data (sysadm.id object_r corebird.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/corebird(/.*)?" any root_corebird_home_cache)
+	(filecon "/root/\.config/corebird(/.*)?" any root_corebird_home_config)
+	(filecon "/root/\.local/share/corebird(/.*)?" any root_corebird_home_data))
+
 (optional sysadm_curl_home_optional_curl
 	(tunableif enable_rbacsep
 		(true

@@ -1047,6 +1047,27 @@
 	(optional sysadm_optional_sysadm_chfn
 		(call sysadm_chfn.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_corebird
+		(call corebird.manage_tmpfs_user (subj))
+		(call corebird.relabel_tmpfs_user (subj))
+
+		(call corebird.manage_home_cache (subj))
+		(call corebird.relabel_home_cache (subj))
+
+		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+
+		(call corebird.manage_home_config (subj))
+		(call corebird.relabel_home_config (subj))
+
+		(call corebird.home_config_obj_type_transition_home_config (subj))
+
+		(call corebird.manage_home_data (subj))
+		(call corebird.relabel_home_data (subj))
+
+		(call corebird.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_corebird.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_dbus_send
 		(call sysadm_dbus_send.role_pattern (role subj_type_attribute)))
 
@@ -1058,6 +1079,8 @@
 
 		(call dconf.manage_home_config (subj))
 		(call dconf.relabel_home_config (subj))
+
+		(call dconf.home_config_obj_type_transition_home_config (subj))
 
 		(call sysadm_dconf.role_pattern (role subj_type_attribute))
 		(call sysadm_dconfs.role_pattern (role subj_type_attribute)))

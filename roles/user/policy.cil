@@ -328,6 +328,27 @@
 	(optional user_optional_user_chfn
 		(call user_chfn.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_corebird
+		(call corebird.manage_tmpfs_user (subj))
+		(call corebird.relabel_tmpfs_user (subj))
+
+		(call corebird.manage_home_cache (subj))
+		(call corebird.relabel_home_cache (subj))
+
+		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+
+		(call corebird.manage_home_config (subj))
+		(call corebird.relabel_home_config (subj))
+
+		(call corebird.home_config_obj_type_transition_home_config (subj))
+
+		(call corebird.manage_home_data (subj))
+		(call corebird.relabel_home_data (subj))
+
+		(call corebird.home_data_obj_type_transition_home_data (subj))
+
+		(call user_corebird.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_dconf
 		(call dconf.manage_tmpfs_user (subj))
 		(call dconf.relabel_tmpfs_user (subj))

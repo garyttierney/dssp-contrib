@@ -17,6 +17,9 @@
 	(optional wheel_gedit_optional_wheel_caribou
 		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
 
+	(optional wheel_gedit_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
 	(optional wheel_gedit_optional_wheel_goad
 		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
 
@@ -58,6 +61,9 @@
 
 	(optional wheel_gedit_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj gedit.cmd_file)))
+
+	(optional wheel_gedit_optional_wheel_thunderbird
+		(call wheel_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional wheel_gedit_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

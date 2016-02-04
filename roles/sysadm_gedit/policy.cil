@@ -17,6 +17,9 @@
 	(optional sysadm_gedit_optional_sysadm_caribou
 		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
 
+	(optional sysadm_gedit_optional_sysadm_firefox
+                (call sysadm_firefox.auto_subj_type_transition (subj)))
+
 	(optional sysadm_gedit_optional_sysadm_goad
 		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
 
@@ -58,6 +61,9 @@
 
 	(optional sysadm_gedit_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gedit.cmd_file)))
+
+	(optional sysadm_gedit_optional_sysadm_thunderbird
+                (call sysadm_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gedit_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

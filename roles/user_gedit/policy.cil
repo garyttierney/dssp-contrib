@@ -14,6 +14,9 @@
 	(optional user_gedit_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
 
+	(optional user_gedit_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
 	(optional user_gedit_optional_user_caribou
 		(call user_caribou.sessbus_chat_client_subj_type (subj)))
 
@@ -58,6 +61,9 @@
 
 	(optional user_gedit_optional_user_sessbus
 		(call user_sessbus.daemon (subj gedit.cmd_file)))
+
+	(optional user_gedit_optional_user_thunderbird
+		(call user_thunderbird.auto_subj_type_transition (subj)))
 
         (optional user_gedit_sessbus_chat_client_subj_type_optional_user_sessbus
                 (allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -3,6 +3,11 @@
 
 	(blockinherit gedit.subj_blk)
 
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
 	(optional user_gedit_optional_user_atspird
 		(call user_atspird.sessbus_chat_client_subj_type (subj)))
 

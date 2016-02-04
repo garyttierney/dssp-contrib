@@ -1432,4 +1432,10 @@
 		(call wheel_xwayland.role (role)))
 
 	(optional wheel_optional_wheel_xterm
-		(call wheel_xterm.role_pattern (role subj_type_attribute))))
+		(call wheel_xterm.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_zenity
+		(call zenity.manage_tmpfs_user (subj))
+		(call zenity.relabel_tmpfs_user (subj))
+
+		(call wheel_zenity.role_pattern (role subj_type_attribute))))

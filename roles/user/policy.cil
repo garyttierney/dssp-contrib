@@ -1287,4 +1287,11 @@
 		(call user_xwayland.role (role)))
 
 	(optional user_optional_user_xterm
-		(call user_xterm.role_pattern (role subj_type_attribute))))
+		(call user_xterm.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_zenity
+		(call zenity.manage_tmpfs_user (subj))
+		(call zenity.relabel_tmpfs_user (subj))
+
+		(call user_zenity.role_pattern (role subj_type_attribute))))
+

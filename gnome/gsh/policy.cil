@@ -86,6 +86,8 @@
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
 
+	(call zenity.exec (subj_type_attribute))
+
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))

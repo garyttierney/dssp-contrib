@@ -116,6 +116,9 @@
 	(optional sysadm_gsh_optional_sysadm_xwayland
 		(call sysadm_xwayland.auto_subj_type_transition (subj)))
 
+	(optional sysadm_gsh_optional_sysadm_zenity
+		(call sysadm_zenity.send_sigkill (subj)))
+
 	(optional sysadm_gsh_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

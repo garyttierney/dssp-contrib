@@ -1,0 +1,54 @@
+(block zenity
+	(typeattribute client_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(call client_subj_type (subj_type_attribute))
+
+	(call sys.read_cpu_online_sysfs_files (client_subj_type_attribute))
+
+	(call dev.read_urandom (client_subj_type_attribute))
+
+        (call file.dontaudit_list_home (client_subj_type_attribute))
+        (call file.list_mnt (client_subj_type_attribute))
+        (call file.read_config (client_subj_type_attribute))
+        (call file.read_data (client_subj_type_attribute))
+
+        (call fs.dontaudit_list_rootfs (client_subj_type_attribute))
+        (call fs.getattr_fs (client_subj_type_attribute))
+
+	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(call dconf.client_subj_type (client_subj_type_attribute))
+
+	(call gtk.client_subj_type (client_subj_type_attribute))
+
+	(call fonts.client_subj_type (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
+	(call mime_types.read_data (client_subj_type_attribute))
+
+	(call usersubj.home_data_creator_subj_type (client_subj_type_attribute))
+
+	(call usersubj.read_home_config_files (client_subj_type_attribute))
+	(call usersubj.manage_home_data_files (client_subj_type_attribute))
+
+	(call usersubj.dontaudit_rw_all_home_user (client_subj_type_attribute))
+
+        (call usersubj.read_home_user (client_subj_type_attribute))
+
+	(optional zenity_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type (client_subj_type_attribute)))
+
+	(optional zenity_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (client_subj_type_attribute)))
+
+	(optional zenity_subj_type_optional_xserver
+		(call xserver.tmpfs_client (client_subj_type_attribute tmpfs_user_file))))

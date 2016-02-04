@@ -106,6 +106,9 @@
 	(optional user_gsh_optional_user_xwayland
 		(call user_xwayland.auto_subj_type_transition (subj)))
 
+	(optional user_gsh_optional_user_zenity
+		(call user_zenity.send_sigkill (subj)))
+
 	(optional user_gsh_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

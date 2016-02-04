@@ -1,0 +1,50 @@
+(block wheel_zenity
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit zenity.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_zenity_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_dconfs
+		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdgoavm
+		(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdhttp
+		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdnetwork
+		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdsftp
+		(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gvfsdtrash
+		(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_zenity_optional_wheel_nautilus
+		(call wheel_nautilus.sessbus_chat_client_subj_type (subj))
+		(call wheel_nautilus.auto_subj_type_transition (subj)))
+
+	(optional wheel_zenity_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_zenity_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

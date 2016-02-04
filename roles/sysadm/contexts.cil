@@ -276,7 +276,8 @@
 		(false
 			(context root_gedit_home_config (sysadm.id object_r gedit.home_config_file (systemlow systemlow)))))
 
-	(filecon "/root/\.config/gedit(/.*)?" any root_gedit_home_config))
+	(filecon "/root/\.config/gedit(/.*)?" any root_gedit_home_config)
+        (filecon "/root/\.config/gedit/tools(/.*)?" any root_home_cmd))
 
 (optional sysadm_gegl_home_optional_gegl
 	(tunableif enable_rbacsep

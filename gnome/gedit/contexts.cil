@@ -2,4 +2,11 @@
 	(filecon "/usr/bin/gedit" file cmd_file_context)
 	(filecon "HOME_DIR/\.config/gedit(/.*)?" any home_config_file_context))
 
-(filecon "/usr/share/gedit/plugins/externaltools/tools/.*" file cmd)
+(in geditstf
+	(filecon "/usr/share/gedit/plugins/externaltools/tools/send-to-fpaste" file cmd_file_context))
+
+(in home_cmd
+	(filecon "HOME_DIR/\.config/gedit/tools(/.*)?" any home_user_file_context))
+
+(in gedit_helper
+	(filecon "/usr/share/gedit/plugins/externaltools/tools/.*" file cmd_file_context))

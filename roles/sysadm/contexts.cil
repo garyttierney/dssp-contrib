@@ -247,6 +247,15 @@
 
 	(filecon "/root/\.fop(/.*)?" any root_fop_home))
 
+(optional sysadm_gcalc_home_optional_gcalc
+	(tunableif enable_rbacsep
+		(true
+			(context root_gcalc_home_cache (sysadm.id sysadm.role gcalc.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gcalc_home_cache (sysadm.id object_r gcalc.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-calculator(/.*)?" any root_gcalc_home_cache))
+
 (optional sysadm_gconf_home_optional_gconf
 	(tunableif enable_rbacsep
 		(true

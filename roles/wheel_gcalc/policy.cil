@@ -1,0 +1,53 @@
+(block wheel_gcalc
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gcalc.subj_blk)
+
+	(optional wheel_gcalc_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_dconfs
+		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_gcalc_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_gvfsdhttp
+		(call wheel_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
+		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_gcalc_optional_wheel_thunderbird
+		(call wheel_thunderbird.auto_subj_type_transition (subj)))
+
+	(optional wheel_gcalc_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+
+(block wheel_gcalcsp
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gcalcsp.subj_blk)
+
+	(call wheel_gcalc.auto_subj_type_transition (subj))
+
+	(optional wheel_gcalcsp_optional_wheel_atspird
+		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalcsp_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcalcsp_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gcalcsp.cmd_file)))
+
+	(optional wheel_gcalcsp_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

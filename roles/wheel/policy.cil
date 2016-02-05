@@ -571,6 +571,22 @@
 
 		(call wheel_gcal.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_gcalc
+		(call gcalc.manage_tmpfs_user (subj))
+		(call gcalc.relabel_tmpfs_user (subj))
+
+		(call gcalc.manage_home_cache (subj))
+		(call gcalc.relabel_home_cache (subj))
+
+		(call gcalc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gcalc.role_pattern (role subj_type_attribute))
+
+		(call gcalcsp.manage_tmpfs_user (subj))
+		(call gcalcsp.relabel_tmpfs_user (subj))
+
+		(call wheel_gcalcsp.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_gcl
 		(call gcl.manage_tmpfs_user (subj))
 		(call gcl.relabel_tmpfs_user (subj))

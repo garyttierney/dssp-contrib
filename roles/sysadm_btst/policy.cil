@@ -1,17 +1,10 @@
 (block sysadm_btst
 	(blockinherit btst.subj_blk)
 
-	(optional sysadm_btst_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_btst_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj btst.tmpfs_user_file))
 
 	(optional sysadm_btst_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_btst_optional_sysadm_obexd
-		(call sysadm_obexd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_btst_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj))))
+		(call sysadm_obexd.sessbus_chat_client_subj_type (subj))))

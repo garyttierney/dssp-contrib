@@ -1,11 +1,8 @@
 (block sysadm_firefox
 	(blockinherit firefox.subj_blk)
 
-	(optional sysadm_firefox_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_firefox_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(optional sysadm_firefox_optional_sysadm_atspi
+		(call sysadm_atspi.tmpfs_client (subj firefox.tmpfs_user_file)))
 
 	(optional sysadm_firefox_optional_sysadm_atspi_sessbus_launch
 		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
@@ -35,9 +32,6 @@
 	(optional sysadm_firefox_optional_sysadm_gsd
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_firefox_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_firefox_optional_sysadm_gstreamer
 		(call sysadm_gstps.auto_subj_type_transition (subj)))
 
@@ -58,9 +52,6 @@
 
 	(optional sysadm_firefox_optional_sysadm_gvfsdnetwork
 		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_firefox_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
 
 	(optional sysadm_firefox_optional_sysadm_firefox_xremotec
 		(call sysadm_firefox_xremotec.auto_subj_type_transition (subj)))

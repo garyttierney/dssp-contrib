@@ -7,6 +7,9 @@
 	(call user.cmd_auto_subj_type_transition (subj))
 	(call user.home_cmd_auto_subj_type_transition (subj))
 
+	(call user_atspi.provider_subj_type (subj))
+	(call user_atspi.tmpfs_client (subj gsh.tmpfs_user_file))
+
 	(optional user_gsh_optional_user_btst
 		(call user_btst.send_sigkill (subj)))
 

@@ -1,11 +1,8 @@
 (block user_firefox
 	(blockinherit firefox.subj_blk)
 
-	(optional user_firefox_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_firefox_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(optional user_firefox_optional_wheel_atspi
+		(call user_atspi.tmpfs_client (subj firefox.tmpfs_user_file)))
 
 	(optional user_firefox_optional_wheel_atspi_sessbus_launch
 		(call user_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
@@ -35,9 +32,6 @@
 	(optional user_firefox_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_firefox_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_firefox_optional_user_gstreamer
 		(call user_gstps.auto_subj_type_transition (subj)))
 
@@ -58,9 +52,6 @@
 
 	(optional user_firefox_optional_user_gvfsdmd
 		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_firefox_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj)))
 
 	(optional user_firefox_optional_user_firefox_xremotec
 		(call user_firefox_xremotec.auto_subj_type_transition (subj)))

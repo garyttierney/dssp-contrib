@@ -3,8 +3,7 @@
 
 	(blockinherit gcalc.subj_blk)
 
-	(optional wheel_gcalc_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gcalc.tmpfs_user_file))
 
 	(optional wheel_gcalc_optional_wheel_dconfs
 		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -12,18 +11,12 @@
 	(optional wheel_gcalc_optional_wheel_firefox
 		(call wheel_firefox.auto_subj_type_transition (subj)))
 
-	(optional wheel_gcalc_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional wheel_gcalc_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gcalc_optional_wheel_gvfsdhttp
 		(call wheel_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gcalc_optional_wheel_sessbus
-		(call wheel_sessbus.client_subj_type (subj)))
 
 	(optional wheel_gcalc_optional_wheel_thunderbird
 		(call wheel_thunderbird.auto_subj_type_transition (subj)))
@@ -39,11 +32,7 @@
 
 	(call wheel_gcalc.auto_subj_type_transition (subj))
 
-	(optional wheel_gcalcsp_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gcalcsp_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gcalcsp.tmpfs_user_file))
 
 	(optional wheel_gcalcsp_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj gcalcsp.cmd_file)))

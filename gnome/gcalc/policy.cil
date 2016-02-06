@@ -25,8 +25,6 @@
 
 	(call file.read_config (subj_type_attribute))
 
-	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
-
 	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call gtk.client_subj_type (subj_type_attribute))
@@ -55,8 +53,6 @@
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
-
-	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 
 	(call locale.read (subj_type_attribute))
 

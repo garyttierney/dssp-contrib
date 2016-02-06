@@ -5,18 +5,11 @@
 
 	(call wheel_gsdprinter.auto_subj_type_transition (subj))
 
-	(optional wheel_gsd_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gsd_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gsd.tmpfs_user_file))
 
 	(optional wheel_gsd_optional_wheel_gs
 		(call wheel_gs.daemon (subj gsd.cmd_file))
 		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gsd_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gsd_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))

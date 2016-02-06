@@ -54,8 +54,6 @@
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
-	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
-
 	(call dconf.client_subj_type (subj_type_attribute))
 
 	(call http.tcp_connect_port (subj_type_attribute))
@@ -197,8 +195,6 @@
 
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.list_rootfs (subj_type_attribute))
-
-	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 
 	(call gcs.audit_exec_access_cmd_files (subj_type_attribute))
 	(call gcs.getattr_cmd_files (subj_type_attribute))

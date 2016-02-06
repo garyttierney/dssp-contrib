@@ -5,11 +5,7 @@
 
 	(call sysadm_evinced.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_evince_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evince_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj evince.tmpfs_user_file))
 
 	(optional sysadm_evince_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -19,9 +15,6 @@
 
 	(optional sysadm_evince_optional_sysadm_gsd
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evince_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_evince_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
@@ -47,9 +40,6 @@
 	(optional sysadm_evince_optional_sysadm_gvfsdnetwork
 		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_evince_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
-
 	(optional sysadm_evince_optional_sysadm_nautilus
 		(call sysadm_nautilus.auto_subj_type_transition (subj))
 		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj)))
@@ -66,23 +56,13 @@
 
 	(blockinherit evincep.subj_blk)
 
-	(optional sysadm_evincep_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evincep_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj evincep.tmpfs_user_file))
 
 	(optional sysadm_evincep_optional_sysadm_goad
 		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_evincep_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_evincep_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evincep_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
 
 	(optional sysadm_evincep_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -3,11 +3,7 @@
 
 	(blockinherit gm.subj_blk)
 
-	(optional user_gm_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gm_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gm.tmpfs_user_file))
 
 	(optional user_gm_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -27,9 +23,6 @@
 
 	(optional user_gm_optional_user_gcs
 		(call user_gcs.auto_subj_type_transition (subj)))
-
-	(optional user_gm_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gm_optional_user_goad
 		(call user_goad.sessbus_chat_client_subj_type (subj)))

@@ -3,11 +3,7 @@
 
 	(blockinherit gph.subj_blk)
 
-	(optional user_gph_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-        (optional user_gph_optional_user_caribou
-                (call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gph.tmpfs_user_file))
 
 	(optional user_gph_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -26,9 +22,6 @@
 
 	(optional user_gph_optional_user_gom
 		(call user_gom.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gph_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gph_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))

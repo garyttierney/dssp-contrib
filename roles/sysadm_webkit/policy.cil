@@ -3,11 +3,7 @@
 
 	(blockinherit webkitwp.subj_blk)
 
-	(optional sysadm_webkitwp_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_webkitwp_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj webkitwp.tmpfs_user_file))
 
 	(optional sysadm_webkitwp_optional_sysadm_gcs
 		(call sysadm_gcs.rw_unix_stream_sockets (subj))
@@ -25,9 +21,6 @@
 	(optional sysadm_webkitwp_optional_sysadm_gvfsdmd
 		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_webkitwp_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
-
 	(optional sysadm_webkitwp_optional_sysadm_gcal
 		(call sysadm_gcal.use_fd (subj)))
 
@@ -43,17 +36,10 @@
 
 	(blockinherit webkitpp.subj_blk)
 
-	(optional sysadm_webkitpp_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_webkitpp_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj webkitpp.tmpfs_user_file))
 
 	(optional sysadm_webkitpp_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_webkitpp_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
 
 	(optional sysadm_webkitpp_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

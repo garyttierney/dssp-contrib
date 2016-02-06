@@ -1,11 +1,7 @@
 (block user_gpinentry
 	(blockinherit gpinentry.subj_blk)
 
-	(optional user_gpinentry_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gpinentry_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gpinentry.tmpfs_user_file))
 
 	(optional user_gpinentry_optional_user_gkrd
 		(call user_gkrd.sessbus_chat_client_subj_type (subj)))
@@ -15,11 +11,5 @@
 		(call user_gpg_agent.rw_inherited_unix_stream_sockets (subj))
 		(call user_gpg_agent.send_sigchld (subj)))
 
-	(optional user_gpinentry_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_gpinentry_optional_user_gvfs
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gpinentry_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj))))
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj))))

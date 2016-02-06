@@ -1,3 +1,17 @@
+(block wheel_atspi
+	(typeattribute provider_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(call wheel_atspird.sessbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(call stream_connect_all_client_subj (provider_subj_type_attribute))
+
+	(optional wheel_atspi_client_subj_type_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (client_subj_type_attribute))
+
+		(allow client_subj_type_attribute provider_subj_type_attribute (dbus (send_msg)))
+		(allow provider_subj_type_attribute client_subj_type_attribute (dbus (send_msg)))))
+
 (block wheel_atspird
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 

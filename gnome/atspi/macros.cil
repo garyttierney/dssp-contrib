@@ -9,6 +9,11 @@
 		(call client_subj_type (ARG1))
 		(call tmpfs_obj_type (ARG2)))
 
+	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_obj_type_attribute tmpfs_obj_type_attribute ARG2)))
+
 	(macro stream_connect_all_client_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))

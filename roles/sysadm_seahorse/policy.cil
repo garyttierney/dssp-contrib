@@ -11,11 +11,7 @@
 	(call sysadm_ssh_client.auto_subj_type_transition (subj))
 	(call sysadm_ssh_keygen.auto_subj_type_transition (subj))
 
-	(optional sysadm_seahorse_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_seahorse_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj seahorse.tmpfs_user_file))
 
 	(optional sysadm_seahorse_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -47,9 +43,6 @@
 	(optional sysadm_seahorse_optional_sysadm_gvfsdtrash
 		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_seahorse_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_seahorse_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj seahorse.cmd_file)))
 
@@ -62,11 +55,7 @@
 
 	(blockinherit seahorsesap.subj_blk)
 
-	(optional sysadm_seahorsesap_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_seahorsesap_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj seahorsesap.tmpfs_user_file))
 
 	(optional sysadm_seahorsesap_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))

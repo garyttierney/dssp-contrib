@@ -9,11 +9,7 @@
 
 	(call sysadm_trackers.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_nautilus_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_nautilus_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj nautilus.tmpfs_user_file))
 
 	(optional sysadm_nautilus_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -24,9 +20,6 @@
 	(optional sysadm_nautilus_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj nautilus.cmd_file))
 		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_nautilus_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_nautilus_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))

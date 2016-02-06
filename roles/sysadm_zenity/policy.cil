@@ -8,11 +8,7 @@
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(optional sysadm_zenity_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj zenity.tmpfs_user_file))
 
 	(optional sysadm_zenity_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -38,15 +34,9 @@
 	(optional sysadm_zenity_optional_sysadm_gvfsdtrash
 		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_zenity_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_zenity_optional_sysadm_nautilus
 		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj))
 		(call sysadm_nautilus.auto_subj_type_transition (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj)))
 
 	(optional sysadm_zenity_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

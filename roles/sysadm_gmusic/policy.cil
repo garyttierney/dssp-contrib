@@ -1,11 +1,7 @@
 (block sysadm_gmusic
 	(blockinherit gmusic.subj_blk)
 
-	(optional sysadm_gmusic_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gmusic_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj gmusic.tmpfs_user_file))
 
 	(optional sysadm_gmusic_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -18,9 +14,6 @@
 
 	(optional sysadm_gmusic_optional_sysadm_gsd
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gmusic_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gmusic_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))

@@ -3,11 +3,7 @@
 
 	(blockinherit gcon.subj_blk)
 
-	(optional user_gcon_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gcon_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gcon.tmpfs_user_file))
 
 	(optional user_gcon_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -23,9 +19,6 @@
 
 	(optional user_gcon_optional_user_goad
 		(call user_goad.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gcon_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gcon_optional_user_gstps
 		(call user_gstps.auto_subj_type_transition (subj)))
@@ -53,11 +46,7 @@
 
 	(call user_gcon.auto_subj_type_transition (subj))
 
-	(optional user_gconsp_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gconsp_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gconsp.tmpfs_user_file))
 
 	(optional user_gconsp_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -67,9 +56,6 @@
 
 	(optional user_gconsp_optional_user_evosr
 		(call user_evosr.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gconsp_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gconsp_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))

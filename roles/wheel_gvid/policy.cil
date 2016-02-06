@@ -6,11 +6,7 @@
 	(call wheel_gvidap.auto_subj_type_transition (subj))
 	(call wheel_gvidvt.auto_subj_type_transition (subj))
 
-	(optional wheel_gvid_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gvid_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gvid.tmpfs_user_file))
 
 	(optional wheel_gvid_optional_wheel_dconfs
 		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -52,9 +48,6 @@
 
 	(optional wheel_gvid_optional_wheel_gsd
 		(call wheel_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gvid_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gvid_optional_wheel_gstps
 		(call wheel_gstps.auto_subj_type_transition (subj)))

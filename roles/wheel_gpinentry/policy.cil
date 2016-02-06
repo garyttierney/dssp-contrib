@@ -1,11 +1,7 @@
 (block wheel_gpinentry
 	(blockinherit gpinentry.subj_blk)
 
-	(optional wheel_gpinentry_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gpinentry_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gpinentry.tmpfs_user_file))
 
 	(optional wheel_gpinentry_optional_wheel_gkrd
 		(call wheel_gkrd.sessbus_chat_client_subj_type (subj)))
@@ -15,11 +11,5 @@
 		(call wheel_gpg_agent.rw_inherited_unix_stream_sockets (subj))
 		(call wheel_gpg_agent.send_sigchld (subj)))
 
-	(optional wheel_gpinentry_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional wheel_gpinentry_optional_wheel_gvfs
-		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gpinentry_optional_wheel_sessbus
-		(call wheel_sessbus.client_subj_type (subj))))
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))))

@@ -8,11 +8,7 @@
 
 	(call user.home_cmd_auto_subj_type_transition (subj))
 
-	(optional user_zenity_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_zenity_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj zenity.tmpfs_user_file))
 
 	(optional user_zenity_optional_user_dconfs
 		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -38,15 +34,9 @@
 	(optional user_zenity_optional_user_gvfsdtrash
 		(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_zenity_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_zenity_optional_user_nautilus
 		(call user_nautilus.sessbus_chat_client_subj_type (subj))
 		(call user_nautilus.auto_subj_type_transition (subj)))
-
-	(optional user_zenity_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj)))
 
 	(optional user_zenity_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

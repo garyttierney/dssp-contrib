@@ -3,23 +3,11 @@
 
 	(blockinherit caribou.subj_blk)
 
-	(optional sysadm_caribou_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_caribou_optional_sysadm_gcs
-		(call sysadm_gcs.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.provider_subj_type (subj))
+	(call sysadm_atspird.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_caribou_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj caribou.cmd_file)))
-
-	(optional sysadm_caribou_optional_sysadm_gsd
-		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_caribou_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_caribou_optional_sysadm_gts
-		(call sysadm_gts.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_caribou_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj caribou.cmd_file)))

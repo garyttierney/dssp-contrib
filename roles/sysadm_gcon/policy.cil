@@ -3,11 +3,7 @@
 
 	(blockinherit gcon.subj_blk)
 
-	(optional sysadm_gcon_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gcon_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj gcon.tmpfs_user_file))
 
 	(optional sysadm_gcon_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -23,9 +19,6 @@
 
 	(optional sysadm_gcon_optional_sysadm_goad
 		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gcon_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gcon_optional_sysadm_gstps
 		(call sysadm_gstps.auto_subj_type_transition (subj)))
@@ -53,11 +46,7 @@
 
 	(call sysadm_gcon.auto_subj_type_transition (subj))
 
-	(optional sysadm_gconsp_optional_sysadm_atspird
-		(call sysadm_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gconsp_optional_sysadm_caribou
-		(call sysadm_caribou.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_atspi.tmpfs_client (subj gconsp.tmpfs_user_file))
 
 	(optional sysadm_gconsp_optional_sysadm_dconfs
 		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -67,9 +56,6 @@
 
 	(optional sysadm_gconsp_optional_sysadm_evosr
 		(call sysadm_evosr.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gconsp_optional_sysadm_gsh
-		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gconsp_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))

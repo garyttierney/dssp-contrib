@@ -3,11 +3,7 @@
 
 	(blockinherit corebird.subj_blk)
 
-	(optional wheel_corebird_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_corebird_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj corebird.tmpfs_user_file))
 
 	(optional wheel_corebird_optional_wheel_dconfs
 		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -35,9 +31,6 @@
 
 	(optional wheel_corebird_optional_wheel_gvfsdnetwork
 		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_corebird_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_corebird_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj corebird.cmd_file)))

@@ -3,11 +3,7 @@
 
 	(blockinherit gcon.subj_blk)
 
-	(optional wheel_gcon_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gcon_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gcon.tmpfs_user_file))
 
 	(optional wheel_gcon_optional_wheel_dconfs
 		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -23,9 +19,6 @@
 
 	(optional wheel_gcon_optional_wheel_goad
 		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gcon_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gcon_optional_wheel_gstps
 		(call wheel_gstps.auto_subj_type_transition (subj)))
@@ -53,11 +46,7 @@
 
 	(call wheel_gcon.auto_subj_type_transition (subj))
 
-	(optional wheel_gconsp_optional_wheel_atspird
-		(call wheel_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gconsp_optional_wheel_caribou
-		(call wheel_caribou.sessbus_chat_client_subj_type (subj)))
+	(call wheel_atspi.tmpfs_client (subj gconsp.tmpfs_user_file))
 
 	(optional wheel_gconsp_optional_wheel_dconfs
 		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
@@ -67,9 +56,6 @@
 
 	(optional wheel_gconsp_optional_wheel_evosr
 		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gconsp_optional_wheel_gsh
-		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gconsp_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))

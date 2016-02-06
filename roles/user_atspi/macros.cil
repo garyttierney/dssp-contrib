@@ -1,3 +1,17 @@
+(in user_atspi
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro provider_subj_type ((type ARG1))
+		(typeattributeset provider_subj_type_attribute ARG1))
+
+	(macro tmpfs_client ((type ARG1)(type ARG2))
+		(call client_subj_type (ARG1))
+		(call atspi.tmpfs_client (client_subj_type_attribute ARG2)))
+
+	(macro stream_connect_all_client_subj ((type ARG1))
+		(call atspi.spec_stream_connect (ARG1 client_subj_type_attribute))))
+
 (in user_atspird
 	(macro sessbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))

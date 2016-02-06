@@ -5,18 +5,11 @@
 
 	(call user_gsdprinter.auto_subj_type_transition (subj))
 
-	(optional user_gsd_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gsd_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj gsd.tmpfs_user_file))
 
 	(optional user_gsd_optional_user_gs
 		(call user_gs.daemon (subj gsd.cmd_file))
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gsd_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gsd_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))

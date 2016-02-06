@@ -3,11 +3,7 @@
 
 	(blockinherit webkitwp.subj_blk)
 
-	(optional user_webkitwp_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_webkitwp_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj webkitwp.tmpfs_user_file))
 
 	(optional user_webkitwp_optional_user_gcs
 		(call user_gcs.rw_unix_stream_sockets (subj))
@@ -25,9 +21,6 @@
 	(optional user_webkitwp_optional_user_gvfsdmd
 		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_webkitwp_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj)))
-
 	(optional user_webkitwp_optional_user_gcal
 		(call user_gcal.use_fd (subj)))
 
@@ -43,17 +36,10 @@
 
 	(blockinherit webkitpp.subj_blk)
 
-	(optional user_webkitpp_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_webkitpp_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_atspi.tmpfs_client (subj webkitpp.tmpfs_user_file))
 
 	(optional user_webkitpp_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_webkitpp_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj)))
 
 	(optional user_webkitpp_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -1,11 +1,8 @@
 (block user_thunderbird
 	(blockinherit thunderbird.subj_blk)
 
-	(optional user_thunderbird_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_thunderbird_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(optional user_thunderbird_optional_user_atspi
+		(call user_atspi.tmpfs_client (subj thunderbird.tmpfs_user_file)))
 
 	(optional user_thunderbird_optional_user_atspi_sessbus_launch
 		(call user_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
@@ -29,9 +26,6 @@
 	(optional user_thunderbird_optional_user_gpg
 		(call user_gpg.auto_subj_type_transition (subj)))
 
-	(optional user_thunderbird_optional_user_gsh
-		(call user_gsh.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_thunderbird_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
@@ -42,7 +36,4 @@
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_thunderbird_optional_user_pa
-		(call user_pa.auto_subj_type_transition (subj)))
-
-	(optional user_thunderbird_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj))))
+		(call user_pa.auto_subj_type_transition (subj))))

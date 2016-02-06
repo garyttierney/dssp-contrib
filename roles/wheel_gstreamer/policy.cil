@@ -1,11 +1,12 @@
-(block wheel_gst
+(block wheel_gstreamer
 	(typeattribute client_subj_type_attribute)
-
-	(blockinherit gst.subj_blk)
 
 	(call wheel_gstps.auto_subj_type_transition (client_subj_type_attribute))
 
 	(call gstreamer.client_subj_type (client_subj_type_attribute)))
+
+(block wheel_gst
+	(blockinherit gst.subj_blk))
 
 (block wheel_gstps
 	(blockinherit gstps.subj_blk)

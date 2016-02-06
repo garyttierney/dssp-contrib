@@ -1,11 +1,12 @@
-(block user_gst
+(block user_gstreamer
 	(typeattribute client_subj_type_attribute)
-
-	(blockinherit gst.subj_blk)
 
 	(call user_gstps.auto_subj_type_transition (client_subj_type_attribute))
 
 	(call gstreamer.client_subj_type (client_subj_type_attribute)))
+
+(block user_gst
+	(blockinherit gst.subj_blk))
 
 (block user_gstps
 	(blockinherit gstps.subj_blk)
@@ -17,4 +18,3 @@
 
 	(optional user_gstps_optional_user_sessbus
 		(call user_sessbus.client_subj_type (subj))))
-

@@ -1,11 +1,12 @@
-(block sysadm_gst
+(block sysadm_gstreamer
 	(typeattribute client_subj_type_attribute)
-
-	(blockinherit gst.subj_blk)
 
 	(call sysadm_gstps.auto_subj_type_transition (client_subj_type_attribute))
 
 	(call gstreamer.client_subj_type (client_subj_type_attribute)))
+
+(block sysadm_gst
+	(blockinherit gst.subj_blk))
 
 (block sysadm_gstps
 	(blockinherit gstps.subj_blk)

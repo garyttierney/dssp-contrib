@@ -23,7 +23,6 @@
 	(call file.read_config (subj_type_attribute))
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
-	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.manage_dosfs_subj_type (subj_type_attribute))
 	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
@@ -88,8 +87,6 @@
 
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
-
-	(call fs.getattr_fs (subj_type_attribute))
 
 	(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file))
 

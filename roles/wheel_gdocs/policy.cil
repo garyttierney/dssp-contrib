@@ -7,6 +7,8 @@
 
 	(call wheel_dconf.client_subj_type (subj))
 
+	(call wheel_gvfsdmd.client_subj_type (subj))
+
 	(optional wheel_gdocs_optional_wheel_evince
 		(call wheel_evince.auto_subj_type_transition (subj))
 		(call wheel_evincep.auto_subj_type_transition (subj)))
@@ -28,9 +30,6 @@
 
 	(optional wheel_gdocs_optional_wheel_gvfsdhttp
 		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gdocs_optional_wheel_gvfsdmd
-		(call wheel_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gdocs_optional_wheel_trackerm
 		(call wheel_trackerm.sessbus_chat_client_subj_type (subj)))

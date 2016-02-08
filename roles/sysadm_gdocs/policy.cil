@@ -7,6 +7,8 @@
 
 	(call sysadm_dconf.client_subj_type (subj))
 
+	(call sysadm_gvfsdmd.client_subj_type (subj))
+
 	(optional sysadm_gdocs_optional_sysadm_evince
 		(call sysadm_evince.auto_subj_type_transition (subj))
 		(call sysadm_evincep.auto_subj_type_transition (subj)))
@@ -28,9 +30,6 @@
 
 	(optional sysadm_gdocs_optional_sysadm_gvfsdhttp
 		(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gdocs_optional_sysadm_gvfsdmd
-		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gdocs_optional_sysadm_trackerm
 		(call sysadm_trackerm.sessbus_chat_client_subj_type (subj)))

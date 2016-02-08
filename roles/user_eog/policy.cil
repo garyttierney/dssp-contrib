@@ -7,6 +7,8 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(call user_gvfsdmd.client_subj_type (subj))
+
 	(optional user_eog_optional_user_gcs
 		(call user_gcs.auto_subj_type_transition (subj)))
 
@@ -27,9 +29,6 @@
 
 	(optional user_eog_optional_user_gvfsdhttp
 		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_eog_optional_user_gvfsdmd
-		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_eog_optional_user_gvfsdnetwork
 		(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))

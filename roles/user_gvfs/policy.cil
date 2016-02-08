@@ -22,11 +22,10 @@
 	(allow daemon_subj_type_attribute daemon_subj_type_attribute (unix_stream_socket (connectto))))
 
 (block user_gvfsdmd
+	(typeattribute client_subj_type_attribute)
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit gvfsdmd.subj_blk)
-
-	(call user_gvfsdrecent.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gvfsdmd_optional_user_sessbus
 		(call user_sessbus.daemon (subj gvfsdmd.cmd_file)))
@@ -35,7 +34,11 @@
 		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
 
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+
+	(call sessbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(call gvfsdmd.read_home_data_files (client_subj_type_attribute)))
 
 (block user_gvfsdud2
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -197,6 +200,7 @@
 	(call user_gvfsd.daemon (subj gvfsdrecent.cmd_file))
 
 	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdmd.client_subj_type (subj))
 
 	(call user_atspird.sessbus_chat_client_subj_type (subj))
 

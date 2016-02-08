@@ -7,6 +7,8 @@
 
 	(call wheel_dconf.client_subj_type (subj))
 
+	(call wheel_gvfsdmd.client_subj_type (subj))
+
 	(optional wheel_eog_optional_wheel_gcs
 		(call wheel_gcs.auto_subj_type_transition (subj)))
 
@@ -27,9 +29,6 @@
 
 	(optional wheel_eog_optional_wheel_gvfsdhttp
 		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdmd
-		(call wheel_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_eog_optional_wheel_gvfsdnetwork
 		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))

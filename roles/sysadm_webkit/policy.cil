@@ -7,6 +7,8 @@
 
 	(call sysadm_dconf.client_subj_type (subj))
 
+	(call sysadm_gvfsdmd.client_subj_type (subj))
+
 	(optional sysadm_webkitwp_optional_sysadm_gcs
 		(call sysadm_gcs.rw_unix_stream_sockets (subj))
 		(call sysadm_gcs.sessbus_chat_client_subj_type (subj)))
@@ -22,9 +24,6 @@
 
 	(optional sysadm_webkitwp_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_webkitwp_optional_sysadm_gvfsdmd
-		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_webkitwp_optional_sysadm_gcal
 		(call sysadm_gcal.use_fd (subj)))

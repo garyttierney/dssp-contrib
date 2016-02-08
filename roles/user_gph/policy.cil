@@ -7,6 +7,8 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(call user_gvfsdmd.client_subj_type (subj))
+
 	(optional user_gph_optional_user_dleyna
 		(call user_dleyna.sessbus_chat_client_subj_type (subj)))
 
@@ -24,9 +26,6 @@
 
 	(optional user_gph_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gph_optional_user_gvfsdmd
-		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gph_optional_user_gvfsdhttp
 		(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))

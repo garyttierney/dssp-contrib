@@ -7,6 +7,8 @@
 
 	(call sysadm_dconf.client_subj_type (subj))
 
+	(call sysadm_gvfsdmd.client_subj_type (subj))
+
 	(optional sysadm_gph_optional_sysadm_dleyna
 		(call sysadm_dleyna.sessbus_chat_client_subj_type (subj)))
 
@@ -24,9 +26,6 @@
 
 	(optional sysadm_gph_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gph_optional_sysadm_gvfsdmd
-		(call sysadm_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gph_optional_sysadm_gvfsdhttp
 		(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))

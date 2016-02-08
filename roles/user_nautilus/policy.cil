@@ -13,6 +13,8 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(call user_gvfsdmd.client_subj_type (subj))
+
 	(optional user_nautilus_optional_user_eog
 		(call user_eog.auto_subj_type_transition (subj)))
 
@@ -22,9 +24,6 @@
 
 	(optional user_nautilus_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_nautilus_optional_user_gvfsdmd
-		(call user_gvfsdmd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_nautilus_optional_user_gvfsdgoogle
 		(call user_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))

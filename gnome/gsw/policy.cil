@@ -15,8 +15,6 @@
         (call manage_home_data (subj_type_attribute))
         (call home_data_obj_type_transition_home_data (subj_type_attribute))
 
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
-
 	(call fwupd.read_config_files (subj_type_attribute))
 	(call fwupd.read_var_cache (subj_type_attribute))
 
@@ -27,8 +25,6 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call polkit.sysbus_chat_client_subj_type (subj_type_attribute))
-
-	(call usersubj.manage_home_data_files (subj_type_attribute))
 
 	(optional gsw_subj_type_optional_fwupd
 		(call fwupd.sysbus_chat_client_subj_type (subj_type_attribute)))

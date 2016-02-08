@@ -14,8 +14,6 @@
 
 	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
-
 	(call file.dontaudit_list_home (subj_type_attribute))
 	(call file.list_mnt (subj_type_attribute))
 
@@ -35,10 +33,6 @@
 	(call thumbnails.client_subj_type (subj_type_attribute))
 
 	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
-
-	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
-
-	(call usersubj.manage_home_data_files (subj_type_attribute))
 
         (call usersubj.manage_home_user_dirs (subj_type_attribute))
         (call usersubj.manage_home_user_files (subj_type_attribute))

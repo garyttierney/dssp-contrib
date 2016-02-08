@@ -13,10 +13,8 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(call sys.read_cpu_sysfs (subj_type_attribute))
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 	(call sys.read_fs_sysctl_files (subj_type_attribute))
 
-	(call dev.getattr_random (subj_type_attribute))
 	(call dev.rw_dri (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
@@ -26,15 +24,11 @@
 
 	(call trackers.manage_home_cache_files (subj_type_attribute))
 
-	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
-
 	(call trackers.manage_home_data (subj_type_attribute))
 	(call trackers.home_data_obj_type_transition_home_data (subj_type_attribute))
 
 	(call usersubj.list_home_dir (subj_type_attribute))
 	(call usersubj.read_home_user (subj_type_attribute))
-
-	(call usersubj.read_home_data (subj_type_attribute))
 
 	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
 

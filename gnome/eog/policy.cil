@@ -15,12 +15,8 @@
 	(call manage_home_data_files (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
-
 	(call file.dontaudit_list_home (subj_type_attribute))
 	(call file.list_mnt (subj_type_attribute))
-	(call file.read_config (subj_type_attribute))
-	(call file.read_data (subj_type_attribute))
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
@@ -38,8 +34,6 @@
 	(call thumbnails.client_subj_type (subj_type_attribute))
 
 	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
-
-	(call usersubj.manage_home_data_files (subj_type_attribute))
 
 	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
 

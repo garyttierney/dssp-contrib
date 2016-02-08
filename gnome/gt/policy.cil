@@ -31,8 +31,6 @@
 
 	(call exec (subj_type_attribute))
 
-	(call dev.getattr_random (subj_type_attribute))
-
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
@@ -42,8 +40,6 @@
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.setpgid_common_login_subj (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
-
-	(call usersubj.read_home_data (subj_type_attribute))
 
 	(optional gts_subj_type_optional_xwayland
 		(call xwayland.shared_client_subj_type (subj_type_attribute))))

@@ -7,8 +7,6 @@
 
 	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
-
 	(call cmd.audit_read_access_cmd_files (subj_type_attribute))
 
 	(call dev.rw_dri (subj_type_attribute))
@@ -34,9 +32,6 @@
 	(call selinux_config.read_config_files (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
-
-	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
-	(call usersubj.manage_home_data_files (subj_type_attribute))
 
 	(optional gm_subj_type_optional_bluetoothd
 		(call bluetoothd.sysbus_chat_client_subj_type (subj_type_attribute)))

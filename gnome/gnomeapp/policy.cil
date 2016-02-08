@@ -7,8 +7,11 @@
 	(allow common_subj_type_attribute self (process (getsched setsched)))
 	(allow common_subj_type_attribute self rw_fifo_file_perms)
 
+	(call sys.read_cpu_online_sysfs_files (common_subj_type_attribute))
+
 	(call cmd.mmap_shell (common_subj_type_attribute))
 
+	(call dev.getattr_random (common_subj_type_attribute))
 	(call dev.read_urandom (common_subj_type_attribute))
 
 	(call file.read_config (common_subj_type_attribute))
@@ -19,6 +22,9 @@
 	(call fonts.client_subj_type (common_subj_type_attribute))
 	(call locale.read (common_subj_type_attribute))
 	(call mime_types.read_data (common_subj_type_attribute))
+
+	(call usersubj.home_data_creator_subj_type (common_subj_type_attribute))
+	(call usersubj.manage_home_data_files (common_subj_type_attribute))
 
 	(call usersubj.read_home_config_files (common_subj_type_attribute))
 

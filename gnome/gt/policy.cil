@@ -1,7 +1,7 @@
 (block gt
 	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
@@ -25,13 +25,9 @@
 (block gts
 	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
-
-	(allow subj_type_attribute self rw_fifo_file_perms)
-
-	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
@@ -39,18 +35,8 @@
 	(call exec (subj_type_attribute))
 
 	(call dev.getattr_random (subj_type_attribute))
-	(call dev.read_urandom (subj_type_attribute))
-
-	(call file.read_config (subj_type_attribute))
-	(call file.read_data (subj_type_attribute))
 
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
-
-	(call gtk.client_subj_type (subj_type_attribute))
-
-	(call fonts.client_subj_type (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
-	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
@@ -60,11 +46,7 @@
 	(call usersubj.setpgid_common_login_subj (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
 
-	(call usersubj.read_home_config_files (subj_type_attribute))
 	(call usersubj.read_home_data (subj_type_attribute))
-
-	(optional gts_subj_type_optional_xserver
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
 
 	(optional gts_subj_type_optional_xwayland
 		(call xwayland.shared_client_subj_type (subj_type_attribute))))

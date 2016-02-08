@@ -1,19 +1,14 @@
 (block fileroller
 	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
-
-	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call cmd.exec (subj_type_attribute))
-	(call cmd.mmap_shell (subj_type_attribute))
-
-	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.dontaudit_list_home (subj_type_attribute))
 	(call file.read_config (subj_type_attribute))
@@ -25,18 +20,11 @@
 
 	(call fileroller_helper.exec (subj_type_attribute))
 
-	(call gtk.client_subj_type (subj_type_attribute))
-
-	(call fonts.client_subj_type (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
-	(call mime_types.read_data (subj_type_attribute))
-
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call thumbnails.client_subj_type (subj_type_attribute))
 
 	(call usersubj.manage_home_data_files (subj_type_attribute))
-	(call usersubj.read_home_config_files (subj_type_attribute))
 
         (call usersubj.manage_home_user_files (subj_type_attribute))
         (call usersubj.read_home_user_lnk_files (subj_type_attribute))
@@ -46,10 +34,7 @@
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional fileroller_subj_type_optional_sysbus
-		(call sysbus.client_subj_type (subj_type_attribute)))
-
-	(optional fileroller_subj_type_optional_xserver
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+		(call sysbus.client_subj_type (subj_type_attribute))))
 
 (block fileroller_helper
 	(blockinherit cmd.obj_blk))

@@ -15,10 +15,16 @@
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
-	(macro tmpfs_client ((type ARG1)(type ARG2))
+	(macro tmpfs_client_subj_type ((type ARG1))
 		(call client_subj_type (ARG1))
-		(typeattributeset tmpfs_client_subj_type_attribute ARG1)
-		(typeattributeset tmpfs_client_obj_type_attribute ARG2))
+		(typeattributeset tmpfs_client_subj_type_attribute ARG1))
+
+	(macro tmpfs_client_obj_type ((type ARG1))
+		(typeattributeset tmpfs_client_obj_type_attribute ARG1))
+
+	(macro tmpfs_client ((type ARG1)(type ARG2))
+		(call tmpfs_client_subj_type (ARG1))
+		(call tmpfs_client_obj_type (ARG2)))
 
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)

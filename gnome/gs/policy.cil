@@ -1,7 +1,7 @@
 (block gs
 	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
@@ -20,7 +20,7 @@
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
@@ -81,7 +81,7 @@
 (block gsquit
 	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file)))
 

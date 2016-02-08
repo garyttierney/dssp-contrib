@@ -12,54 +12,8 @@
 
 	(call sysadm_dconf.client_subj_type (subj))
 
-	(optional sysadm_gsh_optional_sysadm_btst
-		(call sysadm_btst.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_corebird
-		(call sysadm_corebird.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_eog
-		(call sysadm_eog.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_evince
-		(call sysadm_evince.send_sigkill (subj))
-		(call sysadm_evincep.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_fileroller
-		(call sysadm_fileroller.send_sigkill (subj)))
-
 	(optional sysadm_gsh_optional_sysadm_firefox
 		(call sysadm_firefox.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcal
-		(call sysadm_gcal.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcalc
-		(call sysadm_gcalc.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcl
-		(call sysadm_gcl.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcon
-		(call sysadm_gcon.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gcs
-		(call sysadm_gcs.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gdocs
-		(call sysadm_gdocs.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gedit
-		(call sysadm_gedit.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gitg
-		(call sysadm_gitg.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gmusic
-		(call sysadm_gmusic.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gph
-		(call sysadm_gph.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj gsh.cmd_file))
@@ -70,11 +24,7 @@
 		(call sysadm_gstreamer.client_subj_type (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gsw
-		(call sysadm_gsw.auto_subj_type_transition (subj))
-		(call sysadm_gsw.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gts
-		(call sysadm_gts.send_sigkill (subj)))
+		(call sysadm_gsw.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
@@ -88,23 +38,11 @@
 	(optional sysadm_gsh_optional_sysadm_gvfsdud2
 		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
-	(optional sysadm_gsh_optional_sysadm_nautilus
-		(call sysadm_nautilus.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gvid
-		(call sysadm_gvid.send_sigkill (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_nmce
-		(call sysadm_nmce.send_sigkill (subj)))
-
 	(optional sysadm_gsh_optional_sysadm_pa
 		(call sysadm_pa.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gsh_optional_rpm
 		(call rpm.sysbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_polari
-		(call sysadm_polari.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_polkit_agent
 		(call polkit_agent.auto_subj_type_transition (subj)))
@@ -112,23 +50,14 @@
 	(optional sysadm_gsh_optional_wheel_sessbus
 		(call sysadm_sessbus.service_subj_type (subj)))
 
-	(optional sysadm_gsh_optional_sysadm_seahorse
-		(call sysadm_seahorse.send_sigkill (subj)))
-
 	(optional sysadm_gsh_optional_sysadm_steam
 		(call sysadm_steam.send_sigkill (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_thunderbird
 		(call sysadm_thunderbird.send_sigkill (subj)))
 
-	(optional sysadm_gsh_optional_sysadm_vinagre
-		(call sysadm_vinagre.send_sigkill (subj)))
-
 	(optional sysadm_gsh_optional_sysadm_xwayland
 		(call sysadm_xwayland.auto_subj_type_transition (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_zenity
-		(call sysadm_zenity.send_sigkill (subj)))
 
 	(optional sysadm_gsh_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

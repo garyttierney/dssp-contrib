@@ -4,6 +4,7 @@
 	(blockinherit nautilus.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj nautilus.tmpfs_user_file))
+	(call user_gnomeapp.file_chooser_dialog_subj_type (subj))
 
 	(call user.user_subj_type (subj))
 	(call user.cmd_auto_subj_type_transition (subj))
@@ -12,11 +13,6 @@
 	(call user_trackers.sessbus_chat_client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
-	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdrecent.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
 
 	(optional user_nautilus_optional_user_eog
 		(call user_eog.auto_subj_type_transition (subj)))
@@ -24,9 +20,6 @@
 	(optional user_nautilus_optional_user_gs
 		(call user_gs.daemon (subj nautilus.cmd_file))
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_nautilus_optional_user_gvfsdgoogle
-		(call user_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_nautilus_optional_user_gvid
 		(call user_gvid.sessbus_chat_client_subj_type (subj)))

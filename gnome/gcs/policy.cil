@@ -32,19 +32,15 @@
 	(call dev.rw_dri (subj_type_attribute))
 	(call dev.rw_v4l (subj_type_attribute))
 
-	(call file.dontaudit_list_home (subj_type_attribute))
 	(call file.list_boot (subj_type_attribute))
 	(call file.list_var_tmp (subj_type_attribute))
 
-	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_all_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
 	(call sec.search_fs (subj_type_attribute))
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
-
-	(call http.tcp_connect_port (subj_type_attribute))
 
 	(call gcs_helper.obj_entry_subj (subj_type_attribute))
 
@@ -57,26 +53,15 @@
 
 	(call ipp.tcp_connect_port (subj_type_attribute))
 
-	(call cert.read_all (subj_type_attribute))
 	(call fstab.read (subj_type_attribute))
-
-	(call nss.client_subj_type (subj_type_attribute))
 
 	(call pam.read_config (subj_type_attribute))
 
 	(call selinux_config.read_config_files (subj_type_attribute))
 
-	(call thumbnails.client_subj_type (subj_type_attribute))
-
 	(call udev.client_subj_type (subj_type_attribute))
 
-	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
-
 	(call usersubj.manage_home_config_files (subj_type_attribute))
-
-	(call usersubj.manage_home_user_dirs (subj_type_attribute))
-	(call usersubj.read_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
@@ -85,9 +70,6 @@
 	(optional gcs_subj_type_optional_accountsd
 		(call accountsd.read_var_lib (subj_type_attribute))
 		(call accountsd.client_subj_type (subj_type_attribute)))
-
-	(optional gcs_subj_type_optional_avahid
-		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_bluetoothd
 		(call bluetoothd.sysbus_chat_client_subj_type (subj_type_attribute)))
@@ -119,9 +101,6 @@
 		(call sd.status (subj_type_attribute))
 		(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 		(call sd.read_state (subj_type_attribute)))
-
-	(optional gcs_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd_localed
 		(call sd_localed.sysbus_chat_client_subj_type (subj_type_attribute)))

@@ -4,6 +4,7 @@
 	(blockinherit gph.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gph.tmpfs_user_file))
+	(call user_gnomeapp.print_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
 	(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
@@ -14,9 +15,6 @@
 
 	(optional user_gph_optional_user_dleynar
 		(call user_dleynar.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gph_optional_user_goad
-		(call user_goad.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gph_optional_user_gom
 		(call user_gom.sessbus_chat_client_subj_type (subj)))

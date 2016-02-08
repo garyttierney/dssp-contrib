@@ -4,33 +4,16 @@
 	(blockinherit zenity.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj zenity.tmpfs_user_file))
+	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
 
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(optional sysadm_zenity_optional_sysadm_gvfsdud2
-		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_gvfsdgoavm
-		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_zenity_optional_sysadm_gvfsdhttp
+		(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 		(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_gvfsdnetwork
-		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_gvfsdsftp
-		(call sysadm_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_gvfsdtrash
-		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_zenity_optional_sysadm_nautilus
-		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj))
-		(call sysadm_nautilus.auto_subj_type_transition (subj)))
 
 	(optional sysadm_zenity_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

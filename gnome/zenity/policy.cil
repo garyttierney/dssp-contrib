@@ -8,19 +8,4 @@
 
 	(call client_subj_type (subj_type_attribute))
 
-        (call file.dontaudit_list_home (client_subj_type_attribute))
-        (call file.list_mnt (client_subj_type_attribute))
-
-        (call fs.dontaudit_list_rootfs (client_subj_type_attribute))
-
-	(call usersubj.home_data_creator_subj_type (client_subj_type_attribute))
-
-	(call usersubj.dontaudit_rw_all_home_user (client_subj_type_attribute))
-
-        (call usersubj.read_home_user (client_subj_type_attribute))
-
-	(optional zenity_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (client_subj_type_attribute)))
-
-	(optional zenity_subj_type_optional_sysbus
-		(call sysbus.client_subj_type (client_subj_type_attribute))))
+	(call usersubj.home_data_creator_subj_type (client_subj_type_attribute)))

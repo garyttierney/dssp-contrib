@@ -4,8 +4,10 @@
 	(blockinherit gdocs.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gdocs.tmpfs_user_file))
+	(call user_gnomeapp.print_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
+	(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 	(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gdocs_optional_user_evince
@@ -14,9 +16,6 @@
 
 	(optional user_gdocs_optional_user_gcs
 		(call user_gcs.auto_subj_type_transition (subj)))
-
-	(optional user_gdocs_optional_user_goad
-		(call user_goad.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gdocs_optional_user_gs
 		(call user_gs.sessbus_chat_client_subj_type (subj)))

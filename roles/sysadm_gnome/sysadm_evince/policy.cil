@@ -4,30 +4,14 @@
 	(blockinherit evince.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj evince.tmpfs_user_file))
+	(call sysadm_gnomeapp.print_subj_type (subj))
 
 	(call sysadm_evinced.sessbus_chat_client_subj_type (subj))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
-	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
-	(call sysadm_gvfsdsftp.sessbus_chat_client_subj_type (subj))
-	(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj))
-	(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
-
-	(optional sysadm_evince_optional_sysadm_goad
-		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_evince_optional_sysadm_gsd
 		(call sysadm_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evince_optional_sysadm_gvfsdgoavm
-		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evince_optional_sysadm_gvfsdgoogle
-		(call sysadm_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_evince_optional_sysadm_nautilus
-		(call sysadm_nautilus.auto_subj_type_transition (subj))
-		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_evince_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
@@ -39,9 +23,7 @@
 	(blockinherit evincep.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj evincep.tmpfs_user_file))
-
-	(optional sysadm_evincep_optional_sysadm_goad
-		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_gnomeapp.print_subj_type (subj))
 
 	(optional sysadm_evincep_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -9,13 +9,6 @@
 
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
-	(call file.dontaudit_list_home (subj_type_attribute))
-	(call file.list_mnt (subj_type_attribute))
-
-	(call fs.dontaudit_list_rootfs (subj_type_attribute))
-	(call fs.manage_dosfs_subj_type (subj_type_attribute))
-	(call fs.manage_fuse_subj_type (subj_type_attribute))
-
 	(call gpg.list_home_user (subj_type_attribute))
 	(call gpg.getattr_home_user_files (subj_type_attribute))
 
@@ -28,27 +21,11 @@
 
 	(call cert.read_all (subj_type_attribute))
 
-	(call nss.client_subj_type (subj_type_attribute))
-
 	(call ssh_client.manage_home_user (subj_type_attribute))
 	(call ssh_client.home_dir_obj_type_transition_home (subj_type_attribute))
 
-	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
-
-	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
-
-	(optional seahorse_subj_type_optional_avahid
-		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
-
 	(optional seahorse_subj_type_optional_scdaemon
-		(call scdaemon.getattr_home_user_sock_files (subj_type_attribute)))
-
-	(optional seahorse_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
-
-	(optional seahorse_subj_type_optional_sysbus
-		(call sysbus.client_subj_type (subj_type_attribute))))
+		(call scdaemon.getattr_home_user_sock_files (subj_type_attribute))))
 
 (block seahorsesap
 	(typeattribute subj_type_attribute)

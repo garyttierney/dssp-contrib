@@ -34,14 +34,9 @@
 
 	(call dev.rw_dri (subj_type_attribute))
 
-	(call file.dontaudit_list_home (subj_type_attribute))
-	(call file.list_mnt (subj_type_attribute))
 	(call file.list_var_tmp (subj_type_attribute))
 
-	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
-	(call fs.manage_dosfs_subj_type (subj_type_attribute))
-	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
 	(call sec.search_fs (subj_type_attribute))
 
@@ -55,38 +50,14 @@
 
 	(call cert.read_all (subj_type_attribute))
 
-	(call nss.client_subj_type (subj_type_attribute))
-
 	(call selinux_config.read_config_files (subj_type_attribute))
-
-	(call thumbnails.client_subj_type (subj_type_attribute))
 
 	(call trackers.rw_home_cache_files (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
 
-	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
-
-	(call usersubj.manage_home_user_dirs (subj_type_attribute))
-	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
-
-	(optional gvid_subj_type_optional_avahid
-		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
-
-	(optional gvid_subj_type_optional_nm
-		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
-
 	(optional gvid_subj_type_optional_pa
-		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
-
-	(optional gvid_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
-
-	(optional gvid_subj_type_optional_sysbus
-		(call sysbus.client_subj_type (subj_type_attribute))))
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file))))
 
 (block gvidap
 	(typeattribute subj_type_attribute)

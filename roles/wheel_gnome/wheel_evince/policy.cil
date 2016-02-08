@@ -4,30 +4,14 @@
 	(blockinherit evince.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj evince.tmpfs_user_file))
+	(call wheel_gnomeapp.print_subj_type (subj))
 
 	(call wheel_evinced.sessbus_chat_client_subj_type (subj))
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
-	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
-	(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj))
-	(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj))
-	(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
-
-	(optional wheel_evince_optional_wheel_goad
-		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_evince_optional_wheel_gsd
 		(call wheel_gsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_evince_optional_wheel_gvfsdgoavm
-		(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_evince_optional_wheel_gvfsdgoogle
-		(call wheel_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_evince_optional_wheel_nautilus
-		(call wheel_nautilus.auto_subj_type_transition (subj))
-		(call wheel_nautilus.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_evince_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
@@ -39,9 +23,7 @@
 	(blockinherit evincep.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj evincep.tmpfs_user_file))
-
-	(optional wheel_evincep_optional_wheel_goad
-		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
+	(call wheel_gnomeapp.print_subj_type (subj))
 
 	(optional wheel_evincep_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -225,6 +225,12 @@
 			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
 			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
 
+	(macro file_chooser_dialog_subj_type ((type ARG1))
+		(typeattributeset file_chooser_dialog_subj_type_attribute ARG1))
+
+	(macro print_subj_type ((type ARG1))
+		(typeattributeset print_subj_type_attribute ARG1))
+
 	(macro gnomeapplication_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))

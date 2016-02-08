@@ -4,6 +4,7 @@
 	(blockinherit gvid.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gvid.tmpfs_user_file))
+	(call user_gnomeapp.file_chooser_dialog_subj_type (subj))
 
 	(call user_gvidap.auto_subj_type_transition (subj))
 	(call user_gvidvt.auto_subj_type_transition (subj))
@@ -11,33 +12,18 @@
 	(call user_gvfsdmd.client_subj_type (subj))
 	(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 	(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
-	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gvid_optional_user_dleyna
 		(call user_dleyna.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_gvid_optional_user_goad
-		(call user_goad.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_gvid_optional_user_gs
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdgoavm
-		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gvid_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gvid_optional_user_gstreamer
 		(call user_gstreamer.client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_nautilus
-		(call user_nautilus.sessbus_chat_client_subj_type (subj))
-		(call user_nautilus.auto_subj_type_transition (subj)))
 
 	(optional user_gvid_optional_user_pa
 		(call user_pa.auto_subj_type_transition (subj)))

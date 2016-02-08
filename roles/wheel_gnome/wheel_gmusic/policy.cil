@@ -1,12 +1,9 @@
 (block wheel_gmusic
 	(blockinherit gmusic.subj_blk)
 
-	(call wheel_atspi.tmpfs_client (subj gmusic.tmpfs_user_file))
-
-	(call wheel_dconf.client_subj_type (subj))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gmusic.tmpfs_user_file))
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
-	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
 
 	(optional wheel_gmusic_optional_wheel_dleyna

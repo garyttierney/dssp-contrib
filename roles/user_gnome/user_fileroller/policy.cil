@@ -3,20 +3,14 @@
 
 	(blockinherit fileroller.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj fileroller.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj fileroller.tmpfs_user_file))
 
 	(call user_gvfsdmd.client_subj_type (subj))
-	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
 	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
 	(call user_gvfsdrecent.sessbus_chat_client_subj_type (subj))
 	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
 	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
-
-	(optional user_fileroller_optional_user_firefox
-		(call user_firefox.auto_subj_type_transition (subj)))
 
 	(optional user_fileroller_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))

@@ -3,18 +3,10 @@
 
 	(blockinherit gitg.subj_blk)
 
-	(call sysadm_atspi.tmpfs_client (subj gitg.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
-
-	(optional sysadm_gitg_optional_sysadm_firefox
-		(call sysadm_firefox.auto_subj_type_transition (subj)))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gitg.tmpfs_user_file))
 
 	(optional sysadm_gitg_optional_sysadm_gkrd
 		(call sysadm_gkrd.stream_connect (subj)))
-
-	(optional sysadm_gitg_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gitg_optional_sysadm_gvfsdud2
 		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
@@ -37,9 +29,6 @@
 
 	(optional sysadm_gitg_optional_sysadm_sessbus
 		(call sysadm_sessbus.service_subj_type (subj)))
-
-	(optional sysadm_gitg_optional_sysadm_thunderbird
-		(call sysadm_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gitg_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -3,12 +3,9 @@
 
 	(blockinherit gph.subj_blk)
 
-	(call wheel_atspi.tmpfs_client (subj gph.tmpfs_user_file))
-
-	(call wheel_dconf.client_subj_type (subj))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gph.tmpfs_user_file))
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
-	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 	(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
@@ -17,9 +14,6 @@
 
 	(optional wheel_gph_optional_wheel_dleynar
 		(call wheel_dleynar.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gph_optional_wheel_firefox
-		(call wheel_firefox.auto_subj_type_transition (subj)))
 
 	(optional wheel_gph_optional_wheel_goad
 		(call wheel_goad.sessbus_chat_client_subj_type (subj)))

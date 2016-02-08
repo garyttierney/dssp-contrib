@@ -1,12 +1,7 @@
 (block user_nmce
 	(blockinherit nmce.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj nmce.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
-
-	(optional user_nmce_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj nmce.tmpfs_user_file))
 
 	(optional user_nmce_optional_user_gs
 		(call user_gs.forked_subj_type (subj)))

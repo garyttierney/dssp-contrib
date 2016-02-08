@@ -3,18 +3,15 @@
 
 	(blockinherit nautilus.subj_blk)
 
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj nautilus.tmpfs_user_file))
+
 	(call sysadm.sysadm_subj_type (subj))
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(call sysadm_trackers.sessbus_chat_client_subj_type (subj))
 
-	(call sysadm_atspi.tmpfs_client (subj nautilus.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
-
 	(call sysadm_gvfsdmd.client_subj_type (subj))
-	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdrecent.sessbus_chat_client_subj_type (subj))

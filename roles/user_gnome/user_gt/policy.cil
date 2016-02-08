@@ -21,17 +21,9 @@
 
 	(blockinherit gts.subj_blk)
 
+	(call user_gnomeapp.spec_common_gnomeapplication (subj gts.tmpfs_user_file))
+
 	(call user.shell_auto_subj_type_transition (subj))
-
-	(call user_atspi.tmpfs_client (subj gts.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
-
-	(optional user_gts_optional_user_firefox
-		(call user_firefox.auto_subj_type_transition (subj)))
-
-	(optional user_gts_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gts_optional_user_screen
 		(call user_screen.read_state (subj)))

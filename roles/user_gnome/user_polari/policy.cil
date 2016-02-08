@@ -3,17 +3,9 @@
 
 	(blockinherit polari.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj polari.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj polari.tmpfs_user_file))
 
 	(call user_tpi.sessbus_chat_client_subj_type (subj))
-
-	(call user_dconf.client_subj_type (subj))
-
-	(optional user_polari_optional_user_firefox
-		(call user_firefox.auto_subj_type_transition (subj)))
-
-	(optional user_polari_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_polari_optional_user_gvfsdhttp
 		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))

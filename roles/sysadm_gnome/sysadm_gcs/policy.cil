@@ -3,9 +3,7 @@
 
 	(blockinherit gcs.subj_blk)
 
-	(call sysadm_atspi.tmpfs_client (subj gcs.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
 
 	(optional sysadm_gcs_optional_sysadm_btst
 		(call sysadm_btst.auto_subj_type_transition (subj)))
@@ -29,9 +27,6 @@
 	(optional sysadm_gcs_optional_sysadm_gstreamer
 		(call sysadm_gstreamer.client_subj_type (subj)))
 
-	(optional sysadm_gcs_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_gcs_optional_sysadm_gvfsdud2
 		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
@@ -51,7 +46,8 @@
 		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gcs_optional_sysadm_nautilus
-		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj)))
+		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj))
+		(call sysadm_nautilus.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gcs_optional_sysadm_nmce
 		(call sysadm_nmce.auto_subj_type_transition (subj)))
@@ -87,15 +83,12 @@
 
 	(blockinherit gcsp.subj_blk)
 
-	(call sysadm_gcs.auto_subj_type_transition (subj))
+	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
 
-	(call sysadm_atspi.tmpfs_client (subj gcsp.tmpfs_user_file))
+	(call sysadm_gcs.auto_subj_type_transition (subj))
 
 	(optional sysadm_gcsp_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gcsp_optional_sysadm_sessbus
-		(call sysadm_sessbus.daemon (subj gcsp.cmd_file)))
 
 	(optional sysadm_gcsp_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

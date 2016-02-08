@@ -3,9 +3,7 @@
 
 	(blockinherit gcon.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj gcon.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj gcon.tmpfs_user_file))
 
 	(optional user_gcon_optional_user_evoaf
 		(call user_evoaf.sessbus_chat_client_subj_type (subj)))
@@ -22,14 +20,8 @@
 	(optional user_gcon_optional_user_gstreamer
 		(call user_gstreamer.client_subj_type (subj)))
 
-	(optional user_gcon_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_gcon_optional_user_obexd
 		(call user_obexd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gcon_optional_user_thunderbird
-		(call user_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional user_gcon_optional_user_sessbus
 		(call user_sessbus.daemon (subj gcon.cmd_file)))
@@ -43,9 +35,9 @@
 
 	(blockinherit gconsp.subj_blk)
 
-	(call user_gcon.auto_subj_type_transition (subj))
+	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj gconsp.cmd_file gconsp.tmpfs_user_file))
 
-	(call user_atspi.tmpfs_client (subj gconsp.tmpfs_user_file))
+	(call user_gcon.auto_subj_type_transition (subj))
 
 	(call user_dconf.client_subj_type (subj))
 
@@ -60,9 +52,6 @@
 
 	(optional user_gconsp_optional_user_obexd
 		(call user_obexd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gconsp_optional_user_sessbus
-		(call user_sessbus.daemon (subj gconsp.cmd_file)))
 
 	(optional user_gconsp_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

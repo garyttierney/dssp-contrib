@@ -3,12 +3,9 @@
 
 	(blockinherit gph.subj_blk)
 
-	(call sysadm_atspi.tmpfs_client (subj gph.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gph.tmpfs_user_file))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
-	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
 	(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
@@ -17,9 +14,6 @@
 
 	(optional sysadm_gph_optional_sysadm_dleynar
 		(call sysadm_dleynar.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gph_optional_sysadm_firefox
-		(call sysadm_firefox.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gph_optional_sysadm_goad
 		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))

@@ -3,18 +3,10 @@
 
 	(blockinherit corebird.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj corebird.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
-
-	(optional user_corebird_optional_user_firefox
-                (call user_firefox.auto_subj_type_transition (subj)))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj corebird.tmpfs_user_file))
 
 	(optional user_corebird_optional_user_gstreamer
                 (call user_gstreamer.client_subj_type (subj)))
-
-	(optional user_corebird_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_corebird_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
@@ -37,9 +29,6 @@
 	(optional user_corebird_optional_user_nautilus
 		(call user_nautilus.sessbus_chat_client_subj_type (subj))
                 (call user_nautilus.auto_subj_type_transition (subj)))
-
-	(optional user_corebird_optional_user_thunderbird
-                (call user_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional user_corebird_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -3,18 +3,15 @@
 
 	(blockinherit nautilus.subj_blk)
 
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj nautilus.tmpfs_user_file))
+
 	(call wheel.wheel_subj_type (subj))
 	(call wheel.cmd_auto_subj_type_transition (subj))
 	(call wheel.home_cmd_auto_subj_type_transition (subj))
 
 	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
 
-	(call wheel_atspi.tmpfs_client (subj nautilus.tmpfs_user_file))
-
-	(call wheel_dconf.client_subj_type (subj))
-
 	(call wheel_gvfsdmd.client_subj_type (subj))
-	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdrecent.sessbus_chat_client_subj_type (subj))

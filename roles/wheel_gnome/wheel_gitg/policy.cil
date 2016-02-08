@@ -3,18 +3,10 @@
 
 	(blockinherit gitg.subj_blk)
 
-	(call wheel_atspi.tmpfs_client (subj gitg.tmpfs_user_file))
-
-	(call wheel_dconf.client_subj_type (subj))
-
-	(optional wheel_gitg_optional_wheel_firefox
-		(call wheel_firefox.auto_subj_type_transition (subj)))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gitg.tmpfs_user_file))
 
 	(optional wheel_gitg_optional_wheel_gkrd
 		(call wheel_gkrd.stream_connect (subj)))
-
-	(optional wheel_gitg_optional_wheel_gvfsd
-		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gitg_optional_wheel_gvfsdud2
 		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
@@ -37,9 +29,6 @@
 
 	(optional wheel_gitg_optional_wheel_sessbus
 		(call wheel_sessbus.service_subj_type (subj)))
-
-	(optional wheel_gitg_optional_wheel_thunderbird
-		(call wheel_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional wheel_gitg_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

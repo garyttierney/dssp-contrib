@@ -3,9 +3,7 @@
 
 	(blockinherit webkitwp.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj webkitwp.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj webkitwp.tmpfs_user_file))
 
 	(call user_gvfsdmd.client_subj_type (subj))
 
@@ -21,9 +19,6 @@
 
 	(optional user_webkitwp_optional_user_gstreamer
 		(call user_gstreamer.client_subj_type (subj)))
-
-	(optional user_webkitwp_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_webkitwp_optional_user_gcal
 		(call user_gcal.use_fd (subj)))
@@ -42,8 +37,7 @@
 
 	(call user_atspi.tmpfs_client (subj webkitpp.tmpfs_user_file))
 
-	(optional user_webkitpp_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional user_webkitpp_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

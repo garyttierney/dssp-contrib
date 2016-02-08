@@ -3,12 +3,9 @@
 
 	(blockinherit gdocs.subj_blk)
 
-	(call sysadm_atspi.tmpfs_client (subj gdocs.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gdocs.tmpfs_user_file))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
-	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_gdocs_optional_sysadm_evince
@@ -17,9 +14,6 @@
 
 	(optional sysadm_gdocs_optional_sysadm_gcs
 		(call sysadm_gcs.auto_subj_type_transition (subj)))
-
-	(optional sysadm_gdocs_optional_sysadm_firefox
-		(call sysadm_firefox.auto_subj_type_transition (subj)))
 
 	(optional sysadm_gdocs_optional_sysadm_goad
 		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))

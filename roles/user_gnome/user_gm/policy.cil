@@ -3,21 +3,15 @@
 
 	(blockinherit gm.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj gm.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj gm.tmpfs_user_file))
 
 	(call user_gvfsdmd.client_subj_type (subj))
-	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gm_optional_user_evoaf
 		(call user_evoaf.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gm_optional_user_evosr
 		(call user_evosr.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gm_optional_user_firefox
-		(call user_firefox.auto_subj_type_transition (subj)))
 
 	(optional user_gm_optional_user_gcl
 		(call user_gcl.auto_subj_type_transition (subj))

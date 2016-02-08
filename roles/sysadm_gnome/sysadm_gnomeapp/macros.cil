@@ -1,0 +1,24 @@
+(in sysadm_gnomeapp
+	(macro spec_common_gnomeapplication ((type ARG1)(type ARG2))
+		(typeattributeset common_subj_type_attribute ARG1)
+
+	        (call sysadm_atspi.tmpfs_client (ARG1 ARG2))
+
+	        (call sysadm_dconf.client_subj_type (ARG1))
+
+	        (optional sysadm_common_gnomeapplication_optional_sysadm_firefox
+			(call sysadm_firefox.auto_subj_type_transition (ARG1)))
+
+		(optional sysadm_common_gnomeapplication_optional_sysadm_gvfsd
+			(call sysadm_gvfsd.sessbus_chat_client_subj_type (ARG1)))
+
+		(optional sysadm_common_gnomeapplication_optional_sysadm_thunderbird
+			(call sysadm_thunderbird.auto_subj_type_transition (ARG1))))
+
+	(macro spec_common_sp_gnomeapplication ((type ARG1)(type ARG2)(type ARG3))
+		(typeattributeset common_sp_subj_type_attribute ARG1)
+
+	        (call sysadm_atspi.tmpfs_client (ARG1 ARG3))
+
+		(optional sysadm_common_sp_gnomeapplication_optional_sysadm_sessbus
+			(call sysadm_sessbus.daemon (ARG1 ARG2)))))

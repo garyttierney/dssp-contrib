@@ -3,14 +3,13 @@
 
 	(blockinherit gsh.subj_blk)
 
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gsh.tmpfs_user_file))
+
 	(call sysadm.sysadm_subj_type (subj))
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(call sysadm_atspi.provider_subj_type (subj))
-	(call sysadm_atspi.tmpfs_client (subj gsh.tmpfs_user_file))
-
-	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_gsh_optional_sysadm_firefox
 		(call sysadm_firefox.send_sigkill (subj)))
@@ -25,9 +24,6 @@
 
 	(optional sysadm_gsh_optional_sysadm_gsw
 		(call sysadm_gsw.auto_subj_type_transition (subj)))
-
-	(optional sysadm_gsh_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gsh_optional_sysadm_gvfsdmd
 		(call sysadm_gvfsdmd.client_subj_type (subj)))

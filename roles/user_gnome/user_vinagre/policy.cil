@@ -3,15 +3,10 @@
 
 	(blockinherit vinagre.subj_blk)
 
-	(call user_atspi.tmpfs_client (subj vinagre.tmpfs_user_file))
-
-	(call user_dconf.client_subj_type (subj))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj vinagre.tmpfs_user_file))
 
 	(optional user_vinagre_optional_user_gkrd
 		(call user_gkrd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_vinagre_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_vinagre_optional_user_gvfsdud2
 		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))

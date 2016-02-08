@@ -12,9 +12,6 @@
 	(call manage_home_cache (subj_type_attribute))
 	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
-
 	(call nss.client_subj_type (subj_type_attribute)))
 
 (block gcalcsp
@@ -22,7 +19,4 @@
 
 	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file))
-
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute)))
+	(call subj.entry (subj_type_attribute cmd_file)))

@@ -5,9 +5,6 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
-
 	(blockinherit usersubj.home_cache_obj_blk)
 
 	(call manage_home_cache (subj_type_attribute))
@@ -38,8 +35,6 @@
 	(call file.dontaudit_list_home (subj_type_attribute))
 	(call file.list_boot (subj_type_attribute))
 	(call file.list_var_tmp (subj_type_attribute))
-	(call file.read_config (subj_type_attribute))
-	(call file.read_data (subj_type_attribute))
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_all_fs (subj_type_attribute))
@@ -160,9 +155,6 @@
 	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
-
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 

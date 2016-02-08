@@ -5,13 +5,9 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
-
 	(call cmd.exec (subj_type_attribute))
 
 	(call file.dontaudit_list_home (subj_type_attribute))
-	(call file.read_config (subj_type_attribute))
 	(call file.list_mnt (subj_type_attribute))
 
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))

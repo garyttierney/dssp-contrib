@@ -152,6 +152,9 @@
 
 		(blockinherit exec_blk)
 
+		(call manage_tmpfs_user (subj_type_attribute))
+		(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
 		(optional gnomeapplications_common_obj_blk_optional_xserver
 			(call xserver.tmpfs_client_obj_type (tmpfs_user_file)))
 
@@ -191,6 +194,9 @@
 		(blockinherit usersubj.tmpfs_user_obj_blk)
 
 		(blockinherit exec_blk)
+
+		(call manage_tmpfs_user (subj_type_attribute))
+		(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 		(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
 			(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))

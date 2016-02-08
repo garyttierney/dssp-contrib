@@ -5,11 +5,10 @@
 
 	(call user_atspi.tmpfs_client (subj gcs.tmpfs_user_file))
 
+	(call user_dconf.client_subj_type (subj))
+
 	(optional user_gcs_optional_user_btst
 		(call user_btst.auto_subj_type_transition (subj)))
-
-	(optional user_gcs_optional_user_dconfs
-		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gcs_optional_user_gkrd
 		(call user_gkrd.sessbus_chat_client_subj_type (subj)))

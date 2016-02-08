@@ -145,6 +145,8 @@
 
 	(call user_gvfsd.daemon (subj gvfsdhttp.cmd_file))
 
+	(call user_dconf.client_subj_type (subj))
+
 	(optional user_gvfsdhttp_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
@@ -176,6 +178,8 @@
 
 	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
+	(call user_dconf.client_subj_type (subj))
+
 	(optional user_gvfsdnetwork_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
@@ -194,11 +198,9 @@
 
 	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
-	(optional user_gvfsdrecent_optional_user_atspird
-		(call user_atspird.sessbus_chat_client_subj_type (subj)))
+	(call user_atspird.sessbus_chat_client_subj_type (subj))
 
-	(optional user_gvfsdrecent_optional_user_caribou
-		(call user_caribou.sessbus_chat_client_subj_type (subj)))
+	(call user_caribou.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gvfsdrecent_optional_user_gsh
 		(call user_gsh.sessbus_chat_client_subj_type (subj)))

@@ -9,6 +9,9 @@
 		(call dconfs.role_pattern (ARG1 ARG2 subj))))
 
 (in user_dconf
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call dconf.spec_auto_subj_type_transition (ARG1 subj)))
 

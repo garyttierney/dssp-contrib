@@ -5,6 +5,8 @@
 
 	(call sysadm_atspi.tmpfs_client (subj webkitwp.tmpfs_user_file))
 
+	(call sysadm_dconf.client_subj_type (subj))
+
 	(optional sysadm_webkitwp_optional_sysadm_gcs
 		(call sysadm_gcs.rw_unix_stream_sockets (subj))
 		(call sysadm_gcs.sessbus_chat_client_subj_type (subj)))

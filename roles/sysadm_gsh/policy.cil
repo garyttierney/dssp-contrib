@@ -10,6 +10,8 @@
 	(call sysadm_atspi.provider_subj_type (subj))
 	(call sysadm_atspi.tmpfs_client (subj gsh.tmpfs_user_file))
 
+	(call sysadm_dconf.client_subj_type (subj))
+
 	(optional sysadm_gsh_optional_sysadm_btst
 		(call sysadm_btst.send_sigkill (subj)))
 
@@ -156,8 +158,7 @@
 
 	(call sysadm_gsh.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_gshcs_optional_sysadm_dconfs
-		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_gshcs_optional_sysadm_evosr
 		(call sysadm_evosr.sessbus_chat_client_subj_type (subj)))

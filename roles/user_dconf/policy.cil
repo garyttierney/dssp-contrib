@@ -29,4 +29,10 @@
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block user_dconf
-	(blockinherit dconf.subj_blk))
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit dconf.subj_blk)
+
+	(call user_dconfs.sessbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(call dconf.client_subj_type (client_subj_type_attribute)))

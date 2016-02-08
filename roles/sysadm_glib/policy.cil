@@ -15,5 +15,7 @@
 
 	(call sysadm_gs.daemon (subj gsettings.cmd_file))
 
+	(call sysadm_dconf.client_subj_type (subj))
+
 	(optional sysadm_gsettings_optional_sysadm_sessbus
 		(call sysadm_sessbus.client_subj_type (subj))))

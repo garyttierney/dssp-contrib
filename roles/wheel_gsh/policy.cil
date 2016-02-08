@@ -10,6 +10,8 @@
 	(call wheel_atspi.provider_subj_type (subj))
 	(call wheel_atspi.tmpfs_client (subj gsh.tmpfs_user_file))
 
+	(call wheel_dconf.client_subj_type (subj))
+
 	(optional wheel_gsh_optional_wheel_btst
 		(call wheel_btst.send_sigkill (subj)))
 
@@ -156,8 +158,7 @@
 
 	(call wheel_gsh.sessbus_chat_client_subj_type (subj))
 
-	(optional wheel_gshcs_optional_wheel_dconfs
-		(call wheel_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call wheel_dconf.client_subj_type (subj))
 
 	(optional wheel_gshcs_optional_wheel_evosr
 		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))

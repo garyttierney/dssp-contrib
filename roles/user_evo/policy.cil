@@ -5,8 +5,7 @@
 
 	(call user_evosr.sessbus_chat_client_subj_type (subj))
 
-	(optional user_evoaf_optional_user_dconfs
-		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call user_dconf.client_subj_type (subj))
 
 	(optional user_evoaf_optional_user_sessbus
 		(call user_sessbus.daemon (subj evoaf.cmd_file)))
@@ -23,8 +22,7 @@
 	(call user_evosr.sessbus_chat_client_subj_type (subj))
 	(call user_evoaf.sessbus_chat_client_subj_type (subj))
 
-	(optional user_evocf_optional_user_dconfs
-		(call user_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call user_dconf.client_subj_type (subj))
 
 	(optional user_evocf_optional_user_gshcs
 		(call user_gshcs.sessbus_chat_client_subj_type (subj)))
@@ -46,6 +44,8 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit evosr.subj_blk)
+
+	(call user_dconf.client_subj_type (subj))
 
 	(optional user_evosr_optional_user_gvfsd
 		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))

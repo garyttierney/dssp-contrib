@@ -5,8 +5,7 @@
 
 	(call sysadm_evosr.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_evoaf_optional_sysadm_dconfs
-		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_evoaf_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj evoaf.cmd_file)))
@@ -18,14 +17,12 @@
 (block sysadm_evocf
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
-
 	(blockinherit evocf.subj_blk)
 
 	(call sysadm_evosr.sessbus_chat_client_subj_type (subj))
 	(call sysadm_evoaf.sessbus_chat_client_subj_type (subj))
 
-	(optional sysadm_evocf_optional_sysadm_dconfs
-		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_evocf_optional_sysadm_gshcs
 		(call sysadm_gshcs.sessbus_chat_client_subj_type (subj)))
@@ -47,6 +44,8 @@
 	(typeattribute sessbus_chat_client_subj_type_attribute)
 
 	(blockinherit evosr.subj_blk)
+
+	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_evosr_optional_sysadm_gvfsd
 		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))

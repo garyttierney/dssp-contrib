@@ -5,11 +5,10 @@
 
 	(call sysadm_atspi.tmpfs_client (subj gcs.tmpfs_user_file))
 
+	(call sysadm_dconf.client_subj_type (subj))
+
 	(optional sysadm_gcs_optional_sysadm_btst
 		(call sysadm_btst.auto_subj_type_transition (subj)))
-
-	(optional sysadm_gcs_optional_sysadm_dconfs
-		(call sysadm_dconfs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gcs_optional_sysadm_gkrd
 		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))

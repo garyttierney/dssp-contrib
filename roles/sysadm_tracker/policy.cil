@@ -11,12 +11,8 @@
 	(call sysadm_dconf.client_subj_type (subj))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
-
-	(optional sysadm_trackerm_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_trackerm_optional_sysadm_gvfsdud2
-		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_trackerm_optional_sysadm_gvfsdgoavm
 		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
@@ -43,6 +39,8 @@
 
 	(call sysadm_dconf.client_subj_type (subj))
 
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+
 	(optional sysadm_trackers_optional_sysadm_gdocs
 		(call sysadm_gdocs.rw_inherited_fifo_files (subj)))
 
@@ -51,9 +49,6 @@
 
 	(optional sysadm_trackers_optional_sysadm_gom
 		(call sysadm_gom.rw_inherited_fifo_files (subj)))
-
-	(optional sysadm_trackers_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_trackers_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj trackers.cmd_file)))

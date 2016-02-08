@@ -11,12 +11,8 @@
 	(call user_dconf.client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
-
-	(optional user_trackerm_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_trackerm_optional_user_gvfsdud2
-		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
 
 	(optional user_trackerm_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
@@ -43,6 +39,8 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+
 	(optional user_trackers_optional_user_gdocs
 		(call user_gdocs.rw_inherited_fifo_files (subj)))
 
@@ -51,9 +49,6 @@
 
 	(optional user_trackers_optional_user_gom
 		(call user_gom.rw_inherited_fifo_files (subj)))
-
-	(optional user_trackers_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_trackers_optional_user_gs
 		(call user_gs.daemon (subj trackers.cmd_file)))

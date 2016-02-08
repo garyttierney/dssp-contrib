@@ -15,6 +15,13 @@
 	(call user_dconf.client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
+	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
+	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gedit_optional_user_firefox
 		(call user_firefox.auto_subj_type_transition (subj)))
@@ -25,29 +32,12 @@
 	(optional user_gedit_optional_user_gt
 		(call user_gt.auto_subj_type_transition (subj)))
 
-	(optional user_gedit_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gedit_optional_user_gvfsdud2
-		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_gedit_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gedit_optional_user_gvfsdgoogle
 		(call user_gvfsdgoogle.rw_inherited_unix_stream_sockets (subj))
 		(call user_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gedit_optional_user_gvfsdnetwork
-		(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gedit_optional_user_gvfsdsftp
-		(call user_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-		(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gedit_optional_user_gvfsdtrash
-		(call user_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
-		(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gedit_optional_user_gs
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
@@ -72,8 +62,7 @@
 
 	(call user_atspi.tmpfs_client (subj geditstf.tmpfs_user_file))
 
-	(optional user_geditstf_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional user_geditstf_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

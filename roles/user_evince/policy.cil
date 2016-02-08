@@ -10,6 +10,11 @@
 	(call user_dconf.client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
 
 	(optional user_evince_optional_user_goad
 		(call user_goad.sessbus_chat_client_subj_type (subj)))
@@ -17,26 +22,11 @@
 	(optional user_evince_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_evince_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_evince_optional_user_gvfsdud2
-		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_evince_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_evince_optional_user_gvfsdgoogle
 		(call user_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_evince_optional_user_gvfsdsftp
-		(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_evince_optional_user_gvfsdtrash
-		(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_evince_optional_user_gvfsdnetwork
-		(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_evince_optional_user_nautilus
 		(call user_nautilus.auto_subj_type_transition (subj))
@@ -58,11 +48,10 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+
 	(optional user_evincep_optional_user_goad
 		(call user_goad.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_evincep_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_evincep_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

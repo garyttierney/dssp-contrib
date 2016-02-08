@@ -8,6 +8,8 @@
 	(call user_dconf.client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gdocs_optional_user_evince
 		(call user_evince.auto_subj_type_transition (subj))
@@ -24,12 +26,6 @@
 
 	(optional user_gdocs_optional_user_gs
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gdocs_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gdocs_optional_user_gvfsdhttp
-		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gdocs_optional_user_trackerm
 		(call user_trackerm.sessbus_chat_client_subj_type (subj)))

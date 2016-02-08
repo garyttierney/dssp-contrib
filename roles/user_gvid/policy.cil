@@ -11,6 +11,14 @@
 	(call user_dconf.client_subj_type (subj))
 
 	(call user_gvfsdmd.client_subj_type (subj))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
+	(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
+	(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdud2.sessbus_chat_client_subj_type (subj))
 
 	(optional user_gvid_optional_user_dleyna
 		(call user_dleyna.sessbus_chat_client_subj_type (subj)))
@@ -21,28 +29,8 @@
 	(optional user_gvid_optional_user_gs
 		(call user_gs.sessbus_chat_client_subj_type (subj)))
 
-	(optional user_gvid_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdhttp
-		(call user_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
-		(call user_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
 	(optional user_gvid_optional_user_gvfsdgoavm
 		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdnetwork
-		(call user_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdsftp
-		(call user_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-		(call user_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdtrash
-		(call user_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvid_optional_user_gvfsdud2
-		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gvid_optional_user_gsd
 		(call user_gsd.sessbus_chat_client_subj_type (subj)))
@@ -72,14 +60,11 @@
 (block user_gvidvt
 	(blockinherit gvidvt.subj_blk)
 
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call user_gvfsdrecent.sessbus_chat_client_subj_type (subj))
+
 	(optional user_gvidvt_optional_user_gstreamer
 		(call user_gstreamer.client_subj_type (subj)))
-
-	(optional user_gvidvt_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gvidvt_optional_user_gvfsdrecent
-		(call user_gvfsdrecent.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gvidvt_optional_user_sessbus
 		(call user_sessbus.client_subj_type (subj))))

@@ -8,6 +8,13 @@
 	(call wheel_dconf.client_subj_type (subj))
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
+	(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj))
 
 	(optional wheel_eog_optional_wheel_gcs
 		(call wheel_gcs.auto_subj_type_transition (subj)))
@@ -15,30 +22,11 @@
 	(optional wheel_eog_optional_wheel_goad
 		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
 
-	(optional wheel_eog_optional_wheel_gvfsd
-		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdud2
-		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
 	(optional wheel_eog_optional_wheel_gvfsdgoavm
 		(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_eog_optional_wheel_gvfsdgoogle
 		(call wheel_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdhttp
-		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdnetwork
-		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdsftp
-		(call wheel_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-		(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_eog_optional_wheel_gvfsdtrash
-		(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_eog_optional_wheel_nautilus
 		(call wheel_nautilus.auto_subj_type_transition (subj))

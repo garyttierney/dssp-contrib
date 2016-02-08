@@ -15,6 +15,13 @@
 	(call wheel_dconf.client_subj_type (subj))
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
+	(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call wheel_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
+	(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj))
 
 	(optional wheel_gedit_optional_wheel_firefox
 		(call wheel_firefox.auto_subj_type_transition (subj)))
@@ -25,29 +32,12 @@
 	(optional wheel_gedit_optional_wheel_gt
 		(call wheel_gt.auto_subj_type_transition (subj)))
 
-	(optional wheel_gedit_optional_wheel_gvfsd
-		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gedit_optional_wheel_gvfsdud2
-		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
 	(optional wheel_gedit_optional_wheel_gvfsdgoavm
 		(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gedit_optional_wheel_gvfsdgoogle
 		(call wheel_gvfsdgoogle.rw_inherited_unix_stream_sockets (subj))
 		(call wheel_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gedit_optional_wheel_gvfsdnetwork
-		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gedit_optional_wheel_gvfsdsftp
-		(call wheel_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-		(call wheel_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gedit_optional_wheel_gvfsdtrash
-		(call wheel_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
-		(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gedit_optional_wheel_gs
 		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
@@ -72,8 +62,7 @@
 
 	(call wheel_atspi.tmpfs_client (subj geditstf.tmpfs_user_file))
 
-	(optional wheel_geditstf_optional_wheel_gvfsd
-		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional wheel_geditstf_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

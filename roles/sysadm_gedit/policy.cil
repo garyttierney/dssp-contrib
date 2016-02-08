@@ -15,6 +15,13 @@
 	(call sysadm_dconf.client_subj_type (subj))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
+	(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj))
+	(call sysadm_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
+	(call sysadm_gvfsdsftp.sessbus_chat_client_subj_type (subj))
+	(call sysadm_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
+	(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_gedit_optional_sysadm_firefox
                 (call sysadm_firefox.auto_subj_type_transition (subj)))
@@ -25,29 +32,12 @@
 	(optional sysadm_gedit_optional_sysadm_gt
 		(call sysadm_gt.auto_subj_type_transition (subj)))
 
-	(optional sysadm_gedit_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gedit_optional_sysadm_gvfsdud2
-		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
-
 	(optional sysadm_gedit_optional_sysadm_gvfsdgoavm
 		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gedit_optional_sysadm_gvfsdgoogle
 		(call sysadm_gvfsdgoogle.rw_inherited_unix_stream_sockets (subj))
 		(call sysadm_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gedit_optional_sysadm_gvfsdnetwork
-		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gedit_optional_sysadm_gvfsdsftp
-		(call sysadm_gvfsdsftp.rw_inherited_unix_stream_sockets (subj))
-		(call sysadm_gvfsdsftp.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gedit_optional_sysadm_gvfsdtrash
-		(call sysadm_gvfsdtrash.rw_inherited_unix_stream_sockets (subj))
-		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gedit_optional_sysadm_gs
 		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
@@ -72,8 +62,7 @@
 
 	(call sysadm_atspi.tmpfs_client (subj geditstf.tmpfs_user_file))
 
-	(optional sysadm_geditstf_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(optional sysadm_geditstf_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

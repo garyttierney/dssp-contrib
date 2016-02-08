@@ -1,5 +1,13 @@
 (block user_tracker
-	(blockinherit tracker.subj_blk))
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit tracker.subj_blk)
+
+	(call user_sessbus.client_subj_type (client_subj_type_attribute))
+
+	(call user_trackers.sessbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(call trackers.rw_home_cache_files (client_subj_type_attribute)))
 
 (block user_trackerm
 	(typeattribute sessbus_chat_client_subj_type_attribute)

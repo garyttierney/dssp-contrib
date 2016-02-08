@@ -11,8 +11,8 @@
 	(optional wheel_fileroller_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj fileroller.cmd_file)))
 
-	(optional wheel_fileroller_optional_wheel_trackers
-		(call wheel_trackers.sessbus_chat_client_subj_type (subj)))
+	(optional wheel_fileroller_optional_wheel_tracker
+		(call wheel_tracker.client_subj_type (subj)))
 
 	(optional wheel_fileroller_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

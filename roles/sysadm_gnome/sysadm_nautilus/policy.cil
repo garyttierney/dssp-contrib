@@ -10,8 +10,6 @@
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(call sysadm_trackers.sessbus_chat_client_subj_type (subj))
-
 	(call sysadm_gvfsdmd.client_subj_type (subj))
 
 	(optional sysadm_nautilus_optional_sysadm_eog
@@ -26,6 +24,9 @@
 
 	(optional sysadm_nautilus_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj nautilus.cmd_file)))
+
+	(optional sysadm_nautilus_optional_sysadm_tracker
+		(call sysadm_tracker.client_subj_type (subj)))
 
 	(optional sysadm_nautilus_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

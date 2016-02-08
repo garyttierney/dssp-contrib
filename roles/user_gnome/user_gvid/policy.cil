@@ -29,8 +29,8 @@
 	(optional user_gvid_optional_user_sessbus
 		(call user_sessbus.daemon (subj gvid.cmd_file)))
 
-	(optional user_gvid_optional_user_trackers
-		(call user_trackers.sessbus_chat_client_subj_type (subj)))
+	(optional user_gvid_optional_user_tracker
+		(call user_tracker.client_subj_type (subj)))
 
 	(optional user_gvid_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

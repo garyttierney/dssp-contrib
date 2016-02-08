@@ -10,8 +10,6 @@
 	(call wheel.cmd_auto_subj_type_transition (subj))
 	(call wheel.home_cmd_auto_subj_type_transition (subj))
 
-	(call wheel_trackers.sessbus_chat_client_subj_type (subj))
-
 	(call wheel_gvfsdmd.client_subj_type (subj))
 
 	(optional wheel_nautilus_optional_wheel_eog
@@ -26,6 +24,9 @@
 
 	(optional wheel_nautilus_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj nautilus.cmd_file)))
+
+	(optional wheel_nautilus_optional_wheel_tracker
+		(call wheel_tracker.client_subj_type (subj)))
 
 	(optional wheel_nautilus_sessbus_chat_client_subj_type_optional_wheel_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))

@@ -4,7 +4,13 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset sudo.subj_type_attribute subj))
+		(typeattributeset sudo.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call sudo.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call sudo.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 
@@ -91,7 +97,13 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset visudo.subj_type_attribute subj))
+		(typeattributeset visudo.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call visudo.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call visudo.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 

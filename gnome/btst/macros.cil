@@ -4,4 +4,10 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
 
-		(typeattributeset btst.subj_type_attribute subj)))
+		(typeattributeset btst.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call btst.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call btst.role_pattern (ARG1 ARG2 subj)))))

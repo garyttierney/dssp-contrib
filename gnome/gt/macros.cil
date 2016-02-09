@@ -20,4 +20,10 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
 
-		(typeattributeset gts.subj_type_attribute subj)))
+		(typeattributeset gts.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gts.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gts.role_pattern (ARG1 ARG2 subj)))))

@@ -8,16 +8,6 @@
 	(macro role_pattern ((role ARG1)(type ARG2))
 		(call tracker.role_pattern (ARG1 ARG2 subj))))
 
-(in wheel_trackerm
-	(blockinherit subj.use_fd_blk)
-	(blockinherit subj.rw_inherited_fifo_files_blk)
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call trackerm.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call trackerm.role_pattern (ARG1 ARG2 subj))))
-
 (in wheel_trackers
 	(blockinherit subj.use_fd_blk)
 	(blockinherit subj.rw_inherited_fifo_files_blk)

@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
 
-		(typeattributeset evince.subj_type_attribute subj))
+		(typeattributeset evince.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evince.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evince.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -25,7 +31,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
 
-		(typeattributeset evincep.subj_type_attribute subj)))
+		(typeattributeset evincep.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evincep.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evincep.role_pattern (ARG1 ARG2 subj)))))
 
 (in evincet
 	(block subj_blk

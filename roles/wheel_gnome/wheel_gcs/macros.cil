@@ -1,20 +1,3 @@
 (in wheel_gcs
-	(blockinherit subj.read_state_blk)
-	(blockinherit subj.use_fd_blk)
-	(blockinherit subj.rw_unix_stream_sockets_blk)
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gcs.spec_auto_subj_type_transition (ARG1 subj)))
-
 	(macro auto_subj_type_transition_gcs_helper ((type ARG1))
-		(call gcs_helper.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gcs.role_pattern (ARG1 ARG2 subj))))
-
-(in wheel_gcsp
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gcsp.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gcsp.role_pattern (ARG1 ARG2 subj))))
+		(call gcs_helper.spec_auto_subj_type_transition (ARG1 subj))))

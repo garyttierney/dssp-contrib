@@ -231,43 +231,26 @@
 (block gvfsdrecent
 	(typeattribute subj_type_attribute)
 
-	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
-	(call dev.read_urandom (subj_type_attribute))
-
 	(call file.list_mnt (subj_type_attribute))
-	(call file.read_config (subj_type_attribute))
-	(call file.read_data (subj_type_attribute))
 
 	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
 
 	(call fs.manage_dosfs_subj_type (subj_type_attribute))
 	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
-        (call fonts.client_subj_type (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
-	(call mime_types.read_data (subj_type_attribute))
-
-	(call nss.client_subj_type (subj_type_attribute))
-
 	(call thumbnails.read_home_cache (subj_type_attribute))
 
 	(call usersubj.audit_write_access_home_dir (subj_type_attribute))
 	(call usersubj.rw_home_user (subj_type_attribute))
 
-	(call usersubj.read_home_data (subj_type_attribute))
-
-	(call usersubj.read_home_config_files (subj_type_attribute))
-
 	(optional gvfsdrecent_subj_type_optional_gvid
-		(call gvid.getattr_home_cache_files (subj_type_attribute)))
-
-	(optional gvfsdrecent_subj_type_optional_xserver
-		(call xserver.client_subj_type (subj_type_attribute))))
+		(call gvid.getattr_home_cache_files (subj_type_attribute))))
 
 (block gvfsdsftp
 	(typeattribute subj_type_attribute)

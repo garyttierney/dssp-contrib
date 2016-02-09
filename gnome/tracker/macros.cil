@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset tracker.subj_type_attribute subj)))
+		(typeattributeset tracker.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tracker.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tracker.role_pattern (ARG1 ARG2 subj)))))
 
 (in trackerm
 	(block subj_blk
@@ -29,7 +35,16 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset trackers.subj_type_attribute subj))
+		(typeattributeset trackers.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_fifo_files_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call trackers.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call trackers.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)

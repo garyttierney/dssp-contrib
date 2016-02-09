@@ -1,10 +1,3 @@
-(in wheel_gvfs
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfs.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfs.role_pattern (ARG1 ARG2 subj))))
-
 (in wheel_gvfsd
 	(macro sessbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
@@ -14,152 +7,59 @@
 
 	(macro daemon ((type ARG1)(type ARG2))
 		(call daemon_subj_type (ARG1))
-		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsd.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsd.role_pattern (ARG1 ARG2 subj))))
+		(call auto_subj_type_transition_pattern (subj ARG2 ARG1))))
 
 (in wheel_gvfsdmd
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdmd.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdmd.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdud2
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdud2.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdud2.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdburn
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdburn.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdburn.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdcdda
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdcdda.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdcdda.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdcomputer
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdcomputer.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdcomputer.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsddav
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsddav.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsddav.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsddnssd
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsddnssd.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsddnssd.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdftp
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdftp.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdftp.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdhttp
-	(blockinherit subj.use_fd_blk)
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdhttp.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdhttp.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdlocaltest
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdlocaltest.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdlocaltest.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdnetwork
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdnetwork.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdnetwork.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdsftp
-	(blockinherit subj.use_fd_blk)
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdsftp.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdsftp.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in wheel_gvfsdtrash
-	(blockinherit subj.use_fd_blk)
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call gvfsdtrash.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call gvfsdtrash.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))

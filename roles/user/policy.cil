@@ -527,6 +527,12 @@
 
 		(call user_gcalcsp.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gchar
+		(call gchar.manage_tmpfs_user (subj))
+		(call gchar.relabel_tmpfs_user (subj))
+
+		(call user_gchar.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gcl
 		(call gcl.manage_tmpfs_user (subj))
 		(call gcl.relabel_tmpfs_user (subj))

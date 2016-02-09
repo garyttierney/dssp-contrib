@@ -1236,6 +1236,12 @@
 
 		(call sysadm_gcalcsp.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gchar
+		(call gchar.manage_tmpfs_user (subj))
+		(call gchar.relabel_tmpfs_user (subj))
+
+		(call sysadm_gchar.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gcl
 		(call gcal.manage_tmpfs_user (subj))
 		(call gcal.relabel_tmpfs_user (subj))

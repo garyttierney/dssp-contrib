@@ -1,0 +1,13 @@
+(block wheel_gchar
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gchar.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gchar.tmpfs_user_file))
+
+	(optional wheel_gchar_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gchar.cmd_file)))
+
+	(optional wheel_gchar_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))

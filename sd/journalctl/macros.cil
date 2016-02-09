@@ -4,7 +4,10 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset journalctl.subj_type_attribute subj))
+		(typeattributeset journalctl.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call journalctl.spec_auto_subj_type_transition (ARG1 subj))))
 
 	(blockinherit subj.send_signal_blk)
 

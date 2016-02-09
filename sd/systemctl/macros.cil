@@ -4,7 +4,13 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset systemctl.subj_type_attribute subj))
+		(typeattributeset systemctl.subj_type_attribute subj)
+
+		(macro noatsecure ((type ARG1))
+			(allow ARG1 subj (process (noatsecure))))
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call systemctl.spec_auto_subj_type_transition (ARG1 subj))))
 
 	(blockinherit subj.send_signal_blk)
 

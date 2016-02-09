@@ -12,11 +12,5 @@
 		(call daemon_subj_type (ARG1))
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
 
-	(macro auto_subj_type_transition ((type ARG1))
-		(call sessbus.spec_sysbus_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call sessbus.role_pattern (ARG1 ARG2 subj)))
-
 	(macro unix_stream_socket_activation_sduser_subj_type ((type ARG1))
 		(typeattributeset unix_stream_socket_activation_sduser_subj_type_attribute ARG1)))

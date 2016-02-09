@@ -50,7 +50,10 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset fwupdmgr.subj_type_attribute subj))
+		(typeattributeset fwupdmgr.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call fwupdmgr.spec_auto_subj_type_transition (ARG1 subj))))
 
 	(blockinherit exec_blk)
 

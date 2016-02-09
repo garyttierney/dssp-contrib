@@ -4,7 +4,15 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset xwayland.subj_type_attribute subj))
+		(typeattributeset xwayland.subj_type_attribute subj)
+
+		(blockinherit subj.send_sigkill_blk)
+
+		(macro role ((role ARG1))
+			(call xwayland.roletype_pattern (ARG1 subj)))
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call xwayland.spec_auto_subj_type_transition (ARG1 subj))))
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))

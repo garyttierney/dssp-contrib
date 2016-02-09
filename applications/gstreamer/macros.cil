@@ -32,7 +32,13 @@
 
                 (blockinherit app.application_subj_blk)
 
-                (typeattributeset gst.subj_type_attribute subj))
+                (typeattributeset gst.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gst.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gst.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 
@@ -61,7 +67,13 @@
 
                 (blockinherit app.application_subj_blk)
 
-                (typeattributeset gstps.subj_type_attribute subj))
+                (typeattributeset gstps.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gstps.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gstps.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 

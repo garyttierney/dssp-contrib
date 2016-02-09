@@ -4,7 +4,13 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset firefox_plugins.subj_type_attribute subj))
+		(typeattributeset firefox_plugins.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call firefox_plugins.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call firefox_plugins.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 

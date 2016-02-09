@@ -1,12 +1,3 @@
 (in user_xwayland
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call xwayland.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro send_sigkill ((type ARG1))
-		(allow ARG1 subj (process (sigkill))))
-
-	(macro role ((role ARG1))
-		(call xwayland.roletype_pattern (ARG1 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))

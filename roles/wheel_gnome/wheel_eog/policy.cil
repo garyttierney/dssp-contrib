@@ -1,6 +1,4 @@
 (block wheel_eog
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit eog.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj eog.tmpfs_user_file))
@@ -12,8 +10,4 @@
 		(call wheel_gcs.auto_subj_type_transition (subj)))
 
 	(optional wheel_eog_optional_wheel_sessbus
-		(call wheel_sessbus.service_subj_type (subj)))
-
-	(optional wheel_eog_sessbus_chat_client_subj_type_optional_wheel_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call wheel_sessbus.service_subj_type (subj))))

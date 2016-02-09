@@ -100,10 +100,19 @@
 	(block gnomeapplication_common_subj_blk
 		(blockabstract gnomeapplication_common_subj_blk)
 
+		(typeattribute sessbus_chat_client_subj_type_attribute)
+
+		(optional gnomeapplication_common_subj_blk_optional_sessbus
+			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_subj_type_attribute subj)
 
 		(blockinherit subj.send_signal_blk)
+
+		(macro sessbus_chat_client_subj_type ((type ARG1))
+			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))
@@ -112,10 +121,19 @@
 	(block gnomeapplication_common_gjs_subj_blk
 		(blockabstract gnomeapplication_common_gjs_subj_blk)
 
+		(typeattribute sessbus_chat_client_subj_type_attribute)
+
+		(optional gnomeapplication_common_gjs_subj_blk_optional_sessbus
+			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_gjs_subj_type_attribute subj)
 
 		(blockinherit subj.send_signal_blk)
+
+		(macro sessbus_chat_client_subj_type ((type ARG1))
+			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))
@@ -124,10 +142,19 @@
 	(block gnomeapplication_common_sp_subj_blk
 		(blockabstract gnomeapplication_common_sp_subj_blk)
 
+		(typeattribute sessbus_chat_client_subj_type_attribute)
+
+		(optional gnomeapplication_common_sp_subj_blk_optional_sessbus
+			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_sp_subj_type_attribute subj)
 
 		(blockinherit subj.send_signal_blk)
+
+		(macro sessbus_chat_client_subj_type ((type ARG1))
+			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))

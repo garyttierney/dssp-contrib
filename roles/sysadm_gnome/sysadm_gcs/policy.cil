@@ -1,6 +1,4 @@
 (block sysadm_gcs
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcs.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
@@ -54,15 +52,9 @@
 
 	(optional sysadm_gcs_optional_sysadm_webkit
 		(call sysadm_webkitwp.auto_subj_type_transition (subj))
-		(call sysadm_webkitpp.auto_subj_type_transition (subj)))
-
-	(optional sysadm_gcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call sysadm_webkitpp.auto_subj_type_transition (subj))))
 
 (block sysadm_gcsp
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcsp.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
@@ -70,8 +62,4 @@
 	(call sysadm_gcs.auto_subj_type_transition (subj))
 
 	(optional sysadm_gcsp_optional_sysadm_gvfsd
-		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gcsp_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))))

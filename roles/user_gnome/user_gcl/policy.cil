@@ -1,6 +1,4 @@
 (block user_gcl
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcl.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gcl.tmpfs_user_file))
@@ -9,8 +7,4 @@
 		(call user_pa.auto_subj_type_transition (subj)))
 
 	(optional user_gcl_optional_user_sessbus
-		(call user_sessbus.daemon (subj gcl.cmd_file)))
-
-	(optional user_gcl_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_sessbus.daemon (subj gcl.cmd_file))))

@@ -1,6 +1,4 @@
 (block user_nautilus
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit nautilus.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj nautilus.tmpfs_user_file))
@@ -26,11 +24,7 @@
 		(call user_sessbus.daemon (subj nautilus.cmd_file)))
 
 	(optional user_nautilus_optional_user_tracker
-		(call user_tracker.client_subj_type (subj)))
-
-	(optional user_nautilus_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_tracker.client_subj_type (subj))))
 
 (block user_nautilusas
 	(blockinherit nautilusas.subj_blk))

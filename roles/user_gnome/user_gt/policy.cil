@@ -17,8 +17,6 @@
 		(call user_sessbus.client_subj_type (subj))))
 
 (block user_gts
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gts.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gts.tmpfs_user_file))
@@ -32,9 +30,4 @@
 		(call user_sessbus.daemon (subj gts.cmd_file)))
 
 	(optional user_gts_optional_user_ssh_client
-		(call user_ssh_client.read_state (subj)))
-
-	(optional user_gts_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
-
+		(call user_ssh_client.read_state (subj))))

@@ -193,8 +193,6 @@
 		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
 
 (block wheel_gvfsdrecent
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gvfsdrecent.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gvfsdrecent.tmpfs_user_file))
@@ -207,10 +205,7 @@
 		(call wheel_sessbus.service_subj_type (subj)))
 
 	(optional wheel_gvfsdrecent_sessbus_chat_client_subj_type_optional_wheel_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
-
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))))
 
 (block wheel_gvfsdsftp
 	(typeattribute sessbus_chat_client_subj_type_attribute)

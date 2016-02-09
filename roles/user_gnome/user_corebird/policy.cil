@@ -1,6 +1,4 @@
 (block user_corebird
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit corebird.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj corebird.tmpfs_user_file))
@@ -10,8 +8,4 @@
                 (call user_gstreamer.client_subj_type (subj)))
 
 	(optional user_corebird_optional_user_sessbus
-		(call user_sessbus.daemon (subj corebird.cmd_file)))
-
-	(optional user_corebird_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_sessbus.daemon (subj corebird.cmd_file))))

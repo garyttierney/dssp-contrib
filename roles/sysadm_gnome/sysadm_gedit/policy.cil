@@ -1,6 +1,4 @@
 (block sysadm_gedit
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gedit.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gedit.tmpfs_user_file))
@@ -22,11 +20,7 @@
 		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gedit_optional_sysadm_sessbus
-		(call sysadm_sessbus.daemon (subj gedit.cmd_file)))
-
-	(optional sysadm_gedit_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call sysadm_sessbus.daemon (subj gedit.cmd_file))))
 
 (block sysadm_geditstf
 	(typeattribute sessbus_chat_client_subj_type_attribute)

@@ -1,6 +1,4 @@
 (block sysadm_gdocs
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gdocs.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gdocs.tmpfs_user_file))
@@ -29,8 +27,4 @@
 
 	(optional sysadm_gdocs_optional_sysadm_webkitwp
 		(call sysadm_webkitwp.auto_subj_type_transition (subj))
-		(call sysadm_webkitwp.sessbus_chat_client_subj_type (subj)))
-
-	(optional sysadm_gdocs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call sysadm_webkitwp.sessbus_chat_client_subj_type (subj))))

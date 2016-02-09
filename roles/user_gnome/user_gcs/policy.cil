@@ -1,6 +1,4 @@
 (block user_gcs
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcs.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
@@ -45,15 +43,9 @@
 
 	(optional user_gcs_optional_user_webkitwp
 		(call user_webkitwp.auto_subj_type_transition (subj))
-		(call user_webkitpp.auto_subj_type_transition (subj)))
-
-	(optional user_gcs_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_webkitpp.auto_subj_type_transition (subj))))
 
 (block user_gcsp
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcsp.subj_blk)
 
 	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
@@ -61,8 +53,4 @@
 	(call user_gcs.auto_subj_type_transition (subj))
 
 	(optional user_gcsp_optional_user_gvfsd
-		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
-
-	(optional user_gcsp_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj))))

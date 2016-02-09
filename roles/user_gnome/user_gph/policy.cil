@@ -1,6 +1,4 @@
 (block user_gph
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gph.subj_blk)
 
 	(call user_gnomeapp.spec_common_gnomeapplication (subj gph.tmpfs_user_file))
@@ -24,8 +22,4 @@
 		(call user_trackerm.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gph_optional_user_tracker
-		(call user_tracker.client_subj_type (subj)))
-
-	(optional user_gph_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call user_tracker.client_subj_type (subj))))

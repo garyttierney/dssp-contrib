@@ -10,8 +10,6 @@
 	(call trackers.rw_home_cache_files (client_subj_type_attribute)))
 
 (block wheel_trackerm
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit trackerm.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj trackerm.tmpfs_user_file))
@@ -31,11 +29,7 @@
 		(call wheel_gstreamer.client_subj_type (subj)))
 
 	(optional wheel_trackerm_optional_wheel_sessbus
-		(call wheel_sessbus.daemon (subj trackerm.cmd_file)))
-
-	(optional wheel_trackerm_sessbus_chat_client_subj_type_optional_wheel_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(call wheel_sessbus.daemon (subj trackerm.cmd_file))))
 
 (block wheel_trackers
 	(typeattribute sessbus_chat_client_subj_type_attribute)

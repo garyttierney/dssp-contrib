@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset tpmc.subj_type_attribute subj))
+		(typeattributeset tpmc.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tpmc.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tpmc.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)
@@ -48,7 +54,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset tpmct.subj_type_attribute subj)))
+		(typeattributeset tpmct.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tpmct.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tpmct.role_pattern (ARG1 ARG2 subj)))))
 
 (in tpl
 	(macro client_subj_type ((type ARG1))
@@ -59,7 +71,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset tpl.subj_type_attribute subj))
+		(typeattributeset tpl.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tpl.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tpl.role_pattern (ARG1 ARG2 subj))))
 
 	(macro search_home_cache ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
@@ -123,4 +141,10 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset tpi.subj_type_attribute subj)))
+		(typeattributeset tpi.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tpi.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tpi.role_pattern (ARG1 ARG2 subj)))))

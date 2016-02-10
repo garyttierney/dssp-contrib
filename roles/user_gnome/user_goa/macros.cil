@@ -1,22 +1,7 @@
 (in user_goad
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call goad.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call goad.role_pattern (ARG1 ARG2 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))
 
 (in user_goais
 	(macro sessbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
-
-	(macro auto_subj_type_transition ((type ARG1))
-		(call goais.spec_auto_subj_type_transition (ARG1 subj)))
-
-	(macro role_pattern ((role ARG1)(type ARG2))
-		(call goais.role_pattern (ARG1 ARG2 subj)))
-
-	(macro read_keyring ((type ARG1))
-		(call goais.spec_read_keyring (ARG1 subj))))
+		(typeattributeset sessbus_chat_client_subj_type_attribute ARG1)))

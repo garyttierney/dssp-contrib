@@ -21,7 +21,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gapp.subj_type_attribute subj)))
+		(typeattributeset gapp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gapp.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gapp.role_pattern (ARG1 ARG2 subj)))))
 
 (in gdbus
 	(block subj_blk
@@ -29,7 +35,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gdbus.subj_type_attribute subj)))
+		(typeattributeset gdbus.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gdbus.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gdbus.role_pattern (ARG1 ARG2 subj)))))
 
 (in gsettings
 	(block subj_blk
@@ -37,7 +49,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gsettings.subj_type_attribute subj)))
+		(typeattributeset gsettings.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gsettings.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gsettings.role_pattern (ARG1 ARG2 subj)))))
 
 (in glib_helper
 	(blockinherit exec_blk))

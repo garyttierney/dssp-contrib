@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
 
-		(typeattributeset gvid.subj_type_attribute subj))
+		(typeattributeset gvid.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvid.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvid.role_pattern (ARG1 ARG2 subj))))
 
 	(macro write_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -63,7 +69,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gvidap.subj_type_attribute subj)))
+		(typeattributeset gvidap.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvidap.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvidap.role_pattern (ARG1 ARG2 subj)))))
 
 (in gvidvt
 	(block subj_blk
@@ -71,7 +83,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gvidvt.subj_type_attribute subj))
+		(typeattributeset gvidvt.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvidvt.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvidvt.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)

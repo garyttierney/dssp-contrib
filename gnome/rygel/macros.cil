@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset rygel.subj_type_attribute subj))
+		(typeattributeset rygel.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call rygel.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call rygel.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
@@ -56,7 +62,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset rygelp.subj_type_attribute subj)))
+		(typeattributeset rygelp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call rygelp.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call rygelp.role_pattern (ARG1 ARG2 subj)))))
 
 (in rygel_helper
 	(blockinherit exec_blk))

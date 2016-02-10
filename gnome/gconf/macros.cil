@@ -37,7 +37,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gconfd.subj_type_attribute subj)))
+		(typeattributeset gconfd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gconfd.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gconfd.role_pattern (ARG1 ARG2 subj)))))
 
 (in gconftool
 	(block subj_blk
@@ -45,7 +51,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gconftool.subj_type_attribute subj)))
+		(typeattributeset gconftool.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gconftool.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gconftool.role_pattern (ARG1 ARG2 subj)))))
 
 (in gsettingsdc
 	(block subj_blk
@@ -53,7 +65,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gsettingsdc.subj_type_attribute subj))
+		(typeattributeset gsettingsdc.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gsettingsdc.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gsettingsdc.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit usersubj.read_home_data_files_blk)
 	(blockinherit usersubj.manage_home_data_files_blk)

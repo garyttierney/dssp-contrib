@@ -45,7 +45,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset evincet.subj_type_attribute subj)))
+		(typeattributeset evincet.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evincet.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evincet.role_pattern (ARG1 ARG2 subj)))))
 
 (in evinced
 	(block subj_blk
@@ -53,4 +59,10 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset evinced.subj_type_attribute subj)))
+		(typeattributeset evinced.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evinced.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evinced.role_pattern (ARG1 ARG2 subj)))))

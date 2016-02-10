@@ -4,7 +4,16 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset mutter.subj_type_attribute subj))
+		(typeattributeset mutter.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call mutter.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call mutter.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit subj.use_fd_all_blk)
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))

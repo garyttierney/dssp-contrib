@@ -4,7 +4,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gvfsdgoavm.subj_type_attribute subj)))
+		(typeattributeset gvfsdgoavm.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdgoavm.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdgoavm.role_pattern (ARG1 ARG2 subj)))))
 
 (in gvfsdgoogle
 	(block subj_blk
@@ -12,4 +18,14 @@
 
 		(blockinherit gnomeapp.gnomeapplication_subj_blk)
 
-		(typeattributeset gvfsdgoogle.subj_type_attribute subj)))
+		(typeattributeset gvfsdgoogle.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdgoogle.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdgoogle.role_pattern (ARG1 ARG2 subj)))))
+

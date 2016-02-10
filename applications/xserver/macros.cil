@@ -61,6 +61,10 @@
 	(blockinherit usersubj.manage_tmpfs_user_sock_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_sock_files_blk)
 
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd (subj))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
+
 	(macro rw_inherited_tmpfs_client_files ((type ARG1))
 		(allow ARG1 tmpfs_client_subj_type_attribute (fd (use)))
 		(allow ARG1 tmpfs_client_obj_type_attribute rw_inherited_file_perms))

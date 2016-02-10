@@ -6,6 +6,9 @@
 
 		(typeattributeset gedit.subj_type_attribute subj)
 
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_fifo_files_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call gedit.spec_auto_subj_type_transition (ARG1 subj)))
 

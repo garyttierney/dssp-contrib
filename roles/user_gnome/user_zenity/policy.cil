@@ -7,4 +7,7 @@
 	(call user.cmd_auto_subj_type_transition (subj))
 	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user.home_cmd_auto_subj_type_transition (subj)))
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_zenity_optional_user_gedit
+		(call user_gedit.rw_inherited_fifo_files (subj))))

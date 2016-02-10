@@ -11,7 +11,8 @@
 (block wheel_gstps
 	(blockinherit gstps.subj_blk)
 
-	(call wheel_gs.forked_subj_type (subj))
+	(optional wheel_gstps_optional_wheel_gs
+		(call wheel_gs.forked_subj_type (subj)))
 
 	(optional wheel_gstps_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))

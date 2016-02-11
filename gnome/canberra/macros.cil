@@ -7,7 +7,8 @@
 		(typeattributeset canberra.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call canberra.spec_auto_subj_type_transition (ARG1 subj)))
+			(call canberra.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call canberra.role_pattern (ARG1 ARG2 subj))))
@@ -24,4 +25,5 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))

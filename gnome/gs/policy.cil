@@ -15,7 +15,8 @@
 	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
@@ -42,7 +43,7 @@
 
 	(call gsd_helper.exec (subj_type_attribute))
 
-        (call fonts.client_subj_type (subj_type_attribute))
+	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
@@ -50,13 +51,15 @@
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.create_home_user_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_user_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_user_dirs
+		(subj_type_attribute))
 
 	(call usersubj.manage_home_config_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional gs_subj_type_optional_sd
 		(call sd.getattr_unit_runtime_dirs (subj_type_attribute))
@@ -76,7 +79,8 @@
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional gs_subj_type_optional_xserver
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+		(call xserver.tmpfs_client (subj_type_attribute
+			tmpfs_user_file))))
 
 (block gsquit
 	(typeattribute subj_type_attribute)

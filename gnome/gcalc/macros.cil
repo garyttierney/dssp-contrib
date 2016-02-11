@@ -7,7 +7,8 @@
 		(typeattributeset gcalc.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gcalc.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gcalc.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gcalc.role_pattern (ARG1 ARG2 subj))))
@@ -23,7 +24,8 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "gnome-calculator"))))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "gnome-calculator"))))
 
 (in gcalcsp
 	(block subj_blk
@@ -34,7 +36,8 @@
 		(typeattributeset gcalcsp.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gcalcsp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gcalcsp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gcalcsp.role_pattern (ARG1 ARG2 subj)))))

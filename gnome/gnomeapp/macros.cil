@@ -49,9 +49,12 @@
 
 		(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 			(call file.search_runtime_user (ARG1))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file sock_file "*"))))
 
 	(block gnomeapplication_common_sp_blk
 		(blockabstract gnomeapplication_common_sp_blk)
@@ -80,9 +83,12 @@
 
 		(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 			(call file.search_runtime_user (ARG1))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file sock_file "*"))))
 
 	(block gnomeapplication_subj_blk
 		(blockabstract gnomeapplication_subj_blk)
@@ -103,8 +109,10 @@
 		(typeattribute sessbus_chat_client_subj_type_attribute)
 
 		(optional gnomeapplication_common_subj_blk_optional_sessbus
-			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+			(allow sessbus_chat_client_subj_type_attribute subj
+				(dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute
+				(dbus (send_msg))))
 
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_subj_type_attribute subj)
@@ -112,7 +120,8 @@
 		(blockinherit subj.send_signal_blk)
 
 		(macro sessbus_chat_client_subj_type ((type ARG1))
-			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+			(typeattributeset
+				sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))
@@ -124,8 +133,10 @@
 		(typeattribute sessbus_chat_client_subj_type_attribute)
 
 		(optional gnomeapplication_common_gjs_subj_blk_optional_sessbus
-			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+			(allow sessbus_chat_client_subj_type_attribute subj
+				(dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute
+				(dbus (send_msg))))
 
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_gjs_subj_type_attribute subj)
@@ -133,7 +144,8 @@
 		(blockinherit subj.send_signal_blk)
 
 		(macro sessbus_chat_client_subj_type ((type ARG1))
-			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+			(typeattributeset
+				sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))
@@ -145,8 +157,10 @@
 		(typeattribute sessbus_chat_client_subj_type_attribute)
 
 		(optional gnomeapplication_common_sp_subj_blk_optional_sessbus
-			(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-			(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+			(allow sessbus_chat_client_subj_type_attribute subj
+				(dbus (send_msg)))
+			(allow subj sessbus_chat_client_subj_type_attribute
+				(dbus (send_msg))))
 
 		(blockinherit gnomeapplication_subj_blk)
 		(typeattributeset gnomeapp.common_sp_subj_type_attribute subj)
@@ -154,7 +168,8 @@
 		(blockinherit subj.send_signal_blk)
 
 		(macro sessbus_chat_client_subj_type ((type ARG1))
-			(typeattributeset sessbus_chat_client_subj_type_attribute ARG1))
+			(typeattributeset
+				sessbus_chat_client_subj_type_attribute ARG1))
 
 		(macro gnomeapplication_subj_type ((type ARG1))
 			(call gnomeapp.gnomeapplication_subj_type (ARG1))
@@ -169,7 +184,8 @@
 		(blockinherit exec_blk)
 
 		(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-			(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+			(call auto_subj_type_transition_pattern (ARG2 cmd_file
+				ARG3))
 
 			(roletype ARG1 ARG3)
 
@@ -179,7 +195,8 @@
 
 		(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 			(allow ARG1 ARG2 (process (signal)))
-			(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+			(call auto_subj_type_transition_pattern (ARG1 cmd_file
+				ARG2))))
 
 	(block gnomeapplication_common_obj_blk
 		(blockabstract gnomeapplication_common_obj_blk)
@@ -192,13 +209,15 @@
 		(blockinherit exec_blk)
 
 		(call manage_tmpfs_user (subj_type_attribute))
-		(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+		(call tmpfs_obj_type_transition_tmpfs_user
+			(subj_type_attribute))
 
 		(optional gnomeapplications_common_obj_blk_optional_xserver
 			(call xserver.tmpfs_client_obj_type (tmpfs_user_file)))
 
 		(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-			(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+			(call auto_subj_type_transition_pattern (ARG2 cmd_file
+				ARG3))
 
 			(roletype ARG1 ARG3)
 
@@ -208,7 +227,8 @@
 
 		(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 			(allow ARG1 ARG2 (process (signal)))
-			(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+			(call auto_subj_type_transition_pattern (ARG1 cmd_file
+				ARG2)))
 
 		(blockinherit usersubj.search_tmpfs_user_blk)
 		(blockinherit usersubj.list_tmpfs_user_blk)
@@ -220,9 +240,12 @@
 
 		(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 			(call file.search_runtime_user (ARG1))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file sock_file "*"))))
 
 	(block gnomeapplication_common_gjs_obj_blk
 		(blockabstract gnomeapplication_common_gjs_obj_blk)
@@ -236,13 +259,15 @@
 
 		(call manage_tmpfs_user (subj_type_attribute))
 		(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
-		(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+		(call tmpfs_obj_type_transition_tmpfs_user
+			(subj_type_attribute))
 
 		(optional gnomeapplications_common_gjs_obj_blk_optional_xserver
 			(call xserver.tmpfs_client_obj_type (tmpfs_user_file)))
 
 		(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-			(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+			(call auto_subj_type_transition_pattern (ARG2 cmd_file
+				ARG3))
 
 			(roletype ARG1 ARG3)
 
@@ -252,7 +277,8 @@
 
 		(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 			(allow ARG1 ARG2 (process (signal)))
-			(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+			(call auto_subj_type_transition_pattern (ARG1 cmd_file
+				ARG2)))
 
 		(blockinherit usersubj.search_tmpfs_user_blk)
 		(blockinherit usersubj.list_tmpfs_user_blk)
@@ -264,9 +290,12 @@
 
 		(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 			(call file.search_runtime_user (ARG1))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file sock_file "*"))))
 
 	(block gnomeapplication_common_sp_obj_blk
 		(blockabstract gnomeapplication_common_sp_obj_blk)
@@ -279,10 +308,12 @@
 		(blockinherit exec_blk)
 
 		(call manage_tmpfs_user (subj_type_attribute))
-		(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+		(call tmpfs_obj_type_transition_tmpfs_user
+			(subj_type_attribute))
 
 		(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-			(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+			(call auto_subj_type_transition_pattern (ARG2 cmd_file
+				ARG3))
 
 			(roletype ARG1 ARG3)
 
@@ -292,7 +323,8 @@
 
 		(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 			(allow ARG1 ARG2 (process (signal)))
-			(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+			(call auto_subj_type_transition_pattern (ARG1 cmd_file
+				ARG2)))
 
 		(blockinherit usersubj.search_tmpfs_user_blk)
 		(blockinherit usersubj.list_tmpfs_user_blk)
@@ -304,15 +336,19 @@
 
 		(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 			(call file.search_runtime_user (ARG1))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file dir "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1
+				tmpfs_user_file sock_file "*"))))
 
 	(macro common_subj_type ((type ARG1))
 		(typeattributeset common_subj_type_attribute ARG1))
 
 	(macro file_chooser_dialog_subj_type ((type ARG1))
-		(typeattributeset file_chooser_dialog_subj_type_attribute ARG1))
+		(typeattributeset file_chooser_dialog_subj_type_attribute
+			ARG1))
 
 	(macro print_subj_type ((type ARG1))
 		(typeattributeset print_subj_type_attribute ARG1))

@@ -13,7 +13,8 @@
 	(blockinherit usersubj.home_config_obj_blk)
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(blockinherit usersubj.home_data_obj_blk)
 
@@ -45,7 +46,8 @@
 	(call gcs_helper.obj_entry_subj (subj_type_attribute))
 
 	(call goa.manage_home_cache (subj_type_attribute))
-	(call goa.home_cache_obj_type_transition_home_cache (subj_type_attribute))
+	(call goa.home_cache_obj_type_transition_home_cache
+		(subj_type_attribute))
 
 	(call gs.read_home_user_files (subj_type_attribute))
 
@@ -65,21 +67,25 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional gcs_subj_type_optional_accountsd
 		(call accountsd.read_var_lib (subj_type_attribute))
 		(call accountsd.client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_bluetoothd
-		(call bluetoothd.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_colord
 		(call colormgr.read_home_data_files (subj_type_attribute))
-		(call colord.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call colord.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_firewalld
-		(call firewalld.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call firewalld.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_nm
 		(call nm.client_subj_type (subj_type_attribute))
@@ -89,12 +95,14 @@
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
 
 	(optional gcs_subj_type_optional_polkit
-		(call polkit.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call polkit.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_rygel
 		(call rygel.read_config_files (subj_type_attribute))
 		(call rygel.manage_home_config_files (subj_type_attribute))
-		(call rygel.home_config_obj_type_transition_home_config_files (subj_type_attribute)))
+		(call rygel.home_config_obj_type_transition_home_config_files
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd
 		(call sd.search_config (subj_type_attribute))
@@ -103,29 +111,36 @@
 		(call sd.read_state (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd_localed
-		(call sd_localed.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_localed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd_logind
 		(call sd_logind.read_runtime (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sd_timedated
-		(call sd_timedated.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_timedated.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_timedatex
-		(call timedatex.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call timedatex.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_upowerd
-		(call upowerd.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call upowerd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gcs_subj_type_optional_webkit
-		(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
+		(call webkitwp.rw_inherited_tmpfs_user_files
+			(subj_type_attribute))
 		(call webkitwp.manage_home_cache (subj_type_attribute))
-		(call webkitwp.home_cache_obj_type_transition_home_cache (subj_type_attribute))
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj_type_attribute))
 		(call webkitwp.manage_home_data (subj_type_attribute))
-		(call webkitwp.home_data_obj_type_transition_home_data (subj_type_attribute))))
+		(call webkitwp.home_data_obj_type_transition_home_data
+			(subj_type_attribute))))
 
 (block gcsp
 	(typeattribute subj_type_attribute)
@@ -153,7 +168,8 @@
 	(call usersubj.read_home_data (subj_type_attribute))
 
 	(optional gcsp_subj_type_optional_xwayland
-		(call xwayland.shared_client (subj_type_attribute tmpfs_user_file))))
+		(call xwayland.shared_client (subj_type_attribute
+			tmpfs_user_file))))
 
 (block gcs_helper
 	(blockinherit cmd.obj_blk))

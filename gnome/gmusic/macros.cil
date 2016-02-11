@@ -10,7 +10,8 @@
 		(blockinherit subj.rw_inherited_fifo_files_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gmusic.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gmusic.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gmusic.role_pattern (ARG1 ARG2 subj))))
@@ -20,7 +21,8 @@
 	(blockinherit usersubj.relabel_var_tmp_user_files_blk)
 
 	(macro var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			file "*")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -33,4 +35,5 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "gnome-music"))))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "gnome-music"))))

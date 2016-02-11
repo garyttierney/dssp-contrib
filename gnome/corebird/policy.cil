@@ -5,21 +5,22 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-        (blockinherit usersubj.home_cache_obj_blk)
+	(blockinherit usersubj.home_cache_obj_blk)
 
 	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_cache (subj_type_attribute))
 	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
 
-        (blockinherit usersubj.home_config_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk)
 
 	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
-        (blockinherit usersubj.home_data_obj_blk)
+	(blockinherit usersubj.home_data_obj_blk)
 
 	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
 

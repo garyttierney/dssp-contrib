@@ -27,7 +27,8 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "keyring")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"keyring")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -40,20 +41,24 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "keyrings")))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "keyrings")))
 
 	(macro manual_subj_type_transition_all_subj ((type ARG1))
-		(call manual_subj_type_transition_pattern (ARG1 cmd_file subj_type_attribute)))
+		(call manual_subj_type_transition_pattern (ARG1 cmd_file
+			subj_type_attribute)))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file subj_type_attribute)))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2))))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ARG2))))
 
 (in gkr
 	(blockinherit run_blk))

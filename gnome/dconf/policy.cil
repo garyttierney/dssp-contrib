@@ -11,7 +11,8 @@
 	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
@@ -22,13 +23,16 @@
 
 	(call read_config (client_subj_type_attribute))
 
-	(call usersubj.home_config_creator_subj_type (client_subj_type_attribute))
+	(call usersubj.home_config_creator_subj_type
+		(client_subj_type_attribute))
 
 	(call manage_home_config (client_subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (client_subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(client_subj_type_attribute))
 
 	(call manage_tmpfs_user (client_subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (client_subj_type_attribute)))
+	(call tmpfs_obj_type_transition_tmpfs_user
+		(client_subj_type_attribute)))
 
 (block dconfs
 	(typeattribute subj_type_attribute)

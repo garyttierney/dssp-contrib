@@ -10,7 +10,8 @@
 	(filecon "HOME_DIR/\.cache/gdm(/.*)?" any home_cache_file_context)
 
 	(optional gdm_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*gdm.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*gdm.*" file
+			unit_file_context)))
 
 (in gdm_helper
 	(filecon "/etc/gdm/PreSession/Default" file cmd_file_context)

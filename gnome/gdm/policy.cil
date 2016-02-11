@@ -5,9 +5,13 @@
 
 	(booleanif gdm_priv_login
 		(true
-			(call xsession.manual_subj_type_transition_common_login_subj (gdm.subj)))
+			(call
+				xsession.manual_subj_type_transition_common_login_subj
+					(gdm.subj)))
 		(false
-			(call xsession.manual_subj_type_transition_unpriv_login_subj (gdm.subj)))))
+			(call
+				xsession.manual_subj_type_transition_unpriv_login_subj
+					(gdm.subj)))))
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
@@ -75,7 +79,8 @@
 
 	(blockinherit usersubj.home_cache_obj_blk)
 
-	(allow subj self (capability (fsetid fowner sys_tty_config kill sys_admin)))
+	(allow subj self (capability (fsetid fowner sys_tty_config kill
+		sys_admin)))
 	(allow subj self (process (getcap setsched setcap setrlimit)))
 	(allow subj self read_key_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
@@ -224,7 +229,8 @@
 		(call sd.status (subj))
 		(call sd.sysbus_chat_client_subj_type (subj))
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional gdm_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj)))
@@ -241,8 +247,10 @@
 		(call sysbus.service_subj_type (subj)))
 
 	(optional gdm_sysbus_chat_client_subj_type_optional_sysbus
-		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
 
 	(optional gdm_optional_tp
 		(call tpmc.exec (subj)))
@@ -266,7 +274,8 @@
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
 
-	(allow client_subj_type_attribute subj (unix_stream_socket (read write)))
+	(allow client_subj_type_attribute subj (unix_stream_socket (read
+		write)))
 
 	(call read_config_files (client_subj_type_attribute))
 	(call read_config_lnk_files (client_subj_type_attribute))
@@ -281,7 +290,8 @@
 	(optional client_subj_type_optional_xserver
 		(call xserver.search_config (client_subj_type_attribute)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_cache (adm_subj_type_attribute))
@@ -291,13 +301,17 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
 
 (block gdm_helper
 	(blockinherit cmd.obj_blk))

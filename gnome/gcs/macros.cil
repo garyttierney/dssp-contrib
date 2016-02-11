@@ -37,7 +37,8 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "gnome-control-center")))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "gnome-control-center")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -50,8 +51,10 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "telepathy-account-widgets"))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "gnome-control-center")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "telepathy-account-widgets"))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "gnome-control-center")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -64,7 +67,8 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "sounds")))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "sounds")))
 
 	(macro rw_inherited_tmpfs_user_files ((type ARG1))
 		(call use_fd_all_subj (ARG1))

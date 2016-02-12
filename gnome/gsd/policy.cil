@@ -23,7 +23,8 @@
 	(call fs.rw_sysfs_files (subj_type_attribute))
 
 	(call gcs.manage_home_data (subj_type_attribute))
-	(call gcs.home_data_obj_type_transition_home_data (subj_type_attribute))
+	(call gcs.home_data_obj_type_transition_home_data
+		(subj_type_attribute))
 
 	(call glib.client_subj_type (subj_type_attribute))
 
@@ -49,15 +50,18 @@
 	(call usersubj.delete_all_tmpfs_user (subj_type_attribute))
 
 	(optional gsd_subj_type_optional_avahid
-		(call avahid.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call avahid.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_colord
 		(call colormgr.manage_home_data (subj_type_attribute))
-		(call colormgr.home_data_obj_type_transition_home_data (subj_type_attribute))
+		(call colormgr.home_data_obj_type_transition_home_data
+			(subj_type_attribute))
 		(call colord.client_subj_type (subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_geoclue
-		(call geoclue.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call geoclue.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_nm
 		(call nm.client_subj_type (subj_type_attribute)))
@@ -66,35 +70,42 @@
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
 
 	(optional gsd_subj_type_optional_polkit
-		(call polkit.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call polkit.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sd
 		(call sd.status (subj_type_attribute))
 		(call sd.sysbus_chat_client_subj_type (subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_hostnamed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sd_localed
-		(call sd_localed.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_localed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sd_logind
 		(call sd_logind.client_subj_type (subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sd_timedated
-		(call sd_timedated.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_timedated.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_syndaemon
-		(call syndaemon.auto_subj_type_transition (subj_type_attribute)))
+		(call syndaemon.auto_subj_type_transition
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_timedatex
-		(call timedatex.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call timedatex.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional gsd_subj_type_optional_upowerd
-		(call upowerd.sysbus_chat_client_subj_type (subj_type_attribute))))
+		(call upowerd.sysbus_chat_client_subj_type
+			(subj_type_attribute))))
 
 (block gsdprinter
 	(typeattribute subj_type_attribute)

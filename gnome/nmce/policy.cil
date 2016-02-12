@@ -10,17 +10,20 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_data (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_data
+		(subj_type_attribute))
 
 	(optional nmce_subj_type_optional_firewalld
-		(call firewalld.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call firewalld.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional nmce_subj_type_optional_nm
 		(call nm.client_subj_type (subj_type_attribute))
 		(call nm.read_config (subj_type_attribute)))
 
 	(optional nmce_subj_type_optional_sd_hostnamed
-		(call sd_hostnamed.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_hostnamed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional nmce_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

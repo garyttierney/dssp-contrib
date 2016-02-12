@@ -25,11 +25,14 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file file ".mc_connections"))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "telepathy")))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file file ".mc_connections"))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "telepathy")))
 
 	(macro home_cache_add_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_add_obj_type_transition (ARG1 home_cache_file dir "telepathy")))
+		(call usersubj.home_cache_add_obj_type_transition (ARG1
+			home_cache_file dir "telepathy")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -43,10 +46,12 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "telepathy")))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "telepathy")))
 
 	(macro home_data_add_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_add_obj_type_transition (ARG1 home_data_file dir "telepathy"))))
+		(call usersubj.home_data_add_obj_type_transition (ARG1
+			home_data_file dir "telepathy"))))
 
 (in tpmct
 	(block subj_blk
@@ -57,7 +62,8 @@
 		(typeattributeset tpmct.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call tpmct.spec_auto_subj_type_transition (ARG1 subj)))
+			(call tpmct.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call tpmct.role_pattern (ARG1 ARG2 subj)))))
@@ -89,7 +95,8 @@
 
 	(macro read_home_cache_files ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
-		(call read_files_pattern (ARG1 home_cache_file home_cache_file)))
+		(call read_files_pattern (ARG1 home_cache_file
+			home_cache_file)))
 
 	(macro rw_home_cache_files ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
@@ -97,7 +104,8 @@
 
 	(macro read_home_cache_lnk_files ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_cache_file home_cache_file)))
+		(call read_lnk_files_pattern (ARG1 home_cache_file
+			home_cache_file)))
 
 	(macro read_home_cache ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
@@ -120,7 +128,8 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call tpmc.home_cache_obj_type_transition (ARG1 home_cache_file dir "logger")))
+		(call tpmc.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "logger")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -133,7 +142,8 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "TpLogger"))))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "TpLogger"))))
 
 (in tpi
 	(block subj_blk

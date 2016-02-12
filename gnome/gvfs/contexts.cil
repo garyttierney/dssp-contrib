@@ -22,20 +22,26 @@
 	(filecon "/usr/libexec/gvfsd" file cmd_file_context)
 
 	(optional gvfsd_unit_optional_sduser
-		(filecon "/usr/lib/systemd/user/[^/]*gvfs-daemon.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-daemon.*" file
+			unit_file_context)))
 
 (in gvfsdmd
 	(filecon "/usr/libexec/gvfsd-metadata" file cmd_file_context)
-	(filecon "HOME_DIR/\.local/share/gvfs-metadata(/.*)?" any home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/gvfs-metadata(/.*)?" any
+		home_data_file_context)
 
 	(optional gvfsdmd_unit_optional_sduser
-		(filecon "/usr/lib/systemd/user/[^/]*gvfs-metadata.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-metadata.*" file
+			unit_file_context)))
 
 (in gvfsdud2
-	(filecon "/usr/libexec/gvfs-udisks2-volume-monitor" file cmd_file_context)
+	(filecon "/usr/libexec/gvfs-udisks2-volume-monitor" file
+		cmd_file_context)
 
 	(optional gvfsdud2_unit_optional_sduser
-		(filecon "/usr/lib/systemd/user/[^/]*gvfs-udisks2-volume-monitor.*" file unit_file_context)))
+		(filecon
+			"/usr/lib/systemd/user/[^/]*gvfs-udisks2-volume-monitor.*"
+				file unit_file_context)))
 
 (in gvfsdburn
 	(filecon "/usr/libexec/gvfsd-burn" file cmd_file_context))

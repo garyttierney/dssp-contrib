@@ -7,7 +7,8 @@
 		(typeattributeset obexd.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call obexd.spec_auto_subj_type_transition (ARG1 subj)))
+			(call obexd.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call obexd.role_pattern (ARG1 ARG2 subj))))
@@ -23,4 +24,5 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "obexd"))))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "obexd"))))

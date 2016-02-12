@@ -71,15 +71,19 @@
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
 	(call tpmc.create_home_cache_dirs (subj_type_attribute))
-	(call tpmc.home_cache_add_obj_type_transition_home_cache (subj_type_attribute))
+	(call tpmc.home_cache_add_obj_type_transition_home_cache
+		(subj_type_attribute))
 
-	(call usersubj.home_cache_creator_subj_type (client_subj_type_attribute))
+	(call usersubj.home_cache_creator_subj_type
+		(client_subj_type_attribute))
 
 	(call manage_home_cache (client_subj_type_attribute))
-	(call home_cache_obj_type_transition_home_cache (client_subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache
+		(client_subj_type_attribute))
 
 	(call tpmc.create_home_cache_dirs (client_subj_type_attribute))
-	(call tpmc.home_cache_add_obj_type_transition_home_cache (client_subj_type_attribute))
+	(call tpmc.home_cache_add_obj_type_transition_home_cache
+		(client_subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 

@@ -12,9 +12,11 @@
 
 	(macro getattr_home_cache_files ((type ARG1))
 		(call usersubj.search_home_cache (ARG1))
-		(call getattr_files_pattern (ARG1 home_cache_file home_cache_file)))
+		(call getattr_files_pattern (ARG1 home_cache_file
+			home_cache_file)))
 
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "thumbnails"))))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "thumbnails"))))

@@ -7,7 +7,8 @@
 		(typeattributeset nautilus.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call nautilus.spec_auto_subj_type_transition (ARG1 subj)))
+			(call nautilus.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call nautilus.role_pattern (ARG1 ARG2 subj))))
@@ -23,8 +24,10 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file file ".converted-launchers"))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "nautilus")))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file file ".converted-launchers"))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "nautilus")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -37,12 +40,14 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "nautilus")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "nautilus")))
 
 	(macro write_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call write_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+		(call write_files_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file))))
 
 (in nautilusas
 	(block subj_blk
@@ -53,7 +58,8 @@
 		(typeattributeset nautilusas.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call nautilusas.spec_auto_subj_type_transition (ARG1 subj)))
+			(call nautilusas.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call nautilusas.role_pattern (ARG1 ARG2 subj)))))
@@ -67,7 +73,8 @@
 		(typeattributeset nautiluscm.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call nautiluscm.spec_auto_subj_type_transition (ARG1 subj)))
+			(call nautiluscm.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call nautiluscm.role_pattern (ARG1 ARG2 subj)))))

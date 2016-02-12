@@ -25,7 +25,8 @@
 	(call trackers.manage_home_cache_files (subj_type_attribute))
 
 	(call trackers.manage_home_data (subj_type_attribute))
-	(call trackers.home_data_obj_type_transition_home_data (subj_type_attribute))
+	(call trackers.home_data_obj_type_transition_home_data
+		(subj_type_attribute))
 
 	(call usersubj.list_home_dir (subj_type_attribute))
 	(call usersubj.read_home_user (subj_type_attribute))
@@ -36,10 +37,12 @@
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional trackerm_subj_type_optional_upowerd
-		(call upowerd.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call upowerd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional trackerm_subj_type_optional_xwayland
-		(call xwayland.stream_connect_compositor (subj_type_attribute))))
+		(call xwayland.stream_connect_compositor
+			(subj_type_attribute))))
 
 (block trackers
 	(typeattribute subj_type_attribute)

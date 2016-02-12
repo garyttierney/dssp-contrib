@@ -12,13 +12,16 @@
 
 	(macro create_home_data_dirs ((type ARG1))
 		(call usersubj.search_home_data (ARG1))
-		(call create_dirs_pattern (ARG1 home_data_file home_data_file)))
+		(call create_dirs_pattern (ARG1 home_data_file
+			home_data_file)))
 
 	(macro create_home_data_files ((type ARG1))
 		(call usersubj.search_home_data (ARG1))
-		(call create_files_pattern (ARG1 home_data_file home_data_file)))
+		(call create_files_pattern (ARG1 home_data_file
+			home_data_file)))
 
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "Trash"))))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "Trash"))))

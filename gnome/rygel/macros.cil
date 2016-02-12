@@ -7,7 +7,8 @@
 		(typeattributeset rygel.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call rygel.spec_auto_subj_type_transition (ARG1 subj)))
+			(call rygel.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call rygel.role_pattern (ARG1 ARG2 subj))))
@@ -37,11 +38,14 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "rygel.conf"))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "Rygel")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file file "rygel.conf"))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "Rygel")))
 
 	(macro home_config_obj_type_transition_home_config_files ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file file "*")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file file "*")))
 
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)
@@ -54,7 +58,8 @@
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "rygel"))))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "rygel"))))
 
 (in rygelp
 	(block subj_blk
@@ -65,7 +70,8 @@
 		(typeattributeset rygelp.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call rygelp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call rygelp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call rygelp.role_pattern (ARG1 ARG2 subj)))))

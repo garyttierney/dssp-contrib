@@ -21,7 +21,8 @@
 		(typeattributeset gvfsd.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsd.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsd.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsd.role_pattern (ARG1 ARG2 subj))))
@@ -45,14 +46,17 @@
 		(call fs.search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_file (dir (mounton))))
 
-	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2
+			ARG3 ARG4)))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "gvfs"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"gvfs"))))
 
 (in gvfsdmd
 	(block subj_blk
@@ -63,7 +67,8 @@
 		(typeattributeset gvfsdmd.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdmd.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdmd.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdmd.role_pattern (ARG1 ARG2 subj))))
@@ -79,7 +84,8 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "gvfs-metadata"))))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "gvfs-metadata"))))
 
 (in gvfsdud2
 	(block subj_blk
@@ -90,7 +96,8 @@
 		(typeattributeset gvfsdud2.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdud2.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdud2.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdud2.role_pattern (ARG1 ARG2 subj)))))
@@ -104,7 +111,8 @@
 		(typeattributeset gvfsdburn.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdburn.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdburn.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdburn.role_pattern (ARG1 ARG2 subj)))))
@@ -118,7 +126,8 @@
 		(typeattributeset gvfsdcdda.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdcdda.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdcdda.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdcdda.role_pattern (ARG1 ARG2 subj)))))
@@ -132,7 +141,8 @@
 		(typeattributeset gvfsdcomputer.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdcomputer.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdcomputer.spec_auto_subj_type_transition
+				(ARG1 subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdcomputer.role_pattern (ARG1 ARG2 subj)))))
@@ -146,7 +156,8 @@
 		(typeattributeset gvfsddav.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsddav.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsddav.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsddav.role_pattern (ARG1 ARG2 subj)))))
@@ -160,7 +171,8 @@
 		(typeattributeset gvfsddnssd.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsddnssd.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsddnssd.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsddnssd.role_pattern (ARG1 ARG2 subj)))))
@@ -174,7 +186,8 @@
 		(typeattributeset gvfsdftp.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdftp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdftp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdftp.role_pattern (ARG1 ARG2 subj)))))
@@ -191,7 +204,8 @@
 		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdhttp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdhttp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdhttp.role_pattern (ARG1 ARG2 subj))))
@@ -208,7 +222,8 @@
 		(typeattributeset gvfsdlocaltest.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdlocaltest.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdlocaltest.spec_auto_subj_type_transition
+				(ARG1 subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdlocaltest.role_pattern (ARG1 ARG2 subj)))))
@@ -222,7 +237,8 @@
 		(typeattributeset gvfsdnetwork.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdnetwork.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdnetwork.spec_auto_subj_type_transition
+				(ARG1 subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdnetwork.role_pattern (ARG1 ARG2 subj)))))
@@ -236,7 +252,8 @@
 		(typeattributeset gvfsdrecent.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdrecent.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdrecent.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdrecent.role_pattern (ARG1 ARG2 subj)))))
@@ -253,7 +270,8 @@
 		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdsftp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdsftp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdsftp.role_pattern (ARG1 ARG2 subj))))
@@ -273,7 +291,8 @@
 		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gvfsdtrash.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gvfsdtrash.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gvfsdtrash.role_pattern (ARG1 ARG2 subj))))

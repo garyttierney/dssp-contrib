@@ -1,11 +1,15 @@
 (in nautilus
 	(filecon "/usr/bin/nautilus" file cmd_file_context)
-        (filecon "HOME_DIR/\.local/share/\.converted-launchers.*" file home_data_file_context)
-        (filecon "HOME_DIR/\.local/share/nautilus(/.*)?" any home_data_file_context)
-        (filecon "HOME_DIR/\.config/nautilus(/.*)?" any home_config_file_context))
+	(filecon "HOME_DIR/\.local/share/\.converted-launchers.*" file
+		home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/nautilus(/.*)?" any
+		home_data_file_context)
+	(filecon "HOME_DIR/\.config/nautilus(/.*)?" any
+		home_config_file_context))
 
 (in nautilusas
 	(filecon "/usr/bin/nautilus-autorun-software" file cmd_file_context))
 
 (in nautiluscm
-	(filecon "/usr/libexec/nautilus-convert-metadata" file cmd_file_context))
+	(filecon "/usr/libexec/nautilus-convert-metadata" file
+		cmd_file_context))

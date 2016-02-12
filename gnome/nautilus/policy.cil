@@ -15,17 +15,19 @@
 	(blockinherit usersubj.home_config_obj_blk)
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(call sys.read_cpu_sysfs_files (subj_type_attribute))
 
-        (call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
+	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
 
 	(call sec.get_enforce_mode (subj_type_attribute))
 
 	(call trash.client_subj_type (subj_type_attribute))
 
-	(call usersubj.dontaudit_mmap_all_home_user_files (subj_type_attribute))
+	(call usersubj.dontaudit_mmap_all_home_user_files
+		(subj_type_attribute))
 
 	(call usersubj.manage_home_config_files (subj_type_attribute))
 
@@ -34,8 +36,10 @@
 	(call usersubj.manage_home_cmd_dirs (subj_type_attribute))
 	(call usersubj.manage_home_cmd_files (subj_type_attribute))
 	(call usersubj.read_home_cmd_lnk_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_cmd (subj_type_attribute))
-	(call usersubj.home_data_obj_type_transition_home_cmd (subj_type_attribute)))
+	(call usersubj.home_dir_obj_type_transition_home_cmd
+		(subj_type_attribute))
+	(call usersubj.home_data_obj_type_transition_home_cmd
+		(subj_type_attribute)))
 
 (block nautilusas
 	(typeattribute subj_type_attribute)

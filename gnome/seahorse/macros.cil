@@ -7,7 +7,8 @@
 		(typeattributeset seahorse.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call seahorse.spec_auto_subj_type_transition (ARG1 subj)))
+			(call seahorse.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call seahorse.role_pattern (ARG1 ARG2 subj))))
@@ -28,7 +29,8 @@
 		(typeattributeset seahorsesap.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call seahorsesap.spec_auto_subj_type_transition (ARG1 subj)))
+			(call seahorsesap.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call seahorsesap.role_pattern (ARG1 ARG2 subj))))
@@ -43,9 +45,12 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*"))))
 
 (in seahorse_helper
 	(blockinherit exec_blk))

@@ -29,9 +29,11 @@
 	(call manage_var_tmp_user_files (subj_type_attribute))
 	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute "*"))
 
-	(allow subj_type_attribute self (capability (setuid setgid chown sys_resource fowner dac_override kill)))
+	(allow subj_type_attribute self (capability (setuid setgid chown
+		sys_resource fowner dac_override kill)))
 	(dontaudit subj_type_attribute self (capability (net_admin)))
-	(allow subj_type_attribute self (process (setsched setrlimit setexec getpgid)))
+	(allow subj_type_attribute self (process (setsched setrlimit setexec
+		getpgid)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self link_key_perms)
 
@@ -71,21 +73,26 @@
 	(call selinux_config.read_config_files (subj_type_attribute))
 	(call default_context.read_config_files (subj_type_attribute))
 
-	(call usersubj.cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.cmd_manual_subj_type_transition_priv_subj
+		(subj_type_attribute))
 	(call usersubj.create_keyring_priv_subj (subj_type_attribute))
-	(call usersubj.home_cmd_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.home_cmd_manual_subj_type_transition_priv_subj
+		(subj_type_attribute))
 	(call usersubj.read_inherited_tmpfs_user_files (subj_type_attribute))
 	(call usersubj.relabel_term (subj_type_attribute))
 	(call usersubj.send_signal_priv_subj (subj_type_attribute))
 	(call usersubj.setattr_term (subj_type_attribute))
 	(call usersubj.setattr_var_tmp_user_files (subj_type_attribute))
-	(call usersubj.shell_manual_subj_type_transition_priv_subj (subj_type_attribute))
+	(call usersubj.shell_manual_subj_type_transition_priv_subj
+		(subj_type_attribute))
 	(call usersubj.use_term (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))
-			(call rbacsep.obj_role_change_exemption_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))
+			(call rbacsep.obj_role_change_exemption_subj_type
+				(subj_type_attribute))))
 
 	(optional sudo_subj_type_optional_sd
 		(call sd.getpgid (subj_type_attribute))
@@ -93,7 +100,8 @@
 		(call sd.read_state (subj_type_attribute)))
 
 	(optional sudo_subj_type_optional_sd_initctl
-		(call sd_initctl.getattr_runtime_fifo_files (subj_type_attribute)))
+		(call sd_initctl.getattr_runtime_fifo_files
+			(subj_type_attribute)))
 
 	(optional sudo_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))
@@ -118,4 +126,5 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call sudo.manage_config (subj_type_attribute))
-	(call sudo.config_obj_type_transition_config (subj_type_attribute "*")))
+	(call sudo.config_obj_type_transition_config (subj_type_attribute
+		"*")))

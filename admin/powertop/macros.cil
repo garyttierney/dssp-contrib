@@ -16,14 +16,16 @@
 	(blockinherit file.relabel_var_cache_blk)
 
 	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
-		(call file.var_cache_obj_type_transition (ARG1 var_cache_file dir "powertop")))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "powertop")))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

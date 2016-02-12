@@ -25,7 +25,8 @@
 
 	(typeattributeset obj_type_attribute tmpfs_user_file)
 
-	(allow subj self (capability (dac_override net_admin sys_rawio sys_resource sys_admin ipc_lock)))
+	(allow subj self (capability (dac_override net_admin sys_rawio
+		sys_resource sys_admin ipc_lock)))
 	(allow subj self (process (setrlimit)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_socket_perms)
@@ -80,12 +81,14 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional powertop_optional_xutil
 		(call xutil.run (subj role_attribute)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_cache (adm_subj_type_attribute))
@@ -93,8 +96,10 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

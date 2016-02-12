@@ -24,7 +24,11 @@
 		(allow ARG1 file manage_file_perms))
 
 	(macro mountpoint_obj_type_transition_file ((type ARG1))
-		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.user"))
-		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.user.new"))
-		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.group"))
-		(call sys.mountpoint_obj_type_transition (ARG1 file file "aquota.group.new"))))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file
+			"aquota.user"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file
+			"aquota.user.new"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file
+			"aquota.group"))
+		(call sys.mountpoint_obj_type_transition (ARG1 file file
+			"aquota.group.new"))))

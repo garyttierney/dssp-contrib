@@ -3,4 +3,5 @@
 	(filecon "/var/cache/powertop(/.*)?" any var_cache_file_context)
 
 	(optional powertop_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*powertop.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*powertop.*" file
+			unit_file_context)))

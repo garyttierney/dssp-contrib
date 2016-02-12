@@ -15,9 +15,13 @@
 
 	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
 	(call enchant.client_subj_type (subj_type_attribute))
 
 	(call gedit_helper.exec (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
 
 	(call usersubj.manage_home_cmd_dirs (subj_type_attribute))
 	(call usersubj.manage_home_cmd_files (subj_type_attribute))

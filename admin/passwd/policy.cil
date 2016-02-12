@@ -5,7 +5,8 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(allow subj_type_attribute self (capability (setuid dac_override chown fsetid)))
+	(allow subj_type_attribute self (capability (setuid dac_override chown
+		fsetid)))
 	(allow subj_type_attribute self (process (setfscreate)))
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
@@ -13,7 +14,8 @@
 	(call sys.audit_client_subj_type (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
-	(call standard.obj_sys_change_exemption_subj_type (subj_type_attribute))
+	(call standard.obj_sys_change_exemption_subj_type
+		(subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 

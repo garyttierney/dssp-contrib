@@ -27,7 +27,8 @@
 
 	(call dirmngr.stream_connect (subj_type_attribute))
 	(call dirmngr.manage_home_user_files (subj_type_attribute))
-	(call dirmngr.gpg_home_user_obj_type_transition_home_files (subj_type_attribute))
+	(call dirmngr.gpg_home_user_obj_type_transition_home_files
+		(subj_type_attribute))
 
 	(call gpg_agent.read_home_user_files (subj_type_attribute))
 
@@ -37,10 +38,12 @@
 	(call locale.read (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
 
 	(call usersubj.manage_tmpfs_user_files (subj_type_attribute))
-	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files
+		(subj_type_attribute))
 
 	(call usersubj.use_term (subj_type_attribute))
 
@@ -48,11 +51,13 @@
 		(call git.read_tmpfs_user_files (subj_type_attribute)))
 
 	(optional gpg_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional gpg_subj_type_optional_mutt
 		(call mutt.read_home_user_files (subj_type_attribute))
-		(call mutt.rw_inherited_fifo_files_all_subj (subj_type_attribute))
+		(call mutt.rw_inherited_fifo_files_all_subj
+			(subj_type_attribute))
 		(call mutt.rw_tmpfs_user_files (subj_type_attribute))
 		(call mutt.send_sigchld_all_subj (subj_type_attribute)))
 

@@ -7,7 +7,8 @@
 		(typeattributeset xinit.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call xinit.spec_auto_subj_type_transition (ARG1 subj)))
+			(call xinit.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call xinit.role_pattern (ARG1 ARG2 subj))))
@@ -41,9 +42,11 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(macro spec_home_user_auto_subj_type_transition ((type ARG1)(type ARG2))
+	(macro spec_home_user_auto_subj_type_transition ((type ARG1)(type
+		ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 home_user_file ARG2)))
+		(call auto_subj_type_transition_pattern (ARG1 home_user_file
+			ARG2)))
 
 	(blockinherit usersubj.read_home_user_files_blk)
 	(blockinherit usersubj.manage_home_user_files_blk)
@@ -54,7 +57,8 @@
 		(allow ARG1 home_user_file exec_file_perms))
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xinitrc")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".xinitrc")))
 
 	(macro home_user_obj_entry_subj ((type ARG1))
 		(call subj.entry (ARG1 home_user_file)))

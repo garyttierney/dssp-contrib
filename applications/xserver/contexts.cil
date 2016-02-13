@@ -6,7 +6,8 @@
 	(filecon "/var/log/Xorg.*\.log.*" file var_log_file_context)
 	(filecon "/var/lib/xkb(/.*)?" any var_lib_file_context)
 	(filecon "HOME_DIR/\.xserverrc" file home_user_file_context)
-	(filecon "HOME_DIR/\.local/share/xorg(/.*)?" any home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/xorg(/.*)?" any
+		home_data_file_context)
 
 	(portcon "tcp" (6000 6009) port_obj_context)
 	(portcon "udp" (6000 6009) port_obj_context))

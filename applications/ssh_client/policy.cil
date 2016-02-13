@@ -12,7 +12,8 @@
 
 	(allow subj_type_attribute self (capability (setgid)))
 	(allow subj_type_attribute self (process (setrlimit)))
-	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept
+		connectto)))
 
 	(call dev.read_urandom (subj_type_attribute))
 
@@ -67,43 +68,55 @@
 	(call usersubj.manage_home_cmd_files (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
 
 	(call usersubj.manage_tmpfs_user_files (subj_type_attribute))
-	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files
+		(subj_type_attribute))
 
 	(optional ssh_client_subj_type_optional_analyze
-		(call analyze.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call analyze.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_busctl
-		(call busctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call busctl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_fuse
-		(call sshfs.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call sshfs.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_hostnamectl
-		(call hostnamectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call hostnamectl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_localectl
-		(call localectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call localectl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_loginctl
-		(call loginctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call loginctl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_machinectl
-		(call machinectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call machinectl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_run
-		(call run.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call run.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_sshd
 		(call sshd.tcp_connect_all_ports (subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_systemctl
-		(call systemctl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute)))
+		(call systemctl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional ssh_client_subj_type_optional_timedatectl
-		(call timedatectl.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))))
+		(call timedatectl.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute))))
 
 (block ssh_keygen
 	(typeattribute subj_type_attribute)
@@ -115,7 +128,8 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call ssh_client.manage_home_user (subj_type_attribute))
-	(call ssh_client.home_dir_obj_type_transition_home (subj_type_attribute))
+	(call ssh_client.home_dir_obj_type_transition_home
+		(subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 
@@ -124,7 +138,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional ssh_keygen_subj_type_optional_seahorse
-		(call seahorse.rw_inherited_tmpfs_user_files (subj_type_attribute))))
+		(call seahorse.rw_inherited_tmpfs_user_files
+			(subj_type_attribute))))
 
 (block ssh_sftpserver
 	(roleattribute role_attribute)

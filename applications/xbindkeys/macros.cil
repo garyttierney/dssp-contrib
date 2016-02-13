@@ -7,7 +7,8 @@
 		(typeattributeset xbindkeys.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call xbindkeys.spec_auto_subj_type_transition (ARG1 subj)))
+			(call xbindkeys.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call xbindkeys.role_pattern (ARG1 ARG2 subj))))
@@ -41,6 +42,7 @@
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xbindkeysrc")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".xbindkeysrc")))
 
 	(blockinherit subj.use_fd_all_blk))

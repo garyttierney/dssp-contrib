@@ -12,7 +12,8 @@
 			(call xwayland.roletype_pattern (ARG1 subj)))
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call xwayland.spec_auto_subj_type_transition (ARG1 subj))))
+			(call xwayland.spec_auto_subj_type_transition (ARG1
+				subj))))
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
@@ -65,7 +66,8 @@
 	(macro stream_connect_compositor ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file compositor_subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file compositor_subj_type_attribute)))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -79,27 +81,48 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-0"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-0.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-1"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-1.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-2"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-2.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-3"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-3.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-4"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-4.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-5"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-5.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-6"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-6.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-7"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-7.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-8"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-8.lock"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "wayland-9"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "wayland-9.lock")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-0"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-0.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-1"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-1.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-2"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-2.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-3"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-3.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-4"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-4.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-5"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-5.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-6"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-6.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-7"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-7.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-8"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-8.lock"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "wayland-9"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"wayland-9.lock")))

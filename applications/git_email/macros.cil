@@ -7,7 +7,8 @@
 		(typeattributeset git_email.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call git_email.spec_auto_subj_type_transition (ARG1 subj)))
+			(call git_email.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call git_email.role_pattern (ARG1 ARG2 subj))))
@@ -49,4 +50,5 @@
 		(allow ARG1 home_user_file relabel_file_perms))
 
 	(macro git_home_user_obj_type_transition_home ((type ARG1))
-		(call git.home_user_obj_type_transition (ARG1 home_user_file file "*"))))
+		(call git.home_user_obj_type_transition (ARG1 home_user_file
+			file "*"))))

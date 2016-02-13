@@ -15,7 +15,8 @@
 			(call gpg_agent.spec_stream_connect (ARG1 subj)))
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gpg_agent.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gpg_agent.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gpg_agent.role_pattern (ARG1 ARG2 subj))))
@@ -58,7 +59,8 @@
 
 	(macro read_home_user_lnk_files ((type ARG1))
 		(call gpg.search_home_user (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_user_file home_user_file)))
+		(call read_lnk_files_pattern (ARG1 home_user_file
+			home_user_file)))
 
 	(macro read_home_user ((type ARG1))
 		(call gpg.search_home_user (ARG1))
@@ -86,19 +88,27 @@
 		(allow ARG1 home_user_file (sock_file (getattr))))
 
 	(macro gpg_home_user_obj_type_transition_home ((type ARG1))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.conf"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "gpg-agent.log"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "sshcontrol"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file dir "private-keys-v1.d"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.gpg-agent.ssh")))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "gpg-agent.conf"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "gpg-agent.log"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "sshcontrol"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			dir "private-keys-v1.d"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			sock_file "S.gpg-agent"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			sock_file "S.gpg-agent.ssh")))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call gpg.search_home_user (ARG1))
-		(call stream_connect_pattern (ARG1 home_user_file home_user_file ARG2)))
+		(call stream_connect_pattern (ARG1 home_user_file
+			home_user_file ARG2)))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call gpg.search_home_user (ARG1))
-		(call stream_connect_pattern (ARG1 home_user_file home_user_file subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 home_user_file
+			home_user_file subj_type_attribute)))
 
 	(blockinherit subj.send_signal_all_blk))

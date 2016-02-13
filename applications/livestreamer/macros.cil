@@ -7,7 +7,8 @@
 		(typeattributeset livestreamer.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call livestreamer.spec_auto_subj_type_transition (ARG1 subj)))
+			(call livestreamer.spec_auto_subj_type_transition
+				(ARG1 subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call livestreamer.role_pattern (ARG1 ARG2 subj))))
@@ -42,14 +43,16 @@
 	(blockinherit usersubj.relabel_home_config_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "livestreamer")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "livestreamer")))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)
@@ -61,6 +64,7 @@
 	(blockinherit usersubj.relabel_home_cache_blk)
 
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
-		(call usersubj.home_cache_obj_type_transition (ARG1 home_cache_file dir "livestreamer")))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "livestreamer")))
 
 	(blockinherit subj.use_fd_all_blk))

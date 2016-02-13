@@ -1,6 +1,8 @@
 (in gstreamer
-	(filecon "HOME_DIR/\.cache/gstreamer-1\.0(/.*)?" any home_cache_file_context)
-	(filecon "HOME_DIR/\.local/share/gstreamer-1\.0(/.*)?" any home_data_file_context))
+	(filecon "HOME_DIR/\.cache/gstreamer-1\.0(/.*)?" any
+		home_cache_file_context)
+	(filecon "HOME_DIR/\.local/share/gstreamer-1\.0(/.*)?" any
+		home_data_file_context))
 
 (in gst
 	(filecon "/usr/bin/gst-inspect-.*" file cmd_file_context)
@@ -8,7 +10,9 @@
 	(filecon "/usr/bin/gst-typefind-.*" file cmd_file_context))
 
 (in gstps
-	(filecon "/usr/libexec/gstreamer-.*/gst-plugin-scanner" file cmd_file_context))
+	(filecon "/usr/libexec/gstreamer-.*/gst-plugin-scanner" file
+		cmd_file_context))
 
 (in gst_helper
-	(filecon "/usr/libexec/gstreamer-.*/gst-ptp-helper" file cmd_file_context))
+	(filecon "/usr/libexec/gstreamer-.*/gst-ptp-helper" file
+		cmd_file_context))

@@ -7,7 +7,8 @@
 
 	(roletype role_attribute subj)
 
-	(allow subj self (capability (dac_override net_raw net_admin setgid setuid)))
+	(allow subj self (capability (dac_override net_raw net_admin setgid
+		setuid)))
 	(allow subj self (process (getcap setcap)))
 	(allow subj self create_netlink_generic_socket_perms)
 	(allow subj self create_packet_socket_perms)
@@ -103,10 +104,12 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
 
 		(allow adm_subj_type_attribute unit_file manage_file_perms)
 		(allow adm_subj_type_attribute unit_file relabel_file_perms))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj)))

@@ -31,7 +31,8 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional xsession_subj_type_optional_emacs
 		(call emacs.read_home_user_files (subj_type_attribute)))

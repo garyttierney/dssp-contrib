@@ -42,11 +42,16 @@
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_cache"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_cache.gmail"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".mutt_certificates"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".muttrc"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".muttrc.gmail")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".mutt_cache"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".mutt_cache.gmail"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".mutt_certificates"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".muttrc"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".muttrc.gmail")))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -66,8 +71,10 @@
 		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit subj.send_sigchld_all_blk)
 	(blockinherit subj.use_fd_all_blk)

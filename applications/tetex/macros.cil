@@ -33,7 +33,8 @@
 	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".texlive2015")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".texlive2015")))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -44,4 +45,5 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))))

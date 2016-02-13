@@ -61,10 +61,12 @@
 		(allow ARG1 home_user_file (file (getattr))))
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".gnupg")))
 
 	(macro home_dir_add_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_add_obj_type_transition (ARG1 home_user_file dir ".gnupg")))
+		(call usersubj.home_dir_add_obj_type_transition (ARG1
+			home_user_file dir ".gnupg")))
 
 	(blockinherit usersubj.home_user_obj_type_transition_blk))
 

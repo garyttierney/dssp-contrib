@@ -29,17 +29,20 @@
 	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
 
 	(call manage_home_config (subj_type_attribute))
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
 	(call manage_var_tmp_user_files (subj_type_attribute))
 	(call var_tmp_obj_type_transition_var_tmp (subj_type_attribute))
 
-	(allow subj_type_attribute self (process (setsched setcap ptrace setrlimit)))
+	(allow subj_type_attribute self (process (setsched setcap ptrace
+		setrlimit)))
 	(allow subj_type_attribute self create_sem_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
-	(allow subj_type_attribute self (unix_stream_socket (listen accept connectto)))
+	(allow subj_type_attribute self (unix_stream_socket (listen accept
+		connectto)))
 
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
@@ -86,7 +89,8 @@
 	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.manage_home_cert_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_cert (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_cert
+		(subj_type_attribute))
 
 	(call usersubj.manage_home_data_files (subj_type_attribute))
 
@@ -94,10 +98,12 @@
 	(call usersubj.manage_home_config_files (subj_type_attribute))
 
 	(call usersubj.manage_home_user (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user
+		(subj_type_attribute))
 
 	(optional steam_subj_type_optional_atspi
-		(call atspi.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+		(call atspi.tmpfs_client (subj_type_attribute
+			tmpfs_user_file)))
 
 	(optional steam_subj_type_optional_gs
 		(call gs.read_home_user_files (subj_type_attribute)))
@@ -122,4 +128,5 @@
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional steam_subj_type_optional_xserver
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))))
+		(call xserver.tmpfs_client (subj_type_attribute
+			tmpfs_user_file))))

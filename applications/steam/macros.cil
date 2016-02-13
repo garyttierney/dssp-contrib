@@ -9,7 +9,8 @@
 		(blockinherit subj.send_sigkill_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call steam.spec_auto_subj_type_transition (ARG1 subj)))
+			(call steam.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call steam.role_pattern (ARG1 ARG2 subj))))
@@ -45,9 +46,12 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*")))
 
 	(blockinherit usersubj.search_home_user_blk)
 	(blockinherit usersubj.list_home_user_blk)
@@ -60,9 +64,12 @@
 	(blockinherit usersubj.home_user_obj_type_transition_blk)
 
 	(macro home_dir_obj_type_transition_home_user ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".steam"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file lnk_file ".steampath"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file lnk_file ".steampid")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".steam"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file lnk_file ".steampath"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file lnk_file ".steampid")))
 
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
@@ -75,8 +82,10 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "Aspyr"))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "Steam")))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "Aspyr"))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "Steam")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -89,11 +98,13 @@
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "cef_user_data")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "cef_user_data")))
 
 	(blockinherit usersubj.read_var_tmp_user_files_blk)
 	(blockinherit usersubj.manage_var_tmp_user_files_blk)
 	(blockinherit usersubj.relabel_var_tmp_user_files_blk)
 
 	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file file "*"))))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			file "*"))))

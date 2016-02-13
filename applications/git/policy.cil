@@ -1,24 +1,24 @@
 (block git
 	(typeattribute subj_type_attribute)
 
-        (blockinherit app.application_cmd_obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-        (call subj.entry (subj_type_attribute cmd_file))
+	(call subj.entry (subj_type_attribute cmd_file))
 
-        (blockinherit net.unreserved_port_obj_blk)
+	(blockinherit net.unreserved_port_obj_blk)
 
 	(call tcp_connect_port (subj_type_attribute))
 
-        (blockinherit usersubj.home_user_obj_blk)
+	(blockinherit usersubj.home_user_obj_blk)
 
 	(call manage_home_user (subj_type_attribute))
 	(call home_user_obj_type_transition_home (subj_type_attribute))
 
-        (blockinherit usersubj.home_config_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk)
 
 	(call read_home_config (subj_type_attribute))
 
-        (blockinherit usersubj.tmpfs_user_obj_blk)
+	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
@@ -50,12 +50,16 @@
 	(call usersubj.manage_home_user_dirs (subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.manage_home_user_lnk_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_lnk_files
+		(subj_type_attribute))
 
 	(call usersubj.manage_home_cert (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_cert (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_cert
+		(subj_type_attribute))
 
 	(optional git_subj_type_optional_http
 		(call http.tcp_connect_port (subj_type_attribute)))
@@ -68,4 +72,5 @@
 
 	(optional git_subj_type_optional_pass
 		(call pass.manage_home_user (subj_type_attribute))
-		(call pass.home_user_obj_type_transition (subj_type_attribute home_user_file dir ".git"))))
+		(call pass.home_user_obj_type_transition (subj_type_attribute
+			home_user_file dir ".git"))))

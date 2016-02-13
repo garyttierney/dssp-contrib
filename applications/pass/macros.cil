@@ -9,8 +9,11 @@
 	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".password-store")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".password-store")))
 
-	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call usersubj.search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4))))
+		(call obj_type_transition_pattern (ARG1 home_user_file ARG2
+			ARG3 ARG4))))

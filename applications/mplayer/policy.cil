@@ -41,7 +41,8 @@
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
 
 	(optional mplayer_subj_type_optional_http
 		(call http.tcp_connect_port (subj_type_attribute)))
@@ -56,7 +57,8 @@
 		(call lircd.stream_connect (subj_type_attribute)))
 
 	(optional mplayer_subj_type_optional_xserver
-		(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+		(call xserver.tmpfs_client (subj_type_attribute
+			tmpfs_user_file)))
 
 	(optional mplayer_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file))))

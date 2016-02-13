@@ -33,9 +33,11 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-	(macro spec_home_user_auto_subj_type_transition ((type ARG1)(type ARG2))
+	(macro spec_home_user_auto_subj_type_transition ((type ARG1)(type
+		ARG2))
 		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 home_user_file ARG2)))
+		(call auto_subj_type_transition_pattern (ARG1 home_user_file
+			ARG2)))
 
 	(macro home_user_obj_entry_subj ((type ARG1))
 		(call subj.entry (ARG1 home_user_file)))
@@ -49,7 +51,8 @@
 	(blockinherit usersubj.relabel_home_config_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "git")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "git")))
 
 	(blockinherit usersubj.search_home_user_blk)
 	(blockinherit usersubj.list_home_user_blk)
@@ -64,18 +67,22 @@
 		(call usersubj.search_home_dir (ARG1))
 		(call exec_files_pattern (ARG1 home_user_file home_user_file)))
 
-	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4)))
+	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
+		(call obj_type_transition_pattern (ARG1 home_user_file ARG2
+			ARG3 ARG4)))
 
 	(macro home_user_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_user_obj_type_transition (ARG1 home_user_file dir ".git")))
+		(call usersubj.home_user_obj_type_transition (ARG1
+			home_user_file dir ".git")))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit subj.use_fd_all_blk)
 

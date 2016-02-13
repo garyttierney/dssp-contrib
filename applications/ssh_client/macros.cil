@@ -10,7 +10,8 @@
 			(call ssh_agent.spec_stream_connect (ARG1 subj)))
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call ssh_agent.spec_auto_subj_type_transition (ARG1 subj)))
+			(call ssh_agent.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call ssh_agent.role_pattern (ARG1 ARG2 subj))))
@@ -46,17 +47,20 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*")))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ARG2)))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ssh_agent.subj_type_attribute))))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ssh_agent.subj_type_attribute))))
 
 (in ssh_client
 	(block subj_blk
@@ -69,7 +73,8 @@
 		(blockinherit subj.read_state_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call ssh_client.spec_auto_subj_type_transition (ARG1 subj)))
+			(call ssh_client.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call ssh_client.role_pattern (ARG1 ARG2 subj))))
@@ -87,9 +92,11 @@
 	(blockinherit file.manage_config_blk)
 	(blockinherit file.relabel_config_blk)
 
-	(macro config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro config_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_config (ARG1))
-		(call obj_type_transition_pattern (ARG1 config_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1 config_file ARG2 ARG3
+			ARG4)))
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -120,7 +127,8 @@
 	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".ssh")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".ssh")))
 
 	(macro spec_read_state ((type ARG1)(type ARG2))
 		(call fs.search_proc (ARG1))
@@ -148,7 +156,8 @@
 		(typeattributeset ssh_keygen.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call ssh_keygen.spec_auto_subj_type_transition (ARG1 subj)))
+			(call ssh_keygen.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call ssh_keygen.role_pattern (ARG1 ARG2 subj))))

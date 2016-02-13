@@ -9,7 +9,8 @@
 		(blockinherit subj.read_state_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call screen.spec_auto_subj_type_transition (ARG1 subj)))
+			(call screen.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call screen.role_pattern (ARG1 ARG2 subj))))
@@ -54,7 +55,8 @@
 		(allow ARG1 home_user_file read_inherited_file_perms))
 
 	(macro home_dir_obj_type_transition_home_files ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".screenrc")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".screenrc")))
 
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
@@ -65,14 +67,16 @@
 	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "screen")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"screen")))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit subj.use_fd_all_blk)
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)

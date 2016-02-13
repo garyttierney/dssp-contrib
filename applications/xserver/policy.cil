@@ -45,7 +45,8 @@
 	(call manage_tmpfs_user_sock_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
-	(allow subj self (capability (dac_override setgid setuid sys_admin sys_rawio ipc_owner)))
+	(allow subj self (capability (dac_override setgid setuid sys_admin
+		sys_rawio ipc_owner)))
 	(allow subj self (process (getpgid setpgid)))
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self (unix_stream_socket (accept listen)))
@@ -149,11 +150,13 @@
 		(call gdm.read_tmpfs_user_files (client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (client_subj_type_attribute)))
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj
+			(client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_rp
 		(call rp.client_subj_type (client_subj_type_attribute)))
 
 	(optional xserver_client_subj_type_optional_xwayland
 		(call xwayland.client_subj_type (client_subj_type_attribute))
-		(call xwayland.read_inherited_fifo_files_all_subj (client_subj_type_attribute))))
+		(call xwayland.read_inherited_fifo_files_all_subj
+			(client_subj_type_attribute))))

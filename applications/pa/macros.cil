@@ -60,7 +60,8 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "pulse")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"pulse")))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -73,13 +74,16 @@
 	(macro mmap_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call mmap_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file)))
+		(call mmap_files_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "pulse")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"pulse")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -90,18 +94,21 @@
 	(blockinherit usersubj.relabel_home_config_blk)
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
-		(call usersubj.home_config_obj_type_transition (ARG1 home_config_file dir "pulse")))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "pulse")))
 
 	(blockinherit usersubj.read_home_user_files_blk)
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".esd_auth")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".esd_auth")))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file subj_type_attribute)))
 
 	(blockinherit subj.read_state_all_blk))

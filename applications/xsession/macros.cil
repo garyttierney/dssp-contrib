@@ -7,7 +7,8 @@
 		(typeattributeset xsession.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call xsession.spec_auto_subj_type_transition (ARG1 subj)))
+			(call xsession.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call xsession.role_pattern (ARG1 ARG2 subj))))
@@ -34,21 +35,27 @@
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
 	(macro manual_subj_type_transition_common_login_subj ((type ARG1))
-		(call usersubj.spec_manual_subj_type_transition_common_login_subj (ARG1 cmd_file)))
+		(call
+			usersubj.spec_manual_subj_type_transition_common_login_subj
+				(ARG1 cmd_file)))
 
 	(macro manual_subj_type_transition_unpriv_login_subj ((type ARG1))
-		(call usersubj.spec_manual_subj_type_transition_unpriv_login_subj (ARG1 cmd_file)))
+		(call
+			usersubj.spec_manual_subj_type_transition_unpriv_login_subj
+				(ARG1 cmd_file)))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
 
 	(blockinherit usersubj.read_home_user_files_blk)
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".xsession-errors"))))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".xsession-errors"))))

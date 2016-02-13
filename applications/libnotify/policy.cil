@@ -8,7 +8,8 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(optional libnotify_subj_type_optional_irssi
-		(call irssi.dontaudit_rw_inherited_tcp_sockets_all_subj (subj_type_attribute)))
+		(call irssi.dontaudit_rw_inherited_tcp_sockets_all_subj
+			(subj_type_attribute)))
 
 	(optional libnotify_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files (subj_type_attribute))))

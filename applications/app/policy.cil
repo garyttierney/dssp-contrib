@@ -8,24 +8,30 @@
 
 	(optional app_optional_emacs
 		(call emacs.send_sigchld_all_subj (subj_type_attribute))
-		(call emacs.rw_inherited_fifo_files_all_subj (subj_type_attribute)))
+		(call emacs.rw_inherited_fifo_files_all_subj
+			(subj_type_attribute)))
 
 	(optional app_optional_gdm
-		(call gdm.rw_inherited_unix_stream_sockets (subj_type_attribute)))
+		(call gdm.rw_inherited_unix_stream_sockets
+			(subj_type_attribute)))
 
 	(optional app_optional_irssi
 		(call irssi.send_sigchld_all_subj (subj_type_attribute))
-		(call irssi.rw_inherited_fifo_files_all_subj (subj_type_attribute)))
+		(call irssi.rw_inherited_fifo_files_all_subj
+			(subj_type_attribute)))
 
 	(optional app_optional_sduser
-		(call sduser.rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))
+		(call sduser.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute))
 		(call sduser.send_sigchld_all_subj (subj_type_attribute)))
 
 	(optional app_optional_sudo
 		(call sudo.send_sigchld_all_subj (subj_type_attribute))
-		(call usersubj.write_inherited_fifo_files_unpriv_subj (subj_type_attribute)))
+		(call usersubj.write_inherited_fifo_files_unpriv_subj
+			(subj_type_attribute)))
 
 	(optional app_optional_usersubj
 		(call usersubj.list_home_cmd (subj_type_attribute))
-		(call usersubj.dontaudit_search_all_home_user (subj_type_attribute))
+		(call usersubj.dontaudit_search_all_home_user
+			(subj_type_attribute))
 		(call usersubj.use_inherited_term (subj_type_attribute))))

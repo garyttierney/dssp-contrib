@@ -21,11 +21,13 @@
 
 	(macro manage_home_user_files ((type ARG1))
 		(call gpg.rw_home_user_dirs (ARG1))
-		(call manage_files_pattern (ARG1 home_user_file home_user_file)))
+		(call manage_files_pattern (ARG1 home_user_file
+			home_user_file)))
 
 	(macro read_home_user_lnk_files ((type ARG1))
 		(call gpg.search_home_user (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_user_file home_user_file)))
+		(call read_lnk_files_pattern (ARG1 home_user_file
+			home_user_file)))
 
 	(macro rw_home_user_dirs ((type ARG1))
 		(call gpg.search_home_user (ARG1))
@@ -53,14 +55,20 @@
 		(allow ARG1 home_user_file relabel_sock_file_perms))
 
 	(macro gpg_home_user_obj_type_transition_home ((type ARG1))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file dir "crls.d"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file dir "dirmngr-cache.d"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "dirmngr.conf"))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file sock_file "S.dirmngr")))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			dir "crls.d"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			dir "dirmngr-cache.d"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "dirmngr.conf"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			sock_file "S.dirmngr")))
 
 	(macro gpg_home_user_obj_type_transition_home_files ((type ARG1))
-		(call gpg.home_user_obj_type_transition (ARG1 home_user_file file "dirmngr.conf")))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "dirmngr.conf")))
 
 	(macro stream_connect ((type ARG1))
 		(call gpg.search_home_user (ARG1))
-		(call stream_connect_pattern (ARG1 home_user_file home_user_file subj))))
+		(call stream_connect_pattern (ARG1 home_user_file
+			home_user_file subj))))

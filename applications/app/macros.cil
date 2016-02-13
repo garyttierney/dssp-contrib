@@ -48,7 +48,8 @@
 
 	(macro rw_inherited_unix_stream_sockets ((type ARG1))
 		(allow ARG1 subj_type_attribute (fd (use)))
-		(allow ARG1 subj_type_attribute rw_inherited_unix_stream_socket_perms))
+		(allow ARG1 subj_type_attribute
+			rw_inherited_unix_stream_socket_perms))
 
 	(macro send_signal ((type ARG1))
 		(allow ARG1 subj_type_attribute (process (signal))))

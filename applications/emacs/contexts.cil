@@ -10,7 +10,9 @@
 	(filecon "HOME_DIR/\.emacs\.d(/.*)?" any home_user_file_context)
 
 	(optional emacs_unit_optional_sduser
-		(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/user/[^/]*emacs.*" file
+			unit_file_context)))
 
 (in terminfo
-	(filecon "/usr/share/emacs/([^/]*/)?etc/e(/.*)?" any data_file_context))
+	(filecon "/usr/share/emacs/([^/]*/)?etc/e(/.*)?" any
+		data_file_context))

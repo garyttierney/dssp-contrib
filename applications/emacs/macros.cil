@@ -7,7 +7,8 @@
 		(typeattributeset emacs.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call emacs.spec_auto_subj_type_transition (ARG1 subj)))
+			(call emacs.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call emacs.role_pattern (ARG1 ARG2 subj))))
@@ -44,8 +45,10 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "server")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "server")))
 
 	(blockinherit usersubj.search_home_user_blk)
 	(blockinherit usersubj.list_home_user_blk)
@@ -62,14 +65,22 @@
 	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".authinfo"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".emacs"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".emacs.el"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".gnus"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".newsrc"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".newsrc.eld"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file file ".profile"))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".emacs.d")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".authinfo"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".emacs"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".emacs.el"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".gnus"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".newsrc"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".newsrc.eld"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".profile"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".emacs.d")))
 
 	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.send_sigchld_all_blk)
@@ -79,9 +90,11 @@
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ARG2)))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file subj_type_attribute))))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file subj_type_attribute))))

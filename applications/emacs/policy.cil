@@ -8,13 +8,14 @@
 	(blockinherit usersubj.home_user_obj_blk)
 
 	(call manage_home_user (subj_type_attribute))
-	(dontaudit subj_type_attribute emacs.home_user_file relabel_file_perms) 
+	(dontaudit subj_type_attribute emacs.home_user_file relabel_file_perms)
 	(call home_dir_obj_type_transition_home (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user (subj_type_attribute))
-	(dontaudit subj_type_attribute emacs.tmpfs_user_file relabel_file_perms)
+	(dontaudit subj_type_attribute emacs.tmpfs_user_file
+		relabel_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
 	(allow subj_type_attribute self rw_fifo_file_perms)
@@ -40,11 +41,14 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call usersubj.dontaudit_relabel_tmpfs_user_files (subj_type_attribute))
+	(call usersubj.dontaudit_relabel_tmpfs_user_files
+		(subj_type_attribute))
 	(call usersubj.manage_tmpfs_user_files (subj_type_attribute))
 	(call usersubj.manage_tmpfs_user_lnk_files (subj_type_attribute))
-	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
-	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_lnk_files (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files
+		(subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_lnk_files
+		(subj_type_attribute))
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.use_term (subj_type_attribute))
 	(call usersubj.manage_home_cmd_files (subj_type_attribute))
@@ -53,9 +57,12 @@
 	(call usersubj.dontaudit_relabel_home_user_files (subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.manage_home_user_lnk_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_lnk_files
+		(subj_type_attribute))
 	(call usersubj.read_var_spool_user_files (subj_type_attribute))
 
 	(optional emacs_optional_sduser

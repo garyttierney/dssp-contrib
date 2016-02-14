@@ -29,10 +29,10 @@
 		(call sd_machined.sysbus_chat_client_subj_type (subj)))
 
 	(optional sd_stdio_optional_sd_nspawn_container
-	 (call sd_nspawn_container.list_all (subj))
-	 (call sd_nspawn_container.read_all_lnk_files (subj))
-	 (call sd_nspawn_container.stream_connect_all_subj (subj))
-	 (call sd_nspawn_container.read_state_all_subj (subj)))
+		(call sd_nspawn_container.list_all (subj))
+		(call sd_nspawn_container.read_all_lnk_files (subj))
+		(call sd_nspawn_container.stream_connect_all_subj (subj))
+		(call sd_nspawn_container.read_state_all_subj (subj)))
 
 	(optional sd_stdio_optional_sysbus
 		(call sysbus.client_subj_type (subj)))

@@ -19,6 +19,7 @@
 	(call var_cache_obj_type_transition_var_cache (subj))
 
 	(allow subj self (capability (dac_override sys_chroot)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call file.read_config (subj))
 

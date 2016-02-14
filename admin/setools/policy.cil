@@ -6,7 +6,17 @@
 	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override dac_read_search)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+	(call cmd.list_cmd (subj))
+
+	(call dev.read_urandom (subj))
 
 	(call sec.read_policy (subj))
+
+	(call ldconfig.exec (subj))
+
+	(call locale.read (subj))
 
 	(call selinux_config.read_config_files (subj)))

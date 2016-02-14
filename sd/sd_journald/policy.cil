@@ -88,7 +88,8 @@
 
 	(tunableif enable_mls
 		(true
-			(call sd.daemon_auto_subj_range_transition (subj cmd_file systemhigh systemhigh))))
+			(call sd.daemon_auto_subj_range_transition (subj
+				cmd_file systemhigh systemhigh))))
 
 	(optional sd_journald_optional_plymouth
 		(call plymouthd.use_fd (subj)))
@@ -99,7 +100,8 @@
 	(allow client_subj_type_attribute self create_unix_stream_socket_perms)
 	(allow client_subj_type_attribute self create_unix_dgram_socket_perms)
 
-	(call dgram_send_pattern (client_subj_type_attribute runtime_file runtime_file subj))
+	(call dgram_send_pattern (client_subj_type_attribute runtime_file
+		runtime_file subj))
 
 	(call sys.unix_stream_connectto (client_subj_type_attribute))
 	(call sys.unix_dgram_sendto (client_subj_type_attribute))
@@ -108,9 +110,11 @@
 
 	(call sd.search_runtime (client_subj_type_attribute))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_log (adm_subj_type_attribute))
@@ -120,10 +124,14 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))

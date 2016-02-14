@@ -15,11 +15,13 @@
 
 	(macro read_runtime_fifo_files ((type ARG1))
 		(call sd.search_runtime (ARG1))
-		(call read_fifo_files_pattern (ARG1 runtime_file runtime_file)))
+		(call read_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
 
 	(macro getattr_runtime_fifo_files ((type ARG1))
 		(call sd.search_runtime (ARG1))
-		(call getattr_fifo_files_pattern (ARG1 runtime_file runtime_file)))
+		(call getattr_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
 
 	(macro read_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))
@@ -37,7 +39,8 @@
 		(allow ARG1 runtime_file relabel_fifo_file_perms))
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir "initctl")))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"initctl")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

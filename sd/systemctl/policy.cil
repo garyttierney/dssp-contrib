@@ -17,7 +17,8 @@
 	(optional systemctl_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 
-	(allow subj_type_attribute self (capability (dac_override sys_chroot net_admin sys_resource setgid setuid sys_admin fsetid)))
+	(allow subj_type_attribute self (capability (dac_override sys_chroot
+		net_admin sys_resource setgid setuid sys_admin fsetid)))
 	(allow subj_type_attribute self (process (setfscreate)))
 
 	(call sys.read_state_files (subj_type_attribute))
@@ -62,30 +63,38 @@
 	(call sduser.control_unit_runtime (subj_type_attribute))
 	(call sduser.stream_connect_all_subj (subj_type_attribute))
 	(call sduser.manage_home_config (subj_type_attribute))
-	(call sduser.home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call sduser.home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(call client_subj_type (subj_type_attribute))
 
 	(call usersubj.create_home_config_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional subj_type_attribute_optional_sd_initctl
-		(call sd_initctl.getattr_runtime_fifo_files (subj_type_attribute)))
+		(call sd_initctl.getattr_runtime_fifo_files
+			(subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_sd_machined
 		(call sd_machined.read_runtime (subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_sd_nspawn_container
 		(call sd_nspawn_container.list_all (subj_type_attribute))
-		(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
-		(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute))
-		(call sd_nspawn_container.read_state_all_subj (subj_type_attribute)))
+		(call sd_nspawn_container.read_all_lnk_files
+			(subj_type_attribute))
+		(call sd_nspawn_container.stream_connect_all_subj
+			(subj_type_attribute))
+		(call sd_nspawn_container.read_state_all_subj
+			(subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_plymouth
 		(call plymouthd.use_fd (subj_type_attribute)))
@@ -120,7 +129,8 @@
 	(call sd_journald.read_var_log (client_subj_type_attribute))
 
 	(optional client_subj_type_optional_sd_machined
-		(call sd_machined.read_config_files (client_subj_type_attribute)))
+		(call sd_machined.read_config_files
+			(client_subj_type_attribute)))
 
 	(optional client_subj_type_attribute_optional_sysbus
 		(call sysbus.client_subj_type (client_subj_type_attribute))))

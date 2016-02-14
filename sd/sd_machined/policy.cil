@@ -37,7 +37,8 @@
 	(allow subj login_pty_dev rw_term_perms)
 	(call term.create_pty (subj login_pty_dev))
 
-	(allow subj self (capability (sys_chroot setgid sys_admin dac_override chown fsetid fowner)))
+	(allow subj self (capability (sys_chroot setgid sys_admin dac_override
+		chown fsetid fowner)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self (process (setfscreate)))
@@ -100,12 +101,16 @@
 		(call usersubj.getattr_ptys (subj)))
 
 	(optional sd_machined_sysbus_chat_client_subj_type_optional_sysbus
-		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_runtime (adm_subj_type_attribute))
@@ -113,16 +118,26 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_blk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_chr_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_chr_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_blk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_chr_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_blk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_chr_file_perms))

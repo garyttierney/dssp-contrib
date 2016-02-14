@@ -40,7 +40,8 @@
 		(allow ARG1 var_lib_file relabel_lnk_file_perms))
 
 	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir "rfkill")))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"rfkill")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

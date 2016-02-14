@@ -1,8 +1,10 @@
 (in sd_machined
 	(filecon "/etc/machine-id" file config_file_context)
 	(filecon "/etc/machine-info" file config_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-machine-id-commit.*" file unit_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-machined.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-machine-id-commit.*"
+		file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-machined.*" file
+		unit_file_context)
 	(filecon "/usr/lib/systemd/systemd-machined" file cmd_file_context)
 	(filecon "/var/lib/machines" dir var_lib_file_context)
 	(filecon "/var/run/systemd/machines(/.*)?" any runtime_file_context))

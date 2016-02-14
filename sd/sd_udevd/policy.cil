@@ -8,7 +8,8 @@
 
 	(blockinherit sd.unit_obj_blk)
 
-	(allow subj self (capability (dac_override chown sys_admin net_admin sys_rawio fsetid fowner)))
+	(allow subj self (capability (dac_override chown sys_admin net_admin
+		sys_rawio fsetid fowner)))
 	(allow subj self (capability2 (block_suspend)))
 	(allow subj self (process (setfscreate getsched)))
 	(allow subj self create_netlink_kobject_uevent_socket_perms)
@@ -98,9 +99,11 @@
 	(optional sd_udevd_optional_sd_vconsole
 		(call sd_vconsole.auto_subj_type_transition (subj)))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call udev.manage_config (adm_subj_type_attribute))

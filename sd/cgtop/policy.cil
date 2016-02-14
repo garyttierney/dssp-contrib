@@ -21,10 +21,11 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional cgtop_subj_type_optional_sd_machined
 		(call sd_machined.read_runtime_files (subj_type_attribute)))
 
 	(optional cgtop_subj_type_attribute_optional_sysbus
-                (call sysbus.client_subj_type (subj_type_attribute))))
+		(call sysbus.client_subj_type (subj_type_attribute))))

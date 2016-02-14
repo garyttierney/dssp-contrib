@@ -10,7 +10,8 @@
 	(blockinherit file.relabel_boot_flag_files_blk)
 
 	(macro rootfs_obj_type_transition_boot_flag ((type ARG1))
-		(call fs.rootfs_obj_type_transition (ARG1 boot_flag_file file ".autorelabel")))
+		(call fs.rootfs_obj_type_transition (ARG1 boot_flag_file file
+			".autorelabel")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

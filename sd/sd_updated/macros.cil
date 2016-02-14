@@ -26,10 +26,12 @@
 		(allow ARG1 file relabel_file_perms))
 
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file.config_obj_type_transition (ARG1 file file ".updated")))
+		(call file.config_obj_type_transition (ARG1 file file
+			".updated")))
 
 	(macro var_obj_type_transition_var ((type ARG1))
-		(call file.var_obj_type_transition (ARG1 file file ".updated")))
+		(call file.var_obj_type_transition (ARG1 file file
+			".updated")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

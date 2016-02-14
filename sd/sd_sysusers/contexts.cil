@@ -1,5 +1,6 @@
 (in sd_sysusers
 	(filecon "/etc/sysusers\.d(/.*)?" any config_file_context)
 	(filecon "/usr/bin/systemd-sysusers" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-sysusers.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-sysusers.*" file
+		unit_file_context)
 	(filecon "/var/run/sysusers\.d(/.*)?" any runtime_file_context))

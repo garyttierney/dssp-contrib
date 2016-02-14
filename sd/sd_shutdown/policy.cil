@@ -1,7 +1,8 @@
 (block sd_shutdown
 	(blockinherit sd.daemon_blk)
 
-	(allow subj self (capability (sys_boot ipc_lock kill sys_admin sys_chroot dac_override)))
+	(allow subj self (capability (sys_boot ipc_lock kill sys_admin
+		sys_chroot dac_override)))
 	(allow subj self (process (setfscreate)))
 	(allow subj self manage_fifo_file_perms)
 

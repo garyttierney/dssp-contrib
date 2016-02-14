@@ -22,9 +22,11 @@
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var (adm_subj_type_attribute))

@@ -23,7 +23,8 @@
 	(call manage_var_lib_files (subj))
 	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (capability (chown fowner setuid setgid setpcap dac_override sys_time)))
+	(allow subj self (capability (chown fowner setuid setgid setpcap
+		dac_override sys_time)))
 	(allow subj self (process (getcap setcap setrlimit)))
 
 	(call sys.read_kernel_sysctl_files (subj))
@@ -40,19 +41,24 @@
 	(call sd_networkd.read_runtime (subj))
 
 	(call sd.reload (control_sd_unit_subj_type_attribute))
-	(allow control_sd_unit_subj_type_attribute unit_file (service (start status stop reload enable disable)))
+	(allow control_sd_unit_subj_type_attribute unit_file (service (start
+		status stop reload enable disable)))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

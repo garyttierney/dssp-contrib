@@ -62,10 +62,12 @@
 		(allow ARG1 var_log_file relabelto_file_perms))
 
 	(macro runtime_obj_type_transition_var_log ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 var_log_file dir "log")))
+		(call file.runtime_obj_type_transition (ARG1 var_log_file dir
+			"log")))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file dir "journal")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file dir
+			"journal")))
 
 	(macro search_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))
@@ -108,7 +110,8 @@
 		(allow ARG1 runtime_file relabel_lnk_file_perms))
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir "journal")))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"journal")))
 
 	(macro search_var_lib ((type ARG1))
 		(call sd.search_var_lib (ARG1))
@@ -149,7 +152,8 @@
 		(allow ARG1 var_lib_file relabel_lnk_file_perms))
 
 	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir "catalog")))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"catalog")))
 
 	(blockinherit sd.stop_unit_blk)
 	(blockinherit sd.start_unit_blk)
@@ -159,7 +163,8 @@
 
 	(macro stream_connect ((type ARG1))
 		(call sd.search_runtime (ARG1))
-		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

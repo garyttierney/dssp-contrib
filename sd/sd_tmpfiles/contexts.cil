@@ -1,5 +1,6 @@
 (in sd_tmpfiles
 	(filecon "/etc/tmpfiles\.d(/.*)?" any config_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-tmpfiles.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-tmpfiles.*" file
+		unit_file_context)
 	(filecon "/usr/bin/systemd-tmpfiles" file cmd_file_context)
 	(filecon "/var/run/tmpfiles\.d(/.*)?" any runtime_file_context))

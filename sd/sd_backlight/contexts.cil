@@ -1,4 +1,5 @@
 (in sd_backlight
 	(filecon "/usr/lib/systemd/systemd-backlight" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-backlight.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-backlight.*" file
+		unit_file_context)
 	(filecon "/var/lib/systemd/backlight(/.*)?" any var_lib_file_context))

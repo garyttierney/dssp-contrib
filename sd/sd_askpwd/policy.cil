@@ -19,20 +19,25 @@
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
 
 (block sd_askpwd_agent
 	(roleattribute role_attribute)
@@ -67,19 +72,24 @@
 
 	(call usersubj.use_inherited_term (subj))
 
-	(allow subj sd_askpwd.client_subj_type_attribute (unix_dgram_socket (sendto)))
+	(allow subj sd_askpwd.client_subj_type_attribute (unix_dgram_socket
+		(sendto)))
 
 	(allow subj sd_askpwd.client_subj_type_attribute read_file_perms)
 	(allow subj sd_askpwd.client_subj_type_attribute list_dir_perms)
 	(allow subj sd_askpwd.client_subj_type_attribute read_lnk_file_perms)
 
-	(call sd_askpwd.manage_runtime_files (sd_askpwd.client_subj_type_attribute))
-	(call sd_askpwd.manage_runtime_sock_files (sd_askpwd.client_subj_type_attribute))
+	(call sd_askpwd.manage_runtime_files
+		(sd_askpwd.client_subj_type_attribute))
+	(call sd_askpwd.manage_runtime_sock_files
+		(sd_askpwd.client_subj_type_attribute))
 
 	(optional sd_askpwd_agent_optional_plymouth
 		(call plymouthd.stream_connect (subj)))
 
-	(allow sd_askpwd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow sd_askpwd.adm_subj_type_attribute unit_file (service (stop
+		status disable enable reload start)))
 
-	(allow sd_askpwd.adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow sd_askpwd.adm_subj_type_attribute subj (process (ptrace signal
+		signull sigkill sigstop)))
 	(call ps_subj_pattern (sd_askpwd.adm_subj_type_attribute subj)))

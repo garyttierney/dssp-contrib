@@ -1,5 +1,7 @@
 (in sd_loadmodules
 	(filecon "/etc/modules-load\.d(/.*)?" any config_file_context)
 	(filecon "/usr/lib/systemd/systemd-modules-load" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*fedora-loadmodules.*" file unit_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-modules-load.*" file unit_file_context))
+	(filecon "/usr/lib/systemd/system/[^/]*fedora-loadmodules.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-modules-load.*" file
+		unit_file_context))

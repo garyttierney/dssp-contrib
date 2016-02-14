@@ -34,14 +34,17 @@
 
 	(tunableif enable_mls
 		(true
-			(call sd.daemon_auto_subj_range_transition (subj cmd_file systemhigh systemhigh))))
+			(call sd.daemon_auto_subj_range_transition (subj
+				cmd_file systemhigh systemhigh))))
 
 	(optional sd_randomseed_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_var_lib (adm_subj_type_attribute))

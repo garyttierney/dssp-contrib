@@ -47,23 +47,32 @@
 	(call setattr_ptys (subj))
 	(call use_ptys (subj))
 
-	(allow subj self (capability (dac_override sys_chroot setpcap setgid setuid mknod fsetid sys_admin chown kill
-		fowner net_admin)))
+	(allow subj self (capability (dac_override sys_chroot setpcap setgid
+		setuid mknod fsetid sys_admin chown kill fowner net_admin)))
 	(allow subj self (process (getcap setcap setexec setfscreate)))
 	(allow subj self create_netlink_route_socket_perms)
 	(allow subj self rw_fifo_file_perms)
 
-	(allow subj sd_nspawn_container.subj_type_attribute (process (sigkill signal)))
+	(allow subj sd_nspawn_container.subj_type_attribute (process (sigkill
+		signal)))
 
-	(allow subj sd_nspawn_container.obj_type_attribute (dir (mounton relabelfrom relabelto create open getattr setattr
-		read write link unlink rename search add_name remove_name reparent rmdir lock ioctl)))
+	(allow subj sd_nspawn_container.obj_type_attribute (dir (mounton
+		relabelfrom relabelto create open getattr setattr read write
+			link unlink rename search add_name remove_name
+				reparent rmdir lock ioctl)))
 	(allow subj sd_nspawn_container.obj_type_attribute manage_file_perms)
-	(allow subj sd_nspawn_container.obj_type_attribute (file (mounton execute execute_no_trans)))
-	(allow subj sd_nspawn_container.obj_type_attribute manage_lnk_file_perms)
-	(allow subj sd_nspawn_container.obj_type_attribute manage_fifo_file_perms)
-	(allow subj sd_nspawn_container.obj_type_attribute (chr_file (mounton)))
-	(allow subj sd_nspawn_container.obj_type_attribute manage_chr_file_perms)
-	(allow subj sd_nspawn_container.obj_type_attribute (filesystem (mount remount relabelto relabelfrom)))
+	(allow subj sd_nspawn_container.obj_type_attribute (file (mounton
+		execute execute_no_trans)))
+	(allow subj sd_nspawn_container.obj_type_attribute
+		manage_lnk_file_perms)
+	(allow subj sd_nspawn_container.obj_type_attribute
+		manage_fifo_file_perms)
+	(allow subj sd_nspawn_container.obj_type_attribute (chr_file
+		(mounton)))
+	(allow subj sd_nspawn_container.obj_type_attribute
+		manage_chr_file_perms)
+	(allow subj sd_nspawn_container.obj_type_attribute (filesystem (mount
+		remount relabelto relabelfrom)))
 
 	(call sd_nspawn_container.getattr_all_fs (subj))
 
@@ -148,9 +157,11 @@
 	(optional sd_nspawn_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
 
-	(allow adm_subj_type_attribute unit_obj_type_attribute (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_obj_type_attribute (service (stop
+		status disable enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.search_runtime (adm_subj_type_attribute))
@@ -163,26 +174,42 @@
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
 
-	(allow adm_subj_type_attribute sd_nspawn_container.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-	(call ps_subj_pattern (adm_subj_type_attribute sd_nspawn_container.subj_type_attribute))
+	(allow adm_subj_type_attribute sd_nspawn_container.subj_type_attribute
+		(process (ptrace signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute
+		sd_nspawn_container.subj_type_attribute))
 
 	(call sd_machined.search_var_lib (adm_subj_type_attribute))
 
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_fifo_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_sock_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_blk_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute manage_chr_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_dir_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_fifo_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_sock_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_blk_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		manage_chr_file_perms)
 
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_fifo_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_sock_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_blk_file_perms)
-	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute relabel_chr_file_perms))
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_dir_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_sock_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_blk_file_perms)
+	(allow adm_subj_type_attribute sd_nspawn_container.obj_type_attribute
+		relabel_chr_file_perms))
 
 (block sd_nspawn_container
 	(typeattribute subj_type_attribute)
@@ -206,35 +233,54 @@
 	(allow subj_type_attribute self list_dir_perms)
 	(allow subj_type_attribute self read_lnk_file_perms)
 	(allow subj_type_attribute self (fd (use)))
-	(allow subj_type_attribute self (socket (ioctl read write create getattr setattr lock relabelfrom relabelto append
-		bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
+	(allow subj_type_attribute self (socket (ioctl read write create
+		getattr setattr lock relabelfrom relabelto append bind connect
+			listen accept getopt setopt shutdown recvfrom sendto
+				name_bind)))
 	(allow subj_type_attribute self create_tcp_stream_socket_perms)
 	(allow subj_type_attribute self create_udp_socket_perms)
 	(allow subj_type_attribute self create_rawip_socket_perms)
-	(allow subj_type_attribute self (packet_socket (ioctl read write create getattr setattr lock relabelfrom
-		relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
-	(allow subj_type_attribute self (unix_stream_socket (ioctl read write create getattr setattr lock relabelfrom
-		relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind connectto)))
-	(allow subj_type_attribute self (unix_dgram_socket (ioctl read write create getattr setattr lock relabelfrom
-		relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind sendto)))
-	(allow subj_type_attribute self (sem (create destroy getattr setattr read write associate unix_read unix_write)))
+	(allow subj_type_attribute self (packet_socket (ioctl read write
+		create getattr setattr lock relabelfrom relabelto append bind
+			connect listen accept getopt setopt shutdown recvfrom
+				sendto name_bind)))
+	(allow subj_type_attribute self (unix_stream_socket (ioctl read write
+		create getattr setattr lock relabelfrom relabelto append bind
+			connect listen accept getopt setopt shutdown recvfrom
+				sendto name_bind connectto)))
+	(allow subj_type_attribute self (unix_dgram_socket (ioctl read write
+		create getattr setattr lock relabelfrom relabelto append bind
+			connect listen accept getopt setopt shutdown recvfrom
+				sendto name_bind sendto)))
+	(allow subj_type_attribute self (sem (create destroy getattr setattr
+		read write associate unix_read unix_write)))
 	(allow subj_type_attribute self (msg (send receive)))
-	(allow subj_type_attribute self (msgq (create destroy getattr setattr read write associate unix_read unix_write
-		enqueue)))
-	(allow subj_type_attribute self (shm (create destroy getattr setattr read write associate unix_read unix_write
-		lock)))
-	(allow subj_type_attribute self (ipc (create destroy getattr setattr read write associate unix_read unix_write)))
-	(allow subj_type_attribute self (netlink_route_socket (ioctl read write create getattr setattr lock
-		relabelfrom relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind
-		nlmsg_read nlmsg_write)))
-	(allow subj_type_attribute self (netlink_kobject_uevent_socket (ioctl read write create getattr setattr lock
-		relabelfrom relabelto append bind connect listen accept getopt setopt shutdown recvfrom sendto name_bind)))
-	(allow subj_type_attribute self (key (view read write search link setattr create)))
+	(allow subj_type_attribute self (msgq (create destroy getattr setattr
+		read write associate unix_read unix_write enqueue)))
+	(allow subj_type_attribute self (shm (create destroy getattr setattr
+		read write associate unix_read unix_write lock)))
+	(allow subj_type_attribute self (ipc (create destroy getattr setattr
+		read write associate unix_read unix_write)))
+	(allow subj_type_attribute self (netlink_route_socket (ioctl read
+		write create getattr setattr lock relabelfrom relabelto append
+			bind connect listen accept getopt setopt shutdown
+				recvfrom sendto name_bind nlmsg_read
+					nlmsg_write)))
+	(allow subj_type_attribute self (netlink_kobject_uevent_socket (ioctl
+		read write create getattr setattr lock relabelfrom relabelto
+			append bind connect listen accept getopt setopt
+				shutdown recvfrom sendto name_bind)))
+	(allow subj_type_attribute self (key (view read write search link
+		setattr create)))
 
 	(allow subj_type_attribute self (capability (chown dac_override fowner
-		ipc_owner fsetid kill linux_immutable net_admin net_broadcast net_raw setgid setfcap setpcap setuid
-		sys_admin sys_chroot sys_nice sys_tty_config sys_resource sys_boot audit_write audit_control mknod)))
-	(allow subj_type_attribute self all_fifo_file_perms_except_mounton_and_execmod)
+		ipc_owner fsetid kill linux_immutable net_admin net_broadcast
+			net_raw setgid setfcap setpcap setuid sys_admin
+				sys_chroot sys_nice sys_tty_config
+					sys_resource sys_boot audit_write
+						audit_control mknod)))
+	(allow subj_type_attribute self
+		all_fifo_file_perms_except_mounton_and_execmod)
 
 	(roletype sys.role subj_type_attribute)
 
@@ -299,7 +345,8 @@
 
 	(call sd_machined.use_fd (subj_type_attribute))
 
-	(call sd_nspawn.dontaudit_audit_access_tmpfs_dirs (subj_type_attribute))
+	(call sd_nspawn.dontaudit_audit_access_tmpfs_dirs
+		(subj_type_attribute))
 	(call sd_nspawn.list_tmpfs (subj_type_attribute))
 	(call sd_nspawn.read_tmpfs_lnk_files (subj_type_attribute))
 	(call sd_nspawn.search_runtime (subj_type_attribute))
@@ -309,20 +356,24 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_target_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_target_subj_type
+				(subj_type_attribute))))
 
 	(optional subj_type_optional_sduser
-		(call sduser.dontaudit_link_keyring_all_subj (subj_type_attribute)))
+		(call sduser.dontaudit_link_keyring_all_subj
+			(subj_type_attribute)))
 
 	(optional subj_type_optional_usersubj
-		(call usersubj.dontaudit_link_keyring_common_login_subj (subj_type_attribute))))
+		(call usersubj.dontaudit_link_keyring_common_login_subj
+			(subj_type_attribute))))
 
 (block sd_nspawn_container_tcp_connect_all_ports
 	(blockinherit sec.bool_obj_blk)
 
 	(booleanif sd_nspawn_container_tcp_connect_all_ports
 		(true
-			(call net.tcp_connect_all_ports (sd_nspawn_container.subj)))))
+			(call net.tcp_connect_all_ports
+				(sd_nspawn_container.subj)))))
 
 (block sd_nspawn_container_network_bridge
 	(blockinherit sec.bool_obj_blk)

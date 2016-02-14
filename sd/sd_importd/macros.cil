@@ -11,7 +11,8 @@
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
 	(macro all_sysbus_chat_client_subj_type ((type ARG1))
-		(typeattributeset all_sysbus_chat_client_subj_type_attribute ARG1))
+		(typeattributeset all_sysbus_chat_client_subj_type_attribute
+			ARG1))
 
 	(macro cmd_obj_entry_subj ((type ARG1))
 		(call subj.entry (ARG1 cmd_file)))
@@ -54,11 +55,12 @@
 		(allow ARG1 runtime_file relabel_sock_file_perms))
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file file "machines.lock"))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir "import")))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file file
+			"machines.lock"))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"import")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(call sd.daemon_adm_subj_type (ARG1))
 		(call sd_askpwd_agent.run (ARG1 ARG2))))
-

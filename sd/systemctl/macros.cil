@@ -10,7 +10,8 @@
 			(allow ARG1 subj (process (noatsecure))))
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call systemctl.spec_auto_subj_type_transition (ARG1 subj))))
+			(call systemctl.spec_auto_subj_type_transition (ARG1
+				subj))))
 
 	(blockinherit subj.send_signal_blk)
 

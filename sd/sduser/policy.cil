@@ -22,7 +22,8 @@
 	(call manage_home_config_dirs (subj_type_attribute))
 	(call manage_home_config_lnk_files (subj_type_attribute))
 
-	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
 
 	(blockinherit usersubj.home_data_obj_blk)
 
@@ -74,9 +75,12 @@
 	(call usersubj.getattr_common_subj (subj_type_attribute))
 	(call usersubj.create_home_config_dirs (subj_type_attribute))
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_config (subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_data (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_history (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_config
+		(subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_history
+		(subj_type_attribute))
 	(call usersubj.manage_home_history_files (subj_type_attribute))
 	(call usersubj.pty_template (subj_type_attribute))
 	(call usersubj.read_home_user_files (subj_type_attribute))
@@ -85,16 +89,21 @@
 
 	(tunableif enable_rbacsep
 		(true
-			(call rbacsep.read_state_source_subj_type (subj_type_attribute))))
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional sduser_optional_gdm
 		(call gdm.search_var_lib (subj_type_attribute)))
 
 	(optional sduser_sysbus_chat_client_all_subj_type_optional_sysbus
-		(allow subj_type_attribute sysbus_chat_client_all_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_all_subj_type_attribute subj_type_attribute (dbus (send_msg))))
+		(allow subj_type_attribute
+			sysbus_chat_client_all_subj_type_attribute (dbus
+				(send_msg)))
+		(allow sysbus_chat_client_all_subj_type_attribute
+			subj_type_attribute (dbus (send_msg))))
 
-	(allow notify_all_subj_type_attribute self (unix_dgram_socket (sendto)))
+	(allow notify_all_subj_type_attribute self (unix_dgram_socket
+		(sendto)))
 	(call dgram_send_notify_all_subj (notify_all_subj_type_attribute)))
 
 (block sduser_private

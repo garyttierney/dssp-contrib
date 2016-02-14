@@ -92,7 +92,8 @@
 		(allow ARG1 runtime_file relabel_lnk_file_perms))
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir "nspawn")))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"nspawn")))
 
 	(blockinherit term.relabel_ptys_blk)
 	(blockinherit term.setattr_ptys_blk)
@@ -151,7 +152,8 @@
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset sd_nspawn_container.subj_type_attribute subj))
+		(typeattributeset sd_nspawn_container.subj_type_attribute
+			subj))
 
 	(block container_obj_blk
 		(blockabstract container_obj_blk)
@@ -268,7 +270,8 @@
 		(typeattributeset obj_type_attribute ARG1))
 
 	(macro container_pattern ((type ARG1)(type ARG2))
-		(call manual_subj_type_transition_pattern (sd_nspawn.subj ARG2 ARG1))
+		(call manual_subj_type_transition_pattern (sd_nspawn.subj ARG2
+			ARG1))
 
 		(allow ARG1 ARG2 (dir (mounton)))
 		(allow ARG1 ARG2 (file (entrypoint)))
@@ -308,26 +311,31 @@
 
 	(macro delete_all_dirs ((type ARG1))
 		(call sd_machined.rw_var_lib_dirs (ARG1))
-		(call delete_dirs_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call delete_dirs_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro rw_all_chr_files ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
-		(call rw_chr_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call rw_chr_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro rw_all_inherited_chr_files ((type ARG1))
 		(allow ARG1 obj_type_attribute rw_inherited_chr_file_perms))
 
 	(macro read_all_files ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
-		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_all_files ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
-		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all_lnk_files ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
-		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
@@ -379,18 +387,23 @@
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call sd_machined.search_var_lib (ARG1))
-		(call stream_connect_pattern (ARG1 obj_type_attribute obj_type_attribute subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 obj_type_attribute
+			obj_type_attribute subj_type_attribute)))
 
 	(macro spec_stream_connect ((type ARG1)(type ARG2)(type ARG3))
 		(call sd_machined.search_var_lib (ARG1))
 		(call stream_connect_pattern (ARG1 ARG2 ARG2 ARG3)))
 
 	(macro set_tcp_connect_all_ports_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 sd_nspawn_container_tcp_connect_all_ports.bool))
-		(optional sd_nspawn_container_tcp_connect_all_ports_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			sd_nspawn_container_tcp_connect_all_ports.bool))
+		(optional
+			sd_nspawn_container_tcp_connect_all_ports_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
 	(macro set_network_bridge_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 sd_nspawn_container_network_bridge.bool))
-		(optional sd_nspawn_container_network_bridge_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			sd_nspawn_container_network_bridge.bool))
+		(optional
+			sd_nspawn_container_network_bridge_boolean_optional_seutil
 			(call setsebool.exec (ARG1)))))

@@ -56,7 +56,8 @@
 	(call fs.relabel_sysfs_dirs (subj))
 	(call fs.relabel_tmpfs_dirs (subj))
 
-	; i should be able to remove this in the near future: https://marc.info/?l=selinux&m=144286421512700&w=2
+	; i should be able to remove this in the near future:
+		; https://marc.info/?l=selinux&m=144286421512700&w=2
 	(call sec.set_check_req_prot (subj))
 
 	(call factory.read_data (subj))
@@ -67,35 +68,54 @@
 	(optional sd_tmpfiles_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 
-	(call file.spec_exception (manageable_obj_type_attribute manageable_obj_exception_type_attribute))
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_file_perms)
+	(call file.spec_exception (manageable_obj_type_attribute
+		manageable_obj_exception_type_attribute))
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_file_perms)
 	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_dir_perms)
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_fifo_file_perms)
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_lnk_file_perms)
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_sock_file_perms)
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_blk_file_perms)
-	(allow sd_tmpfiles.subj manageable_obj_type_attribute manage_chr_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_fifo_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_lnk_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_sock_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_blk_file_perms)
+	(allow sd_tmpfiles.subj manageable_obj_type_attribute
+		manage_chr_file_perms)
 
-	(call file.spec_exception (relabelable_obj_type_attribute relabelable_obj_exception_type_attribute))
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_file_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_dir_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_fifo_file_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_lnk_file_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_sock_file_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_blk_file_perms)
-	(allow sd_tmpfiles.subj relabelable_obj_type_attribute relabel_chr_file_perms)
+	(call file.spec_exception (relabelable_obj_type_attribute
+		relabelable_obj_exception_type_attribute))
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_dir_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_sock_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_blk_file_perms)
+	(allow sd_tmpfiles.subj relabelable_obj_type_attribute
+		relabel_chr_file_perms)
 
-	(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

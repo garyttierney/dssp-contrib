@@ -1,6 +1,8 @@
 (in sd_networkd
 	(filecon "/etc/systemd/network(/.*)?" any config_file_context)
 	(filecon "/usr/lib/systemd/systemd-networkd" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-networkd.*" file unit_file_context)
-	(filecon "/usr/lib/systemd/systemd-networkd-wait-online" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-networkd.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-networkd-wait-online" file
+		cmd_file_context)
 	(filecon "/var/run/systemd/netif(/.*)?" any runtime_file_context))

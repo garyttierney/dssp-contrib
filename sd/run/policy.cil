@@ -5,7 +5,8 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(allow subj_type_attribute self (capability (net_admin sys_chroot setgid setuid sys_admin dac_override)))
+	(allow subj_type_attribute self (capability (net_admin sys_chroot
+		setgid setuid sys_admin dac_override)))
 
 	(call cmd.audit_exec_access_all_cmd_files (subj_type_attribute))
 	(call cmd.audit_exec_access_shell_files (subj_type_attribute))
@@ -22,13 +23,17 @@
 
 	(optional run_subj_type_optional_sd_machined
 		(call sd_machined.read_runtime (subj_type_attribute))
-		(call sd_machined.sysbus_chat_client_subj_type (subj_type_attribute)))
+		(call sd_machined.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
 
 	(optional run_subj_type_optional_sd_nspawn
 		(call sd_nspawn_container.list_all (subj_type_attribute))
-		(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
-		(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
-		(call sd_nspawn_container.stream_connect_all_subj (subj_type_attribute)))
+		(call sd_nspawn_container.read_all_lnk_files
+			(subj_type_attribute))
+		(call sd_nspawn_container.read_state_all_subj
+			(subj_type_attribute))
+		(call sd_nspawn_container.stream_connect_all_subj
+			(subj_type_attribute)))
 
 	(optional run_subj_type_optional_sduser
 		(call sduser.start_unit_runtime (subj_type_attribute))))

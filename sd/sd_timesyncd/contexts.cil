@@ -1,6 +1,8 @@
 (in sd_timesyncd
 	(filecon "/etc/systemd/timesyncd\.conf" file config_file_context)
-	(filecon "/etc/systemd/timesyncd\.conf\.d(/.*)?" any config_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-timesyncd.*" file unit_file_context)
+	(filecon "/etc/systemd/timesyncd\.conf\.d(/.*)?" any
+		config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-timesyncd.*" file
+		unit_file_context)
 	(filecon "/usr/lib/systemd/systemd-timesyncd" file cmd_file_context)
 	(filecon "/var/lib/systemd/clock" file var_lib_file_context))

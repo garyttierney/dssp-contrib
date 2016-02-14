@@ -1,12 +1,16 @@
 (in sd_nspawn
 	(filecon "/etc/systemd/nspawn(/.*)?" any config_file_context)
 	(filecon "/usr/bin/systemd-nspawn" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-nspawn.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-nspawn.*" file
+		unit_file_context)
 	(filecon "/var/lib/machines/.*\.nspawn" file config_file_context)
 	(filecon "/var/run/systemd/nspawn(/.*)?" any runtime_file_context))
 
 (in sd_nspawn_container_tcp_connect_all_ports
-	(genfscon "selinuxfs" "/booleans/sd_nspawn_container_tcp_connect_all_ports" bool_obj_context))
+	(genfscon "selinuxfs"
+		"/booleans/sd_nspawn_container_tcp_connect_all_ports"
+			bool_obj_context))
 
 (in sd_nspawn_container_network_bridge
-	(genfscon "selinuxfs" "/booleans/sd_nspawn_container_network_bridge" bool_obj_context))
+	(genfscon "selinuxfs" "/booleans/sd_nspawn_container_network_bridge"
+		bool_obj_context))

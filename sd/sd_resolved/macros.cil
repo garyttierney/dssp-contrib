@@ -83,7 +83,8 @@
 		(allow ARG1 runtime_file manage_lnk_file_perms))
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
-		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir "resolve")))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"resolve")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

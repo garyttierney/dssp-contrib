@@ -2,7 +2,8 @@
 	(filecon "/etc/systemd/logind\.conf" file config_file_context)
 	(filecon "/etc/systemd/logind\.conf\.d(/.*)?" any config_file_context)
 	(filecon "/usr/lib/systemd/systemd-logind" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-logind.*" file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-logind.*" file
+		unit_file_context)
 	(filecon "/var/lib/systemd/linger(/.*)?" any var_lib_file_context)
 	(filecon "/var/run/systemd/inhibit(/.*)?" any runtime_file_context)
 	(filecon "/var/run/systemd/seats(/.*)?" any runtime_file_context)

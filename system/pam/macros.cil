@@ -21,7 +21,8 @@
 		(call fs.search_proc (ARG1))
 		(allow ARG1 login_prog_subj_type_attribute read_file_perms)
 		(allow ARG1 login_prog_subj_type_attribute list_dir_perms)
-		(allow ARG1 login_prog_subj_type_attribute read_lnk_file_perms))
+		(allow ARG1 login_prog_subj_type_attribute
+			read_lnk_file_perms))
 
 	(macro change_passwd ((type ARG1))
 		(allow ARG1 self (passwd (passwd))))
@@ -83,9 +84,12 @@
 		(allow ARG1 var_log_file rw_file_perms))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "btmp"))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "faillog"))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "tallylog"))))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"btmp"))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"faillog"))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"tallylog"))))
 
 (in lastlog
 	(blockinherit file.read_var_log_files_blk)
@@ -101,4 +105,5 @@
 		(allow ARG1 var_log_file rw_file_perms))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "lastlog"))))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"lastlog"))))

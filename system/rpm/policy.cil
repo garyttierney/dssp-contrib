@@ -56,7 +56,8 @@
 
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-	(call fs.rootfs_obj_type_transition (subj var_lib_file lnk_file "system-update"))
+	(call fs.rootfs_obj_type_transition (subj var_lib_file lnk_file
+		"system-update"))
 
 	(blockinherit file.runtime_obj_blk)
 
@@ -95,11 +96,14 @@
 		(call sd.status_unit_power (subj))
 		(call sd.start_unit_power (subj))
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional rpm_sysbus_chat_client_subj_type_attribute_optional_sysbus
-		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
 
 	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 
@@ -118,12 +122,14 @@
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
-	(call lib.config_obj_type_transition_ld_so_cache_files (subj_type_attribute))
+	(call lib.config_obj_type_transition_ld_so_cache_files
+		(subj_type_attribute))
 
 	(optional rpm_subj_type_optional_sysbus
 		(call sysbus.unconfined_subj_type (subj_type_attribute)))
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_var_cache (adm_subj_type_attribute))
@@ -133,13 +139,17 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_fifo_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
 
 (typeattribute rpm_script_client_subj_type_attribute)
 
@@ -157,7 +167,8 @@
 (tunableif enable_mls
 	(true
 		(optional rpm_script_enable_mls_optiona_sd_randomseed
-			(call sd_randomseed.auto_subj_range_transition (rpm_script_t systemhigh systemhigh)))))
+			(call sd_randomseed.auto_subj_range_transition
+				(rpm_script_t systemhigh systemhigh)))))
 
 (optional rpm_script_optional_bootloader
 	(call bootloader.run (rpm_script_t rpm.role_attribute)))

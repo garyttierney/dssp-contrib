@@ -1,13 +1,17 @@
 (boolean login_priv false)
 
 (block login_priv
-        (blockinherit sec.bool_obj_blk)
+	(blockinherit sec.bool_obj_blk)
 
 	(booleanif login_priv
 		(true
-			(call usersubj.shell_manual_subj_type_transition_common_login_subj (login.subj)))
+			(call
+				usersubj.shell_manual_subj_type_transition_common_login_subj
+					(login.subj)))
 		(false
-			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (login.subj)))))
+			(call
+				usersubj.shell_manual_subj_type_transition_unpriv_login_subj
+					(login.subj)))))
 
 (block login
 	(typeattribute adm_subj_type_attribute)
@@ -25,7 +29,8 @@
 
 	(roletype sys.role subj)
 
-	(allow subj self (capability (kill fsetid fowner sys_tty_config dac_override sys_admin)))
+	(allow subj self (capability (kill fsetid fowner sys_tty_config
+		dac_override sys_admin)))
 	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 
@@ -54,7 +59,8 @@
 	(call usersubj.setattr_ttys (subj))
 	(call usersubj.use_ttys (subj))
 
-	(call usersubj.dontaudit_manual_subj_type_transition_common_subj (subj))
+	(call usersubj.dontaudit_manual_subj_type_transition_common_subj
+		(subj))
 
 	(booleanif term_console_login
 		(true
@@ -73,7 +79,8 @@
 	(optional login_optional_sd
 		(call sd.daemon (subj cmd_file)))
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
@@ -125,7 +132,8 @@
 	(call default_context.read_config_files (subj))
 
 	(call usersubj.search_home_dir (subj))
-	(call usersubj.shell_manual_subj_type_transition_common_login_subj (subj))
+	(call usersubj.shell_manual_subj_type_transition_common_login_subj
+		(subj))
 
 	(optional sulogin_optional_plymouth
 		(call plymouth.exec (subj)))
@@ -137,6 +145,7 @@
 
 		(typeattributeset login.obj_type_attribute unit_file)
 
-		(allow login.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+		(allow login.adm_subj_type_attribute unit_file (service (stop
+			status disable enable reload start)))
 
 		(call sd.getpgid (subj))))

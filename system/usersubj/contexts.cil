@@ -20,12 +20,16 @@
 
 (in home_fonts
 	(filecon "HOME_DIR/\.fontconfig(/.*)?" any home_cache_file_context)
-	(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.cache/fontconfig(/.*)?" any
+		home_cache_file_context)
 	(filecon "HOME_DIR/\.fonts\.conf" file home_config_file_context)
-	(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any home_config_file_context)
-	(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.fonts\.conf\.d(/.*)?" any
+		home_config_file_context)
+	(filecon "HOME_DIR/\.config/fontconfig(/.*)?" any
+		home_config_file_context)
 	(filecon "HOME_DIR/\.fonts(/.*)?" any home_data_file_context)
-	(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any home_data_file_context))
+	(filecon "HOME_DIR/\.local/share/fonts(/.*)?" any
+		home_data_file_context))
 
 (in home_history
 	(filecon "HOME_DIR/\.bash_history" file home_user_file_context))
@@ -41,20 +45,36 @@
 	(true
 		(tunableif enable_rbacsep
 			(true
-				(context default_home_dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
-				(context home_dir (sys.id sys.role home_dir.file (systemlow systemhigh)))
-				(context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemhigh))))
+				(context default_home_dir (sys.id sys.role
+					home_dir.file (systemlow systemhigh)))
+				(context home_dir (sys.id sys.role
+					home_dir.file (systemlow systemhigh)))
+				(context user_spool (sys.id sys.role
+					var_spool_user.var_spool_file
+						(systemlow systemhigh))))
 			(false
-				(context default_home_dir (sys.id object_r home_dir.file (systemlow systemhigh)))
-				(context home_dir (sys.id object_r home_dir.file (systemlow systemhigh)))
-				(context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemhigh))))))
+				(context default_home_dir (sys.id object_r
+					home_dir.file (systemlow systemhigh)))
+				(context home_dir (sys.id object_r
+					home_dir.file (systemlow systemhigh)))
+				(context user_spool (sys.id object_r
+					var_spool_user.var_spool_file
+						(systemlow systemhigh))))))
 	(false
-                (tunableif enable_rbacsep
+		(tunableif enable_rbacsep
 			(true
-				(context default_home_dir (sys.id sys.role home_dir.file (systemlow systemlow)))
-				(context home_dir (sys.id sys.role home_dir.file (systemlow systemlow)))
-				(context user_spool (sys.id sys.role var_spool_user.var_spool_file (systemlow systemlow))))
+				(context default_home_dir (sys.id sys.role
+					home_dir.file (systemlow systemlow)))
+				(context home_dir (sys.id sys.role
+					home_dir.file (systemlow systemlow)))
+				(context user_spool (sys.id sys.role
+					var_spool_user.var_spool_file
+						(systemlow systemlow))))
 			(false
-				(context default_home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
-				(context home_dir (sys.id object_r home_dir.file (systemlow systemlow)))
-				(context user_spool (sys.id object_r var_spool_user.var_spool_file (systemlow systemlow)))))))
+				(context default_home_dir (sys.id object_r
+					home_dir.file (systemlow systemlow)))
+				(context home_dir (sys.id object_r
+					home_dir.file (systemlow systemlow)))
+				(context user_spool (sys.id object_r
+					var_spool_user.var_spool_file
+						(systemlow systemlow)))))))

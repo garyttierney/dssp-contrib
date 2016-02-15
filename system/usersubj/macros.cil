@@ -88,9 +88,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context home_cache_file_context (sys.id sys.role home_cache_file (systemlow systemlow))))
+				(context home_cache_file_context (sys.id 
+					sys.role home_cache_file
+						(systemlow systemlow))))
 			(false
-				(context home_cache_file_context (sys.id object_r home_cache_file (systemlow systemlow))))))
+				(context home_cache_file_context (sys.id 
+					object_r home_cache_file
+						(systemlow systemlow))))))
 
 	(block list_home_cache_blk
 		(blockabstract list_home_cache_blk)
@@ -126,115 +130,134 @@
 		(blockabstract manage_home_cache_dirs_blk)
 		(macro manage_home_cache_dirs ((type ARG1))
 			(call usersubj.rw_home_cache_dirs (ARG1))
-			(call manage_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call manage_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block relabel_home_cache_dirs_blk
 		(blockabstract relabel_home_cache_dirs_blk)
 		(macro relabel_home_cache_dirs ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call relabel_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call relabel_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block setattr_home_cache_dirs_blk
 		(blockabstract setattr_home_cache_dirs_blk)
 		(macro setattr_home_cache_dirs ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call setattr_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call setattr_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block delete_home_cache_files_blk
 		(blockabstract delete_home_cache_files_blk)
 		(macro delete_home_cache_files ((type ARG1))
 			(call usersubj.del_entry_home_cache (ARG1))
-			(call delete_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call delete_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block create_home_cache_files_blk
 		(blockabstract create_home_cache_files_blk)
 		(macro create_home_cache_files ((type ARG1))
 			(call usersubj.add_entry_home_cache (ARG1))
-			(call create_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call create_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block read_home_cache_files_blk
 		(blockabstract read_home_cache_files_blk)
 		(macro read_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call read_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call read_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block write_home_cache_files_blk
 		(blockabstract write_home_cache_files_blk)
 		(macro write_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call write_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call write_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block rw_home_cache_files_blk
 		(blockabstract rw_home_cache_files_blk)
 		(macro rw_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call rw_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call rw_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block manage_home_cache_files_blk
 		(blockabstract manage_home_cache_files_blk)
 		(macro manage_home_cache_files ((type ARG1))
 			(call usersubj.rw_home_cache_dirs (ARG1))
-			(call manage_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call manage_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block relabel_home_cache_files_blk
 		(blockabstract relabel_home_cache_files_blk)
 		(macro relabel_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call relabel_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call relabel_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block setattr_home_cache_files_blk
 		(blockabstract setattr_home_cache_files_blk)
 		(macro setattr_home_cache_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call setattr_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call setattr_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block read_home_cache_fifo_files_blk
 		(blockabstract read_home_cache_fifo_files_blk)
 		(macro read_home_cache_fifo_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call read_fifo_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call read_fifo_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block read_home_cache_lnk_files_blk
 		(blockabstract read_home_cache_lnk_files_blk)
 		(macro read_home_cache_lnk_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call read_lnk_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call read_lnk_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block manage_home_cache_lnk_files_blk
 		(blockabstract manage_home_cache_lnk_files_blk)
 		(macro manage_home_cache_lnk_files ((type ARG1))
 			(call usersubj.rw_home_cache_dirs (ARG1))
-			(call manage_lnk_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call manage_lnk_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block read_home_cache_sock_files_blk
 		(blockabstract read_home_cache_sock_files_blk)
 		(macro read_home_cache_sock_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call read_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call read_sock_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block delete_home_cache_sock_files_blk
 		(blockabstract delete_home_cache_sock_files_blk)
 		(macro delete_home_cache_sock_files ((type ARG1))
 			(call usersubj.del_entry_home_cache (ARG1))
-			(call delete_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call delete_sock_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block write_home_cache_sock_files_blk
 		(blockabstract write_home_cache_sock_files_blk)
 		(macro write_home_cache_sock_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call write_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call write_sock_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block manage_home_cache_sock_files_blk
 		(blockabstract manage_home_cache_sock_files_blk)
 		(macro manage_home_cache_sock_files ((type ARG1))
 			(call usersubj.rw_home_cache_dirs (ARG1))
-			(call manage_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call manage_sock_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block relabel_home_cache_sock_files_blk
 		(blockabstract relabel_home_cache_sock_files_blk)
 		(macro relabel_home_cache_sock_files ((type ARG1))
 			(call usersubj.search_home_cache (ARG1))
-			(call relabel_sock_files_pattern (ARG1 home_cache_file home_cache_file))))
+			(call relabel_sock_files_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block read_home_cache_blk
 		(blockabstract read_home_cache_blk)
@@ -268,9 +291,11 @@
 
 	(block home_cache_obj_type_transition_blk
 		(blockabstract home_cache_obj_type_transition_blk)
-		(macro home_cache_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro home_cache_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call usersubj.search_home_cache (ARG1))
-			(call obj_type_transition_pattern (ARG1 home_cache_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1
+				home_cache_file ARG2 ARG3 ARG4))))
 
 	(block home_config_obj_blk
 		(blockabstract home_config_obj_blk)
@@ -280,9 +305,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context home_config_file_context (sys.id sys.role home_config_file (systemlow systemlow))))
+				(context home_config_file_context (sys.id
+					sys.role home_config_file
+						(systemlow systemlow))))
 			(false
-				(context home_config_file_context (sys.id object_r home_config_file (systemlow systemlow))))))
+				(context home_config_file_context (sys.id
+					object_r home_config_file
+						(systemlow systemlow))))))
 
 	(block list_home_config_blk
 		(blockabstract list_home_config_blk)
@@ -318,115 +347,134 @@
 		(blockabstract manage_home_config_dirs_blk)
 		(macro manage_home_config_dirs ((type ARG1))
 			(call usersubj.rw_home_config_dirs (ARG1))
-			(call manage_dirs_pattern (ARG1 home_config_file home_config_file))))
+			(call manage_dirs_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block relabel_home_config_dirs_blk
 		(blockabstract relabel_home_config_dirs_blk)
 		(macro relabel_home_config_dirs ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call relabel_dirs_pattern (ARG1 home_config_file home_config_file))))
+			(call relabel_dirs_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block setattr_home_config_dirs_blk
 		(blockabstract setattr_home_config_dirs_blk)
 		(macro setattr_home_config_dirs ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call setattr_dirs_pattern (ARG1 home_config_file home_config_file))))
+			(call setattr_dirs_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block delete_home_config_files_blk
 		(blockabstract delete_home_config_files_blk)
 		(macro delete_home_config_files ((type ARG1))
 			(call usersubj.del_entry_home_config (ARG1))
-			(call delete_files_pattern (ARG1 home_config_file home_config_file))))
+			(call delete_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block create_home_config_files_blk
 		(blockabstract create_home_config_files_blk)
 		(macro create_home_config_files ((type ARG1))
 			(call usersubj.add_entry_home_config (ARG1))
-			(call create_files_pattern (ARG1 home_config_file home_config_file))))
+			(call create_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block read_home_config_files_blk
 		(blockabstract read_home_config_files_blk)
 		(macro read_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call read_files_pattern (ARG1 home_config_file home_config_file))))
+			(call read_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block write_home_config_files_blk
 		(blockabstract write_home_config_files_blk)
 		(macro write_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call write_files_pattern (ARG1 home_config_file home_config_file))))
+			(call write_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block rw_home_config_files_blk
 		(blockabstract rw_home_config_files_blk)
 		(macro rw_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call rw_files_pattern (ARG1 home_config_file home_config_file))))
+			(call rw_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block manage_home_config_files_blk
 		(blockabstract manage_home_config_files_blk)
 		(macro manage_home_config_files ((type ARG1))
 			(call usersubj.rw_home_config_dirs (ARG1))
-			(call manage_files_pattern (ARG1 home_config_file home_config_file))))
+			(call manage_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block relabel_home_config_files_blk
 		(blockabstract relabel_home_config_files_blk)
 		(macro relabel_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call relabel_files_pattern (ARG1 home_config_file home_config_file))))
+			(call relabel_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block setattr_home_config_files_blk
 		(blockabstract setattr_home_config_files_blk)
 		(macro setattr_home_config_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call setattr_files_pattern (ARG1 home_config_file home_config_file))))
+			(call setattr_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block read_home_config_fifo_files_blk
 		(blockabstract read_home_config_fifo_files_blk)
 		(macro read_home_config_fifo_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call read_fifo_files_pattern (ARG1 home_config_file home_config_file))))
+			(call read_fifo_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block read_home_config_lnk_files_blk
 		(blockabstract read_home_config_lnk_files_blk)
 		(macro read_home_config_lnk_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call read_lnk_files_pattern (ARG1 home_config_file home_config_file))))
+			(call read_lnk_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block manage_home_config_lnk_files_blk
 		(blockabstract manage_home_config_lnk_files_blk)
 		(macro manage_home_config_lnk_files ((type ARG1))
 			(call usersubj.rw_home_config_dirs (ARG1))
-			(call manage_lnk_files_pattern (ARG1 home_config_file home_config_file))))
+			(call manage_lnk_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block read_home_config_sock_files_blk
 		(blockabstract read_home_config_sock_files_blk)
 		(macro read_home_config_sock_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call read_sock_files_pattern (ARG1 home_config_file home_config_file))))
+			(call read_sock_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block delete_home_config_sock_files_blk
 		(blockabstract delete_home_config_sock_files_blk)
 		(macro delete_home_config_sock_files ((type ARG1))
 			(call usersubj.del_entry_home_config (ARG1))
-			(call delete_sock_files_pattern (ARG1 home_config_file home_config_file))))
+			(call delete_sock_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block write_home_config_sock_files_blk
 		(blockabstract write_home_config_sock_files_blk)
 		(macro write_home_config_sock_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call write_sock_files_pattern (ARG1 home_config_file home_config_file))))
+			(call write_sock_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block manage_home_config_sock_files_blk
 		(blockabstract manage_home_config_sock_files_blk)
 		(macro manage_home_config_sock_files ((type ARG1))
 			(call usersubj.rw_home_config_dirs (ARG1))
-			(call manage_sock_files_pattern (ARG1 home_config_file home_config_file))))
+			(call manage_sock_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block relabel_home_config_sock_files_blk
 		(blockabstract relabel_home_config_sock_files_blk)
 		(macro relabel_home_config_sock_files ((type ARG1))
 			(call usersubj.search_home_config (ARG1))
-			(call relabel_sock_files_pattern (ARG1 home_config_file home_config_file))))
+			(call relabel_sock_files_pattern (ARG1 home_config_file
+				home_config_file))))
 
 	(block read_home_config_blk
 		(blockabstract read_home_config_blk)
@@ -460,9 +508,11 @@
 
 	(block home_config_obj_type_transition_blk
 		(blockabstract home_config_obj_type_transition_blk)
-		(macro home_config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro home_config_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call usersubj.search_home_config (ARG1))
-			(call obj_type_transition_pattern (ARG1 home_config_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1
+				home_config_file ARG2 ARG3 ARG4))))
 
 	(block home_data_obj_blk
 		(blockabstract home_data_obj_blk)
@@ -472,9 +522,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context home_data_file_context (sys.id sys.role home_data_file (systemlow systemlow))))
+				(context home_data_file_context (sys.id
+					sys.role home_data_file
+						(systemlow systemlow))))
 			(false
-				(context home_data_file_context (sys.id object_r home_data_file (systemlow systemlow))))))
+				(context home_data_file_context (sys.id
+					object_r home_data_file
+						(systemlow systemlow))))))
 
 	(block list_home_data_blk
 		(blockabstract list_home_data_blk)
@@ -510,115 +564,134 @@
 		(blockabstract manage_home_data_dirs_blk)
 		(macro manage_home_data_dirs ((type ARG1))
 			(call usersubj.rw_home_data_dirs (ARG1))
-			(call manage_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call manage_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block relabel_home_data_dirs_blk
 		(blockabstract relabel_home_data_dirs_blk)
 		(macro relabel_home_data_dirs ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call relabel_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call relabel_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block setattr_home_data_dirs_blk
 		(blockabstract setattr_home_data_dirs_blk)
 		(macro setattr_home_data_dirs ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call setattr_dirs_pattern (ARG1 home_cache_file home_cache_file))))
+			(call setattr_dirs_pattern (ARG1 home_cache_file
+				home_cache_file))))
 
 	(block delete_home_data_files_blk
 		(blockabstract delete_home_data_files_blk)
 		(macro delete_home_data_files ((type ARG1))
 			(call usersubj.del_entry_home_data (ARG1))
-			(call delete_files_pattern (ARG1 home_data_file home_data_file))))
+			(call delete_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block create_home_data_files_blk
 		(blockabstract create_home_data_files_blk)
 		(macro create_home_data_files ((type ARG1))
 			(call usersubj.add_entry_home_data (ARG1))
-			(call create_files_pattern (ARG1 home_data_file home_data_file))))
+			(call create_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block read_home_data_files_blk
 		(blockabstract read_home_data_files_blk)
 		(macro read_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call read_files_pattern (ARG1 home_data_file home_data_file))))
+			(call read_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block write_home_data_files_blk
 		(blockabstract write_home_data_files_blk)
 		(macro write_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call write_files_pattern (ARG1 home_data_file home_data_file))))
+			(call write_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block rw_home_data_files_blk
 		(blockabstract rw_home_data_files_blk)
 		(macro rw_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call rw_files_pattern (ARG1 home_data_file home_data_file))))
+			(call rw_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block manage_home_data_files_blk
 		(blockabstract manage_home_data_files_blk)
 		(macro manage_home_data_files ((type ARG1))
 			(call usersubj.rw_home_data_dirs (ARG1))
-			(call manage_files_pattern (ARG1 home_data_file home_data_file))))
+			(call manage_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block relabel_home_data_files_blk
 		(blockabstract relabel_home_data_files_blk)
 		(macro relabel_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call relabel_files_pattern (ARG1 home_data_file home_data_file))))
+			(call relabel_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block setattr_home_data_files_blk
 		(blockabstract setattr_home_data_files_blk)
 		(macro setattr_home_data_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call setattr_files_pattern (ARG1 home_data_file home_data_file))))
+			(call setattr_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block read_home_data_fifo_files_blk
 		(blockabstract read_home_data_fifo_files_blk)
 		(macro read_home_data_fifo_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call read_fifo_files_pattern (ARG1 home_data_file home_data_file))))
+			(call read_fifo_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block read_home_data_lnk_files_blk
 		(blockabstract read_home_data_lnk_files_blk)
 		(macro read_home_data_lnk_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call read_lnk_files_pattern (ARG1 home_data_file home_data_file))))
+			(call read_lnk_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block manage_home_data_lnk_files_blk
 		(blockabstract manage_home_data_lnk_files_blk)
 		(macro manage_home_data_lnk_files ((type ARG1))
 			(call usersubj.rw_home_data_dirs (ARG1))
-			(call manage_lnk_files_pattern (ARG1 home_data_file home_data_file))))
+			(call manage_lnk_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block read_home_data_sock_files_blk
 		(blockabstract read_home_data_sock_files_blk)
 		(macro read_home_data_sock_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call read_sock_files_pattern (ARG1 home_data_file home_data_file))))
+			(call read_sock_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block delete_home_data_sock_files_blk
 		(blockabstract delete_home_data_sock_files_blk)
 		(macro delete_home_data_sock_files ((type ARG1))
 			(call usersubj.del_entry_home_data (ARG1))
-			(call delete_sock_files_pattern (ARG1 home_data_file home_data_file))))
+			(call delete_sock_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block write_home_data_sock_files_blk
 		(blockabstract write_home_data_sock_files_blk)
 		(macro write_home_data_sock_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call write_sock_files_pattern (ARG1 home_data_file home_data_file))))
+			(call write_sock_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block manage_home_data_sock_files_blk
 		(blockabstract manage_home_data_sock_files_blk)
 		(macro manage_home_data_sock_files ((type ARG1))
 			(call usersubj.rw_home_data_dirs (ARG1))
-			(call manage_sock_files_pattern (ARG1 home_data_file home_data_file))))
+			(call manage_sock_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block relabel_home_data_sock_files_blk
 		(blockabstract relabel_home_data_sock_files_blk)
 		(macro relabel_home_data_sock_files ((type ARG1))
 			(call usersubj.search_home_data (ARG1))
-			(call relabel_sock_files_pattern (ARG1 home_data_file home_data_file))))
+			(call relabel_sock_files_pattern (ARG1 home_data_file
+				home_data_file))))
 
 	(block read_home_data_blk
 		(blockabstract read_home_data_blk)
@@ -652,9 +725,11 @@
 
 	(block home_data_obj_type_transition_blk
 		(blockabstract home_data_obj_type_transition_blk)
-		(macro home_data_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro home_data_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call usersubj.search_home_data (ARG1))
-			(call obj_type_transition_pattern (ARG1 home_data_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1 home_data_file
+				ARG2 ARG3 ARG4))))
 
 	(block home_user_obj_blk
 		(blockabstract home_user_obj_blk)
@@ -664,9 +739,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context home_user_file_context (sys.id sys.role home_user_file (systemlow systemlow))))
+				(context home_user_file_context (sys.id
+					sys.role home_user_file
+						(systemlow systemlow))))
 			(false
-				(context home_user_file_context (sys.id object_r home_user_file (systemlow systemlow))))))
+				(context home_user_file_context (sys.id
+					object_r home_user_file
+						(systemlow systemlow))))))
 
 	(block list_home_user_blk
 		(blockabstract list_home_user_blk)
@@ -702,120 +781,140 @@
 		(blockabstract manage_home_user_dirs_blk)
 		(macro manage_home_user_dirs ((type ARG1))
 			(call usersubj.rw_home_dir (ARG1))
-			(call manage_dirs_pattern (ARG1 home_user_file home_user_file))))
+			(call manage_dirs_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block relabel_home_user_dirs_blk
 		(blockabstract relabel_home_user_dirs_blk)
 		(macro relabel_home_user_dirs ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call relabel_dirs_pattern (ARG1 home_user_file home_user_file))))
+			(call relabel_dirs_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block setattr_home_user_dirs_blk
 		(blockabstract setattr_home_user_dirs_blk)
 		(macro setattr_home_user_dirs ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call setattr_dirs_pattern (ARG1 home_user_file home_user_file))))
+			(call setattr_dirs_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block delete_home_user_files_blk
 		(blockabstract delete_home_user_files_blk)
 		(macro delete_home_user_files ((type ARG1))
 			(call usersubj.del_entry_home_dir (ARG1))
-			(call delete_files_pattern (ARG1 home_user_file home_user_file))))
+			(call delete_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block create_home_user_files_blk
 		(blockabstract create_home_user_files_blk)
 		(macro create_home_user_files ((type ARG1))
 			(call usersubj.add_entry_home_dir (ARG1))
-			(call create_files_pattern (ARG1 home_user_file home_user_file))))
+			(call create_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block read_home_user_files_blk
 		(blockabstract read_home_user_files_blk)
 		(macro read_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call read_files_pattern (ARG1 home_user_file home_user_file))))
+			(call read_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block write_home_user_files_blk
 		(blockabstract write_home_user_files_blk)
 		(macro write_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call write_files_pattern (ARG1 home_user_file home_user_file))))
+			(call write_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block write_inherited_home_user_files_blk
 		(blockabstract write_inherited_home_user_files_blk)
 		(macro write_inherited_home_user_files ((type ARG1))
-			(allow ARG1 home_user_file write_inherited_file_perms)))
+			(allow ARG1 home_user_file
+				write_inherited_file_perms)))
 
 	(block rw_home_user_files_blk
 		(blockabstract rw_home_user_files_blk)
 		(macro rw_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call rw_files_pattern (ARG1 home_user_file home_user_file))))
+			(call rw_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block manage_home_user_files_blk
 		(blockabstract manage_home_user_files_blk)
 		(macro manage_home_user_files ((type ARG1))
 			(call usersubj.rw_home_dir (ARG1))
-			(call manage_files_pattern (ARG1 home_user_file home_user_file))))
+			(call manage_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block relabel_home_user_files_blk
 		(blockabstract relabel_home_user_files_blk)
 		(macro relabel_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call relabel_files_pattern (ARG1 home_user_file home_user_file))))
+			(call relabel_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block setattr_home_user_files_blk
 		(blockabstract setattr_home_user_files_blk)
 		(macro setattr_home_user_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call setattr_files_pattern (ARG1 home_user_file home_user_file))))
+			(call setattr_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block read_home_user_fifo_files_blk
 		(blockabstract read_home_user_fifo_files_blk)
 		(macro read_home_user_fifo_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call read_fifo_files_pattern (ARG1 home_user_file home_user_file))))
+			(call read_fifo_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block read_home_user_lnk_files_blk
 		(blockabstract read_home_user_lnk_files_blk)
 		(macro read_home_user_lnk_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call read_lnk_files_pattern (ARG1 home_user_file home_user_file))))
+			(call read_lnk_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block manage_home_user_lnk_files_blk
 		(blockabstract manage_home_user_lnk_files_blk)
 		(macro manage_home_user_lnk_files ((type ARG1))
 			(call usersubj.rw_home_dir (ARG1))
-			(call manage_lnk_files_pattern (ARG1 home_user_file home_user_file))))
+			(call manage_lnk_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block read_home_user_sock_files_blk
 		(blockabstract read_home_user_sock_files_blk)
 		(macro read_home_user_sock_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call read_sock_files_pattern (ARG1 home_user_file home_user_file))))
+			(call read_sock_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block delete_home_user_sock_files_blk
 		(blockabstract delete_home_user_sock_files_blk)
 		(macro delete_home_user_sock_files ((type ARG1))
 			(call usersubj.del_entry_home_dir (ARG1))
-			(call delete_sock_files_pattern (ARG1 home_user_file home_user_file))))
+			(call delete_sock_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block write_home_user_sock_files_blk
 		(blockabstract write_home_user_sock_files_blk)
 		(macro write_home_user_sock_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call write_sock_files_pattern (ARG1 home_user_file home_user_file))))
+			(call write_sock_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block manage_home_user_sock_files_blk
 		(blockabstract manage_home_user_sock_files_blk)
 		(macro manage_home_user_sock_files ((type ARG1))
 			(call usersubj.rw_home_dir (ARG1))
-			(call manage_sock_files_pattern (ARG1 home_user_file home_user_file))))
+			(call manage_sock_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block relabel_home_user_sock_files_blk
 		(blockabstract relabel_home_user_sock_files_blk)
 		(macro relabel_home_user_sock_files ((type ARG1))
 			(call usersubj.search_home_dir (ARG1))
-			(call relabel_sock_files_pattern (ARG1 home_user_file home_user_file))))
+			(call relabel_sock_files_pattern (ARG1 home_user_file
+				home_user_file))))
 
 	(block read_home_user_blk
 		(blockabstract read_home_user_blk)
@@ -849,9 +948,11 @@
 
 	(block home_user_obj_type_transition_blk
 		(blockabstract home_user_obj_type_transition_blk)
-		(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro home_user_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call usersubj.search_home_dir (ARG1))
-			(call obj_type_transition_pattern (ARG1 home_user_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1 home_user_file
+				ARG2 ARG3 ARG4))))
 
 	(block var_tmp_user_obj_blk
 		(blockabstract var_tmp_user_obj_blk)
@@ -861,9 +962,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context var_tmp_user_file_context (sys.id sys.role var_tmp_user_file (systemlow systemlow))))
+				(context var_tmp_user_file_context (sys.id
+					sys.role var_tmp_user_file
+						(systemlow systemlow))))
 			(false
-				(context var_tmp_user_file_context (sys.id object_r var_tmp_user_file (systemlow systemlow))))))
+				(context var_tmp_user_file_context (sys.id
+					object_r var_tmp_user_file
+						(systemlow systemlow))))))
 
 	(block list_var_tmp_user_blk
 		(blockabstract list_var_tmp_user_blk)
@@ -899,115 +1004,134 @@
 		(blockabstract manage_var_tmp_user_dirs_blk)
 		(macro manage_var_tmp_user_dirs ((type ARG1))
 			(call file.rw_var_tmp_dirs (ARG1))
-			(call manage_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call manage_dirs_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_dirs_blk
 		(blockabstract relabel_var_tmp_user_dirs_blk)
 		(macro relabel_var_tmp_user_dirs ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call relabel_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call relabel_dirs_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block setattr_var_tmp_user_dirs_blk
 		(blockabstract setattr_var_tmp_user_dirs_blk)
 		(macro setattr_var_tmp_user_dirs ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call setattr_dirs_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call setattr_dirs_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block delete_var_tmp_user_files_blk
 		(blockabstract delete_var_tmp_user_files_blk)
 		(macro delete_var_tmp_user_files ((type ARG1))
 			(call file.del_entry_var_tmp (ARG1))
-			(call delete_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call delete_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block create_var_tmp_user_files_blk
 		(blockabstract create_var_tmp_user_files_blk)
 		(macro create_var_tmp_user_files ((type ARG1))
 			(call file.add_entry_var_tmp (ARG1))
-			(call create_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call create_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block read_var_tmp_user_files_blk
 		(blockabstract read_var_tmp_user_files_blk)
 		(macro read_var_tmp_user_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call read_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call read_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block write_var_tmp_user_files_blk
 		(blockabstract write_var_tmp_user_files_blk)
 		(macro write_var_tmp_user_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call write_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call write_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block rw_var_tmp_user_files_blk
 		(blockabstract rw_var_tmp_user_files_blk)
 		(macro rw_var_tmp_user_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call rw_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call rw_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block manage_var_tmp_user_files_blk
 		(blockabstract manage_var_tmp_user_files_blk)
 		(macro manage_var_tmp_user_files ((type ARG1))
 			(call file.rw_var_tmp_dirs (ARG1))
-			(call manage_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call manage_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_files_blk
 		(blockabstract relabel_var_tmp_user_files_blk)
 		(macro relabel_var_tmp_user_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call relabel_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call relabel_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block setattr_var_tmp_user_files_blk
 		(blockabstract setattr_var_tmp_user_files_blk)
 		(macro setattr_var_tmp_user_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call setattr_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call setattr_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block read_var_tmp_user_fifo_files_blk
 		(blockabstract read_var_tmp_user_fifo_files_blk)
 		(macro read_var_tmp_user_fifo_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call read_fifo_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call read_fifo_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block read_var_tmp_user_lnk_files_blk
 		(blockabstract read_var_tmp_user_lnk_files_blk)
 		(macro read_var_tmp_user_lnk_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call read_lnk_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call read_lnk_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block manage_var_tmp_user_lnk_files_blk
 		(blockabstract manage_var_tmp_user_lnk_files_blk)
 		(macro manage_var_tmp_user_lnk_files ((type ARG1))
 			(call file.rw_var_tmp_dirs (ARG1))
-			(call manage_lnk_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call manage_lnk_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block read_var_tmp_user_sock_files_blk
 		(blockabstract read_var_tmp_user_sock_files_blk)
 		(macro read_var_tmp_user_sock_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call read_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call read_sock_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block delete_var_tmp_user_sock_files_blk
 		(blockabstract delete_var_tmp_user_sock_files_blk)
 		(macro delete_var_tmp_user_sock_files ((type ARG1))
 			(call file.del_entry_var_tmp (ARG1))
-			(call delete_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call delete_sock_files_pattern (ARG1
+				var_tmp_user_file var_tmp_user_file))))
 
 	(block write_var_tmp_user_sock_files_blk
 		(blockabstract write_var_tmp_user_sock_files_blk)
 		(macro write_var_tmp_user_sock_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call write_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call write_sock_files_pattern (ARG1 var_tmp_user_file
+				var_tmp_user_file))))
 
 	(block manage_var_tmp_user_sock_files_blk
 		(blockabstract manage_var_tmp_user_sock_files_blk)
 		(macro manage_var_tmp_user_sock_files ((type ARG1))
 			(call file.rw_var_tmp_dirs (ARG1))
-			(call manage_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call manage_sock_files_pattern (ARG1
+				var_tmp_user_file var_tmp_user_file))))
 
 	(block relabel_var_tmp_user_sock_files_blk
 		(blockabstract relabel_var_tmp_user_sock_files_blk)
 		(macro relabel_var_tmp_user_sock_files ((type ARG1))
 			(call file.search_var_tmp (ARG1))
-			(call relabel_sock_files_pattern (ARG1 var_tmp_user_file var_tmp_user_file))))
+			(call relabel_sock_files_pattern (ARG1
+				var_tmp_user_file var_tmp_user_file))))
 
 	(block read_var_tmp_user_blk
 		(blockabstract read_var_tmp_user_blk)
@@ -1037,13 +1161,16 @@
 			(allow ARG1 var_tmp_user_file relabel_fifo_file_perms)
 			(allow ARG1 var_tmp_user_file relabel_dir_perms)
 			(allow ARG1 var_tmp_user_file relabel_lnk_file_perms)
-			(allow ARG1 var_tmp_user_file relabel_sock_file_perms)))
+			(allow ARG1 var_tmp_user_file
+				relabel_sock_file_perms)))
 
 	(block var_tmp_user_obj_type_transition_blk
 		(blockabstract var_tmp_user_obj_type_transition_blk)
-		(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro var_tmp_user_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call file.search_var_tmp (ARG1))
-			(call obj_type_transition_pattern (ARG1 var_tmp_user_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1
+				var_tmp_user_file ARG2 ARG3 ARG4))))
 
 	(block tmpfs_user_obj_blk
 		(blockabstract tmpfs_user_obj_blk)
@@ -1053,9 +1180,13 @@
 
 		(tunableif enable_rbacsep
 			(true
-				(context tmpfs_user_file_context (sys.id sys.role tmpfs_user_file (systemlow systemlow))))
+				(context tmpfs_user_file_context (sys.id
+					sys.role tmpfs_user_file
+						(systemlow systemlow))))
 			(false
-				(context tmpfs_user_file_context (sys.id object_r tmpfs_user_file (systemlow systemlow))))))
+				(context tmpfs_user_file_context (sys.id
+					object_r tmpfs_user_file
+						(systemlow systemlow))))))
 
 	(block list_tmpfs_user_blk
 		(blockabstract list_tmpfs_user_blk)
@@ -1093,131 +1224,150 @@
 		(blockabstract manage_tmpfs_user_dirs_blk)
 		(macro manage_tmpfs_user_dirs ((type ARG1))
 			(call fs.rw_tmpfs_dirs (ARG1))
-			(call manage_dirs_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call manage_dirs_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block relabel_tmpfs_user_dirs_blk
 		(blockabstract relabel_tmpfs_user_dirs_blk)
 		(macro relabel_tmpfs_user_dirs ((type ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call relabel_dirs_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call relabel_dirs_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block setattr_tmpfs_user_dirs_blk
 		(blockabstract setattr_tmpfs_user_dirs_blk)
 		(macro setattr_tmpfs_user_dirs ((type ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call setattr_dirs_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call setattr_dirs_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block delete_tmpfs_user_files_blk
 		(blockabstract delete_tmpfs_user_files_blk)
 		(macro delete_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.del_entry_tmpfs (ARG1))
-			(call delete_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call delete_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block create_tmpfs_user_files_blk
 		(blockabstract create_tmpfs_user_files_blk)
 		(macro create_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.add_entry_tmpfs (ARG1))
-			(call create_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call create_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block read_tmpfs_user_files_blk
 		(blockabstract read_tmpfs_user_files_blk)
 		(macro read_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call read_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call read_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block write_tmpfs_user_files_blk
 		(blockabstract write_tmpfs_user_files_blk)
 		(macro write_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call write_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call write_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block rw_tmpfs_user_files_blk
 		(blockabstract rw_tmpfs_user_files_blk)
 		(macro rw_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call rw_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call rw_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block manage_tmpfs_user_files_blk
 		(blockabstract manage_tmpfs_user_files_blk)
 		(macro manage_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.rw_tmpfs_dirs (ARG1))
-			(call manage_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call manage_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block relabel_tmpfs_user_files_blk
 		(blockabstract relabel_tmpfs_user_files_blk)
 		(macro relabel_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call relabel_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call relabel_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block setattr_tmpfs_user_files_blk
 		(blockabstract setattr_tmpfs_user_files_blk)
 		(macro setattr_tmpfs_user_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call setattr_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call setattr_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block read_tmpfs_user_fifo_files_blk
 		(blockabstract read_tmpfs_user_fifo_files_blk)
 		(macro read_tmpfs_user_fifo_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call read_fifo_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call read_fifo_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block read_tmpfs_user_lnk_files_blk
 		(blockabstract read_tmpfs_user_lnk_files_blk)
 		(macro read_tmpfs_user_lnk_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call read_lnk_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call read_lnk_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block manage_tmpfs_user_lnk_files_blk
 		(blockabstract manage_tmpfs_user_lnk_files_blk)
 		(macro manage_tmpfs_user_lnk_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.rw_tmpfs_dirs (ARG1))
-			(call manage_lnk_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call manage_lnk_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block read_tmpfs_user_sock_files_blk
 		(blockabstract read_tmpfs_user_sock_files_blk)
 		(macro read_tmpfs_user_sock_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call read_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call read_sock_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block delete_tmpfs_user_sock_files_blk
 		(blockabstract delete_tmpfs_user_sock_files_blk)
 		(macro delete_tmpfs_user_sock_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.del_entry_tmpfs (ARG1))
-			(call delete_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call delete_sock_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block write_tmpfs_user_sock_files_blk
 		(blockabstract write_tmpfs_user_sock_files_blk)
 		(macro write_tmpfs_user_sock_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call write_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call write_sock_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block manage_tmpfs_user_sock_files_blk
 		(blockabstract manage_tmpfs_user_sock_files_blk)
 		(macro manage_tmpfs_user_sock_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.rw_tmpfs_dirs (ARG1))
-			(call manage_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call manage_sock_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block relabel_tmpfs_user_sock_files_blk
 		(blockabstract relabel_tmpfs_user_sock_files_blk)
 		(macro relabel_tmpfs_user_sock_files ((type ARG1))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call relabel_sock_files_pattern (ARG1 tmpfs_user_file tmpfs_user_file))))
+			(call relabel_sock_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
 
 	(block read_tmpfs_user_blk
 		(blockabstract read_tmpfs_user_blk)
@@ -1254,10 +1404,12 @@
 
 	(block tmpfs_user_obj_type_transition_blk
 		(blockabstract tmpfs_user_obj_type_transition_blk)
-		(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+		(macro tmpfs_user_obj_type_transition ((type ARG1)(type
+			ARG2)(class ARG3)(name ARG4))
 			(call file.search_runtime_user (ARG1))
 			(call fs.search_tmpfs (ARG1))
-			(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2 ARG3 ARG4))))
+			(call obj_type_transition_pattern (ARG1
+				tmpfs_user_file ARG2 ARG3 ARG4))))
 
 	(macro type ((type ARG1))
 		(typeattributeset type_attribute ARG1))
@@ -1343,11 +1495,13 @@
 		(userlevel ARG1 ARG2)
 		(userrange ARG1 ARG3))
 
-	(macro common_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
+	(macro common_login ((user ARG1)(role ARG2)(type ARG3)(level
+		ARG4)(levelrange ARG5))
 		(call base_common_login (ARG1 ARG2 ARG3))
 		(call mls (ARG1 ARG4 ARG5)))
 
-	(macro priv_login ((user ARG1)(role ARG2)(type ARG3)(level ARG4)(levelrange ARG5))
+	(macro priv_login ((user ARG1)(role ARG2)(type ARG3)(level
+		ARG4)(levelrange ARG5))
 		(call base_priv_login (ARG1 ARG2 ARG3))
 		(call mls (ARG1 ARG4 ARG5)))
 
@@ -1370,43 +1524,59 @@
 		(typeattributeset home_cache_creator_subj_type_attribute ARG1))
 
 	(macro home_config_creator_subj_type ((type ARG1))
-		(typeattributeset home_config_creator_subj_type_attribute ARG1))
+		(typeattributeset home_config_creator_subj_type_attribute
+			ARG1))
 
 	(macro home_data_creator_subj_type ((type ARG1))
 		(typeattributeset home_data_creator_subj_type_attribute ARG1))
 
 	(macro dynamic_subj_type_transition_common_login_subj ((type ARG1))
-		(call dynamic_subj_type_transition_pattern (ARG1 common_login_type_attribute)))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			common_login_type_attribute)))
 
 	(macro dynamic_subj_type_transition_unpriv_login_subj ((type ARG1))
-		(call dynamic_subj_type_transition_pattern (ARG1 unpriv_login_type_attribute)))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			unpriv_login_type_attribute)))
 
-	(macro shell_manual_subj_type_transition_common_login_subj ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 common_login_type_attribute)))
+	(macro shell_manual_subj_type_transition_common_login_subj ((type
+		ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			common_login_type_attribute)))
 
-	(macro spec_manual_subj_type_transition_common_login_subj ((type ARG1)(type ARG2))
-		(call manual_subj_type_transition_pattern (ARG1 ARG2 common_login_type_attribute)))
+	(macro spec_manual_subj_type_transition_common_login_subj ((type
+		ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			common_login_type_attribute)))
 
-	(macro shell_manual_subj_type_transition_unpriv_login_subj ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_login_type_attribute)))
+	(macro shell_manual_subj_type_transition_unpriv_login_subj ((type
+		ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			unpriv_login_type_attribute)))
 
-	(macro spec_manual_subj_type_transition_unpriv_login_subj ((type ARG1)(type ARG2))
-		(call manual_subj_type_transition_pattern (ARG1 ARG2 unpriv_login_type_attribute)))
+	(macro spec_manual_subj_type_transition_unpriv_login_subj ((type
+		ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			unpriv_login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 unpriv_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			unpriv_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_common_subj ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 common_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			common_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_priv_subj ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 priv_type_attribute)))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			priv_type_attribute)))
 
 	(macro cmd_manual_subj_type_transition_priv_subj ((type ARG1))
-		(call cmd.manual_subj_type_transition (ARG1 priv_type_attribute)))
+		(call cmd.manual_subj_type_transition (ARG1
+			priv_type_attribute)))
 
 	(macro dontaudit_dynamic_subj_type_transition_common_subj ((type ARG1))
-		(dontaudit ARG1 common_type_attribute (process (dyntransition))))
+		(dontaudit ARG1 common_type_attribute (process
+			(dyntransition))))
 
 	(macro dontaudit_manual_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (transition))))
@@ -1430,7 +1600,8 @@
 
 	(macro rw_inherited_fifo_files_common_subj ((type ARG1))
 		(call use_fd_common_subj (ARG1))
-		(allow ARG1 common_type_attribute rw_inherited_fifo_file_perms))
+		(allow ARG1 common_type_attribute
+			rw_inherited_fifo_file_perms))
 
 	(macro use_fd_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (fd (use))))
@@ -1458,15 +1629,18 @@
 
 	(macro rw_inherited_fifo_files_unpriv_subj ((type ARG1))
 		(call use_fd_unpriv_subj (ARG1))
-		(allow ARG1 unpriv_type_attribute rw_inherited_fifo_file_perms))
+		(allow ARG1 unpriv_type_attribute
+			rw_inherited_fifo_file_perms))
 
 	(macro write_inherited_fifo_files_unpriv_subj ((type ARG1))
 		(call use_fd_unpriv_subj (ARG1))
-		(allow ARG1 unpriv_type_attribute write_inherited_fifo_file_perms))
+		(allow ARG1 unpriv_type_attribute
+			write_inherited_fifo_file_perms))
 
 	(macro rw_inherited_unix_stream_sockets_unpriv_subj ((type ARG1))
 		(call use_fd_unpriv_subj (ARG1))
-		(allow ARG1 unpriv_type_attribute rw_inherited_unix_stream_socket_perms))
+		(allow ARG1 unpriv_type_attribute
+			rw_inherited_unix_stream_socket_perms))
 
 	(macro getattr_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (process (getattr))))
@@ -1559,16 +1733,21 @@
 		(call file.rw_home_dirs (ARG1))
 		(allow ARG1 home_dir.file manage_dir_perms))
 
-	(macro home_dir_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_dir_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_home (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1 home_dir.file ARG2
+			ARG3 ARG4)))
 
-	(macro home_dir_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_dir_add_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_home (ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_dir.file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_add_pattern (ARG1 home_dir.file ARG2
+			ARG3 ARG4)))
 
 	(macro home_obj_type_transition_home_dir ((type ARG1)(name ARG2))
-		(call file.home_obj_type_transition (ARG1 home_dir.file dir ARG2)))
+		(call file.home_obj_type_transition (ARG1 home_dir.file dir
+			ARG2)))
 
 	(macro search_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1580,15 +1759,18 @@
 
 	(macro read_home_cache_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_cache.home_cache_file home_cache.home_cache_file)))
+		(call read_files_pattern (ARG1 home_cache.home_cache_file
+			home_cache.home_cache_file)))
 
 	(macro manage_home_cache_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_files_pattern (ARG1 home_cache.home_cache_file home_cache.home_cache_file)))
+		(call manage_files_pattern (ARG1 home_cache.home_cache_file
+			home_cache.home_cache_file)))
 
 	(macro read_home_cache_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_cache.home_cache_file home_cache.home_cache_file)))
+		(call read_lnk_files_pattern (ARG1 home_cache.home_cache_file
+			home_cache.home_cache_file)))
 
 	(macro add_entry_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1628,7 +1810,8 @@
 		(allow ARG1 home_cache.home_cache_file relabel_dir_perms)
 		(allow ARG1 home_cache.home_cache_file relabel_fifo_file_perms)
 		(allow ARG1 home_cache.home_cache_file relabel_lnk_file_perms)
-		(allow ARG1 home_cache.home_cache_file relabel_sock_file_perms))
+		(allow ARG1 home_cache.home_cache_file
+			relabel_sock_file_perms))
 
 	(macro search_all_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1640,15 +1823,19 @@
 
 	(macro getattr_all_home_cache_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call getattr_files_pattern (ARG1 home_cache_obj_type_attribute home_cache_obj_type_attribute)))
+		(call getattr_files_pattern (ARG1 home_cache_obj_type_attribute
+			home_cache_obj_type_attribute)))
 
 	(macro read_all_home_cache_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_cache_obj_type_attribute home_cache_obj_type_attribute)))
+		(call read_files_pattern (ARG1 home_cache_obj_type_attribute
+			home_cache_obj_type_attribute)))
 
 	(macro read_all_home_cache_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_cache_obj_type_attribute home_cache_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1
+			home_cache_obj_type_attribute
+				home_cache_obj_type_attribute)))
 
 	(macro read_all_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1656,37 +1843,50 @@
 		(allow ARG1 home_cache_obj_type_attribute list_dir_perms)
 		(allow ARG1 home_cache_obj_type_attribute read_fifo_file_perms)
 		(allow ARG1 home_cache_obj_type_attribute read_lnk_file_perms)
-		(allow ARG1 home_cache_obj_type_attribute read_sock_file_perms))
+		(allow ARG1 home_cache_obj_type_attribute
+			read_sock_file_perms))
 
 	(macro manage_all_home_cache ((type ARG1))
 		(call rw_home_dir (ARG1))
 		(allow ARG1 home_cache_obj_type_attribute manage_file_perms)
 		(allow ARG1 home_cache_obj_type_attribute manage_dir_perms)
-		(allow ARG1 home_cache_obj_type_attribute manage_fifo_file_perms)
-		(allow ARG1 home_cache_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 home_cache_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 home_cache_obj_type_attribute
+			manage_fifo_file_perms)
+		(allow ARG1 home_cache_obj_type_attribute
+			manage_lnk_file_perms)
+		(allow ARG1 home_cache_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_cache_obj_type_attribute relabel_file_perms)
 		(allow ARG1 home_cache_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 home_cache_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 home_cache_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 home_cache_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 home_cache_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 home_cache_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 home_cache_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro home_dir_add_obj_type_transition_home_cache ((type ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_dir.file home_cache.home_cache_file dir ".cache")))
+		(call obj_type_transition_add_pattern (ARG1 home_dir.file
+			home_cache.home_cache_file dir ".cache")))
 
 	(macro home_dir_obj_type_transition_home_cache ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_cache.home_cache_file dir ".cache")))
+		(call home_dir_obj_type_transition (ARG1
+			home_cache.home_cache_file dir ".cache")))
 
-	(macro home_cache_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_cache_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_cache.home_cache_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_cache.home_cache_file ARG2 ARG3 ARG4)))
 
-	(macro home_cache_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_cache_add_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_cache.home_cache_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_add_pattern (ARG1
+			home_cache.home_cache_file ARG2 ARG3 ARG4)))
 
 	(macro home_cache_template ((type ARG1))
 		(call manage_home_cache (ARG1))
@@ -1703,15 +1903,18 @@
 
 	(macro read_home_config_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))
+		(call read_files_pattern (ARG1 home_config.home_config_file
+			home_config.home_config_file)))
 
 	(macro manage_home_config_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))
+		(call manage_files_pattern (ARG1 home_config.home_config_file
+			home_config.home_config_file)))
 
 	(macro read_home_config_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_config.home_config_file home_config.home_config_file)))
+		(call read_lnk_files_pattern (ARG1 home_config.home_config_file
+			home_config.home_config_file)))
 
 	(macro add_entry_home_config ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1741,17 +1944,21 @@
 		(call rw_home_dir (ARG1))
 		(allow ARG1 home_config.home_config_file manage_file_perms)
 		(allow ARG1 home_config.home_config_file manage_dir_perms)
-		(allow ARG1 home_config.home_config_file manage_fifo_file_perms)
+		(allow ARG1 home_config.home_config_file
+			manage_fifo_file_perms)
 		(allow ARG1 home_config.home_config_file manage_lnk_file_perms)
-		(allow ARG1 home_config.home_config_file manage_sock_file_perms))
+		(allow ARG1 home_config.home_config_file
+			manage_sock_file_perms))
 
 	(macro relabel_home_config ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_config.home_config_file relabel_file_perms)
 		(allow ARG1 home_config.home_config_file relabel_dir_perms)
-		(allow ARG1 home_config.home_config_file relabel_fifo_file_perms)
+		(allow ARG1 home_config.home_config_file
+			relabel_fifo_file_perms)
 		(allow ARG1 home_config.home_config_file relabel_lnk_file_perms)
-		(allow ARG1 home_config.home_config_file relabel_sock_file_perms))
+		(allow ARG1 home_config.home_config_file
+			relabel_sock_file_perms))
 
 	(macro search_all_home_config ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1763,53 +1970,72 @@
 
 	(macro getattr_all_home_config_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call getattr_files_pattern (ARG1 home_config_obj_type_attribute home_config_obj_type_attribute)))
+		(call getattr_files_pattern (ARG1
+			home_config_obj_type_attribute
+				home_config_obj_type_attribute)))
 
 	(macro read_all_home_config_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_config_obj_type_attribute home_config_obj_type_attribute)))
+		(call read_files_pattern (ARG1 home_config_obj_type_attribute
+			home_config_obj_type_attribute)))
 
 	(macro read_all_home_config_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_config_obj_type_attribute home_config_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1
+			home_config_obj_type_attribute
+				home_config_obj_type_attribute)))
 
 	(macro read_all_home_config ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_config_obj_type_attribute read_file_perms)
 		(allow ARG1 home_config_obj_type_attribute list_dir_perms)
-		(allow ARG1 home_config_obj_type_attribute read_fifo_file_perms)
+		(allow ARG1 home_config_obj_type_attribute
+			read_fifo_file_perms)
 		(allow ARG1 home_config_obj_type_attribute read_lnk_file_perms)
-		(allow ARG1 home_config_obj_type_attribute read_sock_file_perms))
+		(allow ARG1 home_config_obj_type_attribute
+			read_sock_file_perms))
 
 	(macro manage_all_home_config ((type ARG1))
 		(call rw_home_dir (ARG1))
 		(allow ARG1 home_config_obj_type_attribute manage_file_perms)
 		(allow ARG1 home_config_obj_type_attribute manage_dir_perms)
-		(allow ARG1 home_config_obj_type_attribute manage_fifo_file_perms)
-		(allow ARG1 home_config_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 home_config_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 home_config_obj_type_attribute
+			manage_fifo_file_perms)
+		(allow ARG1 home_config_obj_type_attribute
+			manage_lnk_file_perms)
+		(allow ARG1 home_config_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_home_config ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_config_obj_type_attribute relabel_file_perms)
 		(allow ARG1 home_config_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 home_config_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 home_config_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 home_config_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 home_config_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 home_config_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 home_config_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro home_dir_add_obj_type_transition_home_config ((type ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_dir.file home_config.home_config_file dir ".config")))
+		(call obj_type_transition_add_pattern (ARG1 home_dir.file
+			home_config.home_config_file dir ".config")))
 
 	(macro home_dir_obj_type_transition_home_config ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_config.home_config_file dir ".config")))
+		(call home_dir_obj_type_transition (ARG1
+			home_config.home_config_file dir ".config")))
 
-	(macro home_config_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_config_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_config.home_config_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_config.home_config_file ARG2 ARG3 ARG4)))
 
-	(macro home_config_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_config_add_obj_type_transition ((type ARG1)(type
+		ARG2)(class ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_config.home_config_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_add_pattern (ARG1
+			home_config.home_config_file ARG2 ARG3 ARG4)))
 
 	(macro home_config_template ((type ARG1))
 		(call manage_home_config (ARG1))
@@ -1826,15 +2052,18 @@
 
 	(macro read_home_data_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))
+		(call read_files_pattern (ARG1 home_data.home_data_file
+			home_data.home_data_file)))
 
 	(macro manage_home_data_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))
+		(call manage_files_pattern (ARG1 home_data.home_data_file
+			home_data.home_data_file)))
 
 	(macro read_home_data_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_data.home_data_file home_data.home_data_file)))
+		(call read_lnk_files_pattern (ARG1 home_data.home_data_file
+			home_data.home_data_file)))
 
 	(macro add_entry_home_data ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1886,11 +2115,13 @@
 
 	(macro read_all_home_data_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_data_obj_type_attribute home_data_obj_type_attribute)))
+		(call read_files_pattern (ARG1 home_data_obj_type_attribute
+			home_data_obj_type_attribute)))
 
 	(macro read_all_home_data_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_data_obj_type_attribute home_data_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1 home_data_obj_type_attribute
+			home_data_obj_type_attribute)))
 
 	(macro read_all_home_data ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -1904,31 +2135,42 @@
 		(call rw_home_dir (ARG1))
 		(allow ARG1 home_data_obj_type_attribute manage_file_perms)
 		(allow ARG1 home_data_obj_type_attribute manage_dir_perms)
-		(allow ARG1 home_data_obj_type_attribute manage_fifo_file_perms)
+		(allow ARG1 home_data_obj_type_attribute
+			manage_fifo_file_perms)
 		(allow ARG1 home_data_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 home_data_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 home_data_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_home_data ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_data_obj_type_attribute relabel_file_perms)
 		(allow ARG1 home_data_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 home_data_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 home_data_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 home_data_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 home_data_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 home_data_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 home_data_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro home_dir_add_obj_type_transition_home_data ((type ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_dir.file home_data.home_data_file dir ".local")))
+		(call obj_type_transition_add_pattern (ARG1 home_dir.file
+			home_data.home_data_file dir ".local")))
 
 	(macro home_dir_obj_type_transition_home_data ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_data.home_data_file dir ".local")))
+		(call home_dir_obj_type_transition (ARG1
+			home_data.home_data_file dir ".local")))
 
-	(macro home_data_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_data_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_data.home_data_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_data.home_data_file ARG2 ARG3 ARG4)))
 
-	(macro home_data_add_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_data_add_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_add_pattern (ARG1 home_data.home_data_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_add_pattern (ARG1
+			home_data.home_data_file ARG2 ARG3 ARG4)))
 
 	(macro home_data_template ((type ARG1))
 		(call manage_home_data (ARG1))
@@ -1945,23 +2187,28 @@
 
 	(macro create_home_user_dirs ((type ARG1))
 		(call add_entry_home_dir (ARG1))
-		(call create_dirs_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call create_dirs_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro rw_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call rw_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call rw_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro read_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call read_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro exec_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call exec_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call exec_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro mmap_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call mmap_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call mmap_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro dontaudit_relabel_home_user_files ((type ARG1))
 		(dontaudit ARG1 home_user.home_user_file relabel_file_perms))
@@ -1971,41 +2218,50 @@
 
 	(macro write_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call write_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call write_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro write_inherited_home_user_files ((type ARG1))
-		(allow ARG1 home_user.home_user_file write_inherited_file_perms))
+		(allow ARG1 home_user.home_user_file
+			write_inherited_file_perms))
 
 	(macro setattr_home_user_files ((type ARG1))
 		(allow ARG1 home_user.home_user_file (file (setattr))))
 
 	(macro create_home_user_files ((type ARG1))
 		(call add_entry_home_dir (ARG1))
-		(call create_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call create_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro delete_home_user_files ((type ARG1))
 		(call del_entry_home_dir (ARG1))
-		(call delete_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call delete_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro manage_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call manage_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro read_home_user_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call read_lnk_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro manage_home_user_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_lnk_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call manage_lnk_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro manage_home_user_fifo_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_fifo_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call manage_fifo_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro manage_home_user_sock_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_sock_files_pattern (ARG1 home_user.home_user_file home_user.home_user_file)))
+		(call manage_sock_files_pattern (ARG1 home_user.home_user_file
+			home_user.home_user_file)))
 
 	(macro add_entry_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -2102,24 +2358,31 @@
 
 	(macro read_all_home_user_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_user_obj_type_attribute home_user_obj_type_attribute)))
+		(call read_files_pattern (ARG1 home_user_obj_type_attribute
+			home_user_obj_type_attribute)))
 
 	(macro dontaudit_mmap_all_home_user_files ((type ARG1))
-		(dontaudit ARG1 home_user_obj_type_attribute relabel_file_perms))
+		(dontaudit ARG1 home_user_obj_type_attribute
+			relabel_file_perms))
 
 	(macro dontaudit_relabel_all_home_user_files ((type ARG1))
-		(dontaudit ARG1 home_user_obj_type_attribute relabel_file_perms))
+		(dontaudit ARG1 home_user_obj_type_attribute
+			relabel_file_perms))
 
 	(macro read_all_home_user_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_user_obj_type_attribute home_user_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1 home_user_obj_type_attribute
+			home_user_obj_type_attribute)))
 
 	(macro dontaudit_getattr_all_home_user ((type ARG1))
 		(dontaudit ARG1 home_user_obj_type_attribute (file (getattr)))
 		(dontaudit ARG1 home_user_obj_type_attribute (dir (getattr)))
-		(dontaudit ARG1 home_user_obj_type_attribute (fifo_file (getattr)))
-		(dontaudit ARG1 home_user_obj_type_attribute (lnk_file (getattr)))
-		(dontaudit ARG1 home_user_obj_type_attribute (sock_file (getattr))))
+		(dontaudit ARG1 home_user_obj_type_attribute (fifo_file
+			(getattr)))
+		(dontaudit ARG1 home_user_obj_type_attribute (lnk_file
+			(getattr)))
+		(dontaudit ARG1 home_user_obj_type_attribute (sock_file
+			(getattr))))
 
 	(macro getattr_all_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -2127,14 +2390,18 @@
 		(allow ARG1 home_user_obj_type_attribute (dir (getattr)))
 		(allow ARG1 home_user_obj_type_attribute (fifo_file (getattr)))
 		(allow ARG1 home_user_obj_type_attribute (lnk_file (getattr)))
-		(allow ARG1 home_user_obj_type_attribute (sock_file (getattr))))
+		(allow ARG1 home_user_obj_type_attribute (sock_file
+			(getattr))))
 
 	(macro dontaudit_read_all_home_user ((type ARG1))
 		(dontaudit ARG1 home_user_obj_type_attribute read_file_perms)
 		(dontaudit ARG1 home_user_obj_type_attribute list_dir_perms)
-		(dontaudit ARG1 home_user_obj_type_attribute read_fifo_file_perms)
-		(dontaudit ARG1 home_user_obj_type_attribute read_lnk_file_perms)
-		(dontaudit ARG1 home_user_obj_type_attribute read_sock_file_perms))
+		(dontaudit ARG1 home_user_obj_type_attribute
+			read_fifo_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute
+			read_lnk_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute
+			read_sock_file_perms))
 
 	(macro read_all_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -2147,57 +2414,77 @@
 	(macro dontaudit_rw_all_home_user ((type ARG1))
 		(dontaudit ARG1 home_user_obj_type_attribute rw_file_perms)
 		(dontaudit ARG1 home_user_obj_type_attribute rw_dir_perms)
-		(dontaudit ARG1 home_user_obj_type_attribute rw_fifo_file_perms)
+		(dontaudit ARG1 home_user_obj_type_attribute
+			rw_fifo_file_perms)
 		(dontaudit ARG1 home_user_obj_type_attribute rw_lnk_file_perms)
-		(dontaudit ARG1 home_user_obj_type_attribute rw_sock_file_perms))
+		(dontaudit ARG1 home_user_obj_type_attribute
+			rw_sock_file_perms))
 
 	(macro delete_all_home_user ((type ARG1))
 		(call del_entry_home_dir (ARG1))
 		(allow ARG1 home_user_obj_type_attribute del_entry_dir_perms)
 		(allow ARG1 home_user_obj_type_attribute delete_file_perms)
 		(allow ARG1 home_user_obj_type_attribute delete_dir_perms)
-		(allow ARG1 home_user_obj_type_attribute delete_fifo_file_perms)
+		(allow ARG1 home_user_obj_type_attribute
+			delete_fifo_file_perms)
 		(allow ARG1 home_user_obj_type_attribute delete_lnk_file_perms)
-		(allow ARG1 home_user_obj_type_attribute delete_sock_file_perms))
+		(allow ARG1 home_user_obj_type_attribute
+			delete_sock_file_perms))
 
 	(macro manage_all_home_user ((type ARG1))
 		(call rw_home_dir (ARG1))
 		(allow ARG1 home_user_obj_type_attribute manage_file_perms)
 		(allow ARG1 home_user_obj_type_attribute manage_dir_perms)
-		(allow ARG1 home_user_obj_type_attribute manage_fifo_file_perms)
+		(allow ARG1 home_user_obj_type_attribute
+			manage_fifo_file_perms)
 		(allow ARG1 home_user_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 home_user_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 home_user_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user_obj_type_attribute relabel_file_perms)
 		(allow ARG1 home_user_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 home_user_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 home_user_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 home_user_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 home_user_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 home_user_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 home_user_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro home_dir_obj_type_transition_home_user ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file file "*"))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file dir "*"))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file fifo_file "*"))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file lnk_file "*"))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file sock_file "*")))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file file "*"))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file dir "*"))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file fifo_file "*"))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file lnk_file "*"))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file sock_file "*")))
 
 	(macro home_dir_obj_type_transition_home_user_files ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file file "*")))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file file "*")))
 
 	(macro home_dir_obj_type_transition_home_user_lnk_files ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file lnk_file "*")))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file lnk_file "*")))
 
 	(macro home_dir_obj_type_transition_home_user_dirs ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_user.home_user_file dir "*")))
+		(call home_dir_obj_type_transition (ARG1
+			home_user.home_user_file dir "*")))
 
 	(macro home_dir_add_obj_type_transition_home_user_dirs ((type ARG1))
-		(call home_dir_add_obj_type_transition (ARG1 home_user.home_user_file dir "*")))
+		(call home_dir_add_obj_type_transition (ARG1
+			home_user.home_user_file dir "*")))
 
-	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_user.home_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_user.home_user_file ARG2 ARG3 ARG4)))
 
 	(macro home_user_template ((type ARG1))
 		(call manage_home_user (ARG1))
@@ -2214,11 +2501,13 @@
 
 	(macro add_entry_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(allow ARG1 var_tmp_user.var_tmp_user_file add_entry_dir_perms))
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			add_entry_dir_perms))
 
 	(macro del_entry_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(allow ARG1 var_tmp_user.var_tmp_user_file del_entry_dir_perms))
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			del_entry_dir_perms))
 
 	(macro rw_var_tmp_user_dirs ((type ARG1))
 		(call file.search_var_tmp (ARG1))
@@ -2226,43 +2515,57 @@
 
 	(macro read_var_tmp_user_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call read_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+		(call read_files_pattern (ARG1 var_tmp_user.var_tmp_user_file
+			var_tmp_user.var_tmp_user_file)))
 
 	(macro setattr_var_tmp_user_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call setattr_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+		(call setattr_files_pattern (ARG1
+			var_tmp_user.var_tmp_user_file
+				var_tmp_user.var_tmp_user_file)))
 
 	(macro manage_var_tmp_user_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call manage_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+		(call manage_files_pattern (ARG1 var_tmp_user.var_tmp_user_file
+			var_tmp_user.var_tmp_user_file)))
 
 	(macro read_var_tmp_user_lnk_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call read_lnk_files_pattern (ARG1 var_tmp_user.var_tmp_user_file var_tmp_user.var_tmp_user_file)))
+		(call read_lnk_files_pattern (ARG1
+			var_tmp_user.var_tmp_user_file
+				var_tmp_user.var_tmp_user_file)))
 
 	(macro read_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file read_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file list_dir_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file read_fifo_file_perms)
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			read_fifo_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file read_lnk_file_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file read_sock_file_perms))
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			read_sock_file_perms))
 
 	(macro manage_var_tmp_user ((type ARG1))
 		(call file.rw_var_tmp_dirs (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file manage_dir_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file manage_fifo_file_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file manage_lnk_file_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file manage_sock_file_perms))
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			manage_fifo_file_perms)
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			manage_lnk_file_perms)
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			manage_sock_file_perms))
 
 	(macro relabel_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_file_perms)
 		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_dir_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_fifo_file_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_lnk_file_perms)
-		(allow ARG1 var_tmp_user.var_tmp_user_file relabel_sock_file_perms))
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			relabel_fifo_file_perms)
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			relabel_lnk_file_perms)
+		(allow ARG1 var_tmp_user.var_tmp_user_file
+			relabel_sock_file_perms))
 
 	(macro search_all_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
@@ -2274,61 +2577,85 @@
 
 	(macro read_all_var_tmp_user_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call read_files_pattern (ARG1 var_tmp_user_obj_type_attribute var_tmp_user_obj_type_attribute)))
+		(call read_files_pattern (ARG1 var_tmp_user_obj_type_attribute
+			var_tmp_user_obj_type_attribute)))
 
 	(macro read_all_var_tmp_user_lnk_files ((type ARG1))
 		(call file.search_var_tmp (ARG1))
-		(call read_lnk_files_pattern (ARG1 var_tmp_user_obj_type_attribute var_tmp_user_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1
+			var_tmp_user_obj_type_attribute
+				var_tmp_user_obj_type_attribute)))
 
 	(macro read_all_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute read_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute list_dir_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute read_fifo_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute read_lnk_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute read_sock_file_perms))
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			read_fifo_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			read_lnk_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			read_sock_file_perms))
 
 	(macro manage_all_var_tmp_user ((type ARG1))
 		(call file.rw_var_tmp_dirs (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute manage_dir_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute manage_fifo_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			manage_fifo_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			manage_lnk_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_var_tmp_user ((type ARG1))
 		(call file.search_var_tmp (ARG1))
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_file_perms)
 		(allow ARG1 var_tmp_user_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 var_tmp_user_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 var_tmp_user_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_files ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_dirs ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dirs "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file dirs "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_fifo_files ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file fifo_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_sock_files ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file sock_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user_lnk_files ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file lnk_file "*")))
 
 	(macro var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file file "*"))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file dir "*"))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file fifo_file "*"))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file lnk_file "*"))
-		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user.var_tmp_user_file sock_file "*")))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file dir "*"))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file fifo_file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file lnk_file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1
+			var_tmp_user.var_tmp_user_file sock_file "*")))
 
-	(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro var_tmp_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_var_tmp (ARG1))
-		(call obj_type_transition_pattern (ARG1 var_tmp_user.var_tmp_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			var_tmp_user.var_tmp_user_file ARG2 ARG3 ARG4)))
 
 	(macro var_tmp_user_template ((type ARG1))
 		(call manage_var_tmp_user (ARG1))
@@ -2363,10 +2690,12 @@
 	(macro read_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+		(call read_files_pattern (ARG1 tmpfs_user.tmpfs_user_file
+			tmpfs_user.tmpfs_user_file)))
 
 	(macro read_inherited_tmpfs_user_files ((type ARG1))
-		(allow ARG1 tmpfs_user.tmpfs_user_file read_inherited_file_perms))
+		(allow ARG1 tmpfs_user.tmpfs_user_file
+			read_inherited_file_perms))
 
 	(macro dontaudit_relabel_tmpfs_user_files ((type ARG1))
 		(dontaudit ARG1 tmpfs_user.tmpfs_user_file relabel_file_perms))
@@ -2374,25 +2703,30 @@
 	(macro delete_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.del_entry_tmpfs_dirs (ARG1))
-		(call delete_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+		(call delete_files_pattern (ARG1 tmpfs_user.tmpfs_user_file
+			tmpfs_user.tmpfs_user_file)))
 
 	(macro rw_inherited_tmpfs_user_files ((type ARG1))
-		(allow ARG1 tmpfs_user.tmpfs_user_file rw_inherited_file_perms))
+		(allow ARG1 tmpfs_user.tmpfs_user_file
+			rw_inherited_file_perms))
 
 	(macro manage_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.rw_tmpfs_dirs (ARG1))
-		(call manage_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+		(call manage_files_pattern (ARG1 tmpfs_user.tmpfs_user_file
+			tmpfs_user.tmpfs_user_file)))
 
 	(macro read_tmpfs_user_lnk_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call read_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+		(call read_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file
+			tmpfs_user.tmpfs_user_file)))
 
 	(macro manage_tmpfs_user_lnk_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call manage_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file tmpfs_user.tmpfs_user_file)))
+		(call manage_lnk_files_pattern (ARG1 tmpfs_user.tmpfs_user_file
+			tmpfs_user.tmpfs_user_file)))
 
 	(macro read_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -2419,7 +2753,8 @@
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_dir_perms)
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_fifo_file_perms)
 		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_lnk_file_perms)
-		(allow ARG1 tmpfs_user.tmpfs_user_file relabel_sock_file_perms))
+		(allow ARG1 tmpfs_user.tmpfs_user_file
+			relabel_sock_file_perms))
 
 	(macro search_all_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -2434,12 +2769,15 @@
 	(macro read_all_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call read_files_pattern (ARG1 tmpfs_user_obj_type_attribute tmpfs_user_obj_type_attribute)))
+		(call read_files_pattern (ARG1 tmpfs_user_obj_type_attribute
+			tmpfs_user_obj_type_attribute)))
 
 	(macro read_all_tmpfs_user_lnk_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call read_lnk_files_pattern (ARG1 tmpfs_user_obj_type_attribute tmpfs_user_obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1
+			tmpfs_user_obj_type_attribute
+				tmpfs_user_obj_type_attribute)))
 
 	(macro delete_all_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -2447,9 +2785,12 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute del_entry_dir_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute delete_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute delete_dir_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute delete_fifo_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute delete_lnk_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute delete_sock_file_perms))
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			delete_fifo_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			delete_lnk_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			delete_sock_file_perms))
 
 	(macro read_all_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -2458,49 +2799,66 @@
 		(allow ARG1 tmpfs_user_obj_type_attribute list_dir_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute read_fifo_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute read_lnk_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute read_sock_file_perms))
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			read_sock_file_perms))
 
 	(macro manage_all_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.rw_tmpfs_dirs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute manage_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute manage_dir_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute manage_fifo_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute manage_lnk_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute manage_sock_file_perms))
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			manage_fifo_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			manage_lnk_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			manage_sock_file_perms))
 
 	(macro relabel_all_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
 		(allow ARG1 tmpfs_user_obj_type_attribute relabel_file_perms)
 		(allow ARG1 tmpfs_user_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute relabel_fifo_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute relabel_lnk_file_perms)
-		(allow ARG1 tmpfs_user_obj_type_attribute relabel_sock_file_perms))
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			relabel_fifo_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow ARG1 tmpfs_user_obj_type_attribute
+			relabel_sock_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file dir "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file fifo_file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file lnk_file "*"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file sock_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file fifo_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file lnk_file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file sock_file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_lnk_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file lnk_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file lnk_file "*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_dirs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user.tmpfs_user_file dir "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user.tmpfs_user_file dir "*")))
 
-	(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro tmpfs_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call file.search_runtime_user (ARG1))
-		(call obj_type_transition_pattern (ARG1 tmpfs_user.tmpfs_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			tmpfs_user.tmpfs_user_file ARG2 ARG3 ARG4)))
 
 	(macro tmpfs_user_template ((type ARG1))
 		(call manage_tmpfs_user (ARG1))
@@ -2519,35 +2877,43 @@
 
 	(macro manage_home_cmd_dirs ((type ARG1))
 		(call search_home_data (ARG1))
-		(call manage_dirs_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call manage_dirs_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro read_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call read_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call read_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro rw_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call rw_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call rw_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro manage_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call manage_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call manage_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro exec_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call exec_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call exec_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro mmap_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call mmap_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call mmap_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro read_home_cmd_lnk_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call read_lnk_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro manage_home_cmd_lnk_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call manage_lnk_files_pattern (ARG1 home_cmd.home_user_file home_cmd.home_user_file)))
+		(call manage_lnk_files_pattern (ARG1 home_cmd.home_user_file
+			home_cmd.home_user_file)))
 
 	(macro read_home_cmd ((type ARG1))
 		(call search_home_data (ARG1))
@@ -2604,24 +2970,33 @@
 
 	(macro home_cmd_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(call search_home_cmd (ARG1))
-		(call auto_subj_type_transition_pattern (ARG1 home_cmd.home_user_file ARG2)))
+		(call auto_subj_type_transition_pattern (ARG1
+			home_cmd.home_user_file ARG2)))
 
-	(macro spec_obj_type_transition_home_cmd ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
-		(call obj_type_transition_pattern (ARG1 ARG2 home_cmd.home_user_file ARG3 ARG4)))
+	(macro spec_obj_type_transition_home_cmd ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
+		(call obj_type_transition_pattern (ARG1 ARG2
+			home_cmd.home_user_file ARG3 ARG4)))
 
 	(macro home_data_obj_type_transition_home_cmd ((type ARG1))
-		(call home_data_obj_type_transition (ARG1 home_cmd.home_user_file dir "bin")))
+		(call home_data_obj_type_transition (ARG1
+			home_cmd.home_user_file dir "bin")))
 
 	(macro home_dir_obj_type_transition_home_cmd ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_cmd.home_user_file lnk_file "bin"))
-		(call home_dir_obj_type_transition (ARG1 home_cmd.home_user_file dir "bin")))
+		(call home_dir_obj_type_transition (ARG1
+			home_cmd.home_user_file lnk_file "bin"))
+		(call home_dir_obj_type_transition (ARG1
+			home_cmd.home_user_file dir "bin")))
 
-	(macro home_cmd_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_cmd_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_data (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_cmd.home_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_cmd.home_user_file ARG2 ARG3 ARG4)))
 
 	(macro home_cmd_manual_subj_type_transition_priv_subj ((type ARG1))
-		(call manual_subj_type_transition_pattern (ARG1 home_cmd.home_user_file priv_type_attribute)))
+		(call manual_subj_type_transition_pattern (ARG1
+			home_cmd.home_user_file priv_type_attribute)))
 
 	(macro home_cmd_template ((type ARG1))
 		(call exec_home_cmd_files (ARG1))
@@ -2647,7 +3022,8 @@
 		(allow ARG1 home_history.home_user_file relabel_file_perms))
 
 	(macro home_dir_obj_type_transition_home_history ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_history.home_user_file file ".bash_history")))
+		(call home_dir_obj_type_transition (ARG1
+			home_history.home_user_file file ".bash_history")))
 
 	(macro home_history_template ((type ARG1))
 		(call manage_home_history_files (ARG1))
@@ -2664,15 +3040,18 @@
 
 	(macro read_home_cert_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_files_pattern (ARG1 home_cert.home_user_file home_cert.home_user_file)))
+		(call read_files_pattern (ARG1 home_cert.home_user_file
+			home_cert.home_user_file)))
 
 	(macro manage_home_cert_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call manage_files_pattern (ARG1 home_cert.home_user_file home_cert.home_user_file)))
+		(call manage_files_pattern (ARG1 home_cert.home_user_file
+			home_cert.home_user_file)))
 
 	(macro read_home_cert_lnk_files ((type ARG1))
 		(call search_home_dir (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_cert.home_user_file home_cert.home_user_file)))
+		(call read_lnk_files_pattern (ARG1 home_cert.home_user_file
+			home_cert.home_user_file)))
 
 	(macro read_home_cert ((type ARG1))
 		(call search_home_dir (ARG1))
@@ -2699,11 +3078,14 @@
 		(allow ARG1 home_cert.home_user_file relabel_sock_file_perms))
 
 	(macro home_dir_obj_type_transition_home_cert ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_cert.home_user_file dir ".pki")))
+		(call home_dir_obj_type_transition (ARG1
+			home_cert.home_user_file dir ".pki")))
 
-	(macro home_cert_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro home_cert_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
 		(call search_home_dir (ARG1))
-		(call obj_type_transition_pattern (ARG1 home_cert.home_user_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1
+			home_cert.home_user_file ARG2 ARG3 ARG4)))
 
 	(macro home_cert_template ((type ARG1))
 		(call manage_home_cert (ARG1))
@@ -2723,7 +3105,8 @@
 		(allow ARG1 home_terminfo.home_data_file relabel_file_perms))
 
 	(macro home_dir_obj_type_transition_home_terminfo ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_terminfo.home_data_file file ".terminfo")))
+		(call home_dir_obj_type_transition (ARG1
+			home_terminfo.home_data_file file ".terminfo")))
 
 	(macro home_terminfo_template ((type ARG1))
 		(call manage_home_terminfo_files (ARG1))
@@ -2761,8 +3144,10 @@
 		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file relabel_file_perms))
 
-	(macro var_spool_obj_type_transition_var_spool_user ((type ARG1)(name ARG2))
-		(call file.var_spool_obj_type_transition (ARG1 var_spool_user.var_spool_file file ARG2)))
+	(macro var_spool_obj_type_transition_var_spool_user ((type ARG1)(name
+		ARG2))
+		(call file.var_spool_obj_type_transition (ARG1
+			var_spool_user.var_spool_file file ARG2)))
 
 	(macro search_home_fonts_cache ((type ARG1))
 		(call search_home_cache (ARG1))
@@ -2774,11 +3159,13 @@
 
 	(macro read_home_fonts_cache_files ((type ARG1))
 		(call search_home_cache (ARG1))
-		(call read_files_pattern (ARG1 home_fonts.home_cache_file home_fonts.home_cache_file)))
+		(call read_files_pattern (ARG1 home_fonts.home_cache_file
+			home_fonts.home_cache_file)))
 
 	(macro read_home_fonts_cache_lnk_files ((type ARG1))
 		(call search_home_cache (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_fonts.home_cache_file home_fonts.home_cache_file)))
+		(call read_lnk_files_pattern (ARG1 home_fonts.home_cache_file
+			home_fonts.home_cache_file)))
 
 	(macro read_home_fonts_cache ((type ARG1))
 		(call search_home_cache (ARG1))
@@ -2803,13 +3190,16 @@
 		(allow ARG1 home_fonts.home_cache_file relabel_dir_perms)
 		(allow ARG1 home_fonts.home_cache_file relabel_fifo_file_perms)
 		(allow ARG1 home_fonts.home_cache_file relabel_lnk_file_perms)
-		(allow ARG1 home_fonts.home_cache_file relabel_sock_file_perms))
+		(allow ARG1 home_fonts.home_cache_file
+			relabel_sock_file_perms))
 
 	(macro home_dir_obj_type_transition_home_fonts_cache ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_fonts.home_cache_file dir ".fontconfig")))
+		(call home_dir_obj_type_transition (ARG1
+			home_fonts.home_cache_file dir ".fontconfig")))
 
 	(macro home_cache_obj_type_transition_home_fonts_cache ((type ARG1))
-		(call home_cache_obj_type_transition (ARG1 home_fonts.home_cache_file dir "fontconfig")))
+		(call home_cache_obj_type_transition (ARG1
+			home_fonts.home_cache_file dir "fontconfig")))
 
 	(macro home_fonts_cache ((type ARG1))
 		(call manage_home_fonts_cache (ARG1))
@@ -2827,11 +3217,14 @@
 
 	(macro read_home_fonts_config_files ((type ARG1))
 		(call search_home_config (ARG1))
-		(call read_files_pattern (ARG1 home_fonts.home_config_file home_fonts.home_config_file)))
+		(call read_files_pattern (ARG1
+			home_fonts.home_config_file
+				home_fonts.home_config_file)))
 
 	(macro read_home_fonts_config_lnk_files ((type ARG1))
 		(call search_home_config (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_fonts.home_config_file home_fonts.home_config_file)))
+		(call read_lnk_files_pattern (ARG1 home_fonts.home_config_file
+			home_fonts.home_config_file)))
 
 	(macro read_home_fonts_config ((type ARG1))
 		(call search_home_config (ARG1))
@@ -2848,28 +3241,35 @@
 		(allow ARG1 home_fonts.home_config_file manage_dir_perms)
 		(allow ARG1 home_fonts.home_config_file manage_fifo_file_perms)
 		(allow ARG1 home_fonts.home_config_file manage_lnk_file_perms)
-		(allow ARG1 home_fonts.home_config_file manage_sock_file_perms))
+		(allow ARG1 home_fonts.home_config_file
+			manage_sock_file_perms))
 
 	(macro relabel_home_fonts_config ((type ARG1))
 		(call search_home_config (ARG1))
 		(allow ARG1 home_fonts.home_config_file relabel_file_perms)
 		(allow ARG1 home_fonts.home_config_file relabel_dir_perms)
-		(allow ARG1 home_fonts.home_config_file relabel_fifo_file_perms)
+		(allow ARG1 home_fonts.home_config_file
+			relabel_fifo_file_perms)
 		(allow ARG1 home_fonts.home_config_file relabel_lnk_file_perms)
-		(allow ARG1 home_fonts.home_config_file relabel_sock_file_perms))
+		(allow ARG1 home_fonts.home_config_file
+			relabel_sock_file_perms))
 
 	(macro home_dir_obj_type_transition_home_fonts_config ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_fonts.home_config_file file ".fonts.conf"))
-		(call home_dir_obj_type_transition (ARG1 home_fonts.home_config_file dir ".fonts.conf.d")))
+		(call home_dir_obj_type_transition (ARG1
+			home_fonts.home_config_file file ".fonts.conf"))
+		(call home_dir_obj_type_transition (ARG1
+			home_fonts.home_config_file dir ".fonts.conf.d")))
 
 	(macro home_config_obj_type_transition_home_fonts_config ((type ARG1))
-		(call home_config_obj_type_transition (ARG1 home_fonts.home_config_file dir "fontconfig")))
+		(call home_config_obj_type_transition (ARG1
+			home_fonts.home_config_file dir "fontconfig")))
 
 	(macro home_fonts_config ((type ARG1))
 		(call manage_home_fonts_config (ARG1))
 		(call relabel_home_fonts_config (ARG1))
 		(call home_dir_obj_type_transition_home_fonts_config (ARG1))
-		(call home_config_obj_type_transition_home_fonts_config (ARG1)))
+		(call home_config_obj_type_transition_home_fonts_config
+			(ARG1)))
 
 	(macro search_home_fonts_data ((type ARG1))
 		(call search_home_data (ARG1))
@@ -2881,11 +3281,13 @@
 
 	(macro read_home_fonts_data_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call read_files_pattern (ARG1 home_fonts.home_data_file home_fonts.home_data_file)))
+		(call read_files_pattern (ARG1
+			home_fonts.home_data_file home_fonts.home_data_file)))
 
 	(macro read_home_fonts_data_lnk_files ((type ARG1))
 		(call search_home_data (ARG1))
-		(call read_lnk_files_pattern (ARG1 home_fonts.home_data_file home_fonts.home_data_file)))
+		(call read_lnk_files_pattern (ARG1 home_fonts.home_data_file
+			home_fonts.home_data_file)))
 
 	(macro read_home_fonts_data ((type ARG1))
 		(call search_home_data (ARG1))
@@ -2913,10 +3315,12 @@
 		(allow ARG1 home_fonts.home_data_file relabel_sock_file_perms))
 
 	(macro home_dir_obj_type_transition_home_fonts_data ((type ARG1))
-		(call home_dir_obj_type_transition (ARG1 home_fonts.home_data_file dir ".fonts")))
+		(call home_dir_obj_type_transition (ARG1
+			home_fonts.home_data_file dir ".fonts")))
 
 	(macro home_data_obj_type_transition_home_fonts_data ((type ARG1))
-		(call home_data_obj_type_transition (ARG1 home_fonts.home_data_file dir "fonts")))
+		(call home_data_obj_type_transition (ARG1
+			home_fonts.home_data_file dir "fonts")))
 
 	(macro home_fonts_data ((type ARG1))
 		(call manage_home_fonts_data (ARG1))

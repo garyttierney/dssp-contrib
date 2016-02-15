@@ -24,7 +24,8 @@
 	(typeattribute pty_user_obj_type_attribute)
 	(typeattribute tty_user_obj_type_attribute)
 
-	(allow common_type_attribute self (process (setpgid getattr getsched setsched setfscreate)))
+	(allow common_type_attribute self (process (setpgid getattr getsched
+		setsched setfscreate)))
 	(allow common_type_attribute self create_unix_stream_socket_perms)
 	(allow common_type_attribute self rw_fifo_file_perms)
 
@@ -61,8 +62,10 @@
 	(call nss.read_config_files (common_type_attribute))
 
 	(optional usersubj_priv_type_optional_sudo
-		(call rw_inherited_fifo_files_unpriv_subj (priv_type_attribute))
-		(call rw_inherited_unix_stream_sockets_unpriv_subj (priv_type_attribute))
+		(call rw_inherited_fifo_files_unpriv_subj
+			(priv_type_attribute))
+		(call rw_inherited_unix_stream_sockets_unpriv_subj
+			(priv_type_attribute))
 		(call sudo.send_signal_all_subj (priv_type_attribute)))
 
 	(allow common_login_type_attribute self create_unix_dgram_socket_perms)
@@ -79,7 +82,8 @@
 	(call file.read_config (common_login_type_attribute))
 	(call file.read_data (common_login_type_attribute))
 
-	(call fs.dontaudit_getattr_devtmpfs_lnk_files (common_login_type_attribute))
+	(call fs.dontaudit_getattr_devtmpfs_lnk_files
+		(common_login_type_attribute))
 	(call fs.getattr_sysfs_fs (common_login_type_attribute))
 	(call fs.list_tmpfs (common_login_type_attribute))
 
@@ -95,7 +99,8 @@
 	(call app.send_sigkill (common_login_type_attribute))
 	(call app.send_sigstop (common_login_type_attribute))
 	(call app.read_state (common_login_type_attribute))
-	(call app.rw_inherited_unix_stream_sockets (common_login_type_attribute))
+	(call app.rw_inherited_unix_stream_sockets
+		(common_login_type_attribute))
 
 	(call hostname.exec (common_login_type_attribute))
 
@@ -112,19 +117,27 @@
 	(call selinux_config.read_config_files (common_login_type_attribute))
 
 	(optional usersubj_optional_sd_tmpfiles
-		(call sd_tmpfiles.obj_exception_type (home_user_obj_type_attribute)))
+		(call sd_tmpfiles.obj_exception_type
+			(home_user_obj_type_attribute)))
 
-	(typeattributeset unpriv_type_attribute (and (common_type_attribute) (not (priv_type_attribute))))
-	(typeattributeset unpriv_login_type_attribute (and (common_login_type_attribute) (not (priv_login_type_attribute))))
+	(typeattributeset unpriv_type_attribute (and (common_type_attribute)
+		(not (priv_type_attribute))))
+	(typeattributeset unpriv_login_type_attribute (and
+		(common_login_type_attribute) (not
+			(priv_login_type_attribute))))
 
-        (call create_home_cache_dirs (home_cache_creator_subj_type_attribute))
-        (call home_dir_add_obj_type_transition_home_cache (home_cache_creator_subj_type_attribute))
+	(call create_home_cache_dirs (home_cache_creator_subj_type_attribute))
+	(call home_dir_add_obj_type_transition_home_cache
+		(home_cache_creator_subj_type_attribute))
 
-        (call create_home_config_dirs (home_config_creator_subj_type_attribute))
-        (call home_dir_add_obj_type_transition_home_config (home_config_creator_subj_type_attribute))
+	(call create_home_config_dirs
+		(home_config_creator_subj_type_attribute))
+	(call home_dir_add_obj_type_transition_home_config
+		(home_config_creator_subj_type_attribute))
 
-        (call create_home_data_dirs (home_data_creator_subj_type_attribute))
-        (call home_dir_add_obj_type_transition_home_data (home_data_creator_subj_type_attribute)))
+	(call create_home_data_dirs (home_data_creator_subj_type_attribute))
+	(call home_dir_add_obj_type_transition_home_data
+		(home_data_creator_subj_type_attribute)))
 
 (block home_cache
 	(blockinherit usersubj.home_cache_obj_blk))
@@ -193,4 +206,5 @@
 (block var_spool_user
 	(blockinherit file.var_spool_obj_blk)
 
-	(typeattributeset usersubj.var_spool_user_obj_type_attribute var_spool_file))
+	(typeattributeset usersubj.var_spool_user_obj_type_attribute
+		var_spool_file))

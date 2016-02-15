@@ -34,10 +34,14 @@
 	(call setattr_var_cache_dirs (client_subj_type_attribute))
 
 	(optional miscfiles_fonts_client_subj_type_optional_usersubj
-		(call usersubj.home_cache_creator_subj_type (client_subj_type_attribute))
-		(call usersubj.manage_home_fonts_cache (client_subj_type_attribute))
-		(call usersubj.home_dir_obj_type_transition_home_fonts_cache (client_subj_type_attribute))
-		(call usersubj.home_cache_obj_type_transition_home_fonts_cache (client_subj_type_attribute))))
+		(call usersubj.home_cache_creator_subj_type
+			(client_subj_type_attribute))
+		(call usersubj.manage_home_fonts_cache
+			(client_subj_type_attribute))
+		(call usersubj.home_dir_obj_type_transition_home_fonts_cache
+			(client_subj_type_attribute))
+		(call usersubj.home_cache_obj_type_transition_home_fonts_cache
+			(client_subj_type_attribute))))
 
 (block fstab
 	(typeattribute miscfile_sd_status_subj_type_attribute)
@@ -45,8 +49,10 @@
 	(blockinherit file.obj_blk)
 
 	(optional miscfile_fstab_sd_status_subj_type_optional_sd
-		(allow miscfile_sd_status_subj_type_attribute file (service (status)))
-		(call file.search_config (miscfile_sd_status_subj_type_attribute))))
+		(allow miscfile_sd_status_subj_type_attribute file (service
+			(status)))
+		(call file.search_config
+			(miscfile_sd_status_subj_type_attribute))))
 
 (block hosts
 	(blockinherit file.config_obj_blk))
@@ -88,23 +94,29 @@
 	(typeattribute miscfile_read_subj_type_attribute)
 	(typeattribute miscfile_not_read_subj_type_attribute)
 
-	(typeattributeset miscfile_not_read_subj_type_attribute (not (miscfile_read_subj_type_attribute)))
+	(typeattributeset miscfile_not_read_subj_type_attribute (not
+		(miscfile_read_subj_type_attribute)))
 
-	(neverallow miscfile_not_read_subj_type_attribute auth_file (file (read)))
+	(neverallow miscfile_not_read_subj_type_attribute auth_file (file
+		(read)))
 
 	(typeattribute miscfile_write_subj_type_attribute)
 	(typeattribute miscfile_not_write_subj_type_attribute)
 
-	(typeattributeset miscfile_not_write_subj_type_attribute (not (miscfile_write_subj_type_attribute)))
+	(typeattributeset miscfile_not_write_subj_type_attribute (not
+		(miscfile_write_subj_type_attribute)))
 
-	(neverallow miscfile_not_write_subj_type_attribute auth_file (file (create write)))
+	(neverallow miscfile_not_write_subj_type_attribute auth_file (file
+		(create write)))
 
 	(typeattribute miscfile_relabelto_subj_type_attribute)
 	(typeattribute miscfile_not_relabelto_subj_type_attribute)
 
-	(typeattributeset miscfile_not_relabelto_subj_type_attribute (not (miscfile_relabelto_subj_type_attribute)))
+	(typeattributeset miscfile_not_relabelto_subj_type_attribute (not
+		(miscfile_relabelto_subj_type_attribute)))
 
-	(neverallow miscfile_not_relabelto_subj_type_attribute auth_file (file (relabelto))))
+	(neverallow miscfile_not_relabelto_subj_type_attribute auth_file (file
+		(relabelto))))
 
 (block terminfo
 	(typeattribute miscfile_data_obj_type_attribute)

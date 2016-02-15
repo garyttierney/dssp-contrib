@@ -9,4 +9,5 @@
 	(filecon "/var/spool/plymouth(/.*)?" any var_spool_file_context)
 
 	(optional plymouthd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*plymouth-.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*plymouth-.*" file
+			unit_file_context)))

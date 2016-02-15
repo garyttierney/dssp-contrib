@@ -16,18 +16,21 @@
 
 	(booleanif web_content_home_cgi_tcp_connect_memcache
 		(true
-			(call memcache.tcp_connect_port (web_home.web_content_cgi.subj)))))
+			(call memcache.tcp_connect_port
+				(web_home.web_content_cgi.subj)))))
 
 (block web_content_home_cgi_tcp_connect_mysql
 	(blockinherit sec.bool_obj_blk)
 
 	(booleanif web_content_home_cgi_tcp_connect_mysql
 		(true
-			(call mysql.tcp_connect_port (web_home.web_content_cgi.subj)))))
+			(call mysql.tcp_connect_port
+				(web_home.web_content_cgi.subj)))))
 
 (block web_content_home_cgi_tcp_connect_http
 	(blockinherit sec.bool_obj_blk)
 
 	(booleanif web_content_home_cgi_tcp_connect_http
 		(true
-			(call http.tcp_connect_port (web_home.web_content_cgi.subj)))))
+			(call http.tcp_connect_port
+				(web_home.web_content_cgi.subj)))))

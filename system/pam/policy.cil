@@ -45,13 +45,18 @@
 
 	(typeattributeset obj_type_attribute runtime_file)
 
-	(allow login_prog_subj_type_attribute self (capability (setuid setgid chown)))
-	(allow login_prog_subj_type_attribute self (process (setexec setsched)))
+	(allow login_prog_subj_type_attribute self (capability (setuid setgid
+		chown)))
+	(allow login_prog_subj_type_attribute self (process (setexec
+		setsched)))
 	(allow login_prog_subj_type_attribute self write_key_perms)
 
-	(call standard.id_change_exemption_subj_type (login_prog_subj_type_attribute))
-	(call standard.role_change_exemption_subj_type (login_prog_subj_type_attribute))
-	(call standard.obj_change_exemption_subj_type (login_prog_subj_type_attribute))
+	(call standard.id_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
+	(call standard.role_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
+	(call standard.obj_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
 
 	(call sec.compute_user_contexts (login_prog_subj_type_attribute))
 	(call sec.compute_relabel_context (login_prog_subj_type_attribute))
@@ -66,23 +71,31 @@
 	(call locale.read (login_prog_subj_type_attribute))
 	(call utmp.rw_runtime_files (login_prog_subj_type_attribute))
 
-	(call selinux_config.read_config_files (login_prog_subj_type_attribute))
-	(call default_context.read_config_files (login_prog_subj_type_attribute))
+	(call selinux_config.read_config_files
+		(login_prog_subj_type_attribute))
+	(call default_context.read_config_files
+		(login_prog_subj_type_attribute))
 
 	(optional pam_login_prog_subj_type_optional_sd_logind
-		(allow login_prog_subj_type_attribute self (capability (dac_override dac_read_search)))
+		(allow login_prog_subj_type_attribute self (capability
+			(dac_override)))
 
-		(call file.search_runtime_user (login_prog_subj_type_attribute))
+		(call file.search_runtime_user
+			(login_prog_subj_type_attribute))
 		(call fs.search_tmpfs (login_prog_subj_type_attribute))
 
-		(call sd_logind.client_subj_type (login_prog_subj_type_attribute)))
+		(call sd_logind.client_subj_type
+			(login_prog_subj_type_attribute)))
 
 	(optional pam_login_prog_subj_type_optional_sduser
-		(call sduser.link_keyring_all_subj (login_prog_subj_type_attribute)))
+		(call sduser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
 
 	(optional pam_login_prog_subj_type_optional_usersubj
-		(call usersubj.create_keyring_common_login_subj (login_prog_subj_type_attribute))
-		(call usersubj.send_signal_common_login_subj (login_prog_subj_type_attribute)))
+		(call usersubj.create_keyring_common_login_subj
+			(login_prog_subj_type_attribute))
+		(call usersubj.send_signal_common_login_subj
+			(login_prog_subj_type_attribute)))
 
 	(call sys.audit_client_subj_type (client_subj_type_attribute))
 
@@ -94,11 +107,13 @@
 
 	(call faillog.create_var_log_files (client_subj_type_attribute))
 	(call faillog.rw_var_log_files (client_subj_type_attribute))
-	(call faillog.var_log_obj_type_transition_var_log (client_subj_type_attribute))
+	(call faillog.var_log_obj_type_transition_var_log
+		(client_subj_type_attribute))
 
 	(call lastlog.create_var_log_files (client_subj_type_attribute))
 	(call lastlog.rw_var_log_files (client_subj_type_attribute))
-	(call lastlog.var_log_obj_type_transition_var_log (client_subj_type_attribute))
+	(call lastlog.var_log_obj_type_transition_var_log
+		(client_subj_type_attribute))
 
 	(call wtmp.append_var_log_files (client_subj_type_attribute))
 	(call wtmp.read_var_log_files (client_subj_type_attribute))
@@ -107,9 +122,11 @@
 	(call nss.client_subj_type (client_subj_type_attribute))
 
 	(optional pam_client_subj_type_optional_sd_journald
-		(call sd_journald.client_subj_type (client_subj_type_attribute)))
+		(call sd_journald.client_subj_type
+			(client_subj_type_attribute)))
 
-	(allow adm_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab)))
+	(allow adm_subj_type_attribute self (passwd (passwd chfn chsh rootok
+		crontab)))
 
 	(call file.search_config (adm_subj_type_attribute))
 	(call file.search_runtime (adm_subj_type_attribute))
@@ -117,13 +134,16 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
 
-	(allow unconfined_subj_type_attribute self (passwd (passwd chfn chsh rootok crontab))))
+	(allow unconfined_subj_type_attribute self (passwd (passwd chfn chsh
+		rootok crontab))))
 
 (block pam_console
 	(blockinherit subj.common_subj_blk)

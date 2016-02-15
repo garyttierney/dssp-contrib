@@ -4,7 +4,8 @@
 	(block web_content
 		(typeattribute obj_type_attribute)
 
-		(typeattributeset .web_content.obj_type_attribute obj_type_attribute)
+		(typeattributeset .web_content.obj_type_attribute
+			obj_type_attribute)
 
 		(macro search ((type ARG1))
 			(call web_content_ro.search (ARG1))
@@ -40,7 +41,8 @@
 			(allow ARG1 obj_type_attribute relabel_fifo_file_perms)
 			(allow ARG1 obj_type_attribute relabel_dir_perms)
 			(allow ARG1 obj_type_attribute relabel_lnk_file_perms)
-			(allow ARG1 obj_type_attribute relabel_sock_file_perms)))
+			(allow ARG1 obj_type_attribute
+				relabel_sock_file_perms)))
 
 	(block web_content_cgi
 		(typeattribute subj_type_attribute)
@@ -51,18 +53,21 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-                (typeattributeset .web_content_cgi.subj_type_attribute subj_type_attribute)
+		(typeattributeset .web_content_cgi.subj_type_attribute
+			subj_type_attribute)
 
 		(typeattributeset obj_type_attribute cmd_file)
 		(typeattributeset web_content.obj_type_attribute cmd_file)
 
 		(typeattributeset .web_content_cgi.obj_type_attribute cmd_file)
 
-		(roleattributeset .web_content.cgi_client_role_attribute sys.role)
+		(roleattributeset .web_content.cgi_client_role_attribute
+			sys.role)
 
 		(roletype .web_content.cgi_client_role_attribute subj)
 
-		(call auto_subj_type_transition (.web_content.cgi_client_subj_type_attribute))
+		(call auto_subj_type_transition
+			(.web_content.cgi_client_subj_type_attribute))
 
 		(call exec (subj))
 
@@ -86,7 +91,8 @@
 
 		(call web_content_rw.manage (subj))
 
-		(call web_content_rw.tmpfs_obj_type_transition_web_content_rw (subj))
+		(call web_content_rw.tmpfs_obj_type_transition_web_content_rw
+			(subj))
 
 		(block list_blk
 			(blockabstract list_blk)
@@ -110,14 +116,16 @@
 			(blockabstract exec_blk)
 			(macro exec ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call exec_files_pattern (ARG1 cmd_file cmd_file))))
+				(call exec_files_pattern (ARG1 cmd_file
+					cmd_file))))
 
 		(block auto_subj_type_transition_blk
 			(blockabstract auto_subj_type_transition_blk)
 			(macro auto_subj_type_transition ((type ARG1))
 				(call web_content_ro.search (ARG1))
 				(call send_signal (ARG1))
-				(call auto_subj_type_transition_pattern (ARG1 cmd_file subj))))
+				(call auto_subj_type_transition_pattern (ARG1
+					cmd_file subj))))
 
 		(block send_signal_blk
 			(blockabstract send_signal_blk)
@@ -129,19 +137,23 @@
 			(macro run ((type ARG1)(role ARG2))
 				(call send_signal (ARG1))
 				(call auto_subj_type_transition (ARG1))
-				(roleattributeset .web_content.cgi_client_role_attribute ARG2)))
+				(roleattributeset
+					.web_content.cgi_client_role_attribute
+						ARG2)))
 
 		(block read_files_blk
 			(blockabstract read_files_blk)
 			(macro read_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_files_pattern (ARG1 cmd_file cmd_file))))
+				(call read_files_pattern (ARG1 cmd_file
+					cmd_file))))
 
 		(block read_lnk_files_blk
 			(blockabstract read_lnk_files_blk)
 			(macro read_lnk_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_lnk_files_pattern (ARG1 cmd_file cmd_file))))
+				(call read_lnk_files_pattern (ARG1 cmd_file
+					cmd_file))))
 
 		(block read_blk
 			(blockabstract read_blk)
@@ -168,11 +180,20 @@
 				(allow ARG1 cmd_file relabel_lnk_file_perms)))
 
 		(block web_content_ro_obj_type_transition_web_content_cgi_blk
-			(blockabstract web_content_ro_obj_type_transition_web_content_cgi_blk)
-			(macro web_content_ro_obj_type_transition_web_content_cgi ((type ARG1))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "fcgi-bin"))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "cgi-bin"))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file cmd_file dir "scripts"))))
+			(blockabstract
+				web_content_ro_obj_type_transition_web_content_cgi_blk)
+			(macro
+				web_content_ro_obj_type_transition_web_content_cgi
+					((type ARG1))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file cmd_file dir
+						"fcgi-bin"))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file cmd_file dir
+						"cgi-bin"))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file cmd_file dir
+						"scripts"))))
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
@@ -185,7 +206,8 @@
 		(blockinherit read_blk)
 		(blockinherit manage_blk)
 		(blockinherit relabel_blk)
-		(blockinherit web_content_ro_obj_type_transition_web_content_cgi_blk))
+		(blockinherit
+			web_content_ro_obj_type_transition_web_content_cgi_blk))
 
 	(block web_content_htaccess
 		(blockinherit file.obj_blk)
@@ -195,7 +217,8 @@
 		(typeattributeset obj_type_attribute file)
 		(typeattributeset web_content.obj_type_attribute file)
 
-		(typeattributeset .web_content_htaccess.obj_type_attribute file)
+		(typeattributeset .web_content_htaccess.obj_type_attribute
+			file)
 
 		(block read_files_blk
 			(blockabstract read_files_blk)
@@ -215,15 +238,23 @@
 				(allow ARG1 file manage_file_perms)))
 
 		(block web_content_obj_type_transition_web_content_htaccess_blk
-			(blockabstract web_content_obj_type_transition_web_content_htaccess_blk)
-			(macro web_content_obj_type_transition_web_content_htaccess ((type ARG1))
-				(call obj_type_transition_pattern (ARG1 web_content.obj_type_attribute file file ".htaccess"))
-				(call obj_type_transition_pattern (ARG1 web_content.obj_type_attribute file file ".htpasswd"))))
+			(blockabstract
+				web_content_obj_type_transition_web_content_htaccess_blk)
+			(macro
+				web_content_obj_type_transition_web_content_htaccess
+					((type ARG1))
+				(call obj_type_transition_pattern (ARG1
+					web_content.obj_type_attribute file
+						file ".htaccess"))
+				(call obj_type_transition_pattern (ARG1
+					web_content.obj_type_attribute file
+						file ".htpasswd"))))
 
 		(blockinherit read_files_blk)
 		(blockinherit dontaudit_write_files_blk)
 		(blockinherit manage_files_blk)
-		(blockinherit web_content_obj_type_transition_web_content_htaccess_blk))
+		(blockinherit
+			web_content_obj_type_transition_web_content_htaccess_blk))
 
 	(block web_content_ra
 		(blockinherit file.obj_blk)
@@ -311,7 +342,8 @@
 			(blockabstract read_lnk_files_blk)
 			(macro read_lnk_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_lnk_files_pattern (ARG1 file file))))
+				(call read_lnk_files_pattern (ARG1 file
+					file))))
 
 		(block read_blk
 			(blockabstract read_blk)
@@ -338,9 +370,13 @@
 				(allow ARG1 file relabel_lnk_file_perms)))
 
 		(block web_content_ro_obj_type_transition_web_content_ra_blk
-			(blockabstract web_content_ro_obj_type_transition_web_content_ra_blk)
-			(macro web_content_ro_obj_type_transition_web_content_ra ((type ARG1))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "log"))))
+			(blockabstract
+				web_content_ro_obj_type_transition_web_content_ra_blk)
+			(macro
+				web_content_ro_obj_type_transition_web_content_ra
+					((type ARG1))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file file dir "log"))))
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
@@ -357,7 +393,8 @@
 		(blockinherit read_blk)
 		(blockinherit manage_blk)
 		(blockinherit relabel_blk)
-		(blockinherit web_content_ro_obj_type_transition_web_content_ra_blk))
+		(blockinherit
+			web_content_ro_obj_type_transition_web_content_ra_blk))
 
 	(block web_content_ro
 		(blockinherit file.obj_blk)
@@ -397,7 +434,8 @@
 		(block read_lnk_files_blk
 			(blockabstract read_lnk_files_blk)
 			(macro read_lnk_files ((type ARG1))
-				(call read_lnk_files_pattern (ARG1 file file))))
+				(call read_lnk_files_pattern (ARG1 file
+					file))))
 
 		(block read_blk
 			(blockabstract read_blk)
@@ -485,37 +523,43 @@
 			(blockabstract read_fifo_files_blk)
 			(macro read_fifo_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_fifo_files_pattern (ARG1 file file))))
+				(call read_fifo_files_pattern (ARG1 file
+					file))))
 
 		(block manage_fifo_files_blk
 			(blockabstract manage_fifo_files_blk)
 			(macro manage_fifo_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call manage_fifo_files_pattern (ARG1 file file))))
+				(call manage_fifo_files_pattern (ARG1 file
+					file))))
 
 		(block read_lnk_files_blk
 			(blockabstract read_lnk_files_blk)
 			(macro read_lnk_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_lnk_files_pattern (ARG1 file file))))
+				(call read_lnk_files_pattern (ARG1 file
+					file))))
 
 		(block manage_lnk_files_blk
 			(blockabstract manage_lnk_files_blk)
 			(macro manage_lnk_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call manage_lnk_files_pattern (ARG1 file file))))
+				(call manage_lnk_files_pattern (ARG1 file
+					file))))
 
 		(block read_sock_files_blk
 			(blockabstract read_sock_files_blk)
 			(macro read_sock_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call read_sock_files_pattern (ARG1 file file))))
+				(call read_sock_files_pattern (ARG1 file
+					file))))
 
 		(block manage_sock_files_blk
 			(blockabstract manage_sock_files_blk)
 			(macro manage_sock_files ((type ARG1))
 				(call web_content_ro.search (ARG1))
-				(call manage_sock_files_pattern (ARG1 file file))))
+				(call manage_sock_files_pattern (ARG1 file
+					file))))
 
 		(block read_blk
 			(blockabstract read_blk)
@@ -548,10 +592,17 @@
 				(allow ARG1 file relabel_sock_file_perms)))
 
 		(block web_content_ro_obj_type_transition_web_content_rw_blk
-			(blockabstract web_content_ro_obj_type_transition_web_content_rw_blk)
-			(macro web_content_ro_obj_type_transition_web_content_rw ((type ARG1))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "incoming"))
-				(call obj_type_transition_pattern (ARG1 web_content_ro.file file dir "uploads"))))
+			(blockabstract
+				web_content_ro_obj_type_transition_web_content_rw_blk)
+			(macro
+				web_content_ro_obj_type_transition_web_content_rw
+					((type ARG1))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file file dir
+						"incoming"))
+				(call obj_type_transition_pattern (ARG1
+					web_content_ro.file file dir
+						"uploads"))))
 
 		(blockinherit list_blk)
 		(blockinherit search_blk)
@@ -565,18 +616,23 @@
 		(blockinherit read_lnk_files_blk)
 		(blockinherit manage_lnk_files_blk)
 		(blockinherit read_sock_files_blk)
-	        (blockinherit manage_sock_files_blk)
-	        (blockinherit read_blk)
-	        (blockinherit manage_blk)
-	        (blockinherit relabel_blk)
-		(blockinherit web_content_ro_obj_type_transition_web_content_rw_blk)
+		(blockinherit manage_sock_files_blk)
+		(blockinherit read_blk)
+		(blockinherit manage_blk)
+		(blockinherit relabel_blk)
+		(blockinherit
+			web_content_ro_obj_type_transition_web_content_rw_blk)
 
 		(macro tmpfs_obj_type_transition_web_content_rw ((type ARG1))
 			(call fs.tmpfs_obj_type_transition (ARG1 file dir "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 file file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 file fifo_file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 file lnk_file "*"))
-			(call fs.tmpfs_obj_type_transition (ARG1 file sock_file "*")))))
+			(call fs.tmpfs_obj_type_transition (ARG1 file file
+				"*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file
+				fifo_file "*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file lnk_file
+				"*"))
+			(call fs.tmpfs_obj_type_transition (ARG1 file
+				sock_file "*")))))
 
 (in web_content
 	(macro cgi_client ((type ARG1)(role ARG2))
@@ -596,31 +652,40 @@
 		(allow ARG1 obj_type_attribute rw_dir_perms))
 
 	(macro read_files ((type ARG1))
-		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro rw_files ((type ARG1))
-		(call rw_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call rw_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_files ((type ARG1))
-		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_fifo_files ((type ARG1))
-		(call read_fifo_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_fifo_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_fifo_files ((type ARG1))
-		(call manage_fifo_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_fifo_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_lnk_files ((type ARG1))
-		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_lnk_files ((type ARG1))
-		(call manage_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_lnk_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_sock_files ((type ARG1))
-		(call read_sock_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_sock_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_sock_files ((type ARG1))
-		(call manage_sock_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_sock_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro getattr_all ((type ARG1))
 		(allow ARG1 obj_type_attribute (file (getattr)))
@@ -652,24 +717,31 @@
 		(allow ARG1 obj_type_attribute relabel_sock_file_perms))
 
 	(macro set_web_sys_cgi_tcp_connect_http_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 web_content_sys_cgi_tcp_connect_http.bool))
-		(optional web_content_sys_cgi_tcp_connect_http_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			web_content_sys_cgi_tcp_connect_http.bool))
+		(optional
+			web_content_sys_cgi_tcp_connect_http_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
 	(macro set_web_sys_cgi_tcp_connect_memcache_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 web_content_sys_cgi_tcp_connect_memcache.bool))
-		(optional web_content_sys_cgi_tcp_connect_memcache_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			web_content_sys_cgi_tcp_connect_memcache.bool))
+		(optional
+			web_content_sys_cgi_tcp_connect_memcache_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
 	(macro set_web_sys_cgi_tcp_connect_mysql_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 web_content_sys_cgi_tcp_connect_mysql.bool))
-		(optional web_content_sys_cgi_tcp_connect_mysql_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			web_content_sys_cgi_tcp_connect_mysql.bool))
+		(optional
+			web_content_sys_cgi_tcp_connect_mysql_boolean_optional_seutil
 			(call setsebool.exec (ARG1)))))
 
 (in web_content_cgi
 	(macro exec_all ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call exec_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call exec_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro search_all ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
@@ -713,27 +785,33 @@
 
 	(macro setattr_all_dirs ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call setattr_dirs_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call setattr_dirs_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro append_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call append_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call append_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro create_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call create_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call create_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro delete_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call delete_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call delete_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro manage_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call manage_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call manage_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro rename_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
@@ -741,7 +819,8 @@
 
 	(macro setattr_all_files ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
-		(call setattr_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call setattr_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all ((type ARG1))
 		(call web_content_ro.search_all (ARG1))
@@ -769,10 +848,12 @@
 		(allow ARG1 obj_type_attribute list_dir_perms))
 
 	(macro read_all_files ((type ARG1))
-		(call read_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all_lnk_files ((type ARG1))
-		(call read_lnk_files_pattern (ARG1 obj_type_attribute obj_type_attribute)))
+		(call read_lnk_files_pattern (ARG1 obj_type_attribute
+			obj_type_attribute)))
 
 	(macro read_all ((type ARG1))
 		(allow ARG1 obj_type_attribute read_file_perms)

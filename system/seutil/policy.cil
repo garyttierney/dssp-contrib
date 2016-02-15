@@ -3,7 +3,8 @@
 
 	(call sec.getattr_fs (libselinux_linked_client_subj_type_attribute))
 
-	(call selinux_config.search_config (libselinux_linked_client_subj_type_attribute)))
+	(call selinux_config.search_config
+		(libselinux_linked_client_subj_type_attribute)))
 
 (block load_policy
 	(roleattribute role_attribute)
@@ -139,7 +140,8 @@
 	(call nss.client_subj_type (client_subj_type_attribute))
 
 	(optional setsebool_client_subj_type_optional_sd_journald
-		(call sd_journald.client_subj_type (client_subj_type_attribute))))
+		(call sd_journald.client_subj_type
+			(client_subj_type_attribute))))
 
 (block setenforce
 	(roleattribute role_attribute)
@@ -166,16 +168,20 @@
 	(typeattribute relabelto_subj_type_attribute)
 	(typeattribute not_relabelto_subj_type_attribute)
 
-	(typeattributeset not_relabelto_subj_type_attribute (not (relabelto_subj_type_attribute)))
+	(typeattributeset not_relabelto_subj_type_attribute (not
+		(relabelto_subj_type_attribute)))
 
-	(neverallow not_relabelto_subj_type_attribute sec_file (file (relabelto)))
+	(neverallow not_relabelto_subj_type_attribute sec_file (file
+		(relabelto)))
 
 	(typeattribute write_subj_type_attribute)
 	(typeattribute not_write_subj_type_attribute)
 
-	(typeattributeset not_write_subj_type_attribute (not (write_subj_type_attribute)))
+	(typeattributeset not_write_subj_type_attribute (not
+		(write_subj_type_attribute)))
 
-	(neverallow not_write_subj_type_attribute sec_file (file (create write))))
+	(neverallow not_write_subj_type_attribute sec_file (file (create
+		write))))
 
 (block policy_src
 	(blockinherit file.config_obj_blk))

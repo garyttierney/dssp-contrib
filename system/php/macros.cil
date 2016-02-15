@@ -16,8 +16,10 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "pear"))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "php")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"pear"))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"php")))
 
 	(blockinherit file.search_var_cache_blk)
 	(blockinherit file.list_var_cache_blk)
@@ -28,4 +30,5 @@
 	(blockinherit file.relabel_var_cache_blk)
 
 	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
-		(call file.var_cache_obj_type_transition (ARG1 var_cache_file dir "php-pear"))))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "php-pear"))))

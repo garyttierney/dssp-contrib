@@ -1,8 +1,10 @@
 (in default_context
-	(filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any config_file_context))
+	(filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any
+		config_file_context))
 
 (in file_context
-	(filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any config_file_context))
+	(filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any
+		config_file_context))
 
 (in load_policy
 	(filecon "/usr/sbin/load_policy" file cmd_file_context))
@@ -34,12 +36,20 @@
 	(true
 		(tunableif enable_rbacsep
 			(true
-				(context policy_config (sys.id sys.role policy_config.sec_file (systemhigh systemhigh))))
+				(context policy_config (sys.id sys.role
+					policy_config.sec_file
+						(systemhigh systemhigh))))
 			(false
-				(context policy_config (sys.id object_r policy_config.sec_file (systemhigh systemhigh))))))
+				(context policy_config (sys.id object_r
+					policy_config.sec_file
+						(systemhigh systemhigh))))))
 	(false
 		(tunableif enable_rbacsep
 			(true
-				(context policy_config (sys.id sys.role policy_config.sec_file (systemlow systemlow))))
+				(context policy_config (sys.id sys.role
+					policy_config.sec_file
+						(systemlow systemlow))))
 			(false
-				(context policy_config (sys.id object_r policy_config.sec_file (systemlow systemlow)))))))
+				(context policy_config (sys.id object_r
+					policy_config.sec_file
+						(systemlow systemlow)))))))

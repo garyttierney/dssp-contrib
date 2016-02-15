@@ -38,7 +38,8 @@
 	(blockinherit file.relabel_runtime_lock_blk)
 
 	(macro runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
-		(call file.runtime_lock_obj_type_transition (ARG1 runtime_lock_file dir "lvm")))
+		(call file.runtime_lock_obj_type_transition (ARG1
+			runtime_lock_file dir "lvm")))
 
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
@@ -64,12 +65,15 @@
 		(call file.search_runtime (ARG1))
 		(allow ARG1 runtime_file del_entry_dir_perms))
 
-	(macro runtime_obj_object_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro runtime_obj_object_type_transition ((type ARG1)(type
+		ARG2)(class ARG3)(name ARG4))
 		(call file.search_runtime (ARG1))
-		(call obj_type_transition_pattern (ARG1 runtime_file ARG2 ARG3 ARG4)))
+		(call obj_type_transition_pattern (ARG1 runtime_file ARG2 ARG3
+			ARG4)))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "lvm")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"lvm")))
 
 	(macro rw_sem ((type ARG1))
 		(allow ARG1 subj rw_sem_perms))

@@ -6,7 +6,8 @@
 	(filecon "/usr/sbin/sushell" file cmd_file_context)
 
 	(optional sulogin_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*emergency.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*emergency.*" file
+			unit_file_context)))
 
 (in login_priv
 	(genfscon "selinuxfs" "/booleans/login_priv" bool_obj_context))

@@ -22,10 +22,12 @@
 
 	(macro write_runtime_sock_files ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call write_sock_files_pattern (ARG1 runtime_file runtime_file)))
+		(call write_sock_files_pattern (ARG1 runtime_file
+			runtime_file)))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "udev"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"udev"))))
 
 (in udev_helper
 	(blockinherit exec_blk))

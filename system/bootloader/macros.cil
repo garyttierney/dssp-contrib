@@ -42,7 +42,8 @@
 		(allow ARG1 var_log_file relabel_file_perms))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "grubby")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"grubby")))
 
 	(blockinherit file.search_tmpfs_blk)
 	(blockinherit file.list_tmpfs_blk)

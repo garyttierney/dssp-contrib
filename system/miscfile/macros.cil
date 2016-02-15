@@ -50,13 +50,15 @@
 
 	(macro read_all_files ((type ARG1))
 		(call file.search_config (ARG1))
-		(call read_files_pattern (ARG1 miscfile_obj_type_attribute miscfile_obj_type_attribute))
+		(call read_files_pattern (ARG1 miscfile_obj_type_attribute
+			miscfile_obj_type_attribute))
 		(optional miscfile_read_all_cert_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_lnk_files ((type ARG1))
 		(call file.search_config (ARG1))
-		(call read_lnk_files_pattern (ARG1 miscfile_obj_type_attribute miscfile_obj_type_attribute))
+		(call read_lnk_files_pattern (ARG1 miscfile_obj_type_attribute
+			miscfile_obj_type_attribute))
 		(optional miscfile_read_all_cert_lnk_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
@@ -74,7 +76,8 @@
 		(allow ARG1 miscfile_obj_type_attribute manage_dir_perms)
 		(allow ARG1 miscfile_obj_type_attribute manage_lnk_file_perms)
 		(optional miscfile_read_all_cert_optional_usersubj
-			(call usersubj.home_dir_obj_type_transition_home_cert (ARG1))))
+			(call usersubj.home_dir_obj_type_transition_home_cert
+				(ARG1))))
 
 	(macro relabel_all ((type ARG1))
 		(call file.search_config (ARG1))
@@ -116,39 +119,54 @@
 
 	(macro read_all_cache_files ((type ARG1))
 		(call file.search_var_cache (ARG1))
-		(call read_files_pattern (ARG1 miscfile_cache_obj_type_attribute miscfile_cache_obj_type_attribute))
+		(call read_files_pattern (ARG1
+			miscfile_cache_obj_type_attribute
+				miscfile_cache_obj_type_attribute))
 		(optional miscfile_read_all_fonts_cache_files_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro read_all_cache_lnk_files ((type ARG1))
 		(call file.search_var_cache (ARG1))
-		(call read_lnk_files_pattern (ARG1 miscfile_cache_obj_type_attribute miscfile_cache_obj_type_attribute))
-		(optional miscfile_read_all_fonts_cache_lnk_files_optional_usersubj
+		(call read_lnk_files_pattern (ARG1
+			miscfile_cache_obj_type_attribute
+				miscfile_cache_obj_type_attribute))
+		(optional
+			miscfile_read_all_fonts_cache_lnk_files_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro read_all_cache ((type ARG1))
 		(call file.search_var_cache (ARG1))
 		(allow ARG1 miscfile_cache_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute list_dir_perms)
-		(allow ARG1 miscfile_cache_obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			read_lnk_file_perms)
 		(optional miscfile_read_all_fonts_cache_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
 	(macro manage_all_cache ((type ARG1))
 		(call file.rw_var_cache_dirs (ARG1))
-		(allow ARG1 miscfile_cache_obj_type_attribute manage_file_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			manage_file_perms)
 		(allow ARG1 miscfile_cache_obj_type_attribute manage_dir_perms)
-		(allow ARG1 miscfile_cache_obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			manage_lnk_file_perms)
 		(optional miscfile_manage_all_fonts_cache_optional_usersubj
 			(call usersubj.home_cache_creator_subj_type (ARG1))
-			(call usersubj.home_dir_obj_type_transition_home_fonts_cache (ARG1))
-			(call usersubj.home_cache_obj_type_transition_home_fonts_cache (ARG1))))
+			(call
+				usersubj.home_dir_obj_type_transition_home_fonts_cache
+					(ARG1))
+			(call
+				usersubj.home_cache_obj_type_transition_home_fonts_cache
+					(ARG1))))
 
 	(macro relabel_all_cache ((type ARG1))
 		(call file.search_var_cache (ARG1))
-		(allow ARG1 miscfile_cache_obj_type_attribute relabel_file_perms)
-		(allow ARG1 miscfile_cache_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 miscfile_cache_obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			relabel_file_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			relabel_dir_perms)
+		(allow ARG1 miscfile_cache_obj_type_attribute
+			relabel_lnk_file_perms)
 		(optional miscfile_read_all_fonts_cache_optional_usersubj
 			(call usersubj.search_home_cache (ARG1))))
 
@@ -165,7 +183,8 @@
 
 	(macro search_all_config ((type ARG1))
 		(call file.search_config (ARG1))
-		(allow ARG1 miscfile_config_obj_type_attribute search_dir_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			search_dir_perms)
 		(optional miscfile_search_all_fonts_config_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
@@ -177,39 +196,56 @@
 
 	(macro read_all_config_files ((type ARG1))
 		(call file.search_config (ARG1))
-		(call read_files_pattern (ARG1 miscfile_config_obj_type_attribute miscfile_config_obj_type_attribute))
-		(optional miscfile_read_all_fonts_config_files_optional_usersubj
+		(call read_files_pattern (ARG1
+			miscfile_config_obj_type_attribute
+				miscfile_config_obj_type_attribute))
+		(optional
+			miscfile_read_all_fonts_config_files_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro read_all_config_lnk_files ((type ARG1))
 		(call file.search_config (ARG1))
-		(call read_lnk_files_pattern (ARG1 miscfile_config_obj_type_attribute miscfile_config_obj_type_attribute))
-		(optional miscfile_read_all_fonts_config_lnk_files_optional_usersubj
+		(call read_lnk_files_pattern (ARG1
+			miscfile_config_obj_type_attribute
+				miscfile_config_obj_type_attribute))
+		(optional
+			miscfile_read_all_fonts_config_lnk_files_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro read_all_config ((type ARG1))
 		(call file.search_config (ARG1))
 		(allow ARG1 miscfile_config_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_config_obj_type_attribute list_dir_perms)
-		(allow ARG1 miscfile_config_obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			read_lnk_file_perms)
 		(optional miscfile_read_all_fonts_config_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
 	(macro manage_all_config ((type ARG1))
 		(call file.rw_config_dirs (ARG1))
-		(allow ARG1 miscfile_config_obj_type_attribute manage_file_perms)
-		(allow ARG1 miscfile_config_obj_type_attribute manage_dir_perms)
-		(allow ARG1 miscfile_config_obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			manage_file_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			manage_dir_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			manage_lnk_file_perms)
 		(optional miscfile_manage_all_fonts_config_optional_usersubj
 			(call usersubj.home_config_creator_subj_type (ARG1))
-			(call usersubj.home_dir_obj_type_transition_home_fonts_config (ARG1))
-			(call usersubj.home_config_obj_type_transition_home_fonts_config (ARG1))))
+			(call
+				usersubj.home_dir_obj_type_transition_home_fonts_config
+					(ARG1))
+			(call
+				usersubj.home_config_obj_type_transition_home_fonts_config
+					(ARG1))))
 
 	(macro relabel_all_config ((type ARG1))
 		(call file.search_config (ARG1))
-		(allow ARG1 miscfile_config_obj_type_attribute relabel_file_perms)
-		(allow ARG1 miscfile_config_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 miscfile_config_obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			relabel_file_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			relabel_dir_perms)
+		(allow ARG1 miscfile_config_obj_type_attribute
+			relabel_lnk_file_perms)
 		(optional miscfile_read_all_fonts_config_optional_usersubj
 			(call usersubj.search_home_config (ARG1))))
 
@@ -238,21 +274,27 @@
 
 	(macro read_all_data_files ((type ARG1))
 		(call file.search_data (ARG1))
-		(call read_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
+		(call read_files_pattern (ARG1
+			miscfile_data_obj_type_attribute
+				miscfile_data_obj_type_attribute))
 		(optional miscfile_read_all_fonts_data_files_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro read_all_data_lnk_files ((type ARG1))
 		(call file.search_data (ARG1))
-		(call read_lnk_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
-		(optional miscfile_read_all_data_config_lnk_files_optional_usersubj
+		(call read_lnk_files_pattern (ARG1
+			miscfile_data_obj_type_attribute
+				miscfile_data_obj_type_attribute))
+		(optional
+			miscfile_read_all_data_config_lnk_files_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
 	(macro read_all_data ((type ARG1))
 		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			read_lnk_file_perms)
 		(optional miscfile_read_all_fonts_data_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
@@ -260,17 +302,24 @@
 		(call file.rw_data_dirs (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			manage_lnk_file_perms)
 		(optional miscfile_manage_all_fonts_data_optional_usersubj
 			(call usersubj.home_data_creator_subj_type (ARG1))
-			(call usersubj.home_dir_obj_type_transition_home_fonts_data (ARG1))
-			(call usersubj.home_data_obj_type_transition_home_fonts_data (ARG1))))
+			(call
+				usersubj.home_dir_obj_type_transition_home_fonts_data
+					(ARG1))
+			(call
+				usersubj.home_data_obj_type_transition_home_fonts_data
+					(ARG1))))
 
 	(macro relabel_all_data ((type ARG1))
 		(call file.search_data (ARG1))
-		(allow ARG1 miscfile_data_obj_type_attribute relabel_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			relabel_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			relabel_lnk_file_perms)
 		(optional miscfile_read_all_fonts_data_optional_usersubj
 			(call usersubj.search_home_data (ARG1))))
 
@@ -341,21 +390,28 @@
 
 	(macro read_all_data_files ((type ARG1))
 		(call file.search_data (ARG1))
-		(call read_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
-		(optional miscfile_read_all_terminfo_data_files_optional_usersubj
+		(call read_files_pattern (ARG1
+			miscfile_data_obj_type_attribute
+				miscfile_data_obj_type_attribute))
+		(optional
+			miscfile_read_all_terminfo_data_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_data_lnk_files ((type ARG1))
 		(call file.search_data (ARG1))
-		(call read_lnk_files_pattern (ARG1 miscfile_data_obj_type_attribute miscfile_data_obj_type_attribute))
-		(optional miscfile_read_all_terminfo_data_lnk_files_optional_usersubj
+		(call read_lnk_files_pattern (ARG1
+			miscfile_data_obj_type_attribute
+				miscfile_data_obj_type_attribute))
+		(optional
+			miscfile_read_all_terminfo_data_lnk_files_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
 	(macro read_all_data ((type ARG1))
 		(call file.search_data (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute read_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute list_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute read_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			read_lnk_file_perms)
 		(optional miscfile_read_all_terminfo_data_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
@@ -363,15 +419,20 @@
 		(call file.rw_data_dirs (ARG1))
 		(allow ARG1 miscfile_data_obj_type_attribute manage_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute manage_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute manage_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			manage_lnk_file_perms)
 		(optional miscfile_read_all_terminfo_data_optional_usersubj
-			(call usersubj.home_dir_obj_type_transition_home_terminfo (ARG1))))
+			(call
+				usersubj.home_dir_obj_type_transition_home_terminfo
+					(ARG1))))
 
 	(macro relabel_all_data ((type ARG1))
 		(call file.search_data (ARG1))
-		(allow ARG1 miscfile_data_obj_type_attribute relabel_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			relabel_file_perms)
 		(allow ARG1 miscfile_data_obj_type_attribute relabel_dir_perms)
-		(allow ARG1 miscfile_data_obj_type_attribute relabel_lnk_file_perms)
+		(allow ARG1 miscfile_data_obj_type_attribute
+			relabel_lnk_file_perms)
 		(optional miscfile_read_all_terminfo_data_optional_usersubj
 			(call usersubj.search_home_dir (ARG1))))
 
@@ -422,11 +483,14 @@
 		(allow ARG1 file relabel_file_perms))
 
 	(macro config_obj_type_transition_fstab ((type ARG1))
-		(call file.config_obj_type_transition (ARG1 file file "crypttab"))
-		(call file.config_obj_type_transition (ARG1 file file "fstab")))
+		(call file.config_obj_type_transition (ARG1 file file
+			"crypttab"))
+		(call file.config_obj_type_transition (ARG1 file file
+			"fstab")))
 
 	(macro sd_status_subj_type ((type ARG1))
-		(typeattributeset miscfile_sd_status_subj_type_attribute ARG1)))
+		(typeattributeset miscfile_sd_status_subj_type_attribute
+			ARG1)))
 
 (in hosts
 	(blockinherit file.read_config_files_blk)
@@ -434,8 +498,10 @@
 	(blockinherit file.relabel_config_files_blk)
 
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file.config_obj_type_transition (ARG1 config_file file "hosts"))
-		(call file.config_obj_type_transition (ARG1 config_file file "services"))))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"hosts"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"services"))))
 
 (in hwdata
 	(blockinherit file.search_data_blk)
@@ -605,7 +671,8 @@
 		(allow ARG1 file relabel_dir_perms)
 		(allow ARG1 file relabel_lnk_file_perms))
 
-	(macro obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name ARG4))
+	(macro obj_type_transition ((type ARG1)(type ARG2)(class ARG3)(name
+		ARG4))
 		(call lib.search_lib (ARG1))
 		(call obj_type_transition_pattern (ARG1 file ARG2 ARG3 ARG4))))
 
@@ -623,31 +690,56 @@
 		(allow ARG1 file relabel_file_perms))
 
 	(macro modules_obj_type_transition_modules_dep ((type ARG1))
-		(call modules.obj_type_transition (ARG1 file file "modules.alias"))
-		(call modules.obj_type_transition (ARG1 file file "modules.alias.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.alias.bin"))
-		(call modules.obj_type_transition (ARG1 file file "modules.alias.bin.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.block"))
-		(call modules.obj_type_transition (ARG1 file file "modules.builtin"))
-		(call modules.obj_type_transition (ARG1 file file "modules.builtin.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.builtin.bin"))
-		(call modules.obj_type_transition (ARG1 file file "modules.builtin.bin.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.dep"))
-		(call modules.obj_type_transition (ARG1 file file "modules.dep.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.dep.bin"))
-		(call modules.obj_type_transition (ARG1 file file "modules.dep.bin.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.devname"))
-		(call modules.obj_type_transition (ARG1 file file "modules.devname.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.drm"))
-		(call modules.obj_type_transition (ARG1 file file "modules.modesetting"))
-		(call modules.obj_type_transition (ARG1 file file "modules.networking"))
-		(call modules.obj_type_transition (ARG1 file file "modules.order"))
-		(call modules.obj_type_transition (ARG1 file file "modules.softdep"))
-		(call modules.obj_type_transition (ARG1 file file "modules.softdep.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.symbols"))
-		(call modules.obj_type_transition (ARG1 file file "modules.symbols.tmp"))
-		(call modules.obj_type_transition (ARG1 file file "modules.symbols.bin"))
-		(call modules.obj_type_transition (ARG1 file file "modules.symbols.bin.tmp"))))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.alias"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.alias.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.alias.bin"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.alias.bin.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.block"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.builtin"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.builtin.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.builtin.bin"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.builtin.bin.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.dep"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.dep.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.dep.bin"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.dep.bin.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.devname"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.devname.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.drm"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.modesetting"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.networking"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.order"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.softdep"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.softdep.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.symbols"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.symbols.tmp"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.symbols.bin"))
+		(call modules.obj_type_transition (ARG1 file file
+			"modules.symbols.bin.tmp"))))
 
 (in network
 	(blockinherit file.search_config_blk)
@@ -669,8 +761,10 @@
 		(allow ARG1 config_file (dir (setattr)))
 		(allow ARG1 config_file (lnk_file (setattr))))
 
-	(macro config_obj_type_transition_config ((type ARG1)(class ARG2)(name ARG3))
-		(call file.config_obj_type_transition (ARG1 config_file ARG2 ARG3))))
+	(macro config_obj_type_transition_config ((type ARG1)(class ARG2)(name
+		ARG3))
+		(call file.config_obj_type_transition (ARG1 config_file ARG2
+			ARG3))))
 
 (in nologin
 	(blockinherit file.read_runtime_files_blk)
@@ -678,7 +772,8 @@
 	(blockinherit file.relabel_runtime_files_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "*"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"*"))))
 
 (in passwords
 	(macro read ((type ARG1))
@@ -731,7 +826,8 @@
 	(macro relabel ((type ARG1))
 		(call file.search_config (ARG1))
 		(allow ARG1 auth_file relabel_file_perms)
-		(typeattributeset miscfile_relabelto_subj_type_attribute ARG1)))
+		(typeattributeset miscfile_relabelto_subj_type_attribute
+			ARG1)))
 
 (in utmp
 	(blockinherit file.read_runtime_files_blk)
@@ -750,7 +846,8 @@
 		(allow ARG1 runtime_file rw_file_perms))
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "utmp"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"utmp"))))
 
 (in wtmp
 	(blockinherit file.read_var_log_files_blk)

@@ -10,7 +10,8 @@
 
 		(blockinherit qemu_guest.pty_obj_blk)
 
-		(call qemu_guest.guest_pattern (subj file runtime_file pty_dev)))
+		(call qemu_guest.guest_pattern (subj file runtime_file
+			pty_dev)))
 
 	(block subj_blk
 		(blockabstract subj_blk)
@@ -31,7 +32,8 @@
 
 		(blockinherit file.runtime_obj_blk)
 
-		(typeattributeset qemu_guest.runtime_obj_type_attribute runtime_file))
+		(typeattributeset qemu_guest.runtime_obj_type_attribute
+			runtime_file))
 
 	(block pty_obj_blk
 		(blockabstract pty_obj_blk)
@@ -62,7 +64,8 @@
 		(allow ARG1 ARG2 rw_file_perms)
 
 		(allow ARG1 ARG3 manage_sock_file_perms)
-		(call file.runtime_obj_type_transition (ARG1 ARG3 sock_file "*"))
+		(call file.runtime_obj_type_transition (ARG1 ARG3 sock_file
+			"*"))
 
 		(call term.create_pty (ARG1 ARG4))
 		(allow ARG1 ARG4 rw_term_perms))
@@ -72,7 +75,8 @@
 		(roletype ARG2 subj))
 
 	(macro run_all ((type ARG1)(role ARG2))
-		(call qemu.spec_manual_subj_type_transition (ARG1 subj_type_attribute))
+		(call qemu.spec_manual_subj_type_transition (ARG1
+			subj_type_attribute))
 		(roleattributeset role_attribute ARG2))
 
 	(macro manage_files ((type ARG1))
@@ -99,7 +103,8 @@
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call stream_connect_pattern (ARG1 runtime_obj_type_attribute runtime_obj_type_attribute subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 runtime_obj_type_attribute
+			runtime_obj_type_attribute subj_type_attribute)))
 
 	(macro getattr_all_ptys ((type ARG1))
 		(call fs.search_devpts (ARG1))
@@ -122,8 +127,10 @@
 			(call sd_machined.rw_var_lib_dirs (ARG1))))
 
 	(macro set_tcp_connect_all_ports_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 qemu_guest_tcp_connect_all_ports.bool))
-		(optional qemu_guest_tcp_connect_all_ports_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1
+			qemu_guest_tcp_connect_all_ports.bool))
+		(optional
+			qemu_guest_tcp_connect_all_ports_boolean_optional_seutil
 			(call setsebool.exec (ARG1)))))
 
 (in qemu
@@ -136,7 +143,8 @@
 		(allow ARG1 cmd_file (file (read))))
 
 	(macro spec_manual_subj_type_transition ((type ARG1)(type ARG2))
-		(call manual_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+		(call manual_subj_type_transition_pattern (ARG1 cmd_file
+			ARG2)))
 
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)

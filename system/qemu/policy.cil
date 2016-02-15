@@ -71,7 +71,8 @@
 		(call sd_machined.search_var_lib (subj_type_attribute)))
 
 	(optional qemu_guest_subj_type_optional_sd_networkd
-		(call sd_networkd.relabelfrom_tun_socket (subj_type_attribute)))
+		(call sd_networkd.relabelfrom_tun_socket
+			(subj_type_attribute)))
 
 	(optional qemu_guest_subj_type_optional_tunctl
 		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
@@ -88,5 +89,7 @@
 
 	(booleanif qemu_use_hugepages
 		(true
-			(call fs.getattr_hugetlbfs_fs (qemu_guest.subj_type_attribute))
-			(call fs.manage_hugetlbfs_files (qemu_guest.subj_type_attribute)))))
+			(call fs.getattr_hugetlbfs_fs
+				(qemu_guest.subj_type_attribute))
+			(call fs.manage_hugetlbfs_files
+				(qemu_guest.subj_type_attribute)))))

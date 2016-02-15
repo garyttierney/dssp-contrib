@@ -38,9 +38,14 @@
 	(filecon "/var/run/hif-rpmdb\.lock" file runtime_file_context)
 
 	(optional rpm_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*packagekit.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*packagekit-offline-update.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*yum-makecache.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*dnf-makecache.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*packagekit.*" file
+			unit_file_context)
+		(filecon
+			"/usr/lib/systemd/system/[^/]*packagekit-offline-update.*"
+				file unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*yum-makecache.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*dnf-makecache.*" file
+			unit_file_context)))
 
 (filecon "/usr/lib/rpm(/.*)?" file cmd)

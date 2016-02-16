@@ -88,6 +88,7 @@
 
 	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.search_keyring (subj))
 
@@ -106,6 +107,7 @@
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_proc_fs (subj))
 	(call fs.list_devtmpfs (subj))
+	(call fs.list_fuse (subj))
 	(call fs.rw_sysfs_files (subj))
 
 	(call sec.compute_access_vector (subj))
@@ -130,6 +132,7 @@
 
 	(call gdm_helper.exec (subj))
 
+	(call gkrd.exec (subj))
 	(call gkrd.manual_subj_type_transition_all_subj (subj))
 	(call gkrd.stream_connect_all_subj (subj))
 

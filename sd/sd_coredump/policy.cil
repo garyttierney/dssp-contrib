@@ -10,6 +10,11 @@
 	(call manage_var_lib (subj))
 	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
+	(blockinherit file.tmpfs_obj_blk)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
 	(allow subj self (capability (setuid setgid setpcap dac_override)))
 	(allow subj self (process (getcap setcap setfscreate)))
 

@@ -77,6 +77,13 @@
 		(allow ARG1 var_lib_file relabel_dir_perms)
 		(allow ARG1 var_lib_file relabel_lnk_file_perms))
 
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
 	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
 		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
 			"coredump"))))

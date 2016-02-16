@@ -12,7 +12,8 @@
 	(allow subj self (process (setsched)))
 	(allow subj self (capability (sys_nice)))
 
-	(allow subj plugin_subj_type_attribute (process (signal signull sigkill sigstop)))
+	(allow subj plugin_subj_type_attribute (process (signal signull
+		sigkill sigstop)))
 
 	(call read_config (subj))
 

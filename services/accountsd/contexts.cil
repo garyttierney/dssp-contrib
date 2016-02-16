@@ -3,4 +3,5 @@
 	(filecon "/var/lib/AccountsService(/.*)?" any var_lib_file_context)
 
 	(optional accountsd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*accounts-daemon.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*accounts-daemon.*" file
+			unit_file_context)))

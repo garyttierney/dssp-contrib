@@ -2,7 +2,8 @@
 	(filecon "/usr/sbin/auditd" file cmd_file_context)
 
 	(optional auditd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file
+			unit_file_context)))
 
 (in augenrules
 	(filecon "/usr/sbin/augenrules" file cmd_file_context))
@@ -20,23 +21,47 @@
 	(true
 		(tunableif enable_rbacsep
 			(true
-				(context auditd_config (sys.id sys.role auditd_config.sec_file (systemhigh systemhigh)))
-				(context auditd_runtime (sys.id sys.role auditd_runtime.sec_file (systemhigh systemhigh)))
-				(context auditd_var_log (sys.id sys.role auditd_var_log.sec_file (systemhigh systemhigh))))
+				(context auditd_config (sys.id sys.role
+					auditd_config.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_runtime (sys.id sys.role
+					auditd_runtime.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_var_log (sys.id sys.role
+					auditd_var_log.sec_file
+						(systemhigh systemhigh))))
 			(false
-				(context auditd_config (sys.id object_r auditd_config.sec_file (systemhigh systemhigh)))
-				(context auditd_runtime (sys.id object_r auditd_runtime.sec_file (systemhigh systemhigh)))
-				(context auditd_var_log (sys.id object_r auditd_var_log.sec_file (systemhigh systemhigh))))))
+				(context auditd_config (sys.id object_r
+					auditd_config.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_runtime (sys.id object_r
+					auditd_runtime.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_var_log (sys.id object_r
+					auditd_var_log.sec_file
+						(systemhigh systemhigh))))))
 	(false
 		(tunableif enable_rbacsep
 			(true
-				(context auditd_config (sys.id sys.role auditd_config.sec_file (systemlow systemlow)))
-				(context auditd_runtime (sys.id sys.role auditd_runtime.sec_file (systemlow systemlow)))
-				(context auditd_var_log (sys.id sys.role auditd_var_log.sec_file (systemlow systemlow))))
+				(context auditd_config (sys.id sys.role
+					auditd_config.sec_file
+						(systemlow systemlow)))
+				(context auditd_runtime (sys.id sys.role
+					auditd_runtime.sec_file
+						(systemlow systemlow)))
+				(context auditd_var_log (sys.id sys.role
+					auditd_var_log.sec_file
+						(systemlow systemlow))))
 			(false
-				(context auditd_config (sys.id object_r auditd_config.sec_file (systemlow systemlow)))
-				(context auditd_runtime (sys.id object_r auditd_runtime.sec_file (systemlow systemlow)))
-				(context auditd_var_log (sys.id object_r auditd_var_log.sec_file (systemlow systemlow)))))))
+				(context auditd_config (sys.id object_r
+					auditd_config.sec_file
+						(systemlow systemlow)))
+				(context auditd_runtime (sys.id object_r
+					auditd_runtime.sec_file
+						(systemlow systemlow)))
+				(context auditd_var_log (sys.id object_r
+					auditd_var_log.sec_file
+						(systemlow systemlow)))))))
 
 (filecon "/var/log/audit/\.journal" any ())
 (filecon "/var/log/audit/lost\+found/.*" any ())

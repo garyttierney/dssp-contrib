@@ -27,7 +27,8 @@
 	(blockinherit file.relabel_tmpfs_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file
+			"*"))))
 
 (in dnssec_triggerd
 	(blockinherit exec_blk)
@@ -48,8 +49,10 @@
 	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "dnssec-trigger"))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "dnssec-triggerd.pid"))))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"dnssec-trigger"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"dnssec-triggerd.pid"))))
 
 (in dnssec_triggers
 	(blockinherit exec_blk)

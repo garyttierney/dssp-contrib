@@ -112,26 +112,31 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional chronyd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
 	(optional enable_status_start_sd_unit_subj_type_attribute_optional_sd
-		(allow control_sd_unit_subj_type_attribute unit_file (service (start status stop reload enable disable))))
+		(allow control_sd_unit_subj_type_attribute unit_file (service
+			(start status stop reload enable disable))))
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
 
 (block chrony_cmdmon
 	(blockinherit net.reserved_port_obj_blk))
@@ -140,4 +145,4 @@
 	(blockinherit cmd.obj_blk)
 
 	(optional chrony_helper_optional_sd
-                (call sd.daemon (chronyd.subj cmd_file))))
+		(call sd.daemon (chronyd.subj cmd_file))))

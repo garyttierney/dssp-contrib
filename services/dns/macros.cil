@@ -8,13 +8,20 @@
 
 (in resolv
 	(macro config_obj_type_transition_config ((type ARG1))
-		(call file.config_obj_type_transition (ARG1 config_file file "resolv.conf"))
-		(call file.config_obj_type_transition (ARG1 config_file file "resolv.conf.tmp"))
-		(call file.config_obj_type_transition (ARG1 config_file file "resolv.conf.fp-tmp"))
-		(call file.config_obj_type_transition (ARG1 config_file file "resolv-secure.conf"))
-		(call file.config_obj_type_transition (ARG1 config_file file ".resolv.conf.dnssec-trigger"))
-		(call file.config_obj_type_transition (ARG1 config_file file ".resolv-secure.conf.dnssec-trigger"))
-		(call file.config_obj_type_transition (ARG1 config_file file "resolv.conf.fp-saved")))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"resolv.conf"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"resolv.conf.tmp"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"resolv.conf.fp-tmp"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"resolv-secure.conf"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			".resolv.conf.dnssec-trigger"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			".resolv-secure.conf.dnssec-trigger"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"resolv.conf.fp-saved")))
 
 	(macro manage_config_files ((type ARG1))
 		(call file.rw_config_dirs (ARG1))

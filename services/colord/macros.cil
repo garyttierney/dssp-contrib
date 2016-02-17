@@ -20,7 +20,8 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "colord")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"colord")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -54,4 +55,5 @@
 		(allow ARG1 home_data_file read_inherited_file_perms))
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
-		(call usersubj.home_data_obj_type_transition (ARG1 home_data_file dir "icc"))))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "icc"))))

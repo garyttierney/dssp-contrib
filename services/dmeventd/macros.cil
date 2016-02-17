@@ -14,9 +14,12 @@
 	(blockinherit file.relabel_runtime_fifo_files_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file fifo_file "dmeventd-client"))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file fifo_file "dmeventd-server"))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "dmeventd.pid")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file
+			fifo_file "dmeventd-client"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file
+			fifo_file "dmeventd-server"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"dmeventd.pid")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

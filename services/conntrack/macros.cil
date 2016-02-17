@@ -29,25 +29,29 @@
 	(blockinherit file.relabel_var_log_files_blk)
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "conntrackd.log")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"conntrackd.log")))
 
 	(blockinherit file.read_runtime_sock_files_blk)
 	(blockinherit file.manage_runtime_sock_files_blk)
 	(blockinherit file.relabel_runtime_sock_files_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file sock_file "conntrackd.ctl")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file
+			sock_file "conntrackd.ctl")))
 
 	(blockinherit file.read_runtime_lock_files_blk)
 	(blockinherit file.manage_runtime_lock_files_blk)
 	(blockinherit file.relabel_runtime_lock_files_blk)
 
 	(macro runtime_lock_obj_type_transition_runtime_lock ((type ARG1))
-		(call file.runtime_lock_obj_type_transition (ARG1 runtime_lock_file file "conntrack.lock")))
+		(call file.runtime_lock_obj_type_transition (ARG1
+			runtime_lock_file file "conntrack.lock")))
 
 	(macro stream_connect ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
 
 	(blockinherit net.udp_bind_port_blk)
 

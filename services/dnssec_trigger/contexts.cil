@@ -8,10 +8,12 @@
 	(filecon "/var/run/dnssec-triggerd\.pid" file runtime_file_context)
 
 	(optional dnssec_triggerd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*dnssec-triggerd.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*dnssec-triggerd.*" file
+			unit_file_context)))
 
 (in dnssec_triggercs
-	(filecon "/usr/sbin/dnssec-trigger-control-setup" file cmd_file_context))
+	(filecon "/usr/sbin/dnssec-trigger-control-setup" file
+		cmd_file_context))
 
 (in dnssec_triggers
 	(filecon "/usr/libexec/dnssec-trigger-script" file cmd_file_context))

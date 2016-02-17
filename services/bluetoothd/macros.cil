@@ -25,14 +25,16 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "bluetooth")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"bluetooth")))
 
 	(blockinherit file.read_tmpfs_fifo_files_blk)
 	(blockinherit file.manage_tmpfs_fifo_files_blk)
 	(blockinherit file.relabel_tmpfs_fifo_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file fifo_file "*")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file fifo_file
+			"*")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

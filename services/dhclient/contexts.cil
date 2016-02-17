@@ -1,6 +1,7 @@
 (in dhclient
 	(filecon "/etc/dhcp/dhclient\.d(/.*)?" any config_file_context)
-	(filecon "/etc/NetworkManager/dispatcher\.d/[^/]*dhclient" file cmd_file_context)
+	(filecon "/etc/NetworkManager/dispatcher\.d/[^/]*dhclient" file
+		cmd_file_context)
 	(filecon "/usr/sbin/dhclient.*" file cmd_file_context)
 	(filecon "/var/lib/dhclient(/.*)?" any var_lib_file_context)
 	(filecon "/var/run/dhclient.*" file runtime_file_context))

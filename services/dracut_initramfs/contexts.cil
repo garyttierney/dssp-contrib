@@ -1,10 +1,13 @@
 (in dracut_initramfs
-	(filecon "/usr/lib/dracut/dracut-initramfs-restore" file cmd_file_context)
+	(filecon "/usr/lib/dracut/dracut-initramfs-restore" file
+		cmd_file_context)
 	(filecon "/var/lib/initramfs(/.*)?" any var_lib_file_context)
 	(filecon "/var/run/initramfs" dir runtime_file_context)
 
 	(optional dracut_initramfs_unit_optional_sd
-		(filecon "/usr/lib/dracut/modules\.d/.*/dracut-shutdown\.service" file unit_file_context)))
+		(filecon
+			"/usr/lib/dracut/modules\.d/.*/dracut-shutdown\.service"
+				file unit_file_context)))
 
 (filecon "/var/run/initramfs/.*" any ())
 (filecon "/var/run/initramfs/\.need_shutdown" file ())

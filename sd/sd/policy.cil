@@ -239,6 +239,8 @@
 	(call sd.manage_unit_lnk_files (subj))
 	(call sd.relabelto_unit_runtime_dirs (subj))
 
+	(call sd_fsck.manage_runtime_files (subj))
+
 	(call sd_journald.list_var_log (subj))
 	(call sd_journald.read_runtime (subj))
 	(call sd_journald.relabelto_var_log_dirs (subj))

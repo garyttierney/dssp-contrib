@@ -2,4 +2,8 @@
 	(filecon "/usr/lib/systemd/systemd-fsck" file cmd_file_context)
 	(filecon "/usr/lib/systemd/system/[^/]*systemd-fsck.*" file
 		unit_file_context)
-	(filecon "/var/run/fsck(/.*)?" any runtime_file_context))
+	(filecon "/var/run/fsck(/.*)?" any runtime_file_context)
+	(filecon "/var/run/systemd/show-status" file
+		runtime_file_context)
+	(filecon "/var/run/systemd/fsck\.progress" socket
+		runtime_file_context))

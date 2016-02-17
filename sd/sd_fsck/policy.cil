@@ -16,6 +16,8 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
 	(allow subj self rw_fifo_file_perms)
 
 	(call fs.read_sysfs (subj))

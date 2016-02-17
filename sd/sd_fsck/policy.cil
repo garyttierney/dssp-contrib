@@ -20,7 +20,6 @@
 
 	(allow subj self rw_fifo_file_perms)
 
-	(call fs.audit_write_access_rootfs_dirs (subj))
 	(call fs.read_sysfs (subj))
 
 	(call storage.getattr_all (subj))

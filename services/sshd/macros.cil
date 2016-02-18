@@ -74,11 +74,12 @@
 
 		(call exec (subj))
 
-	 (allow subj sshd_net.subj (process (signal sigkill)))
+		(allow subj sshd_net.subj (process (signal sigkill)))
 
-	 (call dynamic_subj_type_transition_pattern (subj sshd_net.subj))
+		(call dynamic_subj_type_transition_pattern (subj
+			sshd_net.subj))
 
-	 (allow subj sshd_key.file read_file_perms)
+		(allow subj sshd_key.file read_file_perms)
 
 		(optional sshd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
@@ -103,22 +104,27 @@
 
 		(call login_subj_type (priv_login_subj_type_attribute))
 
-	 (allow adm_subj_type_attribute subj_type_attribute (process (ptrace
-		signal signull sigkill sigstop)))
-	 (call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
 
-	 (call ssh_client.search_config (adm_subj_type_attribute))
-	 (call file.search_runtime (adm_subj_type_attribute))
+		(call ssh_client.search_config (adm_subj_type_attribute))
+		(call file.search_runtime (adm_subj_type_attribute))
 
-	 (allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute
-		manage_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_lnk_file_perms)
 
-	 (allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute
-		relabel_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_lnk_file_perms)
 
 		(macro login_subj_type ((type ARG1))
 			(typeattributeset login_subj_type_attribute ARG1))

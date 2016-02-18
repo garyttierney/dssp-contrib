@@ -22,7 +22,7 @@
 	(macro manage_runtime_files ((type ARG1))
 		(call file.rw_runtime_dirs (ARG1))
 		(call sd.rw_runtime_dirs (ARG1))
-		(allow ARG1 runtime_file read_file_perms))
+		(allow ARG1 runtime_file manage_file_perms))
 
 	(macro read_runtime ((type ARG1))
 		(call sd.search_runtime (ARG1))

@@ -70,7 +70,8 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
 
 		(call sd.sysbus_chat_client_subj_type (subj)))
 
@@ -78,8 +79,10 @@
 		(call sysbus.daemon (subj fwupd.cmd_file)))
 
 	(optional fwupd_sysbus_chat_client_subj_type_attribute_optional_sysbus
-		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
 
 	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 
@@ -87,7 +90,8 @@
 	(allow subj client_subj_type_attribute read_file_perms)
 	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_cache (adm_subj_type_attribute))
@@ -95,13 +99,17 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
 
 (block fwupdmgr
 	(typeattribute subj_type_attribute)

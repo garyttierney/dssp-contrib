@@ -17,24 +17,34 @@
 		(typeattribute var_lib_obj_type_attribute)
 		(typeattribute var_log_obj_type_attribute)
 
-		(typeattributeset .httpd.adm_subj_type_attribute adm_subj_type_attribute)
+		(typeattributeset .httpd.adm_subj_type_attribute
+			adm_subj_type_attribute)
 
 		(typeattributeset .httpd.obj_type_attribute obj_type_attribute)
 
-		(typeattributeset .httpd.config_obj_type_attribute config_obj_type_attribute)
-		(typeattributeset .httpd.exec_obj_type_attribute exec_obj_type_attribute)
-		(typeattributeset .httpd.port_obj_type_attribute port_obj_type_attribute)
-		(typeattributeset .httpd.runtime_obj_type_attribute runtime_obj_type_attribute)
-		(typeattributeset .httpd.unit_obj_type_attribute unit_obj_type_attribute)
-		(typeattributeset .httpd.var_cache_obj_type_attribute var_cache_obj_type_attribute)
-		(typeattributeset .httpd.var_lib_obj_type_attribute var_lib_obj_type_attribute)
-		(typeattributeset .httpd.var_log_obj_type_attribute var_log_obj_type_attribute)
+		(typeattributeset .httpd.config_obj_type_attribute
+			config_obj_type_attribute)
+		(typeattributeset .httpd.exec_obj_type_attribute
+			exec_obj_type_attribute)
+		(typeattributeset .httpd.port_obj_type_attribute
+			port_obj_type_attribute)
+		(typeattributeset .httpd.runtime_obj_type_attribute
+			runtime_obj_type_attribute)
+		(typeattributeset .httpd.unit_obj_type_attribute
+			unit_obj_type_attribute)
+		(typeattributeset .httpd.var_cache_obj_type_attribute
+			var_cache_obj_type_attribute)
+		(typeattributeset .httpd.var_lib_obj_type_attribute
+			var_lib_obj_type_attribute)
+		(typeattributeset .httpd.var_log_obj_type_attribute
+			var_log_obj_type_attribute)
 
 		(blockinherit subj.common_subj_blk)
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .httpd.subj_type_attribute subj_type_attribute)
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -68,7 +78,8 @@
 		(allow subj runtime_file manage_file_perms)
 		(allow subj runtime_file manage_sock_file_perms)
 
-		(call file.runtime_obj_type_transition (subj runtime_file dir "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file dir
+			"*"))
 
 		(blockinherit file.var_cache_obj_blk)
 
@@ -77,7 +88,8 @@
 
 		(allow subj var_cache_file manage_dir_perms)
 
-		(call file.var_cache_obj_type_transition (subj var_cache_file dir "*"))
+		(call file.var_cache_obj_type_transition (subj var_cache_file
+			dir "*"))
 
 		(blockinherit file.var_lib_obj_blk)
 
@@ -86,7 +98,8 @@
 
 		(allow subj var_lib_file manage_dir_perms)
 
-		(call file.var_lib_obj_type_transition (subj var_lib_file dir "*"))
+		(call file.var_lib_obj_type_transition (subj var_lib_file dir
+			"*"))
 
 		(blockinherit file.var_log_obj_blk)
 
@@ -100,7 +113,8 @@
 		(allow subj var_log_file delete_file_perms)
 		(allow subj var_log_file read_file_perms)
 
-		(call file.var_log_obj_type_transition (subj var_log_file dir "*"))
+		(call file.var_log_obj_type_transition (subj var_log_file dir
+			"*"))
 
 		(call rotatelogs.auto_subj_type_transition (subj))
 		(call suexec.auto_subj_type_transition (subj))
@@ -113,10 +127,13 @@
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
-			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow adm_subj_type_attribute unit_file (service
+				(stop status disable enable reload start))))
 
-		(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-		(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
 
 		(call file.search_config (adm_subj_type_attribute))
 		(call file.search_runtime (adm_subj_type_attribute))
@@ -124,15 +141,23 @@
 		(call file.search_var_lib (adm_subj_type_attribute))
 		(call file.search_var_log (adm_subj_type_attribute))
 
-		(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-		(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_sock_file_perms)
 
-		(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-		(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_sock_file_perms)
 
 		(blockinherit exec_blk)
 
@@ -206,8 +231,10 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .httpd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .htcacheclean.subj_type_attribute subj_type_attribute)
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .htcacheclean.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -225,12 +252,14 @@
 		(blockinherit file.runtime_obj_blk)
 
 		(typeattributeset httpd.obj_type_attribute runtime_file)
-		(typeattributeset httpd.runtime_obj_type_attribute runtime_file)
+		(typeattributeset httpd.runtime_obj_type_attribute
+			runtime_file)
 
 		(allow subj runtime_file manage_dir_perms)
 		(allow subj runtime_file manage_file_perms)
 
-		(call obj_type_transition_pattern (subj httpd.runtime_file runtime_file dir "htcacheclean"))
+		(call obj_type_transition_pattern (subj httpd.runtime_file
+			runtime_file dir "htcacheclean"))
 
 		(call httpd.list_var_cache (subj))
 
@@ -242,9 +271,12 @@
 			(blockinherit sd.unit_obj_blk)
 
 			(typeattributeset httpd.obj_type_attribute unit_file)
-			(typeattributeset httpd.unit_obj_type_attribute unit_file)
+			(typeattributeset httpd.unit_obj_type_attribute
+				unit_file)
 
-			(allow httpd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow httpd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
 
 		(blockinherit file.read_config_files_blk)
 		(blockinherit file.manage_config_files_blk)
@@ -273,10 +305,13 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .httpd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .suexec.subj_type_attribute subj_type_attribute)
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .suexec.subj_type_attribute
+			subj_type_attribute)
 
-		(typeattributeset .suexec.exec_obj_type_attribute exec_obj_type_attribute)
+		(typeattributeset .suexec.exec_obj_type_attribute
+			exec_obj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -302,8 +337,10 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .httpd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .rotatelogs.subj_type_attribute subj_type_attribute)
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .rotatelogs.subj_type_attribute
+			subj_type_attribute)
 
 		(call httpd.append_var_log_files (subj))
 
@@ -324,7 +361,8 @@
 		(call can_exec (ARG1 exec_obj_type_attribute)))
 
 	(macro control_all_sd_unit_subj_type ((type ARG1))
-		(typeattributeset control_all_sd_unit_subj_type_attribute ARG1))
+		(typeattributeset control_all_sd_unit_subj_type_attribute
+			ARG1))
 
 	(blockinherit net.tcp_connect_all_ports_blk)
 	(blockinherit net.tcp_bind_all_ports_blk)
@@ -397,7 +435,8 @@
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file "*"))))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
 
 (in fcgistarter
 	(blockinherit exec_blk))

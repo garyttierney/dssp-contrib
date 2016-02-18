@@ -10,7 +10,8 @@
 		(filecon "/var/log/httpd(/.*)?" any var_log_file_context)
 
 		(optional httpd_unit_optional_sd
-			(filecon "/usr/lib/systemd/system/[^/]*httpd.*" file unit_file_context)))
+			(filecon "/usr/lib/systemd/system/[^/]*httpd.*" file
+				unit_file_context)))
 
 	(block htcacheclean
 		(filecon "/usr/sbin/htcacheclean" file cmd_file_context)
@@ -18,7 +19,8 @@
 		(filecon "/var/run/httpd/htcacheclean(/.*)?" any runtime_file_context)
 
 		(optional htcacheclean_unit_optional_sd
-			(filecon "/usr/lib/systemd/system/[^/]*htcacheclean.*" file unit_file_context)))
+			(filecon "/usr/lib/systemd/system/[^/]*htcacheclean.*"
+				file unit_file_context)))
 
 	(block suexec
 		(filecon "/usr/sbin/suexec" file cmd_file_context))

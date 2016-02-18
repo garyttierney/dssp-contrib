@@ -5,7 +5,8 @@
 	(filecon "/var/log/firewalld.*" file var_log_file_context)
 
 	(optional firewalld_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*firewalld.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*firewalld.*" file
+			unit_file_context)))
 
 (in firewallcmd
 	(filecon "/usr/bin/firewall-cmd" file cmd_file_context)

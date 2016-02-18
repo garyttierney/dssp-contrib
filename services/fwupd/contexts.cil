@@ -6,9 +6,12 @@
 	(filecon "/var/lib/fwupd(/.*)?" any var_lib_file_context)
 
 	(optional fwupd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*fwupd.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*fwupdate-cleanup.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*fwupd-offline-update.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*fwupd.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*fwupdate-cleanup.*"
+			file unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*fwupd-offline-update.*"
+			file unit_file_context)))
 
 (in fwupdmgr
 	(filecon "/usr/bin/fwupdmgr" file cmd_file_context))

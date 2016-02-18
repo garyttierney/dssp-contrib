@@ -15,15 +15,25 @@
 	(filecon "/usr/sbin/xtables-multi" file cmd_file_context)
 	(filecon "/var/lib/ebtables(/.*)?" any var_lib_file_context)
 	(filecon "/var/run/ebtables\.lock" file runtime_file_context)
-	(filecon "/var/run/lock/subsys/arptables" file runtime_lock_file_context)
-	(filecon "/var/run/lock/subsys/ebtables" file runtime_lock_file_context)
-	(filecon "/var/run/lock/subsys/ip6tables" file runtime_lock_file_context)
-	(filecon "/var/run/lock/subsys/iptables" file runtime_lock_file_context)
+	(filecon "/var/run/lock/subsys/arptables" file
+		runtime_lock_file_context)
+	(filecon "/var/run/lock/subsys/ebtables" file
+		runtime_lock_file_context)
+	(filecon "/var/run/lock/subsys/ip6tables" file
+		runtime_lock_file_context)
+	(filecon "/var/run/lock/subsys/iptables" file
+		runtime_lock_file_context)
 
 	(optional iptables_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*arptables.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*ebtables.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*iptables.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*ip6tables.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*nftables.*" file unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*nf6tables.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*arptables.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*ebtables.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*iptables.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*ip6tables.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*nftables.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*nf6tables.*" file
+			unit_file_context)))

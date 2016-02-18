@@ -24,7 +24,8 @@
 	(blockinherit file.relabel_var_cache_blk)
 
 	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
-		(call file.var_cache_obj_type_transition (ARG1 var_cache_file dir "app-info")))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "app-info")))
 
 	(blockinherit file.search_var_lib_blk)
 	(blockinherit file.list_var_lib_blk)
@@ -35,7 +36,8 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "fwupd")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"fwupd")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -53,7 +55,8 @@
 		(typeattributeset fwupdmgr.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call fwupdmgr.spec_auto_subj_type_transition (ARG1 subj))))
+			(call fwupdmgr.spec_auto_subj_type_transition (ARG1
+				subj))))
 
 	(blockinherit exec_blk)
 

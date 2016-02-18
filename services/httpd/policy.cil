@@ -38,8 +38,8 @@
 		(true
 			(call rbacsep.read_state_source_subj_type (subj))))
 
-        (optional apachectl_optional_sysbus
-                (call sysbus.client_subj_type (subj)))
+	(optional apachectl_optional_sysbus
+		(call sysbus.client_subj_type (subj)))
 
 	(optional apachectl_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type (subj))
@@ -82,13 +82,15 @@
 
 	(blockinherit httpd_blk)
 
-	(allow subj_type_attribute self (capability (dac_override setgid setuid kill)))
+	(allow subj_type_attribute self (capability (dac_override setgid
+		setuid kill)))
 	(allow subj_type_attribute self (process (getpgid)))
 	(allow subj_type_attribute self create_sem_perms)
 	(allow subj_type_attribute self create_shm_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
-	(allow subj_type_attribute self (unix_stream_socket (connectto listen accept)))
+	(allow subj_type_attribute self (unix_stream_socket (connectto listen
+		accept)))
 
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
@@ -128,18 +130,23 @@
 
 	(call web_content.cgi_client_subj (httpd.subj))
 
-	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw (httpd.subj))
+	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw
+		(httpd.subj))
 
 	(optional httpd_optional_logrotate
-		(call logrotate.client_reload_sd_unit_obj_type (unit_obj_type_attribute))
-		(call logrotate.client_var_log_obj_type (var_log_obj_type_attribute)))
+		(call logrotate.client_reload_sd_unit_obj_type
+			(unit_obj_type_attribute))
+		(call logrotate.client_var_log_obj_type
+			(var_log_obj_type_attribute)))
 
 	(optional httpd_optional_sd
 		(call sd.notify_subj_type (subj_type_attribute))
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
 		(call sd.reload (control_all_sd_unit_subj_type_attribute))
-		(allow control_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload enable disable))))
+		(allow control_all_sd_unit_subj_type_attribute
+			unit_obj_type_attribute (service (start status stop
+				reload enable disable))))
 
 	(optional httpd_optional_php_fpm
 		(call php_fpm.php_fpm.stream_connect (httpd.subj))))
@@ -167,8 +174,10 @@
 	(optional suexec_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute))))
 
-(allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (httpd.adm_subj_type_attribute httpd.subj_type_attribute))
+(allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process
+	(ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (httpd.adm_subj_type_attribute
+	httpd.subj_type_attribute))
 
 (call file.search_config (httpd.adm_subj_type_attribute))
 (call file.search_runtime (httpd.adm_subj_type_attribute))
@@ -177,14 +186,22 @@
 (call file.search_var_log (httpd.adm_subj_type_attribute))
 
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_dir_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_lnk_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_sock_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_lnk_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_sock_file_perms)
 
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_dir_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_lnk_file_perms)
-(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute relabel_sock_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_dir_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_lnk_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_sock_file_perms)
 
 (optional httpd_adm_subj_type_optional_sd
-	(allow httpd.adm_subj_type_attribute httpd.unit_obj_type_attribute (service (stop status disable enable reload start))))
+	(allow httpd.adm_subj_type_attribute httpd.unit_obj_type_attribute
+		(service (stop status disable enable reload start))))

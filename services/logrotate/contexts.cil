@@ -6,4 +6,5 @@
 	(filecon "/var/lib/logrotate\.status.*" file var_lib_file_context)
 
 	(optional logrotate_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*logrotate.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*logrotate.*" file
+			unit_file_context)))

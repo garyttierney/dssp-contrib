@@ -5,11 +5,19 @@
 
 	(booleanif sshd_priv_login
 		(true
-			(call usersubj.dynamic_subj_type_transition_common_login_subj (sshd.subj_type_attribute))
-			(call usersubj.shell_manual_subj_type_transition_common_login_subj (sshd.subj_type_attribute)))
+			(call
+				usersubj.dynamic_subj_type_transition_common_login_subj
+					(sshd.subj_type_attribute))
+			(call
+				usersubj.shell_manual_subj_type_transition_common_login_subj
+					(sshd.subj_type_attribute)))
 		(false
-			(call usersubj.dynamic_subj_type_transition_unpriv_login_subj (sshd.subj_type_attribute))
-			(call usersubj.shell_manual_subj_type_transition_unpriv_login_subj (sshd.subj_type_attribute)))))
+			(call
+				usersubj.dynamic_subj_type_transition_unpriv_login_subj
+					(sshd.subj_type_attribute))
+			(call
+				usersubj.shell_manual_subj_type_transition_unpriv_login_subj
+					(sshd.subj_type_attribute)))))
 
 (block sshd
 	(typeattribute control_all_sd_unit_subj_type_attribute)
@@ -26,9 +34,11 @@
 	(typeattribute runtime_obj_type_attribute)
 	(typeattribute unit_obj_type_attribute)
 
-        (blockinherit sshd_blk)
+	(blockinherit sshd_blk)
 
-	(allow subj_type_attribute self (capability (sys_resource kill sys_tty_config fowner fsetid net_bind_service sys_chroot net_admin)))
+	(allow subj_type_attribute self (capability (sys_resource kill
+		sys_tty_config fowner fsetid net_bind_service sys_chroot
+			net_admin)))
 	(allow subj_type_attribute self (process (setrlimit)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
@@ -59,9 +69,12 @@
 	(call ssh_client.search_config (subj_type_attribute))
 	(call ssh_client.read_home_user_files (subj_type_attribute))
 
-	(call usersubj.dontaudit_create_keyring_common_subj (subj_type_attribute))
-	(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj (subj_type_attribute))
-	(call usersubj.dontaudit_manual_subj_type_transition_common_subj (subj_type_attribute))
+	(call usersubj.dontaudit_create_keyring_common_subj
+		(subj_type_attribute))
+	(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj
+		(subj_type_attribute))
+	(call usersubj.dontaudit_manual_subj_type_transition_common_subj
+		(subj_type_attribute))
 	(call usersubj.relabel_ptys (subj_type_attribute))
 	(call usersubj.setattr_ptys (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
@@ -70,7 +83,9 @@
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
 		(call sd.reload (control_all_sd_unit_subj_type_attribute))
-		(allow control_all_sd_unit_subj_type_attribute unit_obj_type_attribute (service (start status stop reload enable disable)))))
+		(allow control_all_sd_unit_subj_type_attribute
+			unit_obj_type_attribute (service (start status stop
+				reload enable disable)))))
 
 (block sshd_key
 	(typeattribute obj_type_attribute))
@@ -96,7 +111,8 @@
 (block sshd_net
 	(typeattribute subj_type_attribute)
 
-	(allow subj_type_attribute self (capability (sys_chroot setuid setgid)))
+	(allow subj_type_attribute self (capability (sys_chroot setuid
+		setgid)))
 	(allow subj_type_attribute self (process (setrlimit)))
 	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 
@@ -108,14 +124,17 @@
 	(blockinherit cmd.obj_blk))
 
 (call sshd.rw_inherited_tcp_sockets_all_subj (sshd.login_subj_type_attribute))
-(call sshd.rw_inherited_unix_stream_sockets_all_subj (sshd.login_subj_type_attribute))
-(call sshd.rw_inherited_unix_dgram_sockets_all_subj (sshd.login_subj_type_attribute))
+(call sshd.rw_inherited_unix_stream_sockets_all_subj
+	(sshd.login_subj_type_attribute))
+(call sshd.rw_inherited_unix_dgram_sockets_all_subj
+	(sshd.login_subj_type_attribute))
 
 (call ssh_client.read_config_files (sshd.login_subj_type_attribute))
 
 (call sshd.login_subj_type (sshd.priv_login_subj_type_attribute))
 
-(allow sshd.adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+(allow sshd.adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace
+	signal signull sigkill sigstop)))
 (call ps_subj_pattern (sshd.adm_subj_type_attribute sshd.subj_type_attribute))
 
 (call ssh_client.search_config (sshd.adm_subj_type_attribute))
@@ -123,11 +142,14 @@
 
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute manage_dir_perms)
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute manage_file_perms)
-(allow sshd.adm_subj_type_attribute sshd.obj_type_attribute manage_lnk_file_perms)
+(allow sshd.adm_subj_type_attribute sshd.obj_type_attribute
+	manage_lnk_file_perms)
 
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_dir_perms)
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_file_perms)
-(allow sshd.adm_subj_type_attribute sshd.obj_type_attribute relabel_lnk_file_perms)
+(allow sshd.adm_subj_type_attribute sshd.obj_type_attribute
+	relabel_lnk_file_perms)
 
 (optional sshd_adm_subj_type_optional_sd
-	(allow sshd.adm_subj_type_attribute sshd.unit_obj_type_attribute (service (stop status disable enable reload start))))
+	(allow sshd.adm_subj_type_attribute sshd.unit_obj_type_attribute
+		(service (stop status disable enable reload start))))

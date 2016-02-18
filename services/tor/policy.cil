@@ -108,12 +108,15 @@
 		(call sd.daemon_rwdir_obj_type (var_lib_file))
 		(call sd.daemon_rwdir_obj_type (runtime_file))
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
 
 		(optional tor_sd_optional_logrotate
-			(call logrotate.client_reload_sd_unit_obj_type (unit_file))))
+			(call logrotate.client_reload_sd_unit_obj_type
+				(unit_file))))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_var_lib (adm_subj_type_attribute))
@@ -121,11 +124,13 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
 
 (block tor_control
 	(blockinherit net.unreserved_port_obj_blk))

@@ -34,22 +34,28 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
 
 (block lircmd
 	(blockinherit subj.common_subj_blk)
@@ -69,4 +75,5 @@
 
 		(typeattributeset lircd.obj_type_attribute unit_file)
 
-		(allow lircd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))))
+		(allow lircd.adm_subj_type_attribute unit_file (service (stop
+			status disable enable reload start)))))

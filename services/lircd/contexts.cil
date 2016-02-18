@@ -4,10 +4,12 @@
 	(filecon "/var/run/lirc(/.*)?" any runtime_file_context)
 
 	(optional lircd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*lircd.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*lircd.*" file
+			unit_file_context)))
 
 (in lircmd
 	(filecon "/usr/sbin/lircmd" file cmd_file_context)
 
 	(optional lircmd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*lircmd.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*lircmd.*" file
+			unit_file_context)))

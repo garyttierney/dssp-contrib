@@ -10,7 +10,8 @@
 			(call sessbus.spec_stream_connect (ARG1 subj)))
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call sessbus.spec_sysbus_auto_subj_type_transition (ARG1 subj)))
+			(call sessbus.spec_sysbus_auto_subj_type_transition
+				(ARG1 subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call sessbus.role_pattern (ARG1 ARG2 subj))))
@@ -51,7 +52,8 @@
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file tmpfs_user_file ARG2)))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ARG2)))
 
 	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
 		(call sysbus.spec_auto_subj_type_transition (ARG2 ARG3))
@@ -82,8 +84,10 @@
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file sock_file "bus"))
-		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir "dbus")))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "bus"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"dbus")))
 
 	(blockinherit subj.use_fd_all_blk)
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)

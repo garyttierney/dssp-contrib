@@ -43,9 +43,12 @@
 		(allow ARG1 config_file relabel_lnk_file_perms))
 
 	(macro selinux_config_obj_type_transition_config ((type ARG1))
-		(call selinux_config.config_obj_type_transition (ARG1 config_file dir "setrans.d"))
-		(call selinux_config.config_obj_type_transition (ARG1 config_file file "secolor.conf"))
-		(call selinux_config.config_obj_type_transition (ARG1 config_file file "setrans.conf")))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file dir "setrans.d"))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file file "secolor.conf"))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file file "setrans.conf")))
 
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
@@ -56,12 +59,15 @@
 	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "setrans"))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "mcstransd.pid")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"setrans"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"mcstransd.pid")))
 
 	(macro stream_connect ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call stream_connect_pattern (ARG1 runtime_file runtime_file subj)))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

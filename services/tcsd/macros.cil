@@ -18,7 +18,8 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "tpm")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"tpm")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

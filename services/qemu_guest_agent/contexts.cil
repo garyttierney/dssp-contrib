@@ -3,4 +3,5 @@
 	(filecon "/var/run/qga\.state" file runtime_file_context)
 
 	(optional qemu_guest_agent_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*qemu-guest-agent.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*qemu-guest-agent.*"
+			file unit_file_context)))

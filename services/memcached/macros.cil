@@ -13,20 +13,27 @@
 		(typeattribute var_lib_obj_type_attribute)
 		(typeattribute unit_obj_type_attribute)
 
-		(typeattributeset .memcached.adm_subj_type_attribute adm_subj_type_attribute)
+		(typeattributeset .memcached.adm_subj_type_attribute
+			adm_subj_type_attribute)
 
-		(typeattributeset .memcached.obj_type_attribute obj_type_attribute)
+		(typeattributeset .memcached.obj_type_attribute
+			obj_type_attribute)
 
-		(typeattributeset .memcached.config_obj_type_attribute config_obj_type_attribute)
-		(typeattributeset .memcached.port_obj_type_attribute port_obj_type_attribute)
-		(typeattributeset .memcached.var_lib_obj_type_attribute var_lib_obj_type_attribute)
-		(typeattributeset .memcached.unit_obj_type_attribute unit_obj_type_attribute)
+		(typeattributeset .memcached.config_obj_type_attribute
+			config_obj_type_attribute)
+		(typeattributeset .memcached.port_obj_type_attribute
+			port_obj_type_attribute)
+		(typeattributeset .memcached.var_lib_obj_type_attribute
+			var_lib_obj_type_attribute)
+		(typeattributeset .memcached.unit_obj_type_attribute
+			unit_obj_type_attribute)
 
 		(blockinherit subj.common_subj_blk)
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .memcached.subj_type_attribute subj_type_attribute)
+		(typeattributeset .memcached.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -64,21 +71,25 @@
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
-			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow adm_subj_type_attribute unit_file (service
+				(stop status disable enable reload start))))
 
-	        (allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-	        (call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+	 (allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
+	 (call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
-	        (call file.search_config (adm_subj_type_attribute))
-	        (call file.search_var_lib (adm_subj_type_attribute))
+	 (call file.search_config (adm_subj_type_attribute))
+	 (call file.search_var_lib (adm_subj_type_attribute))
 
-	        (allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-	        (allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	        (allow adm_subj_type_attribute obj_type_attribute manage_sock_file_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
 
-	        (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-	        (allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	        (allow adm_subj_type_attribute obj_type_attribute relabel_sock_file_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	 (allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms)
 
 		(blockinherit exec_blk)
 
@@ -96,17 +107,20 @@
 
 		(macro stream_connect ((type ARG1))
 			(call file.search_var_lib (ARG1))
-			(call stream_connect_pattern (ARG1 var_lib_file var_lib_file subj)))
+			(call stream_connect_pattern (ARG1 var_lib_file
+				var_lib_file subj)))
 
 		(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-			(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "*")))
+			(call file.var_lib_obj_type_transition (ARG1
+				var_lib_file dir "*")))
 
 		(blockinherit net.tcp_connect_port_blk)
 		(blockinherit net.tcp_bind_port_blk)
 		(blockinherit net.udp_bind_port_blk)
 
 		(macro adm ((type ARG1)(role ARG2))
-			(typeattributeset memcached.adm_subj_type_attribute ARG1)
+			(typeattributeset memcached.adm_subj_type_attribute
+				ARG1)
 			(optional memcached_adm_optional_sd
 				(call sd.daemon_adm_subj_type (ARG1)))
 			(optional memcached_adm_optional_sd_askpwd
@@ -127,7 +141,8 @@
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_var_lib (ARG1))
-		(call stream_connect_pattern (ARG1 var_lib_obj_type_attribute var_lib_obj_type_attribute subj_type_attribute)))
+		(call stream_connect_pattern (ARG1 var_lib_obj_type_attribute
+			var_lib_obj_type_attribute subj_type_attribute)))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

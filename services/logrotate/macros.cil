@@ -14,7 +14,8 @@
 		(typeattributeset client_runtime_obj_type_attribute ARG1))
 
 	(macro client_reload_sd_unit_obj_type ((type ARG1))
-		(typeattributeset client_reload_sd_unit_obj_type_attribute ARG1))
+		(typeattributeset client_reload_sd_unit_obj_type_attribute
+			ARG1))
 
 	(macro client_var_log_obj_type ((type ARG1))
 		(typeattributeset client_var_log_obj_type_attribute ARG1))
@@ -37,8 +38,10 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "logrotate"))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file file "logrotate.status")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"logrotate"))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file file
+			"logrotate.status")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

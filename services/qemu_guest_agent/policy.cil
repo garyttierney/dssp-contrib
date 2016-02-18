@@ -33,7 +33,8 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start)))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
 
 		(call sd.start_unit_power (subj))
 		(call sd.stream_connect (subj)))
@@ -47,7 +48,8 @@
 	(optional qemu_guest_agent_optional_systemctl
 		(call systemctl.exec (subj)))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call file.search_runtime (adm_subj_type_attribute))

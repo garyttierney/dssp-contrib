@@ -32,8 +32,10 @@
 
 (in mariadb_server
 	(block mariadb_server
-		(filecon "/etc/my\.cnf\.d/mariadb-server\.cnf" file config_file_context)
-		(filecon "/etc/my\.cnf\.d/tokudb\.cnf" file config_file_context)
+		(filecon "/etc/my\.cnf\.d/mariadb-server\.cnf" file
+			config_file_context)
+		(filecon "/etc/my\.cnf\.d/tokudb\.cnf" file
+			config_file_context)
 		(filecon "/usr/bin/mysqld_safe" file cmd_file_context)
 		(filecon "/usr/bin/mysqld_safe" file cmd_file_context)
 		(filecon "/usr/libexec/mysqld" file cmd_file_context)
@@ -43,13 +45,17 @@
 		(filecon "/var/run/mysqld(/.*)?" any runtime_file_context)
 
 		(optional mariadb_server_unit_optional_sd
-			(filecon "/usr/lib/systemd/system/[^/]*mariadb.*" file unit_file_context)))
+			(filecon "/usr/lib/systemd/system/[^/]*mariadb.*" file
+				unit_file_context)))
 
 	(block mariadb_server_helper
-		(filecon "/usr/libexec/mysql-check-socket" file cmd_file_context)
-		(filecon "/usr/libexec/mysql-check-upgrade" file cmd_file_context)
+		(filecon "/usr/libexec/mysql-check-socket" file
+			cmd_file_context)
+		(filecon "/usr/libexec/mysql-check-upgrade" file
+			cmd_file_context)
 		(filecon "/usr/libexec/mysql-wait-ready" file cmd_file_context)
 		(filecon "/usr/libexec/mysql-wait-stop" file cmd_file_context))
 
 	(block mariadb_server_pdd
-		(filecon "/usr/libexec/mysql-prepare-db-dir" file cmd_file_context)))
+		(filecon "/usr/libexec/mysql-prepare-db-dir" file
+			cmd_file_context)))

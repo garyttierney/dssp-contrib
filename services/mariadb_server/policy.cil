@@ -45,7 +45,7 @@
 		(call sd.forked_subj_type (subj))))
 
 (block mariadb_server
-        (typeattribute adm_subj_type_attribute)
+	(typeattribute adm_subj_type_attribute)
 
 	(typeattribute subj_type_attribute)
 
@@ -87,7 +87,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional mariadb_server_optional_logrotate
-		(call logrotate.client_var_log_obj_type (var_log_obj_type_attribute))))
+		(call logrotate.client_var_log_obj_type
+			(var_log_obj_type_attribute))))
 
 (block mariadb_server_pdd
 	(typeattribute subj_type_attribute)
@@ -141,8 +142,11 @@
 
 	(call nss.client_subj_type (subj_type_attribute)))
 
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (mariadb_server.adm_subj_type_attribute mariadb_server.subj_type_attribute))
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.subj_type_attribute (process (ptrace signal signull
+		sigkill sigstop)))
+(call ps_subj_pattern (mariadb_server.adm_subj_type_attribute
+	mariadb_server.subj_type_attribute))
 
 (call mariadb.search_config (mariadb_server.adm_subj_type_attribute))
 
@@ -150,15 +154,25 @@
 (call file.search_var_lib (mariadb_server.adm_subj_type_attribute))
 (call file.search_var_log (mariadb_server.adm_subj_type_attribute))
 
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute manage_file_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute manage_dir_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute manage_lnk_file_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute manage_sock_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute manage_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute manage_dir_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute manage_lnk_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute manage_sock_file_perms)
 
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute relabel_file_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute relabel_dir_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute relabel_lnk_file_perms)
-(allow mariadb_server.adm_subj_type_attribute mariadb_server.obj_type_attribute relabel_sock_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute relabel_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute relabel_dir_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute relabel_lnk_file_perms)
+(allow mariadb_server.adm_subj_type_attribute
+	mariadb_server.obj_type_attribute relabel_sock_file_perms)
 
 (optional mariadb_server_subj_type_optional_sd
-	(allow mariadb_server.adm_subj_type_attribute mariadb_server.unit_obj_type_attribute (service (stop status disable enable reload start))))
+	(allow mariadb_server.adm_subj_type_attribute
+		mariadb_server.unit_obj_type_attribute (service (stop status
+			disable enable reload start))))

@@ -7,4 +7,5 @@
 		(filecon "/var/log/nginx(/.*)?" any var_log_file_context)
 
 		(optional nginx_unit_optional_sd
-			(filecon "/usr/lib/systemd/system/[^/]*nginx.*" file unit_file_context))))
+			(filecon "/usr/lib/systemd/system/[^/]*nginx.*" file
+				unit_file_context))))

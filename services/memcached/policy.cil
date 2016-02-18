@@ -46,19 +46,29 @@
 
 	(call memcached.tcp_connect_all_ports (subj)))
 
-(allow memcached.adm_subj_type_attribute memcached.subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-(call ps_subj_pattern (memcached.adm_subj_type_attribute memcached.subj_type_attribute))
+(allow memcached.adm_subj_type_attribute memcached.subj_type_attribute
+	(process (ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (memcached.adm_subj_type_attribute
+	memcached.subj_type_attribute))
 
 (call file.search_config (memcached.adm_subj_type_attribute))
 (call file.search_var_lib (memcached.adm_subj_type_attribute))
 
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_file_perms)
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_dir_perms)
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute manage_sock_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	manage_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	manage_dir_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	manage_sock_file_perms)
 
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_file_perms)
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_dir_perms)
-(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute relabel_sock_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	relabel_file_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	relabel_dir_perms)
+(allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
+	relabel_sock_file_perms)
 
 (optional memcached_adm_subj_type_optional_sd
-	(allow memcached.adm_subj_type_attribute memcached.unit_obj_type_attribute (service (stop status disable enable reload start))))
+	(allow memcached.adm_subj_type_attribute
+		memcached.unit_obj_type_attribute (service (stop status
+			disable enable reload start))))

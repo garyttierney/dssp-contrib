@@ -10,10 +10,12 @@
 	(blockinherit file.relabel_runtime_files_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "lvmpolld.pid")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"lvmpolld.pid")))
 
 	(macro lvm_runtime_obj_type_transition_runtime ((type ARG1))
-		(call lvm.runtime_obj_object_type_transition (ARG1 runtime_file sock_file "lvmpolld.socket")))
+		(call lvm.runtime_obj_object_type_transition (ARG1
+			runtime_file sock_file "lvmpolld.socket")))
 
 	(macro read_runtime_sock_files ((type ARG1))
 		(call lvm.search_runtime (ARG1))

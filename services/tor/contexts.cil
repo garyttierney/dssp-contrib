@@ -7,7 +7,8 @@
 	(filecon "HOME_DIR/\.tor(/.*)?" any home_user_file_context)
 
 	(optional tor_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*tor.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*tor.*" file
+			unit_file_context)))
 
 (in tor_control
 	(portcon "tcp" 9051 port_obj_context)

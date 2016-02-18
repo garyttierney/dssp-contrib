@@ -4,4 +4,5 @@
 	(filecon "/var/lib/tpm(/.*)?" any var_lib_file_context)
 
 	(optional tcsd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*tcsd.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*tcsd.*" file
+			unit_file_context)))

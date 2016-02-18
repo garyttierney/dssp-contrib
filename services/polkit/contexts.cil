@@ -1,5 +1,6 @@
 (in polkit_agent
-	(filecon "/usr/lib/polkit-1/polkit-agent-helper-1" file cmd_file_context))
+	(filecon "/usr/lib/polkit-1/polkit-agent-helper-1" file
+		cmd_file_context))
 
 (in polkit
 	(filecon "/etc/polkit-1(/.*)?" any config_file_context)
@@ -7,7 +8,8 @@
 	(filecon "/var/lib/polkit-1(/.*)?" any var_lib_file_context)
 
 	(optional polkit_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*polkit.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*polkit.*" file
+			unit_file_context)))
 
 (in polkit_exec
 	(filecon "/usr/bin/pkaction" file cmd_file_context)

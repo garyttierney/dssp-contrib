@@ -24,7 +24,8 @@
 	(blockinherit file.relabel_var_log_blk)
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file dir "tor")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file dir
+			"tor")))
 
 	(blockinherit file.search_var_lib_blk)
 	(blockinherit file.list_var_lib_blk)
@@ -35,7 +36,8 @@
 	(blockinherit file.relabel_var_lib_blk)
 
 	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
-		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir "tor")))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"tor")))
 
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
@@ -46,7 +48,8 @@
 	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "tor")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"tor")))
 
 	(blockinherit usersubj.search_home_user_blk)
 	(blockinherit usersubj.list_home_user_blk)
@@ -58,7 +61,8 @@
 	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
-		(call usersubj.home_dir_obj_type_transition (ARG1 home_user_file dir ".tor")))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".tor")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

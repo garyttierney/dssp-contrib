@@ -4,7 +4,8 @@
 
 	(typeattribute obj_type_attribute)
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_runtime_user (adm_subj_type_attribute))
@@ -52,7 +53,8 @@
 
 		(typeattributeset myqemu.obj_type_attribute unit_file)
 
-		(allow myqemu.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow myqemu.adm_subj_type_attribute unit_file (service (stop
+			status disable enable reload start))))
 
 	(optional myqemu_runner_optional_sd_machined
 		(call sd_machined.relabelfrom_var_lib_files (subj))))

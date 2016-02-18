@@ -5,7 +5,8 @@
 	(filecon "/var/run/udisks2(/.*)?" any runtime_file_context)
 
 	(optional udisksd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*udisks2.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*udisks2.*" file
+			unit_file_context)))
 
 (in udisksctl
 	(filecon "/usr/bin/udisksctl" file cmd_file_context))

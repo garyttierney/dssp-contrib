@@ -27,9 +27,11 @@
 		(blockinherit sd.unit_obj_blk)
 
 		(allow adm_subj_type_attribute unit_file manage_file_perms)
+
 		(allow adm_subj_type_attribute unit_file relabel_file_perms)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional rtkitd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
@@ -43,8 +45,10 @@
 		(call unconfinedsubj.read_state_all_subj (subj)))
 
 	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
-		(allow subj sysbus_chat_client_subj_type_attribute (dbus (send_msg)))
-		(allow sysbus_chat_client_subj_type_attribute subj (dbus (send_msg))))
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
 
 	(allow subj client_subj_type_attribute (process (getsched setsched)))
 
@@ -54,5 +58,6 @@
 
 	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj)))

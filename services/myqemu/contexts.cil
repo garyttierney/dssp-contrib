@@ -6,7 +6,8 @@
 	(filecon "/usr/sbin/myqemu_runner_tap" file cmd_file_context)
 
 	(optional myqemu_runner_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*myqemu_runner.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*myqemu_runner.*" file
+			unit_file_context)))
 
 (in myqemu_shutdown
 	(filecon "/usr/sbin/myqemu_shutdown" file cmd_file_context))

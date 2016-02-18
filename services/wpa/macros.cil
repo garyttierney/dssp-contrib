@@ -25,19 +25,23 @@
 	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file file "wpa_supplicant.pid"))
-		(call file.runtime_obj_type_transition (ARG1 runtime_file dir "wpa_supplicant")))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"wpa_supplicant.pid"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"wpa_supplicant")))
 
 	(macro dgram_send ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call dgram_send_pattern (ARG1 runtime_file runtime_file subj)))
+		(call dgram_send_pattern (ARG1 runtime_file runtime_file
+			subj)))
 
 	(blockinherit file.read_var_log_files_blk)
 	(blockinherit file.manage_var_log_files_blk)
 	(blockinherit file.relabel_var_log_files_blk)
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
-		(call file.var_log_obj_type_transition (ARG1 var_log_file file "wpa_supplicant.log")))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"wpa_supplicant.log")))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

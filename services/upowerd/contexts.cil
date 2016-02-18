@@ -4,7 +4,8 @@
 	(filecon "/var/lib/upower(/.*)?" any var_lib_file_context)
 
 	(optional upowerd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*upower.*" file unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*upower.*" file
+			unit_file_context)))
 
 (in upower
 	(filecon "/usr/bin/upower" file cmd_file_context))

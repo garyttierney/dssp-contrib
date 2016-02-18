@@ -34,7 +34,8 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (capability (dac_override chown setuid setgid sys_resource)))
+	(allow subj self (capability (dac_override chown setuid setgid
+		sys_resource)))
 	(allow subj self (process (setrlimit)))
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self create_udp_socket_perms)
@@ -67,12 +68,14 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
-		(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
 
 	(optional unbound_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
-	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.search_var_lib (adm_subj_type_attribute))
@@ -80,11 +83,13 @@
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
 	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
 
 (block unboundanch
 	(blockinherit subj.common_subj_blk)

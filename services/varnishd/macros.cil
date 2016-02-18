@@ -16,23 +16,33 @@
 		(typeattribute var_log_obj_type_attribute)
 		(typeattribute tmpfs_obj_type_attribute)
 
-		(typeattributeset .varnishd.adm_subj_type_attribute adm_subj_type_attribute)
+		(typeattributeset .varnishd.adm_subj_type_attribute
+			adm_subj_type_attribute)
 
-		(typeattributeset .varnishd.obj_type_attribute obj_type_attribute)
+		(typeattributeset .varnishd.obj_type_attribute
+			obj_type_attribute)
 
-		(typeattributeset .varnishd.config_obj_type_attribute config_obj_type_attribute)
-		(typeattributeset .varnishd.port_obj_type_attribute port_obj_type_attribute)
-		(typeattributeset .varnishd.runtime_obj_type_attribute runtime_obj_type_attribute)
-		(typeattributeset .varnishd.unit_obj_type_attribute unit_obj_type_attribute)
-		(typeattributeset .varnishd.var_lib_obj_type_attribute var_lib_obj_type_attribute)
-		(typeattributeset .varnishd.var_log_obj_type_attribute var_log_obj_type_attribute)
-		(typeattributeset .varnishd.tmpfs_obj_type_attribute tmpfs_obj_type_attribute)
+		(typeattributeset .varnishd.config_obj_type_attribute
+			config_obj_type_attribute)
+		(typeattributeset .varnishd.port_obj_type_attribute
+			port_obj_type_attribute)
+		(typeattributeset .varnishd.runtime_obj_type_attribute
+			runtime_obj_type_attribute)
+		(typeattributeset .varnishd.unit_obj_type_attribute
+			unit_obj_type_attribute)
+		(typeattributeset .varnishd.var_lib_obj_type_attribute
+			var_lib_obj_type_attribute)
+		(typeattributeset .varnishd.var_log_obj_type_attribute
+			var_log_obj_type_attribute)
+		(typeattributeset .varnishd.tmpfs_obj_type_attribute
+			tmpfs_obj_type_attribute)
 
 		(blockinherit subj.common_subj_blk)
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .varnishd.subj_type_attribute subj_type_attribute)
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -62,7 +72,8 @@
 
 		(allow subj runtime_file manage_file_perms)
 
-		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
 
 		(blockinherit file.var_lib_obj_blk)
 
@@ -73,7 +84,8 @@
 		(allow subj var_lib_file mmap_file_perms)
 		(allow subj var_lib_file manage_file_perms)
 
-		(call file.var_lib_obj_type_transition (subj var_lib_file dir "*"))
+		(call file.var_lib_obj_type_transition (subj var_lib_file dir
+			"*"))
 
 		(blockinherit file.tmpfs_obj_blk)
 
@@ -94,26 +106,35 @@
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
-			(allow adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow adm_subj_type_attribute unit_file (service
+				(stop status disable enable reload start))))
 
 		(optional varnishd_blk_optional_sd_journald
 			(call sd_journald.client_subj_type (subj)))
 
-		(allow adm_subj_type_attribute subj_type_attribute (process (ptrace signal signull sigkill sigstop)))
-		(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
 
 		(call file.search_config (adm_subj_type_attribute))
 		(call file.search_runtime (adm_subj_type_attribute))
 		(call file.search_var_lib (adm_subj_type_attribute))
 		(call file.search_var_log (adm_subj_type_attribute))
 
-		(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-		(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute manage_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_lnk_file_perms)
 
-		(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-		(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-		(allow adm_subj_type_attribute obj_type_attribute relabel_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_lnk_file_perms)
 
 		(blockinherit exec_blk)
 
@@ -162,7 +183,8 @@
 
 		(typeattributeset port_obj_type_attribute port)
 
-		(typeattributeset .varnishd_adm.port_obj_type_attribute port_obj_type_attribute)
+		(typeattributeset .varnishd_adm.port_obj_type_attribute
+			port_obj_type_attribute)
 
 		(allow varnishd.subj port (tcp_socket (name_bind)))
 
@@ -176,8 +198,10 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .varnishd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .varnish_reload_vcl.subj_type_attribute subj_type_attribute)
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnish_reload_vcl.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -197,8 +221,10 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .varnishd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .varnishlog.subj_type_attribute subj_type_attribute)
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnishlog.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -209,16 +235,19 @@
 		(blockinherit file.runtime_obj_blk)
 
 		(typeattributeset varnishd.obj_type_attribute runtime_file)
-		(typeattributeset varnishd.runtime_obj_type_attribute runtime_file)
+		(typeattributeset varnishd.runtime_obj_type_attribute
+			runtime_file)
 
 		(allow subj runtime_file manage_file_perms)
 
-		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
 
 		(blockinherit file.var_log_obj_blk)
 
 		(typeattributeset varnishd.obj_type_attribute var_log_file)
-		(typeattributeset varnishd.var_log_obj_type_attribute var_log_file)
+		(typeattributeset varnishd.var_log_obj_type_attribute
+			var_log_file)
 
 		(allow subj var_log_file manage_dir_perms)
 		(allow subj var_log_file (file (setattr rename)))
@@ -227,7 +256,8 @@
 		(allow subj var_log_file delete_file_perms)
 		(allow subj var_log_file read_file_perms)
 
-		(call file.var_log_obj_type_transition (subj var_log_file dir "*"))
+		(call file.var_log_obj_type_transition (subj var_log_file dir
+			"*"))
 
 		(call varnishd.read_var_lib_files (subj))
 
@@ -238,10 +268,14 @@
 
 			(blockinherit sd.unit_obj_blk)
 
-			(typeattributeset varnishd.obj_type_attribute unit_file)
-			(typeattributeset varnishd.unit_obj_type_attribute unit_file)
+			(typeattributeset varnishd.obj_type_attribute
+				unit_file)
+			(typeattributeset varnishd.unit_obj_type_attribute
+				unit_file)
 
-			(allow varnishd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow varnishd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
 
 		(blockinherit exec_blk)
 
@@ -275,8 +309,10 @@
 
 		(typeattributeset subj_type_attribute subj)
 
-		(typeattributeset .varnishd.subj_type_attribute subj_type_attribute)
-		(typeattributeset .varnishncsa.subj_type_attribute subj_type_attribute)
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnishncsa.subj_type_attribute
+			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
 
@@ -287,16 +323,19 @@
 		(blockinherit file.runtime_obj_blk)
 
 		(typeattributeset varnishd.obj_type_attribute runtime_file)
-		(typeattributeset varnishd.runtime_obj_type_attribute runtime_file)
+		(typeattributeset varnishd.runtime_obj_type_attribute
+			runtime_file)
 
 		(allow subj runtime_file manage_file_perms)
 
-		(call file.runtime_obj_type_transition (subj runtime_file file "*"))
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
 
 		(blockinherit file.var_log_obj_blk)
 
 		(typeattributeset varnishd.obj_type_attribute var_log_file)
-		(typeattributeset varnishd.var_log_obj_type_attribute var_log_file)
+		(typeattributeset varnishd.var_log_obj_type_attribute
+			var_log_file)
 
 		(allow subj var_log_file (file (setattr rename)))
 		(allow subj var_log_file append_file_perms)
@@ -304,7 +343,8 @@
 		(allow subj var_log_file delete_file_perms)
 		(allow subj var_log_file read_file_perms)
 
-		(call obj_type_transition_pattern (subj varnishlog.var_log_file var_log_file file "*"))
+		(call obj_type_transition_pattern (subj
+			varnishlog.var_log_file var_log_file file "*"))
 
 		(call varnishd.read_var_lib_files (subj))
 
@@ -315,10 +355,14 @@
 
 			(blockinherit sd.unit_obj_blk)
 
-			(typeattributeset varnishd.obj_type_attribute unit_file)
-			(typeattributeset varnishd.unit_obj_type_attribute unit_file)
+			(typeattributeset varnishd.obj_type_attribute
+				unit_file)
+			(typeattributeset varnishd.unit_obj_type_attribute
+				unit_file)
 
-			(allow varnishd.adm_subj_type_attribute unit_file (service (stop status disable enable reload start))))
+			(allow varnishd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
 
 		(blockinherit exec_blk)
 

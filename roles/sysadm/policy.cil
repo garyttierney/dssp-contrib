@@ -2,7 +2,8 @@
 	(typeattribute subj_type_attribute)
 
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
-	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xinit_home_user_auto_type_transition_subj_type_attribute)
 
 	(blockinherit usersubj.base_priv_login_blk)
 
@@ -11,7 +12,8 @@
 	(typeattributeset subj_type_attribute subj)
 
 	(dontaudit subj self (capability (sys_ptrace)))
-	(allow subj self (capability (dac_override chown fowner fsetid setfcap linux_immutable)))
+	(allow subj self (capability (dac_override chown fowner fsetid setfcap
+		linux_immutable)))
 	(allow subj self (process (getcap setcap setfscreate)))
 
 	(call sys.manage_var_log_files (subj))
@@ -60,11 +62,20 @@
 
 	(tunableif enable_mls
 		(false
-			(call file_context.default_context_obj_type_transition_config (subj))
-			(call policy_config.selinux_config_obj_type_transition_policy_config (subj))
-			(call default_context.selinux_config_obj_type_transition_config (subj))
-			(call policy_src.selinux_config_obj_type_transition_config (subj))
-			(call selinux_config.config_obj_type_transition_config (subj))
+			(call
+				file_context.default_context_obj_type_transition_config
+					(subj))
+			(call
+				policy_config.selinux_config_obj_type_transition_policy_config
+					(subj))
+			(call
+				default_context.selinux_config_obj_type_transition_config
+					(subj))
+			(call
+				policy_src.selinux_config_obj_type_transition_config
+					(subj))
+			(call selinux_config.config_obj_type_transition_config
+				(subj))
 			(call default_context.manage_config (subj))
 			(call file_context.manage_config (subj))
 			(call policy_config.manage (subj))
@@ -78,21 +89,24 @@
 
 			(optional sysadm_enable_mls_optional_audispd
 				(call audispd.manage_config (subj))
-				(call audispd.manage_runtime_sock_files (subj)))
+				(call audispd.manage_runtime_sock_files
+					(subj)))
 
 			(optional sysadm_enable_mls_optional_auditctl
 				(call auditctl.run (subj_type_attribute role)))
 
 			(optional sysadm_enable_mls_optional_auditd
 				(call auditd.adm (subj role))
-				(call augenrules.run (subj_type_attribute role))
+				(call augenrules.run (subj_type_attribute
+					role))
 				(call ausearch.run (subj_type_attribute role)))
 
 			(optional sysadm_enable_mls_optional_authconfig
 				(call authconfig.manage_config_files (subj))
 				(call authconfig.manage_data (subj))
 				(call authconfig.manage_var_lib (subj))
-				(call authconfig.run (subj_type_attribute role)))
+				(call authconfig.run (subj_type_attribute
+					role)))
 
 			(optional sysadm_enable_mls_optional_chage
 				(call chage.run (subj_type_attribute role)))
@@ -109,17 +123,22 @@
 				(call mcstransd.adm (subj role)))
 
 			(optional sysadm_enable_mls_optional_netlabelctl
-				(call netlabelctl.run (subj_type_attribute role)))
+				(call netlabelctl.run (subj_type_attribute
+					role)))
 
 			(optional sysadm_enable_mls_optional_pam
 				(call pam.adm_subj_type (subj)))
 
 			(optional sysadm_enable_mls_optional_sd_randomseed
-				(call sd_randomseed.auto_subj_range_transition (subj systemhigh systemhigh)))
+				(call sd_randomseed.auto_subj_range_transition
+					(subj systemhigh systemhigh)))
 
 			(optional sysadm_enable_mls_optional_sd_autorelabel
-				(call sd_autorelabel.manage_boot_flag_files (subj))
-				(call sd_autorelabel.rootfs_obj_type_transition_boot_flag (subj)))
+				(call sd_autorelabel.manage_boot_flag_files
+					(subj))
+				(call
+					sd_autorelabel.rootfs_obj_type_transition_boot_flag
+						(subj)))
 
 			(optional sysadm_enable_mls_optional_sudo
 				(call sudo.manage_config (subj))
@@ -173,7 +192,8 @@
 	(optional sysadm_optional_champlain
 		(call champlain.manage_home_cache (subj))
 		(call champlain.relabel_home_cache (subj))
-		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+		(call champlain.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional sysadm_optional_chkpwd
 		(call chkpwd.run (subj_type_attribute role)))
@@ -272,7 +292,8 @@
 	(optional sysadm_optional_enchant
 		(call enchant.manage_home_config (subj))
 		(call enchant.relabel_home_config (subj))
-		(call enchant.home_config_obj_type_transition_home_config (subj)))
+		(call enchant.home_config_obj_type_transition_home_config
+			(subj)))
 
 	(optional sysadm_optional_evo
 		(call evo_helper.exec (subj)))
@@ -433,7 +454,8 @@
 	(optional sysadm_optional_libgweather
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))
-		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional sysadm_optional_mutter
 		(call mutter_helper.exec (subj)))
@@ -488,7 +510,8 @@
 		(call mediaart.manage_home_cache (subj))
 		(call mediaart.relabel_home_cache (subj))
 
-		(call mediaart.home_cache_obj_type_transition_home_cache (subj)))
+		(call mediaart.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional sysadm_optional_md
 		(call md.adm (subj role))
@@ -693,7 +716,8 @@
 		(call rtorrent.manage_home_config_files (subj))
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
-		(call rtorrent.home_config_obj_type_transition_home_config (subj))
+		(call rtorrent.home_config_obj_type_transition_home_config
+			(subj))
 		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_rygel
@@ -873,7 +897,8 @@
 	(optional sysadm_optional_thumbnails
 		(call thumbnails.manage_home_cache (subj))
 		(call thumbnails.relabel_home_cache (subj))
-		(call thumbnails.home_cache_obj_type_transition_home_cache (subj)))
+		(call thumbnails.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional sysadm_optional_timedatex
 		(call timedatex.adm (subj role)))
@@ -949,11 +974,20 @@
 		(call web_content.cgi_client (subj_type_attribute role)))
 
 	(optional sysadm_optional_web_content_home
-		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))
-		(call web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi (subj))
-		(call web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra (subj))
-		(call web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw (subj))
-		(call web_home.home_dir_obj_type_transition_web_home_ro (subj)))
+		(call
+			web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess
+				(subj))
+		(call
+			web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi
+				(subj))
+		(call
+			web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra
+				(subj))
+		(call
+			web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw
+				(subj))
+		(call web_home.home_dir_obj_type_transition_web_home_ro
+			(subj)))
 
 	(optional sysadm_optional_wodim
 		(call wodim.run (subj_type_attribute role)))
@@ -1024,7 +1058,8 @@
 		(call sysadm_atspird.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_atspi_sessbus_launch
-		(call sysadm_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call sysadm_atspi_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_btst
 		(call btst.manage_tmpfs_user (subj))
@@ -1055,12 +1090,14 @@
 		(call corebird.manage_home_cache (subj))
 		(call corebird.relabel_home_cache (subj))
 
-		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+		(call corebird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call corebird.manage_home_config (subj))
 		(call corebird.relabel_home_config (subj))
 
-		(call corebird.home_config_obj_type_transition_home_config (subj))
+		(call corebird.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call corebird.manage_home_data (subj))
 		(call corebird.relabel_home_data (subj))
@@ -1070,7 +1107,8 @@
 		(call sysadm_corebird.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dbus_send
-		(call sysadm_dbus_send.role_pattern (role subj_type_attribute)))
+		(call sysadm_dbus_send.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dconf
 		(call dconf.manage_tmpfs_user (subj))
@@ -1090,7 +1128,8 @@
 		(call dleyna.manage_home_config_files (subj))
 		(call dleyna.relabel_home_config_files (subj))
 
-		(call dleyna.home_config_obj_type_transition_home_config (subj))
+		(call dleyna.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call sysadm_dleyna.role_pattern (role subj_type_attribute)))
 
@@ -1098,7 +1137,8 @@
 		(call dleynar.manage_home_config_files (subj))
 		(call dleynar.relabel_home_config_files (subj))
 
-		(call dleynar.home_config_obj_type_transition_home_config (subj))
+		(call dleynar.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call sysadm_dleynar.role_pattern (role subj_type_attribute)))
 
@@ -1125,7 +1165,8 @@
 		(call sysadm_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_emacsclient
-		(call sysadm_emacsclient.role_pattern (role subj_type_attribute)))
+		(call sysadm_emacsclient.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_eog
 		(call eog.manage_tmpfs_user (subj))
@@ -1150,7 +1191,8 @@
 		(call evince.manage_home_config (subj))
 		(call evince.relabel_home_config (subj))
 
-		(call evince.home_config_obj_type_transition_home_config (subj))
+		(call evince.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call sysadm_evince.role_pattern (role subj_type_attribute))
 
@@ -1207,10 +1249,12 @@
 		(call fileroller.manage_tmpfs_user (subj))
 		(call fileroller.relabel_tmpfs_user (subj))
 
-		(call sysadm_fileroller.role_pattern (role subj_type_attribute)))
+		(call sysadm_fileroller.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_fuse_sshfs
-		(call sysadm_fuse_sshfs.role_pattern (role subj_type_attribute)))
+		(call sysadm_fuse_sshfs.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_fwupd
 		(call sysadm_fwupdmgr.role_pattern (role subj_type_attribute)))
@@ -1272,9 +1316,12 @@
 		(call gsettingsdc.manage_home_data_files (subj))
 		(call gsettingsdc.relabel_home_data_files (subj))
 
-		(call gsettingsdc.home_data_obj_type_transition_home_data_files (subj))
+		(call
+			gsettingsdc.home_data_obj_type_transition_home_data_files
+				(subj))
 
-		(call sysadm_gsettingsdc.role_pattern (role subj_type_attribute)))
+		(call sysadm_gsettingsdc.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gcr
 		(call sysadm_gcrv.role_pattern (role subj_type_attribute))
@@ -1336,7 +1383,9 @@
 
 	(optional sysadm_optional_sysadm_git
 		(call git.home_user_obj_entry_subj (subj))
-		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj))
+		(call git.spec_home_user_auto_subj_type_transition
+			(git_home_user_auto_type_transition_subj_type_attribute
+				subj))
 
 		(call git.exec_home_user_files (subj))
 		(call git.manage_home_user (subj))
@@ -1355,7 +1404,8 @@
 		(call sysadm_git.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git_email
-		(call sysadm_git_email.role_pattern (role subj_type_attribute)))
+		(call sysadm_git_email.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gitg
 		(call gitg.manage_tmpfs_user (subj))
@@ -1395,7 +1445,8 @@
 
 		(call sysadm_gapp.role_pattern (role subj_type_attribute))
 		(call sysadm_gdbus.role_pattern (role subj_type_attribute))
-		(call sysadm_gsettings.role_pattern (role subj_type_attribute)))
+		(call sysadm_gsettings.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gm
 		(call gm.manage_tmpfs_user (subj))
@@ -1448,7 +1499,8 @@
 
 		(call gpg_agent.gpg_home_user_obj_type_transition_home (subj))
 
-		(call sysadm_gpg_agent.role_pattern (role subj_type_attribute)))
+		(call sysadm_gpg_agent.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gph
 		(call gph.manage_tmpfs_user (subj))
@@ -1465,7 +1517,8 @@
 		(call gpinentry.manage_tmpfs_user (subj))
 		(call gpinentry.relabel_tmpfs_user (subj))
 
-		(call sysadm_gpinentry.role_pattern (role subj_type_attribute)))
+		(call sysadm_gpinentry.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_grilo
 		(call grilo.manage_home_data (subj))
@@ -1501,7 +1554,8 @@
 		(call gsd.home_data_obj_type_transition_home_data (subj))
 
 		(call sysadm_gsd.role_pattern (role subj_type_attribute))
-		(call sysadm_gsdprinter.role_pattern (role subj_type_attribute)))
+		(call sysadm_gsdprinter.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gsh
 		(call gsh.manage_tmpfs_user (subj))
@@ -1545,7 +1599,8 @@
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))
 
-		(call gstreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call gstreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call gstreamer.manage_home_data (subj))
 		(call gstreamer.relabel_home_data (subj))
@@ -1585,23 +1640,32 @@
 		(call sysadm_gvfsdud2.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdburn.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdcdda.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdcomputer.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdcomputer.role_pattern (role
+			subj_type_attribute))
 		(call sysadm_gvfsddav.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsddnssd.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsddnssd.role_pattern (role
+			subj_type_attribute))
 		(call sysadm_gvfsdftp.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdhttp.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdlocaltest.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdnetwork.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdrecent.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdlocaltest.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdnetwork.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdrecent.role_pattern (role
+			subj_type_attribute))
 		(call sysadm_gvfsdsftp.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdtrash.role_pattern (role subj_type_attribute)))
+		(call sysadm_gvfsdtrash.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gvfsdfuse
-		(call sysadm_gvfsdfuse.role_pattern (role subj_type_attribute)))
+		(call sysadm_gvfsdfuse.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gvfsdgoa
-		(call sysadm_gvfsdgoavm.role_pattern (role subj_type_attribute))
-		(call sysadm_gvfsdgoogle.role_pattern (role subj_type_attribute)))
+		(call sysadm_gvfsdgoavm.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdgoogle.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gvid
 		(call gvid.manage_tmpfs_user (subj))
@@ -1649,13 +1713,16 @@
 		(call firefox_plugins.manage_tmpfs_user_files (subj))
 		(call firefox_plugins.relabel_tmpfs_user_files (subj))
 
-		(call sysadm_firefox_plugins.role_pattern (role subj_type_attribute)))
+		(call sysadm_firefox_plugins.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_firefox_xremotec
-		(call sysadm_firefox_xremotec.role_pattern (role subj_type_attribute)))
+		(call sysadm_firefox_xremotec.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_hostnamectl
-		(call sysadm_hostnamectl.role_pattern (role subj_type_attribute)))
+		(call sysadm_hostnamectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_irssi
 		(call irssi.manage_home_user (subj))
@@ -1666,29 +1733,35 @@
 		(call sysadm_irssi.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_journalctl
-		(call sysadm_journalctl.role_pattern (role subj_type_attribute)))
+		(call sysadm_journalctl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_libnotify
-		(call sysadm_libnotify.role_pattern (role subj_type_attribute)))
+		(call sysadm_libnotify.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_livestreamer
 		(call livestreamer.manage_home_cache (subj))
 		(call livestreamer.relabel_home_cache (subj))
 
-		(call livestreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call livestreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call livestreamer.manage_home_config (subj))
 		(call livestreamer.relabel_home_config (subj))
 
-		(call livestreamer.home_config_obj_type_transition_home_config (subj))
+		(call livestreamer.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call livestreamer.manage_tmpfs_user_files (subj))
 		(call livestreamer.relabel_tmpfs_user_files (subj))
 
-		(call sysadm_livestreamer.role_pattern (role subj_type_attribute)))
+		(call sysadm_livestreamer.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_localectl
-		(call sysadm_localectl.role_pattern (role subj_type_attribute)))
+		(call sysadm_localectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_loginctl
 		(call sysadm_loginctl.role_pattern (role subj_type_attribute)))
@@ -1707,7 +1780,8 @@
 		(call sysadm_lynx.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_machinectl
-		(call sysadm_machinectl.role_pattern (role subj_type_attribute)))
+		(call sysadm_machinectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mozilla
 		(call mozilla.manage_home_user (subj))
@@ -1718,7 +1792,8 @@
 		(call mozilla.manage_home_cache (subj))
 		(call mozilla.relabel_home_cache (subj))
 
-		(call mozilla.home_cache_obj_type_transition_home_cache (subj)))
+		(call mozilla.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional sysadm_optional_sysadm_mplayer
 		(call mplayer.manage_home_user (subj))
@@ -1743,7 +1818,8 @@
 		(call sysadm_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mutt_pgp_ewrap
-		(call sysadm_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
+		(call sysadm_mutt_pgp_ewrap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mutter
 		(call sysadm_mutter.role_pattern (role subj_type_attribute)))
@@ -1760,11 +1836,14 @@
 		(call nautilus.manage_home_config (subj))
 		(call nautilus.relabel_home_config (subj))
 
-		(call nautilus.home_config_obj_type_transition_home_config (subj))
+		(call nautilus.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call sysadm_nautilus.role_pattern (role subj_type_attribute))
-		(call sysadm_nautilusas.role_pattern (role subj_type_attribute))
-		(call sysadm_nautiluscm.role_pattern (role subj_type_attribute)))
+		(call sysadm_nautilusas.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_nautiluscm.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_nb
 		(call nb.manage_home_user (subj))
@@ -1828,7 +1907,8 @@
 		(call sysadm_polari.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_polkit_exec
-		(call sysadm_polkit_exec.role_pattern (role subj_type_attribute)))
+		(call sysadm_polkit_exec.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rp
 		(call rp.manage_home_user_files (subj))
@@ -1870,7 +1950,8 @@
 		(call sysadm_rygelp.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_screen
-		(allow subj self (capability (setuid setgid fsetid dac_override sys_admin)))
+		(allow subj self (capability (setuid setgid fsetid
+			dac_override sys_admin)))
 
 		(call screen.manage_home_user_files (subj))
 		(call screen.relabel_home_user_files (subj))
@@ -1891,7 +1972,8 @@
 		(call seahorsesap.manage_tmpfs_user (subj))
 		(call seahorsesap.relabel_tmpfs_user (subj))
 
-		(call sysadm_seahorsesap.role_pattern (role subj_type_attribute)))
+		(call sysadm_seahorsesap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_steam
 		(call steam.manage_tmpfs_user (subj))
@@ -1935,13 +2017,15 @@
 
 		(call sessbus_launch.home_dir_obj_type_transition_home (subj))
 
-		(call sysadm_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call sysadm_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ssh_agent
 		(call ssh_agent.manage_tmpfs_user (subj))
 		(call ssh_agent.relabel_tmpfs_user (subj))
 
-		(call sysadm_ssh_agent.role_pattern (role subj_type_attribute)))
+		(call sysadm_ssh_agent.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ssh_client
 		(call ssh_client.manage_home_user (subj))
@@ -1949,8 +2033,10 @@
 
 		(call ssh_client.home_dir_obj_type_transition_home (subj))
 
-		(call sysadm_ssh_client.role_pattern (role subj_type_attribute))
-		(call sysadm_ssh_keygen.role_pattern (role subj_type_attribute)))
+		(call sysadm_ssh_client.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_ssh_keygen.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_startx
 		(call startx.manage_tmpfs_user_files (subj))
@@ -1968,7 +2054,8 @@
 		(call sysadm_sudo.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_systemctl
-		(call sysadm_systemctl.role_pattern (role subj_type_attribute)))
+		(call sysadm_systemctl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_thunderbird
 		(call thunderbird.manage_home_user (subj))
@@ -1979,7 +2066,8 @@
 		(call thunderbird.manage_home_cache (subj))
 		(call thunderbird.relabel_home_cache (subj))
 
-		(call thunderbird.home_cache_obj_type_transition_home_cache (subj))
+		(call thunderbird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call thunderbird.manage_tmpfs_user (subj))
 		(call thunderbird.relabel_tmpfs_user (subj))
@@ -1987,13 +2075,16 @@
 		(call thunderbird.manage_var_tmp_user_files (subj))
 		(call thunderbird.relabel_var_tmp_user_files (subj))
 
-		(call sysadm_thunderbird.role_pattern (role subj_type_attribute)))
+		(call sysadm_thunderbird.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_timedatectl
-		(call sysadm_timedatectl.role_pattern (role subj_type_attribute)))
+		(call sysadm_timedatectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_tor_socks
-		(call sysadm_tor_socks.role_pattern (role subj_type_attribute)))
+		(call sysadm_tor_socks.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_tp
 		(call sysadm_tpmct.role_pattern (role subj_type_attribute))
@@ -2034,12 +2125,14 @@
 		(call trackers.manage_home_cache (subj))
 		(call trackers.relabel_home_cache (subj))
 
-		(call trackers.home_cache_obj_type_transition_home_cache (subj))
+		(call trackers.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call trackers.manage_home_config (subj))
 		(call trackers.relabel_home_config (subj))
 
-		(call trackers.home_config_obj_type_transition_home_config (subj))
+		(call trackers.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call trackers.manage_home_data (subj))
 		(call trackers.relabel_home_data (subj))
@@ -2091,7 +2184,8 @@
 		(call webkitwp.manage_home_cache (subj))
 		(call webkitwp.relabel_home_cache (subj))
 
-		(call webkitwp.home_cache_obj_type_transition_home_cache (subj))
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call webkitwp.manage_home_data (subj))
 		(call webkitwp.relabel_home_data (subj))
@@ -2111,10 +2205,13 @@
 
 		(call xbindkeys.home_dir_obj_type_transition_home (subj))
 
-		(call sysadm_xbindkeys.role_pattern (role subj_type_attribute)))
+		(call sysadm_xbindkeys.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xinit
-		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj))
+		(call xinit.spec_home_user_auto_subj_type_transition
+			(xinit_home_user_auto_type_transition_subj_type_attribute
+				subj))
 		(call xinit.exec_home_user_files (subj))
 		(call xinit.home_user_obj_entry_subj (subj))
 		(call xinit.manage_home_user_files (subj))

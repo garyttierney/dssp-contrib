@@ -1,7 +1,8 @@
 (block user
 	(typeattribute subj_type_attribute)
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
-	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xinit_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute dbus_send_auto_type_transition_subj_type_attribute)
 
 	(blockinherit usersubj.base_login_blk)
@@ -22,7 +23,8 @@
 	(optional user_optional_champlain
 		(call champlain.manage_home_cache (subj))
 		(call champlain.relabel_home_cache (subj))
-		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+		(call champlain.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional user_optional_colord
 		(call colormgr.run (subj_type_attribute role))
@@ -43,7 +45,9 @@
 		(call bti.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_dbus_send
-		(call dbus_send.spec_auto_subj_type_transition (dbus_send_auto_type_transition_subj_type_attribute subj))
+		(call dbus_send.spec_auto_subj_type_transition
+			(dbus_send_auto_type_transition_subj_type_attribute
+				subj))
 		(call dbus_send.exec (subj_type_attribute)))
 
 	(optional user_optional_dd
@@ -61,7 +65,8 @@
 	(optional user_optional_enchant
 		(call enchant.manage_home_config (subj))
 		(call enchant.relabel_home_config (subj))
-		(call enchant.home_config_obj_type_transition_home_config (subj)))
+		(call enchant.home_config_obj_type_transition_home_config
+			(subj)))
 
 	(optional user_optional_folks
 		(call folks.manage_home_cache (subj))
@@ -132,7 +137,8 @@
 	(optional user_optional_libgweather
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))
-		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional user_optional_lirc
 		(call lirc.run (subj_type_attribute role))
@@ -148,7 +154,8 @@
 		(call mediaart.manage_home_cache (subj))
 		(call mediaart.relabel_home_cache (subj))
 
-		(call mediaart.home_cache_obj_type_transition_home_cache (subj)))
+		(call mediaart.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional user_optional_mysysstat
 		(call mysysstat.run (subj_type_attribute role)))
@@ -203,7 +210,8 @@
 		(call rtorrent.manage_home_config_files (subj))
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
-		(call rtorrent.home_config_obj_type_transition_home_config (subj))
+		(call rtorrent.home_config_obj_type_transition_home_config
+			(subj))
 		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional user_optional_run
@@ -240,7 +248,8 @@
 	(optional user_optional_thumbnails
 		(call thumbnails.manage_home_cache (subj))
 		(call thumbnails.relabel_home_cache (subj))
-		(call thumbnails.home_cache_obj_type_transition_home_cache (subj)))
+		(call thumbnails.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional user_optional_trash
 		(call trash.manage_home_data (subj))
@@ -256,10 +265,18 @@
 		(call upower.run (subj_type_attribute role)))
 
 	(optional user_optional_web_content_home
-		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))
-		(call web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi (subj))
-		(call web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra (subj))
-		(call web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw (subj))
+		(call
+			web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess
+				(subj))
+		(call
+			web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi
+				(subj))
+		(call
+			web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra
+				(subj))
+		(call
+			web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw
+				(subj))
 		(call web_home.home_dir_obj_type_transition_web_home_ro (subj))
 		(call web_home.web_content_cgi.exec (subj))
 		(call web_home.web_content.manage (subj))
@@ -307,11 +324,12 @@
 		(call user_atspird.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_atspi_sessbus_launch
-		(call user_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call user_atspi_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_btst
-                (call btst.manage_tmpfs_user (subj))
-                (call btst.relabel_tmpfs_user (subj))
+		(call btst.manage_tmpfs_user (subj))
+		(call btst.relabel_tmpfs_user (subj))
 
 		(call user_btst.role_pattern (role subj_type_attribute)))
 
@@ -335,12 +353,14 @@
 		(call corebird.manage_home_cache (subj))
 		(call corebird.relabel_home_cache (subj))
 
-		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+		(call corebird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call corebird.manage_home_config (subj))
 		(call corebird.relabel_home_config (subj))
 
-		(call corebird.home_config_obj_type_transition_home_config (subj))
+		(call corebird.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call corebird.manage_home_data (subj))
 		(call corebird.relabel_home_data (subj))
@@ -367,7 +387,8 @@
 		(call dleyna.manage_home_config_files (subj))
 		(call dleyna.relabel_home_config_files (subj))
 
-		(call dleyna.home_config_obj_type_transition_home_config (subj))
+		(call dleyna.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call user_dleyna.role_pattern (role subj_type_attribute)))
 
@@ -375,7 +396,8 @@
 		(call dleynar.manage_home_config_files (subj))
 		(call dleynar.relabel_home_config_files (subj))
 
-		(call dleynar.home_config_obj_type_transition_home_config (subj))
+		(call dleynar.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call user_dleynar.role_pattern (role subj_type_attribute)))
 
@@ -402,7 +424,8 @@
 		(call user_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_emacsclient
-		(call user_emacsclient.role_pattern (role subj_type_attribute)))
+		(call user_emacsclient.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_eog
 		(call eog.manage_tmpfs_user (subj))
@@ -427,7 +450,8 @@
 		(call evince.manage_home_config (subj))
 		(call evince.relabel_home_config (subj))
 
-		(call evince.home_config_obj_type_transition_home_config (subj))
+		(call evince.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call user_evince.role_pattern (role subj_type_attribute))
 
@@ -474,10 +498,12 @@
 		(call firefox_plugins.manage_tmpfs_user_files (subj))
 		(call firefox_plugins.relabel_tmpfs_user_files (subj))
 
-		(call user_firefox_plugins.role_pattern (role subj_type_attribute)))
+		(call user_firefox_plugins.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_firefox_xremotec
-		(call user_firefox_xremotec.role_pattern (role subj_type_attribute)))
+		(call user_firefox_xremotec.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_festival
 		(call festival.manage_tmpfs_user_files (subj))
@@ -559,12 +585,15 @@
 		(call user_gconfd.role_pattern (role subj_type_attribute))
 		(call user_gconftool.role_pattern (role subj_type_attribute))
 
-                (call gsettingsdc.manage_home_data_files (subj))
-                (call gsettingsdc.relabel_home_data_files (subj))
+		(call gsettingsdc.manage_home_data_files (subj))
+		(call gsettingsdc.relabel_home_data_files (subj))
 
-                (call gsettingsdc.home_data_obj_type_transition_home_data_files (subj))
+		(call
+			gsettingsdc.home_data_obj_type_transition_home_data_files
+				(subj))
 
-		(call user_gsettingsdc.role_pattern (role subj_type_attribute)))
+		(call user_gsettingsdc.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_gcs
 		(call gcs.manage_tmpfs_user (subj))
@@ -587,8 +616,8 @@
 
 		(call user_gcs.role_pattern (role subj_type_attribute))
 
-                (call gcsp.manage_tmpfs_user (subj))
-                (call gcsp.relabel_tmpfs_user (subj))
+		(call gcsp.manage_tmpfs_user (subj))
+		(call gcsp.relabel_tmpfs_user (subj))
 
 		(call user_gcsp.role_pattern (role subj_type_attribute)))
 
@@ -626,7 +655,9 @@
 
 	(optional user_optional_user_git
 		(call git.home_user_obj_entry_subj (subj))
-		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj))
+		(call git.spec_home_user_auto_subj_type_transition
+			(git_home_user_auto_type_transition_subj_type_attribute
+				subj))
 
 		(call git.exec_home_user_files (subj))
 		(call git.manage_home_user (subj))
@@ -818,7 +849,8 @@
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))
 
-		(call gstreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call gstreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call gstreamer.manage_home_data (subj))
 		(call gstreamer.relabel_home_data (subj))
@@ -858,23 +890,27 @@
 		(call user_gvfsdud2.role_pattern (role subj_type_attribute))
 		(call user_gvfsdburn.role_pattern (role subj_type_attribute))
 		(call user_gvfsdcdda.role_pattern (role subj_type_attribute))
-		(call user_gvfsdcomputer.role_pattern (role subj_type_attribute))
+		(call user_gvfsdcomputer.role_pattern (role
+			subj_type_attribute))
 		(call user_gvfsddav.role_pattern (role subj_type_attribute))
 		(call user_gvfsddnssd.role_pattern (role subj_type_attribute))
 		(call user_gvfsdftp.role_pattern (role subj_type_attribute))
 		(call user_gvfsdhttp.role_pattern (role subj_type_attribute))
-		(call user_gvfsdlocaltest.role_pattern (role subj_type_attribute))
-		(call user_gvfsdnetwork.role_pattern (role subj_type_attribute))
+		(call user_gvfsdlocaltest.role_pattern (role
+			subj_type_attribute))
+		(call user_gvfsdnetwork.role_pattern (role
+			subj_type_attribute))
 		(call user_gvfsdrecent.role_pattern (role subj_type_attribute))
 		(call user_gvfsdsftp.role_pattern (role subj_type_attribute))
 		(call user_gvfsdtrash.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gvfsdfuse
-                (call user_gvfsdfuse.role_pattern (role subj_type_attribute)))
+		(call user_gvfsdfuse.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gvfsdgoa
-                (call user_gvfsdgoavm.role_pattern (role subj_type_attribute))
-                (call user_gvfsdgoogle.role_pattern (role subj_type_attribute)))
+		(call user_gvfsdgoavm.role_pattern (role subj_type_attribute))
+		(call user_gvfsdgoogle.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_gvid
 		(call gvid.manage_tmpfs_user (subj))
@@ -918,17 +954,20 @@
 		(call livestreamer.manage_home_cache (subj))
 		(call livestreamer.relabel_home_cache (subj))
 
-		(call livestreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call livestreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call livestreamer.manage_home_config (subj))
 		(call livestreamer.relabel_home_config (subj))
 
-		(call livestreamer.home_config_obj_type_transition_home_config (subj))
+		(call livestreamer.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call livestreamer.manage_tmpfs_user_files (subj))
 		(call livestreamer.relabel_tmpfs_user_files (subj))
 
-		(call user_livestreamer.role_pattern (role subj_type_attribute)))
+		(call user_livestreamer.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_lynx
 		(call lynx.manage_home_user_files (subj))
@@ -950,7 +989,8 @@
 		(call mozilla.manage_home_cache (subj))
 		(call mozilla.relabel_home_cache (subj))
 
-		(call mozilla.home_cache_obj_type_transition_home_cache (subj)))
+		(call mozilla.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional user_optional_user_mplayer
 		(call mplayer.manage_home_user (subj))
@@ -975,7 +1015,8 @@
 		(call user_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_mutt_pgp_ewrap
-		(call user_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
+		(call user_mutt_pgp_ewrap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_mutter
 		(call user_mutter.role_pattern (role subj_type_attribute)))
@@ -992,7 +1033,8 @@
 		(call nautilus.manage_home_config (subj))
 		(call nautilus.relabel_home_config (subj))
 
-		(call nautilus.home_config_obj_type_transition_home_config (subj))
+		(call nautilus.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call user_nautilus.role_pattern (role subj_type_attribute))
 		(call user_nautilusas.role_pattern (role subj_type_attribute))
@@ -1098,7 +1140,8 @@
 		(call seahorsesap.manage_tmpfs_user (subj))
 		(call seahorsesap.relabel_tmpfs_user (subj))
 
-		(call user_seahorsesap.role_pattern (role subj_type_attribute)))
+		(call user_seahorsesap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_steam
 		(call steam.manage_tmpfs_user (subj))
@@ -1139,9 +1182,10 @@
 		(call sessbus_launch.manage_home_user (subj))
 		(call sessbus_launch.relabel_home_user (subj))
 
-                (call sessbus_launch.home_dir_obj_type_transition_home (subj))
+		(call sessbus_launch.home_dir_obj_type_transition_home (subj))
 
-		(call user_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call user_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_ssh_agent
 		(call ssh_agent.manage_tmpfs_user (subj))
@@ -1173,7 +1217,8 @@
 		(call thunderbird.manage_home_cache (subj))
 		(call thunderbird.relabel_home_cache (subj))
 
-		(call thunderbird.home_cache_obj_type_transition_home_cache (subj))
+		(call thunderbird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call thunderbird.manage_tmpfs_user (subj))
 		(call thunderbird.relabel_tmpfs_user (subj))
@@ -1181,7 +1226,8 @@
 		(call thunderbird.manage_var_tmp_user_files (subj))
 		(call thunderbird.relabel_var_tmp_user_files (subj))
 
-		(call user_thunderbird.role_pattern (role subj_type_attribute)))
+		(call user_thunderbird.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_tp
 		(call user_tpmct.role_pattern (role subj_type_attribute))
@@ -1222,12 +1268,14 @@
 		(call trackers.manage_home_cache (subj))
 		(call trackers.relabel_home_cache (subj))
 
-		(call trackers.home_cache_obj_type_transition_home_cache (subj))
+		(call trackers.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call trackers.manage_home_config (subj))
 		(call trackers.relabel_home_config (subj))
 
-		(call trackers.home_config_obj_type_transition_home_config (subj))
+		(call trackers.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call trackers.manage_home_data (subj))
 		(call trackers.relabel_home_data (subj))
@@ -1276,7 +1324,8 @@
 		(call webkitwp.manage_home_cache (subj))
 		(call webkitwp.relabel_home_cache (subj))
 
-		(call webkitwp.home_cache_obj_type_transition_home_cache (subj))
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call webkitwp.manage_home_data (subj))
 		(call webkitwp.relabel_home_data (subj))
@@ -1302,7 +1351,9 @@
 		(call user_xpdf.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xinit
-		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj))
+		(call xinit.spec_home_user_auto_subj_type_transition
+			(xinit_home_user_auto_type_transition_subj_type_attribute
+				subj))
 		(call xinit.exec_home_user_files (subj))
 		(call xinit.home_user_obj_entry_subj (subj))
 		(call xinit.manage_home_user_files (subj))
@@ -1337,4 +1388,3 @@
 		(call zenity.relabel_tmpfs_user (subj))
 
 		(call user_zenity.role_pattern (role subj_type_attribute))))
-

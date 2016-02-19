@@ -21,8 +21,10 @@
 		(call user_sessbus.daemon (subj goad.cmd_file)))
 
 	(optional user_goad_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_goais
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -35,6 +37,9 @@
 	(optional user_goais_optional_user_sessbus
 		(call user_sessbus.daemon (subj goais.cmd_file)))
 
-	(optional user_goais_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		user_goais_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

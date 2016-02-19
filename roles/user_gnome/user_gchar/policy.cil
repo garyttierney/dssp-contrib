@@ -1,7 +1,8 @@
 (block user_gchar
 	(blockinherit gchar.subj_blk)
 
-	(call user_gnomeapp.spec_common_gnomeapplication (subj gchar.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gchar.tmpfs_user_file))
 
 	(optional user_gchar_optional_user_sessbus
 		(call user_sessbus.daemon (subj gchar.cmd_file))))

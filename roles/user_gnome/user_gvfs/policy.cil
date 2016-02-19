@@ -13,13 +13,18 @@
 	(optional user_gvfsd_optional_user_sessbus
 		(call user_sessbus.daemon (subj gvfsd.cmd_file)))
 
-	(optional user_gvfsd_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsd_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg))))
 
-	(allow daemon_subj_type_attribute daemon_subj_type_attribute (unix_stream_socket (connectto))))
+	(allow daemon_subj_type_attribute daemon_subj_type_attribute
+		(unix_stream_socket (connectto))))
 
 (block user_gvfsdmd
 	(typeattribute client_subj_type_attribute)
@@ -30,11 +35,15 @@
 	(optional user_gvfsdmd_optional_user_sessbus
 		(call user_sessbus.daemon (subj gvfsdmd.cmd_file)))
 
-	(optional user_gvfsdmd_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdmd_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg))))
 
 	(call sessbus_chat_client_subj_type (client_subj_type_attribute))
 
@@ -51,11 +60,15 @@
 	(optional user_gvfsdud2_optional_user_sessbus
 		(call user_sessbus.daemon (subj gvfsdud2.cmd_file)))
 
-	(optional user_gvfsdud2_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdud2_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdburn
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -64,11 +77,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsdburn.cmd_file))
 
-	(optional user_gvfsdburn_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdburn_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdcdda
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -77,11 +94,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsdcdda.cmd_file))
 
-	(optional user_gvfsdcdda_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdcdda_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdcomputer
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -90,11 +111,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsdcomputer.cmd_file))
 
-	(optional user_gvfsdcomputer_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdcomputer_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsddav
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -103,11 +128,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsddav.cmd_file))
 
-	(optional user_gvfsddav_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsddav_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsddnssd
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -122,11 +151,15 @@
 	(optional user_gvfsddnssd_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsddnssd_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsddnssd_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdftp
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -135,11 +168,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsdftp.cmd_file))
 
-	(optional user_gvfsdftp_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdftp_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdhttp
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -153,11 +190,15 @@
 	(optional user_gvfsdhttp_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsdhttp_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdhttp_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdlocaltest
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -166,11 +207,15 @@
 
 	(call user_gvfsd.daemon (subj gvfsdlocaltest.cmd_file))
 
-	(optional user_gvfsdlocaltest_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdlocaltest_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdnetwork
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -186,16 +231,21 @@
 	(optional user_gvfsdnetwork_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsdnetwork_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdnetwork_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdrecent
 	(blockinherit gvfsdrecent.subj_blk)
 
-	(call user_gnomeapp.spec_common_gnomeapplication (subj gvfsdrecent.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gvfsdrecent.tmpfs_user_file))
 
 	(call user_gvfsd.daemon (subj gvfsdrecent.cmd_file))
 
@@ -204,8 +254,10 @@
 	(optional user_gvfsdrecent_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsdrecent_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))))
+	(optional
+		user_gvfsdrecent_sessbus_chat_client_subj_type_optional_user_sessbus
+			(allow sessbus_chat_client_subj_type_attribute subj
+(unix_stream_socket (connectto)))))
 
 (block user_gvfsdsftp
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -224,11 +276,15 @@
 	(optional user_gvfsdsftp_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsdsftp_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdsftp_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_gvfsdtrash
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -242,8 +298,12 @@
 	(optional user_gvfsdtrash_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))
 
-	(optional user_gvfsdtrash_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		user_gvfsdtrash_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

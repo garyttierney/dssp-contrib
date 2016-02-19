@@ -1,7 +1,8 @@
 (block user_gcs
 	(blockinherit gcs.subj_blk)
 
-	(call user_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gcs.tmpfs_user_file))
 	(call user_gnomeapp.print_subj_type (subj))
 
 	(optional user_gcs_optional_user_btst
@@ -48,7 +49,8 @@
 (block user_gcsp
 	(blockinherit gcsp.subj_blk)
 
-	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcsp.cmd_file gcsp.tmpfs_user_file))
 
 	(call user_gcs.auto_subj_type_transition (subj))
 

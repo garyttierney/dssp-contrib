@@ -9,7 +9,8 @@
 	(call user.dbus_send_auto_type_transition_subj_type (subj))
 
 	(optional user_emacs_optional_user_emacsclient
-		(call user_emacsclient.rw_inherited_unix_stream_sockets (subj)))
+		(call user_emacsclient.rw_inherited_unix_stream_sockets
+			(subj)))
 
 	(optional user_emacs_optional_user_firefox
 		(call user_firefox.auto_subj_type_transition (subj)))

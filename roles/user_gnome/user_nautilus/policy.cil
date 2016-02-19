@@ -1,7 +1,8 @@
 (block user_nautilus
 	(blockinherit nautilus.subj_blk)
 
-	(call user_gnomeapp.spec_common_gnomeapplication (subj nautilus.tmpfs_user_file))
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		nautilus.tmpfs_user_file))
 	(call user_gnomeapp.file_chooser_dialog_subj_type (subj))
 
 	(call user.user_subj_type (subj))

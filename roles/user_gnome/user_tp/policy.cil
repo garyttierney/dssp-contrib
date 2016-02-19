@@ -33,8 +33,10 @@
 		(call user_vino.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_tpmc_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_tpl
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -58,8 +60,10 @@
 		(call user_sessbus.daemon (subj tpl.cmd_file)))
 
 	(optional user_tpl_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_tpi
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -87,5 +91,7 @@
 		(call user_sessbus.daemon (subj tpi.cmd_file)))
 
 	(optional user_tpi_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

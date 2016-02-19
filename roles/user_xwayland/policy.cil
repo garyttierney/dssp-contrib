@@ -8,6 +8,9 @@
 	(optional user_xwayland_optional_user_gs
 		(call user_gs.forked_subj_type (subj)))
 
-	(optional user_xwayland_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		user_xwayland_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

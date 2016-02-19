@@ -2,10 +2,12 @@
 	(blockinherit thunderbird.subj_blk)
 
 	(optional user_thunderbird_optional_user_atspi
-		(call user_atspi.tmpfs_client (subj thunderbird.tmpfs_user_file)))
+		(call user_atspi.tmpfs_client (subj
+			thunderbird.tmpfs_user_file)))
 
 	(optional user_thunderbird_optional_user_atspi_sessbus_launch
-		(call user_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+		(call user_atspi_sessbus_launch.sessbus_chat_client_subj_type
+			(subj)))
 
 	(optional user_thunderbird_optional_user_dconf
 		(call user_dconf.client_subj_type (subj)))

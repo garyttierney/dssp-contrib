@@ -2,7 +2,8 @@
 	(typeattribute subj_type_attribute)
 
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
-	(typeattribute xinit_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xinit_home_user_auto_type_transition_subj_type_attribute)
 
 	(blockinherit usersubj.base_login_blk)
 
@@ -28,7 +29,8 @@
 	(optional wheel_optional_champlain
 		(call champlain.manage_home_cache (subj))
 		(call champlain.relabel_home_cache (subj))
-		(call champlain.home_cache_obj_type_transition_home_cache (subj)))
+		(call champlain.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional wheel_optional_curl
 		(call curl.run (subj_type_attribute role))
@@ -60,7 +62,8 @@
 	(optional wheel_optional_enchant
 		(call enchant.manage_home_config (subj))
 		(call enchant.relabel_home_config (subj))
-		(call enchant.home_config_obj_type_transition_home_config (subj)))
+		(call enchant.home_config_obj_type_transition_home_config
+			(subj)))
 
 	(optional wheel_optional_firewalld
 		(call firewallcmd.run (subj_type_attribute role)))
@@ -141,7 +144,8 @@
 	(optional wheel_optional_libgweather
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))
-		(call libgweather.home_cache_obj_type_transition_home_cache (subj)))
+		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional wheel_optional_lirc
 		(call lirc.run (subj_type_attribute role))
@@ -157,7 +161,8 @@
 		(call mediaart.manage_home_cache (subj))
 		(call mediaart.relabel_home_cache (subj))
 
-		(call mediaart.home_cache_obj_type_transition_home_cache (subj)))
+		(call mediaart.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional wheel_optional_myqemu
 		(call myqemu_installer.read_cmd_files (subj))
@@ -234,7 +239,8 @@
 		(call rtorrent.manage_home_config_files (subj))
 		(call rtorrent.relabel_home_config_files (subj))
 		(call rtorrent.home_dir_obj_type_transition_home (subj))
-		(call rtorrent.home_config_obj_type_transition_home_config (subj))
+		(call rtorrent.home_config_obj_type_transition_home_config
+			(subj))
 		(call rtorrent.run (subj_type_attribute role)))
 
 	(optional wheel_optional_run
@@ -279,7 +285,8 @@
 	(optional wheel_optional_thumbnails
 		(call thumbnails.manage_home_cache (subj))
 		(call thumbnails.relabel_home_cache (subj))
-		(call thumbnails.home_cache_obj_type_transition_home_cache (subj)))
+		(call thumbnails.home_cache_obj_type_transition_home_cache
+			(subj)))
 
 	(optional wheel_optional_tor
 		(call tor.manage_home_user (subj))
@@ -305,10 +312,18 @@
 		(call usbutil.run (subj_type_attribute role)))
 
 	(optional wheel_optional_web_content_home
-		(call web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess (subj))
-		(call web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi (subj))
-		(call web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra (subj))
-		(call web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw (subj))
+		(call
+			web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess
+				(subj))
+		(call
+			web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi
+				(subj))
+		(call
+			web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra
+				(subj))
+		(call
+			web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw
+				(subj))
 		(call web_home.home_dir_obj_type_transition_web_home_ro (subj))
 		(call web_home.web_content_cgi.exec (subj))
 		(call web_home.web_content.manage (subj))
@@ -373,7 +388,8 @@
 		(call wheel_atspird.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_atspi_sessbus_launch
-		(call wheel_atspi_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call wheel_atspi_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_btst
 		(call btst.manage_tmpfs_user (subj))
@@ -404,12 +420,14 @@
 		(call corebird.manage_home_cache (subj))
 		(call corebird.relabel_home_cache (subj))
 
-		(call corebird.home_cache_obj_type_transition_home_cache (subj))
+		(call corebird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call corebird.manage_home_config (subj))
 		(call corebird.relabel_home_config (subj))
 
-		(call corebird.home_config_obj_type_transition_home_config (subj))
+		(call corebird.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call corebird.manage_home_data (subj))
 		(call corebird.relabel_home_data (subj))
@@ -439,7 +457,8 @@
 		(call dleyna.manage_home_config_files (subj))
 		(call dleyna.relabel_home_config_files (subj))
 
-		(call dleyna.home_config_obj_type_transition_home_config (subj))
+		(call dleyna.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call wheel_dleyna.role_pattern (role subj_type_attribute)))
 
@@ -447,7 +466,8 @@
 		(call dleynar.manage_home_config_files (subj))
 		(call dleynar.relabel_home_config_files (subj))
 
-		(call dleynar.home_config_obj_type_transition_home_config (subj))
+		(call dleynar.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call wheel_dleynar.role_pattern (role subj_type_attribute)))
 
@@ -474,7 +494,8 @@
 		(call wheel_emacs.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_emacsclient
-		(call wheel_emacsclient.role_pattern (role subj_type_attribute)))
+		(call wheel_emacsclient.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_eog
 		(call eog.manage_tmpfs_user (subj))
@@ -499,7 +520,8 @@
 		(call evince.manage_home_config (subj))
 		(call evince.relabel_home_config (subj))
 
-		(call evince.home_config_obj_type_transition_home_config (subj))
+		(call evince.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call wheel_evince.role_pattern (role subj_type_attribute))
 
@@ -551,7 +573,8 @@
 		(call fileroller.manage_tmpfs_user (subj))
 		(call fileroller.relabel_tmpfs_user (subj))
 
-		(call wheel_fileroller.role_pattern (role subj_type_attribute)))
+		(call wheel_fileroller.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ffmpeg
 		(call ffmpeg.manage_tmpfs_user_files (subj))
@@ -560,7 +583,8 @@
 		(call wheel_ffmpeg.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_fuse_sshfs
-		(call wheel_fuse_sshfs.role_pattern (role subj_type_attribute)))
+		(call wheel_fuse_sshfs.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_fwupd
 		(call wheel_fwupdmgr.role_pattern (role subj_type_attribute)))
@@ -622,9 +646,12 @@
 		(call gsettingsdc.manage_home_data_files (subj))
 		(call gsettingsdc.relabel_home_data_files (subj))
 
-		(call gsettingsdc.home_data_obj_type_transition_home_data_files (subj))
+		(call
+			gsettingsdc.home_data_obj_type_transition_home_data_files
+				(subj))
 
-		(call wheel_gsettingsdc.role_pattern (role subj_type_attribute)))
+		(call wheel_gsettingsdc.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gcs
 		(call gcs.manage_tmpfs_user (subj))
@@ -686,7 +713,9 @@
 
 	(optional wheel_optional_wheel_git
 		(call git.home_user_obj_entry_subj (subj))
-		(call git.spec_home_user_auto_subj_type_transition (git_home_user_auto_type_transition_subj_type_attribute subj))
+		(call git.spec_home_user_auto_subj_type_transition
+			(git_home_user_auto_type_transition_subj_type_attribute
+				subj))
 
 		(call git.exec_home_user_files (subj))
 		(call git.manage_home_user (subj))
@@ -850,7 +879,8 @@
 		(call gsd.home_data_obj_type_transition_home_data (subj))
 
 		(call wheel_gsd.role_pattern (role subj_type_attribute))
-		(call wheel_gsdprinter.role_pattern (role subj_type_attribute)))
+		(call wheel_gsdprinter.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gsh
 		(call gsh.manage_tmpfs_user (subj))
@@ -894,7 +924,8 @@
 		(call gstreamer.manage_home_cache (subj))
 		(call gstreamer.relabel_home_cache (subj))
 
-		(call gstreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call gstreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call gstreamer.manage_home_data (subj))
 		(call gstreamer.relabel_home_data (subj))
@@ -961,23 +992,29 @@
 		(call wheel_gvfsdud2.role_pattern (role subj_type_attribute))
 		(call wheel_gvfsdburn.role_pattern (role subj_type_attribute))
 		(call wheel_gvfsdcdda.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdcomputer.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdcomputer.role_pattern (role
+			subj_type_attribute))
 		(call wheel_gvfsddav.role_pattern (role subj_type_attribute))
 		(call wheel_gvfsddnssd.role_pattern (role subj_type_attribute))
 		(call wheel_gvfsdftp.role_pattern (role subj_type_attribute))
 		(call wheel_gvfsdhttp.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdlocaltest.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdnetwork.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdrecent.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdlocaltest.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsdnetwork.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsdrecent.role_pattern (role
+			subj_type_attribute))
 		(call wheel_gvfsdsftp.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdtrash.role_pattern (role subj_type_attribute)))
+		(call wheel_gvfsdtrash.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gvfsdfuse
 		(call wheel_gvfsdfuse.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_gvfsdgoa
 		(call wheel_gvfsdgoavm.role_pattern (role subj_type_attribute))
-		(call wheel_gvfsdgoogle.role_pattern (role subj_type_attribute)))
+		(call wheel_gvfsdgoogle.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_busctl
 		(call wheel_busctl.role_pattern (role subj_type_attribute)))
@@ -995,10 +1032,12 @@
 		(call firefox_plugins.manage_tmpfs_user_files (subj))
 		(call firefox_plugins.relabel_tmpfs_user_files (subj))
 
-		(call wheel_firefox_plugins.role_pattern (role subj_type_attribute)))
+		(call wheel_firefox_plugins.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_firefox_xremotec
-		(call wheel_firefox_xremotec.role_pattern (role subj_type_attribute)))
+		(call wheel_firefox_xremotec.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_irssi
 		(call irssi.manage_home_user (subj))
@@ -1009,10 +1048,12 @@
 		(call wheel_irssi.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_hostnamectl
-		(call wheel_hostnamectl.role_pattern (role subj_type_attribute)))
+		(call wheel_hostnamectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_journalctl
-		(call wheel_journalctl.role_pattern (role subj_type_attribute)))
+		(call wheel_journalctl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_libnotify
 		(call wheel_libnotify.role_pattern (role subj_type_attribute)))
@@ -1021,17 +1062,20 @@
 		(call livestreamer.manage_home_cache (subj))
 		(call livestreamer.relabel_home_cache (subj))
 
-		(call livestreamer.home_cache_obj_type_transition_home_cache (subj))
+		(call livestreamer.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call livestreamer.manage_home_config (subj))
 		(call livestreamer.relabel_home_config (subj))
 
-		(call livestreamer.home_config_obj_type_transition_home_config (subj))
+		(call livestreamer.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call livestreamer.manage_tmpfs_user_files (subj))
 		(call livestreamer.relabel_tmpfs_user_files (subj))
 
-		(call wheel_livestreamer.role_pattern (role subj_type_attribute)))
+		(call wheel_livestreamer.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_localectl
 		(call wheel_localectl.role_pattern (role subj_type_attribute)))
@@ -1062,13 +1106,15 @@
 		(call wheel_mutt.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mutt_pgp_ewrap
-		(call wheel_mutt_pgp_ewrap.role_pattern (role subj_type_attribute)))
+		(call wheel_mutt_pgp_ewrap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mutter
 		(call wheel_mutter.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_machinectl
-		(call wheel_machinectl.role_pattern (role subj_type_attribute)))
+		(call wheel_machinectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mozilla
 		(call mozilla.manage_home_user (subj))
@@ -1079,8 +1125,9 @@
 		(call mozilla.manage_home_cache (subj))
 		(call mozilla.relabel_home_cache (subj))
 
-		(call mozilla.home_cache_obj_type_transition_home_cache (subj)))
- 
+		(call mozilla.home_cache_obj_type_transition_home_cache
+			(subj)))
+
 	(optional wheel_optional_wheel_mplayer
 		(call mplayer.manage_home_user (subj))
 		(call mplayer.relabel_home_user (subj))
@@ -1104,7 +1151,8 @@
 		(call nautilus.manage_home_config (subj))
 		(call nautilus.relabel_home_config (subj))
 
-		(call nautilus.home_config_obj_type_transition_home_config (subj))
+		(call nautilus.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call wheel_nautilus.role_pattern (role subj_type_attribute))
 		(call wheel_nautilusas.role_pattern (role subj_type_attribute))
@@ -1169,7 +1217,8 @@
 		(call wheel_polari.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.role_pattern (role subj_type_attribute)))
+		(call wheel_polkit_exec.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_rp
 		(call rp.manage_home_user_files (subj))
@@ -1227,7 +1276,8 @@
 		(call seahorsesap.manage_tmpfs_user (subj))
 		(call seahorsesap.relabel_tmpfs_user (subj))
 
-		(call wheel_seahorsesap.role_pattern (role subj_type_attribute)))
+		(call wheel_seahorsesap.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_steam
 		(call steam.manage_tmpfs_user (subj))
@@ -1270,7 +1320,8 @@
 
 		(call sessbus_launch.home_dir_obj_type_transition_home (subj))
 
-		(call wheel_sessbus_launch.role_pattern (role subj_type_attribute)))
+		(call wheel_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ssh_agent
 		(call ssh_agent.manage_tmpfs_user (subj))
@@ -1285,7 +1336,8 @@
 		(call ssh_client.home_dir_obj_type_transition_home (subj))
 
 		(call wheel_ssh_client.role_pattern (role subj_type_attribute))
-		(call wheel_ssh_keygen.role_pattern (role subj_type_attribute)))
+		(call wheel_ssh_keygen.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_startx
 		(call startx.manage_tmpfs_user_files (subj))
@@ -1314,7 +1366,8 @@
 		(call thunderbird.manage_home_cache (subj))
 		(call thunderbird.relabel_home_cache (subj))
 
-		(call thunderbird.home_cache_obj_type_transition_home_cache (subj))
+		(call thunderbird.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call thunderbird.manage_tmpfs_user (subj))
 		(call thunderbird.relabel_tmpfs_user (subj))
@@ -1322,10 +1375,12 @@
 		(call thunderbird.manage_var_tmp_user_files (subj))
 		(call thunderbird.relabel_var_tmp_user_files (subj))
 
-		(call wheel_thunderbird.role_pattern (role subj_type_attribute)))
+		(call wheel_thunderbird.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_timedatectl
-		(call wheel_timedatectl.role_pattern (role subj_type_attribute)))
+		(call wheel_timedatectl.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_tor_socks
 		(call wheel_tor_socks.role_pattern (role subj_type_attribute)))
@@ -1369,12 +1424,14 @@
 		(call trackers.manage_home_cache (subj))
 		(call trackers.relabel_home_cache (subj))
 
-		(call trackers.home_cache_obj_type_transition_home_cache (subj))
+		(call trackers.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call trackers.manage_home_config (subj))
 		(call trackers.relabel_home_config (subj))
 
-		(call trackers.home_config_obj_type_transition_home_config (subj))
+		(call trackers.home_config_obj_type_transition_home_config
+			(subj))
 
 		(call trackers.manage_home_data (subj))
 		(call trackers.relabel_home_data (subj))
@@ -1423,7 +1480,8 @@
 		(call webkitwp.manage_home_cache (subj))
 		(call webkitwp.relabel_home_cache (subj))
 
-		(call webkitwp.home_cache_obj_type_transition_home_cache (subj))
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj))
 
 		(call webkitwp.manage_home_data (subj))
 		(call webkitwp.relabel_home_data (subj))
@@ -1446,7 +1504,9 @@
 		(call wheel_xbindkeys.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_xinit
-		(call xinit.spec_home_user_auto_subj_type_transition (xinit_home_user_auto_type_transition_subj_type_attribute subj))
+		(call xinit.spec_home_user_auto_subj_type_transition
+			(xinit_home_user_auto_type_transition_subj_type_attribute
+				subj))
 		(call xinit.exec_home_user_files (subj))
 		(call xinit.home_user_obj_entry_subj (subj))
 		(call xinit.manage_home_user_files (subj))

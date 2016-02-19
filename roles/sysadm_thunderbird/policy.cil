@@ -2,10 +2,13 @@
 	(blockinherit thunderbird.subj_blk)
 
 	(optional sysadm_thunderbird_optional_sysadm_atspi
-		(call sysadm_atspi.tmpfs_client (subj thunderbird.tmpfs_user_file)))
+		(call sysadm_atspi.tmpfs_client (subj
+			thunderbird.tmpfs_user_file)))
 
 	(optional sysadm_thunderbird_optional_sysadm_atspi_sessbus_launch
-		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+		(call
+			sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type
+				(subj)))
 
 	(optional sysadm_thunderbird_optional_sysadm_dconf
 		(call sysadm_dconf.client_subj_type (subj)))

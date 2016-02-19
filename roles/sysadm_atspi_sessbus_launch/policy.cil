@@ -13,6 +13,9 @@
 		(call sysadm_sessbus.service_subj_type (subj))
 		(call sysadm_sessbus.auto_subj_type_transition (subj)))
 
-	(optional sysadm_atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		sysadm_atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

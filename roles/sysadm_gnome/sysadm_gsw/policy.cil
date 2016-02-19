@@ -1,7 +1,8 @@
 (block sysadm_gsw
 	(blockinherit gsw.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gsw.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gsw.tmpfs_user_file))
 
 	(optional sysadm_gsw_optional_sysadm_epiphany
 		(call sysadm_epiphany.auto_subj_type_transition (subj)))

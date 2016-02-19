@@ -13,6 +13,9 @@
 	(optional sysadm_gkrd_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gkrd.cmd_file)))
 
-	(optional sysadm_gkrd_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		sysadm_gkrd_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

@@ -5,14 +5,16 @@
 
 	(call sysadm_sessbus.client_subj_type (client_subj_type_attribute))
 
-	(call sysadm_trackers.sessbus_chat_client_subj_type (client_subj_type_attribute))
+	(call sysadm_trackers.sessbus_chat_client_subj_type
+		(client_subj_type_attribute))
 
 	(call trackers.rw_home_cache_files (client_subj_type_attribute)))
 
 (block sysadm_trackerm
 	(blockinherit trackerm.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj trackerm.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		trackerm.tmpfs_user_file))
 
 	(call sysadm_trackers.sessbus_chat_client_subj_type (subj))
 
@@ -57,6 +59,9 @@
 	(optional sysadm_trackers_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj trackers.cmd_file)))
 
-	(optional sysadm_trackers_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		sysadm_trackers_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

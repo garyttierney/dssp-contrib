@@ -3,7 +3,8 @@
 	(typeattribute daemon_subj_type_attribute)
 	(typeattribute service_subj_type_attribute)
 
-	(typeattribute unix_stream_socket_activation_sduser_subj_type_attribute)
+	(typeattribute
+		unix_stream_socket_activation_sduser_subj_type_attribute)
 
 	(blockinherit sessbus.subj_blk)
 
@@ -12,7 +13,8 @@
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_sessbus_optional_sysadm_atspi_sessbus_launch
-		(call sysadm_atspi_sessbus_launch.auto_subj_type_transition (subj)))
+		(call sysadm_atspi_sessbus_launch.auto_subj_type_transition
+			(subj)))
 
 	(optional sysadm_sessbus_optional_sysadm_dunst
 		(call sysadm_dunst.auto_subj_type_transition (subj)))
@@ -34,7 +36,8 @@
 
 	(optional sysadm_sessbus_optional_sysadm_sduser
 		(call sduser.unix_stream_socket_activated_subj_pattern
-			(unix_stream_socket_activation_sduser_subj_type_attribute subj)))
+			(unix_stream_socket_activation_sduser_subj_type_attribute
+				subj)))
 
 	(optional sysadm_sessbus_optional_sysadm_tracker
 		(call sysadm_trackerm.rw_inherited_fifo_files (subj)))
@@ -44,4 +47,5 @@
 	(call service_subj_type (daemon_subj_type_attribute))
 
 	(call sessbus.client_pattern (client_subj_type_attribute subj))
-	(call sessbus.acquire_service_pattern (service_subj_type_attribute subj)))
+	(call sessbus.acquire_service_pattern (service_subj_type_attribute
+		subj)))

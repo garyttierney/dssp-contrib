@@ -1,7 +1,8 @@
 (block sysadm_fileroller
 	(blockinherit fileroller.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj fileroller.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		fileroller.tmpfs_user_file))
 	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))

@@ -1,7 +1,8 @@
 (block sysadm_gcalc
 	(blockinherit gcalc.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gcalc.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gcalc.tmpfs_user_file))
 
 	(optional sysadm_gcalc_optional_sysadm_gvfsdhttp
 		(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
@@ -12,4 +13,5 @@
 
 	(call sysadm_gcalc.auto_subj_type_transition (subj))
 
-	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj gcalcsp.cmd_file gcalcsp.tmpfs_user_file)))
+	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcalcsp.cmd_file gcalcsp.tmpfs_user_file)))

@@ -10,8 +10,10 @@
 	(call sysadm_dconf.client_subj_type (subj))
 
 	(optional sysadm_gs_optional_sysadm_atspi_sessbus_launch
-		(call sysadm_atspi_sessbus_launch.auto_subj_type_transition (subj))
-		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type (subj)))
+		(call sysadm_atspi_sessbus_launch.auto_subj_type_transition
+			(subj))
+		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type
+			(subj)))
 
 	(optional sysadm_gs_optional_sysadm_canberra
 		(call sysadm_canberra.auto_subj_type_transition (subj)))
@@ -19,9 +21,12 @@
 	(optional sysadm_gs_optional_sysadm_sessbus
 		(call sysadm_sessbus.service_subj_type (subj)))
 
-	(optional sysadm_gs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg))))
+	(optional
+		sysadm_gs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg))))
 
 	(call forked_subj_type (daemon_subj_type_attribute))
 	(call send_signal (daemon_subj_type_attribute))

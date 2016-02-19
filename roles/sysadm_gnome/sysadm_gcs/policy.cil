@@ -1,7 +1,8 @@
 (block sysadm_gcs
 	(blockinherit gcs.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gcs.tmpfs_user_file))
 	(call sysadm_gnomeapp.print_subj_type (subj))
 
 	(optional sysadm_gcs_optional_sysadm_btst
@@ -57,7 +58,8 @@
 (block sysadm_gcsp
 	(blockinherit gcsp.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcsp.cmd_file gcsp.tmpfs_user_file))
 
 	(call sysadm_gcs.auto_subj_type_transition (subj))
 

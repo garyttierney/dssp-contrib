@@ -1,7 +1,8 @@
 (block sysadm_gsh
 	(blockinherit gsh.subj_blk)
 
-	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj gsh.tmpfs_user_file))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gsh.tmpfs_user_file))
 
 	(call sysadm.sysadm_subj_type (subj))
 	(call sysadm.cmd_auto_subj_type_transition (subj))
@@ -66,9 +67,12 @@
 	(optional sysadm_gshhs_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gshhs.cmd_file)))
 
-	(optional sysadm_gshhs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		sysadm_gshhs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block sysadm_gshcs
 	(typeattribute sessbus_chat_client_subj_type_attribute)
@@ -85,9 +89,12 @@
 	(optional sysadm_gshcs_optional_sysadm_gs
 		(call sysadm_sessbus.daemon (subj gshcs.cmd_file)))
 
-	(optional sysadm_gshcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		sysadm_gshcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block sysadm_gshep
 	(blockinherit gshep.subj_blk))

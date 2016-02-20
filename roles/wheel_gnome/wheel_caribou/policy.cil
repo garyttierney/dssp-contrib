@@ -12,9 +12,12 @@
 	(optional wheel_caribou_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj caribou.cmd_file)))
 
-	(optional wheel_caribou_sessbus_chat_client_subj_type_optional_wheel_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+	(optional
+		wheel_caribou_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block wheel_cariboup
 	(blockinherit cariboup.subj_blk))

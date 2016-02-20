@@ -1,6 +1,7 @@
 (in wheel_gnomeapp
 	(macro file_chooser_dialog_subj_type ((type ARG1))
-		(typeattributeset file_chooser_dialog_subj_type_attribute ARG1))
+		(typeattributeset file_chooser_dialog_subj_type_attribute
+			ARG1))
 
 	(macro print_subj_type ((type ARG1))
 		(typeattributeset print_subj_type_attribute ARG1))
@@ -8,23 +9,28 @@
 	(macro spec_common_gnomeapplication ((type ARG1)(type ARG2))
 		(typeattributeset common_subj_type_attribute ARG1)
 
-	        (call wheel_atspi.tmpfs_client (ARG1 ARG2))
+		(call wheel_atspi.tmpfs_client (ARG1 ARG2))
 
-	        (call wheel_dconf.client_subj_type (ARG1))
+		(call wheel_dconf.client_subj_type (ARG1))
 
-	        (optional wheel_common_gnomeapplication_optional_wheel_firefox
+		(optional wheel_common_gnomeapplication_optional_wheel_firefox
 			(call wheel_firefox.auto_subj_type_transition (ARG1)))
 
 		(optional wheel_common_gnomeapplication_optional_wheel_gvfsd
-			(call wheel_gvfsd.sessbus_chat_client_subj_type (ARG1)))
+			(call wheel_gvfsd.sessbus_chat_client_subj_type
+				(ARG1)))
 
-		(optional wheel_common_gnomeapplication_optional_wheel_thunderbird
-			(call wheel_thunderbird.auto_subj_type_transition (ARG1))))
+		(optional
+			wheel_common_gnomeapplication_optional_wheel_thunderbird
+			(call wheel_thunderbird.auto_subj_type_transition
+				(ARG1))))
 
-	(macro spec_common_sp_gnomeapplication ((type ARG1)(type ARG2)(type ARG3))
+	(macro spec_common_sp_gnomeapplication ((type ARG1)(type ARG2)(type
+		ARG3))
 		(typeattributeset common_sp_subj_type_attribute ARG1)
 
-	        (call wheel_atspi.tmpfs_client (ARG1 ARG3))
+		(call wheel_atspi.tmpfs_client (ARG1 ARG3))
 
-		(optional wheel_common_sp_gnomeapplication_optional_wheel_sessbus
+		(optional
+			wheel_common_sp_gnomeapplication_optional_wheel_sessbus
 			(call wheel_sessbus.daemon (ARG1 ARG2)))))

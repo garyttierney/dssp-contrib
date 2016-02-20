@@ -1,7 +1,8 @@
 (block wheel_gcon
 	(blockinherit gcon.subj_blk)
 
-	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gcon.tmpfs_user_file))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gcon.tmpfs_user_file))
 
 	(optional wheel_gcon_optional_wheel_evoaf
 		(call wheel_evoaf.sessbus_chat_client_subj_type (subj)))
@@ -27,7 +28,8 @@
 (block wheel_gconsp
 	(blockinherit gconsp.subj_blk)
 
-	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj gconsp.cmd_file gconsp.tmpfs_user_file))
+	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gconsp.cmd_file gconsp.tmpfs_user_file))
 
 	(call wheel_gcon.auto_subj_type_transition (subj))
 

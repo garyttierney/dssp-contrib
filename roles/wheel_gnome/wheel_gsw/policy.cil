@@ -1,7 +1,8 @@
 (block wheel_gsw
 	(blockinherit gsw.subj_blk)
 
-	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gsw.tmpfs_user_file))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gsw.tmpfs_user_file))
 
 	(optional wheel_gsw_optional_wheel_epiphany
 		(call wheel_epiphany.auto_subj_type_transition (subj)))

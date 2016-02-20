@@ -1,7 +1,8 @@
 (block wheel_gcs
 	(blockinherit gcs.subj_blk)
 
-	(call wheel_gnomeapp.spec_common_gnomeapplication (subj gcs.tmpfs_user_file))
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gcs.tmpfs_user_file))
 	(call wheel_gnomeapp.print_subj_type (subj))
 
 	(optional wheel_gcs_optional_wheel_btst
@@ -57,7 +58,8 @@
 (block wheel_gcsp
 	(blockinherit gcsp.subj_blk)
 
-	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj gcsp.cmd_file gcsp.tmpfs_user_file))
+	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcsp.cmd_file gcsp.tmpfs_user_file))
 
 	(call wheel_gcs.auto_subj_type_transition (subj))
 

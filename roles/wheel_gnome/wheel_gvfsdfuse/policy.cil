@@ -11,8 +11,12 @@
 	(optional wheel_gvfsdfuse_optional_wheel_sessbus
 		(call wheel_sessbus.service_subj_type (subj)))
 
-	(optional wheel_gvfsdfuse_sessbus_chat_client_subj_type_optional_wheel_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (unix_stream_socket (connectto)))
+	(optional
+		wheel_gvfsdfuse_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
 
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus (send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus (send_msg)))))
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

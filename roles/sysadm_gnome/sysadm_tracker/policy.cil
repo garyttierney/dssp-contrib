@@ -3,12 +3,14 @@
 
 	(blockinherit tracker.subj_blk)
 
-	(call sysadm_sessbus.client_subj_type (client_subj_type_attribute))
-
 	(call sysadm_trackers.sessbus_chat_client_subj_type
 		(client_subj_type_attribute))
 
-	(call trackers.rw_home_cache_files (client_subj_type_attribute)))
+	(call trackers.rw_home_cache_files (client_subj_type_attribute))
+
+	(optional sysadm_tracker_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type
+			(client_subj_type_attribute))))
 
 (block sysadm_trackerm
 	(blockinherit trackerm.subj_blk)

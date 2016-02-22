@@ -99,21 +99,18 @@
 
 	(call alsactl.read_config (client_subj_type_attribute))
 
-	(call usersubj.create_home_config_dirs (client_subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_config
+	(call usersubj.home_config_creator_subj_type
 		(client_subj_type_attribute))
 
 	(call usersubj.delete_tmpfs_user_files (client_subj_type_attribute))
 	(call usersubj.read_tmpfs_user_files (client_subj_type_attribute))
 
-	(call usersubj.create_home_data_dirs (client_subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_data
+	(call usersubj.home_data_creator_subj_type
 		(client_subj_type_attribute))
 
 	(call usersubj.manage_home_data_files (client_subj_type_attribute))
 
-	(call usersubj.create_home_cache_dirs (client_subj_type_attribute))
-	(call usersubj.home_dir_add_obj_type_transition_home_cache
+	(call usersubj.home_cache_creator_subj_type
 		(client_subj_type_attribute))
 
 	(call usersubj.manage_home_cache_files (client_subj_type_attribute))

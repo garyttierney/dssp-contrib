@@ -19,4 +19,7 @@
 
 	(call locale.read (subj))
 
-	(call selinux_config.read_config_files (subj)))
+	(call policy_config.read_files (subj))
+	(call selinux_config.read_config_files (subj))
+
+	(call usersubj.read_home_user_files (subj)))

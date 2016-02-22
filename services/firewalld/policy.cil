@@ -19,6 +19,13 @@
 	(call manage_config (subj))
 	(call relabel_config (subj))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
 	(blockinherit file.var_log_obj_blk)
 
 	(typeattributeset obj_type_attribute var_log_file)
@@ -48,6 +55,8 @@
 	(call cmd.read_cmd_files (subj))
 
 	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
 
 	(call kmod.auto_subj_type_transition (subj))
 

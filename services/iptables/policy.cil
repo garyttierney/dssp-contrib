@@ -69,6 +69,7 @@
 	(call nss.client_subj_type (subj))
 
 	(optional iptables_optional_firewalld
+		(call firewalld.read_inherited_runtime_files (subj))
 		(call firewalld.rw_inherited_tmpfs_files (subj)))
 
 	(optional iptables_optional_iptools

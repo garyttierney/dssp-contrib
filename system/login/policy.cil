@@ -31,6 +31,7 @@
 
 	(allow subj self (capability (kill fsetid fowner sys_tty_config
 		dac_override sys_admin)))
+	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 

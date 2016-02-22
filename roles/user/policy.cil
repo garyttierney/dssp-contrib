@@ -14,6 +14,12 @@
 	(optional user_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))
 
+	(optional user_optional_brlapi
+		(call brlapi.run (subj_type_attribute role)))
+
+	(optional user_optional_brltty
+		(call brltty.run (subj_type_attribute role)))
+
 	(optional user_optional_busctl
 		(call busctl.exec (subj_type_attribute)))
 
@@ -227,6 +233,12 @@
 
 	(optional user_optional_ssh_client
 		(call ssh_sftpserver.run (subj_type_attribute role)))
+
+	(optional user_optional_speechdispd
+		(call speechdispd.manage_tmpfs_user (subj))
+		(call speechdispd.relabel_tmpfs_user (subj))
+
+		(call speechdispd.run (subj_type_attribute role)))
 
 	(optional user_optional_sshd
 		(call sshd.login_subj_type (subj)))
@@ -442,6 +454,12 @@
 		(call eog.home_data_obj_type_transition_home_data (subj))
 
 		(call user_eog.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_espeak
+		(call espeak.manage_tmpfs_user_files (subj))
+		(call espeak.relabel_tmpfs_user_files (subj))
+
+		(call user_espeak.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_evince
 		(call evince.manage_tmpfs_user (subj))
@@ -1061,6 +1079,17 @@
 		(call obexd.home_cache_obj_type_transition_home_cache (subj))
 
 		(call user_obexd.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_orca
+		(call orca.manage_tmpfs_user (subj))
+		(call orca.relabel_tmpfs_user (subj))
+
+		(call orca.manage_home_data (subj))
+		(call orca.relabel_home_data (subj))
+
+		(call orca.home_data_obj_type_transition_home_data (subj))
+
+		(call user_orca.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_pa
 		(call pa.manage_tmpfs_user (subj))

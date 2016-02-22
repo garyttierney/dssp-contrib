@@ -1,0 +1,12 @@
+(in brltty
+	(filecon "/etc/brltty(/.*)?" any config_file_context)
+	(filecon "/etc/brltty\.conf" file config_file_context)
+	(filecon "/usr/bin/brltty" file cmd_file_context)
+	(filecon "/usr/bin/brltty-config" file cmd_file_context)
+	(filecon "/usr/bin/brltty-ctb" file cmd_file_context)
+	(filecon "/usr/bin/brltty-trtxt" file cmd_file_context)
+	(filecon "/usr/bin/brltty-ttb" file cmd_file_context)
+
+	(optional brltty_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*brltty.*" file
+			unit_file_context)))

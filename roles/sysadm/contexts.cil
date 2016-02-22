@@ -908,6 +908,18 @@
 
 	(filecon "/root/\.rnd" file root_openssl_home))
 
+(optional sysadm_orca_home_optional_orca
+	(tunableif enable_rbacsep
+		(true
+			(context root_orca_home_data (sysadm.id sysadm.role
+				orca.home_data_file (systemlow systemlow))))
+		(false
+			(context root_orca_home_data (sysadm.id object_r
+				orca.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/orca(/.*)?" any
+		root_orca_home_data))
+
 (optional sysadm_pa_home_optional_pa
 	(tunableif enable_rbacsep
 		(true

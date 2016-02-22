@@ -207,6 +207,13 @@
 	(optional gdm_optional_nm
 		(call nm.client_subj_type (subj)))
 
+	(optional gdm_optional_orca
+		(call cmd.exec (subj))
+		(call cmd.list_cmd (subj))
+		(call subj.read_state_common_subj (subj))
+		(call orca.exec (subj))
+		(call brl.tcp_connect_port (subj)))
+
 	(optional gdm_optional_pa
 		(call pa.exec (subj))
 		(call pa.tmpfs_client (subj tmpfs_file)))
@@ -243,6 +250,10 @@
 
 	(optional gdm_optional_sd_logind
 		(call sd_logind.read_runtime (subj)))
+
+	(optional gdm_optional_speechdispd
+		(call speechdispd.read_config (subj))
+		(call speechdispd.exec (subj)))
 
 	(optional gdm_optional_sysbus
 		(allow subj self (dbus (acquire_svc)))

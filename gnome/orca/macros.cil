@@ -1,0 +1,47 @@
+(in orca
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset orca.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call orca.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call orca.role_pattern (ARG1 ARG2 subj))
+
+			(call speechdispd.run (subj ARG1))))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "orca")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*"))))

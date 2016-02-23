@@ -63,6 +63,24 @@
 (filecon "/root/\.bash_history" file root_home_history)
 (filecon "/root/\.terminfo" file root_home_terminfo_data)
 
+(optional sysadm_bijiben_home_optional_bijiben
+	(tunableif enable_rbacsep
+		(true
+			(context root_bijiben_home_cache (sysadm.id sysadm.role
+				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijiben_home_data (sysadm.id sysadm.role
+				bijiben.home_data_file (systemlow systemlow))))
+		(false
+			(context root_bijiben_home_cache (sysadm.id object_r
+				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijiben_home_data (sysadm.id object_r
+				bijiben.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/bijiben(/.*)?" any root_bijiben_home_cache)
+	(filecon "/root/\.local/share/bijiben(/.*)?" any
+		root_bijiben_home_data))
+
 (optional sysadm_champlain_home_optional_champlain
 	(tunableif enable_rbacsep
 		(true

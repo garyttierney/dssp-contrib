@@ -1076,6 +1076,30 @@
 		(call sysadm_atspi_sessbus_launch.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_bijiben
+		(call bijiben.manage_tmpfs_user (subj))
+		(call bijiben.relabel_tmpfs_user (subj))
+
+		(call bijiben.manage_home_cache (subj))
+		(call bijiben.relabel_home_cache (subj))
+
+		(call bijiben.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call bijiben.manage_home_data (subj))
+		(call bijiben.relabel_home_data (subj))
+
+		(call bijiben.home_data_obj_type_transition_home_data
+			(subj))
+
+		(call sysadm_bijiben.role_pattern (role subj_type_attribute))
+
+		(call bijibensp.manage_tmpfs_user (subj))
+		(call bijibensp.relabel_tmpfs_user (subj))
+
+		(call sysadm_bijibensp.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_btst
 		(call btst.manage_tmpfs_user (subj))
 		(call btst.relabel_tmpfs_user (subj))

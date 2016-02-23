@@ -11,6 +11,12 @@
 		(true
 			(call rbacsep.exempt_role (role))))
 
+	(optional exempt_optional_bijiben
+		(call bijiben.home_cache_obj_type_transition_home_cache
+			(subj))
+		(call bijiben.home_data_obj_type_transition_home_data
+			(subj)))
+
 	(optional exempt_optional_champlain
 		(call champlain.home_cache_obj_type_transition_home_cache
 			(subj)))

@@ -1,0 +1,28 @@
+(block wheel_bijiben
+	(blockinherit bijiben.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		bijiben.tmpfs_user_file))
+	(call wheel_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(call wheel_gvfsdmd.client_subj_type (subj))
+
+	(optional wheel_bijiben_optional_wheel_evocf
+		(call wheel_evocf.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_bijiben_optional_wheel_evosr
+		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_bijiben_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
+
+	(optional wheel_bijiben_optional_wheel_tracker
+		(call wheel_tracker.client_subj_type (subj))))
+
+(block wheel_bijibensp
+	(blockinherit bijibensp.subj_blk)
+
+	(call wheel_bijibensp.auto_subj_type_transition (subj))
+
+	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj
+		bijibensp.cmd_file bijibensp.tmpfs_user_file)))

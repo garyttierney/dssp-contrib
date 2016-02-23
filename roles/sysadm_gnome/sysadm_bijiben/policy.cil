@@ -22,7 +22,24 @@
 (block sysadm_bijibensp
 	(blockinherit bijibensp.subj_blk)
 
-	(call sysadm_bijibensp.auto_subj_type_transition (subj))
+	(call sysadm_bijiben.auto_subj_type_transition (subj))
+
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 
 	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj
-		bijibensp.cmd_file bijibensp.tmpfs_user_file)))
+		bijibensp.cmd_file bijibensp.tmpfs_user_file))
+
+	(optional sysadm_bijibensp_optional_sysadm_dconf
+		(call sysadm_dconf.client_subj_type (subj)))
+
+	(optional sysadm_bijibensp_optional_sysadm_evocf
+		(call sysadm_evocf.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_bijibensp_optional_sysadm_evosr
+		(call sysadm_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_bijibensp_optional_sysadm_goad
+		(call sysadm_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_bijibensp_optional_sysadm_tracker
+		(call sysadm_tracker.client_subj_type (subj))))

@@ -68,16 +68,24 @@
 		(true
 			(context root_bijiben_home_cache (sysadm.id sysadm.role
 				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijibensp_home_cache (sysadm.id
+				sysadm.role bijibensp.home_cache_file
+					(systemlow systemlow)))
 			(context root_bijiben_home_data (sysadm.id sysadm.role
 				bijiben.home_data_file (systemlow systemlow))))
 		(false
 			(context root_bijiben_home_cache (sysadm.id object_r
 				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijibensp_home_cache (sysadm.id object_r
+				bijibensp.home_cache_file (systemlow
+					systemlow)))
 			(context root_bijiben_home_data (sysadm.id object_r
 				bijiben.home_data_file (systemlow
 					systemlow)))))
 
 	(filecon "/root/\.cache/bijiben(/.*)?" any root_bijiben_home_cache)
+	(filecon "/root/\.cache/bijiben-shell-search-provider(/.*)?" any
+		root_bijibensp_home_cache)
 	(filecon "/root/\.local/share/bijiben(/.*)?" any
 		root_bijiben_home_data))
 

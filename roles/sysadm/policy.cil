@@ -1103,6 +1103,12 @@
 		(call bijibensp.manage_tmpfs_user (subj))
 		(call bijibensp.relabel_tmpfs_user (subj))
 
+		(call bijibensp.manage_home_cache (subj))
+		(call bijibensp.relabel_home_cache (subj))
+
+		(call bijibensp.home_cache_obj_type_transition_home_cache
+			(subj))
+
 		(call sysadm_bijibensp.role_pattern (role
 			subj_type_attribute)))
 

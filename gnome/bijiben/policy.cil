@@ -30,4 +30,31 @@
 
 	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.getattr_random (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+
+	(call bijiben.read_home_data (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
+
+	(optional bijibensp_subj_type_optional_xserver
+		(call xserver.tmpfs_client_subj_type (subj_type_attribute))
+		(call xserver.tmpfs_client_obj_type (tmpfs_user_file))))

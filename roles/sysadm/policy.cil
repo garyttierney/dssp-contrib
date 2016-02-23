@@ -367,6 +367,12 @@
 	(optional sysadm_optional_glib
 		(call glib_helper.exec (subj)))
 
+	(optional sysadm_optional_glxutils
+		(call glxutils.manage_tmpfs_user_files (subj))
+		(call glxutils.relabel_tmpfs_user_files (subj))
+
+		(call glxutils.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_gpg
 		(call gpg.manage_config (subj))
 		(call gpg_helper.exec (subj)))

@@ -105,6 +105,12 @@
 	(optional user_optional_gkr
 		(call gkr.run (subj_type_attribute role)))
 
+	(optional user_optional_glxutils
+		(call glxutils.manage_tmpfs_user_files (subj))
+		(call glxutils.relabel_tmpfs_user_files (subj))
+
+		(call glxutils.run (subj_type_attribute role)))
+
 	(optional user_optional_gpg
 		(call gpg_helper.exec (subj)))
 

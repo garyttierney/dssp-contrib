@@ -1,0 +1,21 @@
+(block glxutils
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call dev.rw_dri (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fs.read_sysfs (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(call xserver.tmpfs_client (subj tmpfs_user_file)))

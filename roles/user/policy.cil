@@ -183,6 +183,9 @@
 		(call pass.relabel_home_user (subj))
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
+	(optional user_optional_pcitools
+		(call pcitools.dontaudit_exec_cmd_files (subj)))
+
 	(optional user_optional_phpcli
 		(call phpcli.exec (subj_type_attribute))
 		(call phpcli.manage_home_user_files (subj))

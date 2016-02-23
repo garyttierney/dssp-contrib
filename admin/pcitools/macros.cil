@@ -5,4 +5,7 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(macro dontaudit_exec_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file exec_file_perms)))

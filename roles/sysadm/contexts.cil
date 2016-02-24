@@ -1307,23 +1307,32 @@
 (optional sysadm_webkit_home_optional_webkit
 	(tunableif enable_rbacsep
 		(true
-			(context root_webkit_home_cache (sysadm.id sysadm.role
+			(context root_webkit_home_cache (sysadm.id
+					sysadm.role
+				webkit.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_cache (sysadm.id
+					sysadm.role
 				webkitwp.home_cache_file (systemlow
 					systemlow)))
-			(context root_webkit_home_data (sysadm.id sysadm.role
+			(context root_webkitwp_home_data (sysadm.id sysadm.role
 				webkitwp.home_data_file (systemlow
 					systemlow))))
 		(false
 			(context root_webkit_home_cache (sysadm.id object_r
+				webkit.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_cache (sysadm.id object_r
 				webkitwp.home_cache_file (systemlow
 					systemlow)))
-			(context root_webkit_home_data (sysadm.id object_r
+			(context root_webkitwp_home_data (sysadm.id object_r
 				webkitwp.home_data_file (systemlow
 					systemlow)))))
 
-	(filecon "/root/\.cache/webkitgtk(/.*)?" any root_webkit_home_cache)
+	(filecon "/root/\.cache/webkit(/.*)?" any root_webkit_home_cache)
+	(filecon "/root/\.cache/webkitgtk(/.*)?" any root_webkitwp_home_cache)
 	(filecon "/root/\.local/share/webkitgtk(/.*)?" any
-		root_webkit_home_data))
+		root_webkitwp_home_data))
 
 (optional sysadm_web_home_optional_web_content_home
 	(tunableif enable_rbacsep

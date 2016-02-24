@@ -2245,7 +2245,13 @@
 
 		(call sysadm_vlock.role_pattern (role subj_type_attribute)))
 
-	(optional sysadm_optional_sysadm_webkitwp
+	(optional sysadm_optional_sysadm_webkit
+		(call webkit.manage_home_cache (subj))
+		(call webkit.relabel_home_cache (subj))
+
+		(call webkit.home_cache_obj_type_transition_home_cache
+			(subj))
+
 		(call webkitwp.manage_tmpfs_user (subj))
 		(call webkitwp.relabel_tmpfs_user (subj))
 

@@ -1,0 +1,49 @@
+(block wheel_setoolsgui
+	(blockinherit setoolsgui.subj_blk)
+
+	(optional wheel_setoolsgui_optional_wheel_atspi
+		(call wheel_atspi.tmpfs_client (subj
+			setoolsgui.tmpfs_user_file)))
+
+	(optional wheel_setoolsgui_optional_wheel_atspi_sessbus_launch
+		(call
+			wheel_atspi_sessbus_launch.sessbus_chat_client_subj_type
+				(subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_dconf
+		(call wheel_dconf.client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gconfd
+		(call wheel_gconfd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gs
+		(call wheel_gs.stream_connect (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdud2
+		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdgoavm
+		(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdgoogle
+		(call wheel_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdtrash
+		(call wheel_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdmd
+		(call wheel_gvfsdmd.client_subj_type (subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_gvfsdnetwork
+		(call wheel_gvfsdnetwork.sessbus_chat_client_subj_type
+			(subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition
+			(subj)))
+
+	(optional wheel_setoolsgui_optional_wheel_thunderbird
+		(call wheel_thunderbird.auto_subj_type_transition (subj))))

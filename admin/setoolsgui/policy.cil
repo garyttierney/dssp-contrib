@@ -1,0 +1,60 @@
+(block setoolsgui
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setsched getsched)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call cmd.list_cmd (subj_type_attribute))
+	(call cmd.mmap (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_dri (subj_type_attribute))
+
+	(call file.dontaudit_list_home (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.dontaudit_list_rootfs (subj_type_attribute))
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
+
+	(call ldconfig.exec (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_config_files (subj_type_attribute))
+	(call usersubj.manage_home_data_files (subj_type_attribute))
+
+	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
+
+	(call usersubj.read_home_user (subj_type_attribute))
+
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(optional setoolsgui_subj_type_optional_gtk
+		(call gtk.client_subj_type (subj_type_attribute)))
+
+	(optional setoolsgui_subj_type_optional_thumbnails
+		(call thumbnails.client_subj_type (subj_type_attribute))))

@@ -2043,6 +2043,13 @@
 		(call sysadm_seahorsesap.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_setoolsgui
+		(call setoolsgui.manage_tmpfs_user (subj))
+		(call setoolsgui.relabel_tmpfs_user (subj))
+
+		(call sysadm_setoolsgui.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_steam
 		(call steam.manage_tmpfs_user (subj))
 		(call steam.relabel_tmpfs_user (subj))

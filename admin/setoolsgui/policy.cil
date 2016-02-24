@@ -21,7 +21,7 @@
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 
 	(call cmd.list_cmd (subj_type_attribute))
-	(call cmd.mmap (subj_type_attribute))
+	(call cmd.read_cmd_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
 	(call dev.rw_dri (subj_type_attribute))
@@ -34,8 +34,8 @@
 	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
-	(call fs.manage_dosfs_subj_type (subj_type_attribute))
-	(call fs.manage_fuse_subj_type (subj_type_attribute))
+	(call fs.read_dosfs_subj_type (subj_type_attribute))
+	(call fs.read_fuse_subj_type (subj_type_attribute))
 
 	(call ldconfig.exec (subj_type_attribute))
 

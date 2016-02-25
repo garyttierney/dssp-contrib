@@ -1,6 +1,7 @@
 (block i3
 	(typeattribute subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
+	(typeattribute sensible_client_subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
@@ -44,8 +45,8 @@
 	(allow client_subj_type_attribute subj_type_attribute (process
 		(sigchld)))
 
-	(call i3.exec (client_subj_type_attribute))
+	(call i3.exec (sensible_client_subj_type_attribute))
 
-	(call i3.delete_tmpfs_user_files (client_subj_type_attribute))
-	(call i3.read_tmpfs_user_lnk_files (client_subj_type_attribute))
-	(call i3.delete_tmpfs_user_lnk_files (client_subj_type_attribute)))
+	(call i3.delete_tmpfs_user_files (sensible_client_subj_type_attribute))
+	(call i3.read_tmpfs_user_lnk_files (sensible_client_subj_type_attribute))
+	(call i3.delete_tmpfs_user_lnk_files (sensible_client_subj_type_attribute)))

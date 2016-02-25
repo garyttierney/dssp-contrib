@@ -23,6 +23,9 @@
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
+	(macro sensible_client_subj_type ((type ARG1))
+		(typeattributeset sensible_client_subj_type_attribute ARG1))
+
 	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
 		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 

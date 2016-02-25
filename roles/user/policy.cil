@@ -1021,6 +1021,12 @@
 
 		(call user_i3.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_i3lock
+		(call i3lock.manage_tmpfs_user_files (subj))
+		(call i3lock.relabel_tmpfs_user_files (subj))
+
+		(call user_i3lock.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_irssi
 		(call irssi.manage_home_user (subj))
 		(call irssi.relabel_home_user (subj))

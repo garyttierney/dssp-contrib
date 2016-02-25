@@ -1811,6 +1811,12 @@
 
 		(call sysadm_i3.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_i3lock
+		(call i3lock.manage_tmpfs_user_files (subj))
+		(call i3lock.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_i3lock.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_irssi
 		(call irssi.manage_home_user (subj))
 		(call irssi.relabel_home_user (subj))

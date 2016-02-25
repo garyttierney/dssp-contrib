@@ -224,6 +224,19 @@
 	(filecon "/root/\.config/dleyna-renderer-service.conf" file
 		root_dleynar_home_config))
 
+
+(optional sysadm_dmenu_home_optional_dmenu
+	(tunableif enable_rbacsep
+		(true
+			(context root_dmenu_home_cache (sysadm.id sysadm.role
+				dmenu.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_dmenu_home_cache (sysadm.id object_r
+				dmenu.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/dmenu_run" file root_dmenu_home_cache))
+
 (optional sysadm_dunst_home_optional_dunst
 	(tunableif enable_rbacsep
 		(true

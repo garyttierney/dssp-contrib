@@ -519,6 +519,12 @@
 		(call wheel_dleynar.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_dmenu
+		(call dmenu.manage_home_cache_files (subj))
+		(call dmenu.relabel_home_cache_files (subj))
+
+		(call dmenu.home_cache_obj_type_transition_home_cache
+			(subj))
+
 		(call wheel_dmenu.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_dunst

@@ -1191,6 +1191,12 @@
 		(call sysadm_dleynar.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dmenu
+		(call dmenu.manage_home_cache_files (subj))
+		(call dmenu.relabel_home_cache_files (subj))
+
+		(call dmenu.home_cache_obj_type_transition_home_cache
+			(subj))
+
 		(call sysadm_dmenu.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dunst

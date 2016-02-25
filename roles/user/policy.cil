@@ -65,9 +65,6 @@
 		(call dirmngr.relabel_home_user (subj))
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
-	(optional user_optional_dmenu
-		(call dmenu.run (subj_type_attribute role)))
-
 	(optional user_optional_enchant
 		(call enchant.manage_home_config (subj))
 		(call enchant.relabel_home_config (subj))
@@ -450,6 +447,9 @@
 			(subj))
 
 		(call user_dleynar.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_dmenu
+		(call user_dmenu.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_dunst
 		(call dunst.manage_home_config (subj))

@@ -264,9 +264,6 @@
 		(call dmcrypt.run (subj_type_attribute role))
 		(call dmsetup.run (subj_type_attribute role)))
 
-	(optional sysadm_optional_dmenu
-		(call dmenu.run (subj_type_attribute role)))
-
 	(optional sysadm_optional_dmesg
 		(call dmesg.run (subj_type_attribute role)))
 
@@ -1192,6 +1189,9 @@
 			(subj))
 
 		(call sysadm_dleynar.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dmenu
+		(call sysadm_dmenu.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_dunst
 		(call dunst.manage_home_config (subj))

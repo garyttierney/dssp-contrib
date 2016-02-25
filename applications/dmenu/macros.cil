@@ -1,8 +1,35 @@
 (in dmenu
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset dmenu.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call dmenu.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call dmenu.role_pattern (ARG1 ARG2 subj))))
+
 	(blockinherit exec_blk)
 
-	(blockinherit auto_subj_type_transition_blk)
+	(blockinherit subj.send_signal_blk)
 
-	(blockinherit run_blk)
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
 
-	(blockinherit subj.send_signal_blk))
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

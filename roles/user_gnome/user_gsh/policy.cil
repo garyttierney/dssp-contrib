@@ -5,7 +5,10 @@
 		gsh.tmpfs_user_file))
 
 	(call user.user_subj_type (subj))
+
 	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
 	(call user.home_cmd_auto_subj_type_transition (subj))
 
 	(call user_atspi.provider_subj_type (subj))

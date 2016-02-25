@@ -995,6 +995,14 @@
 
 		(call user_gvidvt.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_i3
+		(call i3.manage_home_config (subj))
+		(call i3.relabel_home_config (subj))
+
+		(call i3.home_config_obj_type_transition_home_config (subj))
+
+		(call user_i3.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_irssi
 		(call irssi.manage_home_user (subj))
 		(call irssi.relabel_home_user (subj))

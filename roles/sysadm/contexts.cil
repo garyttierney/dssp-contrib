@@ -767,6 +767,20 @@
 
 	(filecon "/root/\.config/i3(/.*)?" any root_i3_home_config))
 
+(optional sysadm_i3status_home_optional_i3status
+	(tunableif enable_rbacsep
+		(true
+			(context root_i3status_home_config (sysadm.id
+				sysadm.role i3status.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_i3status_home_config (sysadm.id object_r
+				i3status.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/i3status(/.*)?" any
+		root_i3status_home_config))
+
 (optional sysadm_ibus_home_optional_ibus
 	(tunableif enable_rbacsep
 		(true

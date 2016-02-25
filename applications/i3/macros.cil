@@ -36,6 +36,8 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(blockinherit subj.read_state_all_blk)
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)
@@ -61,7 +63,9 @@
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.delete_tmpfs_user_files_blk)
 	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.delete_tmpfs_user_lnk_files_blk)
 	(blockinherit usersubj.read_tmpfs_user_blk)
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
@@ -73,5 +77,6 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1
-			tmpfs_user_file file "*"))))
-
+			tmpfs_user_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file lnk_file "*"))))

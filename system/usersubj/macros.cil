@@ -1321,6 +1321,14 @@
 			(call read_lnk_files_pattern (ARG1 tmpfs_user_file
 				tmpfs_user_file))))
 
+	(block delete_tmpfs_user_lnk_files_blk
+		(blockabstract delete_tmpfs_user_lnk_files_blk)
+		(macro delete_tmpfs_user_lnk_files ((type ARG1))
+			(call file.search_runtime_user (ARG1))
+			(call fs.del_entry_tmpfs (ARG1))
+			(call delete_lnk_files_pattern (ARG1 tmpfs_user_file
+				tmpfs_user_file))))
+
 	(block manage_tmpfs_user_lnk_files_blk
 		(blockabstract manage_tmpfs_user_lnk_files_blk)
 		(macro manage_tmpfs_user_lnk_files ((type ARG1))

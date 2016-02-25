@@ -432,6 +432,17 @@
 		(call hwclock.manage_config_files (subj))
 		(call hwclock.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_i3status
+		(call i3status.manage_config_files (subj))
+
+		(call i3status.manage_home_config (subj))
+		(call i3status.relabel_home_config (subj))
+
+		(call i3status.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call i3status.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_ibus
 		(call ibus.manage_home_config (subj))
 		(call ibus.relabel_home_config (subj))
@@ -1788,6 +1799,11 @@
 			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_i3
+		(call i3.manage_config (subj))
+
+		(call i3.manage_tmpfs_user (subj))
+		(call i3.relabel_tmpfs_user (subj))
+
 		(call i3.manage_home_config (subj))
 		(call i3.relabel_home_config (subj))
 

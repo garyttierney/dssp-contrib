@@ -13,6 +13,7 @@
 	(call dev.read_urandom (subj_type_attribute))
 	(call dev.rw_dri (subj_type_attribute))
 
+	(call file.read_config_files (subj_type_attribute))
 	(call file.read_data_files (subj_type_attribute))
 
 	(call fs.read_sysfs (subj_type_attribute))
@@ -46,6 +47,9 @@
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.setpgid_common_login_subj (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional gts_subj_type_optional_i3
+		(call i3.client_subj_type (subj_type_attribute)))
 
 	(optional gts_subj_type_optional_xwayland
 		(call xwayland.shared_client_subj_type (subj_type_attribute))))

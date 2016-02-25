@@ -23,6 +23,8 @@
 
 	(call tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
 
+	(call exec (subj_type_attribute))
+
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 
 	(call file.read_data (subj_type_attribute))

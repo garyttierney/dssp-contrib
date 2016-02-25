@@ -331,6 +331,17 @@
 	(filecon "/root/\.config/evolution(/.*)?" any root_evo_home_config)
 	(filecon "/root/\.local/share/evolution(/.*)?" any root_evo_home_data))
 
+(optional sysadm_feh_home_optional_feh
+	(tunableif enable_rbacsep
+		(true
+			(context root_feh_home (sysadm.id sysadm.role
+				feh.home_user_file (systemlow systemlow))))
+		(false
+			(context root_feh_home (sysadm.id object_r
+				feh.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.fehbg" file root_feh_home))
+
 (optional sysadm_festival_home_optional_festival
 	(tunableif enable_rbacsep
 		(true

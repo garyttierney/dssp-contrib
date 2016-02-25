@@ -11,10 +11,15 @@
 	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_dri (subj_type_attribute))
 
 	(call file.read_data_files (subj_type_attribute))
 
+	(call fs.read_sysfs (subj_type_attribute))
+
 	(call locale.read (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
 
 	(optional gt_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute)))

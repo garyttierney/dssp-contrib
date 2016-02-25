@@ -20,6 +20,9 @@
 		(call app.application_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))
 
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
 	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
 		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
 
@@ -53,4 +56,22 @@
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
 		(call usersubj.home_config_obj_type_transition (ARG1
-			home_config_file dir "i3"))))
+			home_config_file dir "i3")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file dir "i3")))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file file "*"))))
+

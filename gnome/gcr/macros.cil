@@ -16,12 +16,13 @@
 	(block subj_blk
 		(blockabstract subj_blk)
 
-		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
 
-		(typeattributeset gsquit.subj_type_attribute subj)
+		(typeattributeset gcrp.subj_type_attribute subj)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call gcrp.spec_auto_subj_type_transition (ARG1 subj)))
+			(call gcrp.spec_auto_subj_type_transition (ARG1
+				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gcrp.role_pattern (ARG1 ARG2 subj)))))

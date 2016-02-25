@@ -2,16 +2,10 @@
 	(blockinherit gcrv.subj_blk))
 
 (block sysadm_gcrp
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gcrp.subj_blk)
 
-	(optional sysadm_gcrp_optional_sysadm_sessbus
-		(call sysadm_sessbus.daemon (subj gcrp.cmd_file)))
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gcrp.tmpfs_user_file))
 
-	(optional
-		sysadm_gcrp_sessbus_chat_client_subj_type_optional_sysadm_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus
-			(send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus
-			(send_msg)))))
+	(optional sysadm_gcrp_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gcrp.cmd_file))))

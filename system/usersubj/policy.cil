@@ -61,6 +61,9 @@
 
 	(call nss.read_config_files (common_type_attribute))
 
+	(optional usersubj_common_type_optional_ldconfig
+		(call ldconfig.exec (common_type_attribute)))
+
 	(optional usersubj_priv_type_optional_sudo
 		(call rw_inherited_fifo_files_unpriv_subj
 			(priv_type_attribute))

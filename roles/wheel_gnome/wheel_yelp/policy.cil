@@ -1,0 +1,12 @@
+(block wheel_yelp
+	(blockinherit yelp.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		yelp.tmpfs_user_file))
+	(call wheel_gnomeapp.print_subj_type (subj))
+
+	(optional wheel_yelp_optional_wheel_gsw
+		(call wheel_gsw.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_yelp_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj))))

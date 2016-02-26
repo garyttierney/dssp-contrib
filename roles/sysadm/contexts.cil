@@ -1528,6 +1528,17 @@
 
 	(filecon "/root/\.Xresources" file root_xutil_home))
 
+(optional sysadm_yelp_home_optional_yelp
+	(tunableif enable_rbacsep
+		(true
+			(context root_yelp_home_config (sysadm.id sysadm.role
+				yelp.home_config_file (systemlow systemlow))))
+		(false
+			(context root_yelp_home_config (sysadm.id object_r
+				yelp.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/yelp(/.*)?" any root_yelp_home_config))
+
 (optional sysadm_znc_home_optional_znc
 	(tunableif enable_rbacsep
 		(true

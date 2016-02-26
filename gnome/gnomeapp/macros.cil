@@ -369,6 +369,12 @@
 		(call app.application_cmd_obj_type (ARG1))
 		(typeattributeset cmd_obj_type_attribute ARG1))
 
+	(macro audit_exec_access_all_cmd_files ((type ARG1))
+		(allow ARG1 cmd_obj_type_attribute (file (execute))))
+
+	(macro getattr_all_cmd_files ((type ARG1))
+		(allow ARG1 cmd_obj_type_attribute (file (getattr))))
+
 	(macro exec_all ((type ARG1))
 		(call can_exec (ARG1 cmd_obj_type_attribute)))
 

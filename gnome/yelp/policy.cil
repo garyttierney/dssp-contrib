@@ -1,0 +1,24 @@
+(block yelp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call enchant.client_subj_type (subj_type_attribute))
+
+	(call gnomeapp.audit_exec_access_all_cmd_files
+		(subj_type_attribute))
+	(call gnomeapp.getattr_all_cmd_files (subj_type_attribute))
+
+	(call webkit.client_subj_type (subj_type_attribute)))

@@ -26,6 +26,8 @@
 
 	(call polkit.sysbus_chat_client_subj_type (subj_type_attribute))
 
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
 	(optional gsw_subj_type_optional_fwupd
 		(call fwupd.sysbus_chat_client_subj_type 
 			(subj_type_attribute)))

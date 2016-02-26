@@ -1671,6 +1671,17 @@
 	(optional wheel_optional_wheel_xterm
 		(call wheel_xterm.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_yelp
+		(call yelp.manage_tmpfs_user (subj))
+		(call yelp.relabel_tmpfs_user (subj))
+
+		(call yelp.manage_home_config (subj))
+		(call yelp.relabel_home_config (subj))
+
+		(call yelp.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_yelp.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_zenity
 		(call zenity.manage_tmpfs_user (subj))
 		(call zenity.relabel_tmpfs_user (subj))

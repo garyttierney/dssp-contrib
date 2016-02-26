@@ -5,5 +5,8 @@
 		yelp.tmpfs_user_file))
 	(call user_gnomeapp.print_subj_type (subj))
 
+	(optional user_yelp_optional_user_gstreamer
+		(call user_gstreamer.client_subj_type (subj)))
+
 	(optional user_yelp_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj))))

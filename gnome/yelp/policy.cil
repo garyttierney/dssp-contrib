@@ -13,6 +13,10 @@
 	(call home_config_obj_type_transition_home_config
 		(subj_type_attribute))
 
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+
+	(call dev.rw_v4l (subj_type_attribute))
+
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
 	(call enchant.client_subj_type (subj_type_attribute))

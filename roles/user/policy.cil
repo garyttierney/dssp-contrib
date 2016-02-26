@@ -450,6 +450,12 @@
 		(call user_dconf.role_pattern (role subj_type_attribute))
 		(call user_dconfs.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_dconfed
+		(call dconfed.manage_tmpfs_user (subj))
+		(call dconfed.relabel_tmpfs_user (subj))
+
+		(call user_dconfed.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_dleyna
 		(call dleyna.manage_home_config_files (subj))
 		(call dleyna.relabel_home_config_files (subj))

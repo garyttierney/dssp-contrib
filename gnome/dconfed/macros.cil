@@ -1,0 +1,14 @@
+(in dconfed
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset dconfed.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call dconfed.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call dconfed.role_pattern (ARG1 ARG2 subj)))))

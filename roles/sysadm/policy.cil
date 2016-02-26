@@ -1194,6 +1194,12 @@
 		(call sysadm_dconf.role_pattern (role subj_type_attribute))
 		(call sysadm_dconfs.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_dconfed
+		(call dconfed.manage_tmpfs_user (subj))
+		(call dconfed.relabel_tmpfs_user (subj))
+
+		(call sysadm_dconfed.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_dleyna
 		(call dleyna.manage_home_config_files (subj))
 		(call dleyna.relabel_home_config_files (subj))

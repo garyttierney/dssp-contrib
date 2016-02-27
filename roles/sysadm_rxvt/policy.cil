@@ -13,4 +13,12 @@
 	(blockinherit rxvtc.subj_blk))
 
 (block sysadm_rxvtd
-	(blockinherit rxvtd.subj_blk))
+	(blockinherit rxvtd.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_rxvt_optional_sysadm_screen
+		(call sysadm_screen.auto_subj_type_transition (subj))))

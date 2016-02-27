@@ -13,4 +13,12 @@
 	(blockinherit rxvtc.subj_blk))
 
 (block user_rxvtd
-	(blockinherit rxvtd.subj_blk))
+	(blockinherit rxvtd.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_rxvt_optional_user_screen
+		(call user_screen.auto_subj_type_transition (subj))))

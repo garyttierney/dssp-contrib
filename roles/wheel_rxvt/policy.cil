@@ -13,4 +13,12 @@
 	(blockinherit rxvtc.subj_blk))
 
 (block wheel_rxvtd
-	(blockinherit rxvtd.subj_blk))
+	(blockinherit rxvtd.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_rxvt_optional_wheel_screen
+		(call wheel_screen.auto_subj_type_transition (subj))))

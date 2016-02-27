@@ -48,4 +48,15 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call app.send_signal (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.setattr_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional rxvtd_subj_type_optional_i3
+		(call i3.sensible_client_subj_type (subj_type_attribute))))

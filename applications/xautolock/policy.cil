@@ -1,0 +1,12 @@
+(block xautolock
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(call usersubj.read_tmpfs_user_files (subj_type_attribute))
+
+	(call xserver.client_subj_type (subj_type_attribute)))

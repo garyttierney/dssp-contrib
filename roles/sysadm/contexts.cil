@@ -1323,6 +1323,17 @@
 
 	(filecon "/root/\.local/share/Trash(/.*)?" any root_trash_home_data))
 
+(optional sysadm_rxvt_home_optional_rxvt
+	(tunableif enable_rbacsep
+		(true
+			(context root_rxvt_home (sysadm.id sysadm.role
+				rxvt.home_user_file (systemlow systemlow))))
+		(false
+			(context root_rxvt_home (sysadm.id object_r
+				rxvt.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.urxvt(/.*)?" any root_rxvt_home))
+
 (optional sysadm_vlock_home_optional_vlock
 	(tunableif enable_rbacsep
 		(true

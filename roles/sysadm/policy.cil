@@ -2300,6 +2300,16 @@
 	(optional sysadm_optional_sysadm_visudo
 		(call sysadm_visudo.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_rxvt
+		(call rxvt.manage_home_user (subj))
+		(call rxvt.relabel_home_user (subj))
+
+		(call rxvt.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_rxvt.role_pattern (role subj_type_attribute))
+		(call sysadm_rxvtc.role_pattern (role subj_type_attribute))
+		(call sysadm_rxvtd.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_vlock
 		(call vlock.manage_home_user_files (subj))
 		(call vlock.relabel_home_user_files (subj))

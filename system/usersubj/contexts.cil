@@ -35,7 +35,8 @@
 	(filecon "HOME_DIR/\.bash_history" file home_user_file_context))
 
 (in home_terminfo
-	(filecon "HOME_DIR/\.terminfo" file home_data_file_context))
+	(filecon "HOME_DIR/\.terminfo" file home_data_file_context)
+	(filecon "HOME_DIR/\.terminfo(/.*)?" any home_data_file_context))
 
 (filecon "HOME_DIR" dir home_dir)
 (filecon "DEFAULT_HOME_DIR(/.*)?" dir default_home_dir)

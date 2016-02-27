@@ -14,12 +14,16 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
+
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call app.send_signal (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 	(call utmp.read_runtime_files (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

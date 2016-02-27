@@ -1404,13 +1404,14 @@
 		(call user_trackers.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_rxvt
-		(call rxvt.manage_home_user (subj))
-		(call rxvt.relabel_home_user (subj))
-
-		(call rxvt.home_dir_obj_type_transition_home (subj))
-
 		(call user_rxvt.role_pattern (role subj_type_attribute))
 		(call user_rxvtc.role_pattern (role subj_type_attribute))
+
+		(call rxvtd.manage_tmpfs_user (subj))
+		(call rxvtd.relabel_tmpfs_user (subj))
+
+		(call rxvtd.tmpfs_obj_type_transition_tmpfs_user (subj))
+
 		(call user_rxvtd.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_vinagre

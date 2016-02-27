@@ -15,6 +15,13 @@
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(blockinherit file.runtime_obj_blk)
+
+	(call sd.socket_activated_obj_type (runtime_file))
+
+	(call manage_runtime_sock_files (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
 	(allow subj self (capability (setuid setgid setpcap dac_override)))
 	(allow subj self (process (getcap setcap setfscreate)))
 

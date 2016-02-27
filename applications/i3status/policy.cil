@@ -11,6 +11,10 @@
 
 	(blockinherit usersubj.home_config_obj_blk)
 
+	(allow subj self create_netlink_generic_socket_perms)
+
+	(call sys.read_net_proc_files (subj))
+
 	(call read_home_config (subj))
 
 	(call file.list_runtime (subj))

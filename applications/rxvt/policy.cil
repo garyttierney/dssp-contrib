@@ -5,9 +5,13 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
 
@@ -36,7 +40,10 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call rxvt.manage_tmpfs_user_dirs (subj_type_attribute))
+	(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute)))
 
 (block rxvtd
 	(typeattribute subj_type_attribute)
@@ -45,18 +52,30 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(blockinherit usersubj.tmpfs_user_obj_blk)
+	(call dev.read_urandom (subj_type_attribute))
 
-	(call manage_tmpfs_user (subj_type_attribute))
-	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
 
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call app.send_signal (subj_type_attribute))
 
+	(call locale.read (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
+	(call fonts.read_all (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call rxvt.manage_tmpfs_user_sock_files (subj_type_attribute))
+
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.setattr_ptys (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
+
+	(call xserver.client_subj_type (subj_type_attribute))
 
 	(optional rxvtd_subj_type_optional_i3
 		(call i3.sensible_client_subj_type (subj_type_attribute))))

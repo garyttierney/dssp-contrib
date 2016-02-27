@@ -1570,13 +1570,13 @@
 		(call wheel_trackers.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_rxvt
+		(call rxvt.manage_tmpfs_user (subj))
+		(call rxvt.relabel_tmpfs_user (subj))
+
+		(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj))
+
 		(call wheel_rxvt.role_pattern (role subj_type_attribute))
 		(call wheel_rxvtc.role_pattern (role subj_type_attribute))
-
-		(call rxvtd.manage_tmpfs_user (subj))
-		(call rxvtd.relabel_tmpfs_user (subj))
-
-		(call rxvtd.tmpfs_obj_type_transition_tmpfs_user (subj))
 
 		(call wheel_rxvtd.role_pattern (role subj_type_attribute)))
 

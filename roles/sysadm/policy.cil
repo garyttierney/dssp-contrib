@@ -2302,13 +2302,13 @@
 		(call sysadm_visudo.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rxvt
+		(call rxvt.manage_tmpfs_user (subj))
+		(call rxvt.relabel_tmpfs_user (subj))
+
+		(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj))
+
 		(call sysadm_rxvt.role_pattern (role subj_type_attribute))
 		(call sysadm_rxvtc.role_pattern (role subj_type_attribute))
-
-		(call rxvtd.manage_tmpfs_user (subj))
-		(call rxvtd.relabel_tmpfs_user (subj))
-
-		(call rxvtd.tmpfs_obj_type_transition_tmpfs_user (subj))
 
 		(call sysadm_rxvtd.role_pattern (role subj_type_attribute)))
 

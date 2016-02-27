@@ -1,6 +1,8 @@
 (block sd_coredump
 	(blockinherit sd.daemon_blk)
 
+	(call sd.unix_stream_socket_activated_subj_type (subj))
+
 	(blockinherit file.config_obj_blk)
 
 	(call read_config (subj))

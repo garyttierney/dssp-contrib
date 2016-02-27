@@ -52,6 +52,9 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_data (subj_type_attribute))

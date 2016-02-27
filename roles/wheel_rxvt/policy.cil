@@ -10,7 +10,10 @@
 		(call wheel_screen.auto_subj_type_transition (subj))))
 
 (block wheel_rxvtc
-	(blockinherit rxvtc.subj_blk))
+	(blockinherit rxvtc.subj_blk)
+
+	(call stream_connect_pattern (subj rxvt.tmpfs_user_file
+		rxvt.tmpfs_user_file wheel_rxvtd.subj)))
 
 (block wheel_rxvtd
 	(blockinherit rxvtd.subj_blk)

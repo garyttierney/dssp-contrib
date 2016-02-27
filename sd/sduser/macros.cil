@@ -796,6 +796,16 @@
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			subj_type_attribute)))
 
+	(macro stream_connectto_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (unix_stream_socket
+			(connectto))))
+
+	(macro stream_accept_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (unix_stream_socket (accept))))
+
+	(macro stream_getopt_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (unix_stream_socket (getopt))))
+
 	(blockinherit subj.noatsecure_all_blk)
 	(blockinherit subj.send_sigchld_all_blk)
 	(blockinherit subj.link_keyring_all_blk)

@@ -6,6 +6,7 @@
 	(blockinherit run_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(blockinherit file.search_var_cache_blk)
 	(blockinherit file.list_var_cache_blk)
@@ -26,6 +27,10 @@
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
 			"*")))
+
+	(macro rw_inherited_sockets ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 subj rw_inherited_socket_perms))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

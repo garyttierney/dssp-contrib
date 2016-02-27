@@ -18,5 +18,8 @@
 	(call terminfo.read_all (subj))
 	(call locale.read (subj))
 
+	(optional bluetoothctl_optional_powertop
+		(call powertop.rw_inherited_sockets (subj)))
+
 	(optional bluetoothctl_optional_sysbus
 		(call sysbus.client_subj_type (subj))))

@@ -1,17 +1,10 @@
 (block user_xinit
 	(blockinherit xinit.subj_blk)
 
+	(call user.user_subj_type (subj))
+
 	(call user.cmd_auto_subj_type_transition (subj))
 
 	(call user.home_cmd_auto_subj_type_transition (subj))
 
-	(call user.xinit_home_user_auto_type_transition_subj_type (subj))
-
-	(optional user_xinit_optional_user_rp
-		(call user_rp.auto_subj_type_transition (subj)))
-
-	(optional user_xinit_optional_user_sessbus_launch
-		(call user_sessbus_launch.auto_subj_type_transition (subj)))
-
-	(optional user_xinit_optional_user_xbindkeys
-		(call user_xbindkeys.auto_subj_type_transition (subj))))
+	(call user.xinit_home_user_auto_type_transition_subj_type (subj)))

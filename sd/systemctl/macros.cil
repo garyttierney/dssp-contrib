@@ -6,10 +6,8 @@
 
 		(typeattributeset systemctl.subj_type_attribute subj)
 
-		(macro noatsecure ((type ARG1))
-			(allow ARG1 subj (process (noatsecure))))
-
 		(macro auto_subj_type_transition ((type ARG1))
+			(allow ARG1 subj (process (noatsecure signal)))
 			(call systemctl.spec_auto_subj_type_transition (ARG1
 				subj))))
 
@@ -46,7 +44,7 @@
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
-		(allow ARG1 ARG2 (process (signal)))
+		(allow ARG1 ARG2 (process (noatsecure signal)))
 
 		(allow ARG2 ARG1 read_file_perms)
 		(allow ARG2 ARG1 list_dir_perms)

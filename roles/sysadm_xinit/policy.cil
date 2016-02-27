@@ -1,21 +1,10 @@
 (block sysadm_xinit
 	(blockinherit xinit.subj_blk)
 
+	(call sysadm.sysadm_subj_type (subj))
+
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(call sysadm.xinit_home_user_auto_type_transition_subj_type (subj))
-
-	(optional sysadm_xinit_optional_sysadm_rp
-		(call sysadm_rp.auto_subj_type_transition (subj)))
-
-	(optional sysadm_xinit_optional_sysadm_sessbus_launch
-		(call sysadm_sessbus_launch.auto_subj_type_transition (subj)))
-
-	(optional sysadm_xinit_optional_sysadm_systemctl
-		(call sysadm_systemctl.noatsecure (subj))
-		(call sysadm_systemctl.auto_subj_type_transition (subj)))
-
-	(optional sysadm_xinit_optional_sysadm_xbindkeys
-		(call sysadm_xbindkeys.auto_subj_type_transition (subj))))
+	(call sysadm.xinit_home_user_auto_type_transition_subj_type (subj)))

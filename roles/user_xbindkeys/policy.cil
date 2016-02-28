@@ -1,9 +1,8 @@
 (block user_xbindkeys
 	(blockinherit xbindkeys.subj_blk)
 
+	(call user.user_subj_type (subj))
+
 	(call user.cmd_auto_subj_type_transition (subj))
 
-	(call user.home_cmd_auto_subj_type_transition (subj))
-
-	(optional user_xbindkeys_optional_user_pactl
-		(call user_pactl.auto_subj_type_transition (subj))))
+	(call user.home_cmd_auto_subj_type_transition (subj)))

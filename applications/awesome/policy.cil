@@ -6,9 +6,11 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(blockinherit file.config_obj_blk)
+	(blockinherit usersubj.home_cache_obj_blk)
 
-	(call read_config (subj_type_attribute))
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache
+		(subj_type_attribute))
 
 	(blockinherit usersubj.home_config_obj_blk)
 

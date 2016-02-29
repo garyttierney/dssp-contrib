@@ -288,8 +288,8 @@
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
 
-	(allow client_subj_type_attribute subj (unix_stream_socket (read
-		write)))
+	(allow client_subj_type_attribute subj
+		rw_inherited_unix_stream_socket_perms)
 
 	(call read_config_files (client_subj_type_attribute))
 	(call read_config_lnk_files (client_subj_type_attribute))

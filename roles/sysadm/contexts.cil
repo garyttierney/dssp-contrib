@@ -67,14 +67,21 @@
 (optional sysadm_awesome_home_optional_awesome
 	(tunableif enable_rbacsep
 		(true
+			(context root_awesome_home_cache (sysadm.id
+				sysadm.role awesome.home_cache_file
+					(systemlow systemlow)))
 			(context root_awesome_home_config (sysadm.id
 				sysadm.role awesome.home_config_file
 					(systemlow systemlow))))
 		(false
+			(context root_awesome_home_cache (sysadm.id object_r
+				awesome.home_cache_file (systemlow
+					systemlow)))
 			(context root_awesome_home_config (sysadm.id object_r
 				awesome.home_config_file (systemlow
 					systemlow)))))
 
+	(filecon "/root/\.cache/awesome(/.*)?" any root_awesome_home_cache)
 	(filecon "/root/\.config/awesome(/.*)?" any root_awesome_home_config))
 
 (optional sysadm_bijiben_home_optional_bijiben

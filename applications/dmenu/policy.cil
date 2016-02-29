@@ -22,6 +22,9 @@
 
 	(call xserver.client_subj_type (subj_type_attribute))
 
+	(optional dmenu_optional_authconfig
+		(call authconfig.read_data (subj_type_attribute)))
+
 	(optional dmenu_optional_sessbus
 		(call sessbus.rw_inherited_unix_stream_sockets_all_subj
 			(subj_type_attribute))))

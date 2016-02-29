@@ -26,4 +26,7 @@
 	(call usersubj.setattr_ptys (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
 
-	(call xserver.client_subj_type (subj_type_attribute)))
+	(call xserver.client_subj_type (subj_type_attribute))
+
+	(optional xterm_subj_type_optional_gs
+		(call gs.read_home_user_files (subj_type_attribute))))

@@ -51,6 +51,8 @@
 	(optional mpd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
+		(call sd.tcp_socket_activated_subj_type (subj))
+
 		(blockinherit sd.unit_obj_blk)
 
 		(allow adm_subj_type_attribute unit_file (service (stop status

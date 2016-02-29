@@ -13,6 +13,8 @@
 
 	(blockinherit net.unreserved_port_obj_blk)
 
+	(call tcp_bind_port (subj))
+
 	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
@@ -48,6 +50,23 @@
 	(optional mdp_optional_logrotate
 		(call logrotate.client_var_log_obj_type (var_log_file)))
 
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (process (getsched)))
+
+	(call sys.read_cpu_sysfs (subj))
+
+	(call net.tcp_bind_generic_node (subj))
+
+	(optional mpd_optional_pa
+		(call pa.exec (subj))
+		(call pa.tmpfs_client (subj tmpfs_file)))
+
 	(optional mpd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -65,6 +84,8 @@
 	(call file.search_runtime (adm_subj_type_attribute))
 	(call file.search_var_lib (adm_subj_type_attribute))
 	(call file.search_var_log (adm_subj_type_attribute))
+
+	(call fs.search_tmpfs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

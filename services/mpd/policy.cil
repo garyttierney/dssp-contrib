@@ -57,16 +57,37 @@
 	(call manage_tmpfs (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
-	(allow subj self (process (getsched)))
-	(allow subj self (unix_stream_socket (listen accept)))
+	(allow subj self (capability (dac_override setuid setgid)))
+	(allow subj self (process (setsched setcap setrlimit)))
+	(allow subj self (unix_stream_socket (listen accept connectto)))
+	(allow subj self (tcp_socket (listen accept)))
 
 	(call sys.read_cpu_sysfs (subj))
 
+	(call file.read_data (subj))
+
+	(call fs.list_devtmpfs (subj))
+
 	(call net.tcp_bind_generic_node (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional mpd_optional_avahid
+		(call avahid.sysbus_chat_client_subj_type (subj)))
+
+	(optional mpd_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type (subj)))
 
 	(optional mpd_optional_pa
 		(call pa.exec (subj))
 		(call pa.tmpfs_client (subj tmpfs_file)))
+
+	(optional mpd_optional_rtkit
+		(call rtkitd.client_subj_type (subj)))
 
 	(optional mpd_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -78,8 +99,19 @@
 
 		(blockinherit sd.unit_obj_blk)
 
+		(typeattributeset obj_type_attribute unit_file)
+
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
+
+	(optional mpd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional mpd_optional_sd_logind
+		(call sd_logind.read_runtime (subj)))
+
+	(optional mpd_optional_sysbus
+		(call sysbus.client_subj_type (subj)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

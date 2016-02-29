@@ -58,6 +58,7 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self (process (getsched)))
+	(allow subj self (unix_stream_socket (listen accept)))
 
 	(call sys.read_cpu_sysfs (subj))
 
@@ -71,6 +72,9 @@
 		(call sd.daemon (subj cmd_file))
 
 		(call sd.tcp_socket_activated_subj_type (subj))
+		(call sd.unix_stream_socket_activated_subj_type (subj))
+
+		(call sd.socket_activated_obj_type (runtime_file))
 
 		(blockinherit sd.unit_obj_blk)
 

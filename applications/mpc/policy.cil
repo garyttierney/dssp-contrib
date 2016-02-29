@@ -1,0 +1,13 @@
+(block mpc
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call mpd.stream_connect (subj))
+	(call mpd.tcp_connect_port (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj)))

@@ -60,6 +60,11 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
 
+	(macro stream_connect ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(optional mpd_adm_optional_sd

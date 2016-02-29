@@ -1,4 +1,6 @@
 (block user_awesome
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit awesome.subj_blk)
 
 	(call user.user_subj_type (subj))
@@ -6,7 +8,17 @@
 	(call user.cmd_auto_subj_type_transition (subj))
 	(call user.shell_auto_subj_type_transition (subj))
 
-	(call user.home_cmd_auto_subj_type_transition (subj)))
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_awesome_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj)))
+
+	(optional
+		user_awesome_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block user_awesomec
 	(blockinherit awesomec.subj_blk))

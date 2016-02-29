@@ -18,8 +18,18 @@
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
+	(call exec (subj_type_attribute))
+
 	(call manage_tmpfs_user_files (subj_type_attribute))
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
 	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
 

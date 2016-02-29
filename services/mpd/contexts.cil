@@ -1,4 +1,7 @@
 (in mpd
+	(portcon "tcp" 6600 port_obj_context)
+	(portcon "udp" 6600 port_obj_context)
+
 	(filecon "/usr/bin/mpd" file cmd_file_context)
 	(filecon "/etc/mpd\.conf" file config_file_context)
 	(filecon "/var/run/mpd(/.*)?" any runtime_file_context)

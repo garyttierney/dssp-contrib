@@ -64,6 +64,19 @@
 (filecon "/root/\.terminfo" file root_home_terminfo_data)
 (filecon "/root/\.terminfo(/.*)?" any root_home_terminfo_data)
 
+(optional sysadm_awesome_home_optional_awesome
+	(tunableif enable_rbacsep
+		(true
+			(context root_awesome_home_config (sysadm.id
+				sysadm.role awesome.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_awesome_home_config (sysadm.id object_r
+				awesome.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/awesome(/.*)?" any root_awesome_home_config))
+
 (optional sysadm_bijiben_home_optional_bijiben
 	(tunableif enable_rbacsep
 		(true

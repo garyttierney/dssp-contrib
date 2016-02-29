@@ -429,6 +429,19 @@
 		(call wheel_atspi_sessbus_launch.role_pattern (role
 			subj_type_attribute)))
 
+	(optional wheel_optional_wheel_awesome
+		(call awesome.manage_tmpfs_user_files (subj))
+		(call awesome.relabel_tmpfs_user_files (subj))
+
+		(call awesome.manage_home_config (subj))
+		(call awesome.relabel_home_config (subj))
+
+		(call awesome.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_awesome.role_pattern (role subj_type_attribute))
+		(call wheel_awesomec.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_bijiben
 		(call bijiben.manage_tmpfs_user (subj))
 		(call bijiben.relabel_tmpfs_user (subj))

@@ -1,0 +1,31 @@
+(block awesome
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+(block awesomec
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))

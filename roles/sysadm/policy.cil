@@ -1102,6 +1102,19 @@
 		(call sysadm_atspi_sessbus_launch.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_awesome
+		(call awesome.manage_tmpfs_user_files (subj))
+		(call awesome.relabel_tmpfs_user_files (subj))
+
+		(call awesome.manage_home_config (subj))
+		(call awesome.relabel_home_config (subj))
+
+		(call awesome.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_awesome.role_pattern (role subj_type_attribute))
+		(call sysadm_awesomec.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_bijiben
 		(call bijiben.manage_tmpfs_user (subj))
 		(call bijiben.relabel_tmpfs_user (subj))

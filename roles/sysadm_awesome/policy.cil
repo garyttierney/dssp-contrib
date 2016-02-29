@@ -1,0 +1,12 @@
+(block sysadm_awesome
+	(blockinherit awesome.subj_blk)
+
+	(call sysadm.sysadm_subj_type (subj))
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj)))
+
+(block sysadm_awesomec
+	(blockinherit awesomec.subj_blk))

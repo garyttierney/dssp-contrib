@@ -1,0 +1,10 @@
+(in mpd
+	(filecon "/usr/bin/mpd" file cmd_file_context)
+	(filecon "/etc/mpd\.conf" file config_file_context)
+	(filecon "/var/run/mpd(/.*)?" any runtime_file_context)
+	(filecon "/var/lib/mpd(/.*)?" any var_lib_file_context)
+	(filecon "/var/log/mpd(/.*)?" any var_log_file_context)
+
+	(optional mpd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*mpd.*" file
+			unit_file_context)))

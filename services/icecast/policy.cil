@@ -70,6 +70,7 @@
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
 
+	(call file.search_var_lib (adm_subj_type_attribute))
 	(call file.search_var_log (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)

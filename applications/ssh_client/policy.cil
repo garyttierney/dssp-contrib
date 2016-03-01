@@ -68,14 +68,14 @@
 
 	(call ssh_client.exec (subj_type_attribute))
 
-	(call usersubj.manage_home_cmd_files (subj_type_attribute))
+	(call usersubj.manage_home_cmd (subj_type_attribute))
 
-	(call usersubj.manage_home_user_files (subj_type_attribute))
-	(call usersubj.home_dir_obj_type_transition_home_user_files
+	(call usersubj.manage_home_user (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user
 		(subj_type_attribute))
 
-	(call usersubj.manage_tmpfs_user_files (subj_type_attribute))
-	(call usersubj.tmpfs_obj_type_transition_tmpfs_user_files
+	(call usersubj.manage_tmpfs_user (subj_type_attribute))
+	(call usersubj.tmpfs_obj_type_transition_tmpfs_user
 		(subj_type_attribute))
 
 	(optional ssh_client_subj_type_optional_analyze

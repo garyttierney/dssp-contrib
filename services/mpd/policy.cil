@@ -1,3 +1,5 @@
+(boolean mpd_read_home_user true)
+
 (block mpd
 	(typeattribute adm_subj_type_attribute)
 
@@ -144,3 +146,10 @@
 		relabel_lnk_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute
 		relabel_sock_file_perms))
+
+(block mpd_read_home_user
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif mpd_read_home_user
+		(true
+			(call usersubj.read_home_user (mpd.subj)))))

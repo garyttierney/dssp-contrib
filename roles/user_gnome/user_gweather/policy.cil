@@ -10,16 +10,16 @@
 		(call user_sessbus.daemon (subj gweather.cmd_file))))
 
 (block user_gweatherbs
-	(typeattribute sessbus_chat_client_subj_type_attribute)
-
 	(blockinherit gweatherbs.subj_blk)
 
-	(optional user_gweatherbs_optional_user_sessbus
-		(call user_sessbus.daemon (subj gweatherbs.cmd_file)))
+	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gweatherbs.cmd_file gweatherbs.tmpfs_user_file))
 
-	(optional
-		user_gweatherbs_sessbus_chat_client_subj_type_optional_user_sessbus
-		(allow sessbus_chat_client_subj_type_attribute subj (dbus
-			(send_msg)))
-		(allow subj sessbus_chat_client_subj_type_attribute (dbus
-			(send_msg)))))
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(call user_gvfsdmd.client_subj_type (subj))
+
+	(call user_gweather.sessbus_chat_client_subj_type (subj))
+
+	(optional user_gweatherbs_optional_user_sessbus
+		(call user_sessbus.daemon (subj gweatherbs.cmd_file))))

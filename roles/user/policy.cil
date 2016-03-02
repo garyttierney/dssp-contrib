@@ -667,7 +667,12 @@
 		(call gchar.manage_tmpfs_user (subj))
 		(call gchar.relabel_tmpfs_user (subj))
 
-		(call user_gchar.role_pattern (role subj_type_attribute)))
+		(call user_gchar.role_pattern (role subj_type_attribute))
+
+		(call gcharbs.manage_tmpfs_user (subj))
+		(call gcharbs.relabel_tmpfs_user (subj))
+
+		(call user_gcharbs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_gcl
 		(call gcl.manage_tmpfs_user (subj))
@@ -1054,6 +1059,10 @@
 		(call gweather.relabel_tmpfs_user (subj))
 
 		(call user_gweather.role_pattern (role subj_type_attribute))
+
+		(call gweatherbs.manage_tmpfs_user (subj))
+		(call gweatherbs.relabel_tmpfs_user (subj))
+
 		(call user_gweatherbs.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_i3

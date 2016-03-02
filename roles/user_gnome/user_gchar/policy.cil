@@ -6,3 +6,18 @@
 
 	(optional user_gchar_optional_user_sessbus
 		(call user_sessbus.daemon (subj gchar.cmd_file))))
+
+(block user_gcharbs
+	(blockinherit gcharbs.subj_blk)
+
+	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcharbs.cmd_file gcharbs.tmpfs_user_file))
+
+	(call user_gapp.auto_subj_type_transition (subj))
+
+	(call user_gchar.sessbus_chat_client_subj_type (subj))
+
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional user_gcharbs_optional_user_sessbus
+		(call user_sessbus.daemon (subj gcharbs.cmd_file))))

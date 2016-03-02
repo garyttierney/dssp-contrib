@@ -4,3 +4,27 @@
 	(blockinherit gnomeapp.gnomeapplication_common_gjs_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gcharbs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call cmd.audit_read_access_cmd_files (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
+	(call usersubj.manage_home_data_files (subj_type_attribute)))

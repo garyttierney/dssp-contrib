@@ -5,3 +5,18 @@
 		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
 
 		(typeattributeset gchar.subj_type_attribute subj)))
+
+(in gcharbs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_sp_subj_blk)
+
+		(typeattributeset gcharbs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcharbs.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcharbs.role_pattern (ARG1 ARG2 subj)))))

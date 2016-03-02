@@ -1405,7 +1405,12 @@
 		(call gchar.manage_tmpfs_user (subj))
 		(call gchar.relabel_tmpfs_user (subj))
 
-		(call sysadm_gchar.role_pattern (role subj_type_attribute)))
+		(call sysadm_gchar.role_pattern (role subj_type_attribute))
+
+		(call gcharbs.manage_tmpfs_user (subj))
+		(call gcharbs.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcharbs.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gcl
 		(call gcal.manage_tmpfs_user (subj))
@@ -1819,6 +1824,11 @@
 		(call gweather.relabel_tmpfs_user (subj))
 
 		(call sysadm_gweather.role_pattern (role subj_type_attribute))
+
+		(call gweatherbs.manage_tmpfs_user (subj))
+		(call gweatherbs.relabel_tmpfs_user (subj))
+
+
 		(call sysadm_gweatherbs.role_pattern (role
 			subj_type_attribute)))
 

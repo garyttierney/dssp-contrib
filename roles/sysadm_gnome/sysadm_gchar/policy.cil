@@ -6,3 +6,18 @@
 
 	(optional sysadm_gchar_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gchar.cmd_file))))
+
+(block sysadm_gcharbs
+	(blockinherit gcharbs.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gcharbs.cmd_file gcharbs.tmpfs_user_file))
+
+	(call sysadm_gapp.auto_subj_type_transition (subj))
+
+	(call sysadm_gchar.sessbus_chat_client_subj_type (subj))
+
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_gcharbs_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gcharbs.cmd_file))))

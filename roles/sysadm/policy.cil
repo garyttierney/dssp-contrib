@@ -1814,6 +1814,14 @@
 
 		(call sysadm_gvidvt.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gweather
+		(call gweather.manage_tmpfs_user (subj))
+		(call gweather.relabel_tmpfs_user (subj))
+
+		(call sysadm_gweather.role_pattern (role subj_type_attribute))
+		(call sysadm_gweatherbs.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_busctl
 		(call sysadm_busctl.role_pattern (role subj_type_attribute)))
 

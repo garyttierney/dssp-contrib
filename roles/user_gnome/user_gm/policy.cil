@@ -12,6 +12,9 @@
 	(optional user_gm_optional_user_evosr
 		(call user_evosr.sessbus_chat_client_subj_type (subj)))
 
+	(optional user_gm_optional_user_gapp
+		(call user_gapp.auto_subj_type_transition (subj)))
+
 	(optional user_gm_optional_user_gcl
 		(call user_gcl.auto_subj_type_transition (subj))
 		(call user_gcl.sessbus_chat_client_subj_type (subj)))
@@ -21,6 +24,10 @@
 
 	(optional user_gm_optional_user_goad
 		(call user_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gm_optional_user_gweather
+		(call user_gweather.auto_subj_type_transition (subj))
+		(call user_gweather.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gm_optional_user_obexd
 		(call user_obexd.sessbus_chat_client_subj_type (subj)))

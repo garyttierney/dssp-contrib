@@ -1,0 +1,29 @@
+(in gweather
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
+
+		(typeattributeset gweather.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gweather.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gweather.role_pattern (ARG1 ARG2 subj)))))
+
+(in gweatherbs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gweatherbs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gweatherbs.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gweatherbs.role_pattern (ARG1 ARG2 subj)))))

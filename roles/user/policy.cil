@@ -1049,6 +1049,13 @@
 
 		(call user_gvidvt.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gweather
+		(call gweather.manage_tmpfs_user (subj))
+		(call gweather.relabel_tmpfs_user (subj))
+
+		(call user_gweather.role_pattern (role subj_type_attribute))
+		(call user_gweatherbs.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_i3
 		(call i3.manage_tmpfs_user (subj))
 		(call i3.relabel_tmpfs_user (subj))

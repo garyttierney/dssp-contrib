@@ -8,5 +8,8 @@
 
 	(call client_subj_type (subj_type_attribute))
 
+	(call gsh.rw_inherited_unix_stream_sockets_all_subj
+		(subj_type_attribute))
+
 	(call usersubj.home_data_creator_subj_type
 		(client_subj_type_attribute)))

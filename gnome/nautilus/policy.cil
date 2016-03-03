@@ -21,6 +21,8 @@
 	(call sys.read_cpu_sysfs_files (subj_type_attribute))
 
 	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
+	(call fs.getattr_iso9660_fs (subj_type_attribute))
+	(call fs.read_iso9660_subj_type (subj_type_attribute))
 
 	(call sec.get_enforce_mode (subj_type_attribute))
 

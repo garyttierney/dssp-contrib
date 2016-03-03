@@ -20,9 +20,14 @@
 
 	(call locale.read (subj_type_attribute))
 
+	(call nss.client_subj_type (subj_type_attribute))
+
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files
 		(subj_type_attribute))
+
+	(optional ffpmeg_subj_type_optional_youtube
+		(call youtube.tcp_connect_port (subj_type_attribute)))
 
 	(optional ffmpeg_subj_type_optional_xserver
 		(call xserver.tmpfs_client (subj_type_attribute

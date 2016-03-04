@@ -35,6 +35,7 @@
 	(call locale.read (subj_type_attribute))
 
 	(call http.tcp_bind_reserved_port (nginx.subj))
+	(call http_alt.tcp_bind_port (nginx.subj))
 	(call http_alt.tcp_connect_port (nginx.subj))
 
 	(call nss.client_subj_type (subj_type_attribute))

@@ -1,7 +1,7 @@
 (in varnishd
 	(block varnishd
 		(filecon "/usr/sbin/varnishd" file cmd_file_context)
-		(filecon "/etc/varnish(/.*)" any config_file_context)
+		(filecon "/etc/varnish(/.*)?" any config_file_context)
 		(filecon "/var/run/varnish\.pid" file runtime_file_context)
 		(filecon "/var/lib/varnish(/.*)?" any var_lib_file_context)
 

@@ -42,7 +42,13 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(allow subj self create_tcp_socket_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj))
+
+	(call redis.tcp_connect_all_ports (subj)))
 
 (allow redis.adm_subj_type_attribute redis.subj_type_attribute
 	(process (ptrace signal signull sigkill sigstop)))

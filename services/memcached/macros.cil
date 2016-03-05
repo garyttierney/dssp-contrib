@@ -60,7 +60,7 @@
 		(typeattributeset obj_type_attribute var_lib_file)
 		(typeattributeset var_lib_obj_type_attribute var_lib_file)
 
-		(call manage_var_lib_sock_files (subj))
+		(call manage_var_lib (subj))
 		(call var_lib_obj_type_transition_var_lib (subj))
 
 		(optional memcached_blk_optional_sd
@@ -74,22 +74,27 @@
 			(allow adm_subj_type_attribute unit_file (service
 				(stop status disable enable reload start))))
 
-	 (allow adm_subj_type_attribute subj_type_attribute (process (ptrace
-		signal signull sigkill sigstop)))
-	 (call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
 
-	 (call file.search_config (adm_subj_type_attribute))
-	 (call file.search_var_lib (adm_subj_type_attribute))
+		(call file.search_config (adm_subj_type_attribute))
+		(call file.search_var_lib (adm_subj_type_attribute))
 
-	 (allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute
-		manage_sock_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_sock_file_perms)
 
-	 (allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
-	 (allow adm_subj_type_attribute obj_type_attribute
-		relabel_sock_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_sock_file_perms)
 
 		(blockinherit exec_blk)
 
@@ -101,9 +106,13 @@
 		(blockinherit file.manage_config_files_blk)
 		(blockinherit file.relabel_config_files_blk)
 
-		(blockinherit file.read_var_lib_sock_files_blk)
-		(blockinherit file.manage_var_lib_sock_files_blk)
-		(blockinherit file.relabel_var_lib_sock_files_blk)
+		(blockinherit file.search_var_lib_blk)
+		(blockinherit file.list_var_lib_blk)
+		(blockinherit file.read_var_lib_files_blk)
+		(blockinherit file.read_var_lib_lnk_files_blk)
+		(blockinherit file.read_var_lib_blk)
+		(blockinherit file.manage_var_lib_blk)
+		(blockinherit file.relabel_var_lib_blk)
 
 		(macro stream_connect ((type ARG1))
 			(call file.search_var_lib (ARG1))
@@ -135,9 +144,13 @@
 	(blockinherit file.manage_all_config_files_blk)
 	(blockinherit file.relabel_all_config_files_blk)
 
-	(blockinherit file.read_all_runtime_sock_files_blk)
-	(blockinherit file.manage_all_runtime_sock_files_blk)
-	(blockinherit file.relabel_all_runtime_sock_files_blk)
+	(blockinherit file.search_all_var_lib_blk)
+	(blockinherit file.list_all_var_lib_blk)
+	(blockinherit file.read_all_var_lib_files_blk)
+	(blockinherit file.read_all_var_lib_lnk_files_blk)
+	(blockinherit file.read_all_var_lib_blk)
+	(blockinherit file.manage_all_var_lib_blk)
+	(blockinherit file.relabel_all_var_lib_blk)
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_var_lib (ARG1))

@@ -13,7 +13,9 @@
 
 	(blockinherit redis_blk)
 
-	(blockinherit net.unreserved_port_obj_blk))
+	(blockinherit net.unreserved_port_obj_blk)
+
+	(call tcp_bind_port (redis.subj)))
 
 (block redis_sentinel
 	(typeattribute subj_type_attribute))

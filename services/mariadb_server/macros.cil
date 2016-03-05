@@ -124,6 +124,18 @@
 
 		(call exec (subj))
 
+		(allow subj self (process (setsched)))
+		(allow subj self (tcp_socket (listen accept)))
+		(allow subj self (unix_stream_socket (listen accept)))
+
+		(call sys.read_cpu_online_sysfs_files (subj))
+
+		(call file.read_data_files (subj))
+
+		(call fs.getattr_fs (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
 		(optional mariadb_server_optional_sd
 			(call sd.daemon (subj cmd_file))
 

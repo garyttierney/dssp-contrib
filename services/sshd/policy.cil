@@ -1,23 +1,7 @@
 (boolean sshd_priv_login true)
 
 (block sshd_priv_login
-	(blockinherit sec.bool_obj_blk)
-
-	(booleanif sshd_priv_login
-		(true
-			(call
-				usersubj.dynamic_subj_type_transition_common_login_subj
-					(sshd.subj_type_attribute))
-			(call
-				usersubj.shell_manual_subj_type_transition_common_login_subj
-					(sshd.subj_type_attribute)))
-		(false
-			(call
-				usersubj.dynamic_subj_type_transition_unpriv_login_subj
-					(sshd.subj_type_attribute))
-			(call
-				usersubj.shell_manual_subj_type_transition_unpriv_login_subj
-					(sshd.subj_type_attribute)))))
+	(blockinherit sec.bool_obj_blk))
 
 (block sshd
 	(typeattribute control_all_sd_unit_subj_type_attribute)
@@ -36,52 +20,9 @@
 
 	(blockinherit sshd_blk)
 
-	(allow subj_type_attribute self (capability (sys_resource kill
-		sys_tty_config fowner fsetid net_bind_service sys_chroot
-			net_admin)))
-	(allow subj_type_attribute self (process (setrlimit)))
-	(allow subj_type_attribute self rw_fifo_file_perms)
-	(allow subj_type_attribute self (tcp_socket (listen accept)))
-
-	(call sys.link_keyring (subj_type_attribute))
-	(call sys.read_kernel_sysctl_files (subj_type_attribute))
-	(call sys.read_net_proc_files (subj_type_attribute))
-
-	(call cmd.getattr_shell_files (subj_type_attribute))
-
-	(call dev.read_urandom (subj_type_attribute))
-
-	(call file.read_config (subj_type_attribute))
-
-	(call net.tcp_bind_generic_node (subj_type_attribute))
-
-	(call sec.list_fs (subj_type_attribute))
-
-	(call subj.dynamic_type_transition_subj_type (subj_type_attribute))
-
-	(call cert.read (subj_type_attribute))
-
-	(call pam.login_prog_subj_type (subj_type_attribute))
-	(call pam.read_config_files (subj_type_attribute))
-
 	(call ssh.tcp_bind_reserved_port (sshd.subj))
 
-	(call ssh_client.read_config_files (subj_type_attribute))
-	(call ssh_client.read_home_user_files (subj_type_attribute))
-
-	(call usersubj.dontaudit_create_keyring_common_subj
-		(subj_type_attribute))
-	(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj
-		(subj_type_attribute))
-	(call usersubj.dontaudit_manual_subj_type_transition_common_subj
-		(subj_type_attribute))
-	(call usersubj.relabel_ptys (subj_type_attribute))
-	(call usersubj.setattr_ptys (subj_type_attribute))
-	(call usersubj.use_ptys (subj_type_attribute))
-
 	(optional sshd_optional_sd
-		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
-
 		(call sd.reload (control_all_sd_unit_subj_type_attribute))
 		(allow control_all_sd_unit_subj_type_attribute
 			unit_obj_type_attribute (service (start status stop

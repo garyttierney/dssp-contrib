@@ -61,21 +61,10 @@
 
 	(blockinherit mariadb_server_blk)
 
-	(allow subj_type_attribute self (process (setsched)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
-	(allow subj_type_attribute self (tcp_socket (listen accept)))
-	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
-
-	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 
 	(call cmd.mmap_shell (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
-
-	(call file.read_data_files (subj_type_attribute))
-
-	(call fs.getattr_fs (subj_type_attribute))
-
-	(call net.tcp_bind_generic_node (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 
@@ -93,24 +82,12 @@
 (block mariadb_server_pdd
 	(typeattribute subj_type_attribute)
 
-	(allow subj_type_attribute self rw_fifo_file_perms)
-
 	(call sys.list_mountpoints (subj_type_attribute))
-
-	(call cmd.mmap_shell (subj_type_attribute))
-	(call cmd.exec (subj_type_attribute))
 
 	(call fs.getattr_all_fs (subj_type_attribute))
 	(call fs.list_rootfs (subj_type_attribute))
 
 	(call hostname.exec (subj_type_attribute))
-
-	(call locale.read (subj_type_attribute))
-
-	(call mariadb.exec (subj_type_attribute))
-	(call mariadb.read_config (subj_type_attribute))
-
-	(call nss.client_subj_type (subj_type_attribute))
 
 	(call default_context.read_config_files (subj_type_attribute))
 	(call file_context.read_config_files (subj_type_attribute))
@@ -126,21 +103,9 @@
 (block mariadb_server_helper
 	(typeattribute subj_type_attribute)
 
-	(allow subj_type_attribute self rw_fifo_file_perms)
-
-	(call cmd.mmap_shell (subj_type_attribute))
-	(call cmd.exec (subj_type_attribute))
-
 	(call file.read_data_files (subj_type_attribute))
 
-	(call hostname.exec (subj_type_attribute))
-
-	(call locale.read (subj_type_attribute))
-
-	(call mariadb.exec (subj_type_attribute))
-	(call mariadb.read_config (subj_type_attribute))
-
-	(call nss.client_subj_type (subj_type_attribute)))
+	(call hostname.exec (subj_type_attribute)))
 
 (allow mariadb_server.adm_subj_type_attribute
 	mariadb_server.subj_type_attribute (process (ptrace signal signull

@@ -74,6 +74,13 @@
 
 		(call exec (subj))
 
+		(allow subj self (capability (sys_resource kill
+			sys_tty_config fowner fsetid net_bind_service
+				sys_chroot net_admin)))
+		(allow subj self (process (setrlimit)))
+		(allow subj self rw_fifo_file_perms)
+		(allow subj self (tcp_socket (listen accept)))
+
 		(allow subj sshd_net.subj (process (signal sigkill)))
 
 		(call dynamic_subj_type_transition_pattern (subj
@@ -81,8 +88,60 @@
 
 		(allow subj sshd_key.file read_file_perms)
 
+		(call sys.link_keyring (subj))
+		(call sys.read_kernel_sysctl_files (subj))
+		(call sys.read_net_proc_files (subj))
+
+		(call cmd.getattr_shell_files (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call file.read_config (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
+		(call sec.list_fs (subj))
+
+		(call subj.dynamic_type_transition_subj_type (subj))
+
+		(call cert.read (subj))
+
+		(call pam.login_prog_subj_type (subj))
+		(call pam.read_config_files (subj))
+
+		(call ssh_client.read_config_files (subj))
+		(call ssh_client.read_home_user_files (subj))
+
+		(call usersubj.dontaudit_create_keyring_common_subj
+			(subj))
+		(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj
+			(subj))
+		(call usersubj.dontaudit_manual_subj_type_transition_common_subj
+			(subj))
+		(call usersubj.relabel_ptys (subj))
+		(call usersubj.setattr_ptys (subj))
+		(call usersubj.use_ptys (subj))
+
+		(booleanif sshd_priv_login
+			(true
+				(call
+					usersubj.dynamic_subj_type_transition_common_login_subj
+						(subj))
+				(call
+					usersubj.shell_manual_subj_type_transition_common_login_subj
+						(subj)))
+			(false
+				(call
+					usersubj.dynamic_subj_type_transition_unpriv_login_subj
+						(subj))
+				(call
+					usersubj.shell_manual_subj_type_transition_unpriv_login_subj
+						(subj))))
+
 		(optional sshd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
+
+			(call sd.tcp_socket_activated_subj_type (subj))
 
 			(call sd.daemon_pid_obj_type (runtime_file))
 

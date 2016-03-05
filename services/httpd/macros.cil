@@ -116,8 +116,37 @@
 		(call file.var_log_obj_type_transition (subj var_log_file dir
 			"*"))
 
+		(allow subj self (capability (dac_override
+			setgid setuid kill)))
+		(allow subj self (process (getpgid)))
+		(allow subj self create_sem_perms)
+		(allow subj self create_shm_perms)
+		(allow subj self rw_fifo_file_perms)
+		(allow subj self (tcp_socket (listen accept)))
+		(allow subj self (unix_stream_socket (connectto
+			listen accept)))
+
+		(call sys.read_kernel_sysctl_files (subj))
+
+		(call cmd.mmap (subj))
+		(call cmd.mmap_shell (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call file.read_data (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
 		(call rotatelogs.auto_subj_type_transition (subj))
 		(call suexec.auto_subj_type_transition (subj))
+
+		(call nss.client_subj_type (subj))
+
+		(call cert.read (subj))
+		(call locale.read (subj))
+		(call mime_types.read_config_files (subj))
+
+		(call usersubj.search_home_dir (subj))
 
 		(optional httpd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))

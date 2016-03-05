@@ -1,6 +1,7 @@
 (boolean web_content_sys_cgi_tcp_connect_http true)
 (boolean web_content_sys_cgi_tcp_connect_memcache true)
 (boolean web_content_sys_cgi_tcp_connect_mysql true)
+(boolean web_content_sys_cgi_tcp_connect_redis true)
 
 (block web_content
 	(typeattribute obj_type_attribute)
@@ -88,4 +89,12 @@
 	(booleanif web_content_sys_cgi_tcp_connect_http
 		(true
 			(call http.tcp_connect_port
+				(web_sys.web_content_cgi.subj)))))
+
+(block web_content_sys_cgi_tcp_connect_redis
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif web_content_sys_cgi_tcp_connect_redis
+		(true
+			(call redis.tcp_connect_port
 				(web_sys.web_content_cgi.subj)))))

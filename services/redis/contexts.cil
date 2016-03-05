@@ -7,8 +7,8 @@
 		(filecon "/etc/redis-sentinel\.conf" file config_file_context)
 		(filecon "/usr/bin/redis-server" file cmd_file_context)
 		(filecon "/var/lib/redis(/.*)?" any var_lib_file_context)
-		(filecon "/var/log/redis(/.*)?" any var_lib_file_context)
-		(filecon "/var/run/redis(/.*)?" any var_lib_file_context)
+		(filecon "/var/log/redis(/.*)?" any var_log_file_context)
+		(filecon "/var/run/redis(/.*)?" any runtime_file_context)
 
 		(optional redis_unit_optional_sd
 			(filecon "/usr/lib/systemd/system/[^/]*redis.*"

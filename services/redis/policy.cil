@@ -26,6 +26,8 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self create_tcp_socket_perms)
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
 	(call cmd.audit_read_access_shell_files (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
 

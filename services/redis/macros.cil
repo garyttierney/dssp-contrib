@@ -90,6 +90,19 @@
 
 		(call var_log_obj_type_transition_var_log (subj))
 
+		(allow subj self create_tcp_stream_socket_perms)
+
+		(call sys.read_cpu_online_sysfs_files (subj))
+		(call sys.read_net_sysctl_files (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call fs.read_sysfs_files (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
+		(call locale.read (subj))
+
 		(optional redis_blk_optional_logrotate
 			(call logrotate.client_var_log_obj_type (var_log_file)))
 
@@ -235,6 +248,10 @@
 		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
+
+		(call redis.read_config_files (subj))
+
+		(call redis.tcp_connect_port (subj))
 
 		(optional redis_shutdown_optional_sd
 			(call sd.daemon (subj cmd_file)))

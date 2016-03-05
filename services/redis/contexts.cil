@@ -1,6 +1,6 @@
 (in redis
-	(portcon "tcp" 6380 port_obj_context)
-	(portcon "udp" 6380 port_obj_context)
+	(portcon "tcp" (6379 6380) port_obj_context)
+	(portcon "udp" (6379 6380) port_obj_context)
 
 	(block redis
 		(filecon "/etc/redis\.conf" file config_file_context)

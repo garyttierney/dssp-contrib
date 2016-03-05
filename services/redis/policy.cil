@@ -21,7 +21,17 @@
 	(typeattribute subj_type_attribute))
 
 (block redis_shutdown
-	(typeattribute subj_type_attribute))
+	(typeattribute subj_type_attribute)
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self create_tcp_socket_perms)
+
+	(call cmd.audit_read_access_shell_files (subj_type_attribute))
+	(call cmd.exec (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call rediscli.exec (subj_type_attribute)))
 
 (block rediscli
 	(roleattribute role_attribute)

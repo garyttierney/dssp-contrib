@@ -137,6 +137,8 @@
 
 		(call net.tcp_bind_generic_node (subj))
 
+		(call sec.get_enforce_mode (subj))
+
 		(call rotatelogs.auto_subj_type_transition (subj))
 		(call suexec.auto_subj_type_transition (subj))
 

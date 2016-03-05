@@ -135,6 +135,12 @@
 
 	(typeattribute exec_obj_type_attribute)
 
+	(allow subj_type_attribute self (capability (setuid setgid)))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
 	(call usersubj.search_home_dir (subj_type_attribute))
 
 	(call web_content.cgi_client_subj (httpd.suexec.subj))

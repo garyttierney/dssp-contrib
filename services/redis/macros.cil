@@ -90,6 +90,7 @@
 
 		(call var_log_obj_type_transition_var_log (subj))
 
+		(allow subj self (process (setrlimit)))
 		(allow subj self create_tcp_stream_socket_perms)
 
 		(call sys.read_cpu_online_sysfs_files (subj))

@@ -87,6 +87,8 @@
 		(optional php_fpm_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
 
+			(call sd.daemon_pid_obj_type (runtime_file))
+
 			(blockinherit sd.unit_obj_blk)
 
 			(typeattributeset obj_type_attribute unit_file)

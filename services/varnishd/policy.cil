@@ -25,7 +25,9 @@
 
 	(typeattribute runtime_obj_type_attribute)
 
-	(call file.search_var_log (subj_type_attribute)))
+	(call file.search_var_log (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))
 
 (block varnishlog
 	(typeattribute subj_type_attribute))

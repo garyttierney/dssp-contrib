@@ -124,11 +124,6 @@
 
 		(call nss.client_subj_type (subj))
 
-		(optional varnishd_blk_optional_logrotate
-			(call logrotate.client_subj_type (subj))
-			(call logrotate.client_runtime_obj_type
-				(runtime_file)))
-
 		(optional varnishd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
 
@@ -295,6 +290,9 @@
 		(call varnishd.read_var_lib_files (subj))
 
 		(optional varnishdlog_blk_optional_logrotate
+			(call logrotate.client_subj_type (subj))
+			(call logrotate.client_runtime_obj_type
+				(runtime_file))
 			(call logrotate.client_var_log_obj_type
 				(var_log_file)))
 

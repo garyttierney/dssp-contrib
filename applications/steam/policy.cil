@@ -44,6 +44,7 @@
 	(allow subj_type_attribute self (unix_stream_socket (listen accept
 		connectto)))
 
+	(call sys.dontaudit_list_mountpoints (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
@@ -55,12 +56,10 @@
 	(call dev.rw_dri (subj_type_attribute))
 	(call dev.rw_sound (subj_type_attribute))
 
-	(call file.dontaudit_list_var_lib (subj_type_attribute))
 	(call file.list_home (subj_type_attribute))
 	(call file.list_mnt (subj_type_attribute))
 	(call file.read_config (subj_type_attribute))
 
-	(call fs.dontaudit_list_devtmpfs (subj_type_attribute))
 	(call fs.list_rootfs (subj_type_attribute))
 	(call fs.getattr_all_fs (subj_type_attribute))
 

@@ -79,6 +79,9 @@
 			subj_type_attribute))
 		(roleattributeset role_attribute ARG2))
 
+	(macro dontaudit_list_files ((type ARG1))
+		(dontaudit ARG1 file list_dir_perms))
+
 	(macro manage_files ((type ARG1))
 		(call manage_files_pattern (ARG1 file file))
 		(optional qemu_guest_manage_files_optional_sd_machined

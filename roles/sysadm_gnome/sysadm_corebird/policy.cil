@@ -5,6 +5,9 @@
 		corebird.tmpfs_user_file))
 	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
 
+	(optional sysadm_corebird_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
 	(optional sysadm_corebird_optional_sysadm_gstreamer
 		(call sysadm_gstreamer.client_subj_type (subj)))
 

@@ -12,7 +12,10 @@
 		(subj_type_attribute))
 
 	(optional evince_subj_type_optional_firefox
-		(call firefox.read_tmpfs_user_files (subj_type_attribute))))
+		(call firefox.read_tmpfs_user (subj_type_attribute)))
+
+	(optional evince_subj_type_optional_thunderbird
+		(call thunderbird.read_tmpfs_user (subj_type_attribute))))
 
 (block evincep
 	(typeattribute subj_type_attribute)

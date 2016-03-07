@@ -103,7 +103,9 @@
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
-			home_user_file file ".esd_auth")))
+			home_user_file file ".esd_auth"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".pulse-cookie")))
 
 	(macro stream_connect_all_subj ((type ARG1))
 		(call file.search_runtime_user (ARG1))

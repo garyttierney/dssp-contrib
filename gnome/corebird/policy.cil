@@ -5,6 +5,8 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
 	(blockinherit usersubj.home_cache_obj_blk)
 
 	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
@@ -28,6 +30,8 @@
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
 	(call sys.read_cpu_sysfs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
 	(call http.tcp_connect_port (subj_type_attribute))
 

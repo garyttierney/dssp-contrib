@@ -1,0 +1,11 @@
+(in letsencrypt
+	(filecon "/usr/bin/letsencrypt" file cmd_file_context)
+	(filecon "/etc/letsencrypt(/.*)?" any config_file_context)
+	(filecon "/var/lib/letsencrypt(/.*)?" any var_lib_file_context)
+	(filecon "/var/log/letsencrypt(/.*)?" any var_log_file_context)
+	(filecon "HOME_DIR/\.config/letsencrypt(/.*)?" any
+		home_config_file_context)
+
+	(optional letsencrypt_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*letsencrypt.*" file
+			unit_file_context)))

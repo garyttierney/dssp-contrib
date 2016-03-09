@@ -163,6 +163,12 @@
 	(optional user_optional_journalctl
 		(call journalctl.exec (subj)))
 
+	(optional user_optional_letsencrypt
+		(call letsencrypt.manage_home_config (subj))
+		(call letsencrypt.relabel_home_config (subj))
+		(call letsencrypt.home_config_obj_type_transition_home_config
+			(subj)))
+
 	(optional user_optional_libgweather
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))

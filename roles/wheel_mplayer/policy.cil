@@ -1,6 +1,9 @@
 (block wheel_mplayer
 	(blockinherit mplayer.subj_blk)
 
+	(optional wheel_mplayer_optional_wheel_gkrd
+		(call wheel_gkrd.stream_connect (subj)))
+
 	(optional wheel_mplayer_optional_wheel_pa
 		(call wheel_pa.auto_subj_type_transition (subj)))
 

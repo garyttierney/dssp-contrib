@@ -19,9 +19,11 @@
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
 	(call dev.rw_dri (subj_type_attribute))
 
-	(call file.read_config_files (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 	(call file.search_mnt (subj_type_attribute))
 
@@ -32,6 +34,7 @@
 
 	(call subj.execmem_uncond_subj_type (subj_type_attribute))
 
+	(call cert.read (subj_type_attribute))
 	(call fonts.read (subj_type_attribute))
 	(call locale.read (subj_type_attribute))
 

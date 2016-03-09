@@ -1,6 +1,6 @@
 (in icecast
-	(portcon "tcp" 8000 port_obj_context)
-	(portcon "udp" 8000 port_obj_context)
+	(portcon "tcp" (8000 8001) port_obj_context)
+	(portcon "udp" (8000 8001) port_obj_context)
 
 	(filecon "/usr/bin/icecast" file cmd_file_context)
 	(filecon "/etc/icecast\.xml" file config_file_context)

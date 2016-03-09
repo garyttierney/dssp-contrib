@@ -35,6 +35,7 @@
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_net_proc_files (subj))
+	(call sys.read_net_sysctl_files (subj))
 
 	(call cmd.audit_read_access_cmd_files (subj))
 	(call cmd.exec_shell (subj))

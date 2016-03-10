@@ -69,6 +69,7 @@
 
 	(allow subj self (capability (setuid setgid sys_time)))
 	(allow subj self (process (setcap)))
+	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.read_net_proc_files (subj))

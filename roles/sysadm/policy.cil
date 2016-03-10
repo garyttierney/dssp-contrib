@@ -522,6 +522,10 @@
 		(call ntpctl.run (subj_type_attribute role))
 		(call ntpd.adm (subj role)))
 
+	(optional sysadm_optional_ntpdate
+		(call ntpdate.adm (subj role))
+		(call ntpdate.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_kmod
 		(call kmod.adm (subj role))
 		(call kmod.run (subj_type_attribute role)))

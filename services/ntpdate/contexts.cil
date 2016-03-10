@@ -1,0 +1,7 @@
+(in ntpdate
+	(filecon "/usr/sbin/ntpdate" file cmd_file_context)
+	(filecon "/usr/libexec/ntpdate-wrapper" file cmd_file_context)
+
+	(optional ntpdate_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*ntpdate.*" file
+			unit_file_context)))

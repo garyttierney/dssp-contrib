@@ -40,6 +40,13 @@
 		(call file.var_log_obj_type_transition (ARG1 var_log_file dir
 			"ntpstats")))
 
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(optional ntpd_adm_optional_sd

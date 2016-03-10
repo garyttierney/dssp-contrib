@@ -54,8 +54,15 @@
 		(call nm.manage_var_lib_files (subj))
 		(call nm.stream_connect (subj)))
 
+	(optional dhclient_optional_ntpd
+		(call ntpd.control_sd_unit_subj_type (subj)))
+
 	(optional dhclient_optional_sd
-		(call sd.daemon (subj cmd_file)))
+		(call sd.daemon (subj cmd_file))
+		(call sd.stream_connect (subj)))
 
 	(optional dhclient_optional_sd_journald
-		(call sd_journald.client_subj_type (subj))))
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional dhclient_optional_systemctl
+		(call systemctl.exec (subj))))

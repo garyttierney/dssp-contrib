@@ -514,6 +514,11 @@
 	(optional sysadm_optional_networkctl
 		(call networkctl.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_ntpd
+		(call ntpstat.run (subj_type_attribute role))
+		(call ntpctl.run (subj_type_attribute role))
+		(call ntpd.adm (subj role)))
+
 	(optional sysadm_optional_kmod
 		(call kmod.adm (subj role))
 		(call kmod.run (subj_type_attribute role)))

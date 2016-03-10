@@ -54,6 +54,25 @@
 
 	(call var_log_obj_type_transition_var_log (subj))
 
+	(allow subj self (capability (setuid setgid sys_time)))
+	(allow subj self (process (setcap)))
+
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.read_net_proc_files (subj))
+
+	(call cmd.list_cmd (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call net.udp_bind_generic_node (subj))
+
+	(call ntp.read_config_files (subj))
+	(call ntp.udp_bind_reserved_port (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
 	(optional ntpd_optional_sd
 		(call sd.daemon (subj cmd_file))
 

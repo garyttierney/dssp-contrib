@@ -51,6 +51,8 @@
 	(call php.manage_var_lib (subj_type_attribute))
 	(call php.read_config (subj_type_attribute))
 
+	(call php_fpm.read_config_files (subj_type_attribute))
+
 	(call usersubj.search_home_dir (subj_type_attribute))
 
 	(call web_content_htaccess.read_all_files (php_fpm.subj))
@@ -91,7 +93,10 @@
 		(call sd.reload (control_all_sd_unit_subj_type_attribute))
 		(allow control_all_sd_unit_subj_type_attribute
 			unit_obj_type_attribute (service (start status stop
-				reload enable disable)))))
+				reload enable disable))))
+
+	(optional php_fpm_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute))))
 
 (block php_fpm_tcp_connect_memcache
 	(blockinherit sec.bool_obj_blk)

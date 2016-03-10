@@ -3,14 +3,20 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(allow subj self create_udp_socket_perms))
 
 (block ntpctl
 	(roleattribute role_attribute)
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call nss.client_subj_type (subj)))
 
 (block ntpd
 	(typeattribute subj_type_attribute)

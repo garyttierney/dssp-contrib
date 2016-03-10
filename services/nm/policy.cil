@@ -187,7 +187,7 @@
 
 	(roletype sys.role subj)
 
-	(dontaudit subj self (capability (sys_tty_config)))
+	(dontaudit subj self (capability (sys_tty_config net_admin)))
 	(allow subj self (process (setpgid)))
 
 	(call sys.read_net_proc_files (subj))
@@ -223,7 +223,8 @@
 		(call dhclient.auto_subj_type_transition (subj)))
 
 	(optional nmdisp_optional_sd
-		(call sd.daemon (subj cmd_file)))
+		(call sd.daemon (subj cmd_file))
+		(call sd.stream_connect (subj)))
 
 	(optional nm_disp_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))

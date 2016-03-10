@@ -15,6 +15,26 @@
 
 	(typeattributeset obj_type_attribute config_file)
 
+	(call read_config_files (subj))
+
+	(call exec (subj))
+
+	(allow subj self (capability (sys_nice setuid setgid sys_time)))
+	(allow subj self (process (setcap setsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+
+	(call net.udp_bind_generic_node (subj))
+
+	(call ntp.udp_bind_reserved_port (subj))
+
+	(call ntpd.read_config (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
 	(optional ntpdate_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -24,6 +44,9 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
+
+	(optional ntpdate_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

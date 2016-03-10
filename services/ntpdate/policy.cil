@@ -24,6 +24,7 @@
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
 	(call net.udp_bind_generic_node (subj))
 

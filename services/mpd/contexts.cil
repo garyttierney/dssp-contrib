@@ -11,3 +11,6 @@
 	(optional mpd_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*mpd.*" file
 			unit_file_context)))
+
+(in mpd_read_home_user
+	(genfscon "selinuxfs" "/booleans/mpd_read_home_user" bool_obj_context))

@@ -2,6 +2,7 @@
 (boolean web_content_sys_cgi_tcp_connect_memcache true)
 (boolean web_content_sys_cgi_tcp_connect_mysql true)
 (boolean web_content_sys_cgi_tcp_connect_redis true)
+(boolean web_content_sys_cgi_tcp_connect_smtp true)
 
 (block web_content
 	(typeattribute obj_type_attribute)
@@ -97,4 +98,14 @@
 	(booleanif web_content_sys_cgi_tcp_connect_redis
 		(true
 			(call redis.tcp_connect_port
+				(web_sys.web_content_cgi.subj)))))
+
+(block web_content_sys_cgi_tcp_connect_smtp
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif web_content_sys_cgi_tcp_connect_smtp
+		(true
+			(call file.read_config_files
+				(web_sys.web_content_cgi.subj))
+			(call smtp.tcp_connect_port
 				(web_sys.web_content_cgi.subj)))))

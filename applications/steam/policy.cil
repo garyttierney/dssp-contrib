@@ -74,6 +74,8 @@
 	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
 	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
 
+	(call subj.dontaudit_read_state_common_subj (subj_type_attribute))
+	(call subj.read_state_common_subj (subj_type_attribute))
 	(call subj.execstack_uncond_subj_type (subj_type_attribute))
 
 	(call hostname.read_config_files (subj_type_attribute))

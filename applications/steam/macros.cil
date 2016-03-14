@@ -79,6 +79,19 @@
 	(blockinherit usersubj.manage_home_data_blk)
 	(blockinherit usersubj.relabel_home_data_blk)
 
+	(macro read_home_data_fifo_files ((type ARG1))
+		(call usersubj.search_home_data (ARG1))
+		(call read_fifo_files_pattern (ARG1 home_data_file
+			home_data_file)))
+
+	(macro rw_home_data_files ((type ARG1))
+		(call usersubj.search_home_data (ARG1))
+		(call rw_files_pattern (ARG1 home_data_file home_data_file)))
+
+	(macro mmap_home_data_files ((type ARG1))
+		(call usersubj.search_home_data (ARG1))
+		(call mmap_files_pattern (ARG1 home_data_file home_data_file)))
+
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))

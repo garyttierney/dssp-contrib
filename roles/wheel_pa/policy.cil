@@ -8,4 +8,8 @@
 		(call wheel_sessbus.service_subj_type (subj)))
 
 	(optional wheel_pa_optional_wheel_sessbus_launch
-		(call wheel_sessbus_launch.auto_subj_type_transition (subj))))
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional wheel_pa_optional_sysadm_steam
+		(call wheel_steam.read_state (subj))
+		(call wheel_steam.rw_inherited_unix_stream_sockets (subj))))

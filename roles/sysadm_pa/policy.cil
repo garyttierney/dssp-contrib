@@ -8,4 +8,8 @@
 		(call sysadm_sessbus.service_subj_type (subj)))
 
 	(optional sysadm_pa_optional_sysadm_sessbus_launch
-		(call sysadm_sessbus_launch.auto_subj_type_transition (subj))))
+		(call sysadm_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional sysadm_pa_optional_sysadm_steam
+		(call sysadm_steam.read_state (subj))
+		(call sysadm_steam.rw_inherited_unix_stream_sockets (subj))))

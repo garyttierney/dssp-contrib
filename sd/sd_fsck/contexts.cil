@@ -3,6 +3,8 @@
 	(filecon "/usr/lib/systemd/system/[^/]*systemd-fsck.*" file
 		unit_file_context)
 	(filecon "/var/run/fsck(/.*)?" any runtime_file_context)
+	(filecon "/var/run/systemd/quotacheck" file
+		runtime_file_context)
 	(filecon "/var/run/systemd/show-status" file
 		runtime_file_context)
 	(filecon "/var/run/systemd/fsck\.progress" socket

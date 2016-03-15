@@ -1389,6 +1389,19 @@
 	(filecon "/root/\.local/share/vinagre(/.*)?" any
 		root_vinagre_home_data))
 
+(optional sysadm_vulkan_home_optional_vulkan
+	(tunableif enable_rbacsep
+		(true
+			(context root_vulkan_home_data (sysadm.id sysadm.role
+				vulkan.home_data_file (systemlow systemlow))))
+		(false
+			(context root_vulkan_home_data (sysadm.id object_r
+				vulkan.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/vulkan(/.*)?" any
+		root_vulkan_home_data))
+
 (optional sysadm_webkit_home_optional_webkit
 	(tunableif enable_rbacsep
 		(true

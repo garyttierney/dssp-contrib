@@ -14,7 +14,7 @@
 	(dontaudit subj self (capability (sys_ptrace)))
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap
 		linux_immutable)))
-	(allow subj self (process (getcap setcap setfscreate)))
+	(allow subj self (process (getcap setcap ptrace setfscreate)))
 
 	(call sys.manage_var_log_files (subj))
 	(call sys.read_all_proc_files (subj))

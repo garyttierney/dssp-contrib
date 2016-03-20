@@ -1091,6 +1091,10 @@
 		(call xauth.manage_home_user_files (subj))
 		(call xauth.relabel_home_user_files (subj)))
 
+	(optional sysadm_optional_xboxdrv
+		(call xboxdrv.run (subj_type_attribute role))
+		(call xboxdrv.adm (subj role)))
+
 	(optional sysadm_optional_xlock
 		(call xlock.manage_home_user_files (subj))
 		(call xlock.relabel_home_user_files (subj))

@@ -1,0 +1,54 @@
+(block xboxdrv
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call dev.rw_event (subj))
+	(call dev.rw_usb (subj))
+
+	(call file.read_data_files (subj))
+
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional xboxdrv_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(call sd.daemon_pid_obj_type (runtime_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional xboxdrv_optional_sysbus
+		(call sysbus.service_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

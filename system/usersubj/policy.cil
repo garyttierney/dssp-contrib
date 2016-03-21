@@ -123,6 +123,8 @@
 	(dontaudit priv_type_attribute self (capability (dac_override)))
 	(allow priv_type_attribute self (capability (dac_read_search)))
 
+	(call dontaudit_read_all_home_user (priv_type_attribute))
+
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type
 			(home_user_obj_type_attribute)))

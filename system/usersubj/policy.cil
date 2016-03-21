@@ -57,10 +57,11 @@
 	(call subj.dontaudit_read_state_common_subj (common_type_attribute))
 	(call subj.interactive_fd_subj_type (common_type_attribute))
 
-	(call passwords.read (common_type_attribute))
-	(call utmp.read_runtime_files (common_type_attribute))
-	(call terminfo.read_all (common_type_attribute))
 	(call locale.read (common_type_attribute))
+	(call man.read (common_type_attribute))
+	(call passwords.read (common_type_attribute))
+	(call terminfo.read_all (common_type_attribute))
+	(call utmp.read_runtime_files (common_type_attribute))
 
 	(call nss.read_config_files (common_type_attribute))
 
@@ -112,7 +113,6 @@
 	(call login.send_signull (common_login_type_attribute))
 
 	(call fonts.read (common_login_type_attribute))
-	(call man.read (common_login_type_attribute))
 	(call mime_types.read_data (common_login_type_attribute))
 
 	(call setfiles.exec (common_login_type_attribute))

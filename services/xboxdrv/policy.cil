@@ -20,6 +20,8 @@
 
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.request_load_module (subj))
+
 	(call dev.rw_event (subj))
 	(call dev.rw_usb (subj))
 

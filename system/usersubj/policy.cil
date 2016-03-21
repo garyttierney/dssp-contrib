@@ -52,9 +52,12 @@
 	(call fs.dontaudit_getattr_all_fs (common_type_attribute))
 	(call fs.getattr_fs (common_type_attribute))
 
+	(call sec.get_enforce_mode (common_type_attribute))
+
 	(call subj.dontaudit_read_state_common_subj (common_type_attribute))
 	(call subj.interactive_fd_subj_type (common_type_attribute))
 
+	(call passwords.read (common_type_attribute))
 	(call utmp.read_runtime_files (common_type_attribute))
 	(call terminfo.read_all (common_type_attribute))
 	(call locale.read (common_type_attribute))
@@ -94,7 +97,6 @@
 	(call fs.manage_fuse_subj_type (common_login_type_attribute))
 
 	(call sec.validate_context (common_login_type_attribute))
-	(call sec.get_enforce_mode (common_login_type_attribute))
 
 	(call app.getattr (common_login_type_attribute))
 	(call app.ptrace (common_login_type_attribute))
@@ -110,7 +112,6 @@
 	(call login.send_signull (common_login_type_attribute))
 
 	(call fonts.read (common_login_type_attribute))
-	(call passwords.read (common_login_type_attribute))
 	(call man.read (common_login_type_attribute))
 	(call mime_types.read_data (common_login_type_attribute))
 
@@ -118,6 +119,9 @@
 	(call default_context.read_config_files (common_login_type_attribute))
 	(call file_context.read_config_files (common_login_type_attribute))
 	(call selinux_config.read_config_files (common_login_type_attribute))
+
+	(dontaudit priv_type_attribute self (capability (dac_override)))
+	(allow priv_type_attribute self (capability (dac_read_search)))
 
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type

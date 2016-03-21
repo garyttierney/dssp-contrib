@@ -231,13 +231,13 @@
 	(call lastlog.read_var_log_files (subj))
 	(call pam.link_login_prog_keyring (subj))
 
-	(call sd.auto_subj_type_transition (subj))
-	(call sd.exec (subj))
-	(call sd.read_all_unit (subj))
-	(call sd.manage_unit_runtime (subj))
-	(call sd.manage_unit_dirs (subj))
-	(call sd.manage_unit_lnk_files (subj))
-	(call sd.relabelto_unit_runtime_dirs (subj))
+	(call auto_subj_type_transition (subj))
+	(call exec (subj))
+	(call read_all_unit (subj))
+	(call manage_unit_runtime (subj))
+	(call manage_unit_dirs (subj))
+	(call manage_unit_lnk_files (subj))
+	(call relabelto_unit_runtime_dirs (subj))
 
 	(call sd_fsck.manage_runtime_files (subj))
 
@@ -388,16 +388,16 @@
 
 	(call subj.ptrace_subj_type (daemon_adm_subj_type_attribute))
 
-	(call sd.reload (daemon_adm_subj_type_attribute))
-	(call sd.search_unit (daemon_adm_subj_type_attribute))
-	(call sd.status (daemon_adm_subj_type_attribute))
-	(call sd.stream_connect (daemon_adm_subj_type_attribute))
+	(call reload (daemon_adm_subj_type_attribute))
+	(call manage_unit_dirs (daemon_adm_subj_type_attribute))
+	(call status (daemon_adm_subj_type_attribute))
+	(call stream_connect (daemon_adm_subj_type_attribute))
 
 	(call systemctl.exec (daemon_adm_subj_type_attribute))
 
-	(call sd.control (adm_subj_type_attribute))
-	(call sd.control_unit (adm_subj_type_attribute))
-	(call sd.control_unit_runtime (adm_subj_type_attribute))
+	(call control (adm_subj_type_attribute))
+	(call control_unit (adm_subj_type_attribute))
+	(call control_unit_runtime (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
 		signal signull sigkill sigstop)))

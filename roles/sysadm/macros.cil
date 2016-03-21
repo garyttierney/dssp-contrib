@@ -2,26 +2,6 @@
 	(macro sysadm_subj_type ((type ARG1))
 		(typeattributeset subj_type_attribute ARG1))
 
-	(macro shell_manual_subj_type_transition ((type ARG1))
-		(call cmd.shell_manual_subj_type_transition (ARG1 subj)))
-
-	(macro sysadm_userrole ((user ARG1))
-		(userrole ARG1 role))
-
-	(macro sysadm_roleallow ((role ARG1))
-		(roleallow ARG1 role))
-
-	(blockinherit subj.send_signal_blk)
-	(blockinherit subj.rw_inherited_fifo_files_blk)
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-	(blockinherit subj.use_fd_blk)
-
-	(macro cmd_auto_subj_type_transition ((type ARG1))
-		(call cmd.auto_subj_type_transition (ARG1 subj)))
-
-	(macro shell_auto_subj_type_transition ((type ARG1))
-		(call cmd.shell_auto_subj_type_transition (ARG1 subj)))
-
 	(macro home_cmd_auto_subj_type_transition ((type ARG1))
 		(call usersubj.home_cmd_auto_subj_type_transition (ARG1 subj)))
 

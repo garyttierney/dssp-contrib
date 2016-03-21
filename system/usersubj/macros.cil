@@ -3203,6 +3203,9 @@
 		(call file.del_entry_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file delete_file_perms))
 
+	(macro dontaudit_rw_var_spool_user_files ((type ARG1))
+		(dontaudit ARG1 var_spool_user.var_spool_file rw_file_perms))
+
 	(macro rw_var_spool_user_files ((type ARG1))
 		(call file.search_var_spool (ARG1))
 		(allow ARG1 var_spool_user.var_spool_file rw_file_perms))

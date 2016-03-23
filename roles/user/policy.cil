@@ -1,6 +1,7 @@
 (block user
 	(typeattribute subj_type_attribute)
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute systemctl_auto_type_transition_subj_type_attribute)
 	(typeattribute
 		xinit_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute dbus_send_auto_type_transition_subj_type_attribute)
@@ -282,6 +283,10 @@
 		(call syndaemon.run (subj_type_attribute role)))
 
 	(optional user_optional_systemctl
+		(call systemctl.cmd_obj_entry_subj (subj))
+		(call systemctl.spec_auto_subj_type_transition
+			(systemctl_auto_type_transition_subj_type_attribute
+				subj))
 		(call systemctl.exec (subj)))
 
 	(optional user_optional_tetex

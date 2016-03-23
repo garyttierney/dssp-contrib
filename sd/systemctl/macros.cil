@@ -43,6 +43,9 @@
 		(allow ARG1 subj (process (noatsecure signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
 
+	(macro cmd_obj_entry_subj ((type ARG1))
+		(call subj.entry (ARG1 cmd_file)))
+
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (noatsecure signal)))
 

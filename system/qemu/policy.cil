@@ -20,9 +20,8 @@
 
 	(roleattributeset role_attribute sys.role)
 
-	(dontaudit subj_type_attribute self (capability (dac_override)))
 	(allow subj_type_attribute self (capability (setuid setgid net_admin
-		dac_read_search)))
+		dac_override)))
 	(allow subj_type_attribute self (process (getsched)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 	(allow subj_type_attribute self create_unix_stream_stream_socket_perms)

@@ -1231,7 +1231,10 @@
 	(filecon "/root/\.steampid" symlink root_steam_home)
 	(filecon "/root/\.config/cef_user_data(/.*)?" any
 		root_steam_home_config)
+	(filecon "/root/\.config/unity3d(/.*)?" any root_steam_home_config)
 	(filecon "/root/\.local/share/Aspyr(/.*)?" any root_steam_home_data)
+	(filecon "/root/\.local/share/Starbreeze(/.*)?" any
+		root_steam_home_data)
 	(filecon "/root/\.local/share/Steam(/.*)?" any root_steam_home_data))
 
 (optional sysadm_tp_home_optional_tp

@@ -34,6 +34,9 @@
 	(macro exec_all ((type ARG1))
 		(call can_exec (ARG1 cmd_obj_type_attribute)))
 
+	(macro dontaudit_getattr_all_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_obj_type_attribute (file (getattr))))
+
 	(macro getattr ((type ARG1))
 		(allow ARG1 subj_type_attribute (process (getattr))))
 

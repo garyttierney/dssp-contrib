@@ -18,7 +18,6 @@
 	(call chronyd.dgram_send (subj))
 
 	(allow subj self (capability (dac_override)))
-	(allow subj self create_unix_dgram_stream_socket_perms)
 
 	(call sys.read_crypto_sysctl_files (subj))
 
@@ -102,6 +101,8 @@
 	(call net.udp_bind_generic_node (subj))
 
 	(call term.use_inherited_unallocated_ttys (subj))
+
+	(call chronyc.dgram_send (subj))
 
 	(call locale.read (subj))
 

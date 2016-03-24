@@ -75,6 +75,10 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro dgram_send ((type ARG1))
+		(call chronyd.search_runtime (ARG1))
+		(call dgram_send_pattern (ARG1 runtime_file runtime_file subj)))
+
 	(macro manage_runtime_sock_files ((type ARG1))
 		(call chronyd.rw_runtime_dirs (ARG1))
 		(allow ARG1 runtime_file manage_sock_file_perms))

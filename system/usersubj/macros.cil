@@ -2307,6 +2307,14 @@
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user.home_user_file manage_dir_perms))
 
+	(macro reparent_home_user ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_user.home_user_file (dir (reparent))))
+
+	(macro setattr_home_user_dirs ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_user.home_user_file (dir (setattr))))
+
 	(macro getattr_home_user ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_user.home_user_file (file (getattr)))
@@ -2895,6 +2903,10 @@
 		(call search_home_data (ARG1))
 		(allow ARG1 home_cmd.home_user_file search_dir_perms))
 
+	(macro reparent_home_cmd ((type ARG1))
+		(call search_home_data (ARG1))
+		(allow ARG1 home_cmd.home_user_file (dir (reparent))))
+
 	(macro list_home_cmd ((type ARG1))
 		(call search_home_data (ARG1))
 		(allow ARG1 home_cmd.home_user_file list_dir_perms)
@@ -2904,6 +2916,10 @@
 		(call search_home_data (ARG1))
 		(call manage_dirs_pattern (ARG1 home_cmd.home_user_file
 			home_cmd.home_user_file)))
+
+	(macro setattr_home_cmd_dirs ((type ARG1))
+		(call search_home_data (ARG1))
+		(allow ARG1 home_cmd.home_user_file (dir (setattr))))
 
 	(macro read_home_cmd_files ((type ARG1))
 		(call search_home_data (ARG1))

@@ -35,7 +35,9 @@
 	(call sec.list_fs (subj))
 
 	(call passwords.manage (subj))
-	(call shadow.read (subj))
+	(call shadow.manage (subj))
+
+	(call nss.client_subj_type (subj))
 
 	(call sd.log_parse_env_subj_type (subj))
 

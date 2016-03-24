@@ -153,6 +153,7 @@
 	(call sys.send_signal_invalid (subj))
 	(call sys.send_signull_invalid (subj))
 	(call sys.use_fd (subj))
+	(call sys.write_usermodehelper_sysctl_files (subj))
 
 	(call mls.priv_range_trans_subj_type (subj))
 
@@ -222,6 +223,7 @@
 
 	(call fstab.read (subj))
 	(call modules.read (subj))
+	(call modules_dep.getattr_files (subj))
 	(call utmp.rw_runtime_files (subj))
 	(call wtmp.write_var_log_files (subj))
 

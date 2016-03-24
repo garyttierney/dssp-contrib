@@ -677,6 +677,10 @@
 		(call obj_type_transition_pattern (ARG1 file ARG2 ARG3 ARG4))))
 
 (in modules_dep
+	(macro getattr_files ((type ARG1))
+		(call modules.search (ARG1))
+		(allow ARG1 file (file (getattr))))
+
 	(macro read_files ((type ARG1))
 		(call modules.search (ARG1))
 		(allow ARG1 file read_file_perms))

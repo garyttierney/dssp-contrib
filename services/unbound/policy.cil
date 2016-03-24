@@ -35,7 +35,7 @@
 	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self (capability (dac_override chown setuid setgid
-		sys_resource)))
+		sys_resource net_raw net_admin)))
 	(allow subj self (process (setrlimit)))
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self create_udp_socket_perms)

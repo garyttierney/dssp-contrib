@@ -28,6 +28,7 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self (process (setfscreate)))
 
 	(call dev.read_urandom (subj))

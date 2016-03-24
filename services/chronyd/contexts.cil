@@ -18,7 +18,8 @@
 	(filecon "/usr/libexec/chrony-helper" file cmd_file_context))
 
 (in chronyc
-	(filecon "/usr/bin/chronyc" file cmd_file_context))
+	(filecon "/usr/bin/chronyc" file cmd_file_context)
+	(filecon "/var/run/chrony/chronyc\..*\.sock" socket runtime_file_context))
 
 (in chrony_cmdmon
 	(portcon "tcp" 323 port_obj_context)

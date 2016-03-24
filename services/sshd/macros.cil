@@ -283,6 +283,35 @@
 		(call ssh_client.config_obj_type_transition (subj
 			sshd_key.file file "*"))
 
+		(allow subj self (capability (chown fsetid)))
+		(allow subj self rw_fifo_file_perms)
+
+		(call sys.read_crypto_sysctl_files (subj))
+
+		(call cmd.audit_read_access_shell_files (subj))
+		(call cmd.exec (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call file.read_config_files (subj))
+
+		(call fs.getattr_all_fs (subj))
+		(call fs.list_rootfs (subj))
+		(call fs.read_devtmpfs_lnk_files (subj))
+
+		(call cert.read (subj))
+		(call locale.read (subj))
+
+		(call mount.exec (subj))
+
+		(call nss.client_subj_type (subj))
+
+		(call file_context.read_config_files (subj))
+		(call selinux_config.read_config_files (subj))
+		(call setfiles.exec (subj))
+
+		(call ssh_keygen.exec (subj))
+
 		(call sshd.read_config_files (subj))
 
 		(optional sshd_keygen_optional_sd
@@ -319,12 +348,20 @@
 
 		(roletype sys.role subj)
 
+		(allow subj self (capability (sys_chroot setuid setgid)))
+		(allow subj self (process (setrlimit)))
+		(allow subj self create_unix_dgram_socket_perms)
+
 		(allow subj sshd.subj (fd (use)))
 
 		(allow subj sshd.subj rw_inherited_fifo_file_perms)
 		(allow subj sshd.subj rw_tcp_socket_perms)
 		(allow subj sshd.subj rw_inherited_unix_dgram_socket_perms)
-		(allow subj sshd.subj rw_inherited_unix_stream_socket_perms)))
+		(allow subj sshd.subj rw_inherited_unix_stream_socket_perms)
+
+		(call file.search_var (subj))
+
+		(call locale.read (subj))))
 
 (in sshd
 	(blockinherit net.tcp_connect_all_ports_blk)

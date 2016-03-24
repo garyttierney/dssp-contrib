@@ -9,7 +9,16 @@
 
 	(roletype role_attribute subj)
 
+	(blockinherit file.runtime_obj_blk)
+
+	(call manage_runtime_sock_files (subj))
+	(call chronyd_runtime_obj_type_transition_runtime (subj))
+
 	(call chronyd.read_config_files (subj))
+	(call chronyd.dgram_send (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self create_unix_dgram_stream_socket_perms)
 
 	(call sys.read_crypto_sysctl_files (subj))
 

@@ -208,6 +208,7 @@
 
 	(optional sysadm_optional_chronyd
 		(call chronyd.adm (subj role))
+		(call chronyc.manage_runtime_sock_files (subj))
 		(call chronyc.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_colord

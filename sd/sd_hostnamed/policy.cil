@@ -7,7 +7,6 @@
 	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (sys_admin)))
-	(allow subj self (process (setfscreate)))
 
 	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
@@ -19,7 +18,7 @@
 	(call fs.read_sysfs (subj))
 	(call fs.search_tmpfs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call hostname.manage_config_files (subj))
 

@@ -3,7 +3,6 @@
 
 	(allow subj self (capability (sys_boot ipc_lock kill sys_admin
 		sys_chroot dac_override)))
-	(allow subj self (process (setfscreate)))
 	(allow subj self manage_fifo_file_perms)
 
 	(call sys.get_sysvipc_info (subj))
@@ -41,7 +40,7 @@
 	(call fs.unmount_all_fs (subj))
 	(call fs.write_inherited_devpts_chr_files (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.rw_fixed_disk (subj))
 	(call storage.setattr_all (subj))

@@ -15,7 +15,6 @@
 	(call exec (subj))
 
 	(allow subj self (capability (sys_admin sys_rawio dac_override)))
-	(allow subj self (process (setfscreate)))
 
 	(call sys.get_sysvipc_info (subj))
 	(call sys.request_load_module (subj))
@@ -35,6 +34,8 @@
 
 	(call file.manage_lost_found (subj))
 	(call file.mountpoint_obj_type_transition_lost_found (subj))
+
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.manage_all (subj))
 

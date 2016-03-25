@@ -35,7 +35,7 @@
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (fowner fsetid dac_override chown)))
-	(allow subj self (process (getcap setfscreate)))
+	(allow subj self (process (getcap)))
 
 	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.read_net_proc_files (subj))
@@ -59,6 +59,7 @@
 	; i should be able to remove this in the near future:
 		; https://marc.info/?l=selinux&m=144286421512700&w=2
 	(call sec.set_check_req_prot (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call factory.read_data (subj))
 	(call locale.read (subj))

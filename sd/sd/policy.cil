@@ -343,7 +343,7 @@
 		(call exempt.shell_manual_subj_type_transition (subj)))
 
 	(allow subj_type_attribute self (process (getsched setsched setrlimit
-		setfscreate setsockcreate)))
+		setsockcreate)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self (unix_dgram_socket (sendto)))
@@ -365,7 +365,7 @@
 
 	(call sec.compute_access_vector (subj_type_attribute))
 	(call sec.compute_create_context (subj_type_attribute))
-	(call sec.list_fs (subj_type_attribute))
+	(call sec.setfscreate_subj_type (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
 

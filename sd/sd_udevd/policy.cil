@@ -11,7 +11,7 @@
 	(allow subj self (capability (dac_override chown sys_admin net_admin
 		sys_rawio fsetid fowner)))
 	(allow subj self (capability2 (block_suspend)))
-	(allow subj self (process (setfscreate getsched)))
+	(allow subj self (process (getsched)))
 	(allow subj self create_netlink_kobject_uevent_socket_perms)
 	(allow subj self (netlink_route_socket (nlmsg_write)))
 	(allow subj self create_netlink_generic_socket_perms)
@@ -49,7 +49,7 @@
 	(call fs.relabelfrom_devtmpfs_chr_files (subj))
 	(call fs.trace_client_subj_type (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call iptools.exec (subj))
 

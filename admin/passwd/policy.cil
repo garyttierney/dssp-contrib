@@ -7,7 +7,6 @@
 
 	(allow subj_type_attribute self (capability (setuid dac_override chown
 		fsetid)))
-	(allow subj_type_attribute self (process (setfscreate)))
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
@@ -26,7 +25,7 @@
 	(call fs.search_devpts (subj_type_attribute))
 
 	(call sec.compute_access_vector (subj_type_attribute))
-	(call sec.list_fs (subj_type_attribute))
+	(call sec.setfscreate_subj_type (subj_type_attribute))
 
 	(call passwords.manage (subj_type_attribute))
 	(call shadow.manage (subj_type_attribute))

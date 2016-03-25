@@ -30,7 +30,6 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (process (setfscreate)))
 	(allow subj self (capability (chown fsetid dac_override)))
 
 	(call standard.obj_sys_change_exemption_subj_type (subj))
@@ -43,7 +42,7 @@
 
 	(call fs.list_rootfs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call locale.read (subj))
 

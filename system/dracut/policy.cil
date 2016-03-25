@@ -21,7 +21,7 @@
 
 	(allow subj self (capability (dac_override mknod sys_chroot sys_admin
 		sys_resource net_admin)))
-	(allow subj self (process (getsched setfscreate)))
+	(allow subj self (process (getsched)))
 
 	(call sys.list_cpu_sysfs (subj))
 	(call sys.list_memory_sysfs (subj))
@@ -53,7 +53,7 @@
 
 	(call lib.exec_ld_so_files (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.read_all (subj))
 

@@ -12,8 +12,7 @@
 	(allow subj_type_attribute self (capability (net_admin dac_override
 		kill sys_chroot sys_boot setgid setuid sys_admin
 			sys_tty_config)))
-	(allow subj_type_attribute self (process (setfscreate setsched
-		getsched)))
+	(allow subj_type_attribute self (process (setsched getsched)))
 	(allow subj_type_attribute self create_udp_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
@@ -34,6 +33,8 @@
 	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.read_cgroup (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
+
+	(call sec.setfscreate_subj_type (subj_type_attribute))
 
 	(call storage.getattr_all (subj_type_attribute))
 

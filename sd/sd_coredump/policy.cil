@@ -25,7 +25,7 @@
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (setuid setgid setpcap dac_override)))
-	(allow subj self (process (getcap setcap setfscreate)))
+	(allow subj self (process (getcap setcap)))
 
 	(call sys.read_kernel_sysctl_files (subj))
 
@@ -37,6 +37,8 @@
 
 	(call fs.getattr_fs (subj))
 	(call fs.getattr_tmpfs_fs (subj))
+
+	(call sec.setfscreate_subj_type (subj))
 
 	(call subj.ptrace_uncond_subj_type (subj))
 	(call subj.read_state_common_subj (subj))

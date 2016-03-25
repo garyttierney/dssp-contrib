@@ -22,7 +22,6 @@
 
 	(allow subj self (capability (dac_override)))
 	(dontaudit subj self (capability (net_admin)))
-	(allow subj self (process (setfscreate)))
 
 	(call standard.obj_sys_change_exemption_subj_type (subj))
 
@@ -36,7 +35,7 @@
 	(call file.read_data (subj))
 	(call file.relabel_config_files (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call hostname.exec (subj))

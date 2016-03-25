@@ -21,10 +21,9 @@
 	(call manage_runtime_sock_files (subj))
 	(call lvm_runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (process (setfscreate)))
 	(allow subj self create_unix_stream_stream_socket_perms)
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call lvm.manage_runtime_dirs (subj))
 	(call lvm.runtime_obj_type_transition_runtime (subj))

@@ -29,11 +29,10 @@
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (dac_override)))
-	(allow subj self (process (setfscreate)))
 
 	(call dev.read_urandom (subj))
 
-	(call sec.list_fs (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call passwords.manage (subj))
 	(call shadow.manage (subj))

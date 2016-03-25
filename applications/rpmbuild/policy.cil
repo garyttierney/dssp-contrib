@@ -20,7 +20,7 @@
 	(call term.create_pty (subj pty_dev))
 	(allow subj pty_dev rw_term_perms)
 
-	(allow subj self (process (getsched setrlimit setfscreate)))
+	(allow subj self (process (getsched setrlimit)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_cpu_online_sysfs_files (subj))
@@ -38,7 +38,7 @@
 
 	(call fs.getattr_tmpfs_fs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call cert.read (subj))

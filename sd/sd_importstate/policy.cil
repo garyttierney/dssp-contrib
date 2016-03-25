@@ -6,7 +6,6 @@
 	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (sys_admin)))
-	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.exec (subj))
@@ -19,7 +18,7 @@
 
 	(call fs.list_tmpfs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call locale.read (subj))
 	(call network.setattr_config (subj))

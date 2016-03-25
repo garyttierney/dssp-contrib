@@ -6,7 +6,6 @@
 	(roletype role_attribute subj)
 
 	(allow subj self (capability (dac_override)))
-	(allow subj self (process (setfscreate)))
 
 	(call sys.audit_client_subj_type (subj))
 
@@ -15,8 +14,8 @@
 	(call fs.list_devtmpfs (subj))
 	(call fs.search_devpts (subj))
 
-	(call sec.list_fs (subj))
 	(call sec.compute_access_vector (subj))
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call passwords.config_obj_type_transition_passwords (subj "*"))

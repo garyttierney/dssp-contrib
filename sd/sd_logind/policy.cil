@@ -33,7 +33,7 @@
 
 	(allow subj self (capability (chown fowner sys_tty_config sys_admin
 		dac_override)))
-	(allow subj self (process (getcap setfscreate)))
+	(allow subj self (process (getcap)))
 
 	(allow subj client_subj_type_attribute read_file_perms)
 	(allow subj client_subj_type_attribute list_dir_perms)
@@ -70,7 +70,7 @@
 	(call file.manage_runtime_user_dirs (subj))
 	(call file.mounton_runtime_user_dirs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.getattr_all (subj))
 	(call storage.setattr_all (subj))

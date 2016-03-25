@@ -19,7 +19,6 @@
 
 	(allow subj_type_attribute self (capability (dac_override sys_chroot
 		net_admin sys_resource setgid setuid sys_admin fsetid)))
-	(allow subj_type_attribute self (process (setfscreate)))
 
 	(call sys.read_state_files (subj_type_attribute))
 
@@ -31,6 +30,8 @@
 	(call fs.manage_efivarfs_files (subj_type_attribute))
 	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.write_inherited_devpts_chr_files (subj_type_attribute))
+
+	(call sec.setfscreate_subj_type (subj_type_attribute))
 
 	(call term.use_inherited_console (subj_type_attribute))
 

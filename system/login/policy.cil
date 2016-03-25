@@ -32,7 +32,6 @@
 	(allow subj self (capability (kill fsetid fowner sys_tty_config
 		dac_override sys_admin)))
 	(dontaudit subj self (capability (net_admin)))
-	(allow subj self (process (setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.link_keyring (subj))
@@ -43,6 +42,8 @@
 
 	(call file.read_config_files (subj))
 	(call file.read_data_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
 
 	(call term.relabel_unallocated_ttys (subj))
 	(call term.setattr_unallocated_ttys (subj))

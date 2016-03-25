@@ -13,13 +13,14 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self (capability (dac_override net_admin)))
-	(allow subj self (process (setfscreate setexec)))
+	(allow subj self (process (setexec)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.audit_read_access_shell_files (subj))
 
 	(call dev.read_urandom (subj))
 
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call httpd.exec_all (subj))

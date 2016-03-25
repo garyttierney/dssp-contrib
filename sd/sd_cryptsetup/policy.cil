@@ -6,7 +6,6 @@
 	(blockinherit sd.unit_obj_blk)
 
 	(allow subj self (capability (sys_admin ipc_lock)))
-	(allow subj self (process (setfscreate)))
 	(allow subj self create_socket_perms)
 	(allow subj self (socket (accept)))
 	(allow subj self create_sem_perms)
@@ -25,6 +24,8 @@
 	(call fs.trace_client_subj_type (subj))
 
 	(call file.read_config_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.rw_all (subj))
 

@@ -24,7 +24,7 @@
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (chown setuid setgid setpcap)))
-	(allow subj self (process (setfscreate getcap setcap)))
+	(allow subj self (process (getcap setcap)))
 	(allow subj self (tcp_socket (listen accept)))
 
 	(call sys.read_kernel_sysctl_files (subj))
@@ -36,7 +36,7 @@
 	(call net.tcp_bind_generic_node (subj))
 	(call net.udp_bind_generic_node (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call llmnr.tcp_bind_port (subj))
 	(call llmnr.udp_bind_port (subj))

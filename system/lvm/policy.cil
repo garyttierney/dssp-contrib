@@ -32,7 +32,7 @@
 	(call lvm_metadata.manage_config (subj))
 
 	(allow subj self (capability (ipc_lock sys_nice sys_admin)))
-	(allow subj self (process (setfscreate setsched)))
+	(allow subj self (process (setsched)))
 	(allow subj self create_sem_perms)
 
 	(allow subj client_subj_type_attribute read_file_perms)
@@ -56,7 +56,7 @@
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call storage.manage_all (subj))
 

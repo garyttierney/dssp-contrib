@@ -49,7 +49,7 @@
 
 	(allow subj self (capability (dac_override sys_chroot setpcap setgid
 		setuid mknod fsetid sys_admin chown kill fowner net_admin)))
-	(allow subj self (process (getcap setcap setexec setfscreate)))
+	(allow subj self (process (getcap setcap setexec)))
 	(allow subj self create_netlink_route_socket_perms)
 	(allow subj self rw_fifo_file_perms)
 
@@ -123,6 +123,7 @@
 	(call fs.write_cgroup_files (subj))
 
 	(call sec.remount_fs (subj))
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call storage.rw_fixed_disk (subj))

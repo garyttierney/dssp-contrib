@@ -59,9 +59,9 @@
 	(call manage_runtime (subj))
 	(call sd_runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (process (setfscreate)))
-
 	(call file.search_config (subj))
+
+	(call sec.setfscreate_subj_type (subj))
 
 	(call term.use_inherited_unallocated_ttys (subj))
 

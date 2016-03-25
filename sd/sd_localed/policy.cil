@@ -16,8 +16,6 @@
 
 	(call read_config_files (subj))
 
-	(allow subj self (process (setfscreate)))
-
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
@@ -26,7 +24,7 @@
 
 	(call fs.search_tmpfs (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call sd.notify_subj_type (subj))
 	(call sd.log_parse_env_subj_type (subj))

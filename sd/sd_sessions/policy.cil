@@ -5,11 +5,9 @@
 
 	(blockinherit sd.unit_obj_blk)
 
-	(allow subj self (process (setfscreate)))
-
 	(call file.search_config (subj))
 
-	(call sec.get_enforce_mode (subj))
+	(call sec.setfscreate_subj_type (subj))
 
 	(call nologin.manage_runtime_files (subj))
 	(call nologin.runtime_obj_type_transition_runtime (subj))

@@ -126,6 +126,9 @@
 	(call dontaudit_rw_all_home_user (priv_type_attribute))
 	(call dontaudit_rw_var_spool_user_files (priv_type_attribute))
 
+	(call standard.obj_id_change_exemption_subj_type
+		(priv_login_type_attribute))
+
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type
 			(home_user_obj_type_attribute)))

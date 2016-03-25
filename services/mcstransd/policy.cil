@@ -4,6 +4,8 @@
 (block mcstransd
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
+	(typeattribute contains_subj_type_attribute)
+	(typeattribute mls_translate_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -34,6 +36,7 @@
 
 	(allow subj self (capability (sys_resource)))
 	(allow subj self (process (setrlimit getcap setcap)))
+	(allow subj self (context (contains)))
 	(allow subj self (unix_stream_socket (listen accept)))
 	(allow subj self create_netlink_selinux_socket_perms)
 
@@ -51,6 +54,24 @@
 
 	(call selinux_config.read_config (subj))
 
+	(tunableif enable_mls
+		(true
+			(constrain (context (translate))
+			(or (dom h1 h2)
+			(eq t1 mls_translate_subj_type_attribute)))
+
+			(constrain (context (contains))
+			(and (dom h1 h2)
+			(domby l1 l2)))))
+
+	(tunableif enable_rbacsep
+		(true
+			(constrain (context (contains translate))
+			(or (or (or (eq r1 r2)
+			(eq r1 rbacsep.exempt_role_attribute))
+			(eq r2 rbacsep.exempt_role_attribute))
+			(eq t1 rbacsep.exempt_subj_type_attribute)))))
+
 	(optional msctransd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -66,7 +87,10 @@
 	(optional mcstransd_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
+	(allow client_subj_type_attribute subj (context (translate)))
 	(call stream_connect (client_subj_type_attribute))
+
+	(allow contains_subj_type_attribute self (context (contains)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

@@ -121,6 +121,10 @@
 	(call file_context.read_config_files (common_login_type_attribute))
 	(call selinux_config.read_config_files (common_login_type_attribute))
 
+	(optional common_login_type_optional_mcstransd
+		(call mcstransd.contains_subj_type
+			(common_login_type_attribute)))
+
 	(allow priv_type_attribute self (capability (dac_override)))
 
 	(call dontaudit_rw_all_home_user (priv_type_attribute))

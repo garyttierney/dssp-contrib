@@ -8,6 +8,12 @@
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
+	(macro contains_subj_type ((type ARG1))
+		(typeattributeset contains_subj_type_attribute ARG1))
+
+	(macro mls_translate_subj_type ((type ARG1))
+		(typeattributeset mls_translate_subj_type_attribute ARG1))
+
 	(macro search_config ((type ARG1))
 		(call selinux_config.search_config (ARG1))
 		(allow ARG1 config_file search_dir_perms))

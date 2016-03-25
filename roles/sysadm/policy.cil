@@ -510,6 +510,10 @@
 		(call libgweather.home_cache_obj_type_transition_home_cache
 			(subj)))
 
+	(optional sysadm_optional_mcelog
+		(call mcelog.run (subj_type_attribute role))
+		(call mcelog.adm (subj role)))
+
 	(optional sysadm_optional_mutter
 		(call mutter_helper.exec (subj)))
 

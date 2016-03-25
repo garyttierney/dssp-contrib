@@ -25,6 +25,8 @@
 		(call atspi.read_config (subj_type_attribute)))
 
 	(optional subj_type_attribute_optional_sduser
+		(blockinherit sduser.unit_obj_blk)
+
 		(call sduser.stream_accept_all_subj (subj_type_attribute))
 		(call sduser.stream_getopt_all_subj (subj_type_attribute)))
 

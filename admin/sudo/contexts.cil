@@ -4,7 +4,11 @@
 	(filecon "/etc/sudoers\.d(/.*)?" any config_file_context)
 	(filecon "/usr/bin/sudo" file cmd_file_context)
 	(filecon "/var/db/sudo(/.*)?" any var_db_file_context)
-	(filecon "/var/run/sudo(/.*)?" any runtime_file_context))
+	(filecon "/var/db/sudo/lectured" dir var_db_file_context)
+	(filecon "/var/db/sudo/lectured/.*" any ())
+	(filecon "/var/run/sudo(/.*)?" any runtime_file_context)
+	(filecon "/var/run/sudo/ts" dir runtime_file_context)
+	(filecon "/var/run/sudo/ts/.*" any ()))
 
 (in visudo
 	(filecon "/usr/sbin/visudo" file cmd_file_context))

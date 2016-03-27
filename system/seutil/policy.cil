@@ -20,7 +20,10 @@
 	(call selinux_config.read_config_files (subj))
 	(call policy_config.read_files (subj))
 
-	(call locale.read (subj)))
+	(call locale.read (subj))
+
+	(optional load_policy_optional_sd
+		(call sd.forked_subj_type (subj))))
 
 (block matchpathcon
 	(roleattribute role_attribute)

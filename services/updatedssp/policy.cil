@@ -1,4 +1,6 @@
 (block updatedssp
+	(typeattribute obj_type_attribute)
+
 	(typeattribute adm_subj_type_attribute)
 
 	(blockinherit subj.common_subj_blk)
@@ -8,6 +10,13 @@
 	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self rw_fifo_file_perms)
 
@@ -65,13 +74,17 @@
 
 		(blockinherit sd.unit_obj_blk)
 
+		(typeattributeset obj_type_attribute unit_file)
+
 		(allow adm_subj_type_attribute unit_file (service (stop status
-			disable enable reload start)))
-
-		(allow adm_subj_type_attribute unit_file manage_file_perms)
-
-		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+			disable enable reload start))))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
-	(call ps_subj_pattern (adm_subj_type_attribute subj)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call fs.search_tmpfs (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

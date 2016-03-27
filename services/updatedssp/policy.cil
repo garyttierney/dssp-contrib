@@ -1,0 +1,48 @@
+(block updatedssp
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(call git.exec (subj))
+
+	(tunableif enable_mls
+		(false
+			(call
+				file_context.default_context_obj_type_transition_config
+					(subj))
+			(call
+				policy_config.selinux_config_obj_type_transition_policy_config
+					(subj))
+			(call default_context.selinux_config_obj_type_transition_config
+					(subj))
+			(call selinux_config.config_obj_type_transition_config
+					(subj))
+			(call default_context.manage_config (subj))
+			(call file_context.manage_config (subj))
+			(call policy_config.manage (subj))
+			(call selinux_config.manage_config (subj))
+
+			(call load_policy.auto_subj_type_transition (subj))
+			(call setfiles.auto_subj_type_transition (subj))))
+
+	(optional updatedssp_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

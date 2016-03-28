@@ -27,6 +27,8 @@
 	(call dev.read_random (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
+	(call file.dontaudit_search_all (subj_type_attribute))
+
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 
 	(call client_subj_type (subj_type_attribute))

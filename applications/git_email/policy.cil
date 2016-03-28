@@ -10,6 +10,11 @@
 	(call manage_home_user_files (subj_type_attribute))
 	(call git_home_user_obj_type_transition_home (subj_type_attribute))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call dev.read_urandom (subj_type_attribute))

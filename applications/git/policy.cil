@@ -62,6 +62,9 @@
 	(call usersubj.home_dir_obj_type_transition_home_cert
 		(subj_type_attribute))
 
+	(optional git_subj_type_optional_git_email
+		(call git_email.manage_tmpfs_user_files (subj_type_attribute)))
+
 	(optional git_subj_type_optional_http
 		(call http.tcp_connect_port (subj_type_attribute)))
 

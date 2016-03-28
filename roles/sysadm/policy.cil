@@ -1582,6 +1582,12 @@
 		(call sysadm_git.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_git_email
+		(call git_email.manage_home_user_files (subj))
+		(call git_email.relabel_home_user_files (subj))
+
+		(call git_email.manage_tmpfs_user (subj))
+		(call git_email.relabel_tmpfs_user (subj))
+
 		(call sysadm_git_email.role_pattern (role
 			subj_type_attribute)))
 

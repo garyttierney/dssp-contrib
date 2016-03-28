@@ -176,6 +176,9 @@
 		(call libgweather.home_cache_obj_type_transition_home_cache
 			(subj)))
 
+	(optional user_optional_logger
+		(call logger.run (subj_type_attribute role)))
+
 	(optional user_optional_lirc
 		(call lirc.run (subj_type_attribute role))
 		(call lirc_lsplugins.run (subj_type_attribute role)))

@@ -1,0 +1,24 @@
+(block logger
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.read_home_user_files (subj))
+	(call usersubj.read_inherited_tmpfs_user_files (subj))
+
+	(optional logger_optional_sd
+		(call sd.getattr_unit_runtime_dirs (subj))
+		(call sd.forked_subj_type (subj)))
+
+	(optional logger_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional logger_optional_syslog
+		(call syslog.tcp_connect_port (subj))
+		(call syslog_tls.tcp_connect_port (subj))))

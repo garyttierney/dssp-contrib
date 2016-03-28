@@ -43,6 +43,7 @@
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 
 	(call dev.read_event (subj_type_attribute))
+	(call dev.rw_inherited_dri (subj_type_attribute))
 	(call dev.rw_sound (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))

@@ -14,6 +14,11 @@
 		(call file.search_config (ARG1))
 		(call read_files_pattern (ARG1 file file)))
 
+	(macro dontaudit_audit_access ((type ARG1))
+		(dontaudit ARG1 file (dir (audit_access)))
+		(dontaudit ARG1 file (file (audit_access)))
+		(dontaudit ARG1 file (lnk_file (audit_access))))
+
 	(macro read_lnk_files ((type ARG1))
 		(call file.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 file file)))

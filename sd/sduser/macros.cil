@@ -146,10 +146,11 @@
 
 		(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
 		(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
-
-		(call ps_subj_pattern (ARG2 ARG3))
+		(call ps_subj_pattern (ARG3 ARG2))
 
 		(allow ARG2 ARG3 (process (signal)))
+		(call ps_subj_pattern (ARG2 ARG3))
+
 
 		(call cmd.auto_subj_type_transition (ARG3 ARG2))
 		(call cmd.shell_auto_subj_type_transition (ARG3 ARG2))

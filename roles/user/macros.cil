@@ -1,17 +1,4 @@
 (in user
-	(blockinherit subj.rw_inherited_fifo_files_blk)
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-	(blockinherit subj.use_fd_blk)
-
-	(macro cmd_auto_subj_type_transition ((type ARG1))
-		(call cmd.auto_subj_type_transition (ARG1 subj)))
-
-	(macro shell_auto_subj_type_transition ((type ARG1))
-		(call cmd.shell_auto_subj_type_transition (ARG1 subj)))
-
-	(macro home_cmd_auto_subj_type_transition ((type ARG1))
-		(call usersubj.home_cmd_auto_subj_type_transition (ARG1 subj)))
-
 	(macro dbus_send_auto_type_transition_subj_type ((type ARG1))
 		(typeattributeset
 			dbus_send_auto_type_transition_subj_type_attribute

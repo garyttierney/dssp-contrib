@@ -824,6 +824,9 @@
 		(call screen.manage_config_files (subj))
 		(call screen.manage_runtime (subj)))
 
+	(optional sysadm_optional_script
+		(call script.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_sctl
 		(call sctl.manage_config (subj))
 		(call sctl.run (subj_type_attribute role)))

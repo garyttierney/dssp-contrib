@@ -1,0 +1,13 @@
+(block script
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call usersubj.create_ptys (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional script_optional_utempter
+		(call utempter.run (subj role_attribute))))

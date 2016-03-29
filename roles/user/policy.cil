@@ -270,6 +270,9 @@
 		(call scdaemon.manage_tmpfs_user (subj))
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
+	(optional user_optional_script
+		(call script.run (subj_type_attribute role)))
+
 	(optional user_optional_ssh_client
 		(call ssh_sftpserver.run (subj_type_attribute role)))
 

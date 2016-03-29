@@ -22,6 +22,8 @@
 
 	(call standard.obj_change_exemption_subj_type (subj))
 
+	(call sys.read_cpu_sysfs_files (subj))
+
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
 

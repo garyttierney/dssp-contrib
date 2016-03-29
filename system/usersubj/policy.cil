@@ -1,10 +1,18 @@
 (block usersubj
 	(typeattribute type_attribute)
 	(typeattribute common_type_attribute)
+
 	(typeattribute priv_type_attribute)
+	(typeattribute common_priv_type_attribute)
+
 	(typeattribute unpriv_type_attribute)
+
+	(typeattribute login_type_attribute)
 	(typeattribute common_login_type_attribute)
+
 	(typeattribute priv_login_type_attribute)
+	(typeattribute common_priv_login_type_attribute)
+
 	(typeattribute unpriv_login_type_attribute)
 
 	(typeattribute home_user_obj_type_attribute)
@@ -72,12 +80,14 @@
 
 	(optional usersubj_priv_type_optional_sudo
 		(call rw_inherited_fifo_files_unpriv_subj
-			(priv_type_attribute))
+			(common_priv_type_attribute))
 		(call rw_inherited_unix_stream_sockets_unpriv_subj
-			(priv_type_attribute))
-		(call sudo.send_signal_all_subj (priv_type_attribute)))
+			(common_priv_type_attribute))
+		(call sudo.send_signal_all_subj (common_priv_type_attribute)))
 
 	(allow common_login_type_attribute self create_unix_dgram_socket_perms)
+
+	(call login_type (common_login_type_attribute))
 
 	(call obj_template (common_login_type_attribute))
 
@@ -129,22 +139,26 @@
 		(call sd.dontaudit_search_runtime
 			(common_login_type_attribute)))
 
-	(allow priv_type_attribute self (capability (dac_override)))
+	(allow common_priv_type_attribute self (capability (dac_override)))
 
-	(call dontaudit_rw_all_home_user (priv_type_attribute))
-	(call dontaudit_rw_var_spool_user_files (priv_type_attribute))
+	(call priv_type (common_priv_type_attribute))
+
+	(call dontaudit_rw_all_home_user (common_priv_type_attribute))
+	(call dontaudit_rw_var_spool_user_files (common_priv_type_attribute))
+
+	(call priv_login_type (common_priv_login_type_attribute))
 
 	(call standard.obj_id_change_exemption_subj_type
-		(priv_login_type_attribute))
+		(common_priv_login_type_attribute))
 
 	(optional usersubj_optional_sd_tmpfiles
 		(call sd_tmpfiles.obj_exception_type
 			(home_user_obj_type_attribute)))
 
-	(typeattributeset unpriv_type_attribute (and (common_type_attribute)
+	(typeattributeset unpriv_type_attribute (and (type_attribute)
 		(not (priv_type_attribute))))
 	(typeattributeset unpriv_login_type_attribute (and
-		(common_login_type_attribute) (not
+		(login_type_attribute) (not
 			(priv_login_type_attribute))))
 
 	(call create_home_cache_dirs (home_cache_creator_subj_type_attribute))

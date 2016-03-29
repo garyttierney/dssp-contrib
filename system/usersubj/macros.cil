@@ -40,12 +40,27 @@
 	(block base_priv_user_blk
 		(blockabstract base_priv_user_blk)
 
-		(blockinherit usersubj.usersubj_common_blk)
+		(blockinherit usersubj.usersubj_blk)
 
 		(role role)
 		(roletype role subj)
 
 		(call usersubj.priv_type (subj))
+
+		(tunableif enable_rbacsep
+			(true
+				(call sys.sys_role (role))
+				(call rbacsep.exempt_role (role)))))
+
+	(block base_common_priv_user_blk
+		(blockabstract base_common_priv_user_blk)
+
+		(blockinherit usersubj.usersubj_common_blk)
+
+		(role role)
+		(roletype role subj)
+
+		(call usersubj.common_priv_type (subj))
 
 		(tunableif enable_rbacsep
 			(true
@@ -77,6 +92,8 @@
 
 		(blockinherit usersubj.base_user_blk)
 
+		(call usersubj.login_type (subj))
+
 		(call sys.roleallow_role (role))
 
 		(tunableif enable_rbacsep
@@ -107,8 +124,25 @@
 
 		(blockinherit usersubj.base_priv_user_blk)
 
-		(call usersubj.common_login_type (subj))
+		(call usersubj.login_type (subj))
 		(call usersubj.priv_login_type (subj))
+
+		(call sys.roleallow_role (role))
+
+		(tunableif enable_rbacsep
+			(false
+				(userrole id object_r))))
+
+	(block base_common_priv_login_blk
+		(blockabstract base_common_priv_login_blk)
+
+		(user id)
+		(userrole id role)
+
+		(blockinherit usersubj.base_common_priv_user_blk)
+
+		(call usersubj.common_login_type (subj))
+		(call usersubj.common_priv_login_type (subj))
 
 		(call sys.roleallow_role (role))
 
@@ -121,21 +155,28 @@
 
 		(blockinherit usersubj.base_login_blk)
 
-		(call usersubj.mls (id systemlow (systemlow systemhigh))))
+		(call usersubj.spec_mls (id systemlow (systemlow systemhigh))))
 
 	(block common_login_blk
 		(blockabstract common_login_blk)
 
 		(blockinherit usersubj.base_common_login_blk)
 
-		(call usersubj.mls (id systemlow (systemlow systemhigh))))
+		(call usersubj.spec_mls (id systemlow (systemlow systemhigh))))
 
 	(block priv_login_blk
 		(blockabstract priv_login_blk)
 
 		(blockinherit usersubj.base_priv_login_blk)
 
-		(call usersubj.mls (id systemlow (systemlow systemhigh))))
+		(call usersubj.spec_mls (id systemlow (systemlow systemhigh))))
+
+	(block common_priv_login_blk
+		(blockabstract common_priv_login_blk)
+
+		(blockinherit usersubj.base_common_priv_login_blk)
+
+		(call usersubj.spec_mls (id systemlow (systemlow systemhigh))))
 
 	(block home_cache_obj_blk
 		(blockabstract home_cache_obj_blk)
@@ -1485,13 +1526,22 @@
 	(macro priv_type ((type ARG1))
 		(typeattributeset priv_type_attribute ARG1))
 
+	(macro common_priv_type ((type ARG1))
+		(typeattributeset common_priv_type_attribute ARG1))
+
+	(macro login_type ((type ARG1))
+		(typeattributeset login_type_attribute ARG1))
+
 	(macro common_login_type ((type ARG1))
 		(typeattributeset common_login_type_attribute ARG1))
 
 	(macro priv_login_type ((type ARG1))
 		(typeattributeset priv_login_type_attribute ARG1))
 
-	(macro base ((role ARG1)(type ARG2))
+	(macro common_priv_login_type ((type ARG1))
+		(typeattributeset common_priv_login_type_attribute ARG1))
+
+	(macro spec_base ((role ARG1)(type ARG2))
 		(call subj.subj_type (ARG2))
 		(call type (ARG2))
 
@@ -1501,7 +1551,7 @@
 			(true
 				(call sys.sys_role (ARG1)))))
 
-	(macro base_common ((role ARG1)(type ARG2))
+	(macro spec_base_common ((role ARG1)(type ARG2))
 		(call subj.common_subj_type (ARG2))
 		(call common_type (ARG2))
 
@@ -1511,9 +1561,9 @@
 			(true
 				(call sys.sys_role (ARG1)))))
 
-	(macro base_priv ((role ARG1)(type ARG2))
-		(call subj.common_subj_type (ARG2))
-		(call common_type (ARG2))
+	(macro spec_base_priv ((role ARG1)(type ARG2))
+		(call subj.subj_type (ARG2))
+		(call type (ARG2))
 		(call priv_type (ARG2))
 
 		(roletype ARG1 ARG2)
@@ -1523,8 +1573,21 @@
 				(call sys.sys_role (ARG1))
 				(call rbacsep.exempt_role (ARG1)))))
 
-	(macro base_login ((user ARG1)(role ARG2)(type ARG3))
-		(call base (ARG2 ARG3))
+	(macro spec_base_common_priv ((role ARG1)(type ARG2))
+		(call subj.common_subj_type (ARG2))
+		(call common_type (ARG2))
+		(call common_priv_type (ARG2))
+
+		(roletype ARG1 ARG2)
+
+		(tunableif enable_rbacsep
+			(true
+				(call sys.sys_role (ARG1))
+				(call rbacsep.exempt_role (ARG1)))))
+
+	(macro spec_base_login ((user ARG1)(role ARG2)(type ARG3))
+		(call spec_base (ARG2 ARG3))
+		(call login_type (ARG3))
 
 		(call sys.roleallow_role (ARG2))
 		(userrole ARG1 ARG2)
@@ -1533,8 +1596,8 @@
 			(false
 				(userrole ARG1 object_r))))
 
-	(macro base_common_login ((user ARG1)(role ARG2)(type ARG3))
-		(call base_common (ARG2 ARG3))
+	(macro spec_base_common_login ((user ARG1)(role ARG2)(type ARG3))
+		(call spec_base_common (ARG2 ARG3))
 		(call common_login_type (ARG3))
 
 		(call sys.roleallow_role (ARG2))
@@ -1544,9 +1607,9 @@
 			(false
 				(userrole ARG1 object_r))))
 
-	(macro base_priv_login ((user ARG1)(role ARG2)(type ARG3))
-		(call base_priv (ARG2 ARG3))
-		(call common_login_type (ARG3))
+	(macro spec_base_priv_login ((user ARG1)(role ARG2)(type ARG3))
+		(call spec_base_priv (ARG2 ARG3))
+		(call login_type (ARG3))
 		(call priv_login_type (ARG3))
 
 		(call sys.roleallow_role (ARG2))
@@ -1556,19 +1619,41 @@
 			(false
 				(userrole ARG1 object_r))))
 
-	(macro mls ((user ARG1)(level ARG2)(levelrange ARG3))
+	(macro spec_base_common_priv_login ((user ARG1)(role ARG2)(type ARG3))
+		(call spec_base_common_priv (ARG2 ARG3))
+		(call common_login_type (ARG3))
+		(call common_priv_login_type (ARG3))
+
+		(call sys.roleallow_role (ARG2))
+		(userrole ARG1 ARG2)
+
+		(tunableif enable_rbacsep
+			(false
+				(userrole ARG1 object_r))))
+
+	(macro spec_mls ((user ARG1)(level ARG2)(levelrange ARG3))
 		(userlevel ARG1 ARG2)
 		(userrange ARG1 ARG3))
 
-	(macro common_login ((user ARG1)(role ARG2)(type ARG3)(level
+	(macro spec_login ((user ARG1)(role ARG2)(type ARG3)(level
 		ARG4)(levelrange ARG5))
-		(call base_common_login (ARG1 ARG2 ARG3))
-		(call mls (ARG1 ARG4 ARG5)))
+		(call spec_base_login (ARG1 ARG2 ARG3))
+		(call spec_mls (ARG1 ARG4 ARG5)))
 
-	(macro priv_login ((user ARG1)(role ARG2)(type ARG3)(level
+	(macro spec_common_login ((user ARG1)(role ARG2)(type ARG3)(level
 		ARG4)(levelrange ARG5))
-		(call base_priv_login (ARG1 ARG2 ARG3))
-		(call mls (ARG1 ARG4 ARG5)))
+		(call spec_base_common_login (ARG1 ARG2 ARG3))
+		(call spec_mls (ARG1 ARG4 ARG5)))
+
+	(macro spec_priv_login ((user ARG1)(role ARG2)(type ARG3)(level
+		ARG4)(levelrange ARG5))
+		(call spec_base_priv_login (ARG1 ARG2 ARG3))
+		(call spec_mls (ARG1 ARG4 ARG5)))
+
+	(macro spec_common_priv_login ((user ARG1)(role ARG2)(type ARG3)(level
+		ARG4)(levelrange ARG5))
+		(call spec_base_common_priv_login (ARG1 ARG2 ARG3))
+		(call spec_mls (ARG1 ARG4 ARG5)))
 
 	(macro obj_template ((type ARG1))
 		(call home_cmd_template (ARG1))

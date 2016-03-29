@@ -1,13 +1,9 @@
 (block sysadm
-	(typeattribute subj_type_attribute)
-
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute
 		xinit_home_user_auto_type_transition_subj_type_attribute)
 
 	(blockinherit usersubj.common_priv_login_blk)
-
-	(typeattributeset subj_type_attribute subj)
 
 	(dontaudit subj self (capability (sys_ptrace)))
 	(allow subj self (capability (dac_override chown fowner fsetid setfcap

@@ -1,5 +1,4 @@
 (block user
-	(typeattribute subj_type_attribute)
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute systemctl_auto_type_transition_subj_type_attribute)
 	(typeattribute
@@ -7,8 +6,6 @@
 	(typeattribute dbus_send_auto_type_transition_subj_type_attribute)
 
 	(blockinherit usersubj.common_login_blk)
-
-	(typeattributeset subj_type_attribute subj)
 
 	(optional user_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))

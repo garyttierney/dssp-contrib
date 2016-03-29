@@ -92,13 +92,19 @@
 
 		(blockinherit usersubj.base_user_blk)
 
+		(typeattribute subj_type_attribute)
+		(typeattributeset subj_type_attribute subj)
+
 		(call usersubj.login_type (subj))
 
 		(call sys.roleallow_role (role))
 
 		(tunableif enable_rbacsep
 			(false
-				(userrole id object_r))))
+				(userrole id object_r)))
+
+		(macro subj_type ((type ARG1))
+			(typeattributeset subj_type_attribute ARG1)))
 
 	(block base_common_login_blk
 		(blockabstract base_common_login_blk)
@@ -108,13 +114,19 @@
 
 		(blockinherit usersubj.base_common_user_blk)
 
+		(typeattribute subj_type_attribute)
+		(typeattributeset subj_type_attribute subj)
+
 		(call usersubj.common_login_type (subj))
 
 		(call sys.roleallow_role (role))
 
 		(tunableif enable_rbacsep
 			(false
-				(userrole id object_r))))
+				(userrole id object_r)))
+
+		(macro subj_type ((type ARG1))
+			(typeattributeset subj_type_attribute ARG1)))
 
 	(block base_priv_login_blk
 		(blockabstract base_priv_login_blk)
@@ -124,6 +136,9 @@
 
 		(blockinherit usersubj.base_priv_user_blk)
 
+		(typeattribute subj_type_attribute)
+		(typeattributeset subj_type_attribute subj)
+
 		(call usersubj.login_type (subj))
 		(call usersubj.priv_login_type (subj))
 
@@ -131,7 +146,10 @@
 
 		(tunableif enable_rbacsep
 			(false
-				(userrole id object_r))))
+				(userrole id object_r)))
+
+		(macro subj_type ((type ARG1))
+			(typeattributeset subj_type_attribute ARG1)))
 
 	(block base_common_priv_login_blk
 		(blockabstract base_common_priv_login_blk)
@@ -141,6 +159,9 @@
 
 		(blockinherit usersubj.base_common_priv_user_blk)
 
+		(typeattribute subj_type_attribute)
+		(typeattributeset subj_type_attribute subj)
+
 		(call usersubj.common_login_type (subj))
 		(call usersubj.common_priv_login_type (subj))
 
@@ -148,7 +169,10 @@
 
 		(tunableif enable_rbacsep
 			(false
-				(userrole id object_r))))
+				(userrole id object_r)))
+
+		(macro subj_type ((type ARG1))
+			(typeattributeset subj_type_attribute ARG1)))
 
 	(block login_blk
 		(blockabstract login_blk)

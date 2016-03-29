@@ -16,6 +16,8 @@
 
 	(call nss.client_subj_type (subj))
 
+	(call usersubj.write_inherited_home_user_files (subj))
+
 	(optional utempter_optional_gsh
 		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj)))
 

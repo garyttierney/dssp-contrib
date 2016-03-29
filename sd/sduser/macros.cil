@@ -146,7 +146,8 @@
 
 		(allow ARG3 ARG2 (process (signal signull sigkill sigstop)))
 		(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
-		(call ps_subj_pattern (ARG3 ARG2))
+
+		(call ps_subj_pattern (ARG2 ARG3))
 
 		(allow ARG2 ARG3 (process (signal)))
 

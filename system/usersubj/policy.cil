@@ -131,6 +131,10 @@
 	(call file_context.read_config_files (common_login_type_attribute))
 	(call selinux_config.read_config_files (common_login_type_attribute))
 
+	(optional common_login_type_optional_pcitools
+		(call pcitools.dontaudit_exec_cmd_files
+			(common_login_type_attribute)))
+
 	(optional common_login_type_optional_mcstransd
 		(call mcstransd.contains_subj_type
 			(common_login_type_attribute)))

@@ -72,7 +72,7 @@
 	(call systemctl.getattr_all_subj (subj_type_attribute))
 	(call systemctl.read_state_all_subj (subj_type_attribute))
 
-	(call usersubj.getattr_common_subj (subj_type_attribute))
+	(call usersubj.getattr_subj (subj_type_attribute))
 	(call usersubj.create_home_config_dirs (subj_type_attribute))
 	(call usersubj.create_home_data_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_config
@@ -84,7 +84,7 @@
 	(call usersubj.manage_home_history_files (subj_type_attribute))
 	(call usersubj.pty_template (subj_type_attribute))
 	(call usersubj.read_home_user_files (subj_type_attribute))
-	(call usersubj.read_state_common_subj (subj_type_attribute))
+	(call usersubj.read_state_subj (subj_type_attribute))
 	(call usersubj.read_var_spool_user_files (subj_type_attribute))
 
 	(tunableif enable_rbacsep

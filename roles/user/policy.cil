@@ -270,9 +270,6 @@
 		(call scdaemon.manage_tmpfs_user (subj))
 		(call scdaemon.relabel_tmpfs_user (subj)))
 
-	(optional user_optional_script
-		(call script.run (subj_type_attribute role)))
-
 	(optional user_optional_ssh_client
 		(call ssh_sftpserver.run (subj_type_attribute role)))
 
@@ -321,9 +318,6 @@
 
 	(optional user_optional_upowerd
 		(call upower.run (subj_type_attribute role)))
-
-	(optional user_optional_utempter
-		(call utempter.run (subj_type_attribute role)))
 
 	(optional user_optional_vulkan
 		(call vulkan.manage_home_data (subj))
@@ -1319,6 +1313,9 @@
 		(call screen.relabel_tmpfs_user_files (subj))
 
 		(call user_screen.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_script
+		(call user_script.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_seahorse
 		(call seahorse.manage_tmpfs_user (subj))

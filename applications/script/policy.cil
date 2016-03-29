@@ -1,13 +1,16 @@
 (block script
-	(roleattribute role_attribute)
+	(typeattribute subj_type_attribute)
 
-	(blockinherit app.application_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-	(roletype role_attribute subj)
+	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call usersubj.create_ptys (subj))
-	(call usersubj.manage_home_user_files (subj))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+	(call locale.read (subj_type_attribute))
 
-	(optional script_optional_utempter
-		(call utempter.run (subj role_attribute))))
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute)))

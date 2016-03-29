@@ -824,9 +824,6 @@
 		(call screen.manage_config_files (subj))
 		(call screen.manage_runtime (subj)))
 
-	(optional sysadm_optional_script
-		(call script.run (subj_type_attribute role)))
-
 	(optional sysadm_optional_sctl
 		(call sctl.manage_config (subj))
 		(call sctl.run (subj_type_attribute role)))
@@ -1058,9 +1055,6 @@
 	(optional sysadm_optional_useradd
 		(call groupadd.run (subj_type_attribute role))
 		(call useradd.run (subj_type_attribute role)))
-
-	(optional sysadm_optional_utempter
-		(call utempter.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_varnishd
 		(call varnishadm.run (subj_type_attribute role))
@@ -2195,6 +2189,9 @@
 		(call screen.relabel_tmpfs_user_files (subj))
 
 		(call sysadm_screen.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_script
+		(call sysadm_script.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_seahorse
 		(call seahorse.manage_tmpfs_user (subj))

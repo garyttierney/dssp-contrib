@@ -1609,6 +1609,12 @@
 	(macro dontaudit_create_keyring_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute create_key_perms))
 
+	(macro dontaudit_send_signull_common_subj ((type ARG1))
+		(dontaudit ARG1 common_type_attribute (process (signull))))
+
+	(macro send_signull_common_subj ((type ARG1))
+		(allow ARG1 common_type_attribute (process (signull))))
+
 	(macro create_keyring_common_login_subj ((type ARG1))
 		(allow ARG1 self (process (setkeycreate)))
 		(allow ARG1 common_login_type_attribute create_key_perms))
@@ -1645,6 +1651,9 @@
 
 	(macro send_signal_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (process (signal))))
+
+	(macro send_signull_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (signull))))
 
 	(macro send_signal_priv_subj ((type ARG1))
 		(allow ARG1 priv_type_attribute (process (signal))))
@@ -3499,6 +3508,10 @@
 
 	(macro tty_template ((type ARG1))
 		(call term.user_tty (ARG1 tty_user.tty_dev)))
+
+	(macro dontaudit_getattr_term ((type ARG1))
+		(dontaudit ARG1 pty_user.pty_dev (chr_file (getattr)))
+		(dontaudit ARG1 tty_user.tty_dev (chr_file (getattr))))
 
 	(macro getattr_term ((type ARG1))
 		(call fs.search_devpts (ARG1))

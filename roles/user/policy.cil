@@ -342,6 +342,9 @@
 		(call web_home.web_content.manage (subj))
 		(call web_home.web_content.relabel (subj)))
 
+	(optional user_optional_who
+		(call who.run (subj_type_attribute role)))
+
 	(optional user_optional_xauth
 		(call xauth.run (subj_type_attribute role))
 		(call xauth.manage_home_user_files (subj))

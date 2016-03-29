@@ -1783,8 +1783,14 @@
 	(macro dontaudit_manual_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (transition))))
 
+	(macro create_keyring_subj ((type ARG1))
+		(allow ARG1 type_attribute create_key_perms))
+
 	(macro dontaudit_create_keyring_subj ((type ARG1))
 		(dontaudit ARG1 type_attribute create_key_perms))
+
+	(macro create_keyring_common_subj ((type ARG1))
+		(allow ARG1 common_type_attribute create_key_perms))
 
 	(macro dontaudit_create_keyring_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute create_key_perms))

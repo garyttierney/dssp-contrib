@@ -94,9 +94,9 @@
 			(login_prog_subj_type_attribute)))
 
 	(optional pam_login_prog_subj_type_optional_usersubj
-		(call usersubj.create_keyring_common_login_subj
+		(call usersubj.create_keyring_login_subj
 			(login_prog_subj_type_attribute))
-		(call usersubj.send_signal_common_login_subj
+		(call usersubj.send_signal_login_subj
 			(login_prog_subj_type_attribute)))
 
 	(call sys.audit_client_subj_type (client_subj_type_attribute))

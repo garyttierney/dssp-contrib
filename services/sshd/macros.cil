@@ -112,11 +112,11 @@
 		(call ssh_client.read_config_files (subj))
 		(call ssh_client.read_home_user_files (subj))
 
-		(call usersubj.dontaudit_create_keyring_common_subj
+		(call usersubj.dontaudit_create_keyring_subj
 			(subj))
-		(call usersubj.dontaudit_dynamic_subj_type_transition_common_subj
+		(call usersubj.dontaudit_dynamic_subj_type_transition_subj
 			(subj))
-		(call usersubj.dontaudit_manual_subj_type_transition_common_subj
+		(call usersubj.dontaudit_manual_subj_type_transition_subj
 			(subj))
 		(call usersubj.relabel_ptys (subj))
 		(call usersubj.setattr_ptys (subj))
@@ -125,10 +125,10 @@
 		(booleanif sshd_priv_login
 			(true
 				(call
-					usersubj.dynamic_subj_type_transition_common_login_subj
+					usersubj.dynamic_subj_type_transition_login_subj
 						(subj))
 				(call
-					usersubj.shell_manual_subj_type_transition_common_login_subj
+					usersubj.shell_manual_subj_type_transition_login_subj
 						(subj)))
 			(false
 				(call

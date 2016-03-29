@@ -1680,6 +1680,10 @@
 	(macro home_data_creator_subj_type ((type ARG1))
 		(typeattributeset home_data_creator_subj_type_attribute ARG1))
 
+	(macro dynamic_subj_type_transition_login_subj ((type ARG1))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			login_type_attribute)))
+
 	(macro dynamic_subj_type_transition_common_login_subj ((type ARG1))
 		(call dynamic_subj_type_transition_pattern (ARG1
 			common_login_type_attribute)))
@@ -1687,6 +1691,11 @@
 	(macro dynamic_subj_type_transition_unpriv_login_subj ((type ARG1))
 		(call dynamic_subj_type_transition_pattern (ARG1
 			unpriv_login_type_attribute)))
+
+	(macro shell_manual_subj_type_transition_login_subj ((type
+		ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			login_type_attribute)))
 
 	(macro shell_manual_subj_type_transition_common_login_subj ((type
 		ARG1))
@@ -1724,12 +1733,21 @@
 		(call cmd.manual_subj_type_transition (ARG1
 			priv_type_attribute)))
 
+	(macro dontaudit_dynamic_subj_type_transition_subj ((type ARG1))
+		(dontaudit ARG1 type_attribute (process (dyntransition))))
+
 	(macro dontaudit_dynamic_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process
 			(dyntransition))))
 
+	(macro dontaudit_manual_subj_type_transition_subj ((type ARG1))
+		(dontaudit ARG1 type_attribute (process (transition))))
+
 	(macro dontaudit_manual_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (transition))))
+
+	(macro dontaudit_create_keyring_subj ((type ARG1))
+		(dontaudit ARG1 type_attribute create_key_perms))
 
 	(macro dontaudit_create_keyring_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute create_key_perms))

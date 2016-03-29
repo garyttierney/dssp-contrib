@@ -2,6 +2,13 @@
 	(block usersubj_blk
 		(blockabstract usersubj_blk)
 
+		(blockinherit subj.subj_blk)
+
+		(call usersubj.type (subj)))
+
+	(block usersubj_common_blk
+		(blockabstract usersubj_common_blk)
+
 		(blockinherit subj.common_subj_blk)
 
 		(call usersubj.common_type (subj)))
@@ -18,10 +25,22 @@
 			(true
 				(call sys.sys_role (role)))))
 
+	(block base_common_user_blk
+		(blockabstract base_common_user_blk)
+
+		(blockinherit usersubj.usersubj_common_blk)
+
+		(role role)
+		(roletype role subj)
+
+		(tunableif enable_rbacsep
+			(true
+				(call sys.sys_role (role)))))
+
 	(block base_priv_user_blk
 		(blockabstract base_priv_user_blk)
 
-		(blockinherit usersubj.usersubj_blk)
+		(blockinherit usersubj.usersubj_common_blk)
 
 		(role role)
 		(roletype role subj)
@@ -58,6 +77,20 @@
 
 		(blockinherit usersubj.base_user_blk)
 
+		(call sys.roleallow_role (role))
+
+		(tunableif enable_rbacsep
+			(false
+				(userrole id object_r))))
+
+	(block base_common_login_blk
+		(blockabstract base_common_login_blk)
+
+		(user id)
+		(userrole id role)
+
+		(blockinherit usersubj.base_common_user_blk)
+
 		(call usersubj.common_login_type (subj))
 
 		(call sys.roleallow_role (role))
@@ -87,6 +120,13 @@
 		(blockabstract login_blk)
 
 		(blockinherit usersubj.base_login_blk)
+
+		(call usersubj.mls (id systemlow (systemlow systemhigh))))
+
+	(block common_login_blk
+		(blockabstract common_login_blk)
+
+		(blockinherit usersubj.base_common_login_blk)
 
 		(call usersubj.mls (id systemlow (systemlow systemhigh))))
 

@@ -24,10 +24,14 @@
 	(typeattribute pty_user_obj_type_attribute)
 	(typeattribute tty_user_obj_type_attribute)
 
+	(call standard.user_exemption_target_subj_type (type_attribute))
+
 	(allow common_type_attribute self (process (setpgid getattr getsched
 		ptrace setsched)))
 	(allow common_type_attribute self create_unix_stream_socket_perms)
 	(allow common_type_attribute self rw_fifo_file_perms)
+
+	(call type (common_type_attribute))
 
 	(call use_term (common_type_attribute))
 
@@ -37,8 +41,6 @@
 	(call sys.dontaudit_read_all_sysfs (common_type_attribute))
 	(call sys.read_cpu_online_sysfs_files (common_type_attribute))
 	(call sys.read_node_online_sysfs_files (common_type_attribute))
-
-	(call standard.user_exemption_target_subj_type (common_type_attribute))
 
 	(call cmd.obj_entry_subj (common_type_attribute))
 	(call cmd.shell_obj_entry_subj (common_type_attribute))

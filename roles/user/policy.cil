@@ -346,6 +346,7 @@
 		(call web_home.web_content.relabel (subj)))
 
 	(optional user_optional_who
+		(call mesg.run (subj_type_attribute role))
 		(call who.run (subj_type_attribute role)))
 
 	(optional user_optional_xauth

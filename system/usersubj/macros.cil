@@ -3527,6 +3527,10 @@
 		(allow ARG1 pty_user.pty_dev rw_inherited_term_perms)
 		(allow ARG1 tty_user.tty_dev rw_inherited_term_perms))
 
+	(macro dontaudit_setattr_term ((type ARG1))
+		(dontaudit ARG1 pty_user.pty_dev (chr_file (setattr)))
+		(dontaudit ARG1 tty_user.tty_dev (chr_file (setattr))))
+
 	(macro setattr_term ((type ARG1))
 		(call fs.search_devpts (ARG1))
 		(allow ARG1 pty_user.pty_dev (chr_file (setattr)))

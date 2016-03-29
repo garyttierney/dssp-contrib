@@ -1692,6 +1692,11 @@
 		(call dynamic_subj_type_transition_pattern (ARG1
 			unpriv_login_type_attribute)))
 
+	(macro dynamic_subj_type_transition_common_unpriv_login_subj
+		((type ARG1))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			common_unpriv_login_type_attribute)))
+
 	(macro shell_manual_subj_type_transition_login_subj ((type
 		ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
@@ -1701,6 +1706,11 @@
 		ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			common_login_type_attribute)))
+
+	(macro spec_manual_subj_type_transition_login_subj ((type
+		ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			login_type_attribute)))
 
 	(macro spec_manual_subj_type_transition_common_login_subj ((type
 		ARG1)(type ARG2))
@@ -1712,14 +1722,33 @@
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			unpriv_login_type_attribute)))
 
+	(macro shell_manual_subj_type_transition_common_unpriv_login_subj
+		((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			common_unpriv_login_type_attribute)))
+
 	(macro spec_manual_subj_type_transition_unpriv_login_subj ((type
 		ARG1)(type ARG2))
 		(call manual_subj_type_transition_pattern (ARG1 ARG2
 			unpriv_login_type_attribute)))
 
+	(macro spec_manual_subj_type_transition_common_unpriv_login_subj
+		((type ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			common_unpriv_login_type_attribute)))
+
 	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			unpriv_type_attribute)))
+
+	(macro shell_manual_subj_type_transition_common_unpriv_subj
+		((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			common_unpriv_type_attribute)))
+
+	(macro shell_manual_subj_type_transition_subj ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			type_attribute)))
 
 	(macro shell_manual_subj_type_transition_common_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
@@ -1729,9 +1758,17 @@
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			priv_type_attribute)))
 
+	(macro shell_manual_subj_type_transition_common_priv_subj ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			common_priv_type_attribute)))
+
 	(macro cmd_manual_subj_type_transition_priv_subj ((type ARG1))
 		(call cmd.manual_subj_type_transition (ARG1
 			priv_type_attribute)))
+
+	(macro cmd_manual_subj_type_transition_common_priv_subj ((type ARG1))
+		(call cmd.manual_subj_type_transition (ARG1
+			common_priv_type_attribute)))
 
 	(macro dontaudit_dynamic_subj_type_transition_subj ((type ARG1))
 		(dontaudit ARG1 type_attribute (process (dyntransition))))
@@ -1752,11 +1789,21 @@
 	(macro dontaudit_create_keyring_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute create_key_perms))
 
+	(macro dontaudit_send_signull_subj ((type ARG1))
+		(dontaudit ARG1 type_attribute (process (signull))))
+
 	(macro dontaudit_send_signull_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (signull))))
 
+	(macro send_signull_subj ((type ARG1))
+		(allow ARG1 type_attribute (process (signull))))
+
 	(macro send_signull_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (process (signull))))
+
+	(macro create_keyring_login_subj ((type ARG1))
+		(allow ARG1 self (process (setkeycreate)))
+		(allow ARG1 login_type_attribute create_key_perms))
 
 	(macro create_keyring_common_login_subj ((type ARG1))
 		(allow ARG1 self (process (setkeycreate)))
@@ -1766,22 +1813,48 @@
 		(allow ARG1 self (process (setkeycreate)))
 		(allow ARG1 priv_type_attribute create_key_perms))
 
+	(macro create_keyring_common_priv_subj ((type ARG1))
+		(allow ARG1 self (process (setkeycreate)))
+		(allow ARG1 common_priv_type_attribute create_key_perms))
+
+	(macro dontaudit_link_keyring_login_subj ((type ARG1))
+		(dontaudit ARG1 login_type_attribute link_key_perms))
+
 	(macro dontaudit_link_keyring_common_login_subj ((type ARG1))
 		(dontaudit ARG1 common_login_type_attribute link_key_perms))
 
+	(macro link_keyring_login_subj ((type ARG1))
+		(allow ARG1 login_type_attribute link_key_perms))
+
 	(macro link_keyring_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute link_key_perms))
+
+	(macro rw_inherited_fifo_files_subj ((type ARG1))
+		(call use_fd_subj (ARG1))
+		(allow ARG1 type_attribute rw_inherited_fifo_file_perms))
 
 	(macro rw_inherited_fifo_files_common_subj ((type ARG1))
 		(call use_fd_common_subj (ARG1))
 		(allow ARG1 common_type_attribute
 			rw_inherited_fifo_file_perms))
 
+	(macro use_fd_subj ((type ARG1))
+		(allow ARG1 type_attribute (fd (use))))
+
 	(macro use_fd_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (fd (use))))
 
+	(macro use_fd_login_subj ((type ARG1))
+		(allow ARG1 login_type_attribute (fd (use))))
+
 	(macro use_fd_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (fd (use))))
+
+	(macro read_state_login_subj ((type ARG1))
+		(call fs.search_proc (ARG1))
+		(allow ARG1 login_type_attribute read_file_perms)
+		(allow ARG1 login_type_attribute list_dir_perms)
+		(allow ARG1 login_type_attribute read_lnk_file_perms))
 
 	(macro read_state_common_login_subj ((type ARG1))
 		(call fs.search_proc (ARG1))
@@ -1789,11 +1862,20 @@
 		(allow ARG1 common_login_type_attribute list_dir_perms)
 		(allow ARG1 common_login_type_attribute read_lnk_file_perms))
 
+	(macro setpgid_login_subj ((type ARG1))
+		(allow ARG1 login_type_attribute (process (getpgid))))
+
 	(macro setpgid_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (process (getpgid))))
 
+	(macro send_signal_login_subj ((type ARG1))
+		(allow ARG1 login_type_attribute (process (signal))))
+
 	(macro send_signal_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (process (signal))))
+
+	(macro send_signull_login_subj ((type ARG1))
+		(allow ARG1 login_type_attribute (process (signull))))
 
 	(macro send_signull_common_login_subj ((type ARG1))
 		(allow ARG1 common_login_type_attribute (process (signull))))
@@ -1801,12 +1883,23 @@
 	(macro send_signal_priv_subj ((type ARG1))
 		(allow ARG1 priv_type_attribute (process (signal))))
 
+	(macro send_signal_common_priv_subj ((type ARG1))
+		(allow ARG1 common_priv_type_attribute (process (signal))))
+
 	(macro use_fd_unpriv_subj ((type ARG1))
 		(allow ARG1 unpriv_type_attribute (fd (use))))
+
+	(macro use_fd_common_unpriv_subj ((type ARG1))
+		(allow ARG1 common_unpriv_type_attribute (fd (use))))
 
 	(macro rw_inherited_fifo_files_unpriv_subj ((type ARG1))
 		(call use_fd_unpriv_subj (ARG1))
 		(allow ARG1 unpriv_type_attribute
+			rw_inherited_fifo_file_perms))
+
+	(macro rw_inherited_fifo_files_common_unpriv_subj ((type ARG1))
+		(call use_fd_common_unpriv_subj (ARG1))
+		(allow ARG1 common_unpriv_type_attribute
 			rw_inherited_fifo_file_perms))
 
 	(macro write_inherited_fifo_files_unpriv_subj ((type ARG1))
@@ -1814,18 +1907,43 @@
 		(allow ARG1 unpriv_type_attribute
 			write_inherited_fifo_file_perms))
 
+	(macro write_inherited_fifo_files_common_unpriv_subj ((type ARG1))
+		(call use_fd_common_unpriv_subj (ARG1))
+		(allow ARG1 common_unpriv_type_attribute
+			write_inherited_fifo_file_perms))
+
 	(macro rw_inherited_unix_stream_sockets_unpriv_subj ((type ARG1))
 		(call use_fd_unpriv_subj (ARG1))
 		(allow ARG1 unpriv_type_attribute
 			rw_inherited_unix_stream_socket_perms))
 
+	(macro rw_inherited_unix_stream_sockets_common_unpriv_subj
+		((type ARG1))
+		(call use_fd_common_unpriv_subj (ARG1))
+		(allow ARG1 common_unpriv_type_attribute
+			rw_inherited_unix_stream_socket_perms))
+
+	(macro getattr_subj ((type ARG1))
+		(allow ARG1 type_attribute (process (getattr))))
+
 	(macro getattr_common_subj ((type ARG1))
 		(allow ARG1 common_type_attribute (process (getattr))))
+
+	(macro dontaudit_read_state_subj ((type ARG1))
+		(dontaudit ARG1 type_attribute read_file_perms)
+		(dontaudit ARG1 type_attribute list_dir_perms)
+		(dontaudit ARG1 type_attribute read_lnk_file_perms))
 
 	(macro dontaudit_read_state_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute read_file_perms)
 		(dontaudit ARG1 common_type_attribute list_dir_perms)
 		(dontaudit ARG1 common_type_attribute read_lnk_file_perms))
+
+	(macro read_state_subj ((type ARG1))
+		(call fs.search_proc (ARG1))
+		(allow ARG1 type_attribute read_file_perms)
+		(allow ARG1 type_attribute list_dir_perms)
+		(allow ARG1 type_attribute read_lnk_file_perms))
 
 	(macro read_state_common_subj ((type ARG1))
 		(call fs.search_proc (ARG1))

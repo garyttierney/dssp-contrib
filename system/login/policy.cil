@@ -6,7 +6,7 @@
 	(booleanif login_priv
 		(true
 			(call
-				usersubj.shell_manual_subj_type_transition_common_login_subj
+				usersubj.shell_manual_subj_type_transition_login_subj
 					(login.subj)))
 		(false
 			(call
@@ -61,7 +61,7 @@
 	(call usersubj.setattr_ttys (subj))
 	(call usersubj.use_ttys (subj))
 
-	(call usersubj.dontaudit_manual_subj_type_transition_common_subj
+	(call usersubj.dontaudit_manual_subj_type_transition_subj
 		(subj))
 
 	(booleanif term_console_login

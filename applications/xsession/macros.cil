@@ -37,6 +37,11 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(macro manual_subj_type_transition_login_subj ((type ARG1))
+		(call
+			usersubj.spec_manual_subj_type_transition_login_subj
+				(ARG1 cmd_file)))
+
 	(macro manual_subj_type_transition_common_login_subj ((type ARG1))
 		(call
 			usersubj.spec_manual_subj_type_transition_common_login_subj
@@ -45,6 +50,12 @@
 	(macro manual_subj_type_transition_unpriv_login_subj ((type ARG1))
 		(call
 			usersubj.spec_manual_subj_type_transition_unpriv_login_subj
+				(ARG1 cmd_file)))
+
+	(macro manual_subj_type_transition_common_unpriv_login_subj
+		((type ARG1))
+		(call
+			usersubj.spec_manual_subj_type_transition_common_unpriv_login_subj
 				(ARG1 cmd_file)))
 
 	(blockinherit usersubj.read_tmpfs_user_files_blk)

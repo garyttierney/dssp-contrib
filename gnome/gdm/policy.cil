@@ -6,7 +6,7 @@
 	(booleanif gdm_priv_login
 		(true
 			(call
-				xsession.manual_subj_type_transition_common_login_subj
+				xsession.manual_subj_type_transition_login_subj
 					(gdm.subj)))
 		(false
 			(call
@@ -164,7 +164,7 @@
 
 	(call udev.client_subj_type (subj))
 
-	(call usersubj.read_state_common_login_subj (subj))
+	(call usersubj.read_state_login_subj (subj))
 	(call usersubj.relabel_ttys (subj))
 	(call usersubj.use_ttys (subj))
 	(call usersubj.search_home_user (subj))

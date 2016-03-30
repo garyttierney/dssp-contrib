@@ -85,6 +85,9 @@
 			(common_priv_type_attribute))
 		(call sudo.send_signal_all_subj (common_priv_type_attribute)))
 
+	(optional login_type_optional_mcstransd
+		(call mcstransd.contains_subj_type (login_type_attribute)))
+
 	(allow common_login_type_attribute self create_unix_dgram_socket_perms)
 
 	(call login_type (common_login_type_attribute))
@@ -133,10 +136,6 @@
 
 	(optional common_login_type_optional_pcitools
 		(call pcitools.dontaudit_exec_cmd_files
-			(common_login_type_attribute)))
-
-	(optional common_login_type_optional_mcstransd
-		(call mcstransd.contains_subj_type
 			(common_login_type_attribute)))
 
 	(optional common_login_type_optional_sd

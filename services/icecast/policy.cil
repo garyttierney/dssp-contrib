@@ -11,10 +11,6 @@
 
 	(roletype sys.role subj)
 
-	(blockinherit net.unreserved_port_obj_blk)
-
-	(call tcp_bind_port (subj))
-
 	(blockinherit file.config_obj_blk)
 
 	(typeattributeset obj_type_attribute config_file)
@@ -57,6 +53,8 @@
 	(call mime_types.read_config_files (subj))
 
 	(call nss.client_subj_type (subj))
+
+	(call shout.tcp_bind_port (subj))
 
 	(optional icecast_optional_logrotate
 		(call logrotate.client_var_log_obj_type (var_log_file)))

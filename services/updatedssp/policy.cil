@@ -23,6 +23,7 @@
 	(call standard.obj_change_exemption_subj_type (subj))
 
 	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
@@ -51,6 +52,8 @@
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj))
+
+	(call policy_src.manage_var_lib (subj))
 
 	(call usersubj.manage_home_user (subj))
 

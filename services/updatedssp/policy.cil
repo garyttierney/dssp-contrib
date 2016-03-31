@@ -1,15 +1,15 @@
 (block updatedssp
+	(roleattribute role_attribute)
+
 	(typeattribute obj_type_attribute)
 
 	(typeattribute adm_subj_type_attribute)
 
-	(blockinherit subj.common_subj_blk)
+	(blockinherit app.application_blk)
 
-	(blockinherit cmd.obj_blk)
+	(roleattributeset role_attribute sys.role)
 
-	(call subj.entry (subj cmd_file))
-
-	(roletype sys.role subj)
+	(roletype role_attribute subj)
 
 	(blockinherit file.tmpfs_obj_blk)
 

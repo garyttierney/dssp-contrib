@@ -14,6 +14,8 @@
 	(call manage_home_user_files (subj))
 	(call home_dir_obj_type_transition_home (subj))
 
+	(allow subj self (capability (dac_override)))
+
 	(call dev.read_urandom (subj))
 
 	(call file.audit_access_var_tmp_dirs (subj))

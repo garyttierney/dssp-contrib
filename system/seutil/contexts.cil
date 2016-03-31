@@ -13,7 +13,7 @@
 	(filecon "/usr/sbin/matchpathcon" file cmd_file_context))
 
 (in policy_src
-	(filecon "/etc/selinux/([^/]*/)?source(/.*)?" any config_file_context))
+	(filecon "/var/lib/selinux(/.*)?" any var_lib_file_context))
 
 (in selinux_config
 	(filecon "/etc/selinux(/.*)?" any config_file_context)

@@ -67,14 +67,14 @@
 				default_context.selinux_config_obj_type_transition_config
 					(subj))
 			(call
-				policy_src.selinux_config_obj_type_transition_config
+				policy_src.var_lib_obj_type_transition_var_lib
 					(subj))
 			(call selinux_config.config_obj_type_transition_config
 				(subj))
 			(call default_context.manage_config (subj))
 			(call file_context.manage_config (subj))
 			(call policy_config.manage (subj))
-			(call policy_src.manage_config (subj))
+			(call policy_src.manage_var_lib (subj))
 			(call selinux_config.manage_config (subj))
 			(call load_policy.run (subj_type_attribute role))
 			(call matchpathcon.run (subj_type_attribute role))

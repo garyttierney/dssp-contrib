@@ -74,8 +74,8 @@
 			(call policy_config.manage (subj))
 			(call selinux_config.manage_config (subj))
 
-			(call load_policy.auto_subj_type_transition (subj))
-			(call setfiles.auto_subj_type_transition (subj))))
+			(call load_policy.run (subj role_attribute))
+			(call setfiles.run (subj role_attribute))))
 
 	(optional updatedssp_optional_sd
 		(call sd.daemon (subj cmd_file))

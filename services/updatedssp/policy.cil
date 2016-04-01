@@ -18,6 +18,7 @@
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call standard.obj_change_exemption_subj_type (subj))

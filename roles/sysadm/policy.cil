@@ -2131,6 +2131,10 @@
 		(call sysadm_polkit_exec.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_prunner
+		(call sysadm_prunner.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_rp
 		(call rp.manage_home_user_files (subj))
 		(call rp.relabel_home_user_files (subj))

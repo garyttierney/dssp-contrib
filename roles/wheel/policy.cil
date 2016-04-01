@@ -1396,6 +1396,9 @@
 		(call wheel_polkit_exec.role_pattern (role
 			subj_type_attribute)))
 
+	(optional wheel_optional_wheel_prunner
+		(call wheel_prunner.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_rp
 		(call rp.manage_home_user_files (subj))
 		(call rp.relabel_home_user_files (subj))

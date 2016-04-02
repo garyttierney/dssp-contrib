@@ -7,6 +7,9 @@
 
 	(call wheel_dconf.client_subj_type (subj))
 
+	(optional wheel_evoaf_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_evoaf_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj evoaf.cmd_file)))
 

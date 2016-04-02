@@ -92,6 +92,9 @@
 	(optional sysadm_gshcs_optional_sysadm_gs
 		(call sysadm_sessbus.daemon (subj gshcs.cmd_file)))
 
+	(optional sysadm_gshcs_optional_sysadm_gvfs
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional
 		sysadm_gshcs_sessbus_chat_client_subj_type_optional_sysadm_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus

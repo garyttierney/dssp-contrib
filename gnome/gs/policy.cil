@@ -37,11 +37,14 @@
 	(call file.read_config (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
 	(call gs_helper.exec (subj_type_attribute))
 
 	(call gsd_helper.exec (subj_type_attribute))
+
+	(call gtk.client_subj_type (subj_type_attribute))
 
 	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.read (subj_type_attribute))

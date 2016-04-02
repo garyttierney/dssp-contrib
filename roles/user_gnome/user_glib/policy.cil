@@ -17,5 +17,8 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(optional user_gsettings_optional_user_gvfs
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gsettings_optional_user_sessbus
 		(call user_sessbus.client_subj_type (subj))))

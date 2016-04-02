@@ -20,8 +20,14 @@
 	(optional user_gs_optional_user_canberra
 		(call user_canberra.auto_subj_type_transition (subj)))
 
+	(optional user_gs_optional_user_gvfs
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_gs_optional_user_orca
 		(call user_orca.send_signal (subj)))
+
+	(optional user_gs_optional_user_pactl
+		(call user_pactl.auto_subj_type_transition (subj)))
 
 	(optional user_gs_optional_user_sessbus
 		(call user_sessbus.service_subj_type (subj)))

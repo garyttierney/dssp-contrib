@@ -83,6 +83,9 @@
 	(optional user_gshcs_optional_user_gs
 		(call user_sessbus.daemon (subj gshcs.cmd_file)))
 
+	(optional user_gshcs_optional_user_gvfs
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional
 		user_gshcs_sessbus_chat_client_subj_type_optional_user_sessbus
 		(allow sessbus_chat_client_subj_type_attribute subj (dbus

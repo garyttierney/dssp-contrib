@@ -7,6 +7,9 @@
 
 	(call user_dconf.client_subj_type (subj))
 
+	(optional user_evoaf_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_evoaf_optional_user_sessbus
 		(call user_sessbus.daemon (subj evoaf.cmd_file)))
 

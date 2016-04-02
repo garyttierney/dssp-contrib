@@ -62,6 +62,7 @@
 	(allow subj tmpfs_client_obj_type_attribute (file (read write)))
 
 	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.write_mtrr_proc_files (subj))
 
 	(call cmd.exec (subj))

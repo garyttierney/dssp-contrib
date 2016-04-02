@@ -59,6 +59,8 @@
 	(call fs.read_sysfs (subj))
 	(call fs.trace_client_subj_type (subj))
 
+	(call locale.read (subj))
+
 	(call nss.client_subj_type (subj))
 
 	(call wpacli.dgram_send (subj))
@@ -75,6 +77,9 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
+
+	(optional wpa_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional wpa_optional_sysbus
 		(call sysbus.service_subj_type (subj)))

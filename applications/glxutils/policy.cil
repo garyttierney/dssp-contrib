@@ -10,6 +10,8 @@
 	(call manage_tmpfs_user_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(call sys.read_cpu_online_sysfs_files (subj))
+
 	(call dev.rw_dri (subj))
 
 	(call file.read_config_files (subj))

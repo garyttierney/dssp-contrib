@@ -230,6 +230,9 @@
 		(call qiv.relabel_tmpfs_user_files (subj))
 		(call qiv.run (subj_type_attribute role)))
 
+	(optional user_optional_qemu
+		(call qemu_img.exec (subj)))
+
 	(optional user_optional_quota
 		(call quota.exec (subj_type_attribute)))
 
@@ -1269,6 +1272,13 @@
 
 	(optional user_optional_user_pinentry
 		(call user_pinentry.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_qemu_user_guest
+		(call qemu_user_guest.manage_tmpfs_user (subj))
+		(call qemu_user_guest.relabel_tmpfs_user (subj))
+
+		(call user_qemu_user_guest.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_rp
 		(call rp.manage_home_user_files (subj))

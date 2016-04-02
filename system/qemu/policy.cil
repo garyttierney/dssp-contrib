@@ -8,6 +8,48 @@
 
 	(call subj.entry (qemu_guest.subj_type_attribute cmd_file)))
 
+(block qemu_user_guest
+	(typeattribute subj_type_attribute)
+
+	(call qemu.cmd_obj_entry_subj (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
+	(call sys.read_node_sysfs (subj_type_attribute))
+
+	(call dev.rw_kvm (subj_type_attribute))
+
+	(call file.read_config_files (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.tcp_bind_all_unreserved_ports (subj_type_attribute))
+	(call net.tcp_connect_all_ports (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call qemu.read_config (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+	(call usersubj.rw_home_user_files (subj_type_attribute))
+
+	(optional qemu_user_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional qemu_user_quest_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute
+			tmpfs_user_file))))
+
 (block qemu_guest
 	(blockinherit guest_blk)
 
@@ -77,6 +119,9 @@
 
 	(optional qemu_guest_subj_type_optional_tunctl
 		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
+
+(block qemu_img
+	(blockinherit cmd.obj_blk))
 
 (block qemu_guest_tcp_connect_all_ports
 	(blockinherit sec.bool_obj_blk)

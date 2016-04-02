@@ -719,6 +719,7 @@
 		(call python.home_data_obj_type_transition_home_data (subj)))
 
 	(optional sysadm_optional_qemu
+		(call qemu_img.exec (subj))
 		(call qemu_guest.manage_all_files (subj))
 		(call qemu_guest.manage_all_runtime_sock_files (subj))
 		(call qemu.manage_config (subj)))
@@ -2129,6 +2130,13 @@
 
 	(optional sysadm_optional_sysadm_polkit_exec
 		(call sysadm_polkit_exec.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_qemu_user_guest
+		(call qemu_user_guest.manage_tmpfs_user (subj))
+		(call qemu_user_guest.relabel_tmpfs_user (subj))
+
+		(call sysadm_qemu_user_guest.role_pattern (role
 			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rp

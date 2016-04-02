@@ -1,3 +1,5 @@
+(tunable gdm_systemd_workaround true)
+
 (boolean gdm_priv_login true)
 
 (block gdm_priv_login
@@ -169,6 +171,46 @@
 	(call usersubj.relabel_ttys (subj))
 	(call usersubj.use_ttys (subj))
 	(call usersubj.search_home_user (subj))
+
+	(tunableif gdm_systemd_workaround
+		(true
+			;; this goes with contexts/users/gdm.id
+			;; sys.role:sd.subj:s0 sys.role:gdm.subj:s0
+
+			(user id)
+			(userrole id sys.role)
+			(userlevel id systemlow)
+			(userrange id (systemlow systemhigh))
+
+			(call standard.user_exemption_target_subj_type (subj))
+
+			(call cmd.shell_obj_entry_subj (subj))
+
+			(call fs.write_cgroup_files (subj))
+			(call fs.manage_cgroup_dirs (subj))
+			(call fs.getattr_sysfs_fs (subj))
+
+			(call sec.setfscreate_subj_type (subj))
+
+			(call storage.getattr_fixed_disk (subj))
+			(call storage.getattr_removable (subj))
+
+			(call mount.read_runtime (subj))
+
+			(optional gdm_systemd_workaround_optional_sd
+				(call sd.cmd_obj_entry_subj (subj))
+				(call sd.audit_read_access_cmd_files (subj))
+				(call sd.read_config_files (subj))
+				(call sd_helper.exec (subj))
+				(call sd.read_all_unit (subj))
+				(call sd.notify_subj_type (subj))
+				(call sd.send_signal (subj)))
+
+			(optional gdm_systemd_workaround_optional_sduser
+				(call sduser.read_all_unit (subj)))
+
+			(optional gdm_systemd_workaround_optional_systemctl
+				(call systemctl.exec (subj)))))
 
 	(optional gdm_optional_accountsd
 		(call accountsd.read_var_lib (subj)))

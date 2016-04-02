@@ -274,6 +274,12 @@
 	(optional sd_optional_fstools
 		(call fstools.read_runtime (subj)))
 
+	(optional sd_optional_gdm
+		(call gdm.shell_manual_subj_type_transition (subj))
+		(call gdm.noatsecure (subj))
+		(call gdm.create_keyring (subj))
+		(call gdm.send_sigchld (subj)))
+
 	(optional sd_optional_http
 		(call http.tcp_connect_port (subj)))
 

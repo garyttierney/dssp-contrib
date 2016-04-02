@@ -163,6 +163,9 @@
 	(blockinherit cmd.getattr_cmd_files_blk)
 	(blockinherit cmd.mmap_cmd_files_blk)
 
+	(macro audit_read_access_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file (file (read))))
+
 	(blockinherit auto_subj_type_transition_blk)
 
 	(blockinherit dynamic_subj_type_transition_blk)

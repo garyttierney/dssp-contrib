@@ -178,7 +178,7 @@
 	(call dev.rw_wireless (subj))
 	(call dev.write_watchdog (subj))
 
-	(call file.audit_access_config_dirs (subj))
+	(call file.audit_write_access_config_dirs (subj))
 	(call file.read_all_config (subj))
 	(call file.read_all_runtime_lock_files (subj))
 	(call file.relabel_all_runtime (subj))
@@ -187,6 +187,7 @@
 	(call file.manage_runtime_config (subj))
 	(call file.runtime_obj_type_transition_runtime_config (subj))
 
+	(call fs.audit_write_access_rootfs_dirs (subj))
 	(call fs.getattr_all_fs (subj))
 	(call fs.manage_devtmpfs_dirs (subj))
 	(call fs.manage_devtmpfs_lnk_files (subj))

@@ -7,6 +7,8 @@
 
 	(allow subj_type_attribute self (capability (dac_override sys_admin)))
 
+	(call sys.request_load_module (subj_type_attribute))
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config_lnk_files (subj_type_attribute))

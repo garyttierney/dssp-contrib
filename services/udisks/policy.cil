@@ -119,5 +119,9 @@
 
 	(roletype role_attribute subj)
 
+	(call locale.read (subj))
+
+	(call udisksd.sysbus_chat_client_subj_type (subj))
+
 	(optional udisksctl_optional_sysbus
 		(call sysbus.client_subj_type (subj))))

@@ -2132,6 +2132,10 @@
 		(call sysadm_polkit_exec.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_prunner
+		(call sysadm_prunner.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_qemu_user_guest
 		(call qemu_user_guest.manage_tmpfs_user (subj))
 		(call qemu_user_guest.relabel_tmpfs_user (subj))

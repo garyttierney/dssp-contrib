@@ -161,6 +161,17 @@
 
 		(call ssh_client.read_config_files (login_subj_type_attribute))
 
+		(booleanif sshd_enable_x11_forward
+			(true
+				(allow login_subj_type_attribute self
+					(tcp_socket (listen accept)))
+
+				(call net.tcp_bind_generic_node
+					(login_subj_type_attribute))
+
+				(call ssh_x11_forward.tcp_bind_port
+					(login_subj_type_attribute))))
+
 		(call login_subj_type (priv_login_subj_type_attribute))
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
@@ -406,8 +417,13 @@
 		(typeattributeset priv_login_subj_type_attribute ARG1))
 
 	(macro set_priv_login_boolean ((type ARG1))
-		(call sec.set_spec_boolean (ARG1 ssh_priv_login.bool))
-		(optional ssh_set_priv_login_boolean_optional_seutil
+		(call sec.set_spec_boolean (ARG1 sshd_priv_login.bool))
+		(optional sshd_set_priv_login_boolean_optional_seutil
+			(call setsebool.exec (ARG1))))
+
+	(macro set_enable_x11_forward_boolean ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 sshd_enable_x11_forward.bool))
+		(optional ssh_set_enable_x11_forward_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
 	(macro adm ((type ARG1)(role ARG2))

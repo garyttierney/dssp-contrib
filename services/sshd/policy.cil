@@ -1,6 +1,10 @@
 (boolean sshd_priv_login true)
+(boolean sshd_enable_x11_forward true)
 
 (block sshd_priv_login
+	(blockinherit sec.bool_obj_blk))
+
+(block sshd_enable_x11_forward
 	(blockinherit sec.bool_obj_blk))
 
 (block sshd
@@ -47,6 +51,17 @@
 	(sshd.login_subj_type_attribute))
 
 (call ssh_client.read_config_files (sshd.login_subj_type_attribute))
+
+(booleanif sshd_enable_x11_forward
+	(true
+		(allow sshd.login_subj_type_attribute self
+			(tcp_socket (listen accept)))
+
+		(call net.tcp_bind_generic_node
+			(sshd.login_subj_type_attribute))
+
+		(call ssh_x11_forward.tcp_bind_port
+			(sshd.login_subj_type_attribute))))
 
 (call sshd.login_subj_type (sshd.priv_login_subj_type_attribute))
 

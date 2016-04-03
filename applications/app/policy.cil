@@ -6,6 +6,20 @@
 
 	(call term.use_inherited_unallocated_ttys (subj_type_attribute))
 
+	(optional app_optional_sshd
+		(booleanif sshd_enable_x11_forward
+			(true
+				(call fstab.read (subj_type_attribute))
+
+				(call ssh_x11_forward.tcp_connect_port
+					(subj_type_attribute)))))
+
+	(optional app_optional_sd_machined
+		(booleanif sshd_enable_x11_forward
+			(true
+				(call sd_machined.read_config_files
+					(subj_type_attribute)))))
+
 	(optional app_optional_emacs
 		(call emacs.send_sigchld_all_subj (subj_type_attribute))
 		(call emacs.rw_inherited_fifo_files_all_subj

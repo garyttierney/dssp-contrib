@@ -22,4 +22,7 @@
 	(call startx.read_tmpfs_user_files (subj))
 
 	(optional xauth_optional_sd_machined
-		(call sd_machined.read_runtime (subj))))
+		(call sd_machined.read_runtime (subj)))
+
+	(optional xauth_optional_ssh_client
+		(call ssh_client.write_inherited_fifo_files_all_subj (subj))))

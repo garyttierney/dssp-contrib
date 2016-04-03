@@ -169,6 +169,9 @@
 				(call net.tcp_bind_generic_node
 					(login_subj_type_attribute))
 
+				(call storage.getattr_fixed_disk
+					(login_subj_type_attribute))
+
 				(call ssh_x11_forward.tcp_bind_port
 					(login_subj_type_attribute))))
 

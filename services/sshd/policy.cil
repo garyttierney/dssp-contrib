@@ -56,8 +56,13 @@
 	(true
 		(allow sshd.login_subj_type_attribute self
 			(tcp_socket (listen accept)))
+		(allow sshd.login_subj_type_attribute self
+			create_unix_stream_stream_socket_perms)
 
 		(call net.tcp_bind_generic_node
+			(sshd.login_subj_type_attribute))
+
+		(call storage.getattr_fixed_disk
 			(sshd.login_subj_type_attribute))
 
 		(call ssh_x11_forward.tcp_bind_port

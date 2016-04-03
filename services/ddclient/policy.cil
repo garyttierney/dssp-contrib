@@ -42,7 +42,10 @@
 
 	(call dev.read_urandom (subj))
 
+	(call file.read_config_files (subj))
 	(call file.read_data (subj))
+
+	(call fs.list_rootfs (subj))
 
 	(call http.tcp_connect_port (subj))
 
@@ -51,6 +54,9 @@
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj))
+
+	(optional ddclient_optional_logger
+		(call logger.auto_subj_type_transition (subj)))
 
 	(optional ddclient_optional_sd
 		(call sd.daemon (subj cmd_file))

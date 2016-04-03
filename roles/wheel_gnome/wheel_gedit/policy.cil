@@ -21,7 +21,11 @@
 		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
 
 	(optional wheel_gedit_optional_wheel_sessbus
-		(call wheel_sessbus.daemon (subj gedit.cmd_file))))
+		(call wheel_sessbus.daemon (subj gedit.cmd_file)))
+
+	(optional wheel_gedit_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition
+			(subj))))
 
 (block wheel_geditstf
 	(typeattribute sessbus_chat_client_subj_type_attribute)

@@ -121,7 +121,10 @@
 
 	(optional ssh_client_subj_type_optional_timedatectl
 		(call timedatectl.rw_inherited_unix_stream_sockets_all_subj
-			(subj_type_attribute))))
+			(subj_type_attribute)))
+
+	(optional ssh_client_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
 
 (block ssh_keygen
 	(typeattribute subj_type_attribute)

@@ -1,3 +1,7 @@
 (in ssh
 	(blockinherit net.tcp_bind_reserved_port_blk)
 	(blockinherit net.tcp_connect_port_blk))
+
+(in ssh_x11_forward
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))

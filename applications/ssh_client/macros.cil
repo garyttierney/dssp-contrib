@@ -111,7 +111,10 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 		(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
-		(allow ARG3 self rw_key_perms))
+		(allow ARG3 self rw_key_perms)
+
+		(optional ssh_client_role_pattern_optional_xauth
+			(call xauth.run (ARG3 ARG1))))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))

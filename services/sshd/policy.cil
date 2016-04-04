@@ -17,6 +17,7 @@
 	(typeattribute subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
+	(typeattribute cmd_obj_type_attribute)
 	(typeattribute config_obj_type_attribute)
 	(typeattribute port_obj_type_attribute)
 	(typeattribute runtime_obj_type_attribute)
@@ -32,6 +33,64 @@
 			unit_obj_type_attribute (service (start status stop
 				reload enable disable)))))
 
+(block sshduser
+	(typeattribute subj_type_attribute)
+	(typeattribute priv_subj_type_attribute)
+	(typeattribute unpriv_subj_type_attribute)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call standard.user_exemption_target_subj_type (subj_type_attribute))
+
+	(call dev.rw_inherited_ptmx (subj_type_attribute))
+
+	(call file.read_config_files (subj_type_attribute))
+
+	(call subj.entry (subj_type_attribute sshd.cmd_obj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call ssh_client.read_config_files (subj_type_attribute))
+
+	(call sshd.rw_inherited_tcp_sockets_all_subj (subj_type_attribute))
+	(call sshd.rw_inherited_unix_stream_sockets_all_subj
+		(subj_type_attribute))
+	(call sshd.rw_inherited_unix_dgram_sockets_all_subj
+		(subj_type_attribute))
+
+	(call usersubj.pty_template (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(booleanif sshd_enable_x11_forward
+		(true
+			(allow subj_type_attribute self
+				(tcp_socket (listen accept)))
+			(allow subj_type_attribute self
+				create_unix_stream_stream_socket_perms)
+
+			(call net.tcp_bind_generic_node
+				(subj_type_attribute))
+
+			(call storage.getattr_fixed_disk
+				(subj_type_attribute))
+
+			(call ssh_x11_forward.tcp_bind_port
+				(subj_type_attribute))))
+
+	(optional sshduser_optional_mcstransd
+		(call mcstransd.contains_subj_type (subj_type_attribute)))
+
+	(optional sshduser_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(typeattributeset unpriv_subj_type_attribute (and (subj_type_attribute)
+		(not (priv_subj_type_attribute)))))
+
 (block sshd_key
 	(typeattribute obj_type_attribute))
 
@@ -43,32 +102,6 @@
 
 (block ssh_helper
 	(blockinherit cmd.obj_blk))
-
-(call sshd.rw_inherited_tcp_sockets_all_subj (sshd.login_subj_type_attribute))
-(call sshd.rw_inherited_unix_stream_sockets_all_subj
-	(sshd.login_subj_type_attribute))
-(call sshd.rw_inherited_unix_dgram_sockets_all_subj
-	(sshd.login_subj_type_attribute))
-
-(call ssh_client.read_config_files (sshd.login_subj_type_attribute))
-
-(booleanif sshd_enable_x11_forward
-	(true
-		(allow sshd.login_subj_type_attribute self
-			(tcp_socket (listen accept)))
-		(allow sshd.login_subj_type_attribute self
-			create_unix_stream_stream_socket_perms)
-
-		(call net.tcp_bind_generic_node
-			(sshd.login_subj_type_attribute))
-
-		(call storage.getattr_fixed_disk
-			(sshd.login_subj_type_attribute))
-
-		(call ssh_x11_forward.tcp_bind_port
-			(sshd.login_subj_type_attribute))))
-
-(call sshd.login_subj_type (sshd.priv_login_subj_type_attribute))
 
 (allow sshd.adm_subj_type_attribute sshd.subj_type_attribute (process (ptrace
 	signal signull sigkill sigstop)))

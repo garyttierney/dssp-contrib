@@ -1,0 +1,6 @@
+(block sysadm_sshduser
+	(blockinherit sshduser.priv_subj_blk)
+
+	(allow subj self (capability (setuid setgid dac_override)))
+
+	(call sysadm.shell_auto_subj_type_transition (subj)))

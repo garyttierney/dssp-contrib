@@ -1,3 +1,86 @@
+(in sshduser
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_blk)
+
+		(typeattributeset .sshduser.subj_type_attribute subj)
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call sshduser.role_pattern (ARG1 ARG2 subj))))
+
+	(block priv_subj_blk
+		(blockabstract priv_subj_blk)
+
+		(blockinherit sshduser.subj_blk)
+
+		(typeattributeset .sshduser.priv_subj_type_attribute subj))
+
+	(macro subj_type ((type ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro priv_subj_type ((type ARG1))
+		(typeattributeset priv_subj_type_attribute ARG1))
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset sshduser.subj_type_attribute ARG1))
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit subj.link_keyring_all_blk)
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+		(call ps_subj_pattern (ARG2 ARG3))
+
+		(call manage_tmpfs_user (ARG2))
+		(call relabel_tmpfs_user (ARG2))
+
+		(call sshd.use_fd_all_subj (ARG2)))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*")))
+
+	(macro dontaudit_create_keyring_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute create_key_perms))
+
+	(macro create_keyring_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute create_key_perms))
+
+	(macro dontaudit_dynamic_subj_type_transition_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute (process (dyntransition))))
+
+	(macro dynamic_subj_type_transition_subj ((type ARG1))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			subj_type_attribute)))
+
+	(macro dynamic_subj_type_transition_unpriv_subj ((type ARG1))
+		(call dynamic_subj_type_transition_pattern (ARG1
+			unpriv_subj_type_attribute)))
+
+	(macro dontaudit_manual_subj_type_transition_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute (process (transition))))
+
+	(macro shell_manual_subj_type_transition_subj ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			subj_type_attribute)))
+
+	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			unpriv_subj_type_attribute))))
+
 (block sshd_blk
 	(blockabstract sshd_blk)
 
@@ -12,6 +95,7 @@
 		(typeattribute obj_type_attribute)
 
 		(typeattribute config_obj_type_attribute)
+		(typeattribute cmd_obj_type_attribute)
 		(typeattribute port_obj_type_attribute)
 		(typeattribute runtime_obj_type_attribute)
 		(typeattribute unit_obj_type_attribute)
@@ -23,6 +107,8 @@
 
 		(typeattributeset .sshd.config_obj_type_attribute
 			config_obj_type_attribute)
+		(typeattributeset .sshd.cmd_obj_type_attribute
+			cmd_obj_type_attribute)
 		(typeattributeset .sshd.port_obj_type_attribute
 			port_obj_type_attribute)
 		(typeattributeset .sshd.runtime_obj_type_attribute
@@ -38,6 +124,9 @@
 			subj_type_attribute)
 
 		(blockinherit cmd.obj_blk)
+
+		(typeattributeset obj_type_attribute cmd_file)
+		(typeattributeset cmd_obj_type_attribute cmd_file)
 
 		(call subj.entry (subj cmd_file))
 
@@ -112,12 +201,13 @@
 		(call ssh_client.read_config_files (subj))
 		(call ssh_client.read_home_user_files (subj))
 
-		(call usersubj.dontaudit_create_keyring_subj
+		(call sshduser.dontaudit_dynamic_subj_type_transition_subj
 			(subj))
-		(call usersubj.dontaudit_dynamic_subj_type_transition_subj
+		(call sshduser.dontaudit_manual_subj_type_transition_subj
 			(subj))
-		(call usersubj.dontaudit_manual_subj_type_transition_subj
-			(subj))
+		(call sshduser.dontaudit_create_keyring_subj (subj))
+		(call sshduser.create_keyring_subj (subj))
+
 		(call usersubj.relabel_ptys (subj))
 		(call usersubj.setattr_ptys (subj))
 		(call usersubj.use_ptys (subj))
@@ -125,17 +215,17 @@
 		(booleanif sshd_priv_login
 			(true
 				(call
-					usersubj.dynamic_subj_type_transition_login_subj
+					sshduser.dynamic_subj_type_transition_subj
 						(subj))
 				(call
-					usersubj.shell_manual_subj_type_transition_login_subj
+					sshduser.shell_manual_subj_type_transition_subj
 						(subj)))
 			(false
 				(call
-					usersubj.dynamic_subj_type_transition_unpriv_login_subj
+					sshduser.dynamic_subj_type_transition_unpriv_subj
 						(subj))
 				(call
-					usersubj.shell_manual_subj_type_transition_unpriv_login_subj
+					sshduser.shell_manual_subj_type_transition_unpriv_subj
 						(subj))))
 
 		(optional sshd_blk_optional_sd
@@ -152,30 +242,6 @@
 
 			(allow adm_subj_type_attribute unit_file (service
 				(stop status disable enable reload start))))
-
-		(call rw_inherited_tcp_sockets (login_subj_type_attribute))
-		(call rw_inherited_unix_stream_sockets
-			(login_subj_type_attribute))
-		(call rw_inherited_unix_dgram_sockets
-			(login_subj_type_attribute))
-
-		(call ssh_client.read_config_files (login_subj_type_attribute))
-
-		(booleanif sshd_enable_x11_forward
-			(true
-				(allow login_subj_type_attribute self
-					(tcp_socket (listen accept)))
-
-				(call net.tcp_bind_generic_node
-					(login_subj_type_attribute))
-
-				(call storage.getattr_fixed_disk
-					(login_subj_type_attribute))
-
-				(call ssh_x11_forward.tcp_bind_port
-					(login_subj_type_attribute))))
-
-		(call login_subj_type (priv_login_subj_type_attribute))
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
 			(ptrace signal signull sigkill sigstop)))
@@ -198,12 +264,6 @@
 			relabel_file_perms)
 		(allow adm_subj_type_attribute obj_type_attribute
 			relabel_lnk_file_perms)
-
-		(macro login_subj_type ((type ARG1))
-			(typeattributeset login_subj_type_attribute ARG1))
-
-		(macro priv_login_subj_type ((type ARG1))
-			(typeattributeset priv_login_subj_type_attribute ARG1))
 
 		(blockinherit exec_blk)
 
@@ -412,12 +472,6 @@
 			setopt getattr))))
 
 	(blockinherit subj.rw_inherited_fifo_files_all_blk)
-
-	(macro login_subj_type ((type ARG1))
-		(typeattributeset login_subj_type_attribute ARG1))
-
-	(macro priv_login_subj_type ((type ARG1))
-		(typeattributeset priv_login_subj_type_attribute ARG1))
 
 	(macro set_priv_login_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 sshd_priv_login.bool))

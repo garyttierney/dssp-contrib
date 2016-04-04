@@ -274,9 +274,6 @@
 
 		(call speechdispd.run (subj_type_attribute role)))
 
-	(optional user_optional_sshd
-		(call sshd.login_subj_type (subj)))
-
 	(optional user_optional_syndaemon
 		(call syndaemon.run (subj_type_attribute role)))
 
@@ -1392,6 +1389,9 @@
 
 		(call user_ssh_client.role_pattern (role subj_type_attribute))
 		(call user_ssh_keygen.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_sshduser
+		(call user_sshduser.role_pattern (role subj)))
 
 	(optional user_optional_user_startx
 		(call startx.manage_tmpfs_user_files (subj))

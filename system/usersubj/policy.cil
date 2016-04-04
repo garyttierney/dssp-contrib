@@ -36,10 +36,11 @@
 
 	(allow common_type_attribute self (process (setpgid getattr getsched
 		ptrace setsched)))
+	(allow common_type_attribute self create_unix_stream_socket_perms)
 	(allow common_type_attribute self rw_fifo_file_perms)
 
 	(call type (common_type_attribute))
-	(call use_term (common_type_attribute))
+	(call use_inherited_term (common_type_attribute))
 
 	(call sys.dontaudit_list_mountpoints (common_type_attribute))
 	(call sys.dontaudit_read_all_proc_files (common_type_attribute))
@@ -67,10 +68,11 @@
 
 	(call locale.read (common_type_attribute))
 	(call man.read (common_type_attribute))
+	(call passwords.read (common_type_attribute))
 	(call terminfo.read_all (common_type_attribute))
 	(call utmp.read_runtime_files (common_type_attribute))
 
-	(call nss.client_subj_type (common_type_attribute))
+	(call nss.read_config_files (common_type_attribute))
 
 	(optional usersubj_common_type_optional_ldconfig
 		(call ldconfig.exec (common_type_attribute)))
@@ -93,14 +95,10 @@
 	(call sys.read_kernel_sysctl_files (common_login_type_attribute))
 	(call sys.read_net_proc_files (common_login_type_attribute))
 
-	(call dev.rw_inherited_ptmx (common_login_type_attribute))
-
 	(call file.list_mnt (common_login_type_attribute))
 	(call file.read_config (common_login_type_attribute))
 	(call file.read_data (common_login_type_attribute))
 
-	(call fs.dontaudit_getattr_devtmpfs_lnk_files
-		(common_login_type_attribute))
 	(call fs.getattr_sysfs_fs (common_login_type_attribute))
 	(call fs.list_tmpfs (common_login_type_attribute))
 

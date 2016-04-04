@@ -966,8 +966,7 @@
 
 	(optional sysadm_optional_sshd
 		(call sshd.adm (subj_type_attribute role))
-		(call sshd.sshd_keygen.run (subj_type_attribute role))
-		(call sshd.priv_login_subj_type (subj)))
+		(call sshd.sshd_keygen.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_syndaemon
 		(call syndaemon.run (subj_type_attribute role)))
@@ -2220,6 +2219,9 @@
 
 		(call sysadm_setoolsgui.role_pattern (role
 			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_sshduser
+		(call sysadm_sshduser.role_pattern (role subj)))
 
 	(optional sysadm_optional_sysadm_steam
 		(call steam.manage_tmpfs_user (subj))

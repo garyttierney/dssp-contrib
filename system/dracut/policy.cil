@@ -34,6 +34,7 @@
 
 	(call standard.obj_sys_change_exemption_subj_type (subj))
 
+	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
 	(call cmd.mmap_all (subj))
@@ -68,6 +69,9 @@
 
 	(call ldconfig.exec (subj))
 
+	(call mdadm.exec (subj))
+
+	(call hosts.read_config_files (subj))
 	(call terminfo.read_all (subj))
 	(call fstab.read (subj))
 	(call modules.read (subj))

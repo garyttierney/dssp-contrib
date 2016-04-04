@@ -26,6 +26,7 @@
 
 	(allow subj self (capability (setuid setgid setpcap dac_override)))
 	(allow subj self (process (getcap setcap)))
+	(allow subj self (unix_stream_socket (listen accept connectto)))
 
 	(call sys.read_kernel_sysctl_files (subj))
 

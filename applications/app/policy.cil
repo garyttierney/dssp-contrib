@@ -26,6 +26,8 @@
 		(call sduser.send_sigchld_all_subj (subj_type_attribute)))
 
 	(optional app_optional_sshduser
+		(call sshduser.rw_inherited_fifo_files_all_subj
+			(subj_type_attribute))
 		(call sshduser.send_sigchld_all_subj (subj_type_attribute)))
 
 	(optional app_optional_sudo

@@ -34,9 +34,6 @@
 		(call sd_nspawn_container.stream_connect_all_subj (subj))
 		(call sd_nspawn_container.read_state_all_subj (subj)))
 
-	(optional sd_stdio_optional_sshd
-		(call sshduser.rw_inherited_fifo_files_all_subj (subj)))
-
 	(optional sd_stdio_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
 

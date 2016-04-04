@@ -25,7 +25,7 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (chown)))
+	(allow subj self (capability (chown fowner)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_invalid_files (subj))

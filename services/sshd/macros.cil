@@ -41,7 +41,10 @@
 		(call manage_tmpfs_user (ARG2))
 		(call relabel_tmpfs_user (ARG2))
 
-		(call sshd.use_fd_all_subj (ARG2)))
+		(call sshd.use_fd_all_subj (ARG2))
+
+		(optional sshduser_role_pattern_optional_xauth
+			(call xauth.run (ARG3 ARG1))))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)

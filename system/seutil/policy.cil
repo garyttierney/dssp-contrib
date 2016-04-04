@@ -110,6 +110,7 @@
 	(optional setfiles_optional_auditd
 		(call auditd.relabel_config (subj))
 		(call auditd.relabel_var_log (subj))
+		(call auditd.relabel_runtime_files (subj))
 		(call auditd.relabel_runtime_sock_files (subj)))
 
 	(optional setfiles_optional_audispd

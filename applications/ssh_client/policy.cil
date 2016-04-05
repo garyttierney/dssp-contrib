@@ -46,6 +46,7 @@
 	(allow subj_type_attribute self rw_key_perms)
 	(allow subj_type_attribute self create_unix_dgram_socket_perms)
 	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
 
 	(call sys.read_net_proc_files (subj_type_attribute))
 
@@ -57,6 +58,10 @@
 
 	(call fs.manage_dosfs_subj_type (subj_type_attribute))
 	(call fs.manage_fuse_subj_type (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.tcp_bind_all_unreserved_ports (subj_type_attribute))
+	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
 
 	(call sec.setfscreate_subj_type (subj_type_attribute))
 

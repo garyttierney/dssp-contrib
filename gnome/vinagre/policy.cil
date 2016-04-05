@@ -29,11 +29,11 @@
 
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 
+	(call net.tcp_bind_all_unreserved_ports (subj_type_attribute))
+	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
+
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
-
-	(call vnc.tcp_connect_port (subj_type_attribute))
-	(call vncrev.tcp_bind_port (subj_type_attribute))
 
 	(optional vinagre_subj_type_optional_avahid
 		(call avahid.stream_connect (subj_type_attribute)))

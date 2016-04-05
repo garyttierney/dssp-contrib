@@ -38,6 +38,9 @@
 
 	(call udev.client_subj_type (subj))
 
+	(optional upowerd_optional_fwupd
+		(call fwupd.sysbus_chat_client_subj_type (subj)))
+
 	(optional upowerd_optional_gdm
 		(call gdm.sysbus_chat_client_subj_type (subj)))
 

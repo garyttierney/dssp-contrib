@@ -1,0 +1,20 @@
+(block wheel_gvfsdgph2vm
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdgph2vm.subj_blk)
+
+	(call wheel_gvfsd.daemon (subj gvfsdgph2vm.cmd_file))
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gvfsdgph2vm_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gvfsdgph2vm.cmd_file)))
+
+	(optional
+		wheel_gvfsdgph2vm_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
+
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

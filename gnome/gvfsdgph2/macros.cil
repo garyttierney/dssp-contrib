@@ -1,0 +1,14 @@
+(in gvfsdgph2vm
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdgph2vm.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdgph2vm.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdgph2vm.role_pattern (ARG1 ARG2 subj)))))

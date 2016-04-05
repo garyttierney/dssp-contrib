@@ -1056,6 +1056,9 @@
 		(call varnishadm.run (subj_type_attribute role))
 		(call varnishd.adm (subj role)))
 
+	(optional sysadm_optional_vdagentd
+		(call vdagentd.adm (subj role)))
+
 	(optional sysadm_optional_vulkan
 		(call vulkan.manage_home_data (subj))
 		(call vulkan.relabel_home_data (subj))
@@ -2405,6 +2408,9 @@
 		(call trackers.relabel_var_tmp_user_files (subj))
 
 		(call sysadm_trackers.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_vdagent
+		(call sysadm_vdagent.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_vinagre
 		(call vinagre.manage_tmpfs_user (subj))

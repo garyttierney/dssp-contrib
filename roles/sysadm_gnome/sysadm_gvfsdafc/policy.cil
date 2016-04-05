@@ -6,6 +6,12 @@
 	(call sysadm_gvfsd.daemon (subj gvfsdafcvm.cmd_file))
 	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
 
+	(optional sysadm_gvfsdafcvm_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvfsdafcvm_optional_sysadm_nautilus
+		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gvfsdafcvm_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gvfsdafcvm.cmd_file)))
 

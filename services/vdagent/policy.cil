@@ -28,6 +28,8 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(allow subj self (unix_stream_socket (listen accept)))
+
 	(optional vdagentd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -39,6 +41,9 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
+
+	(optional vdagentd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
 
 	(optional vdagentd_optional_sysbus
 		(call sysbus.client_subj_type (subj)))

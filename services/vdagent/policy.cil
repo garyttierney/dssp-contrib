@@ -7,11 +7,19 @@
 
 	(call locale.read (subj_type_attribute))
 
+	(call usersubj.read_home_config_files (subj_type_attribute))
+
+	(call vdagentd.client_subj_type (subj_type_attribute))
+
 	(optional vdagent_optional_sd_journald
-		(call sd_journald.client_subj_type (subj_type_attribute))))
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional vdagent_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
 
 (block vdagentd
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -33,6 +41,16 @@
 
 	(allow subj self (unix_stream_socket (listen accept)))
 
+	(call sys.request_load_module (subj))
+
+	(call dev.rw_event (subj))
+
+	(call fs.getattr_tmpfs_fs (subj))
+
+	(call term.use_virtio (subj))
+
+	(call locale.read (subj))
+
 	(optional vdagentd_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -45,8 +63,20 @@
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
 
+	(optional vdagentd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional vdagentd_optional_sd_logind
+		(call sd_logind.read_runtime (subj)))
+
 	(optional vdagentd_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
+
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
+
+	(call stream_connect (client_subj_type_attribute))
 
 	(optional vdagentd_sysbus_chat_client_subj_type_attribute_optional_sysbus
 		(allow subj sysbus_chat_client_subj_type_attribute (dbus

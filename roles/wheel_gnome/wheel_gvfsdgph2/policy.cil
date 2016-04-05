@@ -6,6 +6,12 @@
 	(call wheel_gvfsd.daemon (subj gvfsdgph2vm.cmd_file))
 	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
 
+	(optional wheel_gvfsdgph2vm_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gvfsdgph2vm_optional_wheel_nautilus
+		(call wheel_nautilus.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_gvfsdgph2vm_optional_wheel_sessbus
 		(call wheel_sessbus.daemon (subj gvfsdgph2vm.cmd_file)))
 

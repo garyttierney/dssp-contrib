@@ -41,6 +41,9 @@
 
 	(call usersubj.read_home_user_files (subj_type_attribute))
 
+	(optional evincet_subj_type_attribute_optional_gdocs
+		(call gdocs.write_tmpfs_user_files (subj_type_attribute)))
+
 	(optional evincet_subj_type_attribute_optional_nautilus
 		(call nautilus.write_tmpfs_user_files (subj_type_attribute))))
 

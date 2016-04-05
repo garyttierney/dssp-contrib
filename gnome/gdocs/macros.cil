@@ -12,6 +12,12 @@
 		(call use_fd_all_subj (ARG1))
 		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
+	(macro write_tmpfs_user_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call write_files_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file)))
+
 	(blockinherit usersubj.search_home_cache_blk)
 	(blockinherit usersubj.list_home_cache_blk)
 	(blockinherit usersubj.read_home_cache_files_blk)
@@ -25,4 +31,3 @@
 	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
 		(call usersubj.home_cache_obj_type_transition (ARG1
 			home_cache_file dir "gnome-documents"))))
-

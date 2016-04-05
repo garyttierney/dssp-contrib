@@ -43,6 +43,9 @@
 
 		(call sshd.use_fd_all_subj (ARG2))
 
+		(optional sshduser_role_pattern_optional_sftpserver
+			(call ssh_sftpserver.run (ARG3 ARG1)))
+
 		(optional sshduser_role_pattern_optional_xauth
 			(call xauth.run (ARG3 ARG1))))
 

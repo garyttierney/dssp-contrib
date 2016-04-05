@@ -1,7 +1,11 @@
 (boolean sshd_priv_login true)
 (boolean sshd_enable_x11_forward true)
+(boolean sshd_enable_tunnel true)
 
 (block sshd_priv_login
+	(blockinherit sec.bool_obj_blk))
+
+(block sshd_enable_tunnel
 	(blockinherit sec.bool_obj_blk))
 
 (block sshd_enable_x11_forward
@@ -66,6 +70,13 @@
 
 	(call usersubj.pty_template (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))
+
+	(booleanif sshd_enable_tunnel
+		(true
+			(call sys.read_net_proc_files (subj_type_attribute))
+
+			(call net.tcp_connect_all_unreserved_ports
+				(subj_type_attribute))))
 
 	(booleanif sshd_enable_x11_forward
 		(true

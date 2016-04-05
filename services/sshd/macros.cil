@@ -486,6 +486,11 @@
 		(optional sshd_set_priv_login_boolean_optional_seutil
 			(call setsebool.exec (ARG1))))
 
+	(macro set_enable_tunnel ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 sshd_enable_tunnel.bool))
+		(optional ssh_set_enable_tunnel_boolean_optional_seutil
+			(call setsebool.exec (ARG1))))
+
 	(macro set_enable_x11_forward_boolean ((type ARG1))
 		(call sec.set_spec_boolean (ARG1 sshd_enable_x11_forward.bool))
 		(optional ssh_set_enable_x11_forward_boolean_optional_seutil

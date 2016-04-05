@@ -5,6 +5,12 @@
 		vinagre.tmpfs_user_file))
 	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
 
+	(optional sysadm_vinagre_optional_sysadm_gkrd
+		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_vinagre_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
 	(optional sysadm_vinagre_optional_sysadm_ssh_client
 		(call sysadm_ssh_client.auto_subj_type_transition (subj)))
 

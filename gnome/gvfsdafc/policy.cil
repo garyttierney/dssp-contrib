@@ -1,0 +1,11 @@
+(block gvfsdafcvm
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gvfsdafcvm_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk)))

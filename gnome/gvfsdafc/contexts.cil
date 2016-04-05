@@ -1,0 +1,7 @@
+(in gvfsdafcvm
+	(filecon "/usr/libexec/gvfs-afc-volume-monitor" file cmd_file_context)
+
+	(optional gvfsdafcvm_unit_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*gvfs-afc-volume-monitor.*"
+				file unit_file_context)))

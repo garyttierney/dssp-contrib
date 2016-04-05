@@ -11,4 +11,7 @@
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_zenity_optional_sysadm_gedit
-		(call sysadm_gedit.rw_inherited_fifo_files (subj))))
+		(call sysadm_gedit.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_zenity_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj))))

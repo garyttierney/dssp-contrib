@@ -10,6 +10,11 @@
 	(call manage_home_user_files (subj))
 	(call home_dir_obj_type_transition_home (subj))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.exec (subj))
@@ -24,10 +29,14 @@
 
 	(call http.tcp_connect_port (subj))
 
-	(call cert.read_all (subj))
+	(call cert.read (subj))
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj))
+
+	(call usersubj.manage_home_cert (subj))
+	(call usersubj.home_dir_obj_type_transition_home_cert
+		(subj))
 
 	(optional bti_optional_git
 		(call git.use_fd_all_subj (subj)))

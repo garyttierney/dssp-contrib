@@ -5,7 +5,10 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.read (subj_type_attribute))
+
+	(optional vdagent_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute))))
 
 (block vdagentd
 	(typeattribute adm_subj_type_attribute)
@@ -41,9 +44,6 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
-
-	(optional vdagentd_optional_sd_journald
-		(call sd_journald.client_subj_type (subj)))
 
 	(optional vdagentd_optional_sysbus
 		(call sysbus.client_subj_type (subj)))

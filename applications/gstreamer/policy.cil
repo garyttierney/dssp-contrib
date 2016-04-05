@@ -42,9 +42,14 @@
 
 	(call fs.list_devtmpfs (subj_type_attribute))
 
+	(call locale.read (subj_type_attribute))
+
 	(optional gstps_optional_gsh
 		(call gsh.rw_inherited_unix_stream_sockets_all_subj
-			(subj_type_attribute))))
+			(subj_type_attribute)))
+
+	(optional gstps_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
 
 (block gst_helper
 	(blockinherit cmd.obj_blk))

@@ -215,6 +215,8 @@
 	(call fstab.read (subj))
 	(call hwdata.read_data_files (subj))
 	(call mime_types.read_data (subj))
+	(call passwords.manage (subj))
+	(call shadow.manage (subj))
 
 	(call pam.login_prog_subj_type (subj))
 	(call pam_console.manage_runtime_files (subj))

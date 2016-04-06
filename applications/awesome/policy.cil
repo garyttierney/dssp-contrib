@@ -34,7 +34,10 @@
 
 	(call usersubj.read_home_user_files (subj_type_attribute))
 
-	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(optional awesome_subj_type_attribute_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
 
 (block awesomec
 	(typeattribute subj_type_attribute)

@@ -78,6 +78,10 @@
 	(call default_context.read_config_files
 		(login_prog_subj_type_attribute))
 
+	(optional pam_login_prog_subj_type_optional_gdm
+		(call gdmuser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
 	(optional pam_login_prog_subj_type_optional_sd_logind
 		(allow login_prog_subj_type_attribute self (capability
 			(dac_override)))
@@ -91,6 +95,10 @@
 
 	(optional pam_login_prog_subj_type_optional_sduser
 		(call sduser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_sshd
+		(call sshduser.link_keyring_all_subj
 			(login_prog_subj_type_attribute)))
 
 	(optional pam_login_prog_subj_type_optional_usersubj

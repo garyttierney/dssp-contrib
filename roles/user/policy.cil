@@ -100,10 +100,7 @@
 		(call ulockmgr.run (subj_type_attribute role)))
 
 	(optional user_optional_gdm
-		(call gdm.client_subj_type (subj))
-		(call gdm.manage_tmpfs_user (subj))
-		(call gdm.relabel_tmpfs_user (subj))
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.rw_inherited_unix_stream_sockets (subj))
 		(call gdm.manage_home_cache (subj))
 		(call gdm.relabel_home_cache (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
@@ -756,6 +753,13 @@
 	(optional user_optional_user_gcr
 		(call user_gcrv.role_pattern (role subj_type_attribute))
 		(call user_gcrp.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_gdmuser
+		(call gdmuser.manage_tmpfs_user (subj))
+		(call gdmuser.relabel_tmpfs_user (subj))
+		(call gdmuser.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call user_gdmuser.role_pattern (role subj)))
 
 	(optional user_optional_user_gdocs
 		(call gdocs.manage_tmpfs_user (subj))

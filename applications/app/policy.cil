@@ -15,6 +15,11 @@
 		(call gdm.rw_inherited_unix_stream_sockets
 			(subj_type_attribute)))
 
+	(optional app_optional_gdmuser
+		(call gdmuser.rw_inherited_fifo_files_all_subj
+			(subj_type_attribute))
+		(call gdmuser.send_sigchld_all_subj (subj_type_attribute)))
+
 	(optional app_optional_irssi
 		(call irssi.send_sigchld_all_subj (subj_type_attribute))
 		(call irssi.rw_inherited_fifo_files_all_subj

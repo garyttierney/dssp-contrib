@@ -236,6 +236,25 @@
 					sshduser.shell_manual_subj_type_transition_unpriv_subj
 						(subj))))
 
+		(optional sshd_blk_optional_exempt
+			(call
+				exempt.dontaudit_dynamic_subj_type_transition
+					(subj))
+			(call
+				exempt.dontaudit_manual_subj_type_transition
+					(subj))
+			(call exempt.dontaudit_create_keyring (subj))
+			(call exempt.create_keyring (subj))
+
+			(booleanif sshd_priv_login
+				(true
+					(call
+						exempt.dynamic_subj_type_transition
+							(subj))
+					(call
+						exempt.shell_manual_subj_type_transition
+							(subj)))))
+
 		(optional sshd_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
 

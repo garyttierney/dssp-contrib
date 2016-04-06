@@ -8,16 +8,66 @@
 	(booleanif gdm_priv_login
 		(true
 			(call
-				xsession.manual_subj_type_transition_login_subj
-					(gdm.subj)))
+				xsession.spec_manual_subj_type_transition
+					(gdm.subj gdmuser.subj_type_attribute)))
 		(false
 			(call
-				xsession.manual_subj_type_transition_unpriv_login_subj
-					(gdm.subj)))))
+				xsession.spec_manual_subj_type_transition
+					(gdm.subj gdmuser.unpriv_subj_type_attribute))))
+
+	; this is illigal because i am referencing an external type
+	; the alternative would be just as bad
+	(optional gdm_priv_login_optional_exempt
+		(booleanif gdm_priv_login
+			(true
+				(call
+					xsession.spec_manual_subj_type_transition
+						(gdm.subj exempt.subj))))))
+
+(block gdmuser
+	(typeattribute subj_type_attribute)
+	(typeattribute priv_subj_type_attribute)
+	(typeattribute unpriv_subj_type_attribute)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call standard.user_exemption_target_subj_type (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call gdm.read_config (subj_type_attribute))
+	(call gdm.sysbus_chat_client_subj_type (subj_type_attribute))
+
+	(call gdm_helper.cmd_obj_entry_subj (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.tty_template (subj_type_attribute))
+	(call usersubj.use_ttys (subj_type_attribute))
+
+	(optional gdmuser_optional_mcstransd
+		(call mcstransd.contains_subj_type (subj_type_attribute)))
+
+	(optional gdmuser_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gdmuser_optional_xserver
+		(call xserver.search_config (subj_type_attribute)))
+
+	(typeattributeset unpriv_subj_type_attribute (and (subj_type_attribute)
+		(not (priv_subj_type_attribute)))))
 
 (block gdm
 	(typeattribute adm_subj_type_attribute)
-	(typeattribute client_subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
@@ -134,6 +184,10 @@
 
 	(call gdm_helper.exec (subj))
 
+	(call gdmuser.dontaudit_manual_subj_type_transition_subj (subj))
+	(call gdmuser.dontaudit_create_keyring_subj (subj))
+	(call gdmuser.create_keyring_subj (subj))
+
 	(call gkrd.exec (subj))
 	(call gkrd.manual_subj_type_transition_all_subj (subj))
 	(call gkrd.stream_connect_all_subj (subj))
@@ -176,7 +230,6 @@
 		(true
 			;; this goes with contexts/users/gdm.id
 			;; sys.role:sd.subj:s0 sys.role:gdm.subj:s0
-
 			(user id)
 			(userrole id sys.role)
 			(userlevel id systemlow)
@@ -223,6 +276,11 @@
 
 	(optional gdm_optional_colord
 		(call colord.client_subj_type (subj)))
+
+	(optional gdm_optional_exempt
+		(call exempt.dontaudit_manual_subj_type_transition (subj))
+		(call exempt.dontaudit_create_keyring (subj))
+		(call exempt.create_keyring (subj)))
 
 	(optional gdm_optional_geoclue
 		(call geoclue.client_subj_type (subj)))
@@ -334,22 +392,6 @@
 
 	(optional gdm_optional_xutil
 		(call xutil.exec (subj)))
-
-	(allow client_subj_type_attribute subj
-		rw_inherited_unix_stream_socket_perms)
-
-	(call read_config_files (client_subj_type_attribute))
-	(call read_config_lnk_files (client_subj_type_attribute))
-
-	(call gdm_helper.cmd_obj_entry_subj (client_subj_type_attribute))
-
-	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
-
-	(optional client_subj_type_optional_sysbus
-		(call sysbus.client_subj_type (client_subj_type_attribute)))
-
-	(optional client_subj_type_optional_xserver
-		(call xserver.search_config (client_subj_type_attribute)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

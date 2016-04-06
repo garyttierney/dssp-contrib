@@ -1,0 +1,16 @@
+(block sysadm_gdmuser
+	(blockinherit gdmuser.priv_subj_blk)
+
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(optional sysadm_gdmuser_optional_sysadm_gkr
+		(call sysadm_gkrd.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gdmuser_optional_sysadm_gs
+		(call sysadm_gs.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gdmuser_optional_sysadm_sessbus
+		(call sysadm_sessbus.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gdmuser_optional_sysadm_xsession
+		(call sysadm_xsession.auto_subj_type_transition (subj))))

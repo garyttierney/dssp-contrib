@@ -33,9 +33,15 @@
 		(optional xsession_role_pattern_optional_glxutils
 			(call glxutils.run (ARG3 ARG1))))
 
+	(macro cmd_obj_entry_subj ((type ARG1))
+		(call subj.entry (ARG1 cmd_file)))
+
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(macro spec_manual_subj_type_transition ((type ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
 	(macro manual_subj_type_transition_login_subj ((type ARG1))
 		(call

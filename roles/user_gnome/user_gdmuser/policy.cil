@@ -1,0 +1,16 @@
+(block user_gdmuser
+	(blockinherit gdmuser.subj_blk)
+
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(optional user_gdmuser_optional_user_gkr
+		(call user_gkrd.auto_subj_type_transition (subj)))
+
+	(optional user_gdmuser_optional_user_gs
+		(call user_gs.auto_subj_type_transition (subj)))
+
+	(optional user_gdmuser_optional_user_sessbus
+		(call user_sessbus.auto_subj_type_transition (subj)))
+
+	(optional user_gdmuser_optional_user_xsession
+		(call user_xsession.auto_subj_type_transition (subj))))

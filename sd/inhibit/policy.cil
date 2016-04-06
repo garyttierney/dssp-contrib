@@ -1,8 +1,11 @@
 (block inhibit
 	(typeattribute client_subj_type_attribute)
+	(typeattribute subj_type_attribute)
 
-	(blockinherit cmd.obj_blk)
+	(blockinherit app.application_cmd_obj_blk)
 
-	(call exec (client_subj_type_attribute))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call client_subj_type (subj_type_attribute))
 
 	(call sd_logind.client_subj_type (client_subj_type_attribute)))

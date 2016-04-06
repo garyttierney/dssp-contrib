@@ -7,6 +7,8 @@
 
 	(call unconfinedsubj.unconfined_type (subj))
 
+	(call usersubj.obj_template (subj))
+
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.exempt_role (role))))
@@ -122,7 +124,7 @@
 		(call gcs.home_data_obj_type_transition_home_data (subj)))
 
 	(optional exempt_optional_gdm
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdmuser.tmpfs_obj_type_transition_tmpfs_user (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
 
 	(optional exempt_optional_gdocs
@@ -309,9 +311,6 @@
 
 	(optional exempt_optional_ssh_client
 		(call ssh_client.home_dir_obj_type_transition_home (subj)))
-
-	(optional exempt_optional_sshd
-		(call sshduser.priv_subj_type (subj)))
 
 	(optional exempt_optional_steam
 		(call steam.home_config_obj_type_transition_home_config (subj))

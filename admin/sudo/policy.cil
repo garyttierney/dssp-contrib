@@ -95,6 +95,9 @@
 			(call rbacsep.obj_role_change_exemption_subj_type
 				(subj_type_attribute))))
 
+	(optional sudo_subj_type_optional_gdmuser
+		(call gdmuser.link_keyring_all_subj (subj_type_attribute)))
+
 	(optional sudo_subj_type_optional_sd
 		(call sd.getpgid (subj_type_attribute))
 		(call sd.link_keyring (subj_type_attribute))

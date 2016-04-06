@@ -117,10 +117,7 @@
 		(call fpaste.relabel_var_tmp_user (subj)))
 
 	(optional wheel_optional_gdm
-		(call gdm.client_subj_type (subj))
-		(call gdm.manage_tmpfs_user (subj))
-		(call gdm.relabel_tmpfs_user (subj))
-		(call gdm.tmpfs_obj_type_transition_tmpfs_user (subj))
+		(call gdm.rw_inherited_unix_stream_sockets (subj))
 		(call gdm.manage_home_cache (subj))
 		(call gdm.relabel_home_cache (subj))
 		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
@@ -155,9 +152,6 @@
 		(call ibus.manage_home_config (subj))
 		(call ibus.relabel_home_config (subj))
 		(call ibus.home_config_obj_type_transition_home_config (subj)))
-
-	(optional wheel_optional_inhibit
-		(call inhibit.client_subj_type (subj_type_attribute)))
 
 	(optional wheel_optional_java
 		(call java.manage_tmpfs_user (subj))
@@ -815,6 +809,13 @@
 		(call wheel_gcrv.role_pattern (role subj_type_attribute))
 		(call wheel_gcrp.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_gdmuser
+		(call gdmuser.manage_tmpfs_user (subj))
+		(call gdmuser.relabel_tmpfs_user (subj))
+		(call gdmuser.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call wheel_gdmuser.role_pattern (role subj)))
+
 	(optional wheel_optional_wheel_gdocs
 		(call gdocs.manage_tmpfs_user (subj))
 		(call gdocs.relabel_tmpfs_user (subj))
@@ -1217,6 +1218,9 @@
 		(call i3lock.relabel_tmpfs_user_files (subj))
 
 		(call wheel_i3lock.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_inhibit
+		(call wheel_inhibit.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_irssi
 		(call irssi.manage_home_user (subj))

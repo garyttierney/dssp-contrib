@@ -3,4 +3,7 @@
 
 	(allow subj self (capability (setuid setgid dac_override)))
 
-	(call sysadm.shell_auto_subj_type_transition (subj)))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(optional sysadm_sshduser_optional_sysadm_passwd
+		(call sysadm_passwd.auto_subj_type_transition (subj))))

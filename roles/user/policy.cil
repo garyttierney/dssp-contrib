@@ -214,7 +214,7 @@
 		(call phpcli.home_dir_obj_type_transition_home_user (subj)))
 
 	(optional user_optional_polkit
-		(call polkit_tty_agent.exec (subj)))
+		(call polkit_tty_agent.run (subj role)))
 
 	(optional user_optional_pwgen
 		(call pwgen.run (subj_type_attribute role)))

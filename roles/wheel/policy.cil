@@ -1411,6 +1411,7 @@
 		(call wheel_polari.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_polkit_exec
+		(call polkit_tty_agent.run (subj role))
 		(call wheel_polkit_exec.role_pattern (role
 			subj_type_attribute)))
 

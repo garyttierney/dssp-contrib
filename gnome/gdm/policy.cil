@@ -265,7 +265,7 @@
 				(call sduser.read_all_unit (subj)))
 
 			(optional gdm_systemd_workaround_optional_systemctl
-				(call systemctl.exec (subj)))))
+				(call systemctl.system_client_subj_type (subj)))))
 
 	(optional gdm_optional_accountsd
 		(call accountsd.read_var_lib (subj)))

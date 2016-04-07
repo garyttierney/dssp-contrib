@@ -46,7 +46,7 @@
 		(call sd_logind.client_subj_type (subj)))
 
 	(optional qemu_guest_agent_optional_systemctl
-		(call systemctl.exec (subj)))
+		(call systemctl.system_client_subj_type (subj)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

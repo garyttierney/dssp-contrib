@@ -100,7 +100,7 @@
 		(call sysbus.client_subj_type (subj_type_attribute)))
 
 	(optional mariadb_server_pdd_subj_type_optional_systemctl
-		(call systemctl.exec (subj_type_attribute))))
+		(call systemctl.system_client_subj_type (subj_type_attribute))))
 
 (block mariadb_server_helper
 	(typeattribute subj_type_attribute)

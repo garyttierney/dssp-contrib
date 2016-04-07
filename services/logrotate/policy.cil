@@ -68,7 +68,7 @@
 			(reload))))
 
 	(optional logrotate_optional_systemctl
-		(call systemctl.exec (subj)))
+		(call systemctl.system_client_subj_type (subj)))
 
 	(allow subj client_subj_type_attribute (process (signal)))
 

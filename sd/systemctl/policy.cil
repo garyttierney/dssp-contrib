@@ -3,6 +3,7 @@
 
 	(typeattribute subj_type_attribute)
 	(typeattribute client_subj_type_attribute)
+	(typeattribute system_client_subj_type_attribute)
 
 	(blockinherit subj_blk)
 
@@ -134,4 +135,8 @@
 			(client_subj_type_attribute)))
 
 	(optional client_subj_type_attribute_optional_sysbus
-		(call sysbus.client_subj_type (client_subj_type_attribute))))
+		(call sysbus.client_subj_type (client_subj_type_attribute)))
+
+	(call exec (system_client_subj_type_attribute))
+
+	(call client_subj_type (system_client_subj_type_attribute)))

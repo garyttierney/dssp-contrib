@@ -73,7 +73,7 @@
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 
-	(call systemctl.exec (subj))
+	(call systemctl.system_client_subj_type (subj))
 
 	(call udev_helper.exec (subj))
 	(call udev.read_config (subj))

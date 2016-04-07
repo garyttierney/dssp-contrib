@@ -56,7 +56,7 @@
 		(call sd_askpwd_agent.read_runtime_fifo_files (subj)))
 
 	(optional apachectl_optional_systemctl
-		(call systemctl.exec (subj))))
+		(call systemctl.system_client_subj_type (subj))))
 
 (block fcgistarter
 	(blockinherit cmd.obj_blk))

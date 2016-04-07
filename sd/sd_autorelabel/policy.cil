@@ -50,7 +50,7 @@
 	(call sd.reboot (subj))
 	(call sd.stream_connect (subj))
 
-	(call systemctl.exec (subj))
+	(call systemctl.system_client_subj_type (subj))
 
 	(optional sd_autorelabel_optional_plymouth
 		(call plymouth.exec (subj)))

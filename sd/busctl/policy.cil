@@ -17,18 +17,22 @@
 	(call sd.control_all_unit (subj_type_attribute))
 	(call sd.control (subj_type_attribute))
 
-	(call sd_machined.read_runtime (subj_type_attribute))
-
-	(call sd_nspawn_container.list_all (subj_type_attribute))
-	(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
-	(call sd_nspawn_container.stream_connect_all_subj
-		(subj_type_attribute))
-	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
-
 	(call sduser.control_all_unit (subj_type_attribute))
 	(call sduser.control_home_config (subj_type_attribute))
 
 	(call client_subj_type (subj_type_attribute))
+
+	(optional busctl_subj_type_optional_sd_machined
+		(call sd_machined.read_runtime (subj_type_attribute)))
+
+	(optional busctl_subj_type_optional_sd_nspawn
+		(call sd_nspawn_container.list_all (subj_type_attribute))
+		(call sd_nspawn_container.read_all_lnk_files
+			(subj_type_attribute))
+		(call sd_nspawn_container.stream_connect_all_subj
+			(subj_type_attribute))
+		(call sd_nspawn_container.read_state_all_subj
+			(subj_type_attribute)))
 
 	(optional busctl_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))
@@ -40,4 +44,6 @@
 	(call terminfo.read_all (client_subj_type_attribute))
 	(call locale.read (client_subj_type_attribute))
 
-	(call sd_machined.read_config_files (client_subj_type_attribute)))
+	(optional busctl_client_subj_type_optional_sd_machined
+		(call sd_machined.read_config_files
+			(client_subj_type_attribute))))

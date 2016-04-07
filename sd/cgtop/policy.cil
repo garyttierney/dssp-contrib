@@ -14,11 +14,6 @@
 	(call sd.stream_connect (subj_type_attribute))
 	(call sd.sysbus_chat_client_subj_type (subj_type_attribute))
 
-	(call sd_nspawn.status_all_unit (subj_type_attribute))
-	(call sd_nspawn.read_state (subj_type_attribute))
-
-	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
-
 	(tunableif enable_rbacsep
 		(true
 			(call rbacsep.read_state_source_subj_type
@@ -26,6 +21,12 @@
 
 	(optional cgtop_subj_type_optional_sd_machined
 		(call sd_machined.read_runtime_files (subj_type_attribute)))
+
+	(optional cgtop_subj_type_optional_sd_nspawn
+		(call sd_nspawn.status_all_unit (subj_type_attribute))
+		(call sd_nspawn.read_state (subj_type_attribute))
+		(call sd_nspawn_container.read_state_all_subj
+			(subj_type_attribute)))
 
 	(optional cgtop_subj_type_attribute_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

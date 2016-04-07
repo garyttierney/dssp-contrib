@@ -29,7 +29,8 @@
 
 	(call sd_journald.read_var_log (subj))
 
-	(call sd_machined.read_config_files (subj))
-
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
-	(call usersubj.manage_home_user_files (subj)))
+	(call usersubj.manage_home_user_files (subj))
+
+	(optional coredumpctl_optional_sd_machined
+		(call sd_machined.read_config_files (subj))))

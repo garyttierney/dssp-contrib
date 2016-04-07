@@ -145,7 +145,11 @@
 
 		(blockinherit sd_nspawn.unit_obj_blk)
 
-		(call sd_nspawn_container.container_pattern (subj file)))
+		(call sd_nspawn_container.container_pattern (subj file))
+
+		(macro stream_connect ((type ARG1))
+			(call sd_machined.search_var_lib (ARG1))
+			(call stream_connect_pattern (ARG1 file file subj))))
 
 	(block container_subj_blk
 		(blockabstract container_subj_blk)
@@ -153,7 +157,11 @@
 		(blockinherit app.application_subj_blk)
 
 		(typeattributeset sd_nspawn_container.subj_type_attribute
-			subj))
+			subj)
+
+		(blockinherit subj.send_signal_blk)
+		(blockinherit subj.read_state_blk)
+		(blockinherit subj.use_fd_blk))
 
 	(block container_obj_blk
 		(blockabstract container_obj_blk)
@@ -162,7 +170,20 @@
 
 		(typeattributeset sd_nspawn_container.obj_type_attribute file)
 
-		(blockinherit sd_nspawn_container.rw_inherited_chr_files_blk))
+		(blockinherit sd_nspawn_container.search_blk)
+		(blockinherit sd_nspawn_container.dontaudit_list_blk)
+		(blockinherit sd_nspawn_container.list_blk)
+		(blockinherit sd_nspawn_container.delete_dirs_blk)
+		(blockinherit sd_nspawn_container.rw_chr_files_blk)
+		(blockinherit sd_nspawn_container.rw_inherited_chr_files_blk)
+		(blockinherit sd_nspawn_container.read_files_blk)
+		(blockinherit sd_nspawn_container.read_lnk_files_blk)
+		(blockinherit sd_nspawn_container.read_blk)
+		(blockinherit sd_nspawn_container.relabelto_blk)
+		(blockinherit sd_nspawn_container.manage_blk)
+
+		(macro getattr_fs ((type ARG1))
+			(allow ARG1 file (filesystem (getattr)))))
 
 	(block search_blk
 		(blockabstract search_blk)
@@ -250,18 +271,6 @@
 			(allow ARG1 file manage_sock_file_perms)
 			(allow ARG1 file manage_blk_file_perms)
 			(allow ARG1 file manage_chr_file_perms)))
-
-	(blockinherit sd_nspawn_container.search_blk)
-	(blockinherit sd_nspawn_container.dontaudit_list_blk)
-	(blockinherit sd_nspawn_container.list_blk)
-	(blockinherit sd_nspawn_container.delete_dirs_blk)
-	(blockinherit sd_nspawn_container.rw_chr_files_blk)
-	(blockinherit sd_nspawn_container.rw_inherited_chr_files_blk)
-	(blockinherit sd_nspawn_container.read_files_blk)
-	(blockinherit sd_nspawn_container.read_lnk_files_blk)
-	(blockinherit sd_nspawn_container.read_blk)
-	(blockinherit sd_nspawn_container.relabelto_blk)
-	(blockinherit sd_nspawn_container.manage_blk)
 
 	(macro container_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -368,17 +377,6 @@
 		(allow ARG1 obj_type_attribute manage_sock_file_perms)
 		(allow ARG1 obj_type_attribute manage_blk_file_perms)
 		(allow ARG1 obj_type_attribute manage_chr_file_perms))
-
-	(blockinherit subj.send_signal_blk)
-	(blockinherit subj.read_state_blk)
-	(blockinherit subj.use_fd_blk)
-
-	(macro getattr_fs ((type ARG1))
-		(allow ARG1 file (filesystem (getattr))))
-
-	(macro stream_connect ((type ARG1))
-		(call sd_machined.search_var_lib (ARG1))
-		(call stream_connect_pattern (ARG1 file file subj)))
 
 	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.read_state_all_blk)

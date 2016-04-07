@@ -47,6 +47,8 @@
 	(call setattr_ptys (subj))
 	(call use_ptys (subj))
 
+	(allow subj pty_dev (chr_file (relabelfrom)))
+
 	(allow subj self (capability (dac_override sys_chroot setpcap setgid
 		setuid mknod fsetid sys_admin chown kill fowner net_admin)))
 	(allow subj self (process (getcap setcap setexec)))
@@ -68,7 +70,7 @@
 	(allow subj sd_nspawn_container.obj_type_attribute
 		manage_fifo_file_perms)
 	(allow subj sd_nspawn_container.obj_type_attribute (chr_file
-		(mounton)))
+		(mounton relabelto)))
 	(allow subj sd_nspawn_container.obj_type_attribute
 		manage_chr_file_perms)
 	(allow subj sd_nspawn_container.obj_type_attribute (filesystem (mount
@@ -227,6 +229,7 @@
 	(allow obj_type_attribute self (filesystem (associate)))
 
 	(call fs.associate_tmpfs (obj_type_attribute))
+	(call fs.associate_devpts (obj_type_attribute))
 
 	(call subj.entry_obj_type (obj_type_attribute))
 

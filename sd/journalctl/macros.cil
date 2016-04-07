@@ -16,11 +16,13 @@
 		(call app.application_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))
 
+	(macro system_client_subj_type ((type ARG1))
+		(typeattributeset system_client_subj_type_attribute ARG1))
+
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
 	(macro exec ((type ARG1))
-		(call client_subj_type (ARG1))
 		(call can_exec (ARG1 cmd_file)))
 
 	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))

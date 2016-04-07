@@ -87,7 +87,7 @@
 		(call httpd.tcp_connect_all_ports (subj)))
 
 	(optional fpaste_optional_journalctl
-		(call journalctl.exec (subj)))
+		(call journalctl.system_client_subj_type (subj)))
 
 	(optional fpaste_optional_rpmdev
 		(call rpmdev.read_home_user_files (subj)))

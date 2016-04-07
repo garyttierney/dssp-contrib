@@ -68,7 +68,7 @@
 	(call sduser.home_config_obj_type_transition_home_config
 		(subj_type_attribute))
 
-	(call client_subj_type (subj_type_attribute))
+	(call system_client_subj_type (subj_type_attribute))
 
 	(call usersubj.create_home_config_dirs (subj_type_attribute))
 	(call usersubj.home_dir_add_obj_type_transition_home_config
@@ -101,13 +101,12 @@
 	(optional subj_type_attribute_optional_plymouth
 		(call plymouthd.use_fd (subj_type_attribute)))
 
-	(allow client_subj_type_attribute self (capability (ipc_lock)))
 	(allow client_subj_type_attribute self (process (setrlimit)))
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
-	(call sys.read_crypto_sysctl_files (client_subj_type_attribute))
+	(call exec (client_subj_type_attribute))
+
 	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
-	(call sys.use_fd (client_subj_type_attribute))
 
 	(call cmd.exec (client_subj_type_attribute))
 
@@ -117,26 +116,32 @@
 	(call file.read_data (client_subj_type_attribute))
 
 	(call fs.getattr_fs (client_subj_type_attribute))
-	(call fs.read_sysfs_files (client_subj_type_attribute))
-	(call fs.read_cgroup (client_subj_type_attribute))
 
 	(call terminfo.read_all (client_subj_type_attribute))
 	(call locale.read (client_subj_type_attribute))
-
-	(call sd.read_state_lnk_files (client_subj_type_attribute))
-	(call sd.search_unit_runtime (client_subj_type_attribute))
-	(call sd.sysbus_chat_client_subj_type (client_subj_type_attribute))
-	(call sd.use_fd (client_subj_type_attribute))
-
-	(call sd_journald.read_var_log (client_subj_type_attribute))
 
 	(optional client_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files
 			(client_subj_type_attribute)))
 
-	(optional client_subj_type_attribute_optional_sysbus
-		(call sysbus.client_subj_type (client_subj_type_attribute)))
+	(allow system_client_subj_type_attribute self (capability (ipc_lock)))
 
-	(call exec (system_client_subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (system_client_subj_type_attribute))
+	(call sys.use_fd (system_client_subj_type_attribute))
 
-	(call client_subj_type (system_client_subj_type_attribute)))
+	(call fs.read_sysfs_files (system_client_subj_type_attribute))
+	(call fs.read_cgroup (system_client_subj_type_attribute))
+
+	(call sd.read_state_lnk_files (system_client_subj_type_attribute))
+	(call sd.search_unit_runtime (system_client_subj_type_attribute))
+	(call sd.sysbus_chat_client_subj_type
+		(system_client_subj_type_attribute))
+	(call sd.use_fd (system_client_subj_type_attribute))
+
+	(call sd_journald.read_var_log (system_client_subj_type_attribute))
+
+	(call client_subj_type (system_client_subj_type_attribute))
+
+	(optional systemctl_system_client_subj_type_attribute_optional_sysbus
+		(call sysbus.client_subj_type
+			(system_client_subj_type_attribute))))

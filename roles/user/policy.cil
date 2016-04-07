@@ -156,7 +156,7 @@
 		(call java.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_journalctl
-		(call journalctl.exec (subj)))
+		(call journalctl.client_subj_type (subj)))
 
 	(optional user_optional_letsencrypt
 		(call letsencrypt.manage_home_config (subj))
@@ -281,7 +281,7 @@
 		(call systemctl.spec_auto_subj_type_transition
 			(systemctl_auto_type_transition_subj_type_attribute
 				subj))
-		(call systemctl.exec (subj)))
+		(call systemctl.client_subj_type (subj)))
 
 	(optional user_optional_tetex
 		(call tetex.manage_home_user (subj))

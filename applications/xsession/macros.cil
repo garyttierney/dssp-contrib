@@ -28,13 +28,10 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal)))
+		(allow ARG3 ARG2 (process (noatsecure signal)))
 
 		(optional xsession_role_pattern_optional_glxutils
-			(call glxutils.run (ARG3 ARG1)))
-
-		(optional xsession_role_pattern_optional_systemctl
-			(allow ARG3 ARG2 (process (noatsecure)))))
+			(call glxutils.run (ARG3 ARG1))))
 
 	(macro cmd_obj_entry_subj ((type ARG1))
 		(call subj.entry (ARG1 cmd_file)))

@@ -66,9 +66,7 @@
 		(allow ARG3 ARG2 rw_inherited_unix_stream_socket_perms)
 		(call ps_subj_pattern (ARG3 ARG2))
 
-		(allow ARG2 ARG3 (process (signal)))
-
-		(call client_pattern (ARG2 ARG3)))
+		(allow ARG2 ARG3 (process (signal))))
 
 	(macro spec_sysbus_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))

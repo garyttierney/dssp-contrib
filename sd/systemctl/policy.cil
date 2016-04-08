@@ -120,6 +120,8 @@
 	(call terminfo.read_all (client_subj_type_attribute))
 	(call locale.read (client_subj_type_attribute))
 
+	(call sd.search_unit_runtime (client_subj_type_attribute))
+
 	(optional client_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files
 			(client_subj_type_attribute)))
@@ -133,7 +135,6 @@
 	(call fs.read_cgroup (system_client_subj_type_attribute))
 
 	(call sd.read_state_lnk_files (system_client_subj_type_attribute))
-	(call sd.search_unit_runtime (system_client_subj_type_attribute))
 	(call sd.sysbus_chat_client_subj_type
 		(system_client_subj_type_attribute))
 	(call sd.use_fd (system_client_subj_type_attribute))

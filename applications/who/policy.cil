@@ -32,3 +32,19 @@
 
 	(call usersubj.dontaudit_setattr_term (subj))
 	(call usersubj.setattr_term (subj)))
+
+(block write
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.use_term (subj)))

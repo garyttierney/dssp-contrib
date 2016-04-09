@@ -30,7 +30,10 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal))))
+		(allow ARG3 ARG2 (process (signal)))
+
+		(optional steam_role_pattern_optional_nettools
+			(call ping.run (ARG3 ARG1))))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -98,6 +101,8 @@
 	(blockinherit usersubj.home_data_obj_type_transition_blk)
 
 	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "American Truck Simulator"))
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Aspyr"))
 		(call usersubj.home_data_obj_type_transition (ARG1

@@ -66,6 +66,7 @@
 	(allow subj self (tcp_socket (listen accept)))
 
 	(call sys.read_cpu_sysfs (subj))
+	(call sys.read_kernel_sysctl_files (subj))
 	(call sys.read_net_proc_files (subj))
 
 	(call file.read_data (subj))

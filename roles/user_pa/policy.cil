@@ -9,8 +9,4 @@
 		(call user_sessbus.service_subj_type (subj)))
 
 	(optional user_pa_optional_user_sessbus_launch
-		(call user_sessbus_launch.auto_subj_type_transition (subj)))
-
-	(optional user_pa_optional_sysadm_steam
-		(call user_steam.read_state (subj))
-		(call user_steam.rw_inherited_unix_stream_sockets (subj))))
+		(call user_sessbus_launch.auto_subj_type_transition (subj))))

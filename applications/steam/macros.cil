@@ -39,6 +39,19 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(macro dontaudit_read_state_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute list_dir_perms)
+		(dontaudit ARG1 subj_type_attribute read_file_perms)
+		(dontaudit ARG1 subj_type_attribute read_lnk_file_perms))
+
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+
+	(macro dontaudit_rw_inherited_unix_stream_sockets_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute rw_inherited_unix_stream_socket_perms))
+
+	(macro dontaudit_rw_inherited_tcp_sockets_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute rw_inherited_tcp_socket_perms))
+
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
@@ -46,6 +59,9 @@
 	(blockinherit usersubj.read_tmpfs_user_blk)
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro dontaudit_rw_inherited_tmpfs_user_files ((type ARG1))
+		(dontaudit ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro write_inherited_tmpfs_user_files ((type ARG1))
 		(allow ARG1 tmpfs_user_file write_inherited_file_perms))
@@ -66,6 +82,9 @@
 	(blockinherit usersubj.read_home_user_blk)
 	(blockinherit usersubj.manage_home_user_blk)
 	(blockinherit usersubj.relabel_home_user_blk)
+
+	(macro dontaudit_rw_inherited_home_user_fifo_files ((type ARG1))
+		(dontaudit ARG1 home_user_file rw_inherited_fifo_file_perms))
 
 	(macro read_home_user_fifo_files ((type ARG1))
 		(call usersubj.search_home_dir (ARG1))
@@ -89,6 +108,9 @@
 	(blockinherit usersubj.read_home_data_blk)
 	(blockinherit usersubj.manage_home_data_blk)
 	(blockinherit usersubj.relabel_home_data_blk)
+
+	(macro dontaudit_rw_inherited_home_data_files ((type ARG1))
+		(dontaudit ARG1 home_data_file rw_inherited_file_perms))
 
 	(macro rw_home_data_files ((type ARG1))
 		(call usersubj.search_home_data (ARG1))
@@ -120,6 +142,9 @@
 	(blockinherit usersubj.relabel_home_config_blk)
 
 	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro dontaudit_rw_inherited_home_config_files ((type ARG1))
+		(dontaudit ARG1 home_config_file rw_inherited_file_perms))
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
 		(call usersubj.home_config_obj_type_transition (ARG1

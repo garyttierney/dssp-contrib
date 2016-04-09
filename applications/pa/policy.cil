@@ -79,14 +79,15 @@
 	(optional pa_subj_type_optional_sd_logind
 		(call sd_logind.read_runtime (subj_type_attribute)))
 
-	(optional pa_subj_type_optional_steam
+        (optional pa_subj_type_optional_steam
+		(call steam.dontaudit_read_state_all_subj (subj_type_attribute))
+                (call steam.dontaudit_rw_inherited_unix_stream_sockets_all_subj (subj_type_attribute))
+		(call steam.dontaudit_rw_inherited_home_config_files (subj_type_attribute))
+                (call steam.dontaudit_rw_inherited_home_data_files (subj_type_attribute))
+                (call steam.dontaudit_rw_inherited_home_user_fifo_files (subj_type_attribute))
+                (call steam.dontaudit_rw_inherited_tmpfs_user_files (subj_type_attribute))
 		(call steam.mmap_home_data_files (subj_type_attribute))
-		(call steam.read_home_user_fifo_files (subj_type_attribute))
-		(call steam.read_home_data_lnk_files (subj_type_attribute))
-		(call steam.rw_home_config_files (subj_type_attribute))
-		(call steam.rw_home_data_files (subj_type_attribute))
-		(call steam.write_inherited_tmpfs_user_files
-			(subj_type_attribute)))
+		(call steam.read_home_data_lnk_files (subj_type_attribute)))
 
 	(optional pa_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute)))

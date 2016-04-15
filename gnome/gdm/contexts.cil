@@ -1,12 +1,10 @@
 (in gdm
 	(filecon "/usr/sbin/gdm" file cmd_file_context)
-
 	(filecon "/etc/gdm(/.*)?" any config_file_context)
 	(filecon "/var/cache/gdm(/.*)?" any var_cache_file_context)
 	(filecon "/var/lib/gdm(/.*)?" any var_lib_file_context)
 	(filecon "/var/log/gdm(/.*)?" any var_log_file_context)
 	(filecon "/var/run/gdm(/.*)?" any runtime_file_context)
-
 	(filecon "HOME_DIR/\.cache/gdm(/.*)?" any home_cache_file_context)
 
 	(optional gdm_unit_optional_sd

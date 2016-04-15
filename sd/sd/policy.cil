@@ -54,15 +54,7 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(call runtime_obj_type_transition (subj sd_unit_runtime.unit_file dir
-		"generator"))
-	(call runtime_obj_type_transition (subj sd_unit_runtime.unit_file dir
-		"generator.early"))
-	(call runtime_obj_type_transition (subj sd_unit_runtime.unit_file dir
-		"generator.late"))
-
-	(call runtime_obj_type_transition (subj sd_unit_runtime.unit_file dir
-		"system"))
+	(call runtime_obj_type_transition_runtime_unit_dirs (subj))
 
 	(call manage_private_runtime_sock_files (subj))
 	(call runtime_obj_type_transition (subj sd_private.runtime_file

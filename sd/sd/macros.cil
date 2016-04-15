@@ -487,6 +487,19 @@
 		(allow ARG1 sd_unit_runtime.unit_file relabel_dir_perms)
 		(allow ARG1 sd_unit_runtime.unit_file relabel_lnk_file_perms))
 
+	(macro runtime_obj_type_transition_runtime_unit_dirs ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call obj_type_transition_pattern (ARG1 runtime_file
+			sd_unit_runtime.unit_file dir "generator"))
+		(call obj_type_transition_pattern (ARG1 runtime_file
+			sd_unit_runtime.unit_file dir "generator.early"))
+		(call obj_type_transition_pattern (ARG1 runtime_file
+			sd_unit_runtime.unit_file dir "generator.late"))
+		(call obj_type_transition_pattern (ARG1 runtime_file
+			sd_unit_runtime.unit_file dir "system"))
+		(call obj_type_transition_pattern (ARG1 runtime_file
+			sd_unit_runtime.unit_file dir "transient")))
+
 	(macro search_all_unit ((type ARG1))
 		(call search_unit (ARG1))
 		(call search_unit_runtime (ARG1)))

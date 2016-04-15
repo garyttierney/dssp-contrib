@@ -33,6 +33,7 @@
 
 (in sd_unit_runtime
 	(filecon "/var/run/systemd/system(/.*)?" any unit_file_context)
+	(filecon "/var/run/systemd/transient(/.*)?" any unit_file_context)
 	(filecon "/var/run/systemd/generator(/.*)?" any unit_file_context)
 	(filecon "/var/run/systemd/generator\.early(/.*)?" any
 		unit_file_context)

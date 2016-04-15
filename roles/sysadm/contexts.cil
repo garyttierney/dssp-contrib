@@ -1058,6 +1058,19 @@
 
 	(filecon "/root/\.password-store(/.*)?" any root_pass_home))
 
+(optional sysadm_pastebinit_home_optional_pastebinit
+	(tunableif enable_rbacsep
+		(true
+			(context root_pastebinit_home (sysadm.id sysadm.role
+				pastebinit.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_pastebinit_home (sysadm.id object_r
+				pastebinit.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.pastebinit\.xml" file root_pastebinit_home))
+
 (optional sysadm_phpcli_home_optional_phpcli
 	(tunableif enable_rbacsep
 		(true

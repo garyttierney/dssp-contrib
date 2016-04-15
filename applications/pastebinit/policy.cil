@@ -1,14 +1,17 @@
-(block bti
+(block pastebinit
 	(roleattribute role_attribute)
 
 	(blockinherit app.application_blk)
 
 	(roletype role_attribute subj)
 
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(call manage_home_user_files (subj))
-	(call home_dir_obj_type_transition_home (subj))
+	(call read_home_user (subj))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
@@ -22,25 +25,15 @@
 
 	(call dev.read_urandom (subj))
 
-	(call file.dontaudit_audit_access_var_tmp_dirs (subj))
-	(call file.list_var_tmp (subj))
+	(call file.read_data (subj))
 
 	(call http.tcp_connect_port (subj))
 
-	(call cert.read (subj))
 	(call locale.read (subj))
 
 	(call nss.client_subj_type (subj))
 
-	(call usersubj.manage_home_cert (subj))
-	(call usersubj.home_dir_obj_type_transition_home_cert
-		(subj))
+	(call usersubj.read_home_user_files (subj))
 
-	(optional bti_optional_git
-		(call git.use_fd_all_subj (subj)))
-
-	(optional bti_optional_httpd
-		(call httpd.tcp_connect_all_ports (subj)))
-
-	(optional bti_optional_tor_sock
+	(optional pastebinit_optional_tor_sock
 		(call tor_socks.client_subj_type (subj))))

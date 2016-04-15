@@ -224,6 +224,14 @@
 		(call pass.relabel_home_user (subj))
 		(call pass.home_dir_obj_type_transition_home (subj)))
 
+	(optional wheel_optional_pastebinit
+		(call pastebinit.run (subj_type_attribute role))
+		(call pastebinit.manage_tmpfs_user_files (subj))
+		(call pastebinit.relabel_tmpfs_user_files (subj))
+		(call pastebinit.manage_home_user (subj))
+		(call pastebinit.relabel_home_user (subj))
+		(call pastebinit.home_dir_obj_type_transition_home (subj)))
+
 	(optional wheel_optional_pcitools
 		(call pcitools.run (subj_type_attribute role)))
 

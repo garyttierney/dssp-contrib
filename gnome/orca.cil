@@ -1,0 +1,121 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in orca
+	(filecon "/usr/bin/orca" file cmd_file_context)
+	(filecon "HOME_DIR/\.local/share/orca(/.*)?" any
+		home_data_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in orca
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset orca.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call orca.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call orca.role_pattern (ARG1 ARG2 subj))
+
+			(call speechdispd.run (subj ARG1))))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "orca")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block orca
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(allow subj_type_attribute self create_tcp_socket_perms)
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute))
+	(call cmd.exec_shell (subj_type_attribute))
+	(call cmd.list_cmd (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call subj.dontaudit_read_state_common_subj (subj_type_attribute))
+	(call subj.read_state_common_subj (subj_type_attribute))
+
+	(call brl.tcp_connect_port (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
+
+	(optional orca_subj_type_optional_speechdispd
+		(call speechdispd.stream_connect (subj_type_attribute)))
+
+	(optional orca_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute)))
+
+	(optional orca_subj_type_optional_xutil
+		(call xutil.exec (subj_type_attribute))))

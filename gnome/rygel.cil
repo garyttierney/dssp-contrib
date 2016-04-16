@@ -1,0 +1,189 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in rygel
+	(filecon "/etc/rygel\.conf" file config_file_context)
+	(filecon "/usr/bin/rygel" file cmd_file_context)
+	(filecon "HOME_DIR/\.config/Rygel(/.*)?" any home_config_file_context)
+	(filecon "HOME_DIR/\.config/rygel\.conf" file home_config_file_context)
+	(filecon "HOME_DIR/\.cache/rygel(/.*)?" any home_cache_file_context))
+
+(in rygelp
+	(filecon "/usr/bin/rygel-preferences" file cmd_file_context))
+
+(in rygel_helper
+	(filecon "/usr/libexec/rygel/mx-extract" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in rygel
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset rygel.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call rygel.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call rygel.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.manage_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file file "rygel.conf"))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "Rygel")))
+
+	(macro home_config_obj_type_transition_home_config_files ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file file "*")))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "rygel"))))
+
+(in rygelp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset rygelp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call rygelp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call rygelp.role_pattern (ARG1 ARG2 subj)))))
+
+(in rygel_helper
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block rygel
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj_type_attribute))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj_type_attribute))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setsched)))
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.read_net_proc_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.udp_bind_generic_node (subj_type_attribute))
+
+	(call mediaart.client_subj_type (subj_type_attribute))
+
+	(call cert.read (subj_type_attribute))
+	(call fstab.read (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call rygel_helper.exec (subj_type_attribute))
+
+	(call ssdp.udp_bind_port (subj_type_attribute))
+
+	(call usersubj.list_home_user (subj_type_attribute))
+	(call usersubj.read_home_user_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
+
+	(optional rygel_subj_type_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional rygel_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
+
+(block rygelp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block rygel_helper
+	(blockinherit cmd.obj_blk))

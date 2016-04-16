@@ -1,0 +1,162 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in bijiben
+	(filecon "/usr/bin/bijiben" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/bijiben(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.local/share/bijiben(/.*)?" any
+		home_data_file_context))
+
+(in bijibensp
+	(filecon "/usr/libexec/bijiben-shell-search-provider" file
+		cmd_file_context)
+	(filecon "HOME_DIR/\.cache/bijiben-shell-search-provider(/.*)?" any
+		home_cache_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in bijiben
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset bijiben.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call bijiben.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call bijiben.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "bijiben")))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "bijiben"))))
+
+(in bijibensp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_sp_subj_blk)
+
+		(typeattributeset bijibensp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call bijibensp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call bijibensp.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "bijiben-shell-search-provider"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block bijiben
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call gvfs.exec (subj_type_attribute))
+
+	(call webkit.client_subj_type (subj_type_attribute)))
+
+(block bijibensp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.getattr_random (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+
+	(call bijiben.read_home_data (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
+	(call usersubj.read_home_data (subj_type_attribute))
+
+	(optional bijibensp_subj_type_optional_xserver
+		(call xserver.tmpfs_client_subj_type (subj_type_attribute))
+		(call xserver.tmpfs_client_obj_type (tmpfs_user_file))))

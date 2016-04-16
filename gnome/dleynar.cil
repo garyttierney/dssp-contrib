@@ -1,0 +1,88 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dleynar
+	(filecon "/usr/libexec/dleyna-renderer-service" file cmd_file_context)
+	(filecon "/etc/dleyna-renderer-service\.conf" file config_file_context)
+	(filecon "HOME_DIR/\.config/dleyna-renderer-service\.conf" file
+		home_config_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dleynar
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset dleynar.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call dleynar.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call dleynar.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.manage_home_config_files_blk)
+	(blockinherit usersubj.relabel_home_config_files_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file file
+				"dleyna-renderer-service.conf"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dleynar
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj_type_attribute))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config_files (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(call sys.read_net_proc_files (subj_type_attribute))
+
+	(call net.udp_bind_generic_node (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call ssdp.udp_bind_port (subj_type_attribute))
+
+	(optional dleynar_subj_type_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional dleynar_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional dleynar_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

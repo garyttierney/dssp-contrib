@@ -1,0 +1,41 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in epiphany
+	(filecon "/usr/bin/epiphany" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in epiphany
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset epiphany.subj_type_attribute subj)
+
+		(blockinherit subj.send_sigkill_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call epiphany.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call epiphany.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block epiphany
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))

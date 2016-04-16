@@ -1,0 +1,140 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in glib
+	(filecon "HOME_DIR/\.cache/geocode-glib(/.*)?" any
+		home_cache_file_context))
+
+(in gapp
+	(filecon "/usr/bin/gapplication" file cmd_file_context))
+
+(in gdbus
+	(filecon "/usr/bin/gdbus" file cmd_file_context))
+
+(in gsettings
+	(filecon "/usr/bin/gsettings" file cmd_file_context))
+
+(in glib_helper
+	(filecon "/usr/bin/gio-querymodules-64" file cmd_file_context)
+	(filecon "/usr/bin/glib-compile-schemas" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in glib
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "geocode-glib"))))
+
+(in gapp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gapp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gapp.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gapp.role_pattern (ARG1 ARG2 subj)))))
+
+(in gdbus
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gdbus.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gdbus.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gdbus.role_pattern (ARG1 ARG2 subj)))))
+
+(in gsettings
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gsettings.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gsettings.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gsettings.role_pattern (ARG1 ARG2 subj)))))
+
+(in glib_helper
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block glib
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call manage_home_cache (client_subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache
+		(client_subj_type_attribute)))
+
+(block gapp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gdbus
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call locale.read (subj_type_attribute)))
+
+(block gsettings
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))
+
+(block glib_helper
+	(blockinherit cmd.obj_blk))

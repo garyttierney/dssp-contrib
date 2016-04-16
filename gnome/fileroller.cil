@@ -1,0 +1,55 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in fileroller
+	(filecon "/usr/bin/file-roller" file cmd_file_context))
+
+(in fileroller_helper
+	(filecon "/usr/libexec/file-roller/isoinfo\.sh" file cmd_file_context)
+	(filecon "/usr/libexec/file-roller/rpm2cpio" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in fileroller
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset fileroller.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call fileroller.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call fileroller.role_pattern (ARG1 ARG2 subj)))))
+
+(in fileroller_helper
+	(blockinherit exec_blk)
+
+	(blockinherit cmd.cmd_obj_entry_subj_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block fileroller
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call cmd.exec (subj_type_attribute))
+
+	(call fileroller_helper.exec (subj_type_attribute)))
+
+(block fileroller_helper
+	(blockinherit cmd.obj_blk))

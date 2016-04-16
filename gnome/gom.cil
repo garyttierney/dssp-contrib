@@ -1,0 +1,66 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gom
+	(filecon "/usr/libexec/gom-facebook-miner" file cmd_file_context)
+	(filecon "/usr/libexec/gom-flickr-miner" file cmd_file_context)
+	(filecon "/usr/libexec/gom-gdata-miner" file cmd_file_context)
+	(filecon "/usr/libexec/gom-media-server-miner" file cmd_file_context)
+	(filecon "/usr/libexec/gom-owncloud-miner" file cmd_file_context)
+	(filecon "/usr/libexec/gom-zpj-miner" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gom
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gom.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_fifo_files_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gom.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gom.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gom
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (process (getsched setsched)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional gom_subj_type_attribute_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gom_subj_type_attribute_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

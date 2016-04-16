@@ -1,0 +1,317 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gsh
+	(filecon "/usr/bin/gnome-shell" file cmd_file_context)
+	(filecon "HOME_DIR/\.local/share/gnome-shell(/.*)?" any
+		home_data_file_context))
+
+(in gshcs
+	(filecon "/usr/libexec/gnome-shell-calendar-server" file
+		cmd_file_context))
+
+(in gshep
+	(filecon "/usr/bin/gnome-shell-extension-prefs" file cmd_file_context)
+	(filecon "/usr/bin/gnome-shell-extension-tool" file cmd_file_context)
+	(filecon "/usr/bin/gnome-shell-perf-tool" file cmd_file_context))
+
+(in gshhs
+	(filecon "/usr/libexec/gnome-shell-hotplug-sniffer" file
+		cmd_file_context))
+
+(in gsh_helper
+	(filecon "/usr/libexec/gnome-shell-perf-helper" file cmd_file_context)
+	(filecon "/usr/libexec/gnome-shell-portal-helper" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gsh
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset gsh.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gsh.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gsh.role_pattern (ARG1 ARG2 subj)))
+
+		(macro stream_connect ((type ARG1))
+			(call gsh.spec_stream_connect (ARG1 subj))))
+
+	(blockinherit subj.read_state_all_blk)
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+
+	(blockinherit usersubj.tmpfs_user_obj_type_transition_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user_dirs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"gnome-shell")))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "gnome-shell")))
+
+	(macro stream_connect_all_subj ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file subj_type_attribute)))
+
+	(macro spec_stream_connect ((type ARG1)(type ARG2))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file ARG2))))
+
+(in gshcs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gshcs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gshcs.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gshcs.role_pattern (ARG1 ARG2 subj)))))
+
+(in gshep
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gshep.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gshep.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gshep.role_pattern (ARG1 ARG2 subj)))))
+
+(in gshhs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gshhs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gshhs.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gshhs.role_pattern (ARG1 ARG2 subj)))))
+
+(in gsh_helper
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gsh
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
+	(call tmpfs_obj_type_transition_tmpfs_user_dirs (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call exec (subj_type_attribute))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call cmd.dontaudit_audit_access_all_cmd_files (subj_type_attribute))
+	(call cmd.mmap (subj_type_attribute))
+
+	(call dev.rw_dri (subj_type_attribute))
+	(call dev.rw_event (subj_type_attribute))
+
+	(call sec.list_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call file.list_boot (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+	(call file.list_var_tmp (subj_type_attribute))
+
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call canberra.write_inherited_tmpfs_user_files (subj_type_attribute))
+
+	(call gcs.manage_home_cache_files (subj_type_attribute))
+	(call gcs.read_home_data (subj_type_attribute))
+
+	(call gnomeapp.send_sigkill_common_subj (subj_type_attribute))
+
+	(call gs.read_home_user_files (subj_type_attribute))
+
+	(call ibus.client_subj_type (subj_type_attribute))
+
+	(call cert.read (subj_type_attribute))
+	(call fstab.read (subj_type_attribute))
+	(call hwdata.read_data_files (subj_type_attribute))
+
+	(call mutter_helper.exec (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call thumbnails.client_subj_type (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.getattr_all_home_config_files (subj_type_attribute))
+	(call usersubj.manage_home_config_files (subj_type_attribute))
+
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+
+	(call zenity.exec (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
+
+	(optional gsh_subj_type_optional_accountsd
+		(call accountsd.read_var_lib (subj_type_attribute))
+		(call accountsd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_gdm
+		(call gdm.stream_connect (subj_type_attribute))
+		(call gdm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_geoclue
+		(call geoclue.client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_nm
+		(call nm.client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gsh_subj_type_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_sd
+		(call sd.read_state (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_sd_logind
+		(call sd_logind.client_subj_type (subj_type_attribute))
+		(call sd_logind.read_runtime (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_tp
+		(call tpl.rw_home_cache_files (subj_type_attribute))
+		(call tpl.read_home_data (subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_upowerd
+		(call upowerd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_xserver
+		(call xserver.rw_inherited_tmpfs_user_files
+			(subj_type_attribute))
+		(call xserver.rw_inherited_tmpfs_client_files
+			(subj_type_attribute)))
+
+	(optional gsh_subj_type_optional_xwayland
+		(call xwayland.compositor (subj_type_attribute
+			tmpfs_user_file))))
+
+(block gshcs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
+
+(block gshep
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gshhs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call file.dontaudit_list_lost_found (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+
+	(call fs.read_dosfs_subj_type (subj_type_attribute))
+	(call fs.read_iso9660_subj_type (subj_type_attribute))
+
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_user (subj_type_attribute)))
+
+(block gsh_helper
+	(blockinherit cmd.obj_blk))

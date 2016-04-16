@@ -1,0 +1,137 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in seahorse
+	(filecon "/usr/bin/seahorse" file cmd_file_context))
+
+(in seahorsesap
+	(filecon "/usr/lib/seahorse/seahorse-ssh-askpass" file
+		cmd_file_context))
+
+(in seahorse_helper
+	(filecon "/usr/lib/seahorse/xloadimage" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in seahorse
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset seahorse.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call seahorse.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call seahorse.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_fifo_files_all_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms)))
+
+(in seahorsesap
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset seahorsesap.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call seahorsesap.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call seahorsesap.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*"))))
+
+(in seahorse_helper
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block seahorse
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call gpg.list_home_user (subj_type_attribute))
+	(call gpg.getattr_home_user_files (subj_type_attribute))
+
+	(call gpg_agent.getattr_home_user_sock_files (subj_type_attribute))
+
+	(call hkp.tcp_connect_port (subj_type_attribute))
+
+	(call ldap.read_config_files (subj_type_attribute))
+	(call ldap.tcp_connect_port (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+
+	(call ssh_client.manage_home_user (subj_type_attribute))
+	(call ssh_client.home_dir_obj_type_transition_home
+		(subj_type_attribute))
+
+	(optional seahorse_subj_type_optional_scdaemon
+		(call scdaemon.getattr_home_user_sock_files
+			(subj_type_attribute))))
+
+(block seahorsesap
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call seahorse.rw_inherited_fifo_files_all_subj (subj_type_attribute))
+	(call seahorse.rw_inherited_tmpfs_user_files (subj_type_attribute))
+
+	(optional seahorsesap_subj_type_optional_xserver
+		(call xserver.tmpfs_client (subj_type_attribute
+			tmpfs_user_file))))
+
+(block seahorse_helper
+	(blockinherit cmd.obj_blk))

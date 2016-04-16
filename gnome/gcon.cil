@@ -1,0 +1,126 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gcon
+	(filecon "/usr/bin/gnome-contacts" file cmd_file_context))
+
+(in gconsp
+	(filecon "/usr/libexec/gnome-contacts-search-provider" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gcon
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset gcon.subj_type_attribute subj)
+
+		(blockinherit subj.read_state_blk)
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcon.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcon.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+
+	(macro audit_exec_access_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file (file (execute))))
+
+	(macro getattr_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file (file (getattr)))))
+
+(in gconsp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_sp_subj_blk)
+
+		(typeattributeset gconsp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gconsp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gconsp.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gcon
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+
+	(call dev.rw_dri (subj_type_attribute))
+	(call dev.rw_v4l (subj_type_attribute))
+
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call sec.search_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call evo.read_home_data_files (subj_type_attribute))
+
+	(call folks.client_subj_type (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(optional gcon_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gcon_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
+
+(block gconsp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call evo.read_home_data_files (subj_type_attribute))
+
+	(call folks.client_subj_type (subj_type_attribute))
+
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional gconsp_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gconsp_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

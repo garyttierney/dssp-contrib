@@ -1,0 +1,106 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in vinagre
+	(filecon "/usr/bin/vinagre" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/vinagre(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.local/share/vinagre(/.*)?" any
+		home_data_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in vinagre
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset vinagre.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call vinagre.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call vinagre.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "vinagre")))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "vinagre"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block vinagre
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
+
+	(call lib.dontaudit_lock_lib_files (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+
+	(call net.tcp_bind_all_unreserved_ports (subj_type_attribute))
+	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional vinagre_subj_type_optional_avahid
+		(call avahid.stream_connect (subj_type_attribute)))
+
+	(optional vinagre_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file))))

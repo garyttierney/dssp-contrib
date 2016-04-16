@@ -1,0 +1,77 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gchar
+	(filecon "/usr/share/org\.gnome\.Characters/org\.gnome\.Characters"
+		file cmd_file_context))
+
+(in gcharbs
+	(filecon
+		"/usr/share/org\.gnome\.Characters/org\.gnome\.Characters\.BackgroundService"
+			file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gchar
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
+
+		(typeattributeset gchar.subj_type_attribute subj)))
+
+(in gcharbs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_sp_subj_blk)
+
+		(typeattributeset gcharbs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcharbs.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcharbs.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gchar
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_gjs_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gcharbs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call cmd.audit_read_access_cmd_files (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call subj.execmem_uncond_subj_type (subj_type_attribute))
+
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
+	(call usersubj.manage_home_data_files (subj_type_attribute)))

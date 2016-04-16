@@ -1,0 +1,150 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in goa
+	(filecon "HOME_DIR/\.cache/goa-1\.0(/.*)?" any home_cache_file_context)
+	(filecon "HOME_DIR/\.config/goa-1\.0(/.*)?" any
+		home_config_file_context))
+
+(in goad
+	(filecon "/usr/libexec/goa-daemon" file cmd_file_context))
+
+(in goais
+	(filecon "/usr/libexec/goa-identity-service" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in goa
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.manage_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "goa-1.0")))
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "goa-1.0"))))
+
+(in goad
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset goad.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call goad.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call goad.role_pattern (ARG1 ARG2 subj)))))
+
+(in goais
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset goais.subj_type_attribute subj)
+
+		(macro read_keyring ((type ARG1))
+			(call goais.spec_read_keyring (ARG1 subj)))
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call goais.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call goais.role_pattern (ARG1 ARG2 subj))))
+
+	(macro read_keyring_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute read_key_perms))
+
+	(macro spec_read_keyring ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 read_key_perms)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block goa
+	(blockinherit usersubj.home_cache_obj_blk)
+	(blockinherit usersubj.home_config_obj_blk))
+
+(block goad
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call goa.manage_home_cache (subj_type_attribute))
+	(call goa.home_cache_obj_type_transition_home_cache
+		(subj_type_attribute))
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call goa.manage_home_config (subj_type_attribute))
+	(call goa.home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional goad_subj_type_attribute_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional goad_subj_type_attribute_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
+
+(block goais
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self rw_key_perms)
+
+	(call file.read_config (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute)))

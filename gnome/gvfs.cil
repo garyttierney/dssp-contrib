@@ -1,0 +1,736 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gvfs
+	(filecon "/usr/bin/gvfs-cat" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-copy" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-info" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-less" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-ls" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mime" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mkdir" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-monitor-dir" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-monitor-file" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-mount" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-move" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-open" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-rename" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-rm" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-save" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-set-attribute" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-trash" file cmd_file_context)
+	(filecon "/usr/bin/gvfs-tree" file cmd_file_context))
+
+(in gvfsd
+	(filecon "/usr/libexec/gvfsd" file cmd_file_context)
+
+	(optional gvfsd_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-daemon.*" file
+			unit_file_context)))
+
+(in gvfsdmd
+	(filecon "/usr/libexec/gvfsd-metadata" file cmd_file_context)
+	(filecon "HOME_DIR/\.local/share/gvfs-metadata(/.*)?" any
+		home_data_file_context)
+
+	(optional gvfsdmd_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gvfs-metadata.*" file
+			unit_file_context)))
+
+(in gvfsdud2
+	(filecon "/usr/libexec/gvfs-udisks2-volume-monitor" file
+		cmd_file_context)
+
+	(optional gvfsdud2_unit_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*gvfs-udisks2-volume-monitor.*"
+				file unit_file_context)))
+
+(in gvfsdburn
+	(filecon "/usr/libexec/gvfsd-burn" file cmd_file_context))
+
+(in gvfsdcdda
+	(filecon "/usr/libexec/gvfsd-cdda" file cmd_file_context))
+
+(in gvfsdcomputer
+	(filecon "/usr/libexec/gvfsd-computer" file cmd_file_context))
+
+(in gvfsddav
+	(filecon "/usr/libexec/gvfsd-dav" file cmd_file_context))
+
+(in gvfsddnssd
+	(filecon "/usr/libexec/gvfsd-dnssd" file cmd_file_context))
+
+(in gvfsdftp
+	(filecon "/usr/libexec/gvfsd-ftp" file cmd_file_context))
+
+(in gvfsdhttp
+	(filecon "/usr/libexec/gvfsd-http" file cmd_file_context))
+
+(in gvfsdlocaltest
+	(filecon "/usr/libexec/gvfsd-localtest" file cmd_file_context))
+
+(in gvfsdnetwork
+	(filecon "/usr/libexec/gvfsd-network" file cmd_file_context))
+
+(in gvfsdrecent
+	(filecon "/usr/libexec/gvfsd-recent" file cmd_file_context))
+
+(in gvfsdsftp
+	(filecon "/usr/libexec/gvfsd-sftp" file cmd_file_context))
+
+(in gvfsdtrash
+	(filecon "/usr/libexec/gvfsd-trash" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gvfs
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfs.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfs.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfs.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsd
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsd.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsd.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro dontaudit_audit_access_tmpfs_user_dirs ((type ARG1))
+		(dontaudit ARG1 tmpfs_user_file (dir (audit_access))))
+
+	(macro audit_write_access_tmpfs_user_dirs ((type ARG1))
+		(allow ARG1 tmpfs_user_file (dir (write))))
+
+	(macro mounton_tmpfs_user_dirs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file (dir (mounton))))
+
+	(macro tmpfs_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call obj_type_transition_pattern (ARG1 tmpfs_user_file ARG2
+			ARG3 ARG4)))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"gvfs"))))
+
+(in gvfsdmd
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdmd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdmd.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdmd.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "gvfs-metadata"))))
+
+(in gvfsdud2
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdud2.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdud2.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdud2.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdburn
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdburn.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdburn.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdburn.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdcdda
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdcdda.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdcdda.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdcdda.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdcomputer
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdcomputer.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdcomputer.spec_auto_subj_type_transition
+				(ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdcomputer.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsddav
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsddav.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsddav.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsddav.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsddnssd
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsddnssd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsddnssd.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsddnssd.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdftp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdftp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdftp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdftp.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdhttp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdhttp.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdhttp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdhttp.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))
+
+(in gvfsdlocaltest
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdlocaltest.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdlocaltest.spec_auto_subj_type_transition
+				(ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdlocaltest.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdnetwork
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdnetwork.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdnetwork.spec_auto_subj_type_transition
+				(ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdnetwork.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdrecent
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset gvfsdrecent.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdrecent.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdrecent.role_pattern (ARG1 ARG2 subj)))))
+
+(in gvfsdsftp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdsftp.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdsftp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdsftp.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))
+
+(in gvfsdtrash
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdtrash.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdtrash.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdtrash.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gvfs
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gvfsd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gvfsd_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk)))
+
+(block gvfsdmd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(optional gvfsdmd_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk)))
+
+(block gvfsdud2
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.list_config (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.list_dosfs (subj_type_attribute))
+	(call fs.list_fuse (subj_type_attribute))
+	(call fs.list_iso9660 (subj_type_attribute))
+
+	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call storage.getattr_all (subj_type_attribute))
+
+	(call fstab.read (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call mount.exec (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.list_home_user (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
+
+	(optional gvfsdud2_subj_type_optional_sd
+		(call sd.read_state (subj_type_attribute)))
+
+	(optional gvfsdud2_subj_type_optional_sd_logind
+		(call sd_logind.read_runtime_files (subj_type_attribute)))
+
+	(optional gvfsdud2_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
+
+	(optional gvfsdud2_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gvfsdud2_subj_type_optional_udisks
+		(call udisksd.sysbus_chat_client_subj_type
+			(subj_type_attribute))))
+
+(block gvfsdburn
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsdcdda
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsdcomputer
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsddav
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsddnssd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gvfsddnssd_subj_type_optional_avahid
+		(call avahid.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gvfsddnssd_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))
+
+(block gvfsdftp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsdhttp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call thumbnails.getattr_home_cache_files (subj_type_attribute)))
+
+(block gvfsdlocaltest
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept))))
+
+(block gvfsdnetwork
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))
+
+(block gvfsdrecent
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call file.list_mnt (subj_type_attribute))
+
+	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
+
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
+
+	(call thumbnails.read_home_cache (subj_type_attribute))
+
+	(call usersubj.audit_write_access_home_dir (subj_type_attribute))
+	(call usersubj.rw_home_user (subj_type_attribute))
+
+	(optional gvfsdrecent_subj_type_optional_gvid
+		(call gvid.getattr_home_cache_files (subj_type_attribute))))
+
+(block gvfsdsftp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.manage_home_user_dirs (subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs
+		(subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
+
+	(optional gvfsdsftp_subj_type_optional_evince
+		(call evince.manage_tmpfs_user_files (subj_type_attribute))))
+
+(block gvfsdtrash
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.list_boot (subj_type_attribute))
+	(call file.list_config (subj_type_attribute))
+	(call file.list_home (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+
+	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.list_rootfs (subj_type_attribute))
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
+	(call fs.read_iso9660_subj_type (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call thumbnails.client_subj_type (subj_type_attribute))
+
+	(call trash.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_data (subj_type_attribute))
+
+	(call usersubj.delete_home_cmd (subj_type_attribute))
+	(call usersubj.rename_home_cmd (subj_type_attribute))
+	(call usersubj.reparent_home_cmd (subj_type_attribute))
+	(call usersubj.rw_home_cmd (subj_type_attribute))
+	(call usersubj.setattr_home_cmd_dirs (subj_type_attribute))
+	(call usersubj.delete_home_user (subj_type_attribute))
+	(call usersubj.rename_home_user (subj_type_attribute))
+	(call usersubj.reparent_home_user (subj_type_attribute))
+	(call usersubj.rw_home_user (subj_type_attribute))
+	(call usersubj.setattr_home_user_dirs (subj_type_attribute))
+
+	(optional gvfsdtrash_subj_type_optional_qemu
+		(call qemu_guest.dontaudit_list_files (subj_type_attribute))))

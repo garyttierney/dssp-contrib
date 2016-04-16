@@ -1,0 +1,90 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gcalc
+	(filecon "/usr/bin/gnome-calculator" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/gnome-calculator(/.*)?" any
+		home_cache_file_context))
+
+(in gcalcsp
+	(filecon "/usr/libexec/gnome-calculator-search-provider" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gcalc
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset gcalc.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcalc.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcalc.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "gnome-calculator"))))
+
+(in gcalcsp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_sp_subj_blk)
+
+		(typeattributeset gcalcsp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcalcsp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcalcsp.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gcalc
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
+
+(block gcalcsp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_sp_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))

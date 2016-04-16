@@ -1,0 +1,55 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in zenity
+	(filecon "/usr/bin/zenity" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in zenity
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset zenity.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call zenity.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call zenity.role_pattern (ARG1 ARG2 subj))))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block zenity
+	(typeattribute client_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call client_subj_type (subj_type_attribute))
+
+	(call gsh.rw_inherited_unix_stream_sockets_all_subj
+		(subj_type_attribute))
+
+	(call usersubj.home_data_creator_subj_type
+		(client_subj_type_attribute)))

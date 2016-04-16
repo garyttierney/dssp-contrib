@@ -1,0 +1,53 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gvfsdafcvm
+	(filecon "/usr/libexec/gvfs-afc-volume-monitor" file cmd_file_context)
+
+	(optional gvfsdafcvm_unit_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*gvfs-afc-volume-monitor.*"
+				file unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gvfsdafcvm
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdafcvm.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdafcvm.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdafcvm.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gvfsdafcvm
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call file.list_runtime (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gvfsdafcvm_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk)))

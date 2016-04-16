@@ -1,0 +1,84 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in obexd
+	(filecon "/usr/libexec/bluetooth/obexd" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/obexd(/.*)?" any home_cache_file_context)
+
+	(optional obexd_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*obex.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in obexd
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset obexd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call obexd.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call obexd.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "obexd"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block obexd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(allow subj_type_attribute self create_socket_perms)
+
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(optional obexd_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional obexd_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
+
+	(optional obexd_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional obexd_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

@@ -1,0 +1,53 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gvfsdmtpvm
+	(filecon "/usr/libexec/gvfs-mtp-volume-monitor" file cmd_file_context)
+
+	(optional gvfsdmtpvm_unit_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*gvfs-mtp-volume-monitor.*"
+				file unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gvfsdmtpvm
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gvfsdmtpvm.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gvfsdmtpvm.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gvfsdmtpvm.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gvfsdmtpvm
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(optional gvfsdmtpvm_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk)))

@@ -1,0 +1,59 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gcl
+	(filecon "/usr/bin/gnome-clocks" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gcl
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset gcl.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gcl.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gcl.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gcl
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute tmpfs_user_file mmap_file_perms)
+
+	(call glib.client_subj_type (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call libgweather.client_subj_type (subj_type_attribute))
+
+	(call cert.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(optional gcl_subj_type_optional_geoclue
+		(call geoclue.client_subj_type (subj_type_attribute)))
+
+	(optional gcl_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))
+
+	(optional gcl_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

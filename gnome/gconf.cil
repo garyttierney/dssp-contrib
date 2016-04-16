@@ -1,0 +1,202 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gconf
+	(filecon "/etc/gconf(/.*)?" any config_file_context)
+	(filecon "HOME_DIR/\.config/gconf(/.*)?" any home_config_file_context))
+
+(in gconfdm
+	(filecon "/usr/libexec/gconf-defaults-mechanism" file
+		cmd_file_context))
+
+(in gconfd
+	(filecon "/usr/libexec/gconfd-2" file cmd_file_context))
+
+(in gconftool
+	(filecon "/usr/bin/gconf-merge-tree" file cmd_file_context)
+	(filecon "/usr/bin/gconftool-2" file cmd_file_context))
+
+(in gsettingsdc
+	(filecon "/usr/bin/gsettings-data-convert" file cmd_file_context)
+	(filecon "HOME_DIR/\.local/share/gsettings-data-convert.*" file
+		home_data_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gconf
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "gconf"))))
+
+(in gconfdm
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in gconfd
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gconfd.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gconfd.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gconfd.role_pattern (ARG1 ARG2 subj)))))
+
+(in gconftool
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gconftool.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gconftool.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gconftool.role_pattern (ARG1 ARG2 subj)))))
+
+(in gsettingsdc
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset gsettingsdc.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gsettingsdc.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gsettingsdc.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.manage_home_data_files_blk)
+	(blockinherit usersubj.relabel_home_data_files_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file file "*")))
+
+	(macro home_data_obj_type_transition_home_data_files ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file file "gsettings-data-convert"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gconf
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit file.config_obj_blk)
+
+	(blockinherit usersubj.home_config_obj_blk))
+
+(block gconfdm
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(call gconf.read_config (subj))
+
+	(optional gconfdm_optional_sysbus
+		(call sysbus.daemon_subj_type (subj))))
+
+(block gconfd
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call gconf.read_config (subj_type_attribute))
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call gconf.manage_home_config (subj_type_attribute))
+	(call gconf.home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute)))
+
+(block gconftool
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gsettingsdc
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data_files (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call gconf.manage_home_config (subj_type_attribute))
+	(call gconf.home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call gconf.read_config (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))

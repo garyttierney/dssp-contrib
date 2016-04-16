@@ -1,0 +1,48 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in enchant
+	(filecon "HOME_DIR/\.config/enchant(/.*)?" any
+		home_config_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in enchant
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "enchant"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block enchant
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call manage_home_config (client_subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(client_subj_type_attribute)))

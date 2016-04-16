@@ -1,0 +1,69 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gm
+	(filecon "/usr/share/gnome-maps/org\.gnome\.Maps" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gm
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
+
+		(typeattributeset gm.subj_type_attribute subj)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gm
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_gjs_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.rw_dri (subj_type_attribute))
+
+	(call fs.read_sysfs (subj_type_attribute))
+
+	(call sec.search_fs (subj_type_attribute))
+
+	(call champlain.client_subj_type (subj_type_attribute))
+
+	(call folks.client_subj_type (subj_type_attribute))
+
+	(call glib.client_subj_type (subj_type_attribute))
+
+	(call http.tcp_connect_port (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
+
+	(optional gm_subj_type_optional_bluetoothd
+		(call bluetoothd.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gm_subj_type_optional_geoclue
+		(call geoclue.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gm_subj_type_optional_nm
+		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional gm_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

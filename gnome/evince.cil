@@ -1,0 +1,160 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in evince
+	(filecon "/usr/bin/evince" file cmd_file_context)
+	(filecon "HOME_DIR/\.config/evince(/.*)?" any
+		home_config_file_context))
+
+(in evincep
+	(filecon "/usr/bin/evince-previewer" file cmd_file_context))
+
+(in evincet
+	(filecon "/usr/bin/evince-thumbnailer" file cmd_file_context))
+
+(in evinced
+	(filecon "/usr/libexec/evinced" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in evince
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset evince.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evince.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evince.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "evince"))))
+
+(in evincep
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset evincep.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evincep.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evincep.role_pattern (ARG1 ARG2 subj)))))
+
+(in evincet
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset evincet.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evincet.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evincet.role_pattern (ARG1 ARG2 subj)))))
+
+(in evinced
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+
+		(typeattributeset evinced.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call evinced.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call evinced.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block evince
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(optional evince_subj_type_optional_firefox
+		(call firefox.read_tmpfs_user (subj_type_attribute)))
+
+	(optional evince_subj_type_optional_thunderbird
+		(call thunderbird.read_tmpfs_user (subj_type_attribute))))
+
+(block evincep
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block evincet
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(optional evincet_subj_type_attribute_optional_gdocs
+		(call gdocs.write_tmpfs_user_files (subj_type_attribute)))
+
+	(optional evincet_subj_type_attribute_optional_nautilus
+		(call nautilus.write_tmpfs_user_files (subj_type_attribute))))
+
+(block evinced
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))

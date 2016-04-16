@@ -1,0 +1,52 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in btst
+	(filecon "/usr/bin/bluetooth-sendto" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in btst
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset btst.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call btst.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call btst.role_pattern (ARG1 ARG2 subj)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block btst
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call fstab.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.list_home_user (subj_type_attribute))
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(optional btst_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional btst_subj_type_optional_sysbys
+		(call sysbus.client_subj_type (subj_type_attribute))))

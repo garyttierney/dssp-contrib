@@ -1,0 +1,101 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in who
+	(filecon "/usr/bin/who" file cmd_file_context))
+
+(in mesg
+	(filecon "/usr/bin/mesg" file cmd_file_context))
+
+(in write
+	(filecon "/usr/bin/write" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in who
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in mesg
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in write
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block who
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (kill)))
+
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.dontaudit_send_signull_common_subj (subj))
+	(call usersubj.send_signull_common_subj (subj))
+	(call usersubj.dontaudit_getattr_term (subj))
+	(call usersubj.getattr_term (subj))
+
+	(optional who_optional_screen
+		(call screen.dontaudit_send_signull_all_subj (subj))
+		(call screen.send_signull_all_subj (subj))))
+
+(block mesg
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call locale.read (subj))
+
+	(call usersubj.dontaudit_setattr_term (subj))
+	(call usersubj.setattr_term (subj)))
+
+(block write
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.use_term (subj)))

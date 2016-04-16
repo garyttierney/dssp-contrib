@@ -1,0 +1,119 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in pdftex
+	(filecon "/usr/bin/pdftex" file cmd_file_context))
+
+(in tetex
+	(filecon "/var/lib/texmf(/.*)?" any var_lib_file_context)
+	(filecon "/var/spool/texmf(/.*)?" any var_spool_file_context)
+	(filecon "HOME_DIR/\.texlive2015(/.*)?" any home_user_file_context))
+
+(filecon "/usr/share/texlive/texmf-dist/scripts(/.*)?" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in pdftex
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in tetex
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(blockinherit file.search_var_spool_blk)
+	(blockinherit file.list_var_spool_blk)
+	(blockinherit file.read_var_spool_files_blk)
+	(blockinherit file.read_var_spool_lnk_files_blk)
+	(blockinherit file.read_var_spool_blk)
+	(blockinherit file.manage_var_spool_blk)
+	(blockinherit file.relabel_var_spool_blk)
+
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".texlive2015")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block tetex
+	(blockinherit file.var_lib_obj_blk)
+
+	(blockinherit file.var_spool_obj_blk)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk))
+
+(block pdftex
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call exec (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_data (subj))
+
+	(call locale.read (subj))
+
+	(call tetex.manage_home_user (subj))
+	(call tetex.home_dir_obj_type_transition_home (subj))
+
+	(call tetex.manage_tmpfs_user (subj))
+	(call tetex.tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call tetex.read_var_lib_files (subj))
+
+	(call usersubj.read_home_user_files (subj))
+
+	(optional pdftex_optional_fedpkg
+		(call fedpkg.append_inherited_fifo_files_all_subj (subj)))
+
+	(optional pdftext_optional_rpmbuild
+		(call rpmbuild.manage_tmpfs_user_files (subj))))

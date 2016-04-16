@@ -1,0 +1,64 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in lirc
+	(filecon "/usr/bin/ircat" file cmd_file_context)
+	(filecon "/usr/bin/irexec" file cmd_file_context)
+	(filecon "/usr/bin/irman2lirc" file cmd_file_context)
+	(filecon "/usr/bin/irpty" file cmd_file_context)
+	(filecon "/usr/bin/irrecord" file cmd_file_context)
+	(filecon "/usr/bin/irsend" file cmd_file_context)
+	(filecon "/usr/bin/irsimreceive" file cmd_file_context)
+	(filecon "/usr/bin/irsimsend" file cmd_file_context)
+	(filecon "/usr/bin/irtestcase" file cmd_file_context)
+	(filecon "/usr/bin/irw" file cmd_file_context)
+	(filecon "/usr/bin/lirc-lsremotes" file cmd_file_context)
+	(filecon "/usr/bin/mode2" file cmd_file_context)
+	(filecon "/usr/bin/printo2lirc" file cmd_file_context))
+
+(in lirc_lsplugins
+	(filecon "/usr/sbin/lirc-lsplugins" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in lirc
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in lirc_lsplugins
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block lirc
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block lirc_lsplugins
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

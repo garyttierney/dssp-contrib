@@ -1,0 +1,107 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sessbus_launch
+	(filecon "/usr/bin/dbus-launch" file cmd_file_context)
+	(filecon "/usr/bin/dbus-run-session" file cmd_file_context)
+	(filecon "HOME_DIR/\.dbus(/.*)?" any home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sessbus_launch
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset sessbus_launch.subj_type_attribute subj)
+
+		(blockinherit subj.use_fd_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call sessbus_launch.spec_auto_subj_type_transition
+				(ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call sessbus_launch.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call client_subj_type (ARG2)))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call client_subj_type (ARG1))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".dbus")))
+
+	(blockinherit subj.use_fd_all_blk)
+
+	(macro use_fd_client_subj ((type ARG1))
+		(allow ARG1 client_subj_type_attribute (fd (use))))
+
+	(macro write_inherited_fifo_files_client_subj ((type ARG1))
+		(call use_fd_client_subj (ARG1))
+		(allow ARG1 client_subj_type_attribute (fifo_file (write)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sessbus_launch
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj_type_attribute))
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call file.read_data (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call xserver.client_subj_type (subj_type_attribute)))

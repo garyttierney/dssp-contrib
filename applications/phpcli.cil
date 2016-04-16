@@ -1,0 +1,69 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in phpcli
+	(filecon "/usr/bin/phar\.phar" file cmd_file_context)
+	(filecon "/usr/bin/php" file cmd_file_context)
+	(filecon "/usr/bin/php-cgi" file cmd_file_context)
+	(filecon "/usr/bin/phpize" file cmd_file_context)
+	(filecon "/usr/bin/zts-php" file cmd_file_context)
+	(filecon "HOME_DIR/\.php_history" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in phpcli
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home_user ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".php_history"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block phpcli
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home_user (subj))
+
+	(call client_subj_type (subj))
+
+	(call locale.read (subj))
+	(call terminfo.read_all (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call php.read_config (client_subj_type_attribute)))

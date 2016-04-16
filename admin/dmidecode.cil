@@ -1,0 +1,40 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dmidecode
+	(filecon "/usr/sbin/biosdecode" file cmd_file_context)
+	(filecon "/usr/sbin/dmidecode" file cmd_file_context)
+	(filecon "/usr/sbin/ownership" file cmd_file_context)
+	(filecon "/usr/sbin/vpddecode" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dmidecode
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dmidecode
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call dev.read_memory (subj))
+
+	(call fs.read_sysfs (subj)))

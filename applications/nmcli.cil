@@ -1,0 +1,49 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in nmcli
+	(filecon "/usr/bin/nmcli" file cmd_file_context)
+	(filecon "/usr/bin/nmtui" file cmd_file_context)
+	(filecon "/usr/bin/nmtui-connect" file cmd_file_context)
+	(filecon "/usr/bin/nmtui-edit" file cmd_file_context)
+	(filecon "/usr/bin/nmtui-hostname" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in nmcli
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block nmcli
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call dev.read_urandom (subj))
+
+	(call fs.list_tmpfs (subj))
+	(call fs.read_sysfs_files (subj))
+
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
+
+	(call nm.client_subj_type (subj))
+
+	(call udev.client_subj_type (subj)))

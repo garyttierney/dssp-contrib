@@ -1,0 +1,56 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in utempter
+	(filecon "/usr/libexec/utempter/utempter" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in utempter
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block utempter
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(call dev.rw_inherited_ptmx (subj))
+
+	(call fs.search_devpts (subj))
+
+	(call utmp.rw_runtime_files (subj))
+	(call wtmp.write_var_log_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.write_inherited_home_user_files (subj))
+
+	(optional utempter_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
+	(optional utempter_optional_qemu
+		(call qemu_guest.use_all_inherited_ptys (subj)))
+
+	(optional utempter_optional_screen
+		(call screen.rw_inherited_unix_stream_sockets_all_subj (subj))
+		(call screen.read_inherited_home_user_files (subj))))

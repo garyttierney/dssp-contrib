@@ -1,0 +1,61 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in loadkeys
+	(filecon "/usr/bin/loadkeys" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in loadkeys
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block loadkeys
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (sys_tty_config)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.rw_inherited_unix_stream_sockets (subj))
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call file.list_var_tmp (subj))
+
+	(call fs.list_rootfs (subj))
+
+	(call term.use_console (subj))
+	(call term.use_unallocated_ttys (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional loadkeys_optional_sd
+		(call sd.forked_subj_type (subj)))
+
+	(optional loadkeys_optional_sd_udevd
+		(call sd_udevd.write_inherited_fifo_files (subj))
+		(call sd_udevd.rw_inherited_udp_sockets (subj))))

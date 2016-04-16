@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in syndaemon
+	(filecon "/usr/bin/syndaemon" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in syndaemon
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block syndaemon
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(optional syndaemon_optional_gs
+		(call gs.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
+	(optional syndaemon_optional_xserver
+		(call xserver.client_subj_type (subj))))

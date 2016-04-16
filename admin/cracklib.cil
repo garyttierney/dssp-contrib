@@ -1,0 +1,57 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in cracklib
+	(filecon "/usr/sbin/cracklib-check" file cmd_file_context)
+	(filecon "/usr/sbin/cracklib-format" file cmd_file_context)
+	(filecon "/usr/sbin/cracklib-packer" file cmd_file_context)
+	(filecon "/usr/sbin/cracklib-unpacker" file cmd_file_context)
+	(filecon "/usr/sbin/create-cracklib-dict" file cmd_file_context)
+	(filecon "/var/cache/cracklib(/.*)?" any var_cache_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in cracklib
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
+
+	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "cracklib"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block cracklib
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.var_cache_obj_blk)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj)))

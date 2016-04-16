@@ -1,0 +1,144 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xpdf
+	(filecon "/etc/xpdf(/.*)?" any config_file_context)
+	(filecon "/etc/xpdfrc" file config_file_context)
+	(filecon "/usr/bin/xpdf" file cmd_file_context)
+	(filecon "/usr/bin/pdftopng" file cmd_file_context)
+	(filecon "HOME_DIR/\.xpdfrc" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xpdf
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset xpdf.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call xpdf.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call xpdf.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call manage_home_user_files (ARG2))
+		(call relabel_home_user_files (ARG2))
+
+		(call home_dir_obj_type_transition_home (ARG2))
+
+		(call manage_tmpfs_user_files (ARG2))
+		(call relabel_tmpfs_user_files (ARG2)))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".xpdfrc")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xpdf
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call read_home_user_files (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call cmd.exec_shell (subj_type_attribute))
+
+	(call file.dontaudit_list_home (subj_type_attribute))
+	(call file.list_mnt (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.dontaudit_list_rootfs (subj_type_attribute))
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+
+	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
+
+	(call usersubj.create_home_data_dirs (subj_type_attribute))
+	(call usersubj.home_dir_add_obj_type_transition_home_data
+		(subj_type_attribute))
+	(call usersubj.manage_home_data_files (subj_type_attribute))
+
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(optional xpdf_subj_type_optional_firefox
+		(call firefox.read_tmpfs_user_files (subj_type_attribute)))
+
+	(optional xpdf_subj_type_optional_mutt
+		(call mutt.read_tmpfs_user_files (subj_type_attribute))))

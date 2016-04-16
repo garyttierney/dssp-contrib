@@ -1,0 +1,95 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in curl
+	(filecon "/etc/wgetrc" file config_file_context)
+	(filecon "/usr/bin/curl" file cmd_file_context)
+	(filecon "/usr/bin/wget" file cmd_file_context)
+	(filecon "HOME_DIR/\.wget-hsts" file home_user_file_context)
+	(filecon "HOME_DIR/\.wgetrc" file home_user_file_context)
+	(filecon "HOME_DIR/\.curlrc" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in curl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".wget-hsts"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".wgetrc"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".curlrc"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block curl
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
+	(allow subj self (capability (dac_override)))
+
+	(call dev.read_urandom (subj))
+
+	(call file.dontaudit_audit_access_var_tmp_dirs (subj))
+	(call file.list_var_tmp (subj))
+	(call file.read_config_files (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.list_tmpfs (subj))
+
+	(call fs.manage_dosfs_subj_type (subj))
+	(call fs.manage_fuse_subj_type (subj))
+
+	(call http.tcp_connect_port (subj))
+
+	(call cert.read_all (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.manage_home_user_dirs (subj))
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional curl_optional_httpd
+		(call httpd.tcp_connect_all_ports (subj)))
+
+	(optional curl_optional_tor
+		(call tor_socks.client_subj_type (subj))))

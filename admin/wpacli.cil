@@ -1,0 +1,55 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in wpacli
+	(filecon "/usr/sbin/wpa_cli" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wpacli
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_tmpfs_user_sock_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_sock_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_sock_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			sock_file "*")))
+
+	(macro dgram_send ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call dgram_send_pattern (ARG1 tmpfs_user_file tmpfs_user_file
+			subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wpacli
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_sock_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call wpa.dgram_send (subj))
+	(call wpa.list_runtime (subj)))

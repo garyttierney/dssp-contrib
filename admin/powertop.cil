@@ -1,0 +1,169 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in powertop
+	(filecon "/usr/sbin/powertop" file cmd_file_context)
+	(filecon "/var/cache/powertop(/.*)?" any var_cache_file_context)
+
+	(optional powertop_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*powertop.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in powertop
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_blk)
+
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
+
+	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "powertop")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
+
+	(macro rw_inherited_sockets ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 subj rw_inherited_socket_perms))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional powertop_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional powertop_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block powertop
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.var_cache_obj_blk)
+
+	(typeattributeset obj_type_attribute var_cache_file)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(typeattributeset obj_type_attribute tmpfs_user_file)
+
+	(allow subj self (capability (dac_override net_admin sys_rawio
+		sys_resource sys_admin ipc_lock)))
+	(allow subj self (process (setrlimit)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self create_socket_perms)
+	(allow subj self create_udp_socket_perms)
+	(allow subj self create_netlink_generic_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_kallsyms_proc_files (subj))
+	(call sys.request_load_module (subj))
+	(call sys.rw_cpu_sysfs_files (subj))
+	(call sys.rw_fs_sysctl_files (subj))
+	(call sys.rw_irq_sysctl_files (subj))
+	(call sys.rw_kernel_sysctl_files (subj))
+	(call sys.rw_vm_sysctl_files (subj))
+
+	(call cmd.exec_shell (subj))
+
+	(call dev.read_cpu (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_state_common_subj (subj))
+
+	(call kmod.auto_subj_type_transition (subj))
+
+	(call terminfo.read_all (subj))
+	(call hwdata.read_data (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional powertop_optional_bluetoothctl
+		(call bluetoothctl.run (subj role_attribute)))
+
+	(optional powertop_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional powertop_optional_xutil
+		(call xutil.run (subj role_attribute)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_var_cache (adm_subj_type_attribute))
+	(call fs.search_tmpfs (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

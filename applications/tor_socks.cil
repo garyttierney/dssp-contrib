@@ -1,0 +1,118 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in tor_socks
+	(filecon "/usr/bin/torify" file cmd_file_context)
+	(filecon "/usr/bin/torsocks" file cmd_file_context)
+
+	(portcon "tcp" 9050 port_obj_context)
+	(portcon "udp" 9050 port_obj_context)
+	(portcon "tcp" 9100 port_obj_context)
+	(portcon "udp" 9100 port_obj_context))
+
+(in tor_socks_use
+	(genfscon "selinuxfs" "/booleans/tor_socks_use" bool_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in tor_socks
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset tor_socks.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call tor_socks.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call tor_socks.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG2 client_subj_type_attribute (process (noatsecure)))
+
+		(allow ARG3 ARG2 (process (signal noatsecure)))
+
+		(call tor.read_config (ARG2))
+
+		(optional tor_socks_role_pattern_optional_bti
+			(call bti.run (ARG3 ARG1)))
+
+		(optional tor_sock_role_pattern_optional_curl
+			(call curl.run (ARG3 ARG1))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+
+	(macro set_use_boolean ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 tor_socks_use.bool))
+		(optional tor_socks_set_use_boolean_optional_seutil
+			(call setsebool.exec (ARG1)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(boolean tor_socks_use true)
+
+(block tor_socks
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit net.unreserved_port_obj_blk)
+
+	(call exec (subj_type_attribute))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call locale.read (subj_type_attribute))
+
+	(allow subj_type_attribute client_subj_type_attribute (process
+		(noatsecure)))
+
+	(call tor.read_config_files (client_subj_type_attribute)))
+
+(block tor_socks_use
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif tor_socks_use
+		(true
+			(allow tor_socks.client_subj_type_attribute self
+				create_tcp_socket_perms)
+			(call tor_socks.tcp_connect_port
+				(tor_socks.client_subj_type_attribute)))))

@@ -1,0 +1,71 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xauth
+	(filecon "/usr/bin/xauth" file cmd_file_context)
+	(filecon "HOME_DIR/\.Xauthority.*" file home_user_file_context)
+	(filecon "HOME_DIR/\.serverauth.*" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xauth
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.delete_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file "*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xauth
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.read_net_proc_files (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call startx.read_tmpfs_user_files (subj))
+
+	(optional xauth_optional_gdm
+		(call gdmuser.manage_tmpfs_user_files (subj)))
+
+	(optional xauth_optional_sd_machined
+		(call sd_machined.read_runtime (subj)))
+
+	(optional xauth_optional_ssh_client
+		(call ssh_client.rw_inherited_fifo_files_all_subj (subj))))

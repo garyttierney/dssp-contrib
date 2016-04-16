@@ -1,0 +1,172 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in i3
+	(filecon "/etc/i3(/.*)?" any config_file_context)
+	(filecon "/usr/bin/i3" file cmd_file_context)
+	(filecon "/usr/bin/i3-config-wizard" file cmd_file_context)
+	(filecon "/usr/bin/i3-dmenu-desktop" file cmd_file_context)
+	(filecon "/usr/bin/i3-dump-log" file cmd_file_context)
+	(filecon "/usr/bin/i3-input" file cmd_file_context)
+	(filecon "/usr/bin/i3-migrate-config-to-v4" file cmd_file_context)
+	(filecon "/usr/bin/i3-msg" file cmd_file_context)
+	(filecon "/usr/bin/i3-save-tree" file cmd_file_context)
+	(filecon "/usr/bin/i3-nagbar" file cmd_file_context)
+	(filecon "/usr/bin/i3-sensible-editor" file cmd_file_context)
+	(filecon "/usr/bin/i3-sensible-pager" file cmd_file_context)
+	(filecon "/usr/bin/i3-sensible-terminal" file cmd_file_context)
+	(filecon "/usr/bin/i3-with-shmlog" file cmd_file_context)
+	(filecon "/usr/bin/i3bar" file cmd_file_context)
+
+	(filecon "HOME_DIR/\.config/i3(/.*)?" any home_config_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in i3
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset i3.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call i3.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call i3.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro sensible_client_subj_type ((type ARG1))
+		(typeattributeset sensible_client_subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit subj.read_state_all_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "i3")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.delete_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.delete_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file dir "i3")))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file file "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1
+			tmpfs_user_file lnk_file "*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block i3
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute sensible_client_subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config
+		(subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(call tmpfs_obj_type_transition_tmpfs_user_files (subj_type_attribute))
+
+	(call exec (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (setpgid)))
+	(allow subj_type_attribute self (unix_stream_socket (connectto listen
+		accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call i3status.send_sigstop (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call xserver.tmpfs_client (subj_type_attribute tmpfs_user_file))
+
+	(allow client_subj_type_attribute subj_type_attribute (process
+		(sigchld)))
+
+	(call i3.exec (sensible_client_subj_type_attribute))
+
+	(call i3.delete_tmpfs_user_files (sensible_client_subj_type_attribute))
+	(call i3.read_tmpfs_user_lnk_files (sensible_client_subj_type_attribute))
+	(call i3.delete_tmpfs_user_lnk_files (sensible_client_subj_type_attribute)))

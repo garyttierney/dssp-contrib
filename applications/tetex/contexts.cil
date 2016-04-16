@@ -1,9 +1,0 @@
-(in pdftex
-	(filecon "/usr/bin/pdftex" file cmd_file_context))
-
-(in tetex
-	(filecon "/var/lib/texmf(/.*)?" any var_lib_file_context)
-	(filecon "/var/spool/texmf(/.*)?" any var_spool_file_context)
-	(filecon "HOME_DIR/\.texlive2015(/.*)?" any home_user_file_context))
-
-(filecon "/usr/share/texlive/texmf-dist/scripts(/.*)?" file cmd)

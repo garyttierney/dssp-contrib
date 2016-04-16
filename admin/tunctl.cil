@@ -1,0 +1,56 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in tunctl
+	(filecon "/usr/sbin/tunctl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in tunctl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro relabelfrom_tun_socket ((type ARG1))
+		(allow ARG1 subj (tun_socket (relabelfrom)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block tunctl
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (net_admin)))
+	(allow subj self create_tun_socket_perms)
+	(allow subj self (tun_socket (relabelto relabelfrom)))
+
+	(call sys.request_load_module (subj))
+
+	(call standard.change_exemption_subj_type (subj))
+
+	(call dev.rw_tun_tap (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional tunctl_optional_qemu
+		(call qemu_guest.relabelfrom_all_tun_socket (subj)))
+
+	(optional tunctl_optional_sd
+		(call sd.forked_subj_type (subj))))

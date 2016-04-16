@@ -1,0 +1,45 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xserver_wrap
+	(filecon "/usr/libexec/Xorg\.wrap" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xserver_wrap
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call send_signal (ARG1))
+		(allow ARG1 xserver_wrap.subj (process (siginh)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
+
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xserver_wrap
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (setuid setgid sys_admin)))
+
+	(call dev.rw_dri (subj))
+
+	(call xserver.run (subj role_attribute))
+	(call xserver.read_config (subj)))

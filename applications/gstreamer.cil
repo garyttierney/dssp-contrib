@@ -1,0 +1,193 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gstreamer
+	(filecon "HOME_DIR/\.cache/gstreamer-1\.0(/.*)?" any
+		home_cache_file_context)
+	(filecon "HOME_DIR/\.local/share/gstreamer-1\.0(/.*)?" any
+		home_data_file_context))
+
+(in gst
+	(filecon "/usr/bin/gst-inspect-.*" file cmd_file_context)
+	(filecon "/usr/bin/gst-launch-.*" file cmd_file_context)
+	(filecon "/usr/bin/gst-typefind-.*" file cmd_file_context))
+
+(in gstps
+	(filecon "/usr/libexec/gstreamer-.*/gst-plugin-scanner" file
+		cmd_file_context))
+
+(in gst_helper
+	(filecon "/usr/libexec/gstreamer-.*/gst-ptp-helper" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gstreamer
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.manage_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "gstreamer-1.0")))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.manage_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "gstreamer-1.0"))))
+
+(in gst
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset gst.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gst.spec_auto_subj_type_transition (ARG1 subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gst.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+
+(in gstps
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset gstps.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gstps.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gstps.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+
+(in gst_helper
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gstreamer
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call manage_home_cache (client_subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache
+		(client_subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call manage_home_data (client_subj_type_attribute))
+	(call home_data_obj_type_transition_home_data
+		(client_subj_type_attribute)))
+
+(block gst
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
+
+(block gstps
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (process (getsched)))
+
+	(call sys.read_cpu_sysfs (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+	(call dev.rw_v4l (subj_type_attribute))
+
+	(call fs.list_devtmpfs (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(optional gstps_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
+
+	(optional gstps_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))
+
+(block gst_helper
+	(blockinherit cmd.obj_blk))

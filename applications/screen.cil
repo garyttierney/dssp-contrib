@@ -1,0 +1,159 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in screen
+	(filecon "/etc/screenrc" file config_file_context)
+	(filecon "/usr/bin/screen" file cmd_file_context)
+	(filecon "/var/run/screen(/.*)?" any runtime_file_context)
+	(filecon "HOME_DIR/\.screenrc" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in screen
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset screen.subj_type_attribute subj)
+
+		(blockinherit subj.read_state_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call screen.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call screen.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call chkpwd.run (ARG3 ARG1))
+
+		(call utempter.run (ARG3 ARG1))
+
+		(optional screen_role_pattern_optional_mysysstat
+			(call mysysstat.run (ARG3 ARG1))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro read_inherited_home_user_files ((type ARG1))
+		(allow ARG1 home_user_file read_inherited_file_perms))
+
+	(macro home_dir_obj_type_transition_home_files ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".screenrc")))
+
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk)
+
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"screen")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
+
+	(macro dontaudit_send_signull_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute (process (signull))))
+
+	(blockinherit subj.use_fd_all_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+	(blockinherit subj.read_state_all_blk)
+	(blockinherit subj.send_signull_all_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block screen
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj_type_attribute))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(call manage_runtime (subj_type_attribute))
+	(call runtime_obj_type_transition_runtime (subj_type_attribute))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call read_home_user_files (subj_type_attribute))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_files (subj_type_attribute))
+
+	(allow subj_type_attribute self (unix_stream_socket (listen accept
+		connectto)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call file.read_config_files (subj_type_attribute))
+
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call terminfo.read_all (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+	(call utmp.rw_runtime_files (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call pam.read_config (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.setattr_term (subj_type_attribute))
+	(call usersubj.use_term (subj_type_attribute))
+
+	(optional screen_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute))))

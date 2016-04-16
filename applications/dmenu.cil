@@ -1,0 +1,97 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dmenu
+	(filecon "/usr/bin/dmenu" file cmd_file_context)
+	(filecon "/usr/bin/dmenu_path" file cmd_file_context)
+	(filecon "/usr/bin/dmenu_run" file cmd_file_context)
+	(filecon "/usr/bin/stest" file cmd_file_context)
+	(filecon "HOME_DIR/\.cache/dmenu_run" file
+                home_cache_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dmenu
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset dmenu.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call dmenu.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call dmenu.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.manage_home_cache_files_blk)
+	(blockinherit usersubj.relabel_home_cache_files_blk)
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file file "dmenu_run"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dmenu
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call manage_home_cache_files (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache (subj_type_attribute))
+
+	(call exec (subj_type_attribute))
+
+	(call cmd.dontaudit_mmap_all (subj_type_attribute))
+	(call cmd.list_cmd (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+
+	(call fonts.client_subj_type (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
+
+	(call xserver.client_subj_type (subj_type_attribute))
+
+	(optional dmenu_optional_authconfig
+		(call authconfig.read_data (subj_type_attribute)))
+
+	(optional dmenu_optional_sessbus
+		(call sessbus.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute))))

@@ -1,0 +1,40 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xserver_backlight_helper
+	(filecon "/usr/libexec/xf86-video-intel-backlight-helper" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xserver_backlight_helper
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xserver_backlight_helper
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call xserver.rw_inherited_unix_stream_sockets (subj)))

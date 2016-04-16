@@ -1,0 +1,108 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xutil
+	(filecon "/usr/bin/xbacklight" file cmd_file_context)
+	(filecon "/usr/bin/xclip" file cmd_file_context)
+	(filecon "/usr/bin/xinput" file cmd_file_context)
+	(filecon "/usr/bin/xhost" file cmd_file_context)
+	(filecon "/usr/bin/xkbcomp" file cmd_file_context)
+	(filecon "/usr/bin/xloadimage" file cmd_file_context)
+	(filecon "/usr/bin/xmodmap" file cmd_file_context)
+	(filecon "/usr/bin/xprop" file cmd_file_context)
+	(filecon "/usr/bin/xset" file cmd_file_context)
+	(filecon "/usr/bin/xsetroot" file cmd_file_context)
+	(filecon "/usr/bin/xrandr" file cmd_file_context)
+	(filecon "/usr/bin/xrdb" file cmd_file_context)
+	(filecon "HOME_DIR/\.Xmodmap" file home_user_file_context)
+	(filecon "HOME_DIR/\.Xresources" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xutil
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro delete_tmpfs_user_files ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.del_entry_tmpfs (ARG1))
+		(allow ARG1 tmpfs_user_file delete_file_perms))
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".Xmodmap"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".Xresources")))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xutil
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call read_home_user_files (subj))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call file.read_config_files (subj))
+	(call file.read_data_files (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.read_home_user_files (subj))
+
+	(call xserver.client_subj_type (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_target_subj_type (subj))))
+
+	(optional xutil_optional_gs
+		(call gs.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
+	(optional xutil_optional_sd
+		(call sd.getattr_unit_dirs (subj)))
+
+	(optional xutil_optional_xwayland
+		(call xwayland.send_sigchld_all_subj (subj))))

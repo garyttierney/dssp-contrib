@@ -1,9 +1,0 @@
-(in gpg
-	(filecon "/etc/gnupg(/.*)?" any config_file_context)
-	(filecon "/usr/bin/gpg.*" file cmd_file_context)
-	(filecon "HOME_DIR/\.gnupg(/.*)?" any home_user_file_context))
-
-(in gpg_helper
-	(filecon "/usr/libexec/gpg-check-pattern" file cmd_file_context)
-	(filecon "/usr/libexec/gpg-preset-passphrase" file cmd_file_context)
-	(filecon "/usr/libexec/gpg-protect-tool" file cmd_file_context))

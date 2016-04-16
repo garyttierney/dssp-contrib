@@ -1,0 +1,74 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in fop
+	(filecon "/etc/fop\.conf" file config_file_context)
+	(filecon "/usr/bin/fop" file cmd_file_context)
+	(filecon "HOME_DIR/\.fop(/.*)?" any home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in fop
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".fop"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block fop
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call file.search_var_lib (subj))
+
+	(call java.client (subj))
+
+	(call fonts.read_all (subj))
+	(call locale.read (subj))
+
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))

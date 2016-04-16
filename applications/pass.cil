@@ -1,0 +1,40 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in pass
+	(filecon "HOME_DIR/\.password-store(/.*)?" any home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in pass
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".password-store")))
+
+	(macro home_user_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
+		(call usersubj.search_home_dir (ARG1))
+		(call obj_type_transition_pattern (ARG1 home_user_file ARG2
+			ARG3 ARG4))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block pass
+	(blockinherit usersubj.home_user_obj_blk))

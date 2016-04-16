@@ -1,0 +1,82 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in i3status
+	(filecon "/etc/i3status\.conf" file config_file_context)
+	(filecon "/usr/bin/i3status" file cmd_file_context)
+	(filecon "HOME_DIR/\.config/i3status(/.*)?" any
+		home_config_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in i3status
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_sigstop_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(blockinherit usersubj.home_config_obj_type_transition_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "i3status"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block i3status
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config_files (subj))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(allow subj self create_netlink_generic_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.read_net_proc_files (subj))
+
+	(call read_home_config (subj))
+
+	(call file.list_runtime (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call i3.read_state_all_subj (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional i3status_optional_dhclient
+		(call dhclient.read_runtime_files (subj))))

@@ -1,0 +1,37 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ppputil
+	(filecon "/usr/sbin/chat" file cmd_file_context)
+	(filecon "/usr/sbin/ppp-watch" file cmd_file_context)
+	(filecon "/usr/sbin/pppdump" file cmd_file_context)
+	(filecon "/usr/sbin/pppoe-discovery" file cmd_file_context)
+	(filecon "/usr/sbin/pppstats" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ppputil
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ppputil
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

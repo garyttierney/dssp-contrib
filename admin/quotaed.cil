@@ -1,0 +1,77 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in quotaed
+	(filecon "/usr/sbin/convertquota" file cmd_file_context)
+	(filecon "/usr/sbin/edquota" file cmd_file_context)
+	(filecon "/usr/sbin/quotastats" file cmd_file_context)
+	(filecon "/usr/sbin/requota" file cmd_file_context)
+	(filecon "/usr/sbin/setquota" file cmd_file_context)
+	(filecon "/usr/sbin/xfs_quota" file cmd_file_context)
+	(filecon "/usr/sbin/xqmstats" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in quotaed
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block quotaed
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (capability (setuid setgid dac_override sys_admin)))
+
+	(call sys.read_fs_sysctl_files (subj))
+	(call sys.list_mountpoints (subj))
+
+	(call cmd.exec (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fs.get_fs_quotas (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.mod_fs_quotas (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+
+	(call sec.get_enforce_mode (subj))
+
+	(call storage.getattr_all (subj))
+
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.list_home_dir (subj)))

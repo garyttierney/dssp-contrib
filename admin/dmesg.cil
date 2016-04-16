@@ -1,0 +1,49 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dmesg
+	(filecon "/usr/bin/dmesg" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dmesg
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dmesg
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_ring_buffer (subj))
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.read_kmsg (subj))
+
+	(call terminfo.read_all (subj))
+	(call locale.read (subj))
+
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+	(call usersubj.manage_home_user_files (subj)))

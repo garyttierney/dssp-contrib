@@ -1,0 +1,50 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in nethogs
+	(filecon "/usr/sbin/nethogs" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in nethogs
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block nethogs
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (net_raw dac_override net_admin)))
+	(allow subj self create_packet_socket_perms)
+	(allow subj self create_rawip_socket_perms)
+
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.request_load_module (subj))
+
+	(call fs.read_sysfs (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_state_common_subj (subj))
+
+	(call terminfo.read_all (subj))
+
+	(call nss.client_subj_type (subj)))

@@ -1,0 +1,103 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in mariadb
+	(filecon "/usr/bin/msql2mysql" file cmd_file_context)
+	(filecon "/usr/bin/my_print_defaults" file cmd_file_context)
+	(filecon "/usr/bin/mysql" file cmd_file_context)
+	(filecon "/usr/bin/mysql_find_rows" file cmd_file_context)
+	(filecon "/usr/bin/mysql_plugin" file cmd_file_context)
+	(filecon "/usr/bin/mysql_waitpid" file cmd_file_context)
+	(filecon "/usr/bin/mysqlaccess" file cmd_file_context)
+	(filecon "/usr/bin/mysqladmin" file cmd_file_context)
+	(filecon "/usr/bin/mysqlbinlog" file cmd_file_context)
+	(filecon "/usr/bin/mysqlcheck" file cmd_file_context)
+	(filecon "/usr/bin/mysqldump" file cmd_file_context)
+	(filecon "/usr/bin/mysqlimport" file cmd_file_context)
+	(filecon "/usr/bin/mysqlshow" file cmd_file_context)
+	(filecon "/usr/bin/mysqlslap" file cmd_file_context)
+
+	(filecon "/etc/my\.cnf" file config_file_context)
+	(filecon "/etc/my\.cnf\.d(/.*)?" any config_file_context)
+
+	(filecon "HOME_DIR/\.mysql" file home_user_file_context)
+	(filecon "HOME_DIR/\.mysql_history" file home_user_file_context)
+	(filecon "HOME_DIR/\.my\.cnf" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in mariadb
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.rw_config_dirs_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".mysql"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".mysql_history"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".my.cnf"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block mariadb
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(allow subj self (capability (dac_override)))
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home (subj))
+
+	(call file.read_config_files (subj))
+	(call file.read_data_files (subj))
+
+	(call locale.read (subj))
+	(call terminfo.read_all (subj))
+
+	(call mysql.tcp_connect_port (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional mariadb_optional_mariadb_server
+		(call mariadb_server.read_all_config_files (subj))
+		(call mariadb_server.stream_connect_all_subj (subj))
+		(call mariadb_server.tcp_connect_all_ports (subj))))

@@ -1,0 +1,45 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in bridgeutil
+	(filecon "/usr/sbin/brctl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in bridgeutil
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block bridgeutil
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (net_admin)))
+	(allow subj self create_unix_stream_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.request_load_module (subj))
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_net_proc_files (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj)))

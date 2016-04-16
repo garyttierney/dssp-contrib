@@ -1,0 +1,148 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in groupadd
+	(filecon "/usr/bin/gpasswd" file cmd_file_context)
+	(filecon "/usr/sbin/groupadd" file cmd_file_context)
+	(filecon "/usr/sbin/groupdel" file cmd_file_context)
+	(filecon "/usr/sbin/groupmod" file cmd_file_context))
+
+(in useradd
+	(filecon "/usr/sbin/useradd" file cmd_file_context)
+	(filecon "/usr/sbin/userdel" file cmd_file_context)
+	(filecon "/usr/sbin/usermod" file cmd_file_context)
+	(filecon "/usr/sbin/newusers" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in useradd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in groupadd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block groupadd
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override setuid)))
+	(allow subj self (process (setrlimit)))
+
+	(call sys.audit_client_subj_type (subj))
+
+	(call standard.obj_change_exemption_subj_type (subj))
+
+	(call file.read_config_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+	(call sec.validate_context (subj))
+
+	(call passwords.config_obj_type_transition_passwords (subj "*"))
+	(call passwords.manage (subj))
+	(call shadow.manage (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+
+	(optional groupadd_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(optional groupadd_optional_sd
+		(call sd.forked_subj_type (subj)))
+
+	(optional groupadd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj))))
+
+(block useradd
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (chown fsetid fowner dac_override)))
+
+	(call sys.audit_client_subj_type (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call standard.obj_change_exemption_subj_type (subj))
+
+	(call fs.list_proc (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.search_devpts (subj))
+
+	(call file.read_config_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+	(call sec.validate_context (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_state_common_subj (subj))
+
+	(call passwords.config_obj_type_transition_passwords (subj "*"))
+	(call passwords.manage (subj))
+	(call shadow.manage (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call lastlog.rw_var_log_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+
+	(call usersubj.create_home_dir (subj))
+	(call usersubj.create_home_user_files (subj))
+	(call usersubj.create_var_spool_user_files (subj))
+	(call usersubj.delete_all_home_user (subj))
+	(call usersubj.delete_home_dir (subj))
+	(call usersubj.delete_home_user_files (subj))
+	(call usersubj.delete_var_spool_user_files (subj))
+	(call usersubj.list_all_home_user (subj))
+	(call usersubj.setattr_home_dir (subj))
+	(call usersubj.setattr_home_user_files (subj))
+	(call usersubj.setattr_var_spool_user_files (subj))
+	(call usersubj.write_home_user_files (subj))
+	(call usersubj.write_var_spool_user_files (subj))
+	(call usersubj.var_spool_obj_type_transition_var_spool_user (subj "*"))
+
+	(optional useradd_optional_sd
+		(call sd.forked_subj_type (subj)))
+
+	(optional useradd_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(optional useradd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj))))

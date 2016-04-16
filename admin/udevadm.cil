@@ -1,0 +1,99 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in udevadm
+	(filecon "/usr/bin/udevadm" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in udevadm
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block udevadm
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override net_admin)))
+
+	(call client_subj_type (subj))
+
+	(call sys.rw_cpu_sysfs_files (subj))
+	(call sys.rw_memory_sysfs_files (subj))
+	(call sys.rw_node_sysfs_files (subj))
+
+	(call dev.rw_all (subj))
+	(call dev.relabel_all (subj))
+	(call dev.setattr_all (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.manage_devtmpfs_dirs (subj))
+	(call fs.manage_devtmpfs_files (subj))
+	(call fs.manage_devtmpfs_lnk_files (subj))
+	(call fs.manage_devtmpfs_blk_files (subj))
+	(call fs.manage_devtmpfs_chr_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.relabelfrom_devtmpfs_blk_files (subj))
+	(call fs.relabelfrom_devtmpfs_chr_files (subj))
+	(call fs.rw_sysfs_files (subj))
+
+	(call sec.get_enforce_mode (subj))
+
+	(call storage.read_all (subj))
+
+	(call kmod.read_config (subj))
+
+	(call modules.read (subj))
+	(call passwords.read (subj))
+
+	(call nss.read_config_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+
+	(call udev.manage_config (subj))
+	(call udev.manage_runtime (subj))
+
+	(optional udevdadm_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(optional udevadm_optional_sd
+		(call sd.daemon (subj cmd_file)))
+
+	(optional udevadm_optional_sd_networkd
+		(call sd_networkd.read_config (subj)))
+
+	(call dev.read_urandom (client_subj_type_attribute))
+
+	(call udev.client_subj_type (client_subj_type_attribute))
+
+	(optional udevadm_client_subj_type_optional_sd
+		(call sd.search_runtime (client_subj_type_attribute)))
+
+	(optional udevadm_client_subj_type_optional_sd_udevd
+		(call sd_udevd.stream_connect (client_subj_type_attribute))))

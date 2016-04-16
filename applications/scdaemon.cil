@@ -1,0 +1,152 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in scdaemon
+	(filecon "/usr/libexec/scdaemon" file cmd_file_context)
+	(filecon "HOME_DIR/\.gnupg/reader.*\.status" file
+		home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/scdaemon\.conf" file home_user_file_context)
+	(filecon "HOME_DIR/\.gnupg/S\.scdaemon" socket home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in scdaemon
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_home_user ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file search_dir_perms))
+
+	(macro list_home_user ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file list_dir_perms))
+
+	(macro read_home_user_files ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(call read_files_pattern (ARG1 home_user_file home_user_file)))
+
+	(macro getattr_home_user_sock_files ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file (sock_file (getattr))))
+
+	(macro read_home_user_lnk_files ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(call read_lnk_files_pattern (ARG1 home_user_file
+			home_user_file)))
+
+	(macro rw_home_user_dirs ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file rw_dir_perms))
+
+	(macro read_home_user ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file read_file_perms)
+		(allow ARG1 home_user_file list_dir_perms)
+		(allow ARG1 home_user_file read_lnk_file_perms)
+		(allow ARG1 home_user_file read_sock_file_perms))
+
+	(macro manage_home_user ((type ARG1))
+		(call gpg.rw_home_user_dirs (ARG1))
+		(allow ARG1 home_user_file manage_file_perms)
+		(allow ARG1 home_user_file manage_dir_perms)
+		(allow ARG1 home_user_file manage_lnk_file_perms)
+		(allow ARG1 home_user_file manage_sock_file_perms))
+
+	(macro relabel_home_user ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(allow ARG1 home_user_file relabel_file_perms)
+		(allow ARG1 home_user_file relabel_dir_perms)
+		(allow ARG1 home_user_file relabel_lnk_file_perms)
+		(allow ARG1 home_user_file relabel_sock_file_perms))
+
+	(macro gpg_home_user_obj_type_transition_home ((type ARG1))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_0.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_-0.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_1.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_-1.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_2.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "reader_-2.status"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			file "scdaemon.conf"))
+		(call gpg.home_user_obj_type_transition (ARG1 home_user_file
+			sock_file "S.scdaemon")))
+
+	(macro stream_connect ((type ARG1))
+		(call gpg.search_home_user (ARG1))
+		(call stream_connect_pattern (ARG1 home_user_file
+			home_user_file subj)))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_sock_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block scdaemon
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call manage_home_user (subj))
+	(call gpg_home_user_obj_type_transition_home (subj))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self create_unix_stream_stream_socket_perms)
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_crypto_sysctl_files (subj))
+
+	(call dev.rw_usb (subj))
+
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call gpg.delete_home_user_dirs (subj))
+
+	(call gpg_agent.send_signal_all_subj (subj))
+
+	(call gpg_pcsc_wrapper.run (subj role_attribute))
+
+	(call locale.read (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional scdaemon_optional_pcscd
+		(call pcscd.client_subj_type (subj))))

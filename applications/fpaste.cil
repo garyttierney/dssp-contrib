@@ -1,0 +1,153 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in fpaste
+	(filecon "/usr/bin/fpaste" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in fpaste
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
+
+	(blockinherit usersubj.search_var_tmp_user_blk)
+	(blockinherit usersubj.list_var_tmp_user_blk)
+	(blockinherit usersubj.read_var_tmp_user_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_lnk_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_blk)
+	(blockinherit usersubj.manage_var_tmp_user_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_blk)
+
+	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			dir "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			file "*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block fpaste
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(call manage_var_tmp_user (subj))
+	(call var_tmp_obj_type_transition_var_tmp (subj))
+
+	(allow subj self (capability (dac_override sys_resource sys_admin)))
+	(allow subj self (process (getsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.read_ring_buffer (subj))
+
+	(call cmd.list_cmd (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.read_kmsg (subj))
+	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
+	(call file.read_data_files (subj))
+
+	(call fs.getattr_all_fs (subj))
+	(call fs.read_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call sec.get_enforce_mode (subj))
+
+	(call storage.read_all (subj))
+
+	(call subj.dontaudit_read_state_common_subj (subj))
+	(call subj.read_state_common_subj (subj))
+	(call subj.ptrace_subj_type (subj))
+
+	(call dmesg.exec (subj))
+
+	(call fstools.exec (subj))
+	(call fstools.manage_runtime (subj))
+	(call fstools.runtime_obj_type_transition_runtime (subj))
+
+	(call http.tcp_connect_port (subj))
+
+	(call ldconfig.exec (subj))
+
+	(call hwdata.read_data (subj))
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+	(call wtmp.read_var_log_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call pcitools.exec (subj))
+
+	(call rpm.append_var_log_files (subj))
+	(call rpm.exec (subj))
+	(call rpm.read_config (subj))
+	(call rpm.read_tmpfs_files (subj))
+	(call rpm.manage_var_cache_files (subj))
+	(call rpm.manage_var_lib_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(call usbutil.exec (subj))
+
+	(call usersubj.read_home_user_files (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj))))
+
+	(optional fpaste_optional_httpd
+		(call httpd.tcp_connect_all_ports (subj)))
+
+	(optional fpaste_optional_journalctl
+		(call journalctl.system_client_subj_type (subj)))
+
+	(optional fpaste_optional_rpmdev
+		(call rpmdev.read_home_user_files (subj)))
+
+	(optional fpaste_optional_sd
+		(call sd.search_config (subj)))
+
+	(optional fpaste_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional fpaste_optional_xserver
+		(call xserver.read_var_log_files (subj))))

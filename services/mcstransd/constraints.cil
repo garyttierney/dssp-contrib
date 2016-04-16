@@ -1,0 +1,18 @@
+(tunableif enable_mls
+	(true
+		(constrain (context (translate))
+		(or (dom h1 h2)
+		(eq t1 mactransd.mls_translate_subj_type_attribute)))
+
+		(constrain (context (contains))
+		(and (dom h1 h2)
+		(domby l1 l2)))))
+
+(tunableif enable_rbacsep
+	(true
+		(constrain (context (contains translate))
+		(or (or (or (eq r1 r2)
+		(eq r1 rbacsep.exempt_role_attribute))
+		(eq r2 rbacsep.exempt_role_attribute))
+		(eq t1 rbacsep.exempt_subj_type_attribute)))))
+

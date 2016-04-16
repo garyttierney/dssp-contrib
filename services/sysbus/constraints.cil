@@ -1,0 +1,14 @@
+(tunableif enable_mls
+	(true
+		(constrain (dbus (send_msg))
+		(or (or (eq l1 l2)
+		(eq t1 sysbus.mls_send_subj_type_attribute))
+		(eq t2 sysbus.mls_recv_subj_type_attribute)))))
+
+(tunableif enable_rbacsep
+	(true
+		(constrain (dbus (acquire_svc send_msg))
+		(or (or (or (eq r1 r2)
+		(eq r1 rbacsep.exempt_role_attribute))
+		(eq r2 rbacsep.exempt_role_attribute))
+		(eq t1 rbacsep.exempt_subj_type_attribute)))))

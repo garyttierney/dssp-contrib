@@ -1,5 +1,31 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in exempt
+	(blockinherit subj.create_keyring_blk)
+	(blockinherit subj.noatsecure_blk)
+	(blockinherit subj.read_state_blk)
+	(blockinherit subj.send_sigchld_blk)
+
+	(macro dontaudit_create_keyring ((type ARG1))
+		(dontaudit ARG1 subj create_key_perms))
+
+	(macro dontaudit_dynamic_subj_type_transition ((type ARG1))
+		(dontaudit ARG1 subj (process (dyntransition))))
+
+	(macro dynamic_subj_type_transition ((type ARG1))
+		(call dynamic_subj_type_transition_pattern (ARG1 subj)))
+
+	(macro dontaudit_manual_subj_type_transition ((type ARG1))
+		(dontaudit ARG1 subj (process (transition))))
+
+	(macro shell_manual_subj_type_transition ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 

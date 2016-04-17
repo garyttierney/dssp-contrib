@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_git
+	(blockinherit git.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(call user.git_home_user_auto_type_transition_subj_type (subj))
+
+	(optional user_git_optional_user_gpg
+		(call user_gpg.auto_subj_type_transition (subj)))
+
+	(optional user_git_optional_user_gedit
+		(call user_gedit.rw_inherited_fifo_files (subj)))
+
+	(optional user_git_optional_user_git_email
+		(call user_git_email.auto_subj_type_transition (subj)))
+
+	(optional user_git_optional_user_ssh_client
+		(call user_ssh_client.auto_subj_type_transition (subj))))

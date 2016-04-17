@@ -1,0 +1,122 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_tpmc
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+(in user_tpl
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+(in user_tpi
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_tpmct
+	(blockinherit tpmct.subj_blk))
+
+(block user_tpmc
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpmc.subj_blk)
+
+	(call user_tpi.sessbus_chat_client_subj_type (subj))
+	(call user_tpl.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_tpmc_optional_user_gcon
+		(call user_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_goad
+		(call user_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_gs
+		(call user_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_optional_user_sessbus
+		(call user_sessbus.daemon (subj tpmc.cmd_file)))
+
+	(optional user_tpmc_optional_user_vino
+		(call user_vino.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpmc_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_tpl
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpl.subj_blk)
+
+	(call user_tpi.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_tpl_optional_user_gcon
+		(call user_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpl_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpl_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpl_optional_user_sessbus
+		(call user_sessbus.daemon (subj tpl.cmd_file)))
+
+	(optional user_tpl_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_tpi
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpi.subj_blk)
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_tpi_optional_user_gcon
+		(call user_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpi_optional_user_gcs
+		(call user_gcs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpi_optional_user_gconsp
+		(call user_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpi_optional_user_goad
+		(call user_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpi_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_tpi_optional_user_sessbus
+		(call user_sessbus.daemon (subj tpi.cmd_file)))
+
+	(optional user_tpi_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

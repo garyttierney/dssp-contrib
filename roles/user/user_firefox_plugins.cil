@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_firefox_plugins
+	(blockinherit firefox_plugins.subj_blk)
+
+	(optional user_firefox_plugins_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

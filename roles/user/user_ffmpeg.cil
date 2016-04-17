@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_ffmpeg
+	(blockinherit ffmpeg.subj_blk)
+
+	(optional user_ffmpeg_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

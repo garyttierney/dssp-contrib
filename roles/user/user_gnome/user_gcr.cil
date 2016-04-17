@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gcrv
+	(blockinherit gcrv.subj_blk))
+
+(block user_gcrp
+	(blockinherit gcrp.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gcrp.tmpfs_user_file))
+
+	(optional user_gcrp_optional_user_sessbus
+		(call user_sessbus.daemon (subj gcrp.cmd_file))))

@@ -1,0 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_pinentry
+	(blockinherit pinentry.subj_blk)
+
+	(optional user_pinentry_optional_user_gpinentry
+		(call user_gpinentry.auto_subj_type_transition (subj)))
+
+	(optional user_pinentry_optional_user_gpg_agent
+		(call user_gpg_agent.stream_connect (subj))))

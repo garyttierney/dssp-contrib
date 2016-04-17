@@ -1,0 +1,59 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_bijiben
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_bijiben
+	(blockinherit bijiben.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		bijiben.tmpfs_user_file))
+	(call user_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(call user_gvfsdmd.client_subj_type (subj))
+
+	(optional user_bijiben_optional_user_evocf
+		(call user_evocf.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_bijiben_optional_user_evosr
+		(call user_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_bijiben_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj)))
+
+	(optional user_bijiben_optional_user_tracker
+		(call user_tracker.client_subj_type (subj))))
+
+(block user_bijibensp
+	(blockinherit bijibensp.subj_blk)
+
+	(call user_bijiben.auto_subj_type_transition (subj))
+
+	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(call user_gnomeapp.spec_common_sp_gnomeapplication (subj
+		bijibensp.cmd_file bijibensp.tmpfs_user_file))
+
+	(optional user_bijibensp_optional_user_dconf
+		(call user_dconf.client_subj_type (subj)))
+
+	(optional user_bijibensp_optional_user_evocf
+		(call user_evocf.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_bijibensp_optional_user_evosr
+		(call user_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_bijibensp_optional_user_goad
+		(call user_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_bijibensp_optional_user_tracker
+		(call user_tracker.client_subj_type (subj))))

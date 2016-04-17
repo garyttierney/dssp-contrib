@@ -1,0 +1,12 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_rp
+	(blockinherit rp.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj)))

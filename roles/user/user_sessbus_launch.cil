@@ -1,0 +1,11 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_sessbus_launch
+	(blockinherit sessbus_launch.subj_blk)
+
+	(optional user_sessbus_launch_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))
+		(call user_sessbus.auto_subj_type_transition (subj))))

@@ -1,0 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_xbindkeys
+	(blockinherit xbindkeys.subj_blk)
+
+	(call user.subj_type (subj))
+
+	(call user.cmd_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj)))

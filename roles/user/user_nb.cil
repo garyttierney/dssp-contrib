@@ -1,0 +1,23 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_nb
+	(blockinherit nb.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_nb_optional_user_firefox
+		(call user_firefox.auto_subj_type_transition (subj)))
+
+	(optional user_nb_optional_user_lynx
+		(call user_lynx.auto_subj_type_transition (subj)))
+
+	(optional user_nb_optional_user_mplayer
+		(call user_mplayer.auto_subj_type_transition (subj)))
+
+	(optional user_nb_optional_user_mutt
+		(call user_mutt.auto_subj_type_transition (subj))))

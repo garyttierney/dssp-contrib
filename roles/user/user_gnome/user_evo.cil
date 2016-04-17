@@ -1,0 +1,116 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_evoaf
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evoaf.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evoaf.role_pattern (ARG1 ARG2 subj))))
+
+(in user_evocf
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evocf.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evocf.role_pattern (ARG1 ARG2 subj))))
+
+(in user_evosr
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call evosr.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call evosr.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_evoaf
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit evoaf.subj_blk)
+
+	(call user_evosr.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_evoaf_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_evoaf_optional_user_sessbus
+		(call user_sessbus.daemon (subj evoaf.cmd_file)))
+
+	(optional
+		user_evoaf_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_evocf
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit evocf.subj_blk)
+
+	(call user_evosr.sessbus_chat_client_subj_type (subj))
+	(call user_evoaf.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_evocf_optional_user_gshcs
+		(call user_gshcs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_evocf_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_evocf_optional_user_gvfsdmd
+		(call user_gvfsdmd.client_subj_type (subj)))
+
+	(optional user_evocf_optional_user_sessbus
+		(call user_sessbus.daemon (subj evocf.cmd_file)))
+
+	(optional
+		user_evocf_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_evosr
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit evosr.subj_blk)
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_evosr_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_evosr_optional_user_gvfsdmd
+		(call user_gvfsdmd.client_subj_type (subj)))
+
+	(optional user_evosr_optional_user_sessbus
+		(call user_sessbus.daemon (subj evosr.cmd_file)))
+
+	(optional
+		user_evosr_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

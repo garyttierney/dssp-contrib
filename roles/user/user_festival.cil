@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_festival
+	(blockinherit festival.subj_blk)
+
+	(optional user_festival_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

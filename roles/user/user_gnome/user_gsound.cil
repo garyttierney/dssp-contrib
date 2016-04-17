@@ -1,0 +1,32 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_gsound
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gsound
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gsound.subj_blk)
+
+	(optional user_gsound_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj)))
+
+	(optional user_gsound_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj)))
+
+	(optional
+		user_gsound_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

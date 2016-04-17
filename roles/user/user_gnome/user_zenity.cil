@@ -1,0 +1,22 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_zenity
+	(blockinherit zenity.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		zenity.tmpfs_user_file))
+	(call user_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_zenity_optional_user_gedit
+		(call user_gedit.rw_inherited_fifo_files (subj)))
+
+	(optional user_zenity_optional_user_gs
+		(call user_gs.forked_subj_type (subj))))

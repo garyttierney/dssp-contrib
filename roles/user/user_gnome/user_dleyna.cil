@@ -1,0 +1,37 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_dleyna
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_dleyna
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit dleyna.subj_blk)
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_dleyna_optional_user_gom
+		(call user_gom.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dleyna_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dleyna_optional_user_sessbus
+		(call user_sessbus.daemon (subj dleyna.cmd_file)))
+
+	(optional
+		user_dleyna_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

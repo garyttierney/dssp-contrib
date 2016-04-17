@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gkbd
+	(blockinherit gkbd.subj_blk)
+
+	(call user_atspird.sessbus_chat_client_subj_type (subj))
+
+	(call user_caribou.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_gkbd_optional_user_gs
+		(call user_gs.forked_subj_type (subj)))
+
+	(optional user_gkbd_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))

@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gcl
+	(blockinherit gcl.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gcl.tmpfs_user_file))
+
+	(optional user_gcl_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj)))
+
+	(optional user_gcl_optional_user_sessbus
+		(call user_sessbus.daemon (subj gcl.cmd_file))))

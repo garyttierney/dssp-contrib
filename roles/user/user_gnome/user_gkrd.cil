@@ -1,0 +1,35 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_gkrd
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gkrd
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gkrd.subj_blk)
+
+	(call user_gs.daemon (subj gkrd.cmd_file))
+
+	(call user_gs.sessbus_chat_client_subj_type (subj))
+
+	(optional user_gkrd_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gkrd_optional_user_sessbus
+		(call user_sessbus.daemon (subj gkrd.cmd_file)))
+
+	(optional user_gkrd_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

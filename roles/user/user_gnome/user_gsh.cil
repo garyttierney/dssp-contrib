@@ -1,0 +1,112 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_gshhs
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+(in user_gshcs
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gsh
+	(blockinherit gsh.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gsh.tmpfs_user_file))
+
+	(call user.subj_type (subj))
+
+	(call user_atspi.provider_subj_type (subj))
+
+	(optional user_gsh_optional_user_firefox
+		(call user_firefox.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_gs
+		(call user_gs.daemon (subj gsh.cmd_file))
+		(call user_gs.sessbus_chat_client_subj_type (subj))
+		(call user_gs.stream_connect (subj)))
+
+	(optional user_gsh_optional_user_gstreamer
+		(call user_gstreamer.client_subj_type (subj)))
+
+	(optional user_gsh_optional_user_gvfsdmd
+		(call user_gvfsdmd.client_subj_type (subj)))
+
+	(optional user_gsh_optional_user_gvfsdgoavm
+		(call user_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gsh_optional_user_gvfsdud2
+		(call user_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gsh_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj)))
+
+	(optional user_gsh_optional_user_steam
+		(call user_steam.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_thunderbird
+		(call user_thunderbird.send_sigkill (subj)))
+
+	(optional user_gsh_optional_user_sessbus
+		(call user_sessbus.service_subj_type (subj)))
+
+	(optional user_gsh_optional_user_xwayland
+		(call user_xwayland.auto_subj_type_transition (subj))))
+
+(block user_gshhs
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gshhs.subj_blk)
+
+	(call user_gsh.sessbus_chat_client_subj_type (subj))
+
+	(optional user_gshhs_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gshhs_optional_user_sessbus
+		(call user_sessbus.daemon (subj gshhs.cmd_file)))
+
+	(optional
+		user_gshhs_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_gshcs
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gshcs.subj_blk)
+
+	(call user_gsh.sessbus_chat_client_subj_type (subj))
+
+	(call user_dconf.client_subj_type (subj))
+
+	(optional user_gshcs_optional_user_evosr
+		(call user_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gshcs_optional_user_gs
+		(call user_sessbus.daemon (subj gshcs.cmd_file)))
+
+	(optional user_gshcs_optional_user_gvfs
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional
+		user_gshcs_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_gshep
+	(blockinherit gshep.subj_blk))

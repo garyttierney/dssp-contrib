@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_alsautil
+	(blockinherit alsautil.subj_blk)
+
+	(optional user_alsautil_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_libnotify
+	(blockinherit libnotify.subj_blk)
+
+	(optional user_libnotify_optional_user_dunst
+		(call user_dunst.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_libnotify_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_libnotify_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj)))
+
+	(optional user_libnotify_optional_user_sessbus_launch
+		(call user_sessbus_launch.auto_subj_type_transition (subj))))

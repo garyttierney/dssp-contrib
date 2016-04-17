@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_espeak
+	(blockinherit espeak.subj_blk)
+
+	(optional user_espeak_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

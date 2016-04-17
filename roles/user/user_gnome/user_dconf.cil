@@ -1,0 +1,74 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_dconfs
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call dconfs.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call dconfs.role_pattern (ARG1 ARG2 subj))))
+
+(in user_dconf
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call dconf.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call dconf.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_dconfs
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit dconfs.subj_blk)
+
+	(optional user_dconfs_optional_user_atspi_sessbus_launch
+		(call user_atspi_sessbus_launch.sessbus_chat_client_subj_type
+			(subj)))
+
+	(optional user_dconfs_optional_user_evosr
+		(call user_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dconfs_optional_user_gs
+		(call user_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dconfs_optional_user_gsd
+		(call user_gsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dconfs_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dconfs_optional_user_gts
+		(call user_gts.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_dconfs_optional_user_sessbus
+		(call user_sessbus.daemon (subj dconfs.cmd_file)))
+
+	(optional
+		user_dconfs_sessbus_chat_client_subj_type_optional_user_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block user_dconf
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit dconf.subj_blk)
+
+	(call user_dconfs.sessbus_chat_client_subj_type
+		(client_subj_type_attribute))
+
+	(call dconf.client_subj_type (client_subj_type_attribute)))

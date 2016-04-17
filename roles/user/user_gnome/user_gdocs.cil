@@ -1,0 +1,54 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in user_gdocs
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gdocs.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gdocs.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_gdocs
+	(blockinherit gdocs.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		gdocs.tmpfs_user_file))
+	(call user_gnomeapp.print_subj_type (subj))
+
+	(call user_gvfsdmd.client_subj_type (subj))
+
+	(optional user_gdocs_optional_user_evince
+		(call user_evince.auto_subj_type_transition (subj))
+		(call user_evincep.auto_subj_type_transition (subj))
+		(call user_evincet.auto_subj_type_transition (subj)))
+
+	(optional user_gdocs_optional_user_gcs
+		(call user_gcs.auto_subj_type_transition (subj)))
+
+	(optional user_gdocs_optional_user_gs
+		(call user_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_trackerm
+		(call user_trackerm.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_tracker
+		(call user_tracker.client_subj_type (subj)))
+
+	(optional user_gdocs_optional_user_sessbus
+		(call user_sessbus.daemon (subj gdocs.cmd_file)))
+
+	(optional user_gdocs_optional_user_webkitwp
+		(call user_webkitwp.auto_subj_type_transition (subj))
+		(call user_webkitwp.sessbus_chat_client_subj_type (subj))))

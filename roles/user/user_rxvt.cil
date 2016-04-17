@@ -1,0 +1,32 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_rxvt
+	(blockinherit rxvt.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_rxvt_optional_user_screen
+		(call user_screen.auto_subj_type_transition (subj))))
+
+(block user_rxvtc
+	(blockinherit rxvtc.subj_blk)
+
+	(call stream_connect_pattern (subj rxvt.tmpfs_user_file
+		rxvt.tmpfs_user_file user_rxvtd.subj)))
+
+(block user_rxvtd
+	(blockinherit rxvtd.subj_blk)
+
+	(call user.cmd_auto_subj_type_transition (subj))
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(call user.home_cmd_auto_subj_type_transition (subj))
+
+	(optional user_rxvt_optional_user_screen
+		(call user_screen.auto_subj_type_transition (subj))))

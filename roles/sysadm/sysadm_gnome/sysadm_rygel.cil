@@ -1,0 +1,46 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_rygel
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_rygel
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit rygel.subj_blk)
+
+	(call sysadm_dconf.client_subj_type (subj))
+
+	(optional sysadm_rygel_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj)))
+
+	(optional sysadm_rygel_optional_sysadm_gstreamer
+		(call sysadm_gstreamer.client_subj_type (subj)))
+
+	(optional sysadm_rygel_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_rygel_optional_sysadm_gvfsdud2
+		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_rygel_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj rygel.cmd_file)))
+
+	(optional
+		sysadm_rygel_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block sysadm_rygelp
+	(blockinherit rygelp.subj_blk))

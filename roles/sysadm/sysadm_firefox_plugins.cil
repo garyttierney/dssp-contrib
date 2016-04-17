@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_firefox_plugins
+	(blockinherit firefox_plugins.subj_blk)
+
+	(optional sysadm_firefox_plugins_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))

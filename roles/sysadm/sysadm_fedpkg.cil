@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_fedpkg
+	(blockinherit fedpkg.subj_blk)
+
+	(optional sysadm_fedpkg_optional_sysadm_git
+		(call sysadm_git.auto_subj_type_transition (subj))))

@@ -1,0 +1,32 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_rxvt
+	(blockinherit rxvt.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_rxvt_optional_sysadm_screen
+		(call sysadm_screen.auto_subj_type_transition (subj))))
+
+(block sysadm_rxvtc
+	(blockinherit rxvtc.subj_blk)
+
+	(call stream_connect_pattern (subj rxvt.tmpfs_user_file
+		rxvt.tmpfs_user_file sysadm_rxvtd.subj)))
+
+(block sysadm_rxvtd
+	(blockinherit rxvtd.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_rxvt_optional_sysadm_screen
+		(call sysadm_screen.auto_subj_type_transition (subj))))

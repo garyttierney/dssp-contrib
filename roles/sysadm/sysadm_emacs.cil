@@ -1,0 +1,37 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_emacs
+	(blockinherit emacs.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_emacs_optional_sysadm_dbus_send
+		(call sysadm_dbus_send.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_emacsclient
+		(call sysadm_emacsclient.rw_inherited_unix_stream_sockets
+			(subj)))
+
+	(optional sysadm_emacs_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_git
+		(call sysadm_git.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_gpg
+		(call sysadm_gpg.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_lynx
+		(call sysadm_lynx.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_mutt
+		(call sysadm_mutt.auto_subj_type_transition (subj)))
+
+	(optional sysadm_emacs_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

@@ -1,0 +1,4250 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(tunableif enable_rbacsep
+	(true
+		(context root_home_user (sysadm.id sysadm.role
+			home_user.home_user_file (systemlow systemlow)))
+		(context root_home_cache (sysadm.id sysadm.role
+			home_cache.home_cache_file (systemlow systemlow)))
+		(context root_home_config (sysadm.id sysadm.role
+			home_config.home_config_file (systemlow systemlow)))
+		(context root_home_data (sysadm.id sysadm.role
+			home_data.home_data_file (systemlow systemlow)))
+		(context root_home_cmd (sysadm.id sysadm.role
+			home_cmd.home_user_file (systemlow systemlow)))
+		(context root_home_cert (sysadm.id sysadm.role
+			home_cert.home_user_file (systemlow systemlow)))
+		(context root_home_fonts_cache (sysadm.id sysadm.role
+			home_fonts.home_cache_file (systemlow systemlow)))
+		(context root_home_fonts_config (sysadm.id sysadm.role
+			home_fonts.home_config_file (systemlow systemlow)))
+		(context root_home_fonts_data (sysadm.id sysadm.role
+			home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_history (sysadm.id sysadm.role
+			home_history.home_user_file (systemlow systemlow)))
+		(context root_home_terminfo_data (sysadm.id sysadm.role
+			home_terminfo.home_data_file (systemlow systemlow))))
+	(false
+		(context root_home_user (sysadm.id object_r
+			home_user.home_user_file (systemlow systemlow)))
+		(context root_home_cache (sysadm.id object_r
+			home_cache.home_cache_file (systemlow systemlow)))
+		(context root_home_config (sysadm.id object_r
+			home_config.home_config_file (systemlow systemlow)))
+		(context root_home_data (sysadm.id object_r
+			home_data.home_data_file (systemlow systemlow)))
+		(context root_home_cmd (sysadm.id object_r
+			home_cmd.home_user_file (systemlow systemlow)))
+		(context root_home_cert (sysadm.id object_r
+			home_cert.home_user_file (systemlow systemlow)))
+		(context root_home_fonts_cache (sysadm.id object_r
+			home_fonts.home_cache_file (systemlow systemlow)))
+		(context root_home_fonts_config (sysadm.id object_r
+			home_fonts.home_config_file (systemlow systemlow)))
+		(context root_home_fonts_data (sysadm.id object_r
+			home_fonts.home_data_file (systemlow systemlow)))
+		(context root_home_history (sysadm.id object_r
+			home_history.home_user_file (systemlow systemlow)))
+		(context root_home_terminfo_data (sysadm.id object_r
+			home_terminfo.home_data_file (systemlow systemlow)))))
+
+(filecon "/root/.*" any root_home_user)
+(filecon "/root/\.cache(/.*)?" any root_home_cache)
+(filecon "/root/\.config(/.*)?" any root_home_config)
+(filecon "/root/\.local(/.*)?" any root_home_data)
+(filecon "/root/bin(/.*)?" any root_home_cmd)
+(filecon "/root/\.local/bin(/.*)?" any root_home_cmd)
+(filecon "/root/\.pki(/.*)?" any root_home_cert)
+(filecon "/root/\.fontconfig(/.*)?" any root_home_fonts_cache)
+(filecon "/root/\.cache/fontconfig(/.*)?" any root_home_fonts_cache)
+(filecon "/root/\.fonts\.conf" file root_home_fonts_config)
+(filecon "/root/\.fonts\.conf\.d(/.*)?" any root_home_fonts_config)
+(filecon "/root/\.config/fontconfig(/.*)?" any root_home_fonts_config)
+(filecon "/root/\.fonts(/.*)?" any root_home_fonts_data)
+(filecon "/root/\.local/share/fonts(/.*)?" any root_home_fonts_data)
+(filecon "/root/\.bash_history" file root_home_history)
+(filecon "/root/\.terminfo" file root_home_terminfo_data)
+(filecon "/root/\.terminfo(/.*)?" any root_home_terminfo_data)
+
+(optional sysadm_awesome_home_optional_awesome
+	(tunableif enable_rbacsep
+		(true
+			(context root_awesome_home_cache (sysadm.id
+				sysadm.role awesome.home_cache_file
+					(systemlow systemlow)))
+			(context root_awesome_home_config (sysadm.id
+				sysadm.role awesome.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_awesome_home_cache (sysadm.id object_r
+				awesome.home_cache_file (systemlow
+					systemlow)))
+			(context root_awesome_home_config (sysadm.id object_r
+				awesome.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/awesome(/.*)?" any root_awesome_home_cache)
+	(filecon "/root/\.config/awesome(/.*)?" any root_awesome_home_config))
+
+(optional sysadm_bijiben_home_optional_bijiben
+	(tunableif enable_rbacsep
+		(true
+			(context root_bijiben_home_cache (sysadm.id sysadm.role
+				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijibensp_home_cache (sysadm.id
+				sysadm.role bijibensp.home_cache_file
+					(systemlow systemlow)))
+			(context root_bijiben_home_data (sysadm.id sysadm.role
+				bijiben.home_data_file (systemlow systemlow))))
+		(false
+			(context root_bijiben_home_cache (sysadm.id object_r
+				bijiben.home_cache_file (systemlow systemlow)))
+			(context root_bijibensp_home_cache (sysadm.id object_r
+				bijibensp.home_cache_file (systemlow
+					systemlow)))
+			(context root_bijiben_home_data (sysadm.id object_r
+				bijiben.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/bijiben(/.*)?" any root_bijiben_home_cache)
+	(filecon "/root/\.cache/bijiben-shell-search-provider(/.*)?" any
+		root_bijibensp_home_cache)
+	(filecon "/root/\.local/share/bijiben(/.*)?" any
+		root_bijiben_home_data))
+
+(optional sysadm_champlain_home_optional_champlain
+	(tunableif enable_rbacsep
+		(true
+			(context root_champlain_home_cache (sysadm.id
+				sysadm.role champlain.home_cache_file
+					(systemlow systemlow))))
+		(false
+			(context root_champlain_home_cache (sysadm.id object_r
+				champlain.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/champlain(/.*)?" any
+		root_champlain_home_cache))
+
+(optional sysadm_colord_home_optional_colord
+	(tunableif enable_rbacsep
+		(true
+			(context root_colord_home (sysadm.id sysadm.role
+				colormgr.home_data_file (systemlow
+					systemlow))))
+		(false
+			(context root_colord_home (sysadm.id object_r
+				colormgr.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/icc(/.*)?" any root_colord_home))
+
+(optional sysadm_corebird_home_optional_corebird
+	(tunableif enable_rbacsep
+		(true
+			(context root_corebird_home_cache (sysadm.id
+				sysadm.role corebird.home_cache_file
+					(systemlow systemlow)))
+			(context root_corebird_home_config (sysadm.id
+				sysadm.role corebird.home_config_file
+					(systemlow systemlow)))
+			(context root_corebird_home_data (sysadm.id
+				sysadm.role corebird.home_data_file (systemlow
+					systemlow))))
+		(false
+			(context root_corebird_home_cache (sysadm.id object_r
+				corebird.home_cache_file (systemlow
+					systemlow)))
+			(context root_corebird_home_config (sysadm.id object_r
+				corebird.home_config_file (systemlow
+					systemlow)))
+			(context root_corebird_home_data (sysadm.id object_r
+				corebird.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/corebird(/.*)?" any root_corebird_home_cache)
+	(filecon "/root/\.config/corebird(/.*)?" any root_corebird_home_config)
+	(filecon "/root/\.local/share/corebird(/.*)?" any
+		root_corebird_home_data))
+
+(optional sysadm_curl_home_optional_curl
+	(tunableif enable_rbacsep
+		(true
+			(context root_curl_home (sysadm.id sysadm.role
+				curl.home_user_file (systemlow systemlow))))
+		(false
+			(context root_curl_home (sysadm.id object_r
+				curl.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.wget-hsts" file root_curl_home)
+	(filecon "/root/\.wgetrc" file root_curl_home)
+	(filecon "/root/\.curlrc" file root_curl_home))
+
+(optional sysadm_bti_home_optional_bti
+	(tunableif enable_rbacsep
+		(true
+			(context root_bti_home (sysadm.id sysadm.role
+				bti.home_user_file (systemlow systemlow))))
+		(false
+			(context root_bti_home (sysadm.id object_r
+				bti.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.bti" file root_bti_home)
+	(filecon "/root/\.bti\.log.*" file root_bti_home))
+
+(optional sysadm_dconf_home_optional_dconf
+	(tunableif enable_rbacsep
+		(true
+			(context root_dconf_home_config (sysadm.id sysadm.role
+				dconf.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dconf_home_config (sysadm.id object_r
+				dconf.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/dconf(/.*)?" any root_dconf_home_config))
+
+(optional sysadm_dirmngr_home_optional_dirmgr
+	(tunableif enable_rbacsep
+		(true
+			(context root_dirmngr_home (sysadm.id sysadm.role
+				dirmngr.home_user_file (systemlow systemlow))))
+		(false
+			(context root_dirmngr_home (sysadm.id object_r
+				dirmngr.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.gnupg/crls\.d(/.*)?" any root_dirmngr_home)
+	(filecon "/root/\.gnupg/dirmngr-cache\.d(/.*)?" any root_dirmngr_home)
+	(filecon "/root/\.gnupg/dirmngr\.conf" file root_dirmngr_home)
+	(filecon "/root/\.gnupg/S\.dirmngr" socket root_dirmngr_home))
+
+(optional sysadm_dleyna_home_optional_dleyna
+	(tunableif enable_rbacsep
+		(true
+			(context root_dleyna_home_config (sysadm.id
+				sysadm.role dleyna.home_config_file (systemlow
+					systemlow))))
+		(false
+			(context root_dleyna_home_config (sysadm.id object_r
+				dleyna.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/dleyna-server-service.conf" file
+		root_dleyna_home_config))
+
+(optional sysadm_dleynar_home_optional_dleynar
+	(tunableif enable_rbacsep
+		(true
+			(context root_dleynar_home_config (sysadm.id
+				sysadm.role dleynar.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_dleynar_home_config (sysadm.id object_r
+				dleynar.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/dleyna-renderer-service.conf" file
+		root_dleynar_home_config))
+
+
+(optional sysadm_dmenu_home_optional_dmenu
+	(tunableif enable_rbacsep
+		(true
+			(context root_dmenu_home_cache (sysadm.id sysadm.role
+				dmenu.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_dmenu_home_cache (sysadm.id object_r
+				dmenu.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/dmenu_run" file root_dmenu_home_cache))
+
+(optional sysadm_dunst_home_optional_dunst
+	(tunableif enable_rbacsep
+		(true
+			(context root_dunst_home_config (sysadm.id sysadm.role
+				dunst.home_config_file (systemlow systemlow))))
+		(false
+			(context root_dunst_home_config (sysadm.id object_r
+				dunst.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/dunst(/.*)?" any root_dunst_home_config))
+
+(optional sysadm_emacs_home_optional_emacs
+	(tunableif enable_rbacsep
+		(true
+			(context root_emacs_home (sysadm.id sysadm.role
+				emacs.home_user_file (systemlow systemlow))))
+		(false
+			(context root_emacs_home (sysadm.id object_r
+				emacs.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.authinfo" file root_emacs_home)
+	(filecon "/root/\.emacs" file root_emacs_home)
+	(filecon "/root/\.emacs\.el" file root_emacs_home)
+	(filecon "/root/\.gnus" file root_emacs_home)
+	(filecon "/root/\.newsrc" file root_emacs_home)
+	(filecon "/root/\.newsrc\.eld" file root_emacs_home)
+	(filecon "/root/\.profile" file root_emacs_home)
+	(filecon "/root/\.emacs\.d(/.*)?" any root_emacs_home))
+
+(optional sysadm_enchant_home_optional_enchant
+	(tunableif enable_rbacsep
+		(true
+			(context root_enchant_home_config (sysadm.id
+				sysadm.role enchant.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_enchant_home_config (sysadm.id object_r
+				enchant.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/enchant(/.*)?" any root_enchant_home_config))
+
+(optional sysadm_eog_home_optional_eog
+	(tunableif enable_rbacsep
+		(true
+			(context root_eog_home_config (sysadm.id sysadm.role
+				eog.home_config_file (systemlow systemlow)))
+			(context root_eog_home_data (sysadm.id sysadm.role
+				eog.home_data_file (systemlow systemlow))))
+		(false
+			(context root_eog_home_config (sysadm.id object_r
+				eog.home_config_file (systemlow systemlow)))
+			(context root_eog_home_data (sysadm.id object_r
+				eog.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/eog(/.*)?" any root_eog_home_config)
+	(filecon "/root/\.local/share/eog-wallpaper\.png" file
+		root_eog_home_data))
+
+(optional sysadm_evince_home_optional_evince
+	(tunableif enable_rbacsep
+		(true
+			(context root_evince_home_config (sysadm.id
+				sysadm.role evince.home_config_file (systemlow
+					systemlow))))
+		(false
+			(context root_evince_home_config (sysadm.id object_r
+				evince.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/evince(/.*)?" any root_evince_home_config))
+
+(optional sysadm_evo_home_optional_evo
+	(tunableif enable_rbacsep
+		(true
+			(context root_evo_home_cache (sysadm.id sysadm.role
+				evo.home_cache_file (systemlow systemlow)))
+			(context root_evo_home_config (sysadm.id sysadm.role
+				evo.home_config_file (systemlow systemlow)))
+			(context root_evo_home_data (sysadm.id sysadm.role
+				evo.home_data_file (systemlow systemlow))))
+		(false
+			(context root_evo_home_cache (sysadm.id object_r
+				evo.home_cache_file (systemlow systemlow)))
+			(context root_evo_home_config (sysadm.id object_r
+				evo.home_config_file (systemlow systemlow)))
+			(context root_evo_home_data (sysadm.id object_r
+				evo.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/evolution(/.*)?" any root_evo_home_cache)
+	(filecon "/root/\.config/evolution(/.*)?" any root_evo_home_config)
+	(filecon "/root/\.local/share/evolution(/.*)?" any root_evo_home_data))
+
+(optional sysadm_feh_home_optional_feh
+	(tunableif enable_rbacsep
+		(true
+			(context root_feh_home (sysadm.id sysadm.role
+				feh.home_user_file (systemlow systemlow))))
+		(false
+			(context root_feh_home (sysadm.id object_r
+				feh.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.fehbg" file root_feh_home))
+
+(optional sysadm_festival_home_optional_festival
+	(tunableif enable_rbacsep
+		(true
+			(context root_festival_home (sysadm.id sysadm.role
+				festival.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_festival_home (sysadm.id object_r
+				festival.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.festival_history" file root_festival_home)
+	(filecon "/root/\.festivalrc" file root_festival_home))
+
+(optional sysadm_mozilla_home_optional_mozilla
+	(tunableif enable_rbacsep
+		(true
+			(context root_mozilla_home_cache (sysadm.id
+				sysadm.role mozilla.home_cache_file (systemlow
+					systemlow)))
+			(context root_mozilla_home (sysadm.id sysadm.role
+				mozilla.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mozilla_home_cache (sysadm.id object_r
+				mozilla.home_cache_file (systemlow systemlow)))
+			(context root_mozilla_home (sysadm.id object_r
+				mozilla.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.mozilla(/.*)?" any root_mozilla_home)
+	(filecon "/root/\.cache/mozilla(/.*)?" any root_mozilla_home_cache))
+
+(optional sysadm_folks_home_optional_folks
+	(tunableif enable_rbacsep
+		(true
+			(context root_folks_home_cache (sysadm.id sysadm.role
+				folks.home_cache_file (systemlow systemlow)))
+			(context root_folks_home_data (sysadm.id sysadm.role
+				folks.home_data_file (systemlow systemlow))))
+		(false
+			(context root_folks_home_cache (sysadm.id object_r
+				folks.home_cache_file (systemlow systemlow)))
+			(context root_folks_home_data (sysadm.id object_r
+				folks.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/folks(/.*)?" any root_folks_home_cache)
+	(filecon "/root/\.local/share/folks(/.*)?" any root_folks_home_data))
+
+(optional sysadm_fop_home_optional_fop
+	(tunableif enable_rbacsep
+		(true
+			(context root_fop_home (sysadm.id sysadm.role
+				fop.home_user_file (systemlow systemlow))))
+		(false
+			(context root_fop_home (sysadm.id object_r
+				fop.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.fop(/.*)?" any root_fop_home))
+
+(optional sysadm_gcalc_home_optional_gcalc
+	(tunableif enable_rbacsep
+		(true
+			(context root_gcalc_home_cache (sysadm.id sysadm.role
+				gcalc.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gcalc_home_cache (sysadm.id object_r
+				gcalc.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-calculator(/.*)?" any
+		root_gcalc_home_cache))
+
+(optional sysadm_gconf_home_optional_gconf
+	(tunableif enable_rbacsep
+		(true
+			(context root_gconf_home_config (sysadm.id sysadm.role
+				gconf.home_config_file (systemlow systemlow)))
+			(context root_gsettingsdc_home_data (sysadm.id
+				sysadm.role gsettingsdc.home_data_file
+					(systemlow systemlow))))
+		(false
+			(context root_gconf_home_config (sysadm.id object_r
+				gconf.home_config_file (systemlow systemlow)))
+			(context root_gsettingsdc_home_data (sysadm.id
+				object_r gsettingsdc.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/gconf(/.*)?" any root_gconf_home_config)
+	(filecon "/root/\.local/share/gsettings-data-convert" file
+		root_gsettingsdc_home_data))
+
+(optional sysadm_gcs_home_optional_gcs
+	(tunableif enable_rbacsep
+		(true
+			(context root_gcs_home_cache (sysadm.id sysadm.role
+				gcs.home_cache_file (systemlow systemlow)))
+			(context root_gcs_home_config (sysadm.id sysadm.role
+				gcs.home_config_file (systemlow systemlow)))
+			(context root_gcs_home_data (sysadm.id sysadm.role
+				gcs.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gcs_home_cache (sysadm.id object_r
+				gcs.home_cache_file (systemlow systemlow)))
+			(context root_gcs_home_config (sysadm.id object_r
+				gcs.home_config_file (systemlow systemlow)))
+			(context root_gcs_home_data (sysadm.id object_r
+				gcs.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-control-center(/.*)?" any
+		root_gcs_home_cache)
+	(filecon "/root/\.config/gnome-control-center(/.*)?" any
+		root_gcs_home_config)
+	(filecon "/root/\.config/telepathy-account-widgets(/.*)?" any
+		root_gcs_home_config)
+	(filecon "/root/\.local/share/sounds(/.*)?" any root_gcs_home_data))
+
+(optional sysadm_gdocs_home_optional_gdocs
+	(tunableif enable_rbacsep
+		(true
+			(context root_gdocs_home_cache (sysadm.id sysadm.role
+				gdocs.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gdocs_home_cache (sysadm.id object_r
+				gdocs.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-documents(/.*)?" any
+		root_gdocs_home_cache))
+
+(optional sysadm_gedit_home_optional_gedit
+	(tunableif enable_rbacsep
+		(true
+			(context root_gedit_home_config (sysadm.id sysadm.role
+				gedit.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gedit_home_config (sysadm.id object_r
+				gedit.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/gedit(/.*)?" any root_gedit_home_config)
+	(filecon "/root/\.config/gedit/tools(/.*)?" any root_home_cmd))
+
+(optional sysadm_gegl_home_optional_gegl
+	(tunableif enable_rbacsep
+		(true
+			(context root_gegl_home_cache (sysadm.id sysadm.role
+				gegl.home_cache_file (systemlow systemlow)))
+			(context root_gegl_home_data (sysadm.id sysadm.role
+				gegl.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gegl_home_cache (sysadm.id object_r
+				gegl.home_cache_file (systemlow systemlow)))
+			(context root_gegl_home_data (sysadm.id object_r
+				gegl.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gegl-.*(/.*)?" any root_gegl_home_cache)
+	(filecon "/root/\.local/share/gegl-.*(/.*)?" any root_gegl_home_data))
+
+(optional sysadm_gitg_home_optional_gitg
+	(tunableif enable_rbacsep
+		(true
+			(context root_gitg_home_cache (sysadm.id sysadm.role
+				gitg.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gitg_home_cache (sysadm.id object_r
+				gitg.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gitg(/.*)?" any root_gitg_home_cache))
+
+(optional sysadm_glib_home_optional_glib
+	(tunableif enable_rbacsep
+		(true
+			(context root_glib_home_cache (sysadm.id sysadm.role
+				glib.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_glib_home_cache (sysadm.id object_r
+				glib.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/geocode-glib(/.*)?" any root_glib_home_cache))
+
+(optional sysadm_goa_home_optional_goa
+	(tunableif enable_rbacsep
+		(true
+			(context root_goa_home_cache (sysadm.id sysadm.role
+				goa.home_cache_file (systemlow systemlow)))
+			(context root_goa_home_config (sysadm.id sysadm.role
+				goa.home_config_file (systemlow systemlow))))
+		(false
+			(context root_goa_home_cache (sysadm.id object_r
+				goa.home_cache_file (systemlow systemlow)))
+			(context root_goa_home_config (sysadm.id object_r
+				goa.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/goa-1\.0(/.*)?" any root_goa_home_cache)
+	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
+
+(optional sysadm_gph_home_optional_gph
+	(tunableif enable_rbacsep
+		(true
+			(context root_gph_home_cache (sysadm.id sysadm.role
+				gph.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gph_home_cache (sysadm.id object_r
+				gph.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-photos(/.*)?" any root_gph_home_cache))
+
+(optional sysadm_grilo_home_optional_grilo
+	(tunableif enable_rbacsep
+		(true
+			(context root_grilo_home_data (sysadm.id sysadm.role
+				grilo.home_data_file (systemlow systemlow))))
+		(false
+			(context root_grilo_home_data (sysadm.id object_r
+				grilo.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/grilo-plugins(/.*)?" any
+		root_grilo_home_data))
+
+(optional sysadm_gsw_home_optional_gsw
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsw_home_cache (sysadm.id sysadm.role
+				gsw.home_cache_file (systemlow systemlow)))
+			(context root_gsw_home_data (sysadm.id sysadm.role
+				gsw.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsw_home_cache (sysadm.id object_r
+				gsw.home_cache_file (systemlow systemlow)))
+			(context root_gsw_home_data (sysadm.id object_r
+				gsw.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gnome-software(/.*)?" any root_gsw_home_cache)
+	(filecon "/root/\.local/share/gnome-software(/.*)?" any
+		root_gsw_home_data))
+
+(optional sysadm_gtk_home_optional_gtk
+	(tunableif enable_rbacsep
+		(true
+			(context root_gtk_home_config (sysadm.id sysadm.role
+				gtk.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gtk_home_config (sysadm.id object_r
+				gtk.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/gtk-1\.0(/.*)?" any root_gtk_home_config)
+	(filecon "/root/\.config/gtk-2\.0(/.*)?" any root_gtk_home_config)
+	(filecon "/root/\.config/gtk-3\.0(/.*)?" any root_gtk_home_config))
+
+(optional sysadm_gdm_home_optional_gdm
+	(tunableif enable_rbacsep
+		(true
+			(context root_gdm_home_cache (sysadm.id sysadm.role
+				gdm.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_gdm_home_cache (sysadm.id object_r
+				gdm.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/gdm(/.*)?" any root_gdm_home_cache))
+
+(optional sysadm_git_home_optional_git
+	(tunableif enable_rbacsep
+		(true
+			(context root_git_home (sysadm.id sysadm.role
+				git.home_user_file (systemlow systemlow)))
+			(context root_git_home_config (sysadm.id sysadm.role
+				git.home_config_file (systemlow systemlow))))
+		(false
+			(context root_git_home (sysadm.id object_r
+				git.home_user_file (systemlow systemlow)))
+			(context root_git_home_config (sysadm.id object_r
+				git.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/.*/\.git(/.*)?" any root_git_home)
+	(filecon "/root/\.config/git(/.*)?" any root_git_home_config))
+
+(optional sysadm_gkr_home_optional_gkr
+	(tunableif enable_rbacsep
+		(true
+			(context root_gkr_home_data (sysadm.id sysadm.role
+				gkrd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gkr_home_data (sysadm.id object_r
+				gkrd.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/keyrings(/.*)?" any root_gkr_home_data))
+
+(optional sysadm_gkr_home_optional_gmusic
+	(tunableif enable_rbacsep
+		(true
+			(context root_gmusic_home_data (sysadm.id sysadm.role
+				gmusic.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gmusic_home_data (sysadm.id object_r
+				gmusic.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-music(/.*)?" any
+		root_gmusic_home_data))
+
+(optional sysadm_gpg_home_optional_gpg
+	(tunableif enable_rbacsep
+		(true
+			(context root_gpg_home (sysadm.id sysadm.role
+				gpg.home_user_file (systemlow systemlow))))
+		(false
+			(context root_gpg_home (sysadm.id object_r
+				gpg.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gnupg(/.*)?" any root_gpg_home))
+
+(optional sysadm_gpg_agent_home_optional_gpg_agent
+	(tunableif enable_rbacsep
+		(true
+			(context root_gpg_agent_home (sysadm.id sysadm.role
+				gpg_agent.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_gpg_agent_home (sysadm.id object_r
+				gpg_agent.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.gnupg/gpg-agent\.conf" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/gpg-agent\.log" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/S\.gpg-agent" socket root_gpg_agent_home)
+	(filecon "/root/\.gnupg/S\.gpg-agent\.ssh" socket root_gpg_agent_home)
+	(filecon "/root/\.gnupg/sshcontrol" file root_gpg_agent_home)
+	(filecon "/root/\.gnupg/private-keys-v1\.d(/.*)?" any
+		root_gpg_agent_home))
+
+(optional sysadm_gs_home_optional_gs_home
+	(tunableif enable_rbacsep
+		(true
+			(context root_gs_home (sysadm.id sysadm.role
+				gs.home_user_file (systemlow systemlow)))
+			(context root_gs_home_config (sysadm.id sysadm.role
+				gs.home_config_file (systemlow systemlow))))
+		(false
+			(context root_gs_home (sysadm.id object_r
+				gs.home_user_file (systemlow systemlow)))
+			(context root_gs_home_config (sysadm.id object_r
+				gs.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.ICEauthority" file root_gs_home)
+	(filecon "/root/\.ICEauthority-c" file root_gs_home)
+	(filecon "/root/\.config/gnome-session(/.*)?" any root_gs_home_config))
+
+(optional sysadm_gsd_home_optional_gsd
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsd_home_data (sysadm.id sysadm.role
+				gsd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsd_home_data (sysadm.id object_r
+				gsd.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-settings-daemon(/.*)?" any
+		root_gsd_home_data))
+
+(optional sysadm_gsh_home_optional_gsh
+	(tunableif enable_rbacsep
+		(true
+			(context root_gsh_home_data (sysadm.id sysadm.role
+				gsh.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gsh_home_data (sysadm.id object_r
+				gsh.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/gnome-shell(/.*)?" any
+		root_gsh_home_data))
+
+(optional sysadm_gstreamer_home_optional_gstreamer
+	(tunableif enable_rbacsep
+		(true
+			(context root_gstreamer_home_data (sysadm.id
+				sysadm.role gstreamer.home_data_file
+					(systemlow systemlow)))
+			(context root_gstreamer_home_cache (sysadm.id
+				sysadm.role gstreamer.home_cache_file
+					(systemlow systemlow))))
+		(false
+			(context root_gstreamer_home_data (sysadm.id object_r
+				gstreamer.home_data_file (systemlow
+					systemlow)))
+			(context root_gstreamer_home_cache (sysadm.id object_r
+				gstreamer.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/gstreamer-1\.0(/.*)?" any
+		root_gstreamer_home_data)
+	(filecon "/root/\.cache/gstreamer-1\.0(/.*)?" any
+		root_gstreamer_home_cache))
+
+(optional sysadm_gvfsdmd_home_optional_gvfsdmd
+	(tunableif enable_rbacsep
+		(true
+			(context root_gvfsdmd_home_data (sysadm.id sysadm.role
+				gvfsdmd.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gvfsdmd_home_data (sysadm.id object_r
+				gvfsdmd.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/gvfs-metadata(/.*)?" any
+		root_gvfsdmd_home_data))
+
+(optional sysadm_gvid_home_optional_gvid
+	(tunableif enable_rbacsep
+		(true
+			(context root_gvid_home_cache (sysadm.id sysadm.role
+				gvid.home_cache_file (systemlow systemlow)))
+			(context root_gvid_home_config (sysadm.id sysadm.role
+				gvid.home_config_file (systemlow systemlow)))
+			(context root_gvid_home_data (sysadm.id sysadm.role
+				gvid.home_data_file (systemlow systemlow))))
+		(false
+			(context root_gvid_home_cache (sysadm.id object_r
+				gvid.home_cache_file (systemlow systemlow)))
+			(context root_gvid_home_config (sysadm.id object_r
+				gvid.home_config_file (systemlow systemlow)))
+			(context root_gvid_home_data (sysadm.id object_r
+				gvid.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/totem(/.*)?" any root_gvid_home_cache)
+	(filecon "/root/\.cache/totem-.*" file root_gvid_home_cache)
+	(filecon "/root/\.config/totem(/.*)?" any root_gvid_home_config)
+	(filecon "/root/\.local/share/totem(/.*)?" any root_gvid_home_data))
+
+(optional sysadm_i3_home_optional_i3
+	(tunableif enable_rbacsep
+		(true
+			(context root_i3_home_config (sysadm.id sysadm.role
+				i3.home_config_file (systemlow systemlow))))
+		(false
+			(context root_i3_home_config (sysadm.id object_r
+				i3.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/i3(/.*)?" any root_i3_home_config))
+
+(optional sysadm_i3status_home_optional_i3status
+	(tunableif enable_rbacsep
+		(true
+			(context root_i3status_home_config (sysadm.id
+				sysadm.role i3status.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_i3status_home_config (sysadm.id object_r
+				i3status.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/i3status(/.*)?" any
+		root_i3status_home_config))
+
+(optional sysadm_ibus_home_optional_ibus
+	(tunableif enable_rbacsep
+		(true
+			(context root_ibus_home_config (sysadm.id sysadm.role
+				ibus.home_config_file (systemlow systemlow))))
+		(false
+			(context root_ibus_home_config (sysadm.id object_r
+				ibus.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/ibus(/.*)?" any root_ibus_home_config))
+
+(optional sysadm_irssi_home_optional_irssi
+	(tunableif enable_rbacsep
+		(true
+			(context root_irssi_home (sysadm.id sysadm.role
+				irssi.home_user_file (systemlow systemlow))))
+		(false
+			(context root_irssi_home (sysadm.id object_r
+				irssi.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.irssi(/.*)?" any root_irssi_home))
+
+(optional sysadm_java_home_optional_java
+	(tunableif enable_rbacsep
+		(true
+			(context root_java_home (sysadm.id sysadm.role
+				java.home_user_file (systemlow systemlow))))
+		(false
+			(context root_java_home (sysadm.id object_r
+				java.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.java(/.*)?" any root_java_home))
+
+(optional sysadm_letsencrypt_home_optional_letsencrypt
+	(tunableif enable_rbacsep
+		(true
+			(context root_letsencrypt_home_config (sysadm.id
+				sysadm.role letsencrypt.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_letsencrypt_home_config (sysadm.id
+				object_r letsencrypt.home_config_file
+					(systemlow systemlow)))))
+
+	(filecon "/root/\.config/letsencrypt(/.*)?" any
+		root_letsencrypt_home_config))
+
+(optional sysadm_libgweather_home_optional_libgweather
+	(tunableif enable_rbacsep
+		(true
+			(context root_libgweather_home_cache (sysadm.id
+				sysadm.role libgweather.home_cache_file
+					(systemlow systemlow))))
+		(false
+			(context root_libgweather_home_cache (sysadm.id
+				object_r libgweather.home_cache_file
+					(systemlow systemlow)))))
+
+	(filecon "/root/\.cache/libgweather(/.*)?" any
+		root_libgweather_home_cache))
+
+(optional sysadm_livestreamer_home_optional_livestreamer
+	(tunableif enable_rbacsep
+		(true
+			(context root_livestreamer_home_cache (sysadm.id
+				sysadm.role livestreamer.home_cache_file
+					(systemlow systemlow)))
+			(context root_livestreamer_home_config (sysadm.id
+				sysadm.role livestreamer.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_livestreamer_home_cache (sysadm.id
+				object_r livestreamer.home_cache_file
+					(systemlow systemlow)))
+			(context root_livestreamer_home_config (sysadm.id
+				object_r livestreamer.home_config_file
+					(systemlow systemlow)))))
+
+	(filecon "/root/\.cache/livestreamer(/.*)?" any
+		root_livestreamer_home_cache)
+	(filecon "/root/\.config/livestreamer(/.*)?" any
+		root_livestreamer_home_config))
+
+(optional sysadm_lynx_home_optional_lynx
+	(tunableif enable_rbacsep
+		(true
+			(context root_lynx_home (sysadm.id sysadm.role
+				lynx.home_user_file (systemlow systemlow))))
+		(false
+			(context root_lynx_home (sysadm.id object_r
+				lynx.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.lynxrc" file root_lynx_home))
+
+(optional sysadm_mariadb_home_optional_mariadb
+	(tunableif enable_rbacsep
+		(true
+			(context root_mariadb_home (sysadm.id sysadm.role
+				mariadb.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mariadb_home (sysadm.id object_r
+				mariadb.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.mysql" file root_mariadb_home)
+	(filecon "/root/\.mysql_history" file root_mariadb_home)
+	(filecon "/root/\.my\.cnf" file root_mariadb_home))
+
+(optional sysadm_mediaart_home_optional_mediaart
+	(tunableif enable_rbacsep
+		(true
+			(context root_mediaart_home_cache (sysadm.id
+				sysadm.role mediaart.home_cache_file
+					(systemlow systemlow))))
+		(false
+			(context root_mediaart_home_cache (sysadm.id object_r
+				mediaart.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/media-art(/.*)?" any root_mediaart_home_cache))
+
+(optional sysadm_mplayer_home_optional_mplayer
+	(tunableif enable_rbacsep
+		(true
+			(context root_mplayer_home (sysadm.id sysadm.role
+				mplayer.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mplayer_home (sysadm.id object_r
+				mplayer.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.mplayer(/.*)?" any root_mplayer_home))
+
+(optional sysadm_mutt_home_optional_mutt
+	(tunableif enable_rbacsep
+		(true
+			(context root_mutt_home (sysadm.id sysadm.role
+				mutt.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mutt_home (sysadm.id object_r
+				mutt.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.muttrc" file root_mutt_home)
+	(filecon "/root/\.muttrc\..*" file root_mutt_home)
+	(filecon "/root/\.mutt_cache" file root_mutt_home)
+	(filecon "/root/\.mutt_cache\..*" file root_mutt_home)
+	(filecon "/root/\.mutt_certificates" file root_mutt_home))
+
+(optional sysadm_nb_home_optional_nb
+	(tunableif enable_rbacsep
+		(true
+			(context root_nb_home (sysadm.id sysadm.role
+				nb.home_user_file (systemlow systemlow))))
+		(false
+			(context root_nb_home (sysadm.id object_r
+				nb.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.newsbeuter(/.*)?" any root_nb_home))
+
+(optional sysadm_nautilus_home_optional_nautilus
+	(tunableif enable_rbacsep
+		(true
+			(context root_nautilus_home_data (sysadm.id
+				sysadm.role nautilus.home_data_file (systemlow
+					systemlow)))
+			(context root_nautilus_home_config (sysadm.id
+				sysadm.role nautilus.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_nautilus_home_data (sysadm.id object_r
+				nautilus.home_data_file (systemlow systemlow)))
+			(context root_nautilus_home_config (sysadm.id object_r
+				nautilus.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/\.converted-launchers.*" file
+		root_nautilus_home_data)
+	(filecon "/root/\.local/share/nautilus(/.*)?" any
+		root_nautilus_home_data)
+	(filecon "/root/\.config/nautilus(/.*)?" any
+		root_nautilus_home_config))
+
+(optional sysadm_obexd_home_optional_obexd
+	(tunableif enable_rbacsep
+		(true
+			(context root_obexd_home_cache (sysadm.id sysadm.role
+				obexd.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_obexd_home_cache (sysadm.id object_r
+				obexd.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/obexd(/.*)?" any root_obexd_home_cache))
+
+(optional sysadm_openssl_home_optional_openssl
+	(tunableif enable_rbacsep
+		(true
+			(context root_openssl_home (sysadm.id sysadm.role
+				openssl.home_user_file (systemlow systemlow))))
+		(false
+			(context root_openssl_home (sysadm.id object_r
+				openssl.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.rnd" file root_openssl_home))
+
+(optional sysadm_orca_home_optional_orca
+	(tunableif enable_rbacsep
+		(true
+			(context root_orca_home_data (sysadm.id sysadm.role
+				orca.home_data_file (systemlow systemlow))))
+		(false
+			(context root_orca_home_data (sysadm.id object_r
+				orca.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/orca(/.*)?" any
+		root_orca_home_data))
+
+(optional sysadm_pa_home_optional_pa
+	(tunableif enable_rbacsep
+		(true
+			(context root_pa_home (sysadm.id sysadm.role
+				pa.home_user_file (systemlow systemlow)))
+			(context root_pa_home_config (sysadm.id sysadm.role
+				pa.home_config_file (systemlow systemlow))))
+		(false
+			(context root_pa_home (sysadm.id object_r
+				pa.home_user_file (systemlow systemlow)))
+			(context root_pa_home_config (sysadm.id object_r
+				pa.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.esd_auth" file root_pa_home)
+	(filecon "/root/\.pulse-cookie" file root_pa_home)
+	(filecon "/root/\.config/pulse(/.*)?" any root_pa_home_config))
+
+(optional sysadm_pass_home_optional_pass
+	(tunableif enable_rbacsep
+		(true
+			(context root_pass_home (sysadm.id sysadm.role
+				pass.home_user_file (systemlow systemlow))))
+		(false
+			(context root_pass_home (sysadm.id object_r
+				pass.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.password-store(/.*)?" any root_pass_home))
+
+(optional sysadm_pastebinit_home_optional_pastebinit
+	(tunableif enable_rbacsep
+		(true
+			(context root_pastebinit_home (sysadm.id sysadm.role
+				pastebinit.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_pastebinit_home (sysadm.id object_r
+				pastebinit.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.pastebin\.d(/.*)?" any root_pastebinit_home)
+	(filecon "/root/\.pastebinit\.xml" file root_pastebinit_home))
+
+(optional sysadm_phpcli_home_optional_phpcli
+	(tunableif enable_rbacsep
+		(true
+			(context root_phpcli_home (sysadm.id sysadm.role
+				phpcli.home_user_file (systemlow systemlow))))
+		(false
+			(context root_phpcli_home (sysadm.id object_r
+				phpcli.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.php_history" file root_phpcli_home))
+
+(optional sysadm_python_home_optional_python
+	(tunableif enable_rbacsep
+		(true
+			(context root_python_home_data (sysadm.id sysadm.role
+				python.home_data_file (systemlow systemlow))))
+		(false
+			(context root_python_home_data (sysadm.id object_r
+				python.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/lib/python2\.7(/.*)?" any
+		root_python_home_data))
+
+(optional sysadm_rp_home_optional_rp
+	(tunableif enable_rbacsep
+		(true
+			(context root_rp_home (sysadm.id sysadm.role
+				rp.home_user_file (systemlow systemlow))))
+		(false
+			(context root_rp_home (sysadm.id object_r
+				rp.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.ratpoisonrc" file root_rp_home)
+	(filecon "/root/\.ratpoison_history" file root_rp_home))
+
+(optional sysadm_rpmdev_home_optional_rpmdev
+	(tunableif enable_rbacsep
+		(true
+			(context root_rpmdev_home (sysadm.id sysadm.role
+				rpmdev.home_user_file (systemlow systemlow))))
+		(false
+			(context root_rpmdev_home (sysadm.id object_r
+				rpmdev.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.rpmmacros" file root_rpmdev_home))
+
+(optional sysadm_rygel_home_optional_rygel
+	(tunableif enable_rbacsep
+		(true
+			(context root_rygel_home_config (sysadm.id sysadm.role
+				rygel.home_config_file (systemlow systemlow)))
+			(context root_rygel_home_cache (sysadm.id sysadm.role
+				rygel.home_cache_file (systemlow systemlow))))
+		(false
+			(context root_rygel_home_config (sysadm.id object_r
+				rygel.home_config_file (systemlow systemlow)))
+			(context root_rygel_home_cache (sysadm.id object_r
+				rygel.home_cache_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/rygel\.conf" file root_rygel_home_config)
+	(filecon "/root/\.config/Rygel(/.*)?" any root_rygel_home_config)
+	(filecon "/root/\.cache/rygel(/.*)?" any root_rygel_home_cache))
+
+(optional sysadm_rtorrent_home_optional_rtorrent
+	(tunableif enable_rbacsep
+		(true
+			(context root_rtorrent_home (sysadm.id sysadm.role
+				rtorrent.home_user_file (systemlow systemlow)))
+			(context root_rtorrent_home_config (sysadm.id
+				sysadm.role rtorrent.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_rtorrent_home (sysadm.id object_r
+				rtorrent.home_user_file (systemlow systemlow)))
+			(context root_rtorrent_home_config (sysadm.id object_r
+				rtorrent.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.rtorrent(/.*)?" any root_rtorrent_home)
+	(filecon "/root/\.config/rtorrent\.rc" file root_rtorrent_home_config))
+
+(optional sysadm_scdaemon_home_optional_scdaemon
+	(tunableif enable_rbacsep
+		(true
+			(context root_scdaemon_home (sysadm.id sysadm.role
+				scdaemon.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_scdaemon_home (sysadm.id object_r
+				scdaemon.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.gnupg/reader.*\.status" file root_scdaemon_home)
+	(filecon "/root/\.gnupg/scdaemon\.conf" file root_scdaemon_home)
+	(filecon "/root/\.gnupg/S\.scdaemon" socket root_scdaemon_home))
+
+(optional sysadm_screen_home_optional_screen
+	(tunableif enable_rbacsep
+		(true
+			(context root_screen_home (sysadm.id sysadm.role
+				screen.home_user_file (systemlow systemlow))))
+		(false
+			(context root_screen_home (sysadm.id object_r
+				screen.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.screenrc" file root_screen_home))
+
+(optional sysadm_sduser_home_optional_sduser
+	(tunableif enable_rbacsep
+		(true
+			(context root_sduser_home_config (sysadm.id
+				sysadm.role sduser.home_config_file (systemlow
+					systemlow)))
+			(context root_sduser_home_data (sysadm.id sysadm.role
+				sduser.home_data_file (systemlow systemlow))))
+		(false
+			(context root_sduser_home_config (sysadm.id object_r
+				sduser.home_config_file (systemlow systemlow)))
+			(context root_sduser_home_data (sysadm.id object_r
+				sduser.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/systemd(/.*)?" any root_sduser_home_config)
+	(filecon "/root/\.local/share/systemd(/.*)?" any
+		root_sduser_home_data))
+
+(optional sysadm_sessbus_launch_home_optional_sessbus_launch
+	(tunableif enable_rbacsep
+		(true
+			(context root_sessbus_launch_home (sysadm.id
+				sysadm.role sessbus_launch.home_user_file
+					(systemlow systemlow))))
+		(false
+			(context root_sessbus_launch_home (sysadm.id object_r
+				sessbus_launch.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.dbus(/.*)?" any root_sessbus_launch_home))
+
+(optional sysadm_ssh_client_home_optional_ssh_client
+	(tunableif enable_rbacsep
+		(true
+			(context root_ssh_client_home (sysadm.id sysadm.role
+				ssh_client.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_ssh_client_home (sysadm.id object_r
+				ssh_client.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.ssh(/.*)?" any root_ssh_client_home))
+
+(optional sysadm_steam_home_optional_steam
+	(tunableif enable_rbacsep
+		(true
+			(context root_steam_home_config (sysadm.id sysadm.role
+				steam.home_config_file (systemlow systemlow)))
+			(context root_steam_home_data (sysadm.id sysadm.role
+				steam.home_data_file (systemlow systemlow)))
+			(context root_steam_home (sysadm.id sysadm.role
+				steam.home_user_file (systemlow systemlow))))
+		(false
+			(context root_steam_home_config (sysadm.id object_r
+				steam.home_config_file (systemlow systemlow)))
+			(context root_steam_home_data (sysadm.id object_r
+				steam.home_data_file (systemlow systemlow)))
+			(context root_steam_home (sysadm.id object_r
+				steam.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.steam(/.*)?" any root_steam_home)
+	(filecon "/root/\.steampath" symlink root_steam_home)
+	(filecon "/root/\.steampid" symlink root_steam_home)
+	(filecon "/root/\.config/cef_user_data(/.*)?" any
+		root_steam_home_config)
+	(filecon "/root/\.config/unity3d(/.*)?" any root_steam_home_config)
+	(filecon "/root/\.local/share/American\p{Zs}Truck\p{Zs}Simulator(/.*)?"
+		any root_steam_home_data)
+	(filecon "/root/\.local/share/Aspyr(/.*)?" any root_steam_home_data)
+	(filecon "/root/\.local/share/Starbreeze(/.*)?" any
+		root_steam_home_data)
+	(filecon "/root/\.local/share/Steam(/.*)?" any root_steam_home_data))
+
+(optional sysadm_tp_home_optional_tp
+	(tunableif enable_rbacsep
+		(true
+			(context root_tpmc_home_cache (sysadm.id sysadm.role
+				tpmc.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_cache (sysadm.id sysadm.role
+				tpl.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_data (sysadm.id sysadm.role
+				tpl.home_data_file (systemlow systemlow)))
+			(context root_tpmc_home_data (sysadm.id sysadm.role
+				tpmc.home_data_file (systemlow systemlow))))
+		(false
+			(context root_tpmc_home_cache (sysadm.id object_r
+				tpmc.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_cache (sysadm.id object_r
+				tpl.home_cache_file (systemlow systemlow)))
+			(context root_tpl_home_data (sysadm.id object_r
+				tpl.home_data_file (systemlow systemlow)))
+			(context root_tpmc_home_data (sysadm.id object_r
+				tpmc.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.cache/telepathy(/.*)?" any root_tpmc_home_cache)
+	(filecon "/root/\.cache/\.mc_connections.*" file root_tpmc_home_cache)
+	(filecon "/root/\.cache/telepathy/logger(/.*)?" any
+		root_tpl_home_cache)
+	(filecon "/root/\.local/share/TpLogger(/.*)?" any root_tpl_home_data)
+	(filecon "/root/\.local/share/telepathy(/.*)?" any
+		root_tpmc_home_data))
+
+(optional sysadm_tetex_home_optional_tetex
+	(tunableif enable_rbacsep
+		(true
+			(context root_tetex_home (sysadm.id sysadm.role
+				tetex.home_user_file (systemlow systemlow))))
+		(false
+			(context root_tetex_home (sysadm.id object_r
+				tetex.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.texlive2015(/.*)?" any root_tetex_home))
+
+(optional sysadm_thumbnails_home_optional_thumbnails
+	(tunableif enable_rbacsep
+		(true
+			(context root_thumbnails_home_cache (sysadm.id
+				sysadm.role thumbnails.home_cache_file
+					(systemlow systemlow))))
+		(false
+			(context root_thumbnails_home_cache (sysadm.id
+				object_r thumbnails.home_cache_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/thumbnails(/.*)?" any
+		root_thumbnails_home_cache))
+
+(optional sysadm_thunderbird_home_optional_thunderbird
+	(tunableif enable_rbacsep
+		(true
+			(context root_thunderbird_home_cache (sysadm.id
+				sysadm.role thunderbird.home_cache_file
+					(systemlow systemlow)))
+			(context root_thunderbird_home (sysadm.id sysadm.role
+				thunderbird.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_thunderbird_home_cache (sysadm.id
+				object_r thunderbird.home_cache_file
+					(systemlow systemlow)))
+			(context root_thunderbird_home (sysadm.id object_r
+				thunderbird.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.thunderbird(/.*)?" any root_thunderbird_home)
+	(filecon "/root/\.cache/thunderbird(/.*)?" any
+		root_thunderbird_home_cache))
+
+(optional sysadm_tor_home_optional_tor
+	(tunableif enable_rbacsep
+		(true
+			(context root_tor_home (sysadm.id sysadm.role
+				tor.home_user_file (systemlow systemlow))))
+		(false
+			(context root_tor_home (sysadm.id object_r
+				tor.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.tor(/.*)?" any root_tor_home))
+
+(optional sysadm_trackers_home_optional_trackers
+	(tunableif enable_rbacsep
+		(true
+			(context root_trackers_home_cache (sysadm.id
+				sysadm.role trackers.home_cache_file
+					(systemlow systemlow)))
+			(context root_trackers_home_config (sysadm.id
+				sysadm.role trackers.home_config_file
+					(systemlow systemlow)))
+			(context root_trackers_home_data (sysadm.id
+				sysadm.role trackers.home_data_file (systemlow
+					systemlow))))
+		(false
+			(context root_trackers_home_cache (sysadm.id object_r
+				trackers.home_cache_file (systemlow
+					systemlow)))
+			(context root_trackers_home_config (sysadm.id object_r
+				trackers.home_config_file (systemlow
+					systemlow)))
+			(context root_trackers_home_data (sysadm.id object_r
+				trackers.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/tracker(/.*)?" any root_trackers_home_cache)
+	(filecon "/root/\.config/tracker(/.*)?" any root_trackers_home_config)
+	(filecon "/root/\.local/share/tracker(/.*)?" any
+		root_trackers_home_data))
+
+(optional sysadm_trash_home_optional_trash
+	(tunableif enable_rbacsep
+		(true
+			(context root_trash_home_data (sysadm.id sysadm.role
+				trash.home_data_file (systemlow systemlow))))
+		(false
+			(context root_trash_home_data (sysadm.id object_r
+				trash.home_data_file (systemlow systemlow)))))
+
+	(filecon "/root/\.local/share/Trash(/.*)?" any root_trash_home_data))
+
+(optional sysadm_vlock_home_optional_vlock
+	(tunableif enable_rbacsep
+		(true
+			(context root_vlock_home (sysadm.id sysadm.role
+				vlock.home_user_file (systemlow systemlow))))
+		(false
+			(context root_vlock_home (sysadm.id object_r
+				vlock.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.vlockrc" file root_vlock_home))
+
+(optional sysadm_vinagre_home_optional_vinagre
+	(tunableif enable_rbacsep
+		(true
+			(context root_vinagre_home_cache (sysadm.id
+				sysadm.role vinagre.home_cache_file (systemlow
+					systemlow)))
+			(context root_vinagre_home_data (sysadm.id sysadm.role
+				vinagre.home_data_file (systemlow systemlow))))
+		(false
+			(context root_vinagre_home_cache (sysadm.id object_r
+				vinagre.home_cache_file (systemlow systemlow)))
+			(context root_vinagre_home_data (sysadm.id object_r
+				vinagre.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/vinagre(/.*)?" any root_vinagre_home_cache)
+	(filecon "/root/\.local/share/vinagre(/.*)?" any
+		root_vinagre_home_data))
+
+(optional sysadm_vulkan_home_optional_vulkan
+	(tunableif enable_rbacsep
+		(true
+			(context root_vulkan_home_data (sysadm.id sysadm.role
+				vulkan.home_data_file (systemlow systemlow))))
+		(false
+			(context root_vulkan_home_data (sysadm.id object_r
+				vulkan.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/vulkan(/.*)?" any
+		root_vulkan_home_data))
+
+(optional sysadm_webkit_home_optional_webkit
+	(tunableif enable_rbacsep
+		(true
+			(context root_webkit_home_cache (sysadm.id
+					sysadm.role
+				webkit.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_cache (sysadm.id
+					sysadm.role
+				webkitwp.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_data (sysadm.id sysadm.role
+				webkitwp.home_data_file (systemlow
+					systemlow))))
+		(false
+			(context root_webkit_home_cache (sysadm.id object_r
+				webkit.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_cache (sysadm.id object_r
+				webkitwp.home_cache_file (systemlow
+					systemlow)))
+			(context root_webkitwp_home_data (sysadm.id object_r
+				webkitwp.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.cache/webkit(/.*)?" any root_webkit_home_cache)
+	(filecon "/root/\.cache/webkitgtk(/.*)?" any root_webkitwp_home_cache)
+	(filecon "/root/\.local/share/webkitgtk(/.*)?" any
+		root_webkitwp_home_data))
+
+(optional sysadm_web_home_optional_web_content_home
+	(tunableif enable_rbacsep
+		(true
+			(context root_web_home_ro (sysadm.id sysadm.role
+				web_home.web_content_ro.file (systemlow
+					systemlow)))
+			(context root_web_home_cgi (sysadm.id sysadm.role
+				web_home.web_content_cgi.cmd_file (systemlow
+					systemlow)))
+			(context root_web_home_htaccess (sysadm.id sysadm.role
+				web_home.web_content_htaccess.file (systemlow
+					systemlow)))
+			(context root_web_home_ra (sysadm.id sysadm.role
+				web_home.web_content_ra.file (systemlow
+					systemlow)))
+			(context root_web_home_rw (sysadm.id sysadm.role
+				web_home.web_content_rw.file (systemlow
+					systemlow))))
+		(false
+			(context root_web_home_ro (sysadm.id object_r
+				web_home.web_content_ro.file (systemlow
+					systemlow)))
+			(context root_web_home_cgi (sysadm.id object_r
+				web_home.web_content_cgi.cmd_file (systemlow
+					systemlow)))
+			(context root_web_home_htaccess (sysadm.id object_r
+				web_home.web_content_htaccess.file (systemlow
+					systemlow)))
+			(context root_web_home_ra (sysadm.id object_r
+				web_home.web_content_ra.file (systemlow
+					systemlow)))
+			(context root_web_home_rw (sysadm.id object_r
+				web_home.web_content_rw.file (systemlow
+					systemlow)))))
+
+	(filecon "/root/public_html(/.*)?" any root_web_home_ro)
+	(filecon "/root/public_html(/.*)?/cgi-bin(/.*)?" any root_web_home_cgi)
+	(filecon "/root/public_html(/.*)?/fcgi-bin(/.*)?" any
+		root_web_home_cgi)
+	(filecon "/root/public_html(/.*)?/scripts(/.*)?" any root_web_home_cgi)
+	(filecon "/root/public_html/.*/\.htaccess" file root_web_home_htaccess)
+	(filecon "/root/public_html/.*/\.htpasswd" file root_web_home_htaccess)
+	(filecon "/root/public_html(/.*)?/log(/.*)?" any root_web_home_ra)
+	(filecon "/root/public_html(/.*)?/incoming(/.*)?" any root_web_home_rw)
+	(filecon "/root/public_html(/.*)?/uploads(/.*)?" any root_web_home_rw))
+
+(optional sysadm_xauth_home_optional_xauth
+	(tunableif enable_rbacsep
+		(true
+			(context root_xauth_home (sysadm.id sysadm.role
+				xauth.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xauth_home (sysadm.id object_r
+				xauth.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.Xauthority.*" file root_xauth_home)
+	(filecon "/root/\.serverauth.*" file root_xauth_home))
+
+(optional sysadm_xbindkeys_home_optional_xbindkeys
+	(tunableif enable_rbacsep
+		(true
+			(context root_xbindkeys_home (sysadm.id sysadm.role
+				xbindkeys.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_xbindkeys_home (sysadm.id object_r
+				xbindkeys.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.xbindkeysrc" file root_xbindkeys_home))
+
+(optional sysadm_xinit_home_optional_xinit
+	(tunableif enable_rbacsep
+		(true
+			(context root_xinit_home (sysadm.id sysadm.role
+				xinit.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xinit_home (sysadm.id object_r
+				xinit.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xinitrc.*" file root_xinit_home))
+
+(optional sysadm_xlock_home_optional_xlock
+	(tunableif enable_rbacsep
+		(true
+			(context root_xlock_home (sysadm.id sysadm.role
+				xlock.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xlock_home (sysadm.id object_r
+				xlock.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xlockrc" file root_xlock_home))
+
+(optional sysadm_xpdf_home_optional_xpdf
+	(tunableif enable_rbacsep
+		(true
+			(context root_xpdf_home (sysadm.id sysadm.role
+				xpdf.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xpdf_home (sysadm.id object_r
+				xpdf.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.xpdfrc" file root_xpdf_home))
+
+(optional sysadm_xserver_home_optional_xserver
+	(tunableif enable_rbacsep
+		(true
+			(context root_xserver_home (sysadm.id sysadm.role
+				xserver.home_user_file (systemlow systemlow)))
+			(context root_xserver_home_data (sysadm.id sysadm.role
+				xserver.home_data_file (systemlow systemlow))))
+		(false
+			(context root_xserver_home (sysadm.id object_r
+				xserver.home_user_file (systemlow systemlow)))
+			(context root_xserver_home_data (sysadm.id object_r
+				xserver.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.xserverrc" file root_xserver_home)
+	(filecon "/root/\.local/share/xorg(/.*)?" any root_xserver_home_data))
+
+(optional sysadm_xsession_home_optional_xsession
+	(tunableif enable_rbacsep
+		(true
+			(context root_xsession_home (sysadm.id sysadm.role
+				xsession.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_xsession_home (sysadm.id object_r
+				xsession.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.xsession-errors" file root_xsession_home))
+
+(optional sysadm_xutil_home_optional_xutil
+	(tunableif enable_rbacsep
+		(true
+			(context root_xutil_home (sysadm.id sysadm.role
+				xutil.home_user_file (systemlow systemlow))))
+		(false
+			(context root_xutil_home (sysadm.id object_r
+				xutil.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.Xmodmap" file root_xutil_home)
+	(filecon "/root/\.Xresources" file root_xutil_home))
+
+(optional sysadm_yelp_home_optional_yelp
+	(tunableif enable_rbacsep
+		(true
+			(context root_yelp_home_config (sysadm.id sysadm.role
+				yelp.home_config_file (systemlow systemlow))))
+		(false
+			(context root_yelp_home_config (sysadm.id object_r
+				yelp.home_config_file (systemlow systemlow)))))
+
+	(filecon "/root/\.config/yelp(/.*)?" any root_yelp_home_config))
+
+(optional sysadm_znc_home_optional_znc
+	(tunableif enable_rbacsep
+		(true
+			(context root_znc_home (sysadm.id sysadm.role
+				znc.home_user_file (systemlow systemlow))))
+		(false
+			(context root_znc_home (sysadm.id object_r
+				znc.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.znc(/.*)?" any root_znc_home))
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context root_home_dir (sysadm.id sysadm.role
+					home_dir.file (systemlow systemhigh)))
+				(context root_user_spool (sysadm.id
+					sysadm.role
+						var_spool_user.var_spool_file
+							(systemlow
+								systemhigh))))
+			(false
+				(context root_home_dir (sysadm.id object_r
+					home_dir.file (systemlow systemhigh)))
+				(context root_user_spool (sysadm.id object_r
+					var_spool_user.var_spool_file
+						(systemlow systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context root_home_dir (sysadm.id sysadm.role
+					home_dir.file (systemlow systemlow)))
+				(context root_user_spool (sysadm.id
+					sysadm.role
+						var_spool_user.var_spool_file
+							(systemlow
+								systemlow))))
+			(false
+				(context root_home_dir (sysadm.id object_r
+					home_dir.file (systemlow systemlow)))
+				(context root_user_spool (sysadm.id object_r
+					var_spool_user.var_spool_file
+						(systemlow systemlow)))))))
+
+(filecon "/root" dir root_home_dir)
+(filecon "/var/spool/mail/root" file root_user_spool)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm
+	(macro git_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			git_home_user_auto_type_transition_subj_type_attribute
+				ARG1))
+
+	(macro xinit_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			xinit_home_user_auto_type_transition_subj_type_attribute
+				ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm
+	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xinit_home_user_auto_type_transition_subj_type_attribute)
+
+	(blockinherit usersubj.common_priv_login_blk)
+
+	(dontaudit subj self (capability (sys_ptrace)))
+	(allow subj self (capability (dac_override chown fowner fsetid setfcap
+		linux_immutable)))
+	(allow subj self (process (getcap setcap)))
+
+	(call sys.manage_var_log_files (subj))
+	(call sys.read_all_proc_files (subj))
+	(call sys.read_all_sysctl (subj))
+	(call sys.read_all_sysfs (subj))
+
+	(call mls.priv_range_trans_subj_type (subj))
+
+	(call cmd.read_all_cmd_files (subj))
+
+	(call dev.getattr_all (subj))
+
+	(call file.manage_config (subj))
+	(call file.manage_lost_found (subj))
+	(call file.manage_unknown (subj))
+	(call file.read_boot (subj))
+	(call file.rootfs_obj_type_transition_unknown (subj))
+
+	(call fs.getattr_all_fs (subj))
+	(call fs.list_devpts (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_cgroup_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call sec.get_all_booleans (subj))
+	(call sec.setfscreate_subj_type (subj))
+
+	(call subj.getattr_common_subj (subj))
+	(call subj.ptrace_subj_type (subj))
+	(call subj.read_state_common_subj (subj))
+
+	(call term.use_inherited_unallocated_ttys (subj))
+
+	(call factory.read_data (subj))
+	(call fstab.manage (subj))
+	(call cert.manage (subj))
+	(call hosts.manage_config_files (subj))
+	(call hwdata.read_data (subj))
+	(call modules.read (subj))
+	(call network.manage_config_files (subj))
+	(call wtmp.manage_var_log_files (subj))
+	(call mime_types.manage_config_files (subj))
+
+	(call usersubj.setattr_home_dir (subj))
+
+	(tunableif enable_mls
+		(false
+			(call
+				file_context.default_context_obj_type_transition_config
+					(subj))
+			(call
+				policy_config.selinux_config_obj_type_transition_policy_config
+					(subj))
+			(call
+				default_context.selinux_config_obj_type_transition_config
+					(subj))
+			(call
+				policy_src.var_lib_obj_type_transition_var_lib
+					(subj))
+			(call selinux_config.config_obj_type_transition_config
+				(subj))
+			(call default_context.manage_config (subj))
+			(call file_context.manage_config (subj))
+			(call policy_config.manage (subj))
+			(call policy_src.manage_var_lib (subj))
+			(call selinux_config.manage_config (subj))
+			(call load_policy.run (subj_type_attribute role))
+			(call matchpathcon.run (subj_type_attribute role))
+			(call setenforce.run (subj_type_attribute role))
+			(call setfiles.run (subj_type_attribute role))
+			(call setsebool.run (subj_type_attribute role))
+
+			(optional sysadm_enable_mls_optional_audispd
+				(call audispd.manage_config (subj))
+				(call audispd.manage_runtime_sock_files
+					(subj)))
+
+			(optional sysadm_enable_mls_optional_auditctl
+				(call auditctl.run (subj_type_attribute role)))
+
+			(optional sysadm_enable_mls_optional_auditd
+				(call auditd.adm (subj role))
+				(call augenrules.run (subj_type_attribute
+					role))
+				(call ausearch.run (subj_type_attribute role)))
+
+			(optional sysadm_enable_mls_optional_authconfig
+				(call authconfig.manage_config_files (subj))
+				(call authconfig.manage_data (subj))
+				(call authconfig.manage_var_lib (subj))
+				(call authconfig.run (subj_type_attribute
+					role)))
+
+			(optional sysadm_enable_mls_optional_chage
+				(call chage.run (subj_type_attribute role)))
+
+			(optional sysadm_enable_mls_optional_cracklib
+				(call cracklib.run (subj_type_attribute role))
+				(call cracklib.manage_var_cache (subj)))
+
+			(optional sysadm_enable_mls_optional_iptables
+				(call iptables.adm (subj role))
+				(call iptables.run (subj_type_attribute role)))
+
+			(optional sysadm_enable_mls_optional_mcstransd
+				(call mcstransd.adm (subj role)))
+
+			(optional sysadm_enable_mls_optional_netlabelctl
+				(call netlabelctl.run (subj_type_attribute
+					role)))
+
+			(optional sysadm_enable_mls_optional_pam
+				(call pam.adm_subj_type (subj)))
+
+			(optional sysadm_enable_mls_optional_sd_randomseed
+				(call sd_randomseed.auto_subj_range_transition
+					(subj systemhigh systemhigh)))
+
+			(optional sysadm_enable_mls_optional_sd_autorelabel
+				(call sd_autorelabel.manage_boot_flag_files
+					(subj))
+				(call
+					sd_autorelabel.rootfs_obj_type_transition_boot_flag
+						(subj)))
+
+			(optional sysadm_enable_mls_optional_sudo
+				(call sudo.manage_config (subj))
+				(call sudo.manage_var_db (subj))
+				(call sudo.manage_runtime (subj)))))
+
+	(optional sysadm_optional_accountsd
+		(call accountsd.adm (subj role)))
+
+	(optional sysadm_optional_alsactl
+		(call alsactl.adm (subj role)))
+
+	(optional sysadm_optional_appstream
+		(call appstreamutil.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_atspi
+		(call atspi.manage_config (subj)))
+
+	(optional sysadm_optional_avahi
+		(call avahi.manage_config (subj))
+		(call avahitools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_avahi_autoipd
+		(call avahi_autoipd.manage_var_lib (subj))
+		(call avahi_autoipd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_avahid
+		(call avahid.adm (subj role)))
+
+	(optional sysadm_optional_bluetoothctl
+		(call bluetoothctl.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_bluetoothd
+		(call bluetoothd.adm (subj role)))
+
+	(optional sysadm_optional_bootloader
+		(call bootloader.manage_config (subj))
+		(call bootloader.manage_boot_files (subj))
+		(call bootloader.manage_var_log_files (subj))
+		(call bootloader.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_brlapi
+		(call brlapi.manage_config_files (subj))
+		(call brlapi.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_brltty
+		(call brltty.run (subj_type_attribute role))
+		(call brltty.adm (subj role)))
+
+	(optional sysadm_optional_bridgeutil
+		(call bridgeutil.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_bti
+		(call bti.run (subj_type_attribute role))
+		(call bti.manage_tmpfs_user_files (subj))
+		(call bti.relabel_tmpfs_user_files (subj))
+		(call bti.manage_home_user_files (subj))
+		(call bti.relabel_home_user_files (subj))
+		(call bti.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_champlain
+		(call champlain.manage_home_cache (subj))
+		(call champlain.relabel_home_cache (subj))
+		(call champlain.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_chkpwd
+		(call chkpwd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_chronyd
+		(call chronyd.adm (subj role))
+		(call chronyc.manage_runtime_sock_files (subj))
+		(call chronyc.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_colord
+		(call colord.adm (subj role))
+		(call colormgr.run (subj_type_attribute role))
+		(call colormgr.manage_home_data (subj))
+		(call colormgr.relabel_home_data (subj))
+		(call colormgr.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_conntrack
+		(call conntrack.run (subj_type_attribute role))
+		(call conntrackd.run (subj_type_attribute role))
+		(call nfct.run (subj_type_attribute role))
+		(call conntrackd.adm (subj role)))
+
+	(optional sysadm_optional_coredumpctl
+		(call coredumpctl.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_cpupower
+		(call cpupower.adm (subj role))
+		(call cpupower.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_curl
+		(call curl.run (subj_type_attribute role))
+		(call curl.manage_config_files (subj))
+		(call curl.manage_home_user_files (subj))
+		(call curl.relabel_home_user_files (subj))
+		(call curl.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_dconf
+		(call dconf.manage_config (subj)))
+
+	(optional sysadm_optional_dd
+		(call dd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_ddclient
+		(call ddclient.adm (subj role)))
+
+	(optional sysadm_optional_dleyna
+		(call dleyna.manage_config_files (subj)))
+
+	(optional sysadm_optional_dleynar
+		(call dleynar.manage_config_files (subj)))
+
+	(optional sysadm_optional_dhclient
+		(call dhclient.manage_config (subj))
+		(call dhclient.manage_runtime_files (subj))
+		(call dhclient.manage_var_lib (subj)))
+
+	(optional sysadm_optional_dirmngr
+		(call dirmngr.run (subj_type_attribute role))
+		(call dirmngr.manage_home_user (subj))
+		(call dirmngr.relabel_home_user (subj))
+		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_dm
+		(call dmcrypt.run (subj_type_attribute role))
+		(call dmsetup.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dmesg
+		(call dmesg.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dmeventd
+		(call dmeventd.adm (subj role)))
+
+	(optional sysadm_optional_dmidecode
+		(call dmidecode.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dns
+		(call resolv.manage_config_files (subj)))
+
+	(optional sysadm_optional_dnssec_trigger
+		(call dnssec_trigger.adm (subj role)))
+
+	(optional sysadm_optional_dnssec_triggerc
+		(call dnssec_triggerc.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dnsmasq
+		(call dnsmasq.adm (subj role))
+		(call dnsmasq.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dracut
+		(call dracut.manage_config (subj))
+		(call dracut.manage_var_tmp (subj))
+		(call dracut.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dracut_initramfs
+		(call dracut_initramfs.adm (subj role)))
+
+	(optional sysadm_optional_enchant
+		(call enchant.manage_home_config (subj))
+		(call enchant.relabel_home_config (subj))
+		(call enchant.home_config_obj_type_transition_home_config
+			(subj)))
+
+	(optional sysadm_optional_evo
+		(call evo_helper.exec (subj)))
+
+	(optional sysadm_optional_fedpkg
+		(call fedpkg.manage_config (subj))
+		(call fedpkg.relabel_config (subj)))
+
+	(optional sysadm_optional_feh
+		(call feh.manage_tmpfs_user_files (subj))
+		(call feh.relabel_tmpfs_user_files (subj))
+
+		(call feh.manage_home_user_files (subj))
+		(call feh.relabel_home_user_files (subj))
+
+		(call feh.home_dir_obj_type_transition_home (subj))
+
+		(call feh.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_firewalld
+		(call firewalld.adm (subj role))
+		(call firewallcmd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_folks
+		(call folks.manage_home_cache (subj))
+		(call folks.relabel_home_cache (subj))
+		(call folks.home_cache_obj_type_transition_home_cache (subj))
+
+		(call folks.manage_home_data (subj))
+		(call folks.relabel_home_data (subj))
+		(call folks.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_fop
+		(call fop.run (subj_type_attribute role))
+		(call fop.manage_config_files (subj))
+		(call fop.manage_home_user (subj))
+		(call fop.relabel_home_user (subj))
+		(call fop.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_fuse
+		(call fusermount.manage_config_files (subj))
+		(call fusermount.run (subj_type_attribute role))
+		(call ulockmgr.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_gconf
+		(call gconf.manage_config (subj)))
+
+	(optional sysadm_optional_gcs
+		(call gcs_helper.exec (subj)))
+
+	(optional sysadm_optional_gdm
+		(call gdm.adm (subj role))
+		(call gdm_helper.exec (subj))
+		(call gdm.rw_inherited_unix_stream_sockets (subj))
+		(call gdm.manage_home_cache (subj))
+		(call gdm.relabel_home_cache (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional sysadm_optional_gegl
+		(call gegl.manage_home_cache (subj))
+		(call gegl.relabel_home_cache (subj))
+		(call gegl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gegl.manage_home_data (subj))
+		(call gegl.relabel_home_data (subj))
+		(call gegl.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_gkr
+		(call gkr.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_glib
+		(call glib_helper.exec (subj)))
+
+	(optional sysadm_optional_glxutils
+		(call glxutils.manage_tmpfs_user_files (subj))
+		(call glxutils.relabel_tmpfs_user_files (subj))
+
+		(call glxutils.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_gpg
+		(call gpg.manage_config (subj))
+		(call gpg_helper.exec (subj)))
+
+	(optional sysadm_optional_gs
+		(call gs_helper.exec (subj)))
+
+	(optional sysadm_optional_gsd
+		(call gsd_helper.exec (subj)))
+
+	(optional sysadm_optional_gsh
+		(call gsh_helper.exec (subj)))
+
+	(optional sysadm_optional_gtk
+		(call gtk.manage_home_config (subj))
+		(call gtk.relabel_home_config (subj))
+		(call gtk.home_config_obj_type_transition_home_config (subj)))
+
+	(optional sysadm_optional_fwupd
+		(call fwupd.adm (subj role)))
+
+	(optional sysadm_optional_fpaste
+		(call fpaste.run (subj_type_attribute role))
+		(call fpaste.manage_tmpfs_user_files (subj))
+		(call fpaste.relabel_tmpfs_user_files (subj))
+		(call fpaste.manage_var_tmp_user (subj))
+		(call fpaste.relabel_var_tmp_user (subj)))
+
+	(optional sysadm_optional_fstools
+		(call fstools.manage_runtime (subj))
+		(call fstools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_fstim
+		(call fstrim.adm (subj role))
+		(call fstrim.run (subj role)))
+
+	(optional sysadm_optional_geoclue
+		(call geoclue.adm (subj role)))
+
+	(optional sysadm_optional_getty
+		(call getty.adm (subj role)))
+
+	(optional sysadm_optional_gpg_pcsc_wrapper
+		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_gstreamer
+		(call gst_helper.exec (subj)))
+
+	(optional sysadm_optional_hostname
+		(call hostname.manage_config_files (subj))
+		(call hostname.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_httpd
+		(call apachectl.manage_tmpfs_user_files (subj))
+		(call apachectl.relabel_tmpfs_user_files (subj))
+		(call apachectl.run (subj_type_attribute role))
+		(call httpd.adm (subj role)))
+
+	(optional sysadm_optional_hwclock
+		(call hwclock.manage_config_files (subj))
+		(call hwclock.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_i3status
+		(call i3status.manage_config_files (subj))
+
+		(call i3status.manage_home_config (subj))
+		(call i3status.relabel_home_config (subj))
+
+		(call i3status.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call i3status.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_ibus
+		(call ibus.manage_home_config (subj))
+		(call ibus.relabel_home_config (subj))
+		(call ibus.home_config_obj_type_transition_home_config (subj)))
+
+	(optional sysadm_optional_iotop
+		(call iotop.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_iptools
+		(call iptools.manage_config (subj))
+		(call iptools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_irssi
+		(call irssi.manage_config_files (subj)))
+
+	(optional sysadm_optional_icecast
+		(call icecast.adm (subj role)))
+
+	(optional sysadm_optional_java
+		(call java.exec (subj_type_attribute))
+		(call java.manage_config (subj))
+		(call java.manage_tmpfs_user (subj))
+		(call java.relabel_tmpfs_user (subj))
+		(call java.manage_home_user (subj))
+		(call java.relabel_home_user (subj))
+		(call java.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_letsencrypt
+		(call letsencrypt.manage_home_config (subj))
+		(call letsencrypt.relabel_home_config (subj))
+		(call letsencrypt.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call letsencrypt.manage_tmpfs_user_files (subj))
+		(call letsencrypt.relabel_tmpfs_user_files (subj))
+
+		(call letsencrypt.adm (subj role))
+		(call letsencrypt.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_ldap
+		(call ldap.manage_config (subj)))
+
+	(optional sysadm_optional_libgweather
+		(call libgweather.manage_home_cache (subj))
+		(call libgweather.relabel_home_cache (subj))
+		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_logger
+		(call logger.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mcelog
+		(call mcelog.run (subj_type_attribute role))
+		(call mcelog.adm (subj role)))
+
+	(optional sysadm_optional_mutter
+		(call mutter_helper.exec (subj)))
+
+	(optional sysadm_optional_networkctl
+		(call networkctl.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_ntp
+		(call ntp.manage_config_files (subj)))
+
+	(optional sysadm_optional_ntpd
+		(call ntpstat.run (subj_type_attribute role))
+		(call ntpctl.run (subj_type_attribute role))
+		(call ntpd.adm (subj role)))
+
+	(optional sysadm_optional_ntpdate
+		(call ntpdate.adm (subj role))
+		(call ntpdate.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_kmod
+		(call kmod.adm (subj role))
+		(call kmod.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_ldconfig
+		(call ldconfig.adm (subj role))
+		(call ldconfig.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_libatasmart
+		(call skdump.run (subj_type_attribute role))
+		(call sktest.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_lirc
+		(call lirc.run (subj_type_attribute role))
+		(call lirc_lsplugins.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_lircd
+		(call lircd.adm (subj role)))
+
+	(optional sysadm_optional_loadkeys
+		(call loadkeys.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_login
+		(call login.adm (subj role)))
+
+	(optional sysadm_optional_logrotate
+		(call logrotate.adm (subj role))
+		(call logrotate.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_lvm
+		(call lvm.adm (subj role))
+		(call lvm.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_lvmetad
+		(call lvmetad.adm (subj role)))
+
+	(optional sysadm_optional_lvmpolld
+		(call lvmpolld.adm (subj role)))
+
+	(optional sysadm_optional_mandb
+		(call mandb.adm (subj role))
+		(call mandb.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mediaart
+		(call mediaart.manage_home_cache (subj))
+		(call mediaart.relabel_home_cache (subj))
+
+		(call mediaart.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_md
+		(call md.adm (subj role))
+		(call mdadm.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mpc
+		(call mpc.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mpd
+		(call mpd.adm (subj role)))
+
+	(optional sysadm_optional_newrole
+		(call newrole.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_numad
+		(call numad.adm (subj role)))
+
+	(optional sysadm_optional_mariadb
+		(call mariadb.manage_config (subj))
+		(call mariadb.manage_home_user_files (subj))
+		(call mariadb.relabel_home_user_files (subj))
+		(call mariadb.home_dir_obj_type_transition_home (subj))
+		(call mariadb.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mariadb_server
+		(call mariadb_server_util.manage_var_tmp_user_files (subj))
+		(call mariadb_server_util.relabel_var_tmp_user_files (subj))
+		(call mariadb_server_util.run (subj_type_attribute role))
+		(call mariadb_server.adm (subj role)))
+
+	(optional sysadm_optional_memcached
+		(call memcachedtool.run (subj_type_attribute role))
+		(call memcached.adm (subj role)))
+
+	(optional sysadm_optional_mount
+		(call mount.manage_runtime (subj))
+		(call mount.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_mplayer
+		(call mplayer.manage_config (subj)))
+
+	(optional sysadm_optional_mutt
+		(call mutt.manage_config_files (subj)))
+
+	(optional sysadm_optional_myqemu
+		(call myqemu_runner.run (subj_type_attribute role))
+		(call myqemu_installer.run (subj_type_attribute role))
+		(call myqemu_shutdown.run (subj_type_attribute role))
+		(call myqemu.adm (subj role)))
+
+	(optional sysadm_optional_mysysstat
+		(call mysysstat.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_nethogs
+		(call nethogs.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_nettools
+		(call arp.adm (subj role))
+		(call arp.run (subj_type_attribute role))
+		(call nettools.run (subj_type_attribute role))
+		(call ping.run (subj_type_attribute role))
+		(call traceroute.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_nginx
+		(call nginx.adm (subj role)))
+
+	(optional sysadm_optional_nmcli
+		(call nmcli.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_nm
+		(call nm.adm (subj role)))
+
+	(optional sysadm_optional_nss
+		(call nss.manage_config_files (subj)))
+
+	(optional sysadm_optional_openssl
+		(call openssl.run (subj_type_attribute role))
+		(call openssl.manage_home_user_files (subj))
+		(call openssl.relabel_home_user_files (subj))
+		(call openssl.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_pa
+		(call pa.manage_config (subj))
+		(call pa.manage_var_lib (subj)))
+
+	(optional sysadm_optional_pass
+		(call pass.manage_home_user (subj))
+		(call pass.relabel_home_user (subj))
+		(call pass.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_pastebinit
+		(call pastebinit.manage_config (subj))
+		(call pastebinit.relabel_config (subj))
+		(call pastebinit.run (subj_type_attribute role))
+		(call pastebinit.manage_tmpfs_user_files (subj))
+		(call pastebinit.relabel_tmpfs_user_files (subj))
+		(call pastebinit.manage_home_user (subj))
+		(call pastebinit.relabel_home_user (subj))
+		(call pastebinit.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_pcitools
+		(call pcitools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_pcscd
+		(call pcscd.adm (subj role)))
+
+	(optional sysadm_optional_php
+		(call php.manage_config (subj))
+		(call php.manage_var_cache (subj))
+		(call php.manage_var_lib (subj)))
+
+	(optional sysadm_optional_php_fpm
+		(call php_fpm.adm (subj role)))
+
+	(optional sysadm_optional_phpcli
+		(call phpcli.exec (subj_type_attribute))
+		(call phpcli.manage_home_user_files (subj))
+		(call phpcli.relabel_home_user_files (subj))
+		(call phpcli.home_dir_obj_type_transition_home_user (subj)))
+
+	(optional sysadm_optional_plymouth
+		(call plymouth.adm (subj role))
+		(call plymouth.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_polkit
+		(call polkit.adm (subj role))
+		(call polkit_agent.run (subj_type_attribute role))
+		(call polkit_tty_agent.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_powertop
+		(call powertop.adm (subj role))
+		(call powertop.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_pppd
+		(call pppd.manage_config (subj))
+		(call pppd.manage_runtime_lock (subj))
+		(call pppd.manage_runtime (subj))
+		(call pppd.manage_var_log (subj)))
+
+	(optional sysadm_optional_ppputil
+		(call ppputil.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_pwgen
+		(call pwgen.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_python
+		(call python.manage_home_data (subj))
+		(call python.relabel_home_data (subj))
+		(call python.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_qemu
+		(call qemu_img.exec (subj))
+		(call qemu_guest.manage_all_files (subj))
+		(call qemu_guest.manage_all_runtime_sock_files (subj))
+		(call qemu.manage_config (subj)))
+
+	(optional sysadm_optional_qemu_guest_agent
+		(call qemu_guest_agent.adm (subj role)))
+
+	(optional sysadm_optional_qiv
+		(call qiv.manage_tmpfs_user_files (subj))
+		(call qiv.relabel_tmpfs_user_files (subj))
+		(call qiv.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_quota
+		(call quota.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_quotaed
+		(call quotaed.run (subj_type_attribute role))
+		(call quotaed.manage_tmpfs_user_files (subj)))
+
+	(optional sysadm_optional_quotaon
+		(call quotaon.adm (subj role))
+		(call quotaon.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_quotacheck
+		(call quotacheck.run (subj_type_attribute role))
+		(call quotacheck.manage_db_files (subj)))
+
+	(optional sysadm_optional_rdisc
+		(call rdisc.adm (subj role)))
+
+	(optional sysadm_optional_realmd
+		(call realmd.adm (subj role))
+		(call realm.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_redis
+		(call rediscli.run (subj_type_attribute role))
+		(call redis_server.adm (subj role)))
+
+	(optional sysadm_optional_rfkill
+		(call rfkill.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_rpm
+		(call rpm.adm (subj role))
+		(call rpm.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_rpmdev
+		(call rpmdev.manage_config (subj))
+		(call rpmdev.relabel_config (subj)))
+
+	(optional sysadm_optional_rpmbuild
+		(call rpmbuild.manage_tmpfs_user (subj))
+		(call rpmbuild.relabel_tmpfs_user (subj))
+		(call rpmbuild.manage_var_tmp_user (subj))
+		(call rpmbuild.relabel_var_tmp_user (subj))
+		(call rpmbuild.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_rpws
+		(call rpws.run (subj_type_attribute role))
+		(call rpws.manage_tmpfs_user_files (subj))
+		(call rpws.relabel_tmpfs_user_files (subj)))
+
+	(optional sysadm_optional_rtkitctl
+		(call rtkitctl.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_rtkitd
+		(call rtkitd.adm (subj role)))
+
+	(optional sysadm_optional_rtorrent
+		(call rtorrent.manage_home_user (subj))
+		(call rtorrent.relabel_home_user (subj))
+		(call rtorrent.manage_home_config_files (subj))
+		(call rtorrent.relabel_home_config_files (subj))
+		(call rtorrent.home_dir_obj_type_transition_home (subj))
+		(call rtorrent.home_config_obj_type_transition_home_config
+			(subj))
+		(call rtorrent.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_rygel
+		(call rygel.manage_config_files (subj))
+		(call rygel_helper.exec (subj)))
+
+	(optional sysadm_optional_samba
+		(call samba.manage_config (subj))
+		(call samba.manage_runtime (subj))
+		(call samba.manage_var_lib (subj))
+		(call samba.manage_var_log (subj)))
+
+	(optional sysadm_optional_scdaemon
+		(call scdaemon.run (subj_type_attribute role))
+		(call scdaemon.manage_home_user (subj))
+		(call scdaemon.relabel_home_user (subj))
+		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
+		(call scdaemon.manage_tmpfs_user (subj))
+		(call scdaemon.relabel_tmpfs_user (subj)))
+
+	(optional sysadm_optional_screen
+		(call screen.manage_config_files (subj))
+		(call screen.manage_runtime (subj)))
+
+	(optional sysadm_optional_sctl
+		(call sctl.manage_config (subj))
+		(call sctl.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sd
+		(call sd.adm (subj role)))
+
+	(optional sysadm_optional_sd_askpwd
+		(call sd_askpwd.adm (subj role)))
+
+	(optional sysadm_optional_sd_autorelabel
+		(call sd_autorelabel.adm (subj role)))
+
+	(optional sysadm_optional_sd_backlight
+		(call sd_backlight.adm (subj role)))
+
+	(optional sysadm_optional_sd_binfmt
+		(call sd_binfmt.adm (subj role)))
+
+	(optional sysadm_optional_sd_bootchart
+		(call sd_bootchart.adm (subj role)))
+
+	(optional sysadm_optional_sd_coredump
+		(call sd_coredump.manage_config (subj))
+		(call sd_coredump.manage_runtime_sock_files (subj))
+		(call sd_coredump.manage_var_lib (subj))
+		(call sd_coredump.manage_tmpfs_files (subj)))
+
+	(optional sysadm_optional_sd_crypsetup
+		(call sd_cryptsetup.adm (subj role)))
+
+	(optional sysadm_optional_sd_fsck
+		(call sd_fsck.adm (subj role)))
+
+	(optional sysadm_optional_sd_hostnamed
+		(call sd_hostnamed.adm (subj role)))
+
+	(optional sysadm_optional_sd_hwdb
+		(call sd_hwdb.adm (subj role)))
+
+	(optional sysadm_optional_importd
+		(call sd_importd.adm (subj role)))
+
+	(optional sysadm_optional_sd_importstate
+		(call sd_importstate.adm (subj role)))
+
+	(optional sysadm_optional_sd_initctl
+		(call sd_initctl.adm (subj role)))
+
+	(optional sysadm_optional_sd_journal_gateway
+		(call sd_journal_gateway.adm (subj role))
+		(call sd_journal_remote.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sd_journald
+		(call sd_journald.client_subj_type (subj))
+		(call sd_journald.adm (subj role)))
+
+	(optional sysadm_optional_sd_loadmodules
+		(call sd_loadmodules.adm (subj role)))
+
+	(optional sysadm_optional_sd_localed
+		(call sd_localed.adm (subj role)))
+
+	(optional sysadm_optional_sd_logind
+		(call sd_logind.adm (subj role)))
+
+	(optional sysadm_optional_sd_machined
+		(call sd_machined.adm (subj role)))
+
+	(optional sysadm_optional_sd_networkd
+		(call sd_networkd.adm (subj role)))
+
+	(optional sysadm_optional_sd_nspawn
+		(call sd_nspawn.run (subj_type_attribute role))
+		(call sd_nspawn.adm (subj role)))
+
+	(optional sysadm_optional_sd_quotacheck
+		(call sd_quotacheck.adm (subj role)))
+
+	(optional sysadm_optional_sd_randomseed
+		(call sd_randomseed.run (subj_type_attribute role))
+		(call sd_randomseed.adm (subj role)))
+
+	(optional sysadm_optional_sd_readonly
+		(call sd_readonly.adm (subj role)))
+
+	(optional sysadm_optional_sd_resolved
+		(call sd_resolved.adm (subj role)))
+
+	(optional sysadm_optional_sd_rfkill
+		(call sd_rfkill.adm (subj role)))
+
+	(optional sysadm_optional_sd_sessions
+		(call sd_sessions.adm (subj role)))
+
+	(optional sysadm_optional_sd_sleep
+		(call sd_sleep.adm (subj role)))
+
+	(optional sysadm_optional_sd_stdio
+		(call sd_stdio.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sd_sysctl
+		(call sd_sysctl.run (subj_type_attribute role))
+		(call sd_sysctl.adm (subj role)))
+
+	(optional sysadm_optional_sd_sysusers
+		(call sd_sysusers.run (subj_type_attribute role))
+		(call sd_sysusers.adm (subj role)))
+
+	(optional sysadm_optional_sd_timedated
+		(call sd_timedated.adm (subj role)))
+
+	(optional sysadm_optional_sd_timesyncd
+		(call sd_timesyncd.adm (subj role)))
+
+	(optional sysadm_optional_sd_tmpfiles
+		(call sd_tmpfiles.adm (subj role))
+		(call sd_tmpfiles.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sd_udevd
+		(call sd_udevd.adm (subj role)))
+
+	(optional sysadm_optional_sd_updated
+		(call sd_updated.adm (subj role)))
+
+	(optional sysadm_optional_sd_utmp
+		(call sd_utmp.adm (subj role)))
+
+	(optional sysadm_optional_sd_vconsole
+		(call sd_vconsole.adm (subj role)))
+
+	(optional sysadm_optional_setools
+		(call setools.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_speechdispd
+		(call speechdispd.manage_tmpfs_user (subj))
+		(call speechdispd.relabel_tmpfs_user (subj))
+
+		(call speechdispd.run (subj_type_attribute role))
+		(call speechdispd.adm (subj role)))
+
+	(optional sysadm_optional_ssh_client
+		(call ssh_client.manage_config (subj))
+		(call ssh_sftpserver.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sshd
+		(call sshd.adm (subj_type_attribute role))
+		(call sshd.sshd_keygen.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_syndaemon
+		(call syndaemon.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_sysbus
+		(call sysbus.adm (subj role))
+		(call sysbus_helper.exec (subj_type_attribute)))
+
+	(optional sysadm_optional_tcsd
+		(call tcsd.adm (subj role)))
+
+	(optional sysadm_optional_thumbnails
+		(call thumbnails.manage_home_cache (subj))
+		(call thumbnails.relabel_home_cache (subj))
+		(call thumbnails.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_timedatex
+		(call timedatex.adm (subj role)))
+
+	(optional sysadm_optional_tetex
+		(call tetex.manage_home_user (subj))
+		(call tetex.relabel_home_user (subj))
+		(call tetex.home_dir_obj_type_transition_home (subj))
+		(call tetex.manage_tmpfs_user (subj))
+		(call tetex.relabel_tmpfs_user (subj))
+		(call tetex.manage_var_lib (subj))
+		(call tetex.manage_var_spool (subj))
+		(call pdftex.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_tor
+		(call tor.manage_home_user (subj))
+		(call tor.relabel_home_user (subj))
+		(call tor.home_dir_obj_type_transition_home (subj))
+		(call tor.run (subj_type_attribute role))
+		(call tor.adm (subj role)))
+
+	(optional sysadm_optional_tor_gencert
+		(call tor_gencert.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_tor_resolve
+		(call tor_resolve.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_trash
+		(call trash.manage_home_data (subj))
+		(call trash.relabel_home_data (subj))
+		(call trash.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_tunctl
+		(call tunctl.run (subj role)))
+
+	(optional sysadm_optional_udevadm
+		(call udevadm.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_udisksd
+		(call udisksctl.run (subj_type_attribute role))
+		(call udisksd.adm (subj role)))
+
+	(optional sysadm_optional_unbound
+		(call unbound.adm (subj role)))
+
+	(optional sysadm_optional_unboundctl
+		(call unboundctl.run (subj_type_attribute role))
+		(call unboundcc.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_updatedssp
+		(call updatedssp.adm (subj role))
+		(call updatedssp.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_updpwd
+		(call updpwd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_upowerd
+		(call upowerd.adm (subj role))
+		(call upower.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_usbutil
+		(call usbutil.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_useradd
+		(call groupadd.run (subj_type_attribute role))
+		(call useradd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_varnishd
+		(call varnishadm.run (subj_type_attribute role))
+		(call varnishd.adm (subj role)))
+
+	(optional sysadm_optional_vdagentd
+		(call vdagentd.adm (subj role)))
+
+	(optional sysadm_optional_vulkan
+		(call vulkan.manage_home_data (subj))
+		(call vulkan.relabel_home_data (subj))
+		(call vulkan.home_data_obj_type_transition_home_data (subj)))
+
+	(optional sysadm_optional_web_content
+		(call web_content.manage_all (subj))
+		(call web_content.cgi_client (subj_type_attribute role)))
+
+	(optional sysadm_optional_web_content_home
+		(call
+			web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess
+				(subj))
+		(call
+			web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi
+				(subj))
+		(call
+			web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra
+				(subj))
+		(call
+			web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw
+				(subj))
+		(call web_home.home_dir_obj_type_transition_web_home_ro
+			(subj)))
+
+	(optional sysadm_optional_who
+		(call mesg.run (subj_type_attribute role))
+		(call who.run (subj_type_attribute role))
+		(call write.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_wodim
+		(call wodim.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_wpa
+		(call wpa.adm (subj role)))
+
+	(optional sysadm_optional_wpacli
+		(call wpacli.manage_tmpfs_user_sock_files (subj))
+		(call wpacli.relabel_tmpfs_user_sock_files (subj))
+		(call wpacli.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_xauth
+		(call xauth.run (subj_type_attribute role))
+		(call xauth.manage_home_user_files (subj))
+		(call xauth.relabel_home_user_files (subj)))
+
+	(optional sysadm_optional_xboxdrv
+		(call xboxdrv.run (subj_type_attribute role))
+		(call xboxdrv.adm (subj role)))
+
+	(optional sysadm_optional_xlock
+		(call xlock.manage_home_user_files (subj))
+		(call xlock.relabel_home_user_files (subj))
+		(call xlock.home_dir_obj_type_transition_home (subj))
+		(call xlock.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_xpdf
+		(call xpdf.manage_config (subj)))
+
+	(optional sysadm_optional_xserver
+		(call xserver.run (subj_type_attribute role))
+		(call xserver.manage_config (subj))
+		(call xserver.manage_var_log_files (subj))
+		(call xserver.manage_var_lib (subj))
+		(call xserver.manage_home_user_files (subj))
+		(call xserver.relabel_home_user_files (subj))
+		(call xserver.home_dir_obj_type_transition_home (subj))
+		(call xserver.manage_home_data (subj))
+		(call xserver.relabel_home_data (subj))
+		(call xserver.home_data_obj_type_transition_home_data (subj))
+		(call xserver.manage_tmpfs_user_files (subj))
+		(call xserver.manage_tmpfs_user_sock_files (subj))
+		(call xserver.relabel_tmpfs_user_files (subj))
+		(call xserver.relabel_tmpfs_user_sock_files (subj)))
+
+	(optional sysadm_optional_xutil
+		(call xutil.manage_tmpfs_user_files (subj))
+		(call xutil.relabel_tmpfs_user_files (subj))
+		(call xutil.run (subj_type_attribute role))
+		(call xutil.manage_home_user_files (subj))
+		(call xutil.relabel_home_user_files (subj))
+		(call xutil.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_xwd
+		(call xwd.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_znc
+		(call znc.adm (subj role))
+		(call znc.run (subj_type_attribute role))
+		(call znc.manage_home_user (subj))
+		(call znc.relabel_home_user (subj))
+		(call znc.home_dir_obj_type_transition_home (subj)))
+
+	(optional sysadm_optional_sysadm_alsautil
+		(call sysadm_alsautil.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_analyze
+		(call sysadm_analyze.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_atspird
+		(call sysadm_atspird.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_atspi_sessbus_launch
+		(call sysadm_atspi_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_awesome
+		(call awesome.manage_tmpfs_user_files (subj))
+		(call awesome.relabel_tmpfs_user_files (subj))
+
+		(call awesome.manage_home_cache (subj))
+		(call awesome.relabel_home_cache (subj))
+
+		(call awesome.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call awesome.manage_home_config (subj))
+		(call awesome.relabel_home_config (subj))
+
+		(call awesome.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_awesome.role_pattern (role subj_type_attribute))
+		(call sysadm_awesomec.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_bijiben
+		(call bijiben.manage_tmpfs_user (subj))
+		(call bijiben.relabel_tmpfs_user (subj))
+
+		(call bijiben.manage_home_cache (subj))
+		(call bijiben.relabel_home_cache (subj))
+
+		(call bijiben.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call bijiben.manage_home_data (subj))
+		(call bijiben.relabel_home_data (subj))
+
+		(call bijiben.home_data_obj_type_transition_home_data
+			(subj))
+
+		(call sysadm_bijiben.role_pattern (role subj_type_attribute))
+
+		(call bijibensp.manage_tmpfs_user (subj))
+		(call bijibensp.relabel_tmpfs_user (subj))
+
+		(call bijibensp.manage_home_cache (subj))
+		(call bijibensp.relabel_home_cache (subj))
+
+		(call bijibensp.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call sysadm_bijibensp.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_btst
+		(call btst.manage_tmpfs_user (subj))
+		(call btst.relabel_tmpfs_user (subj))
+
+		(call sysadm_btst.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_canberra
+		(call canberra.manage_tmpfs_user_files (subj))
+		(call canberra.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_canberra.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_caribou
+		(call sysadm_caribou.role_pattern (role subj_type_attribute))
+		(call sysadm_cariboup.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_cgtop
+		(call sysadm_cgtop.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_chfn
+		(call sysadm_chfn.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_corebird
+		(call corebird.manage_tmpfs_user (subj))
+		(call corebird.relabel_tmpfs_user (subj))
+
+		(call corebird.manage_home_cache (subj))
+		(call corebird.relabel_home_cache (subj))
+
+		(call corebird.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call corebird.manage_home_config (subj))
+		(call corebird.relabel_home_config (subj))
+
+		(call corebird.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call corebird.manage_home_data (subj))
+		(call corebird.relabel_home_data (subj))
+
+		(call corebird.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_corebird.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dbus_send
+		(call sysadm_dbus_send.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dconf
+		(call dconf.manage_tmpfs_user (subj))
+		(call dconf.relabel_tmpfs_user (subj))
+
+		(call dconf.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call dconf.manage_home_config (subj))
+		(call dconf.relabel_home_config (subj))
+
+		(call dconf.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_dconf.role_pattern (role subj_type_attribute))
+		(call sysadm_dconfs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dconfed
+		(call dconfed.manage_tmpfs_user (subj))
+		(call dconfed.relabel_tmpfs_user (subj))
+
+		(call sysadm_dconfed.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dleyna
+		(call dleyna.manage_home_config_files (subj))
+		(call dleyna.relabel_home_config_files (subj))
+
+		(call dleyna.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_dleyna.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dleynar
+		(call dleynar.manage_home_config_files (subj))
+		(call dleynar.relabel_home_config_files (subj))
+
+		(call dleynar.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_dleynar.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dmenu
+		(call dmenu.manage_home_cache_files (subj))
+		(call dmenu.relabel_home_cache_files (subj))
+
+		(call dmenu.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call sysadm_dmenu.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_dunst
+		(call dunst.manage_home_config (subj))
+		(call dunst.relabel_home_config (subj))
+
+		(call dunst.home_config_obj_type_transition_home_config (subj))
+
+		(call dunst.manage_tmpfs_user_files (subj))
+		(call dunst.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_dunst.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_emacs
+		(call emacs.manage_home_user (subj))
+		(call emacs.relabel_home_user (subj))
+
+		(call emacs.home_dir_obj_type_transition_home (subj))
+
+		(call emacs.manage_tmpfs_user (subj))
+		(call emacs.relabel_tmpfs_user (subj))
+
+		(call sysadm_emacs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_emacsclient
+		(call sysadm_emacsclient.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_eog
+		(call eog.manage_tmpfs_user (subj))
+		(call eog.relabel_tmpfs_user (subj))
+
+		(call eog.manage_home_config (subj))
+		(call eog.relabel_home_config (subj))
+
+		(call eog.home_config_obj_type_transition_home_config (subj))
+
+		(call eog.manage_home_data_files (subj))
+		(call eog.relabel_home_data_files (subj))
+
+		(call eog.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_eog.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_espeak
+		(call espeak.manage_tmpfs_user_files (subj))
+		(call espeak.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_espeak.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_evince
+		(call evince.manage_tmpfs_user (subj))
+		(call evince.relabel_tmpfs_user (subj))
+
+		(call evince.manage_home_config (subj))
+		(call evince.relabel_home_config (subj))
+
+		(call evince.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_evince.role_pattern (role subj_type_attribute))
+
+		(call evincep.manage_tmpfs_user (subj))
+		(call evincep.relabel_tmpfs_user (subj))
+
+		(call sysadm_evincep.role_pattern (role subj_type_attribute))
+		(call sysadm_evincet.role_pattern (role subj_type_attribute))
+		(call sysadm_evinced.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_epiphany
+		(call sysadm_epiphany.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_evo
+		(call evo.manage_home_cache (subj))
+		(call evo.relabel_home_cache (subj))
+
+		(call evo.home_cache_obj_type_transition_home_cache (subj))
+
+		(call evo.manage_home_config (subj))
+		(call evo.relabel_home_config (subj))
+
+		(call evo.home_config_obj_type_transition_home_config (subj))
+
+		(call evo.manage_home_data (subj))
+		(call evo.relabel_home_data (subj))
+
+		(call evo.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_evoaf.role_pattern (role subj_type_attribute))
+		(call sysadm_evocf.role_pattern (role subj_type_attribute))
+		(call sysadm_evosr.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_festival
+		(call festival.manage_config (subj))
+
+		(call festival.manage_tmpfs_user_files (subj))
+		(call festival.relabel_tmpfs_user_files (subj))
+
+		(call festival.manage_home_user_files (subj))
+		(call festival.relabel_home_user_files (subj))
+
+		(call festival.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_festival.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_ffmpeg
+		(call ffmpeg.manage_tmpfs_user_files (subj))
+		(call ffmpeg.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_ffmpeg.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_fileroller
+		(call fileroller.manage_tmpfs_user (subj))
+		(call fileroller.relabel_tmpfs_user (subj))
+
+		(call sysadm_fileroller.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_fuse_sshfs
+		(call sysadm_fuse_sshfs.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_fwupd
+		(call sysadm_fwupdmgr.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcal
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcal.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcalc
+		(call gcalc.manage_tmpfs_user (subj))
+		(call gcalc.relabel_tmpfs_user (subj))
+
+		(call gcalc.manage_home_cache (subj))
+		(call gcalc.relabel_home_cache (subj))
+
+		(call gcalc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gcalc.role_pattern (role subj_type_attribute))
+
+		(call gcalcsp.manage_tmpfs_user (subj))
+		(call gcalcsp.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcalcsp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gchar
+		(call gchar.manage_tmpfs_user (subj))
+		(call gchar.relabel_tmpfs_user (subj))
+
+		(call sysadm_gchar.role_pattern (role subj_type_attribute))
+
+		(call gcharbs.manage_tmpfs_user (subj))
+		(call gcharbs.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcharbs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcl
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcl.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcon
+		(call gcon.manage_tmpfs_user (subj))
+		(call gcon.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcon.role_pattern (role subj_type_attribute))
+
+		(call gconsp.manage_tmpfs_user (subj))
+		(call gconsp.relabel_tmpfs_user (subj))
+
+		(call sysadm_gconsp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gconf
+		(call gconf.manage_home_config (subj))
+		(call gconf.relabel_home_config (subj))
+
+		(call gconf.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_gconfd.role_pattern (role subj_type_attribute))
+		(call sysadm_gconftool.role_pattern (role subj_type_attribute))
+
+		(call gsettingsdc.manage_home_data_files (subj))
+		(call gsettingsdc.relabel_home_data_files (subj))
+
+		(call
+			gsettingsdc.home_data_obj_type_transition_home_data_files
+				(subj))
+
+		(call sysadm_gsettingsdc.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcr
+		(call sysadm_gcrv.role_pattern (role subj_type_attribute))
+		(call sysadm_gcrp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gcs
+		(call gcs.manage_tmpfs_user (subj))
+		(call gcs.relabel_tmpfs_user (subj))
+
+		(call gcs.manage_home_cache (subj))
+		(call gcs.relabel_home_cache (subj))
+
+		(call gcs.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gcs.manage_home_config (subj))
+		(call gcs.relabel_home_config (subj))
+
+		(call gcs.home_config_obj_type_transition_home_config (subj))
+
+		(call gcs.manage_home_data (subj))
+		(call gcs.relabel_home_data (subj))
+
+		(call gcs.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gcs.role_pattern (role subj_type_attribute))
+
+		(call gcsp.manage_tmpfs_user (subj))
+		(call gcsp.relabel_tmpfs_user (subj))
+
+		(call sysadm_gcsp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gdmuser
+		(call gdmuser.manage_tmpfs_user (subj))
+		(call gdmuser.relabel_tmpfs_user (subj))
+		(call gdmuser.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call sysadm_gdmuser.role_pattern (role subj)))
+
+	(optional sysadm_optional_sysadm_gdocs
+		(call gdocs.manage_tmpfs_user (subj))
+		(call gdocs.relabel_tmpfs_user (subj))
+
+		(call gdocs.manage_home_cache (subj))
+		(call gdocs.relabel_home_cache (subj))
+
+		(call gdocs.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gdocs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gedit
+		(call gedit.manage_home_config (subj))
+		(call gedit.relabel_home_config (subj))
+
+		(call gedit.home_config_obj_type_transition_home_config (subj))
+		(call gedit.home_config_obj_type_transition_home_cmd (subj))
+
+		(call gedit.manage_tmpfs_user (subj))
+		(call gedit.relabel_tmpfs_user (subj))
+
+		(call sysadm_gedit.role_pattern (role subj_type_attribute))
+
+		(call geditstf.manage_tmpfs_user (subj))
+		(call geditstf.relabel_tmpfs_user (subj))
+
+		(call sysadm_geditstf.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_git
+		(call git.home_user_obj_entry_subj (subj))
+		(call git.spec_home_user_auto_subj_type_transition
+			(git_home_user_auto_type_transition_subj_type_attribute
+				subj))
+
+		(call git.exec_home_user_files (subj))
+		(call git.manage_home_user (subj))
+		(call git.relabel_home_user (subj))
+
+		(call git.home_user_obj_type_transition_home (subj))
+
+		(call git.manage_home_config (subj))
+		(call git.relabel_home_config (subj))
+
+		(call git.home_config_obj_type_transition_home_config (subj))
+
+		(call git.manage_tmpfs_user_files (subj))
+		(call git.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_git.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_git_email
+		(call git_email.manage_home_user_files (subj))
+		(call git_email.relabel_home_user_files (subj))
+
+		(call git_email.manage_tmpfs_user (subj))
+		(call git_email.relabel_tmpfs_user (subj))
+
+		(call sysadm_git_email.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gitg
+		(call gitg.manage_tmpfs_user (subj))
+		(call gitg.relabel_tmpfs_user (subj))
+
+		(call gitg.manage_home_cache (subj))
+		(call gitg.relabel_home_cache (subj))
+
+		(call gitg.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gitg.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gkbd
+		(call gkbd.manage_tmpfs_user_files (subj))
+		(call gkbd.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_gkbd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gkrd
+		(call gkrd.manage_tmpfs_user (subj))
+		(call gkrd.relabel_tmpfs_user (subj))
+
+		(call gkrd.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call gkrd.manage_home_data (subj))
+		(call gkrd.relabel_home_data (subj))
+
+		(call gkrd.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gkrd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_glib
+		(call glib.manage_home_cache (subj))
+		(call glib.relabel_home_cache (subj))
+
+		(call glib.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gapp.role_pattern (role subj_type_attribute))
+		(call sysadm_gdbus.role_pattern (role subj_type_attribute))
+		(call sysadm_gsettings.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gm
+		(call gm.manage_tmpfs_user (subj))
+		(call gm.relabel_tmpfs_user (subj))
+
+		(call sysadm_gm.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gmusic
+		(call gmusic.manage_tmpfs_user (subj))
+		(call gmusic.relabel_tmpfs_user (subj))
+
+		(call gmusic.manage_var_tmp_user_files (subj))
+		(call gmusic.relabel_var_tmp_user_files (subj))
+
+		(call gmusic.manage_home_data (subj))
+		(call gmusic.relabel_home_data (subj))
+
+		(call gmusic.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gmusic.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_goa
+		(call goa.manage_home_cache (subj))
+		(call goa.relabel_home_cache (subj))
+
+		(call goa.home_cache_obj_type_transition_home_cache (subj))
+
+		(call goa.manage_home_config (subj))
+		(call goa.relabel_home_config (subj))
+
+		(call goa.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_goad.role_pattern (role subj_type_attribute))
+		(call sysadm_goais.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gom
+		(call sysadm_gom.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gpg
+		(call gpg.manage_home_user (subj))
+		(call gpg.relabel_home_user (subj))
+
+		(call gpg.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_gpg.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gpg_agent
+		(call gpg_agent.manage_home_user (subj))
+		(call gpg_agent.relabel_home_user (subj))
+
+		(call gpg_agent.gpg_home_user_obj_type_transition_home (subj))
+
+		(call sysadm_gpg_agent.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gph
+		(call gph.manage_tmpfs_user (subj))
+		(call gph.relabel_tmpfs_user (subj))
+
+		(call gph.manage_home_cache (subj))
+		(call gph.relabel_home_cache (subj))
+
+		(call gph.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_gph.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gpinentry
+		(call gpinentry.manage_tmpfs_user (subj))
+		(call gpinentry.relabel_tmpfs_user (subj))
+
+		(call sysadm_gpinentry.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_grilo
+		(call grilo.manage_home_data (subj))
+		(call grilo.relabel_home_data (subj))
+		(call grilo.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_grilo.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gs
+		(call gs.manage_home_user_files (subj))
+		(call gs.relabel_home_user_files (subj))
+
+		(call gs.home_dir_obj_type_transition_home_user (subj))
+
+		(call gs.manage_tmpfs_user (subj))
+		(call gs.relabel_tmpfs_user (subj))
+
+		(call gs.manage_home_config (subj))
+		(call gs.relabel_home_config (subj))
+
+		(call gs.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_gs.role_pattern (role subj_type_attribute))
+		(call sysadm_gsquit.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsd
+		(call gsd.manage_tmpfs_user (subj))
+		(call gsd.relabel_tmpfs_user (subj))
+
+		(call gsd.manage_home_data (subj))
+		(call gsd.relabel_home_data (subj))
+
+		(call gsd.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gsd.role_pattern (role subj_type_attribute))
+		(call sysadm_gsdprinter.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsh
+		(call gsh.manage_tmpfs_user (subj))
+		(call gsh.relabel_tmpfs_user (subj))
+
+		(call gsh.tmpfs_obj_type_transition_tmpfs_user_dirs (subj))
+
+		(call gsh.manage_home_data (subj))
+		(call gsh.relabel_home_data (subj))
+
+		(call gsh.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gsh.role_pattern (role subj_type_attribute))
+		(call sysadm_gshep.role_pattern (role subj_type_attribute))
+		(call sysadm_gshhs.role_pattern (role subj_type_attribute))
+		(call sysadm_gshcs.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsound
+		(call gsound.manage_tmpfs_user_files (subj))
+		(call gsound.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_gsound.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gsw
+		(call gsw.manage_tmpfs_user (subj))
+		(call gsw.relabel_tmpfs_user (subj))
+
+		(call gsw.manage_home_cache (subj))
+		(call gsw.relabel_home_cache (subj))
+
+		(call gsw.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gsw.manage_home_data (subj))
+		(call gsw.relabel_home_data (subj))
+
+		(call gsw.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gsw.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gstreamer
+		(call gstreamer.manage_home_cache (subj))
+		(call gstreamer.relabel_home_cache (subj))
+
+		(call gstreamer.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call gstreamer.manage_home_data (subj))
+		(call gstreamer.relabel_home_data (subj))
+
+		(call gstreamer.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gst.role_pattern (role subj_type_attribute))
+		(call sysadm_gstps.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gt
+		(call gt.manage_tmpfs_user_files (subj))
+		(call gt.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_gt.role_pattern (role subj_type_attribute))
+
+		(call gts.manage_tmpfs_user (subj))
+		(call gts.relabel_tmpfs_user (subj))
+
+		(call sysadm_gts.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfs
+		(call sysadm_gvfs.role_pattern (role subj_type_attribute))
+
+		(call gvfsd.manage_tmpfs_user (subj))
+		(call gvfsd.relabel_tmpfs_user (subj))
+
+		(call gvfsd.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call sysadm_gvfsd.role_pattern (role subj_type_attribute))
+
+		(call gvfsdmd.manage_home_data (subj))
+		(call gvfsdmd.relabel_home_data (subj))
+
+		(call gvfsdmd.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gvfsdmd.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdud2.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdburn.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdcdda.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdcomputer.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsddav.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsddnssd.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdftp.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdhttp.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdlocaltest.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdnetwork.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdrecent.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdsftp.role_pattern (role subj_type_attribute))
+		(call sysadm_gvfsdtrash.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfsdafc
+		(call sysadm_gvfsdafcvm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfsdfuse
+		(call sysadm_gvfsdfuse.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfsdgoa
+		(call sysadm_gvfsdgoavm.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_gvfsdgoogle.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfsdgph2
+		(call sysadm_gvfsdgph2vm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvfsdmtp
+		(call sysadm_gvfsdmtpvm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gvid
+		(call gvid.manage_tmpfs_user (subj))
+		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_cache (subj))
+		(call gvid.relabel_home_cache (subj))
+
+		(call gvid.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gvid.manage_home_config (subj))
+		(call gvid.relabel_home_config (subj))
+
+		(call gvid.home_config_obj_type_transition_home_config (subj))
+
+		(call gvid.manage_home_data (subj))
+		(call gvid.relabel_home_data (subj))
+
+		(call gvid.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_gvid.role_pattern (role subj_type_attribute))
+		(call sysadm_gvidap.role_pattern (role subj_type_attribute))
+
+		(call gvidvt.manage_tmpfs_user_files (subj))
+		(call gvidvt.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_gvidvt.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gweather
+		(call gweather.manage_tmpfs_user (subj))
+		(call gweather.relabel_tmpfs_user (subj))
+
+		(call sysadm_gweather.role_pattern (role subj_type_attribute))
+
+		(call gweatherbs.manage_tmpfs_user (subj))
+		(call gweatherbs.relabel_tmpfs_user (subj))
+
+		(call sysadm_gweatherbs.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_busctl
+		(call sysadm_busctl.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_fedpkg
+		(call sysadm_fedpkg.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_firefox
+		(call firefox.manage_tmpfs_user (subj))
+		(call firefox.relabel_tmpfs_user (subj))
+
+		(call firefox.manage_var_tmp_user_files (subj))
+		(call firefox.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_firefox.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_firefox_plugins
+		(call firefox_plugins.manage_tmpfs_user_files (subj))
+		(call firefox_plugins.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_firefox_plugins.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_firefox_xremotec
+		(call sysadm_firefox_xremotec.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_hostnamectl
+		(call sysadm_hostnamectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_i3
+		(call i3.manage_config (subj))
+
+		(call i3.manage_tmpfs_user (subj))
+		(call i3.relabel_tmpfs_user (subj))
+
+		(call i3.manage_home_config (subj))
+		(call i3.relabel_home_config (subj))
+
+		(call i3.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_i3.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_i3lock
+		(call i3lock.manage_tmpfs_user_files (subj))
+		(call i3lock.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_i3lock.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_inhibit
+		(call sysadm_inhibit.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_irssi
+		(call irssi.manage_home_user (subj))
+		(call irssi.relabel_home_user (subj))
+
+		(call irssi.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_irssi.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_journalctl
+		(call sysadm_journalctl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_libnotify
+		(call sysadm_libnotify.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_livestreamer
+		(call livestreamer.manage_home_cache (subj))
+		(call livestreamer.relabel_home_cache (subj))
+
+		(call livestreamer.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call livestreamer.manage_home_config (subj))
+		(call livestreamer.relabel_home_config (subj))
+
+		(call livestreamer.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call livestreamer.manage_tmpfs_user_files (subj))
+		(call livestreamer.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_livestreamer.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_localectl
+		(call sysadm_localectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_loginctl
+		(call sysadm_loginctl.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_lynx
+		(call lynx.manage_config_files (subj))
+
+		(call lynx.manage_home_user_files (subj))
+		(call lynx.relabel_home_user_files (subj))
+
+		(call lynx.home_dir_obj_type_transition_home (subj))
+
+		(call lynx.manage_tmpfs_user_files (subj))
+		(call lynx.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_lynx.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_machinectl
+		(call sysadm_machinectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mozilla
+		(call mozilla.manage_home_user (subj))
+		(call mozilla.relabel_home_user (subj))
+
+		(call mozilla.home_dir_obj_type_transition_home (subj))
+
+		(call mozilla.manage_home_cache (subj))
+		(call mozilla.relabel_home_cache (subj))
+
+		(call mozilla.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_sysadm_mplayer
+		(call mplayer.manage_home_user (subj))
+		(call mplayer.relabel_home_user (subj))
+
+		(call mplayer.home_dir_obj_type_transition_home (subj))
+
+		(call mplayer.manage_tmpfs_user_files (subj))
+		(call mplayer.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_mplayer.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mutt
+		(call mutt.manage_home_user_files (subj))
+		(call mutt.relabel_home_user_files (subj))
+
+		(call mutt.home_dir_obj_type_transition_home (subj))
+
+		(call mutt.manage_tmpfs_user (subj))
+		(call mutt.relabel_tmpfs_user (subj))
+
+		(call sysadm_mutt.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mutt_pgp_ewrap
+		(call sysadm_mutt_pgp_ewrap.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mutter
+		(call sysadm_mutter.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_nautilus
+		(call nautilus.manage_tmpfs_user (subj))
+		(call nautilus.relabel_tmpfs_user (subj))
+
+		(call nautilus.manage_home_data (subj))
+		(call nautilus.relabel_home_data (subj))
+
+		(call nautilus.home_data_obj_type_transition_home_data (subj))
+
+		(call nautilus.manage_home_config (subj))
+		(call nautilus.relabel_home_config (subj))
+
+		(call nautilus.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call sysadm_nautilus.role_pattern (role subj_type_attribute))
+		(call sysadm_nautilusas.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_nautiluscm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_nb
+		(call nb.manage_home_user (subj))
+		(call nb.relabel_home_user (subj))
+
+		(call nb.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_nb.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_nmce
+		(call nmce.manage_tmpfs_user (subj))
+		(call nmce.relabel_tmpfs_user (subj))
+
+		(call sysadm_nmce.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_numactl
+		(call sysadm_numactl.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_obexd
+		(call obexd.manage_home_cache (subj))
+		(call obexd.relabel_home_cache (subj))
+
+		(call obexd.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_obexd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_orca
+		(call orca.manage_tmpfs_user (subj))
+		(call orca.relabel_tmpfs_user (subj))
+
+		(call orca.manage_home_data (subj))
+		(call orca.relabel_home_data (subj))
+
+		(call orca.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_orca.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pa
+		(call pa.manage_tmpfs_user (subj))
+		(call pa.relabel_tmpfs_user (subj))
+
+		(call pa.tmpfs_obj_type_transition_tmpfs (subj))
+
+		(call pa.manage_home_config (subj))
+		(call pa.relabel_home_config (subj))
+
+		(call pa.home_config_obj_type_transition_home_config (subj))
+
+		(call pa.manage_home_user_files (subj))
+		(call pa.relabel_home_user_files (subj))
+
+		(call pa.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_pa.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pactl
+		(call sysadm_pactl.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_passwd
+		(call sysadm_passwd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pinentry
+		(call sysadm_pinentry.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_pkcon
+		(call sysadm_pkcon.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_polari
+		(call polari.manage_tmpfs_user (subj))
+		(call polari.relabel_tmpfs_user (subj))
+
+		(call sysadm_polari.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_polkit_exec
+		(call sysadm_polkit_exec.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_prunner
+		(call sysadm_prunner.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_qemu_user_guest
+		(call qemu_user_guest.manage_tmpfs_user (subj))
+		(call qemu_user_guest.relabel_tmpfs_user (subj))
+
+		(call sysadm_qemu_user_guest.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_rp
+		(call rp.manage_home_user_files (subj))
+		(call rp.relabel_home_user_files (subj))
+
+		(call rp.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_rp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_rpmdev
+		(call rpmdev.manage_tmpfs_user_files (subj))
+		(call rpmdev.relabel_tmpfs_user_files (subj))
+
+		(call rpmdev.manage_home_user_files (subj))
+		(call rpmdev.relabel_home_user_files (subj))
+
+		(call rpmdev.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_rpmdev.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_run
+		(call sysadm_run.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_rygel
+		(call rygel.manage_home_user (subj))
+		(call rygel.relabel_home_user (subj))
+
+		(call rygel.manage_home_config (subj))
+		(call rygel.relabel_home_config (subj))
+
+		(call rygel.home_config_obj_type_transition_home_config (subj))
+
+		(call rygel.manage_home_cache (subj))
+		(call rygel.relabel_home_cache (subj))
+
+		(call rygel.home_cache_obj_type_transition_home_cache (subj))
+
+		(call sysadm_rygel.role_pattern (role subj_type_attribute))
+		(call sysadm_rygelp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_screen
+		(allow subj self (capability (setuid setgid fsetid
+			dac_override sys_admin)))
+
+		(call screen.manage_home_user_files (subj))
+		(call screen.relabel_home_user_files (subj))
+
+		(call screen.home_dir_obj_type_transition_home_files (subj))
+
+		(call screen.manage_tmpfs_user_files (subj))
+		(call screen.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_screen.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_script
+		(call sysadm_script.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_seahorse
+		(call seahorse.manage_tmpfs_user (subj))
+		(call seahorse.relabel_tmpfs_user (subj))
+
+		(call sysadm_seahorse.role_pattern (role subj_type_attribute))
+
+		(call seahorsesap.manage_tmpfs_user (subj))
+		(call seahorsesap.relabel_tmpfs_user (subj))
+
+		(call sysadm_seahorsesap.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_setoolsgui
+		(call setoolsgui.manage_tmpfs_user (subj))
+		(call setoolsgui.relabel_tmpfs_user (subj))
+
+		(call setoolsgui.manage_var_tmp_user_files (subj))
+		(call setoolsgui.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_setoolsgui.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_sshduser
+		(call sysadm_sshduser.role_pattern (role subj)))
+
+	(optional sysadm_optional_sysadm_steam
+		(call steam.manage_tmpfs_user (subj))
+		(call steam.relabel_tmpfs_user (subj))
+
+		(call steam.manage_var_tmp_user_files (subj))
+		(call steam.relabel_var_tmp_user_files (subj))
+
+		(call steam.manage_home_user (subj))
+		(call steam.relabel_home_user (subj))
+
+		(call steam.home_dir_obj_type_transition_home_user (subj))
+
+		(call steam.manage_home_config (subj))
+		(call steam.relabel_home_config (subj))
+
+		(call steam.home_config_obj_type_transition_home_config (subj))
+
+		(call steam.manage_home_data (subj))
+		(call steam.relabel_home_data (subj))
+
+		(call steam.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_steam.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_sduser
+		(call sduser.manage_all_unit (subj))
+		(call sysadm_sduser.role_pattern (role subj)))
+
+	(optional sysadm_optional_sysadm_sessbus
+		(call sessbus.manage_tmpfs_user (subj))
+		(call sessbus.relabel_tmpfs_user (subj))
+
+		(call sessbus.tmpfs_obj_type_transition_tmpfs (subj))
+
+		(call sysadm_sessbus.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_sessbus_launch
+		(call sessbus_launch.manage_home_user (subj))
+		(call sessbus_launch.relabel_home_user (subj))
+
+		(call sessbus_launch.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_ssh_agent
+		(call ssh_agent.manage_tmpfs_user (subj))
+		(call ssh_agent.relabel_tmpfs_user (subj))
+
+		(call sysadm_ssh_agent.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_ssh_client
+		(call ssh_client.manage_home_user (subj))
+		(call ssh_client.relabel_home_user (subj))
+
+		(call ssh_client.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_ssh_client.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_ssh_keygen.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_startx
+		(call startx.manage_tmpfs_user_files (subj))
+		(call startx.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_startx.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_sudo
+		(call sudo.manage_tmpfs_user_files (subj))
+		(call sudo.relabel_tmpfs_user_files (subj))
+
+		(call sudo.manage_var_tmp_user_files (subj))
+		(call sudo.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_sudo.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_systemctl
+		(call sysadm_systemctl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_thunderbird
+		(call thunderbird.manage_home_user (subj))
+		(call thunderbird.relabel_home_user (subj))
+
+		(call thunderbird.home_dir_obj_type_transition_home (subj))
+
+		(call thunderbird.manage_home_cache (subj))
+		(call thunderbird.relabel_home_cache (subj))
+
+		(call thunderbird.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call thunderbird.manage_tmpfs_user (subj))
+		(call thunderbird.relabel_tmpfs_user (subj))
+
+		(call thunderbird.manage_var_tmp_user_files (subj))
+		(call thunderbird.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_thunderbird.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_timedatectl
+		(call sysadm_timedatectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_tor_socks
+		(call sysadm_tor_socks.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_tp
+		(call sysadm_tpmct.role_pattern (role subj_type_attribute))
+
+		(call tpmc.manage_home_cache (subj))
+		(call tpmc.relabel_home_cache (subj))
+
+		(call tpmc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpmc.manage_home_data (subj))
+		(call tpmc.relabel_home_data (subj))
+
+		(call tpmc.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_tpmc.role_pattern (role subj_type_attribute))
+
+		(call tpl.manage_home_cache (subj))
+		(call tpl.relabel_home_cache (subj))
+
+		(call tpl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpl.manage_home_data (subj))
+		(call tpl.relabel_home_data (subj))
+
+		(call tpl.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_tpl.role_pattern (role subj_type_attribute))
+		(call sysadm_tpi.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_tracker
+		(call sysadm_tracker.role_pattern (role subj_type_attribute))
+
+		(call trackerm.manage_tmpfs_user (subj))
+		(call trackerm.relabel_tmpfs_user (subj))
+
+		(call sysadm_trackerm.role_pattern (role subj_type_attribute))
+
+		(call trackers.manage_home_cache (subj))
+		(call trackers.relabel_home_cache (subj))
+
+		(call trackers.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call trackers.manage_home_config (subj))
+		(call trackers.relabel_home_config (subj))
+
+		(call trackers.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call trackers.manage_home_data (subj))
+		(call trackers.relabel_home_data (subj))
+
+		(call trackers.home_data_obj_type_transition_home_data (subj))
+
+		(call trackers.manage_var_tmp_user_files (subj))
+		(call trackers.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_trackers.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_vdagent
+		(call sysadm_vdagent.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_vinagre
+		(call vinagre.manage_tmpfs_user (subj))
+		(call vinagre.relabel_tmpfs_user (subj))
+
+		(call vinagre.manage_home_cache (subj))
+		(call vinagre.relabel_home_cache (subj))
+
+		(call vinagre.home_cache_obj_type_transition_home_cache (subj))
+
+		(call vinagre.manage_home_data (subj))
+		(call vinagre.relabel_home_data (subj))
+
+		(call vinagre.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_vinagre.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_vino
+		(call vino.manage_tmpfs_user (subj))
+		(call vino.relabel_tmpfs_user (subj))
+
+		(call sysadm_vino.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_visudo
+		(call sysadm_visudo.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_rxvt
+		(call rxvt.manage_tmpfs_user (subj))
+		(call rxvt.relabel_tmpfs_user (subj))
+
+		(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call sysadm_rxvt.role_pattern (role subj_type_attribute))
+		(call sysadm_rxvtc.role_pattern (role subj_type_attribute))
+
+		(call sysadm_rxvtd.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_vlock
+		(call vlock.manage_home_user_files (subj))
+		(call vlock.relabel_home_user_files (subj))
+
+		(call vlock.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_vlock.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_webkit
+		(call webkit.manage_home_cache (subj))
+		(call webkit.relabel_home_cache (subj))
+
+		(call webkit.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call webkitwp.manage_tmpfs_user (subj))
+		(call webkitwp.relabel_tmpfs_user (subj))
+
+		(call webkitwp.manage_home_cache (subj))
+		(call webkitwp.relabel_home_cache (subj))
+
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call webkitwp.manage_home_data (subj))
+		(call webkitwp.relabel_home_data (subj))
+
+		(call webkitwp.home_data_obj_type_transition_home_data (subj))
+
+		(call sysadm_webkitwp.role_pattern (role subj_type_attribute))
+
+		(call webkitpp.manage_tmpfs_user (subj))
+		(call webkitpp.relabel_tmpfs_user (subj))
+
+		(call sysadm_webkitpp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xautolock
+		(call sysadm_xautolock.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xbindkeys
+		(call xbindkeys.manage_home_user_files (subj))
+		(call xbindkeys.relabel_home_user_files (subj))
+
+		(call xbindkeys.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_xbindkeys.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xinit
+		(call xinit.spec_home_user_auto_subj_type_transition
+			(xinit_home_user_auto_type_transition_subj_type_attribute
+				subj))
+		(call xinit.exec_home_user_files (subj))
+		(call xinit.home_user_obj_entry_subj (subj))
+		(call xinit.manage_home_user_files (subj))
+		(call xinit.relabel_home_user_files (subj))
+
+		(call xinit.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_xinit.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xpdf
+		(call sysadm_xpdf.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xsession
+		(call xsession.manage_tmpfs_user_files (subj))
+		(call xsession.relabel_tmpfs_user_files (subj))
+
+		(call xsession.manage_home_user_files (subj))
+		(call xsession.relabel_home_user_files (subj))
+
+		(call xsession.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_xsession.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xwayland
+		(call xwayland.manage_tmpfs_user (subj))
+		(call xwayland.relabel_tmpfs_user (subj))
+
+		(call sysadm_xwayland.role (role)))
+
+	(optional sysadm_optional_sysadm_xterm
+		(call sysadm_xterm.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_yelp
+		(call yelp.manage_tmpfs_user (subj))
+		(call yelp.relabel_tmpfs_user (subj))
+
+		(call yelp.manage_home_config (subj))
+		(call yelp.relabel_home_config (subj))
+
+		(call yelp.home_config_obj_type_transition_home_config (subj))
+
+		(call sysadm_yelp.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_zenity
+		(call zenity.manage_tmpfs_user (subj))
+		(call zenity.relabel_tmpfs_user (subj))
+
+		(call sysadm_zenity.role_pattern (role subj_type_attribute))))

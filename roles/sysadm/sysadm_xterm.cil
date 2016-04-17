@@ -1,0 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_xterm
+	(blockinherit xterm.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_xterm_optional_sysadm_gs
+		(call sysadm_gs.stream_connect (subj)))
+
+	(optional sysadm_xterm_optional_sysadm_screen
+		(call sysadm_screen.auto_subj_type_transition (subj))))

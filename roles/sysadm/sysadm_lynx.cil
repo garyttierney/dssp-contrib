@@ -1,0 +1,24 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_lynx
+	(blockinherit lynx.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_lynx_optional_sysadm_gpg
+		(call sysadm_gpg.auto_subj_type_transition (subj)))
+
+	(optional sysadm_lynx_optional_sysadm_irssi
+		(call sysadm_irssi.auto_subj_type_transition (subj)))
+
+	(optional sysadm_lynx_optional_sysadm_mutt
+		(call sysadm_mutt.auto_subj_type_transition (subj)))
+
+	(optional sysadm_lynx_optional_tor_socks
+		(call tor_socks.client_subj_type (subj))))

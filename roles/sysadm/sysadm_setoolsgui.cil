@@ -1,0 +1,54 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_setoolsgui
+	(blockinherit setoolsgui.subj_blk)
+
+	(optional sysadm_setoolsgui_optional_sysadm_atspi
+		(call sysadm_atspi.tmpfs_client (subj
+			setoolsgui.tmpfs_user_file)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_atspi_sessbus_launch
+		(call
+			sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type
+				(subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_dconf
+		(call sysadm_dconf.client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gconfd
+		(call sysadm_gconfd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gs
+		(call sysadm_gs.stream_connect (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdud2
+		(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdgoavm
+		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdgoogle
+		(call sysadm_gvfsdgoogle.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdtrash
+		(call sysadm_gvfsdtrash.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdmd
+		(call sysadm_gvfsdmd.client_subj_type (subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_gvfsdnetwork
+		(call sysadm_gvfsdnetwork.sessbus_chat_client_subj_type
+			(subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition
+			(subj)))
+
+	(optional sysadm_setoolsgui_optional_sysadm_thunderbird
+		(call sysadm_thunderbird.auto_subj_type_transition (subj))))

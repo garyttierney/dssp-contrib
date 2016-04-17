@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_ffmpeg
+	(blockinherit ffmpeg.subj_blk)
+
+	(optional sysadm_ffmpeg_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))

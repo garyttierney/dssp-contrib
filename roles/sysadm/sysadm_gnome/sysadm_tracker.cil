@@ -1,0 +1,100 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_tracker
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+(in sysadm_trackers
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_tracker
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit tracker.subj_blk)
+
+	(call sysadm_trackers.sessbus_chat_client_subj_type
+		(client_subj_type_attribute))
+
+	(call trackers.rw_home_cache_files (client_subj_type_attribute))
+
+	(optional sysadm_tracker_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type
+			(client_subj_type_attribute))))
+
+(block sysadm_trackerm
+	(blockinherit trackerm.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		trackerm.tmpfs_user_file))
+
+	(call sysadm_trackers.sessbus_chat_client_subj_type (subj))
+
+	(call sysadm_gvfsdmd.client_subj_type (subj))
+	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_trackerm_optional_sysadm_gvfsdafc
+		(call sysadm_gvfsdafcvm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_trackerm_optional_sysadm_gvfsdgoavm
+		(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_trackerm_optional_sysadm_gvfsdghp2
+		(call sysadm_gvfsdgph2vm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_trackerm_optional_sysadm_gvfsdmtp
+		(call sysadm_gvfsdmtpvm.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_trackerm_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj trackerm.cmd_file)))
+
+	(optional sysadm_trackerm_optional_sysadm_gstreamer
+		(call sysadm_gstreamer.client_subj_type (subj)))
+
+	(optional sysadm_trackerm_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj trackerm.cmd_file))))
+
+(block sysadm_trackers
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit trackers.subj_blk)
+
+	(call sysadm_trackerm.rw_inherited_fifo_files (subj))
+
+	(call sysadm_dconf.client_subj_type (subj))
+
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_trackers_optional_sysadm_bijiben
+		(call sysadm_bijiben.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_trackers_optional_sysadm_gdocs
+		(call sysadm_gdocs.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_trackers_optional_sysadm_gmusic
+		(call sysadm_gmusic.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_trackers_optional_sysadm_gom
+		(call sysadm_gom.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_trackers_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj trackers.cmd_file)))
+
+	(optional sysadm_trackers_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj trackers.cmd_file)))
+
+	(optional
+		sysadm_trackers_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

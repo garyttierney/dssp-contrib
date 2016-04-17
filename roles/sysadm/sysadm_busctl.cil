@@ -1,0 +1,28 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_busctl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call busctl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_busctl
+	(blockinherit busctl.subj_blk)
+
+	(optional sysadm_busctl_optional_sysadm_sduser
+		(call sysadm_sduser.control (subj)))
+
+	(optional sysadm_busctl_optional_sessbus
+		(call sessbus.chat_all_client_subj (subj)))
+
+	(optional sysadm_busctl_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional sysadm_busctl_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

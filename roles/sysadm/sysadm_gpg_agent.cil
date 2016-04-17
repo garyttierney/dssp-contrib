@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_gpg_agent
+	(blockinherit gpg_agent.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_gpg_agent_optional_sysadm_pinentry
+		(call sysadm_pinentry.auto_subj_type_transition (subj))))

@@ -1,0 +1,42 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_canberra
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_canberra
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit canberra.subj_blk)
+
+	(call sysadm_atspird.sessbus_chat_client_subj_type (subj))
+
+	(call sysadm_caribou.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_canberra_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj)))
+
+	(optional sysadm_canberra_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_canberra_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
+	(optional sysadm_canberra_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional
+		sysadm_canberra_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

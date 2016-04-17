@@ -1,0 +1,20 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_corebird
+	(blockinherit corebird.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		corebird.tmpfs_user_file))
+	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(optional sysadm_corebird_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj)))
+
+	(optional sysadm_corebird_optional_sysadm_gstreamer
+		(call sysadm_gstreamer.client_subj_type (subj)))
+
+	(optional sysadm_corebird_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj corebird.cmd_file))))

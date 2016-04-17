@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_systemctl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call systemctl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_systemctl
+	(blockinherit systemctl.subj_blk)
+
+	(optional sysadm_systemctl_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

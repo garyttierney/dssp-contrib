@@ -1,0 +1,34 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_polari
+	(macro auto_subj_type_transition ((type ARG1))
+		(call polari.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call polari.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_polari
+	(blockinherit polari.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		polari.tmpfs_user_file))
+
+	(call sysadm_tpi.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_polari_optional_sysadm_gvfsdhttp
+		(call sysadm_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
+		(call sysadm_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_polari_optional_sysadm_tpmc
+		(call sysadm_tpmc.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_polari_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj polari.cmd_file))))

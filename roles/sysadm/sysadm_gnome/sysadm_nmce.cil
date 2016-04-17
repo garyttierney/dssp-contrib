@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_nmce
+	(blockinherit nmce.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		nmce.tmpfs_user_file))
+
+	(optional sysadm_nmce_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj)))
+
+	(optional sysadm_nmce_optional_sysadm_sessbus
+		(call sysadm_sessbus.service_subj_type (subj))))

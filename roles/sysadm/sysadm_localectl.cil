@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_localectl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call localectl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_localectl
+	(blockinherit localectl.subj_blk)
+
+	(optional sysadm_localectl_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

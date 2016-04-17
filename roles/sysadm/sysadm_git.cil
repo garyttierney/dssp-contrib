@@ -1,0 +1,30 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_git
+	(blockinherit git.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(call sysadm.git_home_user_auto_type_transition_subj_type (subj))
+
+	(optional sysadm_git_optional_sysadm_gpg
+		(call sysadm_gpg.auto_subj_type_transition (subj)))
+
+	(optional sysadm_git_optional_sysadm_gedit
+		(call sysadm_gedit.rw_inherited_fifo_files (subj)))
+
+	(optional sysadm_git_optional_sysadm_git_email
+		(call sysadm_git_email.auto_subj_type_transition (subj)))
+
+	(optional sysadm_git_optional_sysadm_ssh_client
+		(call sysadm_ssh_client.auto_subj_type_transition (subj)))
+
+	(optional sysadm_git_optional_sysadm_tor_socks
+		(call tor_socks.client_subj_type (subj))
+		(call sysadm_tor_socks.auto_subj_type_transition (subj))))

@@ -1,0 +1,36 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_gstreamer
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_gstreamer
+	(typeattribute client_subj_type_attribute)
+
+	(call sysadm_gstps.auto_subj_type_transition
+		(client_subj_type_attribute))
+
+	(call gstreamer.client_subj_type (client_subj_type_attribute)))
+
+(block sysadm_gst
+	(blockinherit gst.subj_blk))
+
+(block sysadm_gstps
+	(blockinherit gstps.subj_blk)
+
+	(optional sysadm_gstps_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj)))
+
+	(optional sysadm_gstps_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gstps_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

@@ -1,0 +1,41 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sysadm_gvfsdmtpvm
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_gvfsdmtpvm
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit gvfsdmtpvm.subj_blk)
+
+	(call sysadm_gvfsd.daemon (subj gvfsdmtpvm.cmd_file))
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_gvfsdmtpvm_optional_sysadm_gsh
+		(call sysadm_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvfsdmtpvm_optional_sysadm_nautilus
+		(call sysadm_nautilus.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gvfsdmtpvm_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj gvfsdmtpvm.cmd_file)))
+
+	(optional
+		sysadm_gvfsdmtpvm_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj
+			(unix_stream_socket (connectto)))
+
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

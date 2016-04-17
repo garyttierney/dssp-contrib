@@ -1,0 +1,29 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_awesome
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit awesome.subj_blk)
+
+	(call sysadm.subj_type (subj))
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_awesome_optional_sysadm_sessbus
+		(call sysadm_sessbus.service_subj_type (subj)))
+
+	(optional
+		sysadm_awesome_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block sysadm_awesomec
+	(blockinherit awesomec.subj_blk))

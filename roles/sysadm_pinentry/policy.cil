@@ -1,8 +1,0 @@
-(block sysadm_pinentry
-	(blockinherit pinentry.subj_blk)
-
-	(optional sysadm_pinentry_optional_sysadm_gpinentry
-		(call sysadm_gpinentry.auto_subj_type_transition (subj)))
-
-	(optional sysadm_pinentry_optional_sysadm_gpg_agent
-		(call sysadm_gpg_agent.stream_connect (subj))))

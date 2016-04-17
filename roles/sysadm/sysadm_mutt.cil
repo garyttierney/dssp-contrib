@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_mutt
+	(blockinherit mutt.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(optional sysadm_mutt_optional_sysadm_emacsclient
+		(call sysadm_emacsclient.auto_subj_type_transition (subj)))
+
+	(optional sysadm_mutt_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_mutt_optional_sysadm_firefox_xremotec
+		(call sysadm_firefox_xremotec.auto_subj_type_transition
+			(subj)))
+
+	(optional sysadm_mutt_optional_sysadm_mutt_pgp_ewrap
+		(call sysadm_mutt_pgp_ewrap.auto_subj_type_transition (subj))))

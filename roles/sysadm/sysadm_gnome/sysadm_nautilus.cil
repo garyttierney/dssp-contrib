@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_nautilus
+	(blockinherit nautilus.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		nautilus.tmpfs_user_file))
+	(call sysadm_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(call sysadm.subj_type (subj))
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(call sysadm_gvfsdmd.client_subj_type (subj))
+
+	(optional sysadm_nautilus_optional_sysadm_eog
+		(call sysadm_eog.auto_subj_type_transition (subj)))
+
+	(optional sysadm_nautilus_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj nautilus.cmd_file))
+		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_nautilus_optional_sysadm_gvid
+		(call sysadm_gvid.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_nautilus_optional_sysadm_sessbus
+		(call sysadm_sessbus.daemon (subj nautilus.cmd_file)))
+
+	(optional sysadm_nautilus_optional_sysadm_tracker
+		(call sysadm_tracker.client_subj_type (subj))))
+
+(block sysadm_nautilusas
+	(blockinherit nautilusas.subj_blk))
+
+(block sysadm_nautiluscm
+	(blockinherit nautiluscm.subj_blk))

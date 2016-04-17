@@ -1,9 +1,0 @@
-(in sd_resolved
-	(filecon "/etc/systemd/resolved\.conf\.d(/.*)?" any
-		config_file_context)
-	(filecon "/etc/systemd/resolved\.conf" file config_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-resolved.*" file
-		unit_file_context)
-	(filecon "/usr/lib/systemd/systemd-resolved" file cmd_file_context)
-	(filecon "/usr/lib/systemd/systemd-resolve-host" file cmd_file_context)
-	(filecon "/var/run/systemd/resolve(/.*)?" any runtime_file_context))

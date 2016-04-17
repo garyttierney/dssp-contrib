@@ -1,0 +1,76 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_sysctl
+	(filecon "/usr/lib/systemd/systemd-sysctl" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-sysctl.*" file
+		unit_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_sysctl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_sysctl
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(call app.application_subj_type (subj))
+
+	(roletype role_attribute subj)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(allow subj self (capability (net_admin)))
+
+	(call sys.rw_all_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+
+	(call locale.read (subj))
+
+	(call sctl.read_config (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call sd_udevd.rw_inherited_udp_sockets (subj))
+
+	(optional sd_sysctl_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

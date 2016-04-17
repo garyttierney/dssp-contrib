@@ -1,0 +1,85 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_cryptsetup
+	(filecon "/usr/lib/systemd/system/[^/]*cryptsetup.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-cryptsetup" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_cryptsetup
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.read_state_blk)
+
+	(macro rw_sem ((type ARG1))
+		(allow ARG1 subj rw_sem_perms))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_cryptsetup
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(allow subj self (capability (sys_admin ipc_lock)))
+	(allow subj self create_socket_perms)
+	(allow subj self (socket (accept)))
+	(allow subj self create_sem_perms)
+
+	(call sys.get_sysvipc_info (subj))
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_keyring (subj))
+
+	(call dev.rw_lvm_control (subj))
+	(call dev.read_random (subj))
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_devtmpfs_fs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call file.read_config_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call storage.rw_all (subj))
+
+	(call fstab.read (subj))
+
+	(call sd_askpwd.client_subj_type (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

@@ -1,0 +1,311 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_journal_gateway
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-gatewayd.*"
+		file unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-remote.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal-upload.*" file
+		unit_file_context)
+
+	(portcon "tcp" 19531 port_obj_context))
+
+(in sd_journal_gatewayd
+	(filecon "/usr/lib/systemd/systemd-journal-gatewayd" file
+		cmd_file_context))
+
+(in sd_journal_remote
+	(filecon "/etc/systemd/journal-remote\.conf" file config_file_context)
+	(filecon "/etc/systemd/journal-remote\.conf\.d(/.*)?" any
+		config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journal-remote" file
+		cmd_file_context))
+
+(in sd_journal_upload
+	(filecon "/etc/systemd/journal-upload\.conf" file config_file_context)
+	(filecon "/etc/systemd/journal-upload\.conf\.d(/.*)?" any
+		config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journal-upload" file
+		cmd_file_context)
+	(filecon "/var/lib/systemd/journal-upload(/.*)?" any
+		var_lib_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_journal_gateway
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+(in sd_journal_gatewayd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file
+			"*"))))
+
+(in sd_journal_remote
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(call manage_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms)))
+
+(in sd_journal_upload
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(call manage_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms)))
+
+	(macro search_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file search_dir_perms))
+
+	(macro list_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file list_dir_perms))
+
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib_lnk_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_lnk_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms)
+		(allow ARG1 var_lib_file list_dir_perms)
+		(allow ARG1 var_lib_file read_lnk_file_perms))
+
+	(macro manage_var_lib ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms)
+		(allow ARG1 var_lib_file manage_dir_perms)
+		(allow ARG1 var_lib_file manage_lnk_file_perms))
+
+	(macro relabel_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms)
+		(allow ARG1 var_lib_file relabel_dir_perms)
+		(allow ARG1 var_lib_file relabel_lnk_file_perms))
+
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"journal-upload")))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_journal_gateway
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit net.port_obj_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call sd.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
+
+(block sd_journal_gatewayd
+	(blockinherit sd.daemon_blk)
+
+	(call sd.tcp_socket_activated_subj_type (subj))
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self create_tcp_stream_socket_perms)
+
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+
+	(call net.tcp_bind_generic_node (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call sd_journal_gateway.tcp_bind_port (subj))
+
+	(call sd_journald.client_subj_type (subj))
+	(call sd_journald.read_var_log (subj))
+
+	(optional sd_journal_gatewayd_optional_sd_machined
+		(call sd_machined.read_config_files (subj))))
+
+(block sd_journal_remote
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call sd.daemon (subj cmd_file))
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(allow subj self create_tcp_socket_perms)
+
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call sd_journal_gateway.tcp_connect_port (subj))
+
+	(call sd_journald.manage_var_log (subj))
+
+	(optional sd_journal_remote_optional_curl
+		(call curl.exec (subj))))
+
+(block sd_journal_upload
+	(blockinherit sd.daemon_blk)
+
+	(typeattributeset sd_journal_gateway.subj_type_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset sd_journal_gateway.obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj)))

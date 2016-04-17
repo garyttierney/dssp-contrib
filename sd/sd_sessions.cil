@@ -1,0 +1,62 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_sessions
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-user-sessions.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-user-sessions" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_sessions
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_sessions
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(call file.search_config (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call nologin.manage_runtime_files (subj))
+	(call nologin.runtime_obj_type_transition_runtime (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call file_context.read_config_files (subj))
+	(call selinux_config.read_config_files (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

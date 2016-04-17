@@ -1,0 +1,93 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_vconsole
+	(filecon "/etc/vconsole\.conf" file config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-vconsole-setup.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-vconsole-setup" file
+		cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_vconsole
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_vconsole
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
+
+	(allow subj self (capability (sys_tty_config sys_admin)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.use_fd (subj))
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call fs.list_rootfs (subj))
+	(call fs.write_inherited_devpts_chr_files (subj))
+	(call fs.rw_sysfs_files (subj))
+
+	(call term.use_unallocated_ttys (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call sd_udevd.rw_inherited_udp_sockets (subj))
+
+	(optional sd_vconsole_optional_loadkeys
+	    (call loadkeys.auto_subj_type_transition (subj)))
+
+	(optional sd_vconsole_optional_plymouth
+	    (call plymouthd.use_fd (subj)))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

@@ -1,0 +1,110 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_initctl
+	(filecon "/usr/lib/systemd/systemd-initctl" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-initctl.*" file
+		unit_file_context)
+	(filecon "/var/run/systemd/initctl(/.*)?" any runtime_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_initctl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file search_dir_perms))
+
+	(macro list_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file list_dir_perms))
+
+	(macro read_runtime_fifo_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro getattr_runtime_fifo_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call getattr_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro read_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file list_dir_perms)
+		(allow ARG1 runtime_file read_fifo_file_perms))
+
+	(macro manage_runtime ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_dir_perms)
+		(allow ARG1 runtime_file manage_fifo_file_perms))
+
+	(macro relabel_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_dir_perms)
+		(allow ARG1 runtime_file relabel_fifo_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"initctl")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_initctl
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(call sd.fifo_file_activated_obj_type (runtime_file))
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(call mls.trusted_obj_type (runtime_file))
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_fifo_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_fifo_file_perms))

@@ -1,0 +1,119 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_rfkill
+	(filecon "/var/lib/systemd/rfkill(/.*)?" any var_lib_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-rfkill.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-rfkill" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_rfkill
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file search_dir_perms))
+
+	(macro list_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file list_dir_perms))
+
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib_lnk_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_lnk_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms)
+		(allow ARG1 var_lib_file list_dir_perms)
+		(allow ARG1 var_lib_file read_lnk_file_perms))
+
+	(macro manage_var_lib ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms)
+		(allow ARG1 var_lib_file manage_dir_perms)
+		(allow ARG1 var_lib_file manage_lnk_file_perms))
+
+	(macro relabel_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms)
+		(allow ARG1 var_lib_file relabel_dir_perms)
+		(allow ARG1 var_lib_file relabel_lnk_file_perms))
+
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"rfkill")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_rfkill
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call dev.read_event (subj))
+	(call dev.rw_inherited_wireless (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call sd.notify_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

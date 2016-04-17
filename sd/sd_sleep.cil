@@ -1,0 +1,110 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_sleep
+	(filecon "/etc/systemd/sleep\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/etc/systemd/sleep\.conf" file config_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-hybrid-sleep.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-sleep" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_sleep
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(call manage_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_sleep
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

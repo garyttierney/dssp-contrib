@@ -1,7 +1,0 @@
-(in sd_bootchart
-	(filecon "/etc/systemd/bootchart\.conf" file config_file_context)
-	(filecon "/etc/systemd/bootchart\.conf\.d(/.*)?" any
-		config_file_context)
-	(filecon "/usr/lib/systemd/systemd-bootchart" file cmd_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-bootchart.*" file
-		unit_file_context))

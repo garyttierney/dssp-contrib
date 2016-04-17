@@ -1,0 +1,376 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_journald
+	(filecon "/etc/systemd/journald\.conf" file config_file_context)
+	(filecon "/etc/systemd/journald\.conf\.d(/.*)?" any
+		config_file_context)
+	(filecon "/usr/lib/systemd/systemd-journald" file cmd_file_context)
+	(filecon "/usr/lib/systemd/systemd-kmsg-syslogd" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*syslog.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-journal.*" file
+		unit_file_context)
+	(filecon "/var/lib/systemd/catalog(/.*)?" any var_lib_file_context))
+
+(filecon "/var/log/journal(/.*)?" any sd_journald_var_log)
+(filecon "/var/run/log(/.*)?" any sd_journald_var_log)
+(filecon "/var/run/systemd/journal(/.*)?" any sd_journald_runtime)
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context sd_journald_runtime (sys.id sys.role
+					sd_journald.runtime_file (systemhigh
+						systemhigh)))
+				(context sd_journald_var_log (sys.id sys.role
+					sd_journald.var_log_file (systemhigh
+						systemhigh))))
+			(false
+				(context sd_journald_runtime (sys.id object_r
+					sd_journald.runtime_file (systemhigh
+						systemhigh)))
+				(context sd_journald_var_log (sys.id object_r
+					sd_journald.var_log_file (systemhigh
+						systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context sd_journald_runtime (sys.id sys.role
+					sd_journald.runtime_file (systemlow
+						systemlow)))
+				(context sd_journald_var_log (sys.id sys.role
+					sd_journald.var_log_file (systemlow
+						systemlow))))
+			(false
+				(context sd_journald_runtime (sys.id object_r
+					sd_journald.runtime_file (systemlow
+						systemlow)))
+				(context sd_journald_var_log (sys.id object_r
+					sd_journald.var_log_file (systemlow
+						systemlow)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_journald
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro search_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(call manage_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(blockinherit file.search_var_log_blk)
+	(blockinherit file.list_var_log_blk)
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.read_var_log_lnk_files_blk)
+	(blockinherit file.manage_var_log_lnk_files_blk)
+	(blockinherit file.read_var_log_blk)
+	(blockinherit file.manage_var_log_blk)
+	(blockinherit file.relabel_var_log_blk)
+
+	(macro relabelto_var_log_dirs ((type ARG1))
+		(call search_var_log (ARG1))
+		(allow ARG1 var_log_file relabelto_dir_perms))
+
+	(macro relabelto_var_log_files ((type ARG1))
+		(call search_var_log (ARG1))
+		(allow ARG1 var_log_file relabelto_file_perms))
+
+	(macro runtime_obj_type_transition_var_log ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1 var_log_file dir
+			"log")))
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file dir
+			"journal")))
+
+	(macro search_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file search_dir_perms))
+
+	(macro dontaudit_search_runtime ((type ARG1))
+		(dontaudit ARG1 runtime_file search_dir_perms))
+
+	(macro list_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file list_dir_perms))
+
+	(macro read_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime_lnk_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_lnk_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file read_file_perms)
+		(allow ARG1 runtime_file list_dir_perms)
+		(allow ARG1 runtime_file read_sock_file_perms)
+		(allow ARG1 runtime_file read_lnk_file_perms))
+
+	(macro manage_runtime ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_file_perms)
+		(allow ARG1 runtime_file manage_dir_perms)
+		(allow ARG1 runtime_file manage_sock_file_perms)
+		(allow ARG1 runtime_file manage_lnk_file_perms))
+
+	(macro relabel_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_file_perms)
+		(allow ARG1 runtime_file relabel_dir_perms)
+		(allow ARG1 runtime_file relabel_sock_file_perms)
+		(allow ARG1 runtime_file relabel_lnk_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"journal")))
+
+	(macro search_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file search_dir_perms))
+
+	(macro list_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file list_dir_perms))
+
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro manage_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call manage_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib_lnk_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_lnk_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms)
+		(allow ARG1 var_lib_file list_dir_perms)
+		(allow ARG1 var_lib_file read_lnk_file_perms))
+
+	(macro manage_var_lib ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms)
+		(allow ARG1 var_lib_file manage_dir_perms)
+		(allow ARG1 var_lib_file manage_lnk_file_perms))
+
+	(macro relabel_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms)
+		(allow ARG1 var_lib_file relabel_dir_perms)
+		(allow ARG1 var_lib_file relabel_lnk_file_perms))
+
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"catalog")))
+
+	(blockinherit sd.stop_unit_blk)
+	(blockinherit sd.start_unit_blk)
+	(blockinherit sd.status_unit_blk)
+
+	(blockinherit subj.use_fd_blk)
+
+	(macro stream_connect ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd_askpwd_agent.run (ARG1 ARG2))
+		(call sd.daemon_adm_subj_type (ARG1))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_journald
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(call sd.netlink_socket_activated (subj netlink_audit_socket))
+	(call sd.unix_dgram_socket_activated (subj runtime_file))
+	(call sd.unix_stream_socket_activated (subj runtime_file))
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_log_obj_blk)
+
+	(typeattributeset obj_type_attribute var_log_file)
+
+	(call manage_var_log (subj))
+	(call var_log_obj_type_transition_var_log (subj))
+	(call runtime_obj_type_transition_var_log (subj))
+
+	(call sys.mountpoint_obj_type (var_log_file))
+	(call fs.associate_tmpfs (var_log_file))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(call mls.trusted_obj_type (runtime_file))
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj self (capability (audit_control setgid setuid sys_admin
+		dac_override)))
+	(allow subj self (capability2 (audit_read)))
+	(allow subj self (process (getcap)))
+	(allow subj self create_netlink_audit_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+	(allow subj self create_unix_stream_stream_socket_perms)
+
+	(call sys.unix_dgram_sendto (subj))
+	(call sys.read_ring_buffer (subj))
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.rw_unix_dgram_sockets (subj))
+	(call sys.rw_unix_stream_sockets (subj))
+	(call sys.rw_inherited_netlink_audit_sockets (subj))
+
+	(call dev.rw_kmsg (subj))
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.write_inherited_devpts_chr_files (subj))
+
+	(call sec.get_enforce_mode (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_state_subj (subj))
+
+	(call term.write_console (subj))
+
+	(call locale.read (subj))
+	(call utmp.read_runtime_files (subj))
+
+	(call sd_machined.read_config_files (subj))
+
+	(call sd.notify_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(tunableif enable_mls
+		(true
+			(call sd.daemon_auto_subj_range_transition (subj
+				cmd_file systemhigh systemhigh))))
+
+	(optional sd_journald_optional_plymouth
+		(call plymouthd.use_fd (subj)))
+
+	(optional sd_journald_optional_usersubj
+		(call usersubj.write_term (subj)))
+
+	(allow client_subj_type_attribute self create_unix_stream_socket_perms)
+	(allow client_subj_type_attribute self create_unix_dgram_socket_perms)
+
+	(call dgram_send_pattern (client_subj_type_attribute runtime_file
+		runtime_file subj))
+
+	(call sys.unix_stream_connectto (client_subj_type_attribute))
+	(call sys.unix_dgram_sendto (client_subj_type_attribute))
+
+	(call fs.read_devtmpfs_lnk_files (client_subj_type_attribute))
+
+	(call sd.search_runtime (client_subj_type_attribute))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_var_log (adm_subj_type_attribute))
+
+	(call sd.search_runtime (adm_subj_type_attribute))
+	(call sd.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))

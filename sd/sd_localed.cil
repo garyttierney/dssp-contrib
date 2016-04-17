@@ -1,0 +1,101 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_localed
+	(filecon "/etc/locale\.conf" file config_file_context)
+	(filecon "/usr/lib/systemd/systemd-localed" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-localed.*" file
+		unit_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_localed
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_localed
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_data (subj))
+
+	(call fs.search_tmpfs (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call sd.notify_subj_type (subj))
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call sd_vconsole.manage_config_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+
+	(optional sd_localed_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj)))
+
+	(optional sd_localed_optional_sysbus
+		(call sysbus.service_subj_type (subj)))
+
+	(optional sd_localed_optional_xserver
+		(call xserver.manage_config_files (subj)))
+
+	(optional sd_localed_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

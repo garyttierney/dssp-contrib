@@ -1,0 +1,154 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in journalctl
+	(filecon "/usr/bin/journalctl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in journalctl
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset journalctl.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call journalctl.spec_auto_subj_type_transition (ARG1
+				subj))))
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro system_client_subj_type ((type ARG1))
+		(typeattributeset system_client_subj_type_attribute ARG1))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(call sd_askpwd_agent.run (ARG3 ARG1)))
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block journalctl
+	(roleattribute role_attribute)
+
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute system_client_subj_type_attribute)
+
+	(blockinherit subj_blk)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call sd.daemon (subj cmd_file))
+
+	(roletype role_attribute subj)
+
+	(optional journalctl_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(allow subj_type_attribute self (capability (dac_override net_admin
+		sys_resource sys_chroot setgid setuid sys_admin)))
+	(allow subj_type_attribute self (unix_dgram_socket (sendto)))
+	(allow subj_type_attribute self create_unix_dgram_socket_perms)
+
+	(call cmd.read_all_cmd_files (subj_type_attribute))
+
+	(call dev.read_random (subj_type_attribute))
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.dontaudit_search_all (subj_type_attribute))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+
+	(call system_client_subj_type (subj_type_attribute))
+
+	(call sd_journald.manage_var_log (subj_type_attribute))
+	(call sd_journald.manage_var_lib_files (subj_type_attribute))
+	(call sd_journald.read_runtime (subj_type_attribute))
+	(call sd_journald.stop_unit (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call sd.stream_connect (subj_type_attribute))
+
+	(call sd_machined.read_runtime (subj_type_attribute))
+
+	(call sd_nspawn_container.list_all (subj_type_attribute))
+	(call sd_nspawn_container.read_all_files (subj_type_attribute))
+	(call sd_nspawn_container.read_all_lnk_files (subj_type_attribute))
+	(call sd_nspawn_container.read_state_all_subj (subj_type_attribute))
+	(call sd_nspawn_container.stream_connect_all_subj
+		(subj_type_attribute))
+
+	(call usersubj.home_dir_obj_type_transition_home_user_files
+		(subj_type_attribute))
+	(call usersubj.manage_home_user_files (subj_type_attribute))
+
+	(allow client_subj_type_attribute self (process (setrlimit)))
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
+
+	(call exec (client_subj_type_attribute))
+
+	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
+
+	(call cmd.exec (client_subj_type_attribute))
+
+	(call file.read_config_files (client_subj_type_attribute))
+
+	(call fs.getattr_fs (client_subj_type_attribute))
+
+	(call terminfo.read_all (client_subj_type_attribute))
+	(call locale.read (client_subj_type_attribute))
+
+	(call sd_journald.read_var_log (client_subj_type_attribute))
+
+	(optional sd_journald_client_subj_type_optional_sd_machined
+		(call sd_machined.read_config_files
+			(client_subj_type_attribute)))
+
+	(call sys.read_crypto_sysctl_files (system_client_subj_type_attribute))
+
+	(call client_subj_type (system_client_subj_type_attribute))
+
+	(call sd.sysbus_chat_client_subj_type
+		(system_client_subj_type_attribute))
+
+	(optional journalctl_system_client_subj_type_optional_sysbus
+		(call sysbus.client_subj_type
+			(system_client_subj_type_attribute))))

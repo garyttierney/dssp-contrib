@@ -1,6 +1,0 @@
-(in sd_sleep
-	(filecon "/etc/systemd/sleep\.conf\.d(/.*)?" any config_file_context)
-	(filecon "/etc/systemd/sleep\.conf" file config_file_context)
-	(filecon "/usr/lib/systemd/system/[^/]*systemd-hybrid-sleep.*" file
-		unit_file_context)
-	(filecon "/usr/lib/systemd/systemd-sleep" file cmd_file_context))

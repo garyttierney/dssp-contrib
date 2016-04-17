@@ -1,0 +1,175 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_coredump
+	(filecon "/etc/systemd/coredump\.conf" file config_file_context)
+	(filecon "/etc/systemd/coredump\.conf\.d(/.*)?" any
+		config_file_context)
+	(filecon "/var/run/systemd/coredump" socket runtime_file_context)
+	(filecon "/usr/lib/systemd/systemd-coredump" file cmd_file_context)
+	(filecon "/var/lib/systemd/coredump(/.*)?" any var_lib_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_coredump
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro auto_subj_range_transition ((type ARG1)(level ARG2)(level ARG3))
+		(call auto_subj_range_transition_pattern (ARG1 cmd_file ARG2
+			ARG3)))
+
+	(macro search_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call sd.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call sd.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call sd.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(macro search_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file search_dir_perms))
+
+	(macro list_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file list_dir_perms))
+
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib_lnk_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(call read_lnk_files_pattern (ARG1 var_lib_file var_lib_file)))
+
+	(macro read_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms)
+		(allow ARG1 var_lib_file list_dir_perms)
+		(allow ARG1 var_lib_file read_lnk_file_perms))
+
+	(macro manage_var_lib ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms)
+		(allow ARG1 var_lib_file manage_dir_perms)
+		(allow ARG1 var_lib_file manage_lnk_file_perms))
+
+	(macro relabel_var_lib ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms)
+		(allow ARG1 var_lib_file relabel_dir_perms)
+		(allow ARG1 var_lib_file relabel_lnk_file_perms))
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"coredump")))
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
+	(macro manage_runtime_sock_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file manage_sock_file_perms))
+
+	(macro relabel_runtime_sock_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_sock_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file
+			sock_file "coredump"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_coredump
+	(blockinherit sd.daemon_blk)
+
+	(call sd.unix_stream_socket_activated_subj_type (subj))
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(call manage_var_lib (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(call sd.socket_activated_obj_type (runtime_file))
+
+	(call manage_runtime_sock_files (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(allow subj self (capability (setuid setgid setpcap dac_override)))
+	(allow subj self (process (getcap setcap)))
+	(allow subj self (unix_stream_socket (listen accept connectto)))
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call mls.range_trans_subj_type (subj))
+
+	(call cmd.read_all_cmd_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call subj.ptrace_uncond_subj_type (subj))
+	(call subj.read_state_common_subj (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(optional sd_coredump_optional_steam
+		(call steam.read_home_data (subj))))

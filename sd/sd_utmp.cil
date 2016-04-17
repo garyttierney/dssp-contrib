@@ -1,0 +1,62 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_utmp
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-update-utmp.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-update-utmp" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_utmp
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_utmp
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(call sys.audit_client_subj_type (subj))
+
+	(call file.search_config (subj))
+
+	(call utmp.manage_runtime_files (subj))
+	(call utmp.runtime_obj_type_transition_runtime (subj))
+	(call wtmp.write_var_log_files (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+	(call sd.status_unit (subj))
+	(call sd.status (subj))
+	(call sd.stream_connect (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

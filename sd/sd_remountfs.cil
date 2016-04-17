@@ -1,0 +1,37 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_remountfs
+	(filecon "/usr/lib/systemd/systemd-remount-fs" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_remountfs
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_remountfs
+	(blockinherit sd.daemon_blk)
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fstab.read (subj))
+
+	(call mount.auto_subj_type_transition (subj))
+
+	(call sd.log_parse_env_subj_type (subj)))

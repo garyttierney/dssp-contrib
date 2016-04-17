@@ -1,0 +1,268 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_askpwd
+	(filecon "/usr/bin/systemd-ask-password" file cmd_file_context)
+	(filecon "/var/run/systemd/ask-password(/.*)?" any
+		runtime_file_context))
+
+(in sd_askpwd_agent
+	(filecon "/usr/bin/systemd-tty-ask-password-agent" file
+		cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-ask-password.*" file
+		unit_file_context)
+	(filecon "/var/run/systemd/ask-password-block(/.*)?" any
+		runtime_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_askpwd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro search_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file search_dir_perms))
+
+	(macro list_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file list_dir_perms))
+
+	(macro read_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro rw_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call rw_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro manage_runtime_sock_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call manage_sock_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro write_runtime_sock_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call write_sock_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro manage_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call manage_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime_lnk_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_lnk_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file read_file_perms)
+		(allow ARG1 runtime_file list_dir_perms)
+		(allow ARG1 runtime_file read_sock_file_perms)
+		(allow ARG1 runtime_file read_lnk_file_perms))
+
+	(macro manage_runtime ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_file_perms)
+		(allow ARG1 runtime_file manage_dir_perms)
+		(allow ARG1 runtime_file manage_sock_file_perms)
+		(allow ARG1 runtime_file manage_lnk_file_perms))
+
+	(macro relabel_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_file_perms)
+		(allow ARG1 runtime_file relabel_dir_perms)
+		(allow ARG1 runtime_file relabel_sock_file_perms)
+		(allow ARG1 runtime_file relabel_lnk_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"ask-password")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd_askpwd_agent.run (ARG1 ARG2))
+		(call sd.daemon_adm_subj_type (ARG1))))
+
+(in sd_askpwd_agent
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro dontaudit_exec ((type ARG1))
+		(dontaudit ARG1 cmd_file exec_file_perms))
+
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2)
+		(optional sd_askpwd_run_sd_askpwd_agent_optional_polkit
+			(call polkit_tty_agent.run (ARG1 ARG2))))
+
+	(macro search_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file search_dir_perms))
+
+	(macro list_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file list_dir_perms))
+
+	(macro read_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime_fifo_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro manage_runtime_fifo_files ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(call manage_fifo_files_pattern (ARG1 runtime_file
+			runtime_file)))
+
+	(macro read_runtime_lnk_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(call read_lnk_files_pattern (ARG1 runtime_file runtime_file)))
+
+	(macro read_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file read_file_perms)
+		(allow ARG1 runtime_file list_dir_perms)
+		(allow ARG1 runtime_file read_fifo_file_perms)
+		(allow ARG1 runtime_file read_lnk_file_perms))
+
+	(macro manage_runtime ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_file_perms)
+		(allow ARG1 runtime_file manage_dir_perms)
+		(allow ARG1 runtime_file manage_fifo_file_perms)
+		(allow ARG1 runtime_file manage_lnk_file_perms))
+
+	(macro relabel_runtime ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_file_perms)
+		(allow ARG1 runtime_file relabel_dir_perms)
+		(allow ARG1 runtime_file relabel_fifo_file_perms)
+		(allow ARG1 runtime_file relabel_lnk_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.runtime_obj_type_transition (ARG1 runtime_file dir
+			"ask-password-block"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_askpwd
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(call sd.daemon (subj cmd_file))
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_fifo_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
+
+(block sd_askpwd_agent
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(call sd.daemon (subj cmd_file))
+
+	(roletype role_attribute subj)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset sd_askpwd.obj_type_attribute unit_file)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset sd_askpwd.obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(call file.search_config (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call term.use_inherited_unallocated_ttys (subj))
+
+	(call sd.use_fd (subj))
+	(call sd.log_parse_env_subj_type (subj))
+
+	(call sd_askpwd.manage_runtime (subj))
+
+	(call usersubj.use_inherited_term (subj))
+
+	(allow subj sd_askpwd.client_subj_type_attribute (unix_dgram_socket
+		(sendto)))
+
+	(allow subj sd_askpwd.client_subj_type_attribute read_file_perms)
+	(allow subj sd_askpwd.client_subj_type_attribute list_dir_perms)
+	(allow subj sd_askpwd.client_subj_type_attribute read_lnk_file_perms)
+
+	(call sd_askpwd.manage_runtime_files
+		(sd_askpwd.client_subj_type_attribute))
+	(call sd_askpwd.manage_runtime_sock_files
+		(sd_askpwd.client_subj_type_attribute))
+
+	(optional sd_askpwd_agent_optional_plymouth
+		(call plymouthd.stream_connect (subj)))
+
+	(allow sd_askpwd.adm_subj_type_attribute unit_file (service (stop
+		status disable enable reload start)))
+
+	(allow sd_askpwd.adm_subj_type_attribute subj (process (ptrace signal
+		signull sigkill sigstop)))
+	(call ps_subj_pattern (sd_askpwd.adm_subj_type_attribute subj)))

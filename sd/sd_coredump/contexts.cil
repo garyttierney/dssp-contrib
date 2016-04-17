@@ -1,7 +1,0 @@
-(in sd_coredump
-	(filecon "/etc/systemd/coredump\.conf" file config_file_context)
-	(filecon "/etc/systemd/coredump\.conf\.d(/.*)?" any
-		config_file_context)
-	(filecon "/var/run/systemd/coredump" socket runtime_file_context)
-	(filecon "/usr/lib/systemd/systemd-coredump" file cmd_file_context)
-	(filecon "/var/lib/systemd/coredump(/.*)?" any var_lib_file_context))

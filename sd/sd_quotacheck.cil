@@ -1,0 +1,81 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_quotacheck
+	(filecon "/var/run/systemd/quotacheck" file runtime_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-quotacheck.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-quotacheck" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_quotacheck
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro read_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file read_file_perms))
+
+	(macro manage_runtime_files ((type ARG1))
+		(call sd.rw_runtime_dirs (ARG1))
+		(allow ARG1 runtime_file manage_file_perms))
+
+	(macro relabel_runtime_files ((type ARG1))
+		(call sd.search_runtime (ARG1))
+		(allow ARG1 runtime_file relabel_file_perms))
+
+	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 runtime_file file
+			"quotacheck")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_quotacheck
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime_files (subj))
+	(call sd_runtime_obj_type_transition_runtime (subj))
+
+	(call sd_journald.client_subj_type (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

@@ -1,0 +1,132 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sd_randomseed
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-random-seed.*" file
+		unit_file_context)
+	(filecon "/usr/lib/systemd/systemd-random-seed" file cmd_file_context))
+
+(filecon "/var/lib/systemd/random-seed" file sd_randomseed_var_lib)
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context sd_randomseed_var_lib (sys.id
+					sys.role sd_randomseed.var_lib_file
+						(systemhigh systemhigh))))
+			(false
+				(context sd_randomseed_var_lib (sys.id
+					object_r sd_randomseed.var_lib_file
+						(systemhigh systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context sd_randomseed_var_lib (sys.id
+					sys.role sd_randomseed.var_lib_file
+						(systemlow systemlow))))
+			(false
+				(context sd_randomseed_var_lib (sys.id
+					object_r sd_randomseed.var_lib_file
+						(systemlow systemlow)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sd_randomseed
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro auto_subj_range_transition ((type ARG1)(level ARG2)(level ARG3))
+		(call auto_subj_range_transition_pattern (ARG1 cmd_file ARG2
+			ARG3)))
+
+	(macro read_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file read_file_perms))
+
+	(macro manage_var_lib_files ((type ARG1))
+		(call sd.rw_var_lib_dirs (ARG1))
+		(allow ARG1 var_lib_file manage_file_perms))
+
+	(macro relabel_var_lib_files ((type ARG1))
+		(call sd.search_var_lib (ARG1))
+		(allow ARG1 var_lib_file relabel_file_perms))
+
+	(macro sd_var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call sd.var_lib_obj_type_transition (ARG1 var_lib_file file
+			"random-seed")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sd_randomseed
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit sd.daemon_blk)
+
+	(call app.application_subj_type (subj))
+
+	(roletype role_attribute subj)
+
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib_files (subj))
+	(call sd_var_lib_obj_type_transition_var_lib (subj))
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.rw_urandom (subj))
+
+	(call file.search_config (subj))
+
+	(call sec.list_fs (subj))
+
+	(call sd.log_parse_env_subj_type (subj))
+
+	(tunableif enable_mls
+		(true
+			(call sd.daemon_auto_subj_range_transition (subj
+				cmd_file systemhigh systemhigh))))
+
+	(optional sd_randomseed_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call sd.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

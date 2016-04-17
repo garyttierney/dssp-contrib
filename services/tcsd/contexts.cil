@@ -1,8 +1,0 @@
-(in tcsd
-	(filecon "/etc/tcsd\.conf" file config_file_context)
-	(filecon "/usr/sbin/tcsd" file cmd_file_context)
-	(filecon "/var/lib/tpm(/.*)?" any var_lib_file_context)
-
-	(optional tcsd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*tcsd.*" file
-			unit_file_context)))

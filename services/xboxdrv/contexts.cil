@@ -1,8 +1,0 @@
-(in xboxdrv
-	(filecon "/usr/bin/xboxdrv" file cmd_file_context)
-
-	(filecon "/var/run/xboxdrv\.pid" file runtime_file_context)
-
-	(optional xboxdrv_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*xboxdrv.*" file
-			unit_file_context)))

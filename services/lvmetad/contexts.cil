@@ -1,8 +1,0 @@
-(in lvmetad
-	(filecon "/usr/sbin/lvmetad" file cmd_file_context)
-	(filecon "/var/run/lvm/lvmetad\.socket" socket runtime_file_context)
-	(filecon "/var/run/lvmetad\.pid" file runtime_file_context)
-
-	(optional lvmetad_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/lvm2-lvmetad.*" file
-			unit_file_context)))

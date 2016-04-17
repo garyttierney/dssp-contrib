@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in pulseaudio
+	(portcon "tcp" 4713 port_obj_context)
+	(portcon "udp" 4713 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in pulseaudio
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block pulseaudio
+	(blockinherit net.unreserved_port_obj_blk))

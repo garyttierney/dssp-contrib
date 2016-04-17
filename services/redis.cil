@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in redis
+	(portcon "tcp" (6379 6380) port_obj_context)
+	(portcon "udp" (6379 6380) port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in redis
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block redis
+	(blockinherit net.unreserved_port_obj_blk))

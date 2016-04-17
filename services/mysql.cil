@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in mysql
+	(portcon "tcp" 3306 port_obj_context)
+	(portcon "udp" 3306 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in mysql
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block mysql
+	(blockinherit net.unreserved_port_obj_blk))

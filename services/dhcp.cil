@@ -1,0 +1,49 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dhcp
+	(filecon "/etc/dhcp(/.*)?" any config_file_context)
+
+	(portcon "tcp" 67 port_obj_context)
+	(portcon "tcp" 68 port_obj_context)
+	(portcon "udp" 67 port_obj_context)
+	(portcon "udp" 68 port_obj_context))
+
+(in dhcpv6_client
+	(portcon "tcp" 546 port_obj_context)
+	(portcon "udp" 546 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dhcp
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.rw_config_dirs_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit net.udp_bind_reserved_port_blk))
+
+(in dhcpv6_client
+	(blockinherit net.udp_bind_reserved_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dhcp
+	(blockinherit net.reserved_port_obj_blk)
+
+	(blockinherit file.config_obj_blk))
+
+(block dhcpv6_client
+	(blockinherit net.hi_reserved_port_obj_blk))

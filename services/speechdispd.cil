@@ -1,0 +1,161 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in speechdispd
+	(filecon "/etc/speech-dispatcher(/.*)?" any config_file_context)
+	(filecon "/usr/bin/speech-dispatcher" file cmd_file_context)
+	(filecon "/usr/lib/speech-dispatcher-modules(/.*)?" file
+		cmd_file_context)
+	(filecon "/var/log/speech-dispatcher(/.*)?" any var_log_file_context)
+
+	(optional speechdispd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*speech-dispatcherd.*"
+			file unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in speechdispd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit file.search_var_log_blk)
+	(blockinherit file.list_var_log_blk)
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.read_var_log_lnk_files_blk)
+	(blockinherit file.read_var_log_blk)
+	(blockinherit file.manage_var_log_blk)
+	(blockinherit file.relabel_var_log_blk)
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file dir
+			"speech-dispatcher")))
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
+			"speech-dispatcher")))
+
+	(macro tmpfs_obj_type_transition_tmpfs_user_files ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
+
+	(macro stream_connect ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 tmpfs_user_file
+			tmpfs_user_file subj)))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional speechdispd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional speechdispd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block speechdispd
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_log_obj_blk)
+
+	(typeattributeset obj_type_attribute var_log_file)	
+
+	(allow subj var_log_file manage_dir_perms)
+	(allow subj var_log_file (file (setattr)))
+	(allow subj var_log_file append_file_perms)
+	(allow subj var_log_file create_file_perms)
+	(allow subj var_log_file read_file_perms)
+
+	(call var_log_obj_type_transition_var_log (subj))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call tmpfs_obj_type_transition_tmpfs_user_files (subj))
+
+	(allow subj self (unix_stream_socket (listen accept)))
+
+	(call exec (subj))
+
+	(call file.read_data (subj))
+
+	(call locale.read (subj))
+
+	(optional speechdispd_optional_gs
+		(call gs.use_fd_all_subj (subj)))
+
+	(optional speechdispd_optional_pa
+		(call pa.tmpfs_client (subj tmpfs_user_file)))
+
+	(optional speechdispd_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional speechdispd_optional_xserver
+		(call xserver.client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

@@ -1,0 +1,103 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ntpdate
+	(filecon "/etc/sysconfig/ntpdate" file config_file_context)
+	(filecon "/usr/sbin/ntpdate" file cmd_file_context)
+	(filecon "/usr/libexec/ntpdate-wrapper" file cmd_file_context)
+
+	(optional ntpdate_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*ntpdate.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ntpdate
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional ntpdate_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional ntpdate_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ntpdate
+	(roleattribute role_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
+
+	(call exec (subj))
+
+	(allow subj self (capability (sys_nice setuid setgid sys_time)))
+	(allow subj self (process (setcap setsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.exec (subj))
+	(call cmd.audit_read_access_shell_files (subj))
+
+	(call net.udp_bind_generic_node (subj))
+
+	(call ntp.udp_bind_reserved_port (subj))
+
+	(call ntpd.read_config (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional ntpdate_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional ntpdate_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_config (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

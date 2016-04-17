@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ssdp
+	(portcon "tcp" 1900 port_obj_context)
+	(portcon "udp" 1900 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ssdp
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ssdp
+	(blockinherit net.unreserved_port_obj_blk))

@@ -1,0 +1,201 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in colord
+	(filecon "/usr/libexec/colord" file cmd_file_context)
+	(filecon "/usr/libexec/colord-session" file cmd_file_context)
+	(filecon "/var/lib/colord(/.*)?" any var_lib_file_context)
+
+	(optional colord_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*colord.*" file
+			unit_file_context)))
+
+(in colormgr
+	(filecon "/usr/bin/cd-create-profile" file cmd_file_context)
+	(filecon "/usr/bin/cd-fix-profile" file cmd_file_context)
+	(filecon "/usr/bin/cd-iccdump" file cmd_file_context)
+	(filecon "/usr/bin/cd-it8" file cmd_file_context)
+	(filecon "/usr/bin/colormgr" file cmd_file_context)
+
+	(filecon "HOME_DIR/\.local/share/icc(/.*)?" any
+		home_data_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in colord
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"colord")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional colord_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional colord_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in colormgr
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.manage_home_data_dirs_blk)
+	(blockinherit usersubj.rw_home_data_dirs_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.manage_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.manage_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(macro read_inherited_home_data_files ((type ARG1))
+		(allow ARG1 home_data_file read_inherited_file_perms))
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "icc"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block colord
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_data (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+	(call mime_types.read_data (subj))
+
+	(call colormgr.read_inherited_home_data_files (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional colord_optional_gdm
+		(call gdm.read_inherited_var_lib_files (subj)))
+
+	(optional sysbus_optional_gsd
+		(call gsd.use_fd_all_subj (subj)))
+
+	(optional colord_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj)))
+
+	(optional colord_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(call sd.search_config (subj))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional colord_optional_sd_logind
+		(call sd_logind.read_runtime_files (subj)))
+
+	(optional colord_optional_sysbus
+		(call sysbus.service_subj_type (subj)))
+
+	(optional colord_optional_unconfinedsubj
+		(call unconfinedsubj.read_state_all_subj (subj))
+		(call unconfinedsubj.use_fd_all_subj (subj)))
+
+	(optional colord_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
+
+	(call sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
+
+(block colormgr
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.home_data_obj_blk))

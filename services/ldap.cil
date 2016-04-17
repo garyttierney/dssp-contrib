@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ldap
+	(portcon "tcp" 389 port_obj_context)
+	(portcon "udp" 389 port_obj_context)
+	(portcon "tcp" 636 port_obj_context)
+	(portcon "udp" 636 port_obj_context)
+
+	(filecon "/etc/openldap(/.*)?" any config_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ldap
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ldap
+	(blockinherit file.config_obj_blk)
+
+	(blockinherit net.reserved_port_obj_blk))

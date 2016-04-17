@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ftp
+	(portcon "tcp" 21 port_obj_context)
+	(portcon "udp" 21 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ftp
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ftp
+	(blockinherit net.reserved_port_obj_blk))

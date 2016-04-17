@@ -1,8 +1,0 @@
-(in lvmpolld
-	(filecon "/usr/sbin/lvmpolld" file cmd_file_context)
-	(filecon "/var/run/lvm/lvmpolld\.socket" socket runtime_file_context)
-	(filecon "/var/run/lvmpolld\.pid" file runtime_file_context)
-
-	(optional lvmpolld_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/lvm2-lvmpolld.*" file
-			unit_file_context)))

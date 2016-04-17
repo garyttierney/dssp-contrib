@@ -1,0 +1,36 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ssh
+	(portcon "tcp" 22 port_obj_context)
+	(portcon "udp" 22 port_obj_context))
+
+(in ssh_x11_forward
+	(portcon "tcp" (6010 6011) port_obj_context)
+	(portcon "udp" (6010 6011) port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ssh
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+(in ssh_x11_forward
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ssh
+	(blockinherit net.reserved_port_obj_blk))
+
+(block ssh_x11_forward
+	(blockinherit net.port_obj_blk))

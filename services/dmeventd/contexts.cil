@@ -1,9 +1,0 @@
-(in dmeventd
-	(filecon "/usr/sbin/dmeventd" file cmd_file_context)
-	(filecon "/var/run/dmeventd-client" pipe runtime_file_context)
-	(filecon "/var/run/dmeventd-server" pipe runtime_file_context)
-	(filecon "/var/run/dmeventd\.pid" file runtime_file_context)
-
-	(optional dmeventd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/dm-event.*" file
-			unit_file_context)))

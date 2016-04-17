@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in llmnr
+	(portcon "tcp" 5355 port_obj_context)
+	(portcon "udp" 5355 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in llmnr
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block llmnr
+	(blockinherit net.unreserved_port_obj_blk))

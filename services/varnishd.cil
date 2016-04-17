@@ -1,0 +1,629 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in varnishd
+	(block varnishd
+		(filecon "/usr/sbin/varnishd" file cmd_file_context)
+		(filecon "/etc/varnish(/.*)?" any config_file_context)
+		(filecon "/var/run/varnish\.pid" file runtime_file_context)
+		(filecon "/var/lib/varnish(/.*)?" any var_lib_file_context)
+
+		(optional varnishd_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnish.*" file
+				unit_file_context)))
+
+	(block varnishd_adm
+		(portcon tcp 6082 port_obj_context)
+		(portcon tcp 6082 port_obj_context))
+
+	(block varnish_reload_vcl
+		(filecon "/usr/sbin/varnish_reload_vcl" file cmd_file_context))
+
+	(block varnishlog
+		(filecon "/usr/bin/varnishlog" file cmd_file_context)
+		(filecon "/var/run/varnishlog\.pid" file runtime_file_context)
+		(filecon "/var/log/varnish(/.*)?" any var_log_file_context)
+
+		(optional varnishlog_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnishlog.*"
+				file unit_file_context)))
+
+	(block varnishncsa
+		(filecon "/usr/bin/varnishncsa" file cmd_file_context)
+		(filecon "/var/run/varnishncsa\.pid" file runtime_file_context)
+		(filecon "/var/log/varnish/varnishncsa\.log.*" file
+			var_log_file_context)
+
+		(optional varnishncsa_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*varnishncsa.*"
+				file unit_file_context))))
+
+(in varnishadm
+	(filecon "/usr/bin/varnishadm" file cmd_file_context)
+	(filecon "/usr/bin/varnishhist" file cmd_file_context)
+	(filecon "/usr/bin/varnishstat" file cmd_file_context)
+	(filecon "/usr/bin/varnishtest" file cmd_file_context)
+	(filecon "/usr/bin/varnishtop" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(block varnishd_blk
+	(blockabstract varnishd_blk)
+
+	(block varnishd
+		(typeattribute adm_subj_type_attribute)
+
+		(typeattribute subj_type_attribute)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattribute config_obj_type_attribute)
+		(typeattribute port_obj_type_attribute)
+		(typeattribute runtime_obj_type_attribute)
+		(typeattribute unit_obj_type_attribute)
+		(typeattribute var_lib_obj_type_attribute)
+		(typeattribute var_log_obj_type_attribute)
+		(typeattribute tmpfs_obj_type_attribute)
+
+		(typeattributeset .varnishd.adm_subj_type_attribute
+			adm_subj_type_attribute)
+
+		(typeattributeset .varnishd.obj_type_attribute
+			obj_type_attribute)
+
+		(typeattributeset .varnishd.config_obj_type_attribute
+			config_obj_type_attribute)
+		(typeattributeset .varnishd.port_obj_type_attribute
+			port_obj_type_attribute)
+		(typeattributeset .varnishd.runtime_obj_type_attribute
+			runtime_obj_type_attribute)
+		(typeattributeset .varnishd.unit_obj_type_attribute
+			unit_obj_type_attribute)
+		(typeattributeset .varnishd.var_lib_obj_type_attribute
+			var_lib_obj_type_attribute)
+		(typeattributeset .varnishd.var_log_obj_type_attribute
+			var_log_obj_type_attribute)
+		(typeattributeset .varnishd.tmpfs_obj_type_attribute
+			tmpfs_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit net.unreserved_port_obj_blk)
+
+		(typeattributeset port_obj_type_attribute port)
+
+		(allow subj port (tcp_socket (name_bind)))
+
+		(blockinherit file.config_obj_blk)
+
+		(typeattributeset obj_type_attribute config_file)
+		(typeattributeset config_obj_type_attribute config_file)
+
+		(allow subj config_file read_file_perms)
+		(allow subj config_file list_dir_perms)
+		(allow subj config_file read_lnk_file_perms)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset obj_type_attribute runtime_file)
+		(typeattributeset runtime_obj_type_attribute runtime_file)
+
+		(allow subj runtime_file manage_file_perms)
+
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
+
+		(blockinherit file.var_lib_obj_blk)
+
+		(typeattributeset obj_type_attribute var_lib_file)
+		(typeattributeset var_lib_obj_type_attribute var_lib_file)
+
+		(allow subj var_lib_file manage_dir_perms)
+		(allow subj var_lib_file mmap_file_perms)
+		(allow subj var_lib_file manage_file_perms)
+
+		(call file.var_lib_obj_type_transition (subj var_lib_file dir
+			"*"))
+
+		(blockinherit file.tmpfs_obj_blk)
+
+		(typeattributeset obj_type_attribute tmpfs_file)
+		(typeattributeset tmpfs_obj_type_attribute tmpfs_file)
+
+		(allow subj tmpfs_file manage_file_perms)
+
+		(call fs.tmpfs_obj_type_transition (subj tmpfs_file file "*"))
+
+		(allow subj self (capability (setuid setgid chown)))
+		(allow subj self rw_fifo_file_perms)
+		(allow subj self (tcp_socket (listen accept)))
+
+		(call sys.read_cpu_online_sysfs_files (subj))
+		(call sys.read_kernel_sysctl_files (subj))
+
+		(call cmd.exec (subj))
+		(call cmd.exec_shell (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call file.read_data_files (subj))
+
+		(call fs.getattr_fs (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
+		(call subj.execmem_uncond_subj_type (subj))
+
+		(call http.tcp_bind_reserved_port (subj))
+		(call http_alt.tcp_connect_port (subj))
+		(call http_cache.tcp_bind_port (subj))
+
+		(call locale.read (subj))
+
+		(call nss.client_subj_type (subj))
+
+		(optional varnishd_blk_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(call sd.daemon_pid_obj_type (runtime_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset obj_type_attribute unit_file)
+			(typeattributeset unit_obj_type_attribute unit_file)
+
+			(allow adm_subj_type_attribute unit_file (service
+				(stop status disable enable reload start))))
+
+		(optional varnishd_blk_optional_sd_journald
+			(call sd_journald.client_subj_type (subj)))
+
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
+
+		(call file.search_config (adm_subj_type_attribute))
+		(call file.search_runtime (adm_subj_type_attribute))
+		(call file.search_var_lib (adm_subj_type_attribute))
+		(call file.search_var_log (adm_subj_type_attribute))
+
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_lnk_file_perms)
+
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_lnk_file_perms)
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit net.tcp_connect_port_blk)
+		(blockinherit net.tcp_bind_port_blk)
+
+		(blockinherit file.search_config_blk)
+		(blockinherit file.list_config_blk)
+		(blockinherit file.read_config_files_blk)
+		(blockinherit file.read_config_lnk_files_blk)
+		(blockinherit file.read_config_blk)
+		(blockinherit file.manage_config_blk)
+		(blockinherit file.relabel_config_blk)
+
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.manage_runtime_files_blk)
+		(blockinherit file.relabel_runtime_files_blk)
+
+		(blockinherit file.search_var_lib_blk)
+		(blockinherit file.list_var_lib_blk)
+		(blockinherit file.read_var_lib_files_blk)
+		(blockinherit file.read_var_lib_lnk_files_blk)
+		(blockinherit file.read_var_lib_blk)
+		(blockinherit file.manage_var_lib_blk)
+		(blockinherit file.relabel_var_lib_blk)
+
+		(blockinherit file.read_tmpfs_files_blk)
+		(blockinherit file.manage_tmpfs_files_blk)
+		(blockinherit file.relabel_tmpfs_files_blk)
+
+		(macro adm ((type ARG1)(role ARG2))
+			(typeattributeset adm_subj_type_attribute ARG1)
+			(optional varnishd_adm_optional_sd
+				(call sd.daemon_adm_subj_type (ARG1)))
+			(optional varnishd_adm_optional_sd_askpwd
+				(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+	(block varnishd_adm
+		(typeattribute port_obj_type_attribute)
+
+		(blockinherit net.unreserved_port_obj_blk)
+
+		(typeattributeset port_obj_type_attribute port)
+
+		(typeattributeset .varnishd_adm.port_obj_type_attribute
+			port_obj_type_attribute)
+
+		(allow varnishd.subj port (tcp_socket (name_bind)))
+
+		(blockinherit net.tcp_connect_port_blk)
+		(blockinherit net.tcp_bind_port_blk))
+
+	(block varnish_reload_vcl
+		(typeattribute subj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnish_reload_vcl.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(optional varnish_reload_vcl_optional_sd
+			(call sd.daemon (subj cmd_file))))
+
+	(block varnishlog
+		(typeattribute subj_type_attribute)
+
+		(typeattribute exec_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnishlog.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset varnishd.obj_type_attribute runtime_file)
+		(typeattributeset varnishd.runtime_obj_type_attribute
+			runtime_file)
+
+		(allow subj runtime_file manage_file_perms)
+
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
+
+		(blockinherit file.var_log_obj_blk)
+
+		(typeattributeset varnishd.obj_type_attribute var_log_file)
+		(typeattributeset varnishd.var_log_obj_type_attribute
+			var_log_file)
+
+		(allow subj var_log_file manage_dir_perms)
+		(allow subj var_log_file (file (setattr rename)))
+		(allow subj var_log_file append_file_perms)
+		(allow subj var_log_file create_file_perms)
+		(allow subj var_log_file delete_file_perms)
+		(allow subj var_log_file read_file_perms)
+
+		(call file.var_log_obj_type_transition (subj var_log_file dir
+			"*"))
+
+		(call varnishd.read_var_lib_files (subj))
+
+		(optional varnishdlog_blk_optional_logrotate
+			(call logrotate.client_subj_type (subj))
+			(call logrotate.client_runtime_obj_type
+				(runtime_file))
+			(call logrotate.client_var_log_obj_type
+				(var_log_file)))
+
+		(optional varnishlog_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(call sd.daemon_pid_obj_type (runtime_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset varnishd.obj_type_attribute
+				unit_file)
+			(typeattributeset varnishd.unit_obj_type_attribute
+				unit_file)
+
+			(allow varnishd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.manage_runtime_files_blk)
+		(blockinherit file.relabel_runtime_files_blk)
+
+		(macro append_var_log_files ((type ARG1))
+			(call search_var_log (ARG1))
+			(allow ARG1 var_log_file append_file_perms))
+
+		(blockinherit file.search_var_log_blk)
+		(blockinherit file.list_var_log_blk)
+		(blockinherit file.rw_var_log_dirs_blk)
+		(blockinherit file.read_var_log_files_blk)
+		(blockinherit file.read_var_log_lnk_files_blk)
+		(blockinherit file.read_var_log_blk)
+		(blockinherit file.manage_var_log_blk)
+		(blockinherit file.relabel_var_log_blk))
+
+	(block varnishncsa
+		(typeattribute subj_type_attribute)
+
+		(typeattribute exec_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .varnishd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .varnishncsa.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset varnishd.obj_type_attribute runtime_file)
+		(typeattributeset varnishd.runtime_obj_type_attribute
+			runtime_file)
+
+		(allow subj runtime_file manage_file_perms)
+
+		(call file.runtime_obj_type_transition (subj runtime_file file
+			"*"))
+
+		(blockinherit file.var_log_obj_blk)
+
+		(typeattributeset varnishd.obj_type_attribute var_log_file)
+		(typeattributeset varnishd.var_log_obj_type_attribute
+			var_log_file)
+
+		(allow subj var_log_file (file (setattr rename)))
+		(allow subj var_log_file append_file_perms)
+		(allow subj var_log_file create_file_perms)
+		(allow subj var_log_file delete_file_perms)
+		(allow subj var_log_file read_file_perms)
+
+		(call obj_type_transition_pattern (subj
+			varnishlog.var_log_file var_log_file file "*"))
+
+		(call varnishd.read_var_lib_files (subj))
+
+		(optional varnishncsa_blk_optional_logrotate
+			(call logrotate.client_subj_type (subj))
+			(call logrotate.client_runtime_obj_type
+				(runtime_file))
+			(call logrotate.client_var_log_obj_type
+				(var_log_file)))
+
+		(optional varnishncsa_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(call sd.daemon_pid_obj_type (runtime_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset varnishd.obj_type_attribute
+				unit_file)
+			(typeattributeset varnishd.unit_obj_type_attribute
+				unit_file)
+
+			(allow varnishd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.manage_runtime_files_blk)
+		(blockinherit file.relabel_runtime_files_blk)
+
+		(macro append_var_log_files ((type ARG1))
+			(call varnishlog.search_var_log (ARG1))
+			(allow ARG1 var_log_file append_file_perms))
+
+		(macro read_var_log_files ((type ARG1))
+			(call varnishlog.search_var_log (ARG1))
+			(allow ARG1 var_log_file read_file_perms))
+
+		(macro manage_var_log_files ((type ARG1))
+			(call varnishlog.rw_var_log_dirs (ARG1))
+			(allow ARG1 var_log_file manage_file_perms))
+
+		(macro relabel_var_log_files ((type ARG1))
+			(call varnishlog.search_var_log (ARG1))
+			(allow ARG1 var_log_file relabel_file_perms))))
+
+(in varnishd
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk)
+
+	(blockinherit file.search_all_config_blk)
+	(blockinherit file.list_all_config_blk)
+	(blockinherit file.read_all_config_files_blk)
+	(blockinherit file.read_all_config_lnk_files_blk)
+	(blockinherit file.read_all_config_blk)
+	(blockinherit file.manage_all_config_blk)
+	(blockinherit file.relabel_all_config_blk)
+
+	(blockinherit file.read_all_runtime_files_blk)
+	(blockinherit file.manage_all_runtime_files_blk)
+	(blockinherit file.relabel_all_runtime_files_blk)
+
+	(blockinherit file.search_all_var_lib_blk)
+	(blockinherit file.list_all_var_lib_blk)
+	(blockinherit file.read_all_var_lib_files_blk)
+	(blockinherit file.read_all_var_lib_lnk_files_blk)
+	(blockinherit file.read_all_var_lib_blk)
+	(blockinherit file.manage_all_var_lib_blk)
+	(blockinherit file.relabel_all_var_lib_blk)
+
+	(blockinherit file.search_all_var_log_blk)
+	(blockinherit file.list_all_var_log_blk)
+	(blockinherit file.read_all_var_log_files_blk)
+	(blockinherit file.read_all_var_log_lnk_files_blk)
+	(blockinherit file.read_all_var_log_blk)
+	(blockinherit file.manage_all_var_log_blk)
+	(blockinherit file.relabel_all_var_log_blk)
+
+	(blockinherit file.read_all_tmpfs_files_blk)
+	(blockinherit file.manage_all_tmpfs_files_blk)
+	(blockinherit file.relabel_all_tmpfs_files_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset varnishd.adm_subj_type_attribute ARG1)
+		(optional varnishd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional varnishd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in varnishd_adm
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk))
+
+(in varnishadm
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block varnishd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+	(typeattribute config_obj_type_attribute)
+	(typeattribute port_obj_type_attribute)
+	(typeattribute runtime_obj_type_attribute)
+	(typeattribute var_lib_obj_type_attribute)
+	(typeattribute var_log_obj_type_attribute)
+	(typeattribute tmpfs_obj_type_attribute)
+	(typeattribute unit_obj_type_attribute)
+
+	(blockinherit varnishd_blk))
+
+(block varnishd_adm
+	(typeattribute port_obj_type_attribute))
+
+(block varnish_reload_vcl
+	(typeattribute subj_type_attribute))
+
+(block varnishncsa
+	(typeattribute subj_type_attribute)
+
+	(typeattribute runtime_obj_type_attribute)
+
+	(call file.search_var_log (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))
+
+(block varnishlog
+	(typeattribute subj_type_attribute))
+
+(block varnishadm
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self create_tcp_socket_perms)
+
+	(call varnishd_adm.tcp_connect_all_ports (subj))
+
+	(call terminfo.read_all (subj))
+
+	(call varnishd.read_all_config (subj))
+	(call varnishd.read_all_var_lib_files (subj)))
+
+(allow varnishd.adm_subj_type_attribute varnishd.subj_type_attribute (process
+	(ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (varnishd.adm_subj_type_attribute
+	varnishd.subj_type_attribute))
+
+(call file.search_config (varnishd.adm_subj_type_attribute))
+(call file.search_runtime (varnishd.adm_subj_type_attribute))
+(call file.search_var_log (varnishd.adm_subj_type_attribute))
+(call file.search_var_lib (varnishd.adm_subj_type_attribute))
+
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	manage_file_perms)
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	manage_dir_perms)
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	manage_lnk_file_perms)
+
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	relabel_file_perms)
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	relabel_dir_perms)
+(allow varnishd.adm_subj_type_attribute varnishd.obj_type_attribute
+	relabel_lnk_file_perms)
+
+(optional varnishd_adm_subj_type_optional_sd
+	(allow varnishd.adm_subj_type_attribute
+		varnishd.unit_obj_type_attribute (service (stop status disable
+			enable reload start))))

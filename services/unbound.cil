@@ -1,0 +1,272 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in unbound
+	(filecon "/etc/unbound(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/unbound" file config_file_context)
+	(filecon "/usr/sbin/unbound" file cmd_file_context)
+	(filecon "/var/lib/unbound(/.*)?" any var_lib_file_context)
+	(filecon "/var/run/unbound(/.*)?" any runtime_file_context)
+	(filecon "/var/run/unbound/unbound\.pid" file runtime_file_context)
+
+	(optional unbound_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*unbound.*" file
+			unit_file_context)))
+
+(in unboundanch
+	(filecon "/usr/sbin/unbound-anchor" file cmd_file_context))
+
+(in unboundcs
+	(filecon "/usr/sbin/unbound-control-setup" file cmd_file_context))
+
+(in unbounddnsctl
+	(portcon "tcp" 8953 port_obj_context)
+	(portcon "udp" 8953 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in unbound
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.manage_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk)
+
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"unbound.pid"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"unbound")))
+
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.manage_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"unbound")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional unbound_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional unbound_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in unboundanch
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in unboundcs
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file
+			"*"))))
+
+(in unbounddnsctl
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block unbound
+	(typeattribute subj_type_attribute)
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(typeattributeset subj_type_attribute subj)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj self (capability (dac_override chown setuid setgid
+		sys_resource net_raw net_admin)))
+	(allow subj self (process (setrlimit)))
+	(allow subj self create_tcp_stream_socket_perms)
+	(allow subj self create_udp_socket_perms)
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
+
+	(call net.tcp_bind_generic_node (subj))
+	(call net.udp_bind_generic_node (subj))
+	(call net.udp_bind_all_unreserved_ports (subj))
+	(call net.udp_bind_ephemeral_port (subj))
+
+	(call dns.tcp_bind_reserved_port (subj))
+	(call dns.udp_bind_reserved_port (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call unbounddnsctl.tcp_bind_port (subj))
+
+	(optional unbound_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional unbound_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
+
+	(call file.search_var_lib (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
+
+(block unboundanch
+	(blockinherit subj.common_subj_blk)
+
+	(typeattributeset unbound.subj_type_attribute subj)
+
+	(blockinherit cmd.obj_blk)
+
+	(roletype sys.role subj)
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self create_unix_stream_socket_perms)
+	(allow subj self create_udp_socket_perms)
+
+	(call net.udp_bind_generic_node (subj))
+	(call net.udp_bind_all_unreserved_ports (subj))
+	(call net.udp_bind_ephemeral_port (subj))
+
+	(call locale.read (subj))
+
+	(call unbound.manage_var_lib_files (subj))
+
+	(optional unboundanch_optional_sd
+		(call sd.daemon (subj cmd_file))))
+
+(block unboundcs
+	(blockinherit subj.common_subj_blk)
+
+	(typeattributeset unbound.subj_type_attribute subj)
+
+	(blockinherit cmd.obj_blk)
+
+	(roletype sys.role subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset unbound.obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_tmpfs_fs (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call unbound.manage_config_files (subj))
+
+	(optional unboundcs_optional_openssl
+		(call openssl.exec (subj)))
+
+	(optional unboundcs_optional_sd
+		(call sd.daemon (subj cmd_file))))
+
+(block unbounddnsctl
+	(blockinherit net.unreserved_port_obj_blk))

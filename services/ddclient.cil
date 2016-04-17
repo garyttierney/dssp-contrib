@@ -1,0 +1,165 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in ddclient
+	(filecon "/etc/ddclient\.conf.*" file config_file_context)
+	(filecon "/etc/sysconfig/ddclient" file config_file_context)
+	(filecon "/usr/sbin/ddclient" file cmd_file_context)
+	(filecon "/var/run/ddclient(/.*)?" any runtime_file_context)
+	(filecon "/var/cache/ddclient(/.*)?" any var_cache_file_context)
+
+	(optional ddclient_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*ddclient.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in ddclient
+	(macro control_sd_unit_subj_type ((type ARG1))
+		(typeattributeset control_sd_unit_subj_type_attribute ARG1))
+
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
+
+	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "ddclient")))
+
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk)
+
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"ddclient")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional ddclient_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional ddclient_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block ddclient
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute control_sd_unit_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
+
+	(blockinherit file.var_cache_obj_blk)
+
+	(typeattributeset obj_type_attribute var_cache_file)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_net_sysctl_files (subj))
+
+	(call cmd.audit_read_access_cmd_files (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_config_files (subj))
+	(call file.read_data (subj))
+
+	(call fs.list_rootfs (subj))
+
+	(call http.tcp_connect_port (subj))
+
+	(call iptools.exec (subj))
+
+	(call cert.read (subj))
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional ddclient_optional_logger
+		(call logger.auto_subj_type_transition (subj)))
+
+	(optional ddclient_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(call sd.daemon_pid_obj_type (runtime_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow control_sd_unit_subj_type_attribute unit_file (service
+			(start status stop reload enable disable)))
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_cache (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

@@ -1,0 +1,715 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in httpd
+	(block httpd
+		(filecon "/usr/sbin/httpd" file cmd_file_context)
+		(filecon "/etc/httpd(/.*)?" any config_file_context)
+		(filecon "/etc/sysconfig/httpd" file config_file_context)
+		(filecon "/var/run/httpd(/.*)?" any runtime_file_context)
+		(filecon "/var/run/mod_fcgid(/.*)?" any runtime_file_context)
+		(filecon "/var/cache/httpd(/.*)?" any var_cache_file_context)
+		(filecon "/var/lib/dav(/.*)?" any var_lib_file_context)
+		(filecon "/var/log/httpd(/.*)?" any var_log_file_context)
+
+		(optional httpd_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*httpd.*" file
+				unit_file_context)))
+
+	(block htcacheclean
+		(filecon "/usr/sbin/htcacheclean" file cmd_file_context)
+		(filecon "/etc/sysconfig/htcacheclean" file config_file_context)
+		(filecon "/var/run/httpd/htcacheclean(/.*)?" any runtime_file_context)
+
+		(optional htcacheclean_unit_optional_sd
+			(filecon "/usr/lib/systemd/system/[^/]*htcacheclean.*"
+				file unit_file_context)))
+
+	(block suexec
+		(filecon "/usr/sbin/suexec" file cmd_file_context))
+
+	(block rotatelogs
+		(filecon "/usr/sbin/rotatelogs" file cmd_file_context)))
+
+(in fcgistarter
+	(filecon "/usr/sbin/fcgistarter" file cmd_file_context))
+
+(in apachectl
+	(filecon "/usr/sbin/apachectl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(block httpd_blk
+	(blockabstract httpd_blk)
+
+	(block httpd
+		(typeattribute adm_subj_type_attribute)
+
+		(typeattribute subj_type_attribute)
+
+		(typeattribute obj_type_attribute)
+
+		(typeattribute config_obj_type_attribute)
+		(typeattribute exec_obj_type_attribute)
+		(typeattribute port_obj_type_attribute)
+		(typeattribute runtime_obj_type_attribute)
+		(typeattribute unit_obj_type_attribute)
+		(typeattribute var_cache_obj_type_attribute)
+		(typeattribute var_lib_obj_type_attribute)
+		(typeattribute var_log_obj_type_attribute)
+
+		(typeattributeset .httpd.adm_subj_type_attribute
+			adm_subj_type_attribute)
+
+		(typeattributeset .httpd.obj_type_attribute obj_type_attribute)
+
+		(typeattributeset .httpd.config_obj_type_attribute
+			config_obj_type_attribute)
+		(typeattributeset .httpd.exec_obj_type_attribute
+			exec_obj_type_attribute)
+		(typeattributeset .httpd.port_obj_type_attribute
+			port_obj_type_attribute)
+		(typeattributeset .httpd.runtime_obj_type_attribute
+			runtime_obj_type_attribute)
+		(typeattributeset .httpd.unit_obj_type_attribute
+			unit_obj_type_attribute)
+		(typeattributeset .httpd.var_cache_obj_type_attribute
+			var_cache_obj_type_attribute)
+		(typeattributeset .httpd.var_lib_obj_type_attribute
+			var_lib_obj_type_attribute)
+		(typeattributeset .httpd.var_log_obj_type_attribute
+			var_log_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(typeattributeset exec_obj_type_attribute cmd_file)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit net.unreserved_port_obj_blk)
+
+		(typeattributeset port_obj_type_attribute port)
+
+		(allow subj port (tcp_socket (name_bind)))
+
+		(blockinherit file.config_obj_blk)
+
+		(typeattributeset obj_type_attribute config_file)
+		(typeattributeset config_obj_type_attribute config_file)
+
+		(allow subj config_file read_file_perms)
+		(allow subj config_file list_dir_perms)
+		(allow subj config_file read_lnk_file_perms)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset obj_type_attribute runtime_file)
+		(typeattributeset runtime_obj_type_attribute runtime_file)
+
+		(allow subj runtime_file manage_dir_perms)
+		(allow subj runtime_file manage_file_perms)
+		(allow subj runtime_file manage_sock_file_perms)
+
+		(call file.runtime_obj_type_transition (subj runtime_file dir
+			"*"))
+
+		(blockinherit file.var_cache_obj_blk)
+
+		(typeattributeset obj_type_attribute var_cache_file)
+		(typeattributeset var_cache_obj_type_attribute var_cache_file)
+
+		(allow subj var_cache_file manage_dir_perms)
+
+		(call file.var_cache_obj_type_transition (subj var_cache_file
+			dir "*"))
+
+		(blockinherit file.var_lib_obj_blk)
+
+		(typeattributeset obj_type_attribute var_lib_file)
+		(typeattributeset var_lib_obj_type_attribute var_lib_file)
+
+		(allow subj var_lib_file manage_dir_perms)
+
+		(call file.var_lib_obj_type_transition (subj var_lib_file dir
+			"*"))
+
+		(blockinherit file.var_log_obj_blk)
+
+		(typeattributeset obj_type_attribute var_log_file)
+		(typeattributeset var_log_obj_type_attribute var_log_file)
+
+		(allow subj var_log_file manage_dir_perms)
+		(allow subj var_log_file (file (setattr rename)))
+		(allow subj var_log_file append_file_perms)
+		(allow subj var_log_file create_file_perms)
+		(allow subj var_log_file delete_file_perms)
+		(allow subj var_log_file read_file_perms)
+
+		(call file.var_log_obj_type_transition (subj var_log_file dir
+			"*"))
+
+		(allow subj self (capability (dac_override
+			setgid setuid kill)))
+		(allow subj self (process (getpgid)))
+		(allow subj self create_sem_perms)
+		(allow subj self create_shm_perms)
+		(allow subj self rw_fifo_file_perms)
+		(allow subj self (tcp_socket (listen accept)))
+		(allow subj self (unix_stream_socket (connectto
+			listen accept)))
+
+		(call sys.read_kernel_sysctl_files (subj))
+
+		(call cmd.mmap (subj))
+		(call cmd.mmap_shell (subj))
+
+		(call dev.read_urandom (subj))
+
+		(call file.read_data (subj))
+
+		(call net.tcp_bind_generic_node (subj))
+
+		(call sec.get_enforce_mode (subj))
+
+		(call rotatelogs.auto_subj_type_transition (subj))
+		(call suexec.auto_subj_type_transition (subj))
+
+		(call nss.client_subj_type (subj))
+
+		(call cert.read (subj))
+		(call locale.read (subj))
+		(call mime_types.read_config_files (subj))
+
+		(call usersubj.search_home_dir (subj))
+
+		(optional httpd_blk_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset obj_type_attribute unit_file)
+			(typeattributeset unit_obj_type_attribute unit_file)
+
+			(allow adm_subj_type_attribute unit_file (service
+				(stop status disable enable reload start))))
+
+		(allow adm_subj_type_attribute subj_type_attribute (process
+			(ptrace signal signull sigkill sigstop)))
+		(call ps_subj_pattern (adm_subj_type_attribute
+			subj_type_attribute))
+
+		(call file.search_config (adm_subj_type_attribute))
+		(call file.search_runtime (adm_subj_type_attribute))
+		(call file.search_var_cache (adm_subj_type_attribute))
+		(call file.search_var_lib (adm_subj_type_attribute))
+		(call file.search_var_log (adm_subj_type_attribute))
+
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			manage_sock_file_perms)
+
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_dir_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_lnk_file_perms)
+		(allow adm_subj_type_attribute obj_type_attribute
+			relabel_sock_file_perms)
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
+		(macro rw_unix_stream_stream_sockets ((type ARG1))
+			(allow ARG1 subj rw_unix_stream_stream_socket_perms))
+
+		(blockinherit net.tcp_connect_port_blk)
+		(blockinherit net.tcp_bind_port_blk)
+
+		(blockinherit file.search_config_blk)
+		(blockinherit file.list_config_blk)
+		(blockinherit file.read_config_files_blk)
+		(blockinherit file.read_config_lnk_files_blk)
+		(blockinherit file.read_config_blk)
+		(blockinherit file.manage_config_blk)
+		(blockinherit file.relabel_config_blk)
+
+		(blockinherit file.search_runtime_blk)
+		(blockinherit file.list_runtime_blk)
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.read_runtime_lnk_files_blk)
+		(blockinherit file.read_runtime_blk)
+		(blockinherit file.manage_runtime_blk)
+		(blockinherit file.relabel_runtime_blk)
+
+		(blockinherit file.search_var_cache_blk)
+		(blockinherit file.list_var_cache_blk)
+		(blockinherit file.read_var_cache_files_blk)
+		(blockinherit file.read_var_cache_lnk_files_blk)
+		(blockinherit file.read_var_cache_blk)
+		(blockinherit file.manage_var_cache_blk)
+		(blockinherit file.relabel_var_cache_blk)
+
+		(blockinherit file.search_var_lib_blk)
+		(blockinherit file.list_var_lib_blk)
+		(blockinherit file.read_var_lib_files_blk)
+		(blockinherit file.read_var_lib_lnk_files_blk)
+		(blockinherit file.read_var_lib_blk)
+		(blockinherit file.manage_var_lib_blk)
+		(blockinherit file.relabel_var_lib_blk)
+
+		(macro append_var_log_files ((type ARG1))
+			(call search_var_log (ARG1))
+			(allow ARG1 var_log_file append_file_perms))
+
+		(blockinherit file.search_var_log_blk)
+		(blockinherit file.list_var_log_blk)
+		(blockinherit file.read_var_log_files_blk)
+		(blockinherit file.read_var_log_lnk_files_blk)
+		(blockinherit file.read_var_log_blk)
+		(blockinherit file.manage_var_log_blk)
+		(blockinherit file.relabel_var_log_blk)
+
+		(macro adm ((type ARG1)(role ARG2))
+			(typeattributeset adm_subj_type_attribute ARG1)
+			(optional httpd_adm_optional_sd
+				(call sd.daemon_adm_subj_type (ARG1)))
+			(optional httpd_adm_optional_sd_askpwd
+				(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+	(block htcacheclean
+		(typeattribute subj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .htcacheclean.subj_type_attribute
+			subj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit file.config_obj_blk)
+
+		(typeattributeset httpd.obj_type_attribute config_file)
+		(typeattributeset httpd.config_obj_type_attribute config_file)
+
+		(allow subj config_file read_file_perms)
+
+		(blockinherit file.runtime_obj_blk)
+
+		(typeattributeset httpd.obj_type_attribute runtime_file)
+		(typeattributeset httpd.runtime_obj_type_attribute
+			runtime_file)
+
+		(allow subj runtime_file manage_dir_perms)
+		(allow subj runtime_file manage_file_perms)
+
+		(call obj_type_transition_pattern (subj httpd.runtime_file
+			runtime_file dir "htcacheclean"))
+
+		(call httpd.list_var_cache (subj))
+
+		(optional htcacheclean_optional_sd
+			(call sd.daemon (subj cmd_file))
+
+			(call sd.daemon_pid_obj_type (runtime_file))
+
+			(blockinherit sd.unit_obj_blk)
+
+			(typeattributeset httpd.obj_type_attribute unit_file)
+			(typeattributeset httpd.unit_obj_type_attribute
+				unit_file)
+
+			(allow httpd.adm_subj_type_attribute unit_file
+				(service (stop status disable enable reload
+					start))))
+
+		(blockinherit file.read_config_files_blk)
+		(blockinherit file.manage_config_files_blk)
+		(blockinherit file.relabel_config_files_blk)
+
+		(blockinherit file.search_runtime_blk)
+		(blockinherit file.list_runtime_blk)
+		(blockinherit file.read_runtime_files_blk)
+		(blockinherit file.read_runtime_lnk_files_blk)
+		(blockinherit file.read_runtime_blk)
+		(blockinherit file.manage_runtime_blk)
+		(blockinherit file.relabel_runtime_blk)
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk))
+
+	(block suexec
+		(typeattribute subj_type_attribute)
+
+		(typeattribute exec_obj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .suexec.subj_type_attribute
+			subj_type_attribute)
+
+		(typeattributeset .suexec.exec_obj_type_attribute
+			exec_obj_type_attribute)
+
+		(blockinherit cmd.obj_blk)
+
+		(typeattributeset exec_obj_type_attribute cmd_file)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(call httpd.append_var_log_files (subj))
+		(call httpd.rw_inherited_unix_stream_sockets (subj))
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk))
+
+	(block rotatelogs
+		(typeattribute subj_type_attribute)
+
+		(blockinherit subj.common_subj_blk)
+
+		(typeattributeset subj_type_attribute subj)
+
+		(typeattributeset .httpd.subj_type_attribute
+			subj_type_attribute)
+		(typeattributeset .rotatelogs.subj_type_attribute
+			subj_type_attribute)
+
+		(call httpd.append_var_log_files (subj))
+
+		(blockinherit cmd.obj_blk)
+
+		(call subj.entry (subj cmd_file))
+
+		(roletype sys.role subj)
+
+		(blockinherit exec_blk)
+
+		(blockinherit auto_subj_type_transition_blk)
+
+		(blockinherit subj.send_signal_blk)))
+
+(in httpd
+	(macro exec_all ((type ARG1))
+		(call can_exec (ARG1 exec_obj_type_attribute)))
+
+	(macro control_all_sd_unit_subj_type ((type ARG1))
+		(typeattributeset control_all_sd_unit_subj_type_attribute
+			ARG1))
+
+	(blockinherit net.tcp_connect_all_ports_blk)
+	(blockinherit net.tcp_bind_all_ports_blk)
+
+	(blockinherit file.search_all_config_blk)
+	(blockinherit file.list_all_config_blk)
+	(blockinherit file.read_all_config_files_blk)
+	(blockinherit file.read_all_config_lnk_files_blk)
+	(blockinherit file.read_all_config_blk)
+	(blockinherit file.manage_all_config_blk)
+	(blockinherit file.relabel_all_config_blk)
+
+	(blockinherit file.search_all_runtime_blk)
+	(blockinherit file.list_all_runtime_blk)
+	(blockinherit file.read_all_runtime_files_blk)
+	(blockinherit file.read_all_runtime_lnk_files_blk)
+	(blockinherit file.read_all_runtime_blk)
+	(blockinherit file.manage_all_runtime_blk)
+	(blockinherit file.relabel_all_runtime_blk)
+
+	(blockinherit file.search_all_var_cache_blk)
+	(blockinherit file.list_all_var_cache_blk)
+	(blockinherit file.read_all_var_cache_files_blk)
+	(blockinherit file.read_all_var_cache_lnk_files_blk)
+	(blockinherit file.read_all_var_cache_blk)
+	(blockinherit file.manage_all_var_cache_blk)
+	(blockinherit file.relabel_all_var_cache_blk)
+
+	(blockinherit file.search_all_var_lib_blk)
+	(blockinherit file.list_all_var_lib_blk)
+	(blockinherit file.read_all_var_lib_files_blk)
+	(blockinherit file.read_all_var_lib_lnk_files_blk)
+	(blockinherit file.read_all_var_lib_blk)
+	(blockinherit file.manage_all_var_lib_blk)
+	(blockinherit file.relabel_all_var_lib_blk)
+
+	(blockinherit file.search_all_var_log_blk)
+	(blockinherit file.list_all_var_log_blk)
+	(blockinherit file.read_all_var_log_files_blk)
+	(blockinherit file.read_all_var_log_lnk_files_blk)
+	(blockinherit file.read_all_var_log_blk)
+	(blockinherit file.manage_all_var_log_blk)
+	(blockinherit file.relabel_all_var_log_blk)
+
+	(macro append_all_var_log_files ((type ARG1))
+		(call search_all_var_log (ARG1))
+		(allow ARG1 var_log_obj_type_attribute append_file_perms))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset httpd.adm_subj_type_attribute ARG1)
+		(optional httpd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional httpd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in suexec
+	(macro mmap_all ((type ARG1))
+		(allow ARG1 exec_obj_type_attribute mmap_file_perms)))
+
+(in apachectl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
+
+(in fcgistarter
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block apachectl
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (capability (dac_override net_admin)))
+	(allow subj self (process (setexec)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+	(call sec.validate_context (subj))
+
+	(call httpd.exec_all (subj))
+	(call httpd.control_all_sd_unit_subj_type (subj))
+	(call httpd.read_all_config (subj))
+	(call httpd.search_all_var_log (subj))
+	(call suexec.mmap_all (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call web_content_ro.search_all (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj))))
+
+	(optional apachectl_optional_sysbus
+		(call sysbus.client_subj_type (subj)))
+
+	(optional apachectl_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj))
+		(call polkit_tty_agent.exec (subj)))
+
+	(optional apachectl_optional_sd
+		(call sd.read_state (subj))
+		(call sd.stream_connect (subj)))
+
+	(optional apachectl_optional_sd_askpwd
+		(call sd_askpwd.read_runtime (subj))
+		(call sd_askpwd_agent.exec (subj))
+		(call sd_askpwd_agent.read_runtime_fifo_files (subj)))
+
+	(optional apachectl_optional_systemctl
+		(call systemctl.system_client_subj_type (subj))))
+
+(block fcgistarter
+	(blockinherit cmd.obj_blk))
+
+(block htcacheclean
+	(typeattribute subj_type_attribute))
+
+(block httpd
+	(typeattribute control_all_sd_unit_subj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+	(typeattribute exec_obj_type_attribute)
+	(typeattribute unit_obj_type_attribute)
+	(typeattribute config_obj_type_attribute)
+	(typeattribute port_obj_type_attribute)
+	(typeattribute runtime_obj_type_attribute)
+	(typeattribute var_cache_obj_type_attribute)
+	(typeattribute var_lib_obj_type_attribute)
+	(typeattribute var_log_obj_type_attribute)
+
+	(blockinherit httpd_blk)
+
+	(call http.tcp_bind_reserved_port (httpd.subj))
+	(call http_alt.tcp_bind_port (httpd.subj))
+
+	(call web_content_cgi.search_all (httpd.subj))
+
+	(call web_content_htaccess.read_all_files (httpd.subj))
+
+	(call web_content_ra.list_all (httpd.subj))
+	(call web_content_ra.append_all_files (httpd.subj))
+	(call web_content_ra.read_all_files (httpd.subj))
+
+	(call web_content_ro.list_all (httpd.subj))
+	(call web_content_ro.read_all_files (httpd.subj))
+	(call web_content_ro.read_all_lnk_files (httpd.subj))
+
+	(call web_content_rw.manage_all (httpd.subj))
+
+	(call web_content.cgi_client_subj (httpd.subj))
+
+	(call web_sys.web_content_rw.tmpfs_obj_type_transition_web_content_rw
+		(httpd.subj))
+
+	(optional httpd_optional_logrotate
+		(call logrotate.client_reload_sd_unit_obj_type
+			(unit_obj_type_attribute))
+		(call logrotate.client_var_log_obj_type
+			(var_log_obj_type_attribute)))
+
+	(optional httpd_optional_sd
+		(call sd.notify_subj_type (subj_type_attribute))
+		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
+
+		(call sd.reload (control_all_sd_unit_subj_type_attribute))
+		(allow control_all_sd_unit_subj_type_attribute
+			unit_obj_type_attribute (service (start status stop
+				reload enable disable))))
+
+	(optional httpd_optional_php_fpm
+		(call php_fpm.php_fpm.stream_connect (httpd.subj))))
+
+(block rotatelogs
+	(typeattribute subj_type_attribute)
+
+	(call web_content_ra.manage_all_files (httpd.rotatelogs.subj))
+
+	(optional rotatelogs_optional_sd
+		(call sd.forked_subj_type (subj_type_attribute))))
+
+(block suexec
+	(typeattribute subj_type_attribute)
+
+	(typeattribute exec_obj_type_attribute)
+
+	(allow subj_type_attribute self (capability (setuid setgid)))
+
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+
+	(call cmd.mmap (subj_type_attribute))
+	(call cmd.mmap_shell (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.search_home_dir (subj_type_attribute))
+
+	(call web_content.cgi_client_subj (httpd.suexec.subj))
+	(call web_content.getattr_all (httpd.suexec.subj))
+
+	(call web_content_cgi.search_all (httpd.suexec.subj))
+
+	(optional suexec_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute))))
+
+(allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process
+	(ptrace signal signull sigkill sigstop)))
+(call ps_subj_pattern (httpd.adm_subj_type_attribute
+	httpd.subj_type_attribute))
+
+(call file.search_config (httpd.adm_subj_type_attribute))
+(call file.search_runtime (httpd.adm_subj_type_attribute))
+(call file.search_var_cache (httpd.adm_subj_type_attribute))
+(call file.search_var_lib (httpd.adm_subj_type_attribute))
+(call file.search_var_log (httpd.adm_subj_type_attribute))
+
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_dir_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_lnk_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	manage_sock_file_perms)
+
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_dir_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_lnk_file_perms)
+(allow httpd.adm_subj_type_attribute httpd.obj_type_attribute
+	relabel_sock_file_perms)
+
+(optional httpd_adm_subj_type_optional_sd
+	(allow httpd.adm_subj_type_attribute httpd.unit_obj_type_attribute
+		(service (stop status disable enable reload start))))

@@ -1,0 +1,270 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Access Vectors
+;
+
+(class context (translate contains))
+(classorder (unordered context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Constraints
+;
+
+(tunableif enable_mls
+	(true
+		(constrain (context (translate))
+		(or (dom h1 h2)
+		(eq t1 mactransd.mls_translate_subj_type_attribute)))
+
+		(constrain (context (contains))
+		(and (dom h1 h2)
+		(domby l1 l2)))))
+
+(tunableif enable_rbacsep
+	(true
+		(constrain (context (contains translate))
+		(or (or (or (eq r1 r2)
+		(eq r1 rbacsep.exempt_role_attribute))
+		(eq r2 rbacsep.exempt_role_attribute))
+		(eq t1 rbacsep.exempt_subj_type_attribute)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in mcstransd
+	(filecon "/usr/sbin/mcstransd" file cmd_file_context)
+
+	(optional mcstransd_unit_optional_sd
+
+	(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file
+		unit_file_context)))
+
+(filecon "/etc/selinux/([^/]*/)?secolor\.conf" file mcstransd_config)
+(filecon "/etc/selinux/([^/]*/)?setrans\.conf" file mcstransd_config)
+(filecon "/etc/selinux/([^/]*/)?setrans\.d(/.*)?" any mcstransd_config)
+(filecon "/var/run/mcstransd\.pid" file mcstransd_runtime)
+(filecon "/var/run/setrans(/.*)?" any mcstransd_runtime)
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context mcstransd_config (sys.id sys.role
+					mcstransd.config_file (systemhigh
+						systemhigh)))
+				(context mcstransd_runtime (sys.id sys.role
+					mcstransd.runtime_file (systemhigh
+						systemhigh))))
+			(false
+				(context mcstransd_config (sys.id object_r
+					mcstransd.config_file (systemhigh
+						systemhigh)))
+				(context mcstransd_runtime (sys.id object_r
+					mcstransd.runtime_file (systemhigh
+						systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context mcstransd_config (sys.id sys.role
+					mcstransd.config_file (systemlow
+						systemlow)))
+				(context mcstransd_runtime (sys.id sys.role
+					mcstransd.runtime_file (systemlow
+						systemlow))))
+			(false
+				(context mcstransd_config (sys.id object_r
+					mcstransd.config_file (systemlow
+						systemlow)))
+				(context mcstransd_runtime (sys.id object_r
+					mcstransd.runtime_file (systemlow
+						systemlow)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in mcstransd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro contains_subj_type ((type ARG1))
+		(typeattributeset contains_subj_type_attribute ARG1))
+
+	(macro mls_translate_subj_type ((type ARG1))
+		(typeattributeset mls_translate_subj_type_attribute ARG1))
+
+	(macro search_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call selinux_config.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(macro selinux_config_obj_type_transition_config ((type ARG1))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file dir "setrans.d"))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file file "secolor.conf"))
+		(call selinux_config.config_obj_type_transition (ARG1
+			config_file file "setrans.conf")))
+
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk)
+
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
+			"setrans"))
+		(call file.runtime_obj_type_transition (ARG1 runtime_file file
+			"mcstransd.pid")))
+
+	(macro stream_connect ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file runtime_file
+			subj)))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional mcstransd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional mcstransd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block mcstransd
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute contains_subj_type_attribute)
+	(typeattribute mls_translate_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(call mls.trusted_obj_type (subj))
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.runtime_obj_blk)
+
+	(call mls.trusted_obj_type (runtime_file))
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(call manage_runtime (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(allow subj self (capability (sys_resource)))
+	(allow subj self (process (setrlimit getcap setcap)))
+	(allow subj self (context (contains)))
+	(allow subj self (unix_stream_socket (listen accept)))
+	(allow subj self create_netlink_selinux_socket_perms)
+
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call file.read_config_files (subj))
+
+	(call sec.compute_access_vector (subj))
+
+	(call subj.read_state_common_subj (subj))
+	(call subj.getattr_common_subj (subj))
+	(call subj.getsession_common_subj (subj))
+
+	(call locale.read (subj))
+
+	(call selinux_config.read_config (subj))
+
+	(optional msctransd_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(call sd.daemon_pid_obj_type (runtime_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional mcstransd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(allow client_subj_type_attribute subj (context (translate)))
+	(call stream_connect (client_subj_type_attribute))
+
+	(allow contains_subj_type_attribute self (context (contains)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_runtime (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))

@@ -1,0 +1,27 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in smtp
+	(portcon "tcp" 465 port_obj_context)
+	(portcon "udp" 465 port_obj_context)
+	(portcon "tcp" 587 port_obj_context)
+	(portcon "udp" 587 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in smtp
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block smtp
+	(blockinherit net.reserved_port_obj_blk))

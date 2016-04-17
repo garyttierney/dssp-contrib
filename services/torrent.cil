@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in torrent
+	(portcon "tcp" 6881 port_obj_context)
+	(portcon "udp" 6881 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in torrent
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block torrent
+	(blockinherit net.unreserved_port_obj_blk))

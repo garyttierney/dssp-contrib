@@ -1,7 +1,0 @@
-(in avahid
-	(filecon "/usr/sbin/avahi-daemon" file cmd_file_context)
-	(filecon "/var/run/avahi-daemon(/.*)?" any runtime_file_context)
-
-	(optional avahid_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*avahi-daemon.*" file
-			unit_file_context)))

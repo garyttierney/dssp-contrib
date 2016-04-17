@@ -1,0 +1,361 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in polkit_agent
+	(filecon "/usr/lib/polkit-1/polkit-agent-helper-1" file
+		cmd_file_context))
+
+(in polkit
+	(filecon "/etc/polkit-1(/.*)?" any config_file_context)
+	(filecon "/usr/lib/polkit-1/polkitd" file cmd_file_context)
+	(filecon "/var/lib/polkit-1(/.*)?" any var_lib_file_context)
+
+	(optional polkit_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*polkit.*" file
+			unit_file_context)))
+
+(in polkit_exec
+	(filecon "/usr/bin/pkaction" file cmd_file_context)
+	(filecon "/usr/bin/pkcheck" file cmd_file_context)
+	(filecon "/usr/bin/pkexec" file cmd_file_context))
+
+(in polkit_helper
+	(filecon "/usr/bin/pkla-admin-identities" file cmd_file_context)
+	(filecon "/usr/bin/pkla-check-authorization" file cmd_file_context))
+
+(in polkit_tty_agent
+	(filecon "/usr/bin/pkttyagent" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in polkit_exec
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset polkit_exec.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call polkit_exec.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call polkit_exec.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call application_subj_type (ARG3))
+
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG3 ARG2 (process (signal)))
+		(allow ARG3 ARG2 rw_key_perms)
+		(call ps_subj_pattern (ARG3 ARG2))
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(call polkit_agent.run (ARG3 ARG1)))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+
+(in polkit
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"polkit-1")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional polkit_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional polkit_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in polkit_agent
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in polkit_helper
+	(blockinherit exec_blk))
+
+(in polkit_tty_agent
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro dontaudit_exec ((type ARG1))
+		(dontaudit ARG1 cmd_file exec_file_perms))
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call send_signal (ARG1))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
+
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block polkit
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(roletype sys.role subj)
+
+	(call subj.entry (subj cmd_file))
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj self (process (getsched setsched)))
+	(allow subj self (capability (setuid setgid)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_kernel_sysctl_files (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+
+	(call file.read_data (subj))
+
+	(call subj.read_state_subj (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call pam.read_config_files (subj))
+
+	(call polkit_helper.exec (subj))
+
+	(optional polkit_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional polkit_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional polkit_optional_sd_logind
+		(call sd_logind.read_runtime (subj)))
+
+	(optional polkit_optional_sysbus
+		(call sysbus.service_subj_type (subj)))
+
+	(optional sysbus_chat_client_subj_type_attribute_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
+
+(block polkit_agent
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (setuid)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.audit_set_params (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fs.list_devtmpfs (subj))
+	(call fs.search_devpts (subj))
+
+	(call chkpwd.run (subj role_attribute))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call pam.read_config (subj))
+
+	(call polkit.sysbus_chat_client_subj_type (subj))
+
+	(optional polkit_agent_optional_gs
+		(call gs.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
+	(optional polkit_agent_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj)))
+
+	(optional polkit_agent_optional_sd_journald
+		(call sd_journald.client_subj_type (subj))))
+
+(block polkit_exec
+	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow client_subj_type_attribute self (capability (dac_override
+		setgid setuid net_admin)))
+	(allow client_subj_type_attribute self (process (setsched)))
+	(allow client_subj_type_attribute self rw_fifo_file_perms)
+
+	(call sys.audit_set_params (client_subj_type_attribute))
+	(call sys.link_keyring (client_subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (client_subj_type_attribute))
+
+	(call file.read_config_files (client_subj_type_attribute))
+
+	(call locale.read (client_subj_type_attribute))
+	(call utmp.read_runtime_files (client_subj_type_attribute))
+
+	(call nss.client_subj_type (client_subj_type_attribute))
+
+	(call pam.read_config (client_subj_type_attribute))
+
+	(call polkit.sysbus_chat_client_subj_type (client_subj_type_attribute))
+
+	(optional polkit_exec_optional_gs
+		(call gs.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
+
+	(optional polkit_exec_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
+
+	(optional polkit_exec_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type
+			(client_subj_type_attribute)))
+
+	(optional polkit_exec_subj_type_optional_sd_logind
+		(call sd_logind.client_subj_type (client_subj_type_attribute)))
+
+	(call client_subj_type (subj_type_attribute)))
+
+(block polkit_helper
+	(blockinherit cmd.obj_blk))
+
+(block polkit_tty_agent
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
+
+	(call term.use_inherited_console (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call polkit_agent.run (subj role_attribute))
+	(call polkit.sysbus_chat_client_subj_type (subj))
+
+	(optional polkit_tty_agent_optional_plymouth
+		(call plymouthd.use_fd (subj)))
+
+	(optional polkit_tty_agent_optional_sd
+		(call sd.use_fd (subj))))

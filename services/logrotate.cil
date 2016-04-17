@@ -1,0 +1,174 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in logrotate
+	(filecon "/etc/logrotate\.conf" file config_file_context)
+	(filecon "/etc/logrotate\.d(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/logrotate" file cmd_file_context)
+	(filecon "/var/lib/logrotate(/.*)?" any var_lib_file_context)
+	(filecon "/var/lib/logrotate\.status.*" file var_lib_file_context)
+
+	(optional logrotate_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*logrotate.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in logrotate
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro client_runtime_obj_type ((type ARG1))
+		(typeattributeset client_runtime_obj_type_attribute ARG1))
+
+	(macro client_reload_sd_unit_obj_type ((type ARG1))
+		(typeattributeset client_reload_sd_unit_obj_type_attribute
+			ARG1))
+
+	(macro client_var_log_obj_type ((type ARG1))
+		(typeattributeset client_var_log_obj_type_attribute ARG1))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.manage_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"logrotate"))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file file
+			"logrotate.status")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional logrotate_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional logrotate_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block logrotate
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(typeattribute client_runtime_obj_type_attribute)
+	(typeattribute client_reload_sd_unit_obj_type_attribute)
+	(typeattribute client_var_log_obj_type_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
+
+	(allow subj self (capability (chown fsetid dac_override)))
+
+	(call standard.obj_sys_change_exemption_subj_type (subj))
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call file.read_config (subj))
+	(call file.rw_var_log_dirs (subj))
+
+	(call fs.list_rootfs (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional logrotate_optional_chronyd
+		(call chronyc.auto_subj_type_transition (subj)))
+
+	(optional logrotate_optional_mariadb
+		(call mariadb.exec (subj)))
+
+	(optional logrotate_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow subj client_reload_sd_unit_obj_type_attribute (service
+			(reload))))
+
+	(optional logrotate_optional_systemctl
+		(call systemctl.system_client_subj_type (subj)))
+
+	(allow subj client_subj_type_attribute (process (signal)))
+
+	(call file.search_runtime (subj))
+	(call read_files_pattern (subj client_runtime_obj_type_attribute
+		client_runtime_obj_type_attribute))
+
+	(allow subj client_var_log_obj_type_attribute rw_dir_perms)
+	(allow subj client_var_log_obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_var_lib (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

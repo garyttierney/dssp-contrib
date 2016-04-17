@@ -1,0 +1,62 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in rdisc
+	(filecon "/usr/sbin/rdisc" file cmd_file_context)
+
+	(optional rdisc_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*rdisc.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in rdisc
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional rdisc_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional rdisc_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block rdisc
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(optional rdisc_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

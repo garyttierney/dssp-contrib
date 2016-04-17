@@ -1,0 +1,52 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in avahi
+	(filecon "/etc/avahi(/.*)?" any config_file_context))
+
+(in avahitools
+	(filecon "/usr/bin/avahi-browse" file cmd_file_context)
+	(filecon "/usr/bin/avahi-publish" file cmd_file_context)
+	(filecon "/usr/bin/avahi-resolve" file cmd_file_context)
+	(filecon "/usr/bin/avahi-set-host-name" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in avahi
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+(in avahitools
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block avahi
+	(blockinherit file.config_obj_blk))
+
+(block avahitools
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

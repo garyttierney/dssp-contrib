@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dnssec
+	(portcon "tcp" 8955 port_obj_context)
+	(portcon "udp" 8955 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dnssec
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dnssec
+	(blockinherit net.unreserved_port_obj_blk))

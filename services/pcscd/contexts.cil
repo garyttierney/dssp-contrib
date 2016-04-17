@@ -1,8 +1,0 @@
-(in pcscd
-	(filecon "/etc/reader\.conf\.d(/.*)?" any config_file_context)
-	(filecon "/usr/sbin/pcscd" file cmd_file_context)
-	(filecon "/var/run/pcscd(/.*)?" any runtime_file_context)
-
-	(optional pcscd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*pcscd.*" file
-			unit_file_context)))

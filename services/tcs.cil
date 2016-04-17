@@ -1,0 +1,24 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in tcs
+	(portcon "tcp" 30003 port_obj_context)
+	(portcon "udp" 30003 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in tcs
+	(blockinherit net.tcp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block tcs
+	(blockinherit net.unreserved_port_obj_blk))

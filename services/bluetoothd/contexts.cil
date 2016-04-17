@@ -1,7 +1,0 @@
-(in bluetoothd
-	(filecon "/usr/libexec/bluetooth/bluetoothd" file cmd_file_context)
-	(filecon "/var/lib/bluetooth(/.*)?" any var_lib_file_context)
-
-	(optional bluetoothd_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*bluetooth.*" file
-			unit_file_context)))

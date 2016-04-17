@@ -1,0 +1,399 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in auditd
+	(filecon "/usr/sbin/auditd" file cmd_file_context)
+
+	(optional auditd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*auditd.*" file
+			unit_file_context)))
+
+(in augenrules
+	(filecon "/usr/sbin/augenrules" file cmd_file_context))
+
+(in ausearch
+	(filecon "/usr/sbin/ausearch" file cmd_file_context))
+
+(filecon "/etc/audit(/.*)?" any auditd_config)
+(filecon "/var/log/audit(/.*)?" any auditd_var_log)
+(filecon "/var/run/audit_events" socket auditd_runtime)
+(filecon "/var/run/auditd\.pid" file auditd_runtime)
+(filecon "/var/run/auditd_sock" socket auditd_runtime)
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context auditd_config (sys.id sys.role
+					auditd_config.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_runtime (sys.id sys.role
+					auditd_runtime.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_var_log (sys.id sys.role
+					auditd_var_log.sec_file
+						(systemhigh systemhigh))))
+			(false
+				(context auditd_config (sys.id object_r
+					auditd_config.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_runtime (sys.id object_r
+					auditd_runtime.sec_file
+						(systemhigh systemhigh)))
+				(context auditd_var_log (sys.id object_r
+					auditd_var_log.sec_file
+						(systemhigh systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context auditd_config (sys.id sys.role
+					auditd_config.sec_file
+						(systemlow systemlow)))
+				(context auditd_runtime (sys.id sys.role
+					auditd_runtime.sec_file
+						(systemlow systemlow)))
+				(context auditd_var_log (sys.id sys.role
+					auditd_var_log.sec_file
+						(systemlow systemlow))))
+			(false
+				(context auditd_config (sys.id object_r
+					auditd_config.sec_file
+						(systemlow systemlow)))
+				(context auditd_runtime (sys.id object_r
+					auditd_runtime.sec_file
+						(systemlow systemlow)))
+				(context auditd_var_log (sys.id object_r
+					auditd_var_log.sec_file
+						(systemlow systemlow)))))))
+
+(filecon "/var/log/audit/\.journal" any ())
+(filecon "/var/log/audit/lost\+found/.*" any ())
+(filecon "/var/log/audit/lost\+found" dir lost_found)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in auditd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro search_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 auditd_config.sec_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 auditd_config.sec_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(call read_files_pattern (ARG1 auditd_config.sec_file
+			auditd_config.sec_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(call manage_files_pattern (ARG1 auditd_config.sec_file
+			auditd_config.sec_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 auditd_config.sec_file
+			auditd_config.sec_file)))
+
+	(macro read_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 auditd_config.sec_file read_file_perms)
+		(allow ARG1 auditd_config.sec_file list_dir_perms)
+		(allow ARG1 auditd_config.sec_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call file.rw_config_dirs (ARG1))
+		(allow ARG1 auditd_config.sec_file manage_file_perms)
+		(allow ARG1 auditd_config.sec_file manage_dir_perms)
+		(allow ARG1 auditd_config.sec_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 auditd_config.sec_file relabel_file_perms)
+		(allow ARG1 auditd_config.sec_file relabel_dir_perms)
+		(allow ARG1 auditd_config.sec_file relabel_lnk_file_perms))
+
+	(macro search_var_log ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file search_dir_perms))
+
+	(macro list_var_log ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file list_dir_perms))
+
+	(macro read_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(call read_files_pattern (ARG1 auditd_var_log.sec_file
+			auditd_var_log.sec_file)))
+
+	(macro read_var_log_lnk_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(call read_lnk_files_pattern (ARG1 auditd_var_log.sec_file
+			auditd_var_log.sec_file)))
+
+	(macro rw_auditd_var_log_dirs ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file rw_dir_perms))
+
+	(macro read_var_log ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file read_file_perms)
+		(allow ARG1 auditd_var_log.sec_file list_dir_perms)
+		(allow ARG1 auditd_var_log.sec_file read_lnk_file_perms))
+
+	(macro manage_var_log ((type ARG1))
+		(call file.rw_var_log_dirs (ARG1))
+		(allow ARG1 auditd_var_log.sec_file manage_file_perms)
+		(allow ARG1 auditd_var_log.sec_file manage_dir_perms)
+		(allow ARG1 auditd_var_log.sec_file manage_lnk_file_perms))
+
+	(macro relabelfrom_var_log_dirs ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file relabelfrom_dir_perms))
+
+	(macro relabel_var_log ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 auditd_var_log.sec_file relabel_file_perms)
+		(allow ARG1 auditd_var_log.sec_file relabel_dir_perms)
+		(allow ARG1 auditd_var_log.sec_file relabel_lnk_file_perms))
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1
+			auditd_var_log.sec_file dir "audit")))
+
+	(macro read_runtime_files ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(allow ARG1 auditd_runtime.sec_file read_file_perms))
+
+	(macro manage_runtime_files ((type ARG1))
+		(call file.rw_runtime_dirs (ARG1))
+		(allow ARG1 auditd_runtime.sec_file manage_file_perms))
+
+	(macro relabel_runtime_files ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(allow ARG1 auditd_runtime.sec_file relabel_file_perms))
+
+	(macro read_runtime_sock_files ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(allow ARG1 auditd_runtime.sec_file read_sock_file_perms))
+
+	(macro manage_runtime_sock_files ((type ARG1))
+		(call file.rw_runtime_dirs (ARG1))
+		(allow ARG1 auditd_runtime.sec_file manage_sock_file_perms))
+
+	(macro relabel_runtime_sock_files ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(allow ARG1 auditd_runtime.sec_file relabel_sock_file_perms))
+
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
+		(call file.runtime_obj_type_transition (ARG1
+			auditd_runtime.sec_file file "auditd.pid"))
+		(call file.runtime_obj_type_transition (ARG1
+			auditd_runtime.sec_file sock_file "auditd_sock"))
+		(call file.runtime_obj_type_transition (ARG1
+			auditd_runtime.sec_file sock_file "audit_events")))
+
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.use_fd_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional auditd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional auditd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in augenrules
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file
+			"*"))))
+
+(in ausearch
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block auditd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(allow subj self (process (setsched)))
+	(allow subj self (capability (audit_control sys_nice sys_resource)))
+	(allow subj self create_netlink_audit_socket_perms)
+
+	(call read_config (subj))
+
+	(allow subj auditd_var_log.sec_file manage_dir_perms)
+	(allow subj auditd_var_log.sec_file (file (rename setattr)))
+	(allow subj auditd_var_log.sec_file append_file_perms)
+	(allow subj auditd_var_log.sec_file create_file_perms)
+	(allow subj auditd_var_log.sec_file delete_file_perms)
+	(allow subj auditd_var_log.sec_file read_file_perms)
+
+	(call var_log_obj_type_transition_var_log (subj))
+
+	(call manage_runtime_files (subj))
+	(call manage_runtime_sock_files (subj))
+	(call runtime_obj_type_transition_runtime (subj))
+
+	(call fs.getattr_fs (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call audispd.auto_subj_type_transition (subj))
+
+	(tunableif enable_mls
+		(true
+			(optional auditd_enable_mls_optional_sd
+				(call sd.daemon_auto_subj_range_transition
+					(subj cmd_file systemhigh
+						systemhigh)))))
+
+	(optional auditd_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional auditd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
+
+(block auditd_config
+	(blockinherit file.sec_obj_blk)
+
+	(typeattributeset auditd.obj_type_attribute sec_file))
+
+(block auditd_var_log
+	(blockinherit file.sec_obj_blk)
+
+	(call sys.mountpoint_obj_type (sec_file))
+
+	(typeattributeset auditd.obj_type_attribute sec_file))
+
+(block auditd_runtime
+	(blockinherit file.sec_obj_blk)
+
+	(typeattributeset auditd.obj_type_attribute sec_file)
+
+	(call fs.associate_tmpfs (sec_file)))
+
+(block augenrules
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset auditd.obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call auditctl.auto_subj_type_transition (subj))
+
+	(call auditd.manage_config_files (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional augenrules_optional_sd
+		(call sd.daemon (subj cmd_file))))
+
+(block ausearch
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call file.read_config_files (subj))
+
+	(call auditd.read_config (subj))
+	(call auditd.read_var_log (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj)))

@@ -1,0 +1,61 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in avahi_autoipd
+	(filecon "/usr/sbin/avahi-autoipd" file cmd_file_context)
+	(filecon "/var/lib/avahi-autoipd(/.*)?" any var_lib_file_context))
+
+(filecon "/etc/avahi/avahi-autoipd\.action" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in avahi_autoipd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.list_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"avahi-autoipd"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block avahi_autoipd
+	(roleattribute role_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.var_lib_obj_blk)
+
+	(call manage_var_lib (subj))
+	(call var_lib_obj_type_transition_var_lib (subj))
+
+	(call avahi.read_config (subj)))

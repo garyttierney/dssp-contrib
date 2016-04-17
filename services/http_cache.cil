@@ -1,0 +1,27 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in http_cache
+	(portcon "tcp" 6081 port_obj_context)
+	(portcon "udp" 6081 port_obj_context)
+	(portcon "tcp" 3128 port_obj_context)
+	(portcon "udp" 3128 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in http_cache
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block http_cache
+	(blockinherit net.unreserved_port_obj_blk))

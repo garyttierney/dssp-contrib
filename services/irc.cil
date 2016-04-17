@@ -1,0 +1,29 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in irc
+	(portcon "tcp" 6667 port_obj_context)
+	(portcon "udp" 6667 port_obj_context)
+	(portcon "tcp" 6697 port_obj_context)
+	(portcon "udp" 6697 port_obj_context)
+	(portcon "tcp" 7000 port_obj_context)
+	(portcon "udp" 7000 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in irc
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block irc
+	(blockinherit net.unreserved_port_obj_blk))

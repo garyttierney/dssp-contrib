@@ -1,9 +1,0 @@
-(in mandb
-	(filecon "/etc/man_db\.conf" file config_file_context)
-	(filecon "/etc/sysconfig/man-db" file config_file_context)
-	(filecon "/usr/bin/mandb" file cmd_file_context)
-	(filecon "/var/cache/man(/.*)?" any var_cache_file_context)
-
-	(optional mandb_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*man-db.*" file
-			unit_file_context)))

@@ -1,0 +1,41 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in syslog
+	(portcon "udp" 514 port_obj_context)
+	(portcon "tcp" 601 port_obj_context)
+	(portcon "udp" 601 port_obj_context))
+
+(in syslog_tls
+	(portcon "tcp" 6514 port_obj_context)
+	(portcon "udp" 6514 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in syslog
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_reserved_port_blk))
+
+(in syslog_tls
+	(blockinherit net.dccp_bind_port_blk)
+	(blockinherit net.dccp_connect_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.udp_bind_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block syslog
+	(blockinherit net.reserved_port_obj_blk))
+
+(block syslog_tls
+	(blockinherit net.port_obj_blk))

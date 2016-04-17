@@ -1,7 +1,0 @@
-(in qemu_guest_agent
-	(filecon "/usr/bin/qemu-ga" file cmd_file_context)
-	(filecon "/var/run/qga\.state" file runtime_file_context)
-
-	(optional qemu_guest_agent_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/[^/]*qemu-guest-agent.*"
-			file unit_file_context)))

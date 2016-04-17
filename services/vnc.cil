@@ -1,0 +1,35 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in vnc
+	(portcon "tcp" ( 5900 5909 ) port_obj_context)
+	(portcon "udp" ( 5900 5909 ) port_obj_context))
+
+(in vncrev
+	(portcon "tcp" 5500 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in vnc
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+(in vncrev
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block vnc
+	(blockinherit net.unreserved_port_obj_blk))
+
+(block vncrev
+	(blockinherit net.unreserved_port_obj_blk))

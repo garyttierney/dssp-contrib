@@ -1,0 +1,145 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in realmd
+	(filecon "/usr/lib/realmd/realmd" file cmd_file_context)
+	(filecon "/var/cache/realmd(/.*)?" any var_cache_file_context)
+
+	(optional realmd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*realmd.*" file
+			unit_file_context)))
+
+(in realm
+	(filecon "/usr/sbin/realm" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in realmd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro sysbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit file.search_var_cache_blk)
+	(blockinherit file.list_var_cache_blk)
+	(blockinherit file.read_var_cache_files_blk)
+	(blockinherit file.read_var_cache_lnk_files_blk)
+	(blockinherit file.read_var_cache_blk)
+	(blockinherit file.manage_var_cache_blk)
+	(blockinherit file.relabel_var_cache_blk)
+
+	(macro var_cache_obj_type_transition_var_cache ((type ARG1))
+		(call file.var_cache_obj_type_transition (ARG1 var_cache_file
+			dir "realmd")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional realmd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional realmd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in realm
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block realmd
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute sysbus_chat_client_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.var_cache_obj_blk)
+
+	(typeattributeset obj_type_attribute var_cache_file)
+
+	(call manage_var_cache (subj))
+	(call var_cache_obj_type_transition_var_cache (subj))
+
+	(allow subj self (capability (net_admin)))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_data (subj))
+	(call file.read_config (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call locale.read (subj))
+
+	(call samba.read_config (subj))
+
+	(call usersubj.dontaudit_search_home_dir (subj))
+
+	(optional realmd_optional_gdm
+		(call gdm.sysbus_chat_client_subj_type (subj)))
+
+	(optional realmd_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional realmd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional realmd_optional_sysbus
+		(call sysbus.daemon (subj cmd_file)))
+
+	(optional realmd_sysbus_chat_client_subj_type_optional_sysbus
+		(allow subj sysbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))
+		(allow sysbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))
+
+(block realm
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

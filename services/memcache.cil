@@ -1,0 +1,26 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in memcache
+	(portcon "tcp" 11211 port_obj_context)
+	(portcon "udp" 11211 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in memcache
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.udp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block memcache
+	(blockinherit net.unreserved_port_obj_blk))

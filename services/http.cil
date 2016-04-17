@@ -1,0 +1,38 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in http
+	(portcon "tcp" 80 port_obj_context)
+	(portcon "tcp" 443 port_obj_context)
+	(portcon "udp" 80 port_obj_context)
+	(portcon "udp" 443 port_obj_context))
+
+(in http_alt
+	(portcon "tcp" 8080 port_obj_context)
+	(portcon "udp" 8080 port_obj_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in http
+	(blockinherit net.tcp_bind_reserved_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+(in http_alt
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.tcp_connect_port_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block http
+	(blockinherit net.reserved_port_obj_blk))
+
+(block http_alt
+	(blockinherit net.unreserved_port_obj_blk))

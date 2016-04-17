@@ -1,0 +1,322 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Access Vectors
+;
+
+(class passwd (passwd chfn chsh rootok crontab))
+(classorder (unordered passwd))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in faillog
+	(filecon "/var/log/btmp.*" file var_log_file_context)
+	(filecon "/var/log/faillog" file var_log_file_context)
+	(filecon "/var/log/tallylog" file var_log_file_context)
+	(filecon "/var/run/faillock(/.*)?" any runtime_file_context))
+
+(in lastlog
+	(filecon "/var/log/lastlog" file var_log_file_context))
+
+(in pam
+	(filecon "/etc/pam\.d(/.*)?" any config_file_context)
+	(filecon "/etc/security(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/pam_timestamp_check" file cmd_file_context)
+	(filecon "/var/run/sepermit(/.*)?" any runtime_file_context))
+
+(in pam_console
+	(filecon "/usr/sbin/pam_console_apply" file cmd_file_context)
+	(filecon "/var/run/console(/.*)?" any runtime_file_context))
+
+(filecon "/etc/security/namespace\.init" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in pam
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro login_prog_subj_type ((type ARG1))
+		(typeattributeset login_prog_subj_type_attribute ARG1))
+
+	(macro use_login_prog_fd ((type ARG1))
+		(allow ARG1 login_prog_subj_type_attribute (fd (use))))
+
+	(macro link_login_prog_keyring ((type ARG1))
+		(allow ARG1 login_prog_subj_type_attribute link_key_perms))
+
+	(macro read_state_login_prog_subj ((type ARG1))
+		(call fs.search_proc (ARG1))
+		(allow ARG1 login_prog_subj_type_attribute read_file_perms)
+		(allow ARG1 login_prog_subj_type_attribute list_dir_perms)
+		(allow ARG1 login_prog_subj_type_attribute
+			read_lnk_file_perms))
+
+	(macro change_passwd ((type ARG1))
+		(allow ARG1 self (passwd (passwd))))
+
+	(macro change_finger ((type ARG1))
+		(allow ARG1 self (passwd (chfn))))
+
+	(macro change_shell ((type ARG1))
+		(allow ARG1 self (passwd (chsh))))
+
+	(macro change_crontab ((type ARG1))
+		(allow ARG1 self (passwd (crontab))))
+
+	(macro rootok ((type ARG1))
+		(allow ARG1 self (passwd (rootok))))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(macro adm_subj_type ((type ARG1))
+		(typeattributeset adm_subj_type_attribute ARG1))
+
+	(macro unconfined_subj_type ((type ARG1))
+		(typeattributeset unconfined_subj_type_attribute ARG1)))
+
+(in pam_console
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
+	(blockinherit file.read_runtime_files_blk)
+	(blockinherit file.manage_runtime_files_blk)
+	(blockinherit file.relabel_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk))
+
+(in faillog
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.manage_var_log_files_blk)
+	(blockinherit file.relabel_var_log_files_blk)
+
+	(macro create_var_log_files ((type ARG1))
+		(call file.add_entry_var_log (ARG1))
+		(allow ARG1 var_log_file create_file_perms))
+
+	(macro rw_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 var_log_file rw_file_perms))
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"btmp"))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"faillog"))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"tallylog"))))
+
+(in lastlog
+	(blockinherit file.read_var_log_files_blk)
+	(blockinherit file.manage_var_log_files_blk)
+	(blockinherit file.relabel_var_log_files_blk)
+
+	(macro create_var_log_files ((type ARG1))
+		(call file.add_entry_var_log (ARG1))
+		(allow ARG1 var_log_file create_file_perms))
+
+	(macro rw_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 var_log_file rw_file_perms))
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"lastlog"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block faillog
+	(blockinherit file.var_log_obj_blk)
+
+	(typeattributeset pam.obj_type_attribute var_log_file)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset pam.obj_type_attribute runtime_file)
+
+	(optional faillog_optional_logrotate
+		(call logrotate.client_var_log_obj_type (var_log_file))))
+
+(block lastlog
+	(blockinherit file.var_log_obj_blk)
+
+	(typeattributeset pam.obj_type_attribute var_log_file))
+
+(block pam
+	(typeattribute obj_type_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+	(typeattribute login_prog_subj_type_attribute)
+	(typeattribute subj_type_attribute)
+	(typeattribute unconfined_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(typeattributeset subj_type_attribute subj)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
+
+	(allow login_prog_subj_type_attribute self (capability (setuid setgid
+		chown)))
+	(allow login_prog_subj_type_attribute self (process (setexec
+		setsched)))
+	(allow login_prog_subj_type_attribute self write_key_perms)
+
+	(call standard.id_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
+	(call standard.role_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
+	(call standard.obj_change_exemption_subj_type
+		(login_prog_subj_type_attribute))
+
+	(call sec.compute_access_vector (login_prog_subj_type_attribute))
+	(call sec.compute_user_contexts (login_prog_subj_type_attribute))
+	(call sec.compute_relabel_context (login_prog_subj_type_attribute))
+	(call sec.list_fs (login_prog_subj_type_attribute))
+	(call sec.validate_context (login_prog_subj_type_attribute))
+
+	(call subj.interactive_fd_subj_type (login_prog_subj_type_attribute))
+
+	(call app.send_signal (login_prog_subj_type_attribute))
+
+	(call client_subj_type (login_prog_subj_type_attribute))
+
+	(call locale.read (login_prog_subj_type_attribute))
+	(call utmp.rw_runtime_files (login_prog_subj_type_attribute))
+
+	(call selinux_config.read_config_files
+		(login_prog_subj_type_attribute))
+	(call default_context.read_config_files
+		(login_prog_subj_type_attribute))
+
+	(optional pam_login_prog_subj_type_optional_gdm
+		(call gdmuser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_sd_logind
+		(allow login_prog_subj_type_attribute self (capability
+			(dac_override)))
+
+		(call file.search_runtime_user
+			(login_prog_subj_type_attribute))
+		(call fs.search_tmpfs (login_prog_subj_type_attribute))
+
+		(call sd_logind.client_subj_type
+			(login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_sduser
+		(call sduser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_sshd
+		(call sshduser.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
+	(optional pam_login_prog_subj_type_optional_usersubj
+		(call usersubj.create_keyring_login_subj
+			(login_prog_subj_type_attribute))
+		(call usersubj.send_signal_login_subj
+			(login_prog_subj_type_attribute)))
+
+	(call sys.audit_client_subj_type (client_subj_type_attribute))
+
+	(call chkpwd.auto_subj_type_transition (client_subj_type_attribute))
+	(call updpwd.auto_subj_type_transition (client_subj_type_attribute))
+
+	(call exec (client_subj_type_attribute))
+	(call read_config (client_subj_type_attribute))
+
+	(call faillog.create_var_log_files (client_subj_type_attribute))
+	(call faillog.rw_var_log_files (client_subj_type_attribute))
+	(call faillog.var_log_obj_type_transition_var_log
+		(client_subj_type_attribute))
+
+	(call lastlog.create_var_log_files (client_subj_type_attribute))
+	(call lastlog.rw_var_log_files (client_subj_type_attribute))
+	(call lastlog.var_log_obj_type_transition_var_log
+		(client_subj_type_attribute))
+
+	(call wtmp.append_var_log_files (client_subj_type_attribute))
+	(call wtmp.read_var_log_files (client_subj_type_attribute))
+	(call wtmp.dontaudit_write_var_log_files (client_subj_type_attribute))
+
+	(call nss.client_subj_type (client_subj_type_attribute))
+
+	(optional pam_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type
+			(client_subj_type_attribute)))
+
+	(allow adm_subj_type_attribute self (passwd (passwd chfn chsh rootok
+		crontab)))
+
+	(call file.search_config (adm_subj_type_attribute))
+	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.search_var_log (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+
+	(allow unconfined_subj_type_attribute self (passwd (passwd chfn chsh
+		rootok crontab))))
+
+(block pam_console
+	(blockinherit subj.common_subj_blk)
+
+	(typeattributeset pam.subj_type_attribute subj)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset pam.obj_type_attribute runtime_file))

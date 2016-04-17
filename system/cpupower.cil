@@ -1,0 +1,96 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in cpupower
+	(filecon "/etc/sysconfig/cpupower" file config_file_context)
+	(filecon "/usr/bin/centrino-decode" file cmd_file_context)
+	(filecon "/usr/bin/cpupower" file cmd_file_context)
+	(filecon "/usr/bin/powernow-k8-decode" file cmd_file_context)
+	(filecon "/usr/bin/tmon" file cmd_file_context)
+	(filecon "/usr/bin/turbostat" file cmd_file_context)
+	(filecon "/usr/bin/x86_energy_perf_policy" file cmd_file_context)
+
+	(optional cpupower_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*cpupower.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in cpupower
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional cpupower_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional cpupower_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block cpupower
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config_files (subj))
+
+	(allow subj self (capability (sys_rawio)))
+
+	(call sys.read_cpuinfo_proc_files (subj))
+
+	(call dev.rw_cpu (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call locale.read (subj))
+
+	(optional cpupower_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

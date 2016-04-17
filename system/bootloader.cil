@@ -1,0 +1,175 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in bootloader
+	(filecon "/boot/System\.map.*" file boot_file_context)
+	(filecon "/etc/grub\.d" dir config_file_context)
+	(filecon "/etc/grub\.d/README" file config_file_context)
+	(filecon "/etc/grub2-efi\.cfg" symlink config_file_context)
+	(filecon "/usr/sbin/grub2-.*" file cmd_file_context)
+	(filecon "/usr/sbin/grubby" file cmd_file_context)
+	(filecon "/var/log/grubby.*" file var_log_file_context))
+
+(filecon "/etc/grub\.d(/.*)?" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in bootloader
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(macro send_signal ((type ARG1))
+		(allow ARG1 subj (process (signal))))
+
+	(macro read_boot_files ((type ARG1))
+		(call file.search_boot (ARG1))
+		(allow ARG1 boot_file read_file_perms))
+
+	(macro manage_boot_files ((type ARG1))
+		(call file.rw_boot_dirs (ARG1))
+		(allow ARG1 boot_file manage_file_perms))
+
+	(macro relabel_boot_files ((type ARG1))
+		(call file.search_boot (ARG1))
+		(allow ARG1 boot_file relabel_file_perms))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(macro read_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 var_log_file read_file_perms))
+
+	(macro manage_var_log_files ((type ARG1))
+		(call file.rw_var_log_dirs (ARG1))
+		(allow ARG1 var_log_file manage_file_perms))
+
+	(macro relabel_var_log_files ((type ARG1))
+		(call file.search_var_log (ARG1))
+		(allow ARG1 var_log_file relabel_file_perms))
+
+	(macro var_log_obj_type_transition_var_log ((type ARG1))
+		(call file.var_log_obj_type_transition (ARG1 var_log_file file
+			"grubby")))
+
+	(blockinherit file.search_tmpfs_blk)
+	(blockinherit file.list_tmpfs_blk)
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.read_tmpfs_lnk_files_blk)
+	(blockinherit file.read_tmpfs_blk)
+	(blockinherit file.manage_tmpfs_blk)
+	(blockinherit file.relabel_tmpfs_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file dir "*"))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
+	(blockinherit subj.read_state_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block bootloader
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_log_obj_blk)
+
+	(allow subj var_log_file (file (setattr)))
+	(allow subj var_log_file append_file_perms)
+	(allow subj var_log_file create_file_perms)
+	(allow subj var_log_file delete_file_perms)
+	(allow subj var_log_file read_file_perms)
+
+	(call var_log_obj_type_transition_var_log (subj))
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(call manage_tmpfs (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(call exec (subj))
+
+	(blockinherit file.boot_obj_blk)
+
+	(allow subj self (capability (dac_override sys_admin)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self (process (getsched)))
+
+	(call sys.read_mdstat_proc_files (subj))
+	(call sys.list_mountpoints (subj))
+
+	(call cmd.list_cmd (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.getattr_all (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_lvm_control (subj))
+
+	(call file.getattr_all_tmpfs_files (subj))
+	(call file.manage_boot_files (subj))
+	(call file.read_config (subj))
+	(call file.read_data (subj))
+	(call file.read_boot_lnk_files (subj))
+
+	(call fs.getattr_devpts_chr_files (subj))
+	(call fs.getattr_tmpfs_fs (subj))
+	(call fs.manage_dosfs_files (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+
+	(call storage.read_all (subj))
+
+	(call fstools.manage_runtime (subj))
+	(call fstools.run (subj role_attribute))
+	(call fstools.runtime_obj_type_transition_runtime (subj))
+
+	(call kmod.run (subj role_attribute))
+
+	(call lvm.run (subj role_attribute))
+
+	(call modules.read (subj))
+	(call locale.read (subj))
+
+	(call mount.exec (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call udevadm.run (subj role_attribute))
+
+	(optional bootloader_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(optional bootloader_optional_sd
+		(call sd.forked_subj_type (subj))
+		(call sd.search_unit_runtime (subj)))
+
+	(optional bootloader_optional_sd_journald
+		(call sd_journald.client_subj_type (subj))))

@@ -1,0 +1,75 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in iptools
+	(filecon "/etc/iproute2(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/ethtool" file cmd_file_context)
+	(filecon "/usr/sbin/ifconfig" file cmd_file_context)
+	(filecon "/usr/sbin/ip" file cmd_file_context)
+	(filecon "/usr/sbin/iw" file cmd_file_context)
+	(filecon "/usr/sbin/iwconfig" file cmd_file_context)
+	(filecon "/usr/sbin/iwpriv" file cmd_file_context)
+	(filecon "/usr/sbin/route" file cmd_file_context)
+	(filecon "/usr/sbin/tc" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in iptools
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block iptools
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(allow subj self (capability (net_admin)))
+	(allow subj self create_udp_socket_perms)
+	(allow subj self create_netlink_route_socket_perms)
+	(allow subj self create_netlink_generic_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+
+	(call sys.load_kernel_module_subj_type (subj))
+	(call sys.read_net_proc_files (subj))
+	(call sys.read_net_sysctl_files (subj))
+	(call sys.request_load_module (subj))
+
+	(call file.read_config_files (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(optional iptools_optional_sd
+		(call sd.forked_subj_type (subj))))

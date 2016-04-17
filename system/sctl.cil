@@ -1,0 +1,59 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in sctl
+	(filecon "/etc/sysctl\.conf" file config_file_context)
+	(filecon "/etc/sysctl\.d(/.*)?" any config_file_context)
+	(filecon "/usr/sbin/sysctl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in sctl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sctl
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(allow subj self (capability (net_admin)))
+
+	(call sys.list_all_sysctl (subj))
+	(call sys.read_cpu_online_sysfs_files (subj))
+	(call sys.rw_all_sysctl_files (subj))
+
+	(call fs.read_binfmt_misc (subj))
+
+	(call locale.read (subj)))

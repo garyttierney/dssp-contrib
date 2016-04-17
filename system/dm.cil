@@ -1,0 +1,110 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dmcrypt
+	(filecon "/usr/sbin/cryptsetup" file cmd_file_context))
+
+(in dmsetup
+	(filecon "/usr/sbin/dmsetup" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dmcrypt
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro rw_sem ((type ARG1))
+		(allow ARG1 subj rw_sem_perms)))
+
+(in dmsetup
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dmcrypt
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (ipc_lock sys_admin sys_nice)))
+	(allow subj self (process (setsched)))
+	(allow subj self create_socket_perms)
+	(allow subj self (socket (accept)))
+	(allow subj self create_sem_perms)
+
+	(call sys.get_sysvipc_info (subj))
+	(call sys.read_crypto_sysctl_files (subj))
+	(call sys.request_load_module (subj))
+
+	(call fs.getattr_devtmpfs_fs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call dev.read_random (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_lvm_control (subj))
+
+	(call storage.rw_all (subj))
+
+	(call locale.read (subj))
+
+	(call udev.client_subj_type (subj)))
+
+(block dmsetup
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (sys_admin)))
+
+	(call sys.get_sysvipc_info (subj))
+
+	(call dev.rw_lvm_control (subj))
+
+	(call dmcrypt.rw_sem (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(optional dmsetup_optional_lvm
+		(call lvm.rw_sem (subj)))
+
+	(optional dmsetup_optional_sd
+		(call sd.daemon (subj cmd_file)))
+
+	(optional dmsetup_optional_sd_cryptsetup
+		(call sd_cryptsetup.rw_sem (subj)))
+
+	(optional dmsetup_optional_sd_udevd
+		(call sd_udevd.rw_inherited_udp_sockets (subj)))
+
+	(optional dmsetup_optional_unconfinedsubj
+		(call unconfinedsubj.rw_sem_all_subj (subj))))

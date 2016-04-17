@@ -1,0 +1,229 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in dracut
+	(filecon "/etc/dracut\.conf" file config_file_context)
+	(filecon "/etc/dracut\.conf\.d(/.*)?" any config_file_context)
+	(filecon "/usr/bin/dracut" file cmd_file_context))
+
+(filecon "/usr/lib/dracut(/.*)?" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in dracut
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro auto_subj_type_transition ((type ARG1))
+		(call send_signal (ARG1))
+		(call ps_subj_pattern (subj ARG1))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file subj)))
+
+	(macro run ((type ARG1)(role ARG2))
+		(call auto_subj_type_transition (ARG1))
+		(roleattributeset role_attribute ARG2))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(blockinherit file.search_var_tmp_blk)
+	(blockinherit file.list_var_tmp_blk)
+	(blockinherit file.read_var_tmp_files_blk)
+	(blockinherit file.manage_var_tmp_files_blk)
+	(blockinherit file.read_var_tmp_lnk_files_blk)
+
+	(macro read_var_tmp ((type ARG1))
+		(call file.search_var_tmp (ARG1))
+		(allow ARG1 var_tmp_file read_file_perms)
+		(allow ARG1 var_tmp_file read_fifo_file_perms)
+		(allow ARG1 var_tmp_file list_dir_perms)
+		(allow ARG1 var_tmp_file read_lnk_file_perms)
+		(allow ARG1 var_tmp_file read_sock_file_perms)
+		(allow ARG1 var_tmp_file read_chr_file_perms))
+
+	(macro manage_var_tmp ((type ARG1))
+		(call file.rw_var_tmp_dirs (ARG1))
+		(allow ARG1 var_tmp_file manage_file_perms)
+		(allow ARG1 var_tmp_file manage_fifo_file_perms)
+		(allow ARG1 var_tmp_file manage_dir_perms)
+		(allow ARG1 var_tmp_file manage_lnk_file_perms)
+		(allow ARG1 var_tmp_file manage_sock_file_perms)
+		(allow ARG1 var_tmp_file manage_chr_file_perms))
+
+	(macro relabel_var_tmp ((type ARG1))
+		(call file.search_var_tmp (ARG1))
+		(allow ARG1 var_tmp_file relabel_file_perms)
+		(allow ARG1 var_tmp_file relabel_fifo_file_perms)
+		(allow ARG1 var_tmp_file relabel_dir_perms)
+		(allow ARG1 var_tmp_file relabel_lnk_file_perms)
+		(allow ARG1 var_tmp_file relabel_sock_file_perms)
+		(allow ARG1 var_tmp_file relabel_chr_file_perms))
+
+	(macro mmap_var_tmp_files ((type ARG1))
+		(call file.search_var_tmp (ARG1))
+		(call mmap_files_pattern (ARG1 var_tmp_file var_tmp_file)))
+
+	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_file dir
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block dracut
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(call read_config (subj))
+
+	(blockinherit file.var_tmp_obj_blk)
+
+	(call manage_var_tmp (subj))
+	(call mmap_var_tmp_files (subj))
+	(call var_tmp_obj_type_transition_var_tmp (subj))
+
+	(call exec (subj))
+
+	(allow subj self (capability (dac_override mknod sys_chroot sys_admin
+		sys_resource net_admin)))
+	(allow subj self (process (getsched)))
+
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.list_memory_sysfs (subj))
+	(call sys.list_node_sysfs (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.read_memory_sysfs_files (subj))
+	(call sys.read_node_sysfs_files (subj))
+
+	(call standard.obj_sys_change_exemption_subj_type (subj))
+
+	(call cmd.list_cmd (subj))
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+	(call cmd.mmap_all (subj))
+
+	(call dev.read_urandom (subj))
+	(call dev.rw_lvm_control (subj))
+
+	(call file.manage_boot_files (subj))
+	(call file.read_config (subj))
+	(call file.read_data (subj))
+
+	(call fs.getattr_all_fs (subj))
+	(call fs.list_devtmpfs (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.search_tmpfs (subj))
+
+	(call lib.exec_ld_so_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+
+	(call storage.read_all (subj))
+
+	(call fstools.exec (subj))
+	(call fstools.manage_runtime (subj))
+	(call fstools.runtime_obj_type_transition_runtime (subj))
+
+	(call hostname.read_config_files (subj))
+
+	(call kmod.read_config (subj))
+	(call kmod.exec (subj))
+
+	(call ldconfig.exec (subj))
+
+	(call mdadm.exec (subj))
+
+	(call hosts.read_config_files (subj))
+	(call terminfo.read_all (subj))
+	(call fstab.read (subj))
+	(call modules.read (subj))
+	(call modules_dep.read_files (subj))
+	(call passwords.read (subj))
+
+	(call mount.exec (subj))
+
+	(call nss.read_config_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call setfiles.exec (subj))
+	(call file_context.read_config (subj))
+
+	(call udev.read_config_files (subj))
+	(call udev.read_runtime_files (subj))
+
+	(optional dracut_optional_dm
+		(call dmsetup.exec (subj)))
+
+	(optional dracut_optional_lvm
+		(call lvm.manage_runtime_lock_files (subj))
+		(call lvm.read_config (subj))
+		(call lvm_metadata.read_config (subj))
+		(call lvm.read_runtime (subj))
+		(call lvm.exec (subj)))
+
+	(optional dracut_optional_lvmetad
+		(call lvmetad.stream_connect (subj)))
+
+	(optional dracut_optional_plymouth
+		(call plymouth.read_config_files (subj))
+		(call plymouth.exec (subj)))
+
+	(optional dracut_optional_rpm
+		(call rpm_script_client_subj_type (subj)))
+
+	(optional dracut_optional_sctl
+		(call sctl.read_config (subj)))
+
+	(optional dracut_optional_sd
+		(call sd.exec (subj))
+		(call sd.read_config_files (subj))
+		(call sd.read_all_unit (subj))
+		(call sd.read_state (subj))
+		(call sd.forked_subj_type (subj))
+		(call sd.stream_connect (subj)))
+
+	(optional dracut_optional_sd_journald
+		(call sd_journald.read_config_files (subj))
+		(call sd_journald.status_unit (subj))
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional dracut_optional_sd_loadmodules
+		(call sd_loadmodules.read_config (subj)))
+
+	(optional dracut_optional_sd_machined
+		(call sd_machined.read_config_files (subj)))
+
+	(optional dracut_optional_sd_networkd
+		(call sd_networkd.read_config (subj)))
+
+	(optional dracut_optional_sd_vconsole
+		(call sd_vconsole.read_config_files (subj)))
+
+	(optional dracut_optional_systemctl
+		(call systemctl.system_client_subj_type (subj)))
+
+	(optional dracut_optional_udevadm
+		(call udevadm.exec (subj))))

@@ -1,0 +1,44 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in wodim
+	(filecon "/usr/bin/devdump" file cmd_file_context)
+	(filecon "/usr/bin/readom" file cmd_file_context)
+	(filecon "/usr/bin/wodim" file cmd_file_context)
+	(filecon "/usr/sbin/netscsid" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wodim
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wodim
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call storage.rw_removable (subj))
+
+	(call usersubj.read_home_user_files (subj)))

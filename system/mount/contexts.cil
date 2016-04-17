@@ -1,9 +1,0 @@
-(in mount
-	(filecon "/usr/bin/mount.*" file cmd_file_context)
-	(filecon "/usr/bin/umount.*" file cmd_file_context)
-	(filecon "/usr/sbin/mount.*" file cmd_file_context)
-	(filecon "/usr/sbin/umount.*" file cmd_file_context)
-	(filecon "/var/run/mount(/.*)?" any runtime_file_context))
-
-(in mount_any_file
-	(genfscon "selinuxfs" "/booleans/mount_any_file" bool_obj_context))

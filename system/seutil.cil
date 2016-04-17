@@ -1,0 +1,508 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in default_context
+	(filecon "/etc/selinux/([^/]*/)?contexts(/.*)?" any
+		config_file_context))
+
+(in file_context
+	(filecon "/etc/selinux/([^/]*/)?contexts/files(/.*)?" any
+		config_file_context))
+
+(in load_policy
+	(filecon "/usr/sbin/load_policy" file cmd_file_context))
+
+(in matchpathcon
+	(filecon "/usr/sbin/matchpathcon" file cmd_file_context))
+
+(in policy_src
+	(filecon "/var/lib/selinux(/.*)?" any var_lib_file_context))
+
+(in selinux_config
+	(filecon "/etc/selinux(/.*)?" any config_file_context)
+	(filecon "/etc/selinux/([^/]*/)?seusers" file config_file_context)
+	(filecon "/etc/selinux/([^/]*/)?users(/.*)?" file config_file_context))
+
+(in setenforce
+	(filecon "/usr/sbin/setenforce" file cmd_file_context))
+
+(in setfiles
+	(filecon "/usr/bin/chcon" file cmd_file_context)
+	(filecon "/usr/sbin/setfiles" file cmd_file_context))
+
+(in setsebool
+	(filecon "/usr/sbin/setsebool" file cmd_file_context))
+
+(filecon "/etc/selinux/([^/]*/)?policy(/.*)?" any policy_config)
+
+(tunableif enable_mls
+	(true
+		(tunableif enable_rbacsep
+			(true
+				(context policy_config (sys.id sys.role
+					policy_config.sec_file
+						(systemhigh systemhigh))))
+			(false
+				(context policy_config (sys.id object_r
+					policy_config.sec_file
+						(systemhigh systemhigh))))))
+	(false
+		(tunableif enable_rbacsep
+			(true
+				(context policy_config (sys.id sys.role
+					policy_config.sec_file
+						(systemlow systemlow))))
+			(false
+				(context policy_config (sys.id object_r
+					policy_config.sec_file
+						(systemlow systemlow)))))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in seutil
+	(macro libselinux_linked_client_subj_type ((type ARG1))
+		(typeattributeset libselinux_linked_client_subj_type_attribute
+			ARG1)))
+
+(in setsebool
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro exec ((type ARG1))
+		(call client_subj_type (ARG1))
+		(call can_exec (ARG1 cmd_file)))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+(in load_policy
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro dontaudit_audit_access_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file (file (audit_access)))))
+
+(in setfiles
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in setenforce
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in matchpathcon
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in selinux_config
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(macro rw_config_dirs ((type ARG1))
+		(call file.search_config (ARG1))
+		(allow ARG1 config_file rw_dir_perms))
+
+	(macro config_obj_type_transition ((type ARG1)(type ARG2)(class
+		ARG3)(name ARG4))
+		(call file.search_config (ARG1))
+		(call obj_type_transition_pattern (ARG1 config_file ARG2 ARG3
+			ARG4)))
+
+	(macro config_obj_type_transition_config ((type ARG1))
+		(call file.config_obj_type_transition (ARG1 config_file dir
+			"selinux"))))
+
+(in default_context
+	(macro search_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call selinux_config.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(macro rw_config_dirs ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 config_file rw_dir_perms))
+
+	(macro selinux_config_obj_type_transition_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(call obj_type_transition_pattern (ARG1
+			selinux_config.config_file config_file dir
+				"contexts"))))
+
+(in file_context
+	(macro search_config ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config_files ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(call manage_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(allow ARG1 config_file read_file_perms)
+		(allow ARG1 config_file list_dir_perms)
+		(allow ARG1 config_file read_lnk_file_perms))
+
+	(macro manage_config ((type ARG1))
+		(call default_context.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call default_context.search_config (ARG1))
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms))
+
+	(macro default_context_obj_type_transition_config ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call obj_type_transition_pattern (ARG1
+			default_context.config_file config_file dir "files"))))
+
+(in policy_config
+	(macro search ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 sec_file search_dir_perms))
+
+	(macro list ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 sec_file list_dir_perms))
+
+	(macro read_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_files_pattern (ARG1 sec_file sec_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 sec_file sec_file)))
+
+	(macro read ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 sec_file read_file_perms)
+		(allow ARG1 sec_file list_dir_perms)
+		(allow ARG1 sec_file read_lnk_file_perms))
+
+	(macro manage ((type ARG1))
+		(call selinux_config.rw_config_dirs (ARG1))
+		(allow ARG1 sec_file manage_file_perms)
+		(allow ARG1 sec_file manage_dir_perms)
+		(allow ARG1 sec_file manage_lnk_file_perms)
+		(typeattributeset write_subj_type_attribute ARG1))
+
+	(macro manage_dirs ((type ARG1))
+		(call selinux_config.rw_config_dirs (ARG1))
+		(allow ARG1 sec_file manage_dir_perms))
+
+	(macro manage_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call manage_files_pattern (ARG1 sec_file sec_file))
+		(typeattributeset write_subj_type_attribute ARG1))
+
+	(macro relabel ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(allow ARG1 sec_file relabel_file_perms)
+		(allow ARG1 sec_file relabel_dir_perms)
+		(allow ARG1 sec_file relabel_lnk_file_perms)
+		(typeattributeset relabelto_subj_type_attribute ARG1))
+
+	(macro selinux_config_obj_type_transition_policy_config ((type ARG1))
+		(call file.search_config (ARG1))
+		(call obj_type_transition_pattern (ARG1
+			selinux_config.config_file sec_file dir "policy")))
+
+	(macro relabel_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call relabel_files_pattern (ARG1 sec_file sec_file))
+		(typeattributeset relabelto_subj_type_attribute ARG1))
+
+	(macro relabelto_files ((type ARG1))
+		(call selinux_config.search_config (ARG1))
+		(call relabelto_files_pattern (ARG1 sec_file sec_file))
+		(typeattributeset relabelto_subj_type_attribute ARG1)))
+
+(in policy_src
+	(blockinherit file.search_var_lib_blk)
+	(blockinherit file.read_var_lib_files_blk)
+	(blockinherit file.read_var_lib_lnk_files_blk)
+	(blockinherit file.read_var_lib_blk)
+	(blockinherit file.manage_var_lib_blk)
+	(blockinherit file.relabel_var_lib_blk)
+
+	(macro var_lib_obj_type_transition_var_lib ((type ARG1))
+		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
+			"selinux"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block seutil
+	(typeattribute libselinux_linked_client_subj_type_attribute)
+
+	(call sec.getattr_fs (libselinux_linked_client_subj_type_attribute))
+
+	(call selinux_config.search_config
+		(libselinux_linked_client_subj_type_attribute)))
+
+(block load_policy
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(call sec.load_policy_subj_type (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call policy_config.read_files (subj))
+
+	(call locale.read (subj))
+
+	(optional load_policy_optional_sd
+		(call sd.forked_subj_type (subj))))
+
+(block matchpathcon
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override dac_read_search)))
+	(allow subj self create_unix_stream_socket_perms)
+
+	(call sys.getattr_all_sysctl_files (subj))
+	(call sys.getattr_all_sysctl_lnk_files (subj))
+
+	(call dev.getattr_all (subj))
+
+	(call file.getattr_all (subj))
+	(call file.read_all_lnk_files (subj))
+
+	(call fs.getattr_all (subj))
+	(call fs.read_all_lnk_files (subj))
+
+	(call sec.validate_context (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj)))
+
+(block setfiles
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override fowner)))
+	(allow subj self create_unix_stream_socket_perms)
+
+	(call sys.audit_client_subj_type (subj))
+	(call sys.list_cpu_sysfs (subj))
+	(call sys.list_invalid (subj))
+	(call sys.list_memory_sysfs (subj))
+	(call sys.list_node_sysfs (subj))
+	(call sys.list_unlabeled (subj))
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_memory_sysfs_files (subj))
+	(call sys.read_node_sysfs_files (subj))
+	(call sys.read_invalid_lnk_files (subj))
+	(call sys.read_unlabeled_lnk_files (subj))
+	(call sys.relabelfrom_invalid (subj))
+	(call sys.relabelfrom_unlabeled (subj))
+
+	(call standard.obj_change_exemption_subj_type (subj))
+
+	(call dev.relabel_all (subj))
+
+	(call file.list_all (subj))
+	(call file.read_all_lnk_files (subj))
+	(call file.relabel_all_except (subj))
+
+	(call fs.getattr_all_fs (subj))
+	(call fs.list_all (subj))
+	(call fs.read_all_lnk_files (subj))
+	(call fs.read_cgroup_files (subj))
+	(call fs.relabel_all (subj))
+	(call fs.trace_client_subj_type (subj))
+
+	(call sec.get_enforce_mode (subj))
+	(call sec.validate_context (subj))
+
+	(call term.use_inherited_console (subj))
+
+	(call locale.read (subj))
+	(call shadow.relabel (subj))
+
+	(call default_context.read_config_files (subj))
+	(call file_context.read_config_files (subj))
+	(call selinux_config.read_config_files (subj))
+	(call policy_config.relabel (subj))
+
+	(optional setfiles_optional_auditd
+		(call auditd.relabel_config (subj))
+		(call auditd.relabel_var_log (subj))
+		(call auditd.relabel_runtime_files (subj))
+		(call auditd.relabel_runtime_sock_files (subj)))
+
+	(optional setfiles_optional_audispd
+		(call audispd.relabel_config (subj))
+		(call audispd.relabel_runtime_sock_files (subj)))
+
+	(optional setfiles_optional_sd
+		(call sd.forked_subj_type (subj))))
+
+(block setsebool
+	(roleattribute role_attribute)
+
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(call sec.set_all_booleans (subj))
+
+	(call client_subj_type (subj))
+
+	(call sec.list_fs (client_subj_type_attribute))
+
+	(call selinux_config.read_config_files (client_subj_type_attribute))
+
+	(call locale.read (client_subj_type_attribute))
+
+	(call nss.client_subj_type (client_subj_type_attribute))
+
+	(optional setsebool_client_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type
+			(client_subj_type_attribute))))
+
+(block setenforce
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(call sec.set_enforce_mode (subj))
+
+	(call selinux_config.read_config_files (subj)))
+
+(block default_context
+	(blockinherit file.config_obj_blk))
+
+(block file_context
+	(blockinherit file.config_obj_blk))
+
+(block policy_config
+	(blockinherit file.sec_obj_blk)
+
+	(typeattribute relabelto_subj_type_attribute)
+	(typeattribute not_relabelto_subj_type_attribute)
+
+	(typeattributeset not_relabelto_subj_type_attribute (not
+		(relabelto_subj_type_attribute)))
+
+	(neverallow not_relabelto_subj_type_attribute sec_file (file
+		(relabelto)))
+
+	(typeattribute write_subj_type_attribute)
+	(typeattribute not_write_subj_type_attribute)
+
+	(typeattributeset not_write_subj_type_attribute (not
+		(write_subj_type_attribute)))
+
+	(neverallow not_write_subj_type_attribute sec_file (file (create
+		write))))
+
+(block policy_src
+	(blockinherit file.var_lib_obj_blk))
+
+(block selinux_config
+	(blockinherit file.config_obj_blk))

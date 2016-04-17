@@ -1,9 +1,0 @@
-(in udev
-	(filecon "/etc/udev(/.*)?" any config_file_context)
-	(filecon "/var/run/udev(/.*)?" any runtime_file_context))
-
-(in udev_helper
-	(filecon "/usr/lib/udev/[^/]*" file cmd_file_context)
-	(filecon "/usr/sbin/biosdevname" file cmd_file_context)
-	(filecon "/usr/sbin/crda" file cmd_file_context)
-	(filecon "/usr/sbin/setregdomain" file cmd_file_context))

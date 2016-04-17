@@ -1,0 +1,14 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_dmenu
+	(blockinherit dmenu.subj_blk)
+
+	(call wheel.subj_type (subj))
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj)))

@@ -1,0 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_pactl
+	(blockinherit pactl.subj_blk)
+
+	(optional wheel_pactl_optional_wheel_pa
+		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_pactl_optional_wheel_gs
+		(call wheel_gs.forked_subj_type (subj))))

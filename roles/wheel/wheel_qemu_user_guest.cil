@@ -1,0 +1,25 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_qemu_user_guest
+	(blockinherit qemu_user_guest.subj_blk)
+
+	(optional wheel_qemu_user_guest_optional_wheel_atspi
+		(call wheel_atspi.tmpfs_client (subj
+			qemu_user_guest.tmpfs_user_file)))
+
+	(optional wheel_qemu_user_quest_optional_wheel_atspi_sessbus_launch
+		(call
+			wheel_atspi_sessbus_launch.sessbus_chat_client_subj_type
+				(subj)))
+
+	(optional wheel_qemu_user_guest_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_qemu_user_guest_optional_wheel_pa
+		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_qemu_user_guest_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))

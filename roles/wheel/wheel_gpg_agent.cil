@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gpg_agent
+	(blockinherit gpg_agent.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_gpg_agent_optional_wheel_pinentry
+		(call wheel_pinentry.auto_subj_type_transition (subj))))

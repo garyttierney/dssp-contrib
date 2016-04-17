@@ -1,0 +1,70 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_atspi
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro provider_subj_type ((type ARG1))
+		(typeattributeset provider_subj_type_attribute ARG1))
+
+	(macro tmpfs_client ((type ARG1)(type ARG2))
+		(call client_subj_type (ARG1))
+		(call atspi.tmpfs_client (client_subj_type_attribute ARG2)))
+
+	(macro stream_connect_all_client_subj ((type ARG1))
+		(call atspi.spec_stream_connect (ARG1
+			client_subj_type_attribute))))
+
+(in wheel_atspird
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_atspi
+	(typeattribute provider_subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
+
+	(call wheel_atspird.sessbus_chat_client_subj_type
+		(client_subj_type_attribute))
+
+	(call stream_connect_all_client_subj (provider_subj_type_attribute))
+
+	(optional wheel_atspi_client_subj_type_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type
+			(client_subj_type_attribute))
+
+		(allow client_subj_type_attribute provider_subj_type_attribute
+			(dbus (send_msg)))
+		(allow provider_subj_type_attribute client_subj_type_attribute
+			(dbus (send_msg)))))
+
+(block wheel_atspird
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit atspird.subj_blk)
+
+	(call wheel_atspi_sessbus_launch.use_fd (subj))
+
+	(optional wheel_atspird_optional_wheel_gs
+		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_atspird_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_atspird_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj atspird.cmd_file)))
+
+	(optional
+		wheel_atspird_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

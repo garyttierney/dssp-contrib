@@ -1,0 +1,46 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gt
+	(blockinherit gt.subj_blk)
+
+	(call wheel_gts.sessbus_chat_client_subj_type (subj))
+
+	(call wheel_atspird.sessbus_chat_client_subj_type (subj))
+
+	(call wheel_caribou.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gt_optional_wheel_atspi_sessbus_launch
+                (call wheel_atspi_sessbus_launch.sessbus_chat_client_subj_type
+			(subj)))
+
+	(optional wheel_gt_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gt_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gt_optional_wheel_orca
+		(call wheel_orca.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gt_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))
+
+(block wheel_gts
+	(blockinherit gts.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gts.tmpfs_user_file))
+
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(optional wheel_gts_optional_wheel_screen
+		(call wheel_screen.read_state (subj)))
+
+	(optional wheel_gts_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gts.cmd_file)))
+
+	(optional wheel_gts_optional_wheel_ssh_client
+		(call wheel_ssh_client.read_state (subj))))

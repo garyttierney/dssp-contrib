@@ -1,0 +1,24 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_xsession
+	(blockinherit xsession.subj_blk)
+
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(optional wheel_xsession_optional_wheel_gpg_agent
+		(call wheel_gpg_agent.auto_subj_type_transition (subj)))
+
+	(optional wheel_xsession_optional_wheel_gs
+		(call wheel_gs.auto_subj_type_transition (subj)))
+
+	(optional wheel_xsession_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_xsession_optional_wheel_ssh_agent
+		(call wheel_ssh_agent.auto_subj_type_transition (subj)))
+
+	(optional wheel_xsession_optional_wheel_xterm
+		(call wheel_xterm.auto_subj_type_transition (subj))))

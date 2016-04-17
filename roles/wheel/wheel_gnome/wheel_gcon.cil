@@ -1,0 +1,53 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gcon
+	(blockinherit gcon.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gcon.tmpfs_user_file))
+
+	(optional wheel_gcon_optional_wheel_evoaf
+		(call wheel_evoaf.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcon_optional_wheel_evosr
+		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcon_optional_wheel_gcs
+		(call wheel_gcs.auto_subj_type_transition (subj)))
+
+	(optional wheel_gcon_optional_wheel_goad
+		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcon_optional_wheel_gstreamer
+		(call wheel_gstreamer.client_subj_type (subj)))
+
+	(optional wheel_gcon_optional_wheel_obexd
+		(call wheel_obexd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gcon_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gcon.cmd_file))))
+
+(block wheel_gconsp
+	(blockinherit gconsp.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_sp_gnomeapplication (subj
+		gconsp.cmd_file gconsp.tmpfs_user_file))
+
+	(call wheel_gcon.auto_subj_type_transition (subj))
+
+	(call wheel_dconf.client_subj_type (subj))
+
+	(optional wheel_gconsp_optional_wheel_evoaf
+		(call wheel_evoaf.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gconsp_optional_wheel_evosr
+		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gconsp_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gconsp_optional_wheel_obexd
+		(call wheel_obexd.sessbus_chat_client_subj_type (subj))))

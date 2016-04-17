@@ -1,0 +1,125 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_tpmc
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+(in wheel_tpl
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+(in wheel_tpi
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_tpmct
+	(blockinherit tpmct.subj_blk))
+
+(block wheel_tpmc
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpmc.subj_blk)
+
+	(call wheel_tpi.sessbus_chat_client_subj_type (subj))
+	(call wheel_tpl.sessbus_chat_client_subj_type (subj))
+
+	(call wheel_dconf.client_subj_type (subj))
+
+	(optional wheel_tpmc_optional_wheel_gcon
+		(call wheel_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpmc_optional_wheel_gconsp
+		(call wheel_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpmc_optional_wheel_goad
+		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpmc_optional_wheel_gs
+		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpmc_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpmc_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj tpmc.cmd_file)))
+
+	(optional wheel_tpmc_optional_wheel_vino
+		(call wheel_vino.sessbus_chat_client_subj_type (subj)))
+
+	(optional
+		wheel_tpmc_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block wheel_tpl
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpl.subj_blk)
+
+	(call wheel_tpi.sessbus_chat_client_subj_type (subj))
+
+	(call wheel_dconf.client_subj_type (subj))
+
+	(optional wheel_tpl_optional_wheel_gcon
+		(call wheel_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpl_optional_wheel_gconsp
+		(call wheel_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpl_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpl_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj tpl.cmd_file)))
+
+	(optional
+		wheel_tpl_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
+
+(block wheel_tpi
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit tpi.subj_blk)
+
+	(call wheel_dconf.client_subj_type (subj))
+
+	(optional wheel_tpi_optional_wheel_gcon
+		(call wheel_gcon.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpi_optional_wheel_gcs
+		(call wheel_gcs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpi_optional_wheel_gconsp
+		(call wheel_gconsp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpi_optional_wheel_goad
+		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpi_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_tpi_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj tpi.cmd_file)))
+
+	(optional
+		wheel_tpi_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

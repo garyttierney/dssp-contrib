@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_ssh_agent
+	(blockinherit ssh_agent.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_ssh_agent_optional_wheel_gpg_agent
+		(call wheel_gpg_agent.stream_connect (subj))))

@@ -1,0 +1,1831 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel
+	(macro git_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			git_home_user_auto_type_transition_subj_type_attribute
+				ARG1))
+
+	(macro xinit_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			xinit_home_user_auto_type_transition_subj_type_attribute
+				ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel
+	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xinit_home_user_auto_type_transition_subj_type_attribute)
+
+	(blockinherit usersubj.common_login_blk)
+
+	(optional wheel_optional_authconfig
+		(call authconfig.run (subj_type_attribute role)))
+
+	(optional wheel_optional_bluetoothctl
+		(call bluetoothctl.run (subj_type_attribute role)))
+
+	(optional wheel_optional_brlapi
+		(call brlapi.run (subj_type_attribute role)))
+
+	(optional wheel_optional_brltty
+		(call brltty.run (subj_type_attribute role)))
+
+	(optional wheel_optional_bti
+		(call bti.run (subj_type_attribute role))
+		(call bti.manage_tmpfs_user_files (subj))
+		(call bti.relabel_tmpfs_user_files (subj))
+		(call bti.manage_home_user_files (subj))
+		(call bti.relabel_home_user_files (subj))
+		(call bti.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_coredumpctl
+		(call coredumpctl.run (subj_type_attribute role)))
+
+	(optional wheel_optional_champlain
+		(call champlain.manage_home_cache (subj))
+		(call champlain.relabel_home_cache (subj))
+		(call champlain.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional wheel_optional_curl
+		(call curl.run (subj_type_attribute role))
+		(call curl.manage_home_user_files (subj))
+		(call curl.relabel_home_user_files (subj))
+		(call curl.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_colord
+		(call colormgr.run (subj_type_attribute role))
+		(call colormgr.manage_home_data (subj))
+		(call colormgr.relabel_home_data (subj))
+		(call colormgr.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_dd
+		(call dd.exec (subj_type_attribute)))
+
+	(optional wheel_optional_dirmngr
+		(call dirmngr.run (subj_type_attribute role))
+		(call dirmngr.manage_home_user (subj))
+		(call dirmngr.relabel_home_user (subj))
+		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_dmesg
+		(call dmesg.run (subj_type_attribute role)))
+
+	(optional wheel_optional_enchant
+		(call enchant.manage_home_config (subj))
+		(call enchant.relabel_home_config (subj))
+		(call enchant.home_config_obj_type_transition_home_config
+			(subj)))
+
+	(optional wheel_optional_feh
+		(call feh.manage_tmpfs_user_files (subj))
+		(call feh.relabel_tmpfs_user_files (subj))
+
+		(call feh.manage_home_user_files (subj))
+		(call feh.relabel_home_user_files (subj))
+
+		(call feh.home_dir_obj_type_transition_home (subj))
+
+		(call feh.run (subj_type_attribute role)))
+
+	(optional wheel_optional_firewalld
+		(call firewallcmd.run (subj_type_attribute role)))
+
+	(optional wheel_optional_folks
+		(call folks.manage_home_cache (subj))
+		(call folks.relabel_home_cache (subj))
+		(call folks.home_cache_obj_type_transition_home_cache (subj))
+
+		(call folks.manage_home_data (subj))
+		(call folks.relabel_home_data (subj))
+		(call folks.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_fop
+		(call fop.run (subj_type_attribute role))
+		(call fop.manage_home_user (subj))
+		(call fop.relabel_home_user (subj))
+		(call fop.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_fuse
+		(call fusermount.run (subj_type_attribute role))
+		(call ulockmgr.run (subj_type_attribute role)))
+
+	(optional wheel_optional_gkr
+		(call gkr.run (subj_type_attribute role)))
+
+	(optional wheel_optional_glxutils
+		(call glxutils.manage_tmpfs_user_files (subj))
+		(call glxutils.relabel_tmpfs_user_files (subj))
+
+		(call glxutils.run (subj_type_attribute role)))
+
+	(optional wheel_optional_gpg
+		(call gpg_helper.exec (subj)))
+
+	(optional wheel_optional_fpaste
+		(call fpaste.run (subj role))
+		(call fpaste.manage_tmpfs_user_files (subj))
+		(call fpaste.relabel_tmpfs_user_files (subj))
+		(call fpaste.manage_var_tmp_user (subj))
+		(call fpaste.relabel_var_tmp_user (subj)))
+
+	(optional wheel_optional_gdm
+		(call gdm.rw_inherited_unix_stream_sockets (subj))
+		(call gdm.manage_home_cache (subj))
+		(call gdm.relabel_home_cache (subj))
+		(call gdm.home_cache_obj_type_transition_home_cache (subj)))
+
+	(optional wheel_optional_gpg_pcsc_wrapper
+		(call gpg_pcsc_wrapper.run (subj_type_attribute role)))
+
+	(optional wheel_optional_gegl
+		(call gegl.manage_home_cache (subj))
+		(call gegl.relabel_home_cache (subj))
+		(call gegl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gegl.manage_home_data (subj))
+		(call gegl.relabel_home_data (subj))
+		(call gegl.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_gtk
+		(call gtk.manage_home_config (subj))
+		(call gtk.relabel_home_config (subj))
+		(call gtk.home_config_obj_type_transition_home_config (subj)))
+
+	(optional wheel_optional_i3status
+		(call i3status.manage_home_config (subj))
+		(call i3status.relabel_home_config (subj))
+
+		(call i3status.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call i3status.run (subj_type_attribute role)))
+
+	(optional wheel_optional_ibus
+		(call ibus.manage_home_config (subj))
+		(call ibus.relabel_home_config (subj))
+		(call ibus.home_config_obj_type_transition_home_config (subj)))
+
+	(optional wheel_optional_java
+		(call java.manage_tmpfs_user (subj))
+		(call java.relabel_tmpfs_user (subj))
+		(call java.manage_home_user (subj))
+		(call java.relabel_home_user (subj))
+		(call java.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_letsencrypt
+		(call letsencrypt.manage_home_config (subj))
+		(call letsencrypt.relabel_home_config (subj))
+		(call letsencrypt.home_config_obj_type_transition_home_config
+			(subj)))
+
+	(optional wheel_optional_libgweather
+		(call libgweather.manage_home_cache (subj))
+		(call libgweather.relabel_home_cache (subj))
+		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional wheel_optional_logger
+		(call logger.run (subj_type_attribute role)))
+
+	(optional wheel_optional_lirc
+		(call lirc.run (subj_type_attribute role))
+		(call lirc_lsplugins.run (subj_type_attribute role)))
+
+	(optional wheel_optional_mariadb
+		(call mariadb.manage_home_user_files (subj))
+		(call mariadb.relabel_home_user_files (subj))
+		(call mariadb.home_dir_obj_type_transition_home (subj))
+		(call mariadb.run (subj_type_attribute role)))
+
+	(optional wheel_optional_mediaart
+		(call mediaart.manage_home_cache (subj))
+		(call mediaart.relabel_home_cache (subj))
+
+		(call mediaart.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional wheel_optional_mpc
+		(call mpc.run (subj_type_attribute role)))
+
+	(optional wheel_optional_myqemu
+		(call myqemu_installer.read_cmd_files (subj))
+		(call myqemu_runner.read_cmd_files (subj))
+		(call myqemu_shutdown.read_cmd_files (subj)))
+
+	(optional wheel_optional_mysysstat
+		(call mysysstat.run (subj_type_attribute role)))
+
+	(optional wheel_optional_nettools
+		(call ping.run (subj_type_attribute role))
+		(call traceroute.run (subj_type_attribute role)))
+
+	(optional wheel_optional_networkctl
+		(call networkctl.run (subj_type_attribute role)))
+
+	(optional wheel_optional_newrole
+		(call newrole.run (subj_type_attribute role)))
+
+	(optional wheel_optional_openssl
+		(call openssl.run (subj_type_attribute role))
+		(call openssl.manage_home_user_files (subj))
+		(call openssl.relabel_home_user_files (subj))
+		(call openssl.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_pass
+		(call pass.manage_home_user (subj))
+		(call pass.relabel_home_user (subj))
+		(call pass.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_pastebinit
+		(call pastebinit.run (subj_type_attribute role))
+		(call pastebinit.manage_tmpfs_user_files (subj))
+		(call pastebinit.relabel_tmpfs_user_files (subj))
+		(call pastebinit.manage_home_user (subj))
+		(call pastebinit.relabel_home_user (subj))
+		(call pastebinit.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_pcitools
+		(call pcitools.run (subj_type_attribute role)))
+
+	(optional wheel_optional_phpcli
+		(call phpcli.exec (subj_type_attribute))
+		(call phpcli.manage_home_user_files (subj))
+		(call phpcli.relabel_home_user_files (subj))
+		(call phpcli.home_dir_obj_type_transition_home_user (subj)))
+
+	(optional wheel_optional_polkit
+		(call polkit_tty_agent.run (subj role)))
+
+	(optional wheel_optional_pwgen
+		(call pwgen.run (subj_type_attribute role)))
+
+	(optional wheel_optional_python
+		(call python.manage_home_data (subj))
+		(call python.relabel_home_data (subj))
+		(call python.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_qiv
+		(call qiv.manage_tmpfs_user_files (subj))
+		(call qiv.relabel_tmpfs_user_files (subj))
+		(call qiv.run (subj_type_attribute role)))
+
+	(optional wheel_optional_qemu
+		(call qemu_img.exec (subj)))
+
+	(optional wheel_optional_quota
+		(call quota.exec (subj_type_attribute)))
+
+	(optional wheel_optional_realm
+		(call realm.run (subj_type_attribute role)))
+
+	(optional wheel_optional_rpmbuild
+		(call rpmbuild.manage_tmpfs_user (subj))
+		(call rpmbuild.relabel_tmpfs_user (subj))
+		(call rpmbuild.manage_var_tmp_user (subj))
+		(call rpmbuild.relabel_var_tmp_user (subj))
+		(call rpmbuild.run (subj_type_attribute role)))
+
+	(optional wheel_optional_rpws
+		(call rpws.run (subj_type_attribute role))
+		(call rpws.manage_tmpfs_user_files (subj))
+		(call rpws.relabel_tmpfs_user_files (subj)))
+
+	(optional wheel_optional_rtorrent
+		(call rtorrent.manage_home_user (subj))
+		(call rtorrent.relabel_home_user (subj))
+		(call rtorrent.manage_home_config_files (subj))
+		(call rtorrent.relabel_home_config_files (subj))
+		(call rtorrent.home_dir_obj_type_transition_home (subj))
+		(call rtorrent.home_config_obj_type_transition_home_config
+			(subj))
+		(call rtorrent.run (subj_type_attribute role)))
+
+	(optional wheel_optional_run
+		(call run.exec (subj)))
+
+	(optional wheel_optional_scdaemon
+		(call scdaemon.run (subj_type_attribute role))
+		(call scdaemon.manage_home_user (subj))
+		(call scdaemon.relabel_home_user (subj))
+		(call scdaemon.gpg_home_user_obj_type_transition_home (subj))
+		(call scdaemon.manage_tmpfs_user (subj))
+		(call scdaemon.relabel_tmpfs_user (subj)))
+
+	(optional wheel_optional_sd_stdio
+		(call sd_stdio.run (subj_type_attribute role)))
+
+	(optional wheel_optional_setools
+		(call setools.exec (subj)))
+
+	(optional wheel_optional_speechdispd
+		(call speechdispd.manage_tmpfs_user (subj))
+		(call speechdispd.relabel_tmpfs_user (subj))
+
+		(call speechdispd.run (subj_type_attribute role)))
+
+	(optional wheel_optional_ssh_client
+		(call ssh_sftpserver.run (subj_type_attribute role)))
+
+	(optional wheel_optional_syndaemon
+		(call syndaemon.run (subj_type_attribute role)))
+
+	(optional wheel_optional_sysadm
+		(call sysadm.rbac_roleallow (role))
+		(call sysadm.send_signal (subj))
+		(call sysadm.rbac_userrole (id)))
+
+	(optional wheel_optional_tetex
+		(call tetex.manage_home_user (subj))
+		(call tetex.relabel_home_user (subj))
+		(call tetex.home_dir_obj_type_transition_home (subj))
+		(call tetex.manage_tmpfs_user (subj))
+		(call tetex.relabel_tmpfs_user (subj))
+		(call pdftex.run (subj_type_attribute role)))
+
+	(optional wheel_optional_thumbnails
+		(call thumbnails.manage_home_cache (subj))
+		(call thumbnails.relabel_home_cache (subj))
+		(call thumbnails.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional wheel_optional_tor
+		(call tor.manage_home_user (subj))
+		(call tor.relabel_home_user (subj))
+		(call tor.home_dir_obj_type_transition_home (subj))
+		(call tor.run (subj_type_attribute role)))
+
+	(optional wheel_optional_tor_gencert
+		(call tor_gencert.run (subj_type_attribute role)))
+
+	(optional wheel_optional_tor_resolve
+		(call tor_resolve.run (subj_type_attribute role)))
+
+	(optional wheel_optional_trash
+		(call trash.manage_home_data (subj))
+		(call trash.relabel_home_data (subj))
+		(call trash.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_udisksd
+		(call udisksctl.run (subj_type_attribute role)))
+
+	(optional wheel_optional_upowerd
+		(call upower.run (subj_type_attribute role)))
+
+	(optional wheel_optional_usbutil
+		(call usbutil.run (subj_type_attribute role)))
+
+	(optional wheel_optional_vulkan
+		(call vulkan.manage_home_data (subj))
+		(call vulkan.relabel_home_data (subj))
+		(call vulkan.home_data_obj_type_transition_home_data (subj)))
+
+	(optional wheel_optional_web_content_home
+		(call
+			web_home.web_content_htaccess.web_content_obj_type_transition_web_content_htaccess
+				(subj))
+		(call
+			web_home.web_content_cgi.web_content_ro_obj_type_transition_web_content_cgi
+				(subj))
+		(call
+			web_home.web_content_ra.web_content_ro_obj_type_transition_web_content_ra
+				(subj))
+		(call
+			web_home.web_content_rw.web_content_ro_obj_type_transition_web_content_rw
+				(subj))
+		(call web_home.home_dir_obj_type_transition_web_home_ro (subj))
+		(call web_home.web_content_cgi.exec (subj))
+		(call web_home.web_content.manage (subj))
+		(call web_home.web_content.relabel (subj)))
+
+	(optional wheel_optional_who
+		(call mesg.run (subj_type_attribute role))
+		(call who.run (subj_type_attribute role))
+		(call write.run (subj_type_attribute role)))
+
+	(optional wheel_optional_wodim
+		(call wodim.run (subj_type_attribute role)))
+
+	(optional wheel_optional_wpacli
+		(call wpacli.manage_tmpfs_user_sock_files (subj))
+		(call wpacli.relabel_tmpfs_user_sock_files (subj))
+		(call wpacli.run (subj_type_attribute role)))
+
+	(optional wheel_optional_xauth
+		(call xauth.run (subj_type_attribute role))
+		(call xauth.manage_home_user_files (subj))
+		(call xauth.relabel_home_user_files (subj)))
+
+	(optional wheel_optional_xlock
+		(call xlock.manage_home_user_files (subj))
+		(call xlock.relabel_home_user_files (subj))
+		(call xlock.home_dir_obj_type_transition_home (subj))
+		(call xlock.run (subj_type_attribute role)))
+
+	(optional wheel_optional_xserver
+		(call xserver.run (subj_type_attribute role))
+		(call xserver.manage_home_user_files (subj))
+		(call xserver.relabel_home_user_files (subj))
+		(call xserver.home_dir_obj_type_transition_home (subj))
+		(call xserver.manage_home_data (subj))
+		(call xserver.relabel_home_data (subj))
+		(call xserver.home_data_obj_type_transition_home_data (subj))
+		(call xserver.manage_tmpfs_user_files (subj))
+		(call xserver.manage_tmpfs_user_sock_files (subj))
+		(call xserver.relabel_tmpfs_user_files (subj))
+		(call xserver.relabel_tmpfs_user_sock_files (subj)))
+
+	(optional wheel_optional_xutil
+		(call xutil.manage_tmpfs_user_files (subj))
+		(call xutil.relabel_tmpfs_user_files (subj))
+		(call xutil.run (subj_type_attribute role))
+		(call xutil.manage_home_user_files (subj))
+		(call xutil.relabel_home_user_files (subj))
+		(call xutil.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_xwd
+		(call xwd.run (subj_type_attribute role)))
+
+	(optional wheel_optional_znc
+		(call znc.run (subj_type_attribute role))
+		(call znc.manage_home_user (subj))
+		(call znc.relabel_home_user (subj))
+		(call znc.home_dir_obj_type_transition_home (subj)))
+
+	(optional wheel_optional_wheel_alsautil
+		(call wheel_alsautil.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_analyze
+		(call wheel_analyze.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_atspird
+		(call wheel_atspird.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_awesome
+		(call awesome.manage_tmpfs_user_files (subj))
+		(call awesome.relabel_tmpfs_user_files (subj))
+
+		(call awesome.manage_home_cache (subj))
+		(call awesome.relabel_home_cache (subj))
+
+		(call awesome.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call awesome.manage_home_config (subj))
+		(call awesome.relabel_home_config (subj))
+
+		(call awesome.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_awesome.role_pattern (role subj_type_attribute))
+		(call wheel_awesomec.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_bijiben
+		(call bijiben.manage_tmpfs_user (subj))
+		(call bijiben.relabel_tmpfs_user (subj))
+
+		(call bijiben.manage_home_cache (subj))
+		(call bijiben.relabel_home_cache (subj))
+
+		(call bijiben.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call bijiben.manage_home_data (subj))
+		(call bijiben.relabel_home_data (subj))
+
+		(call bijiben.home_data_obj_type_transition_home_data
+			(subj))
+
+		(call wheel_bijiben.role_pattern (role subj_type_attribute))
+
+		(call bijibensp.manage_tmpfs_user (subj))
+		(call bijibensp.relabel_tmpfs_user (subj))
+
+		(call bijibensp.manage_home_cache (subj))
+		(call bijibensp.relabel_home_cache (subj))
+
+		(call bijibensp.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call wheel_bijibensp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_btst
+		(call btst.manage_tmpfs_user (subj))
+		(call btst.relabel_tmpfs_user (subj))
+
+		(call wheel_btst.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_canberra
+		(call canberra.manage_tmpfs_user_files (subj))
+		(call canberra.relabel_tmpfs_user_files (subj))
+
+		(call wheel_canberra.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_caribou
+		(call wheel_caribou.role_pattern (role subj_type_attribute))
+		(call wheel_cariboup.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_cgtop
+		(call wheel_cgtop.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_chfn
+		(call wheel_chfn.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_corebird
+		(call corebird.manage_tmpfs_user (subj))
+		(call corebird.relabel_tmpfs_user (subj))
+
+		(call corebird.manage_home_cache (subj))
+		(call corebird.relabel_home_cache (subj))
+
+		(call corebird.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call corebird.manage_home_config (subj))
+		(call corebird.relabel_home_config (subj))
+
+		(call corebird.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call corebird.manage_home_data (subj))
+		(call corebird.relabel_home_data (subj))
+
+		(call corebird.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_corebird.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dbus_send
+		(call wheel_dbus_send.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dconf
+		(call dconf.manage_tmpfs_user (subj))
+		(call dconf.relabel_tmpfs_user (subj))
+
+		(call dconf.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call dconf.manage_home_config (subj))
+		(call dconf.relabel_home_config (subj))
+
+		(call dconf.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_dconf.role_pattern (role subj_type_attribute))
+		(call wheel_dconfs.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dconfed
+		(call dconfed.manage_tmpfs_user (subj))
+		(call dconfed.relabel_tmpfs_user (subj))
+
+		(call wheel_dconfed.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dleyna
+		(call dleyna.manage_home_config_files (subj))
+		(call dleyna.relabel_home_config_files (subj))
+
+		(call dleyna.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_dleyna.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dleynar
+		(call dleynar.manage_home_config_files (subj))
+		(call dleynar.relabel_home_config_files (subj))
+
+		(call dleynar.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_dleynar.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dmenu
+		(call dmenu.manage_home_cache_files (subj))
+		(call dmenu.relabel_home_cache_files (subj))
+
+		(call dmenu.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call wheel_dmenu.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_dunst
+		(call dunst.manage_home_config (subj))
+		(call dunst.relabel_home_config (subj))
+
+		(call dunst.home_config_obj_type_transition_home_config (subj))
+
+		(call dunst.manage_tmpfs_user_files (subj))
+		(call dunst.relabel_tmpfs_user_files (subj))
+
+		(call wheel_dunst.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_emacs
+		(call emacs.manage_home_user (subj))
+		(call emacs.relabel_home_user (subj))
+
+		(call emacs.home_dir_obj_type_transition_home (subj))
+
+		(call emacs.manage_tmpfs_user (subj))
+		(call emacs.relabel_tmpfs_user (subj))
+
+		(call wheel_emacs.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_emacsclient
+		(call wheel_emacsclient.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_eog
+		(call eog.manage_tmpfs_user (subj))
+		(call eog.relabel_tmpfs_user (subj))
+
+		(call eog.manage_home_config (subj))
+		(call eog.relabel_home_config (subj))
+
+		(call eog.home_config_obj_type_transition_home_config (subj))
+
+		(call eog.manage_home_data_files (subj))
+		(call eog.relabel_home_data_files (subj))
+
+		(call eog.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_eog.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_espeak
+		(call espeak.manage_tmpfs_user_files (subj))
+		(call espeak.relabel_tmpfs_user_files (subj))
+
+		(call wheel_espeak.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_evince
+		(call evince.manage_tmpfs_user (subj))
+		(call evince.relabel_tmpfs_user (subj))
+
+		(call evince.manage_home_config (subj))
+		(call evince.relabel_home_config (subj))
+
+		(call evince.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_evince.role_pattern (role subj_type_attribute))
+
+		(call evincep.manage_tmpfs_user (subj))
+		(call evincep.relabel_tmpfs_user (subj))
+
+		(call wheel_evincep.role_pattern (role subj_type_attribute))
+		(call wheel_evincet.role_pattern (role subj_type_attribute))
+		(call wheel_evinced.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_epiphany
+		(call wheel_epiphany.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_evo
+		(call evo.manage_home_cache (subj))
+		(call evo.relabel_home_cache (subj))
+
+		(call evo.home_cache_obj_type_transition_home_cache (subj))
+
+		(call evo.manage_home_config (subj))
+		(call evo.relabel_home_config (subj))
+
+		(call evo.home_config_obj_type_transition_home_config (subj))
+
+		(call evo.manage_home_data (subj))
+		(call evo.relabel_home_data (subj))
+
+		(call evo.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_evoaf.role_pattern (role subj_type_attribute))
+		(call wheel_evocf.role_pattern (role subj_type_attribute))
+		(call wheel_evosr.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_fedpkg
+		(call wheel_fedpkg.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_festival
+		(call festival.manage_tmpfs_user_files (subj))
+		(call festival.relabel_tmpfs_user_files (subj))
+
+		(call festival.manage_home_user_files (subj))
+		(call festival.relabel_home_user_files (subj))
+
+		(call festival.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_festival.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_fileroller
+		(call fileroller.manage_tmpfs_user (subj))
+		(call fileroller.relabel_tmpfs_user (subj))
+
+		(call wheel_fileroller.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_ffmpeg
+		(call ffmpeg.manage_tmpfs_user_files (subj))
+		(call ffmpeg.relabel_tmpfs_user_files (subj))
+
+		(call wheel_ffmpeg.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_fuse_sshfs
+		(call wheel_fuse_sshfs.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_fwupd
+		(call wheel_fwupdmgr.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcal
+		(call gcal.manage_tmpfs_user (subj))
+		(call gcal.relabel_tmpfs_user (subj))
+
+		(call wheel_gcal.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcalc
+		(call gcalc.manage_tmpfs_user (subj))
+		(call gcalc.relabel_tmpfs_user (subj))
+
+		(call gcalc.manage_home_cache (subj))
+		(call gcalc.relabel_home_cache (subj))
+
+		(call gcalc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gcalc.role_pattern (role subj_type_attribute))
+
+		(call gcalcsp.manage_tmpfs_user (subj))
+		(call gcalcsp.relabel_tmpfs_user (subj))
+
+		(call wheel_gcalcsp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gchar
+		(call gchar.manage_tmpfs_user (subj))
+		(call gchar.relabel_tmpfs_user (subj))
+
+		(call wheel_gchar.role_pattern (role subj_type_attribute))
+
+		(call gcharbs.manage_tmpfs_user (subj))
+		(call gcharbs.relabel_tmpfs_user (subj))
+
+		(call wheel_gcharbs.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcl
+		(call gcl.manage_tmpfs_user (subj))
+		(call gcl.relabel_tmpfs_user (subj))
+
+		(call wheel_gcl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcon
+		(call gcon.manage_tmpfs_user (subj))
+		(call gcon.relabel_tmpfs_user (subj))
+
+		(call wheel_gcon.role_pattern (role subj_type_attribute))
+
+		(call gconsp.manage_tmpfs_user (subj))
+		(call gconsp.relabel_tmpfs_user (subj))
+
+		(call wheel_gconsp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gconf
+		(call gconf.manage_home_config (subj))
+		(call gconf.relabel_home_config (subj))
+
+		(call gconf.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_gconfd.role_pattern (role subj_type_attribute))
+		(call wheel_gconftool.role_pattern (role subj_type_attribute))
+
+		(call gsettingsdc.manage_home_data_files (subj))
+		(call gsettingsdc.relabel_home_data_files (subj))
+
+		(call
+			gsettingsdc.home_data_obj_type_transition_home_data_files
+				(subj))
+
+		(call wheel_gsettingsdc.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcs
+		(call gcs.manage_tmpfs_user (subj))
+		(call gcs.relabel_tmpfs_user (subj))
+
+		(call gcs.manage_home_cache (subj))
+		(call gcs.relabel_home_cache (subj))
+
+		(call gcs.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gcs.manage_home_config (subj))
+		(call gcs.relabel_home_config (subj))
+
+		(call gcs.home_config_obj_type_transition_home_config (subj))
+
+		(call gcs.manage_home_data (subj))
+		(call gcs.relabel_home_data (subj))
+
+		(call gcs.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gcs.role_pattern (role subj_type_attribute))
+
+		(call gcsp.manage_tmpfs_user (subj))
+		(call gcsp.relabel_tmpfs_user (subj))
+
+		(call wheel_gcsp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gcr
+		(call wheel_gcrv.role_pattern (role subj_type_attribute))
+		(call wheel_gcrp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gdmuser
+		(call gdmuser.manage_tmpfs_user (subj))
+		(call gdmuser.relabel_tmpfs_user (subj))
+		(call gdmuser.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call wheel_gdmuser.role_pattern (role subj)))
+
+	(optional wheel_optional_wheel_gdocs
+		(call gdocs.manage_tmpfs_user (subj))
+		(call gdocs.relabel_tmpfs_user (subj))
+
+		(call gdocs.manage_home_cache (subj))
+		(call gdocs.relabel_home_cache (subj))
+
+		(call gdocs.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gdocs.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gedit
+		(call gedit.manage_home_config (subj))
+		(call gedit.relabel_home_config (subj))
+
+		(call gedit.home_config_obj_type_transition_home_config (subj))
+		(call gedit.home_config_obj_type_transition_home_cmd (subj))
+
+		(call gedit.manage_tmpfs_user (subj))
+		(call gedit.relabel_tmpfs_user (subj))
+
+		(call wheel_gedit.role_pattern (role subj_type_attribute))
+
+		(call geditstf.manage_tmpfs_user (subj))
+		(call geditstf.relabel_tmpfs_user (subj))
+
+		(call wheel_geditstf.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_git
+		(call git.home_user_obj_entry_subj (subj))
+		(call git.spec_home_user_auto_subj_type_transition
+			(git_home_user_auto_type_transition_subj_type_attribute
+				subj))
+
+		(call git.exec_home_user_files (subj))
+		(call git.manage_home_user (subj))
+		(call git.relabel_home_user (subj))
+
+		(call git.home_user_obj_type_transition_home (subj))
+
+		(call git.manage_home_config (subj))
+		(call git.relabel_home_config (subj))
+
+		(call git.home_config_obj_type_transition_home_config (subj))
+
+		(call git.manage_tmpfs_user_files (subj))
+		(call git.relabel_tmpfs_user_files (subj))
+
+		(call wheel_git.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_git_email
+		(call git_email.manage_home_user_files (subj))
+		(call git_email.relabel_home_user_files (subj))
+
+		(call git_email.manage_tmpfs_user (subj))
+		(call git_email.relabel_tmpfs_user (subj))
+
+		(call wheel_git_email.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gitg
+		(call gitg.manage_tmpfs_user (subj))
+		(call gitg.relabel_tmpfs_user (subj))
+
+		(call gitg.manage_home_cache (subj))
+		(call gitg.relabel_home_cache (subj))
+
+		(call gitg.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gitg.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gkbd
+		(call gkbd.manage_tmpfs_user_files (subj))
+		(call gkbd.relabel_tmpfs_user_files (subj))
+
+		(call wheel_gkbd.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gkrd
+		(call gkrd.manage_tmpfs_user (subj))
+		(call gkrd.relabel_tmpfs_user (subj))
+
+		(call gkrd.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call gkrd.manage_home_data (subj))
+		(call gkrd.relabel_home_data (subj))
+
+		(call gkrd.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gkrd.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_glib
+		(call glib.manage_home_cache (subj))
+		(call glib.relabel_home_cache (subj))
+
+		(call glib.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gapp.role_pattern (role subj_type_attribute))
+		(call wheel_gdbus.role_pattern (role subj_type_attribute))
+		(call wheel_gsettings.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gm
+		(call gm.manage_tmpfs_user (subj))
+		(call gm.relabel_tmpfs_user (subj))
+
+		(call wheel_gm.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gmusic
+		(call gmusic.manage_tmpfs_user (subj))
+		(call gmusic.relabel_tmpfs_user (subj))
+
+		(call gmusic.manage_var_tmp_user_files (subj))
+		(call gmusic.relabel_var_tmp_user_files (subj))
+
+		(call gmusic.manage_home_data (subj))
+		(call gmusic.relabel_home_data (subj))
+
+		(call gmusic.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gmusic.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_goa
+		(call goa.manage_home_cache (subj))
+		(call goa.relabel_home_cache (subj))
+
+		(call goa.home_cache_obj_type_transition_home_cache (subj))
+
+		(call goa.manage_home_config (subj))
+		(call goa.relabel_home_config (subj))
+
+		(call goa.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_goad.role_pattern (role subj_type_attribute))
+		(call wheel_goais.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gom
+		(call wheel_gom.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gpg
+		(call gpg.manage_home_user (subj))
+		(call gpg.relabel_home_user (subj))
+
+		(call gpg.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_gpg.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gpg_agent
+		(call gpg_agent.manage_home_user (subj))
+		(call gpg_agent.relabel_home_user (subj))
+
+		(call gpg_agent.gpg_home_user_obj_type_transition_home (subj))
+
+		(call wheel_gpg_agent.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gph
+		(call gph.manage_tmpfs_user (subj))
+		(call gph.relabel_tmpfs_user (subj))
+
+		(call gph.manage_home_cache (subj))
+		(call gph.relabel_home_cache (subj))
+		(call gph.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_gph.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gpinentry
+		(call gpinentry.manage_tmpfs_user (subj))
+		(call gpinentry.relabel_tmpfs_user (subj))
+
+		(call wheel_gpinentry.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_grilo
+		(call grilo.manage_home_data (subj))
+		(call grilo.relabel_home_data (subj))
+		(call grilo.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_grilo.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gs
+		(call gs.manage_home_user_files (subj))
+		(call gs.relabel_home_user_files (subj))
+
+		(call gs.home_dir_obj_type_transition_home_user (subj))
+
+		(call gs.manage_tmpfs_user (subj))
+		(call gs.relabel_tmpfs_user (subj))
+
+		(call gs.manage_home_config (subj))
+		(call gs.relabel_home_config (subj))
+
+		(call gs.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_gs.role_pattern (role subj_type_attribute))
+		(call wheel_gsquit.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gsd
+		(call gsd.manage_tmpfs_user (subj))
+		(call gsd.relabel_tmpfs_user (subj))
+
+		(call gsd.manage_home_data (subj))
+		(call gsd.relabel_home_data (subj))
+
+		(call gsd.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gsd.role_pattern (role subj_type_attribute))
+		(call wheel_gsdprinter.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gsh
+		(call gsh.manage_tmpfs_user (subj))
+		(call gsh.relabel_tmpfs_user (subj))
+
+		(call gsh.tmpfs_obj_type_transition_tmpfs_user_dirs (subj))
+
+		(call gsh.manage_home_data (subj))
+		(call gsh.relabel_home_data (subj))
+
+		(call gsh.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gsh.role_pattern (role subj_type_attribute))
+		(call wheel_gshep.role_pattern (role subj_type_attribute))
+		(call wheel_gshcs.role_pattern (role subj_type_attribute))
+		(call wheel_gshhs.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gsound
+		(call gsound.manage_tmpfs_user_files (subj))
+		(call gsound.relabel_tmpfs_user_files (subj))
+
+		(call wheel_gsound.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gsw
+		(call gsw.manage_tmpfs_user (subj))
+		(call gsw.relabel_tmpfs_user (subj))
+
+		(call gsw.manage_home_cache (subj))
+		(call gsw.relabel_home_cache (subj))
+
+		(call gsw.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gsw.manage_home_data (subj))
+		(call gsw.relabel_home_data (subj))
+
+		(call gsw.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gsw.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gstreamer
+		(call gstreamer.manage_home_cache (subj))
+		(call gstreamer.relabel_home_cache (subj))
+
+		(call gstreamer.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call gstreamer.manage_home_data (subj))
+		(call gstreamer.relabel_home_data (subj))
+
+		(call gstreamer.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gst.role_pattern (role subj_type_attribute))
+		(call wheel_gstps.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gt
+		(call gt.manage_tmpfs_user_files (subj))
+		(call gt.relabel_tmpfs_user_files (subj))
+
+		(call wheel_gt.role_pattern (role subj_type_attribute))
+
+		(call gts.manage_tmpfs_user (subj))
+		(call gts.relabel_tmpfs_user (subj))
+
+		(call wheel_gts.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvid
+		(call gvid.manage_tmpfs_user (subj))
+		(call gvid.relabel_tmpfs_user (subj))
+
+		(call gvid.manage_home_cache (subj))
+		(call gvid.relabel_home_cache (subj))
+
+		(call gvid.home_cache_obj_type_transition_home_cache (subj))
+
+		(call gvid.manage_home_config (subj))
+		(call gvid.relabel_home_config (subj))
+
+		(call gvid.home_config_obj_type_transition_home_config (subj))
+
+		(call gvid.manage_home_data (subj))
+		(call gvid.relabel_home_data (subj))
+
+		(call gvid.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gvid.role_pattern (role subj_type_attribute))
+		(call wheel_gvidap.role_pattern (role subj_type_attribute))
+
+		(call gvidvt.manage_tmpfs_user_files (subj))
+		(call gvidvt.relabel_tmpfs_user_files (subj))
+
+		(call wheel_gvidvt.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gweather
+		(call gweather.manage_tmpfs_user (subj))
+		(call gweather.relabel_tmpfs_user (subj))
+
+		(call wheel_gweather.role_pattern (role subj_type_attribute))
+
+		(call gweatherbs.manage_tmpfs_user (subj))
+		(call gweatherbs.relabel_tmpfs_user (subj))
+
+		(call wheel_gweatherbs.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfs
+		(call wheel_gvfs.role_pattern (role subj_type_attribute))
+
+		(call gvfsd.manage_tmpfs_user (subj))
+		(call gvfsd.relabel_tmpfs_user (subj))
+
+		(call gvfsd.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call wheel_gvfsd.role_pattern (role subj_type_attribute))
+
+		(call gvfsdmd.manage_home_data (subj))
+		(call gvfsdmd.relabel_home_data (subj))
+
+		(call gvfsdmd.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_gvfsdmd.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdud2.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdburn.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdcdda.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdcomputer.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsddav.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsddnssd.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdftp.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdhttp.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdlocaltest.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsdnetwork.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsdrecent.role_pattern (role
+			subj_type_attribute))
+		(call wheel_gvfsdsftp.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdtrash.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfsdafc
+		(call wheel_gvfsdafcvm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfsdfuse
+		(call wheel_gvfsdfuse.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfsdgoa
+		(call wheel_gvfsdgoavm.role_pattern (role subj_type_attribute))
+		(call wheel_gvfsdgoogle.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfsdgph2
+		(call wheel_gvfsdgph2vm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_gvfsdmtp
+		(call wheel_gvfsdmtpvm.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_busctl
+		(call wheel_busctl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_firefox
+		(call firefox.manage_tmpfs_user (subj))
+		(call firefox.relabel_tmpfs_user (subj))
+
+		(call firefox.manage_var_tmp_user_files (subj))
+		(call firefox.relabel_var_tmp_user_files (subj))
+
+		(call wheel_firefox.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_firefox_plugins
+		(call firefox_plugins.manage_tmpfs_user_files (subj))
+		(call firefox_plugins.relabel_tmpfs_user_files (subj))
+
+		(call wheel_firefox_plugins.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_firefox_xremotec
+		(call wheel_firefox_xremotec.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_i3
+		(call i3.manage_tmpfs_user (subj))
+		(call i3.relabel_tmpfs_user (subj))
+
+		(call i3.manage_home_config (subj))
+		(call i3.relabel_home_config (subj))
+
+		(call i3.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_i3.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_i3lock
+		(call i3lock.manage_tmpfs_user_files (subj))
+		(call i3lock.relabel_tmpfs_user_files (subj))
+
+		(call wheel_i3lock.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_inhibit
+		(call wheel_inhibit.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_irssi
+		(call irssi.manage_home_user (subj))
+		(call irssi.relabel_home_user (subj))
+
+		(call irssi.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_irssi.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_hostnamectl
+		(call wheel_hostnamectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_journalctl
+		(call wheel_journalctl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_libnotify
+		(call wheel_libnotify.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_livestreamer
+		(call livestreamer.manage_home_cache (subj))
+		(call livestreamer.relabel_home_cache (subj))
+
+		(call livestreamer.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call livestreamer.manage_home_config (subj))
+		(call livestreamer.relabel_home_config (subj))
+
+		(call livestreamer.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call livestreamer.manage_tmpfs_user_files (subj))
+		(call livestreamer.relabel_tmpfs_user_files (subj))
+
+		(call wheel_livestreamer.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_localectl
+		(call wheel_localectl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_loginctl
+		(call wheel_loginctl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_lynx
+		(call lynx.manage_home_user_files (subj))
+		(call lynx.relabel_home_user_files (subj))
+
+		(call lynx.home_dir_obj_type_transition_home (subj))
+
+		(call lynx.manage_tmpfs_user_files (subj))
+		(call lynx.relabel_tmpfs_user_files (subj))
+
+		(call wheel_lynx.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_mutt
+		(call mutt.manage_home_user_files (subj))
+		(call mutt.relabel_home_user_files (subj))
+
+		(call mutt.home_dir_obj_type_transition_home (subj))
+
+		(call mutt.manage_tmpfs_user (subj))
+		(call mutt.relabel_tmpfs_user (subj))
+
+		(call wheel_mutt.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_mutt_pgp_ewrap
+		(call wheel_mutt_pgp_ewrap.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_mutter
+		(call wheel_mutter.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_machinectl
+		(call wheel_machinectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_mozilla
+		(call mozilla.manage_home_user (subj))
+		(call mozilla.relabel_home_user (subj))
+
+		(call mozilla.home_dir_obj_type_transition_home (subj))
+
+		(call mozilla.manage_home_cache (subj))
+		(call mozilla.relabel_home_cache (subj))
+
+		(call mozilla.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional wheel_optional_wheel_mplayer
+		(call mplayer.manage_home_user (subj))
+		(call mplayer.relabel_home_user (subj))
+
+		(call mplayer.home_dir_obj_type_transition_home (subj))
+
+		(call mplayer.manage_tmpfs_user_files (subj))
+		(call mplayer.relabel_tmpfs_user_files (subj))
+
+		(call wheel_mplayer.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_nautilus
+		(call nautilus.manage_tmpfs_user (subj))
+		(call nautilus.relabel_tmpfs_user (subj))
+
+		(call nautilus.manage_home_data (subj))
+		(call nautilus.relabel_home_data (subj))
+
+		(call nautilus.home_data_obj_type_transition_home_data (subj))
+
+		(call nautilus.manage_home_config (subj))
+		(call nautilus.relabel_home_config (subj))
+
+		(call nautilus.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call wheel_nautilus.role_pattern (role subj_type_attribute))
+		(call wheel_nautilusas.role_pattern (role subj_type_attribute))
+		(call wheel_nautiluscm.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_nb
+		(call nb.manage_home_user (subj))
+		(call nb.relabel_home_user (subj))
+
+		(call nb.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_nb.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_nmce
+		(call nmce.manage_tmpfs_user (subj))
+		(call nmce.relabel_tmpfs_user (subj))
+
+		(call wheel_nmce.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_obexd
+		(call obexd.manage_home_cache (subj))
+		(call obexd.relabel_home_cache (subj))
+
+		(call obexd.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_obexd.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_orca
+		(call orca.manage_tmpfs_user (subj))
+		(call orca.relabel_tmpfs_user (subj))
+
+		(call orca.manage_home_data (subj))
+		(call orca.relabel_home_data (subj))
+
+		(call orca.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_orca.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_pa
+		(call pa.manage_tmpfs_user (subj))
+		(call pa.relabel_tmpfs_user (subj))
+
+		(call pa.tmpfs_obj_type_transition_tmpfs (subj))
+
+		(call pa.manage_home_config (subj))
+		(call pa.relabel_home_config (subj))
+
+		(call pa.home_config_obj_type_transition_home_config (subj))
+
+		(call pa.manage_home_user_files (subj))
+		(call pa.relabel_home_user_files (subj))
+
+		(call pa.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_pa.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_pactl
+		(call wheel_pactl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_passwd
+		(call wheel_passwd.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_pinentry
+		(call wheel_pinentry.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_pkcon
+		(call wheel_pkcon.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_polari
+		(call polari.manage_tmpfs_user (subj))
+		(call polari.relabel_tmpfs_user (subj))
+
+		(call wheel_polari.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_polkit_exec
+		(call polkit_tty_agent.run (subj role))
+		(call wheel_polkit_exec.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_prunner
+		(call wheel_prunner.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_qemu_user_guest
+		(call qemu_user_guest.manage_tmpfs_user (subj))
+		(call qemu_user_guest.relabel_tmpfs_user (subj))
+
+		(call wheel_qemu_user_guest.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_rp
+		(call rp.manage_home_user_files (subj))
+		(call rp.relabel_home_user_files (subj))
+
+		(call rp.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_rp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_rpmdev
+		(call rpmdev.manage_tmpfs_user_files (subj))
+		(call rpmdev.relabel_tmpfs_user_files (subj))
+
+		(call rpmdev.manage_home_user_files (subj))
+		(call rpmdev.relabel_home_user_files (subj))
+
+		(call rpmdev.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_rpmdev.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_rygel
+		(call rygel.manage_home_user (subj))
+		(call rygel.relabel_home_user (subj))
+
+		(call rygel.manage_home_config (subj))
+		(call rygel.relabel_home_config (subj))
+
+		(call rygel.home_config_obj_type_transition_home_config (subj))
+
+		(call rygel.manage_home_cache (subj))
+		(call rygel.relabel_home_cache (subj))
+
+		(call rygel.home_cache_obj_type_transition_home_cache (subj))
+
+		(call wheel_rygel.role_pattern (role subj_type_attribute))
+		(call wheel_rygelp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_screen
+		(call screen.manage_home_user_files (subj))
+		(call screen.relabel_home_user_files (subj))
+
+		(call screen.home_dir_obj_type_transition_home_files (subj))
+
+		(call screen.manage_tmpfs_user_files (subj))
+		(call screen.relabel_tmpfs_user_files (subj))
+
+		(call wheel_screen.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_script
+		(call wheel_script.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_seahorse
+		(call seahorse.manage_tmpfs_user (subj))
+		(call seahorse.relabel_tmpfs_user (subj))
+
+		(call wheel_seahorse.role_pattern (role subj_type_attribute))
+
+		(call seahorsesap.manage_tmpfs_user (subj))
+		(call seahorsesap.relabel_tmpfs_user (subj))
+
+		(call wheel_seahorsesap.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_setoolsgui
+		(call setoolsgui.manage_tmpfs_user (subj))
+		(call setoolsgui.relabel_tmpfs_user (subj))
+
+		(call setoolsgui.manage_var_tmp_user_files (subj))
+		(call setoolsgui.relabel_var_tmp_user_files (subj))
+
+		(call wheel_setoolsgui.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_steam
+		(call steam.manage_tmpfs_user (subj))
+		(call steam.relabel_tmpfs_user (subj))
+
+		(call steam.manage_var_tmp_user_files (subj))
+		(call steam.relabel_var_tmp_user_files (subj))
+
+		(call steam.manage_home_user (subj))
+		(call steam.relabel_home_user (subj))
+
+		(call steam.home_dir_obj_type_transition_home_user (subj))
+
+		(call steam.manage_home_config (subj))
+		(call steam.relabel_home_config (subj))
+
+		(call steam.home_config_obj_type_transition_home_config (subj))
+
+		(call steam.manage_home_data (subj))
+		(call steam.relabel_home_data (subj))
+
+		(call steam.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_steam.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_sduser
+		(call wheel_sduser.role_pattern (role subj)))
+
+	(optional wheel_optional_wheel_sessbus
+		(call sessbus.manage_tmpfs_user (subj))
+		(call sessbus.relabel_tmpfs_user (subj))
+
+		(call sessbus.tmpfs_obj_type_transition_tmpfs (subj))
+
+		(call wheel_sessbus.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_sessbus_launch
+		(call sessbus_launch.manage_home_user (subj))
+		(call sessbus_launch.relabel_home_user (subj))
+
+		(call sessbus_launch.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_sessbus_launch.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_ssh_agent
+		(call ssh_agent.manage_tmpfs_user (subj))
+		(call ssh_agent.relabel_tmpfs_user (subj))
+
+		(call wheel_ssh_agent.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_ssh_client
+		(call ssh_client.manage_home_user (subj))
+		(call ssh_client.relabel_home_user (subj))
+
+		(call ssh_client.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_ssh_client.role_pattern (role subj_type_attribute))
+		(call wheel_ssh_keygen.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_sshduser
+		(call wheel_sshduser.role_pattern (role subj)))
+
+	(optional wheel_optional_wheel_startx
+		(call startx.manage_tmpfs_user_files (subj))
+		(call startx.relabel_tmpfs_user_files (subj))
+
+		(call wheel_startx.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_sudo
+		(call sudo.manage_tmpfs_user_files (subj))
+		(call sudo.relabel_tmpfs_user_files (subj))
+
+		(call sudo.manage_var_tmp_user_files (subj))
+		(call sudo.relabel_var_tmp_user_files (subj))
+
+		(call wheel_sudo.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_systemctl
+		(call wheel_systemctl.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_thunderbird
+		(call thunderbird.manage_home_user (subj))
+		(call thunderbird.relabel_home_user (subj))
+
+		(call thunderbird.home_dir_obj_type_transition_home (subj))
+
+		(call thunderbird.manage_home_cache (subj))
+		(call thunderbird.relabel_home_cache (subj))
+
+		(call thunderbird.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call thunderbird.manage_tmpfs_user (subj))
+		(call thunderbird.relabel_tmpfs_user (subj))
+
+		(call thunderbird.manage_var_tmp_user_files (subj))
+		(call thunderbird.relabel_var_tmp_user_files (subj))
+
+		(call wheel_thunderbird.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_timedatectl
+		(call wheel_timedatectl.role_pattern (role
+			subj_type_attribute)))
+
+	(optional wheel_optional_wheel_tor_socks
+		(call wheel_tor_socks.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_tp
+		(call wheel_tpmct.role_pattern (role subj_type_attribute))
+
+		(call tpmc.manage_home_cache (subj))
+		(call tpmc.relabel_home_cache (subj))
+
+		(call tpmc.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpmc.manage_home_data (subj))
+		(call tpmc.relabel_home_data (subj))
+
+		(call tpmc.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_tpmc.role_pattern (role subj_type_attribute))
+
+		(call tpl.manage_home_cache (subj))
+		(call tpl.relabel_home_cache (subj))
+
+		(call tpl.home_cache_obj_type_transition_home_cache (subj))
+
+		(call tpl.manage_home_data (subj))
+		(call tpl.relabel_home_data (subj))
+
+		(call tpl.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_tpl.role_pattern (role subj_type_attribute))
+		(call wheel_tpi.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_tracker
+		(call wheel_tracker.role_pattern (role subj_type_attribute))
+
+		(call trackerm.manage_tmpfs_user (subj))
+		(call trackerm.relabel_tmpfs_user (subj))
+
+		(call wheel_trackerm.role_pattern (role subj_type_attribute))
+
+		(call trackers.manage_home_cache (subj))
+		(call trackers.relabel_home_cache (subj))
+
+		(call trackers.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call trackers.manage_home_config (subj))
+		(call trackers.relabel_home_config (subj))
+
+		(call trackers.home_config_obj_type_transition_home_config
+			(subj))
+
+		(call trackers.manage_home_data (subj))
+		(call trackers.relabel_home_data (subj))
+
+		(call trackers.home_data_obj_type_transition_home_data (subj))
+
+		(call trackers.manage_var_tmp_user_files (subj))
+		(call trackers.relabel_var_tmp_user_files (subj))
+
+		(call wheel_trackers.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_rxvt
+		(call rxvt.manage_tmpfs_user (subj))
+		(call rxvt.relabel_tmpfs_user (subj))
+
+		(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj))
+
+		(call wheel_rxvt.role_pattern (role subj_type_attribute))
+		(call wheel_rxvtc.role_pattern (role subj_type_attribute))
+
+		(call wheel_rxvtd.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_vdagent
+		(call wheel_vdagent.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_vinagre
+		(call vinagre.manage_tmpfs_user (subj))
+		(call vinagre.relabel_tmpfs_user (subj))
+
+		(call vinagre.manage_home_cache (subj))
+		(call vinagre.relabel_home_cache (subj))
+
+		(call vinagre.home_cache_obj_type_transition_home_cache (subj))
+
+		(call vinagre.manage_home_data (subj))
+		(call vinagre.relabel_home_data (subj))
+
+		(call vinagre.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_vinagre.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_vino
+		(call vino.manage_tmpfs_user (subj))
+		(call vino.relabel_tmpfs_user (subj))
+
+		(call wheel_vino.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_vlock
+		(call vlock.manage_home_user_files (subj))
+		(call vlock.relabel_home_user_files (subj))
+
+		(call vlock.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_vlock.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_webkit
+		(call webkit.manage_home_cache (subj))
+		(call webkit.relabel_home_cache (subj))
+
+		(call webkit.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call webkitwp.manage_tmpfs_user (subj))
+		(call webkitwp.relabel_tmpfs_user (subj))
+
+		(call webkitwp.manage_home_cache (subj))
+		(call webkitwp.relabel_home_cache (subj))
+
+		(call webkitwp.home_cache_obj_type_transition_home_cache
+			(subj))
+
+		(call webkitwp.manage_home_data (subj))
+		(call webkitwp.relabel_home_data (subj))
+
+		(call webkitwp.home_data_obj_type_transition_home_data (subj))
+
+		(call wheel_webkitwp.role_pattern (role subj_type_attribute))
+
+		(call webkitpp.manage_tmpfs_user (subj))
+		(call webkitpp.relabel_tmpfs_user (subj))
+
+		(call wheel_webkitpp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xautolock
+		(call wheel_xautolock.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xbindkeys
+		(call xbindkeys.manage_home_user_files (subj))
+		(call xbindkeys.relabel_home_user_files (subj))
+
+		(call xbindkeys.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_xbindkeys.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xinit
+		(call xinit.spec_home_user_auto_subj_type_transition
+			(xinit_home_user_auto_type_transition_subj_type_attribute
+				subj))
+		(call xinit.exec_home_user_files (subj))
+		(call xinit.home_user_obj_entry_subj (subj))
+		(call xinit.manage_home_user_files (subj))
+		(call xinit.relabel_home_user_files (subj))
+
+		(call xinit.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_xinit.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xpdf
+		(call wheel_xpdf.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xsession
+		(call xsession.manage_tmpfs_user_files (subj))
+		(call xsession.relabel_tmpfs_user_files (subj))
+
+		(call xsession.manage_home_user_files (subj))
+		(call xsession.relabel_home_user_files (subj))
+
+		(call xsession.home_dir_obj_type_transition_home (subj))
+
+		(call wheel_xsession.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_xwayland
+		(call xwayland.manage_tmpfs_user (subj))
+		(call xwayland.relabel_tmpfs_user (subj))
+
+		(call wheel_xwayland.role (role)))
+
+	(optional wheel_optional_wheel_xterm
+		(call wheel_xterm.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_yelp
+		(call yelp.manage_tmpfs_user (subj))
+		(call yelp.relabel_tmpfs_user (subj))
+
+		(call yelp.manage_home_config (subj))
+		(call yelp.relabel_home_config (subj))
+
+		(call yelp.home_config_obj_type_transition_home_config (subj))
+
+		(call wheel_yelp.role_pattern (role subj_type_attribute)))
+
+	(optional wheel_optional_wheel_zenity
+		(call zenity.manage_tmpfs_user (subj))
+		(call zenity.relabel_tmpfs_user (subj))
+
+		(call wheel_zenity.role_pattern (role subj_type_attribute))))

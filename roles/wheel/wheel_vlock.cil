@@ -1,0 +1,11 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_vlock
+	(blockinherit vlock.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj)))

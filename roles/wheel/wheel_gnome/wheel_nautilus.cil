@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_nautilus
+	(blockinherit nautilus.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		nautilus.tmpfs_user_file))
+	(call wheel_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(call wheel.subj_type (subj))
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(call wheel_gvfsdmd.client_subj_type (subj))
+
+	(optional wheel_nautilus_optional_wheel_eog
+		(call wheel_eog.auto_subj_type_transition (subj)))
+
+	(optional wheel_nautilus_optional_wheel_gs
+		(call wheel_gs.daemon (subj nautilus.cmd_file))
+		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_nautilus_optional_wheel_gvid
+		(call wheel_gvid.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_nautilus_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj nautilus.cmd_file)))
+
+	(optional wheel_nautilus_optional_wheel_tracker
+		(call wheel_tracker.client_subj_type (subj))))
+
+(block wheel_nautilusas
+	(blockinherit nautilusas.subj_blk))
+
+(block wheel_nautiluscm
+	(blockinherit nautiluscm.subj_blk))

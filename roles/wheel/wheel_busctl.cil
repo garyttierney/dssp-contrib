@@ -1,0 +1,28 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_busctl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call busctl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_busctl
+	(blockinherit busctl.subj_blk)
+
+	(optional wheel_busctl_optional_wheel_sduser
+		(call wheel_sduser.control (subj)))
+
+	(optional wheel_busctl_optional_sessbus
+		(call sessbus.chat_all_client_subj (subj)))
+
+	(optional wheel_busctl_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_busctl_optional_wheel_ssh_client
+		(call wheel_ssh_client.auto_subj_type_transition (subj))))

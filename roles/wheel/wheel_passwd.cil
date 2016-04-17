@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_passwd
+	(blockinherit passwd.subj_blk)
+
+	(optional wheel_passwd_optional_wheel_gkrd
+		(call wheel_gkrd.auto_subj_type_transition (subj))))

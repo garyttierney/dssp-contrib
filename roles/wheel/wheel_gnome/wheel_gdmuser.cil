@@ -1,0 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gdmuser
+	(blockinherit gdmuser.subj_blk)
+
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(optional wheel_gdmuser_optional_wheel_gkr
+		(call wheel_gkrd.auto_subj_type_transition (subj)))
+
+	(optional wheel_gdmuser_optional_wheel_gs
+		(call wheel_gs.auto_subj_type_transition (subj)))
+
+	(optional wheel_gdmuser_optional_wheel_sessbus
+		(call wheel_sessbus.auto_subj_type_transition (subj)))
+
+	(optional wheel_gdmuser_optional_wheel_xsession
+		(call wheel_xsession.auto_subj_type_transition (subj))))

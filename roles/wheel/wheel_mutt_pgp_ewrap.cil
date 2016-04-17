@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_mutt_pgp_ewrap
+	(blockinherit mutt_pgp_ewrap.subj_blk)
+
+	(optional wheel_mutt_pgp_ewrap_optional_wheel_gpg
+		(call wheel_gpg.auto_subj_type_transition (subj))))

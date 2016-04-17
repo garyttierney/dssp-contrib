@@ -1,0 +1,30 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_git
+	(blockinherit git.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(call wheel.git_home_user_auto_type_transition_subj_type (subj))
+
+	(optional wheel_git_optional_wheel_gpg
+		(call wheel_gpg.auto_subj_type_transition (subj)))
+
+	(optional wheel_git_optional_wheel_gedit
+		(call wheel_gedit.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_git_optional_wheel_git_email
+		(call wheel_git_email.auto_subj_type_transition (subj)))
+
+	(optional wheel_git_optional_wheel_ssh_client
+		(call wheel_ssh_client.auto_subj_type_transition (subj)))
+
+	(optional wheel_git_optional_wheel_tor_socks
+		(call tor_socks.client_subj_type (subj))
+		(call wheel_tor_socks.auto_subj_type_transition (subj))))

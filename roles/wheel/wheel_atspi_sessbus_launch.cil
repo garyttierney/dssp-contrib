@@ -1,0 +1,39 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_atspi_sessbus_launch
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_atspi_sessbus_launch
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit atspi_sessbus_launch.subj_blk)
+
+	(optional wheel_atspi_sessbus_launch_optional_wheel_gs
+		(call wheel_gs.daemon (subj atspi_sessbus_launch.cmd_file)))
+
+	(optional wheel_atspi_sessbus_launch_optional_wheel_gsh
+		(call wheel_gsh.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_atspi_sessbus_launch_optional_wheel_gvfs
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_atspi_sessbus_launch_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj))
+		(call wheel_sessbus.auto_subj_type_transition (subj)))
+
+	(optional
+		wheel_atspi_sessbus_launch_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

@@ -1,0 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gitg
+	(blockinherit gitg.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gitg.tmpfs_user_file))
+	(call wheel_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(optional wheel_gitg_optional_wheel_gkrd
+		(call wheel_gkrd.stream_connect (subj)))
+
+	(optional wheel_gitg_optional_wheel_webkitwp
+		(call wheel_webkitwp.sessbus_chat_client_subj_type (subj))
+		(call wheel_webkitwp.auto_subj_type_transition (subj)))
+
+	(optional wheel_gitg_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj))))

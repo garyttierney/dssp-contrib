@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_journalctl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call journalctl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_journalctl
+	(blockinherit journalctl.subj_blk))

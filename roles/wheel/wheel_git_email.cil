@@ -1,0 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_git_email
+	(blockinherit git_email.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_git_email_optional_wheel_git
+		(call wheel_git.auto_subj_type_transition (subj)))
+
+	(optional wheel_git_email_optional_tor_socks
+		(call tor_socks.client_subj_type (subj))))

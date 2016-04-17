@@ -1,0 +1,29 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_vinagre
+	(blockinherit vinagre.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		vinagre.tmpfs_user_file))
+	(call wheel_gnomeapp.file_chooser_dialog_subj_type (subj))
+
+	(optional wheel_vinagre_optional_wheel_gkrd
+		(call wheel_gkrd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_vinagre_optional_wheel_ssh_client
+		(call wheel_ssh_client.auto_subj_type_transition (subj)))
+
+	(optional wheel_gmusic_optional_wheel_pa
+		(call wheel_pa.auto_subj_type_transition (subj)))
+
+	(optional wheel_vinagre_optional_wheel_tpmc
+		(call wheel_tpmc.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_vinagre_optional_wheel_tpi
+		(call wheel_tpi.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_vinagre_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj vinagre.cmd_file))))

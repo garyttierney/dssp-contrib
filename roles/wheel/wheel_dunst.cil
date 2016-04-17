@@ -1,0 +1,43 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_dunst
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_dunst
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
+	(blockinherit dunst.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_dunst_optional_wheel_dmenu
+		(call wheel_dmenu.auto_subj_type_transition (subj)))
+
+	(optional wheel_dunst_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_dunst_optional_wheel_sessbus
+		(call wheel_sessbus.service_subj_type (subj)))
+
+	(optional wheel_dunst_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional
+		wheel_dunst_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))

@@ -1,0 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_xterm
+	(blockinherit xterm.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_xterm_optional_wheel_gs
+		(call wheel_gs.stream_connect (subj)))
+
+	(optional wheel_xterm_optional_wheel_screen
+		(call wheel_screen.auto_subj_type_transition (subj))))

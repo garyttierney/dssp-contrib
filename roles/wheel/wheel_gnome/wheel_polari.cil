@@ -1,0 +1,34 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_polari
+	(macro auto_subj_type_transition ((type ARG1))
+		(call polari.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call polari.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_polari
+	(blockinherit polari.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		polari.tmpfs_user_file))
+
+	(call wheel_tpi.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_polari_optional_wheel_gvfsdhttp
+		(call wheel_gvfsdhttp.rw_inherited_unix_stream_sockets (subj))
+		(call wheel_gvfsdhttp.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_polari_optional_wheel_tpmc
+		(call wheel_tpmc.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_polari_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj polari.cmd_file))))

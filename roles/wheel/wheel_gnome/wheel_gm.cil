@@ -1,0 +1,62 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_gm
+	(macro auto_subj_type_transition ((type ARG1))
+		(call gm.spec_auto_subj_type_transition (ARG1 subj)))
+
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call gm.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gm
+	(blockinherit gm.subj_blk)
+
+	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
+		gm.tmpfs_user_file))
+
+	(call wheel_gvfsdmd.client_subj_type (subj))
+
+	(optional wheel_gm_optional_wheel_evoaf
+		(call wheel_evoaf.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_evosr
+		(call wheel_evosr.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_gapp
+		(call wheel_gapp.auto_subj_type_transition (subj)))
+
+	(optional wheel_gm_optional_wheel_gcl
+		(call wheel_gcl.auto_subj_type_transition (subj))
+		(call wheel_gcl.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_gcs
+		(call wheel_gcs.auto_subj_type_transition (subj)))
+
+	(optional wheel_gm_optional_wheel_goad
+		(call wheel_goad.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_gweather
+		(call wheel_gweather.auto_subj_type_transition (subj))
+		(call wheel_gweather.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_obexd
+		(call wheel_obexd.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_tpi
+		(call wheel_tpi.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_tpl
+		(call wheel_tpl.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_tpmc
+		(call wheel_tpmc.sessbus_chat_client_subj_type (subj)))
+
+	(optional wheel_gm_optional_wheel_sessbus
+		(call wheel_sessbus.daemon (subj gm.cmd_file))))

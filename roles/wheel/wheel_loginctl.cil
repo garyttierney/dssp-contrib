@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_loginctl
+	(macro role_pattern ((role ARG1)(type ARG2))
+		(call loginctl.role_pattern (ARG1 ARG2 subj))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_loginctl
+	(blockinherit loginctl.subj_blk)
+
+	(optional wheel_loginctl_optional_wheel_ssh_client
+		(call wheel_ssh_client.auto_subj_type_transition (subj))))

@@ -1,0 +1,83 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in wheel_sessbus
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(macro daemon_subj_type ((type ARG1))
+		(typeattributeset daemon_subj_type_attribute ARG1))
+
+	(macro service_subj_type ((type ARG1))
+		(typeattributeset service_subj_type_attribute ARG1))
+
+	(macro daemon ((type ARG1)(type ARG2))
+		(call daemon_subj_type (ARG1))
+		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
+
+	(macro unix_stream_socket_activation_sduser_subj_type ((type ARG1))
+		(typeattributeset
+			unix_stream_socket_activation_sduser_subj_type_attribute
+				ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_sessbus
+	(typeattribute client_subj_type_attribute)
+	(typeattribute daemon_subj_type_attribute)
+	(typeattribute service_subj_type_attribute)
+
+	(typeattribute
+		unix_stream_socket_activation_sduser_subj_type_attribute)
+
+	(blockinherit sessbus.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_sessbus_optional_wheel_atspi_sessbus_launch
+		(call wheel_atspi_sessbus_launch.auto_subj_type_transition
+			(subj)))
+
+	(optional wheel_sessbus_optional_wheel_bijiben
+		(call wheel_bijiben.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_sessbus_optional_wheel_dunst
+		(call wheel_dunst.auto_subj_type_transition (subj)))
+
+	(optional wheel_sessbus_optional_wheel_gcal
+		(call wheel_gcal.use_fd (subj)))
+
+	(optional wheel_sessbus_optional_wheel_gdocs
+		(call wheel_gdocs.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_sessbus_optional_wheel_gmusic
+		(call wheel_gmusic.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_sessbus_optional_wheel_gom
+		(call wheel_gom.rw_inherited_fifo_files (subj)))
+
+	(optional wheel_sessbus_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional wheel_sessbus_optional_wheel_sduser
+		(call sduser.unix_stream_socket_activated_subj_pattern
+			(unix_stream_socket_activation_sduser_subj_type_attribute
+				subj)))
+
+	(optional wheel_sessbus_optional_wheel_tracker
+		(call wheel_trackerm.rw_inherited_fifo_files (subj)))
+
+	(call client_subj_type (service_subj_type_attribute))
+
+	(call service_subj_type (daemon_subj_type_attribute))
+
+	(call sessbus.client_pattern (client_subj_type_attribute subj))
+	(call sessbus.acquire_service_pattern (service_subj_type_attribute
+		subj)))

@@ -399,6 +399,9 @@
 
 (call modules_dep.modules_obj_type_transition_modules_dep (rpm_script_t))
 
+(call load_policy.run (rpm_script_t rpm.role_attribute))
+(call setfiles.run (rpm_script_t rpm.role_attribute))
+
 (tunableif enable_mls
 	(true
 		(optional rpm_script_enable_mls_optiona_sd_randomseed
@@ -438,6 +441,9 @@
 
 (optional rpm_script_optional_sd_tmpfiles
 	(call sd_tmpfiles.run (rpm_script_t rpm.role_attribute)))
+
+(optional rpm_script_optional_semodule
+	(call semodule.run (rpm_script_t rpm.role_attribute)))
 
 (optional rpm_script_optional_systemctl
 	(call systemctl.run (rpm_script_t rpm.role_attribute)))

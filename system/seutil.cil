@@ -336,6 +336,9 @@
 
 	(call locale.read (subj))
 
+	(optional load_policy_optional_rpm
+		(call rpm.rw_inherited_fifo_files (subj)))
+
 	(optional load_policy_optional_sd
 		(call sd.forked_subj_type (subj))))
 
@@ -431,6 +434,9 @@
 	(optional setfiles_optional_audispd
 		(call audispd.relabel_config (subj))
 		(call audispd.relabel_runtime_sock_files (subj)))
+
+	(optional setfiles_optional_rpm
+		(call rpm.rw_inherited_fifo_files (subj)))
 
 	(optional setfiles_optional_sd
 		(call sd.forked_subj_type (subj))))

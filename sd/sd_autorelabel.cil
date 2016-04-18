@@ -99,6 +99,9 @@
 	(optional sd_autorelabel_optional_polkit
 		(call polkit_tty_agent.exec (subj)))
 
+	(optional sd_autorelabbel_optional_semodule
+		(call semodule.auto_subj_type_transition (subj)))
+
 	(allow adm_subj_type_attribute unit_file (service (stop status disable
 		enable reload start)))
 

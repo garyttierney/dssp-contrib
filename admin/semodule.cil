@@ -30,6 +30,8 @@
 
 	(blockinherit app.application_blk)
 
+	(roleattributeset role_attribute sys.role)
+
 	(roletype role_attribute subj)
 
 	(allow subj self rw_fifo_file_perms)
@@ -60,4 +62,7 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional semodule_optional_rpm
-		(call rpm.rw_inherited_fifo_files (subj))))
+		(call rpm.rw_inherited_fifo_files (subj)))
+
+	(optional semodule_optional_sd
+		(call sd.forked_subj_type (subj))))

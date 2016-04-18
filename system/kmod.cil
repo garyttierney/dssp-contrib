@@ -97,7 +97,8 @@
 
 	(optional kmod_optional_iptables
 		(call iptables.dontaudit_rw_rawip_sockets (subj))
-		(call iptables.dontaudit_rw_unix_stream_sockets (subj)))
+		(call iptables.dontaudit_rw_unix_stream_sockets (subj))
+		(call iptables.read_runtime_files (subj)))
 
 	(optional kmod_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

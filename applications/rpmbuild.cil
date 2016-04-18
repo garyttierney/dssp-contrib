@@ -113,6 +113,7 @@
 	(call rpmdev.read_home_user_files (subj))
 
 	(call selinux_config.read_config (subj))
+	(call setfiles.exec (subj))
 	(call file_context.read_config_files (subj))
 
 	(call usersubj.manage_home_user_dirs (subj))
@@ -131,6 +132,9 @@
 
 	(optional rpmbuild_optional_sd
 		(call sd.search_unit_runtime (subj)))
+
+	(optional rpmbuild_optional_semodule
+		(call semodule.exec (subj)))
 
 	(optional rpmbuild_optional_ssh
 		(call sshd_key.read_all_files (subj)))

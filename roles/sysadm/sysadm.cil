@@ -1826,6 +1826,9 @@
 					sd_autorelabel.rootfs_obj_type_transition_boot_flag
 						(subj)))
 
+			(optional sysadm_enable_mls_optional_semodule
+				(call semodule.run (subj_type_attribute role)))
+
 			(optional sysadm_enable_mls_optional_sudo
 				(call sudo.manage_config (subj))
 				(call sudo.manage_var_db (subj))

@@ -1,0 +1,54 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in semodule
+	(filecon "/usr/sbin/semodule" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in semodule
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block semodule
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call cmd.exec (subj))
+
+	(call file_context.default_context_obj_type_transition_config
+		(subj))
+	(call policy_config.selinux_config_obj_type_transition_policy_config
+		(subj))
+	(call default_context.selinux_config_obj_type_transition_config
+		(subj))
+	(call policy_src.var_lib_obj_type_transition_var_lib (subj))
+	(call selinux_config.config_obj_type_transition_config (subj))
+	(call default_context.manage_config (subj))
+	(call file_context.manage_config (subj))
+	(call policy_config.manage (subj))
+	(call policy_src.manage_var_lib (subj))
+	(call selinux_config.manage_config (subj))
+	(call load_policy.run (subj role_attribute))
+	(call setfiles.run (subj role_attribute))
+
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))

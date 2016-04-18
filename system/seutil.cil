@@ -419,6 +419,7 @@
 	(call default_context.read_config_files (subj))
 	(call file_context.read_config_files (subj))
 	(call selinux_config.read_config_files (subj))
+	(call policy_config.read_files (subj))
 	(call policy_config.relabel (subj))
 
 	(optional setfiles_optional_auditd

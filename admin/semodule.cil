@@ -32,7 +32,13 @@
 
 	(roletype role_attribute subj)
 
+	(allow subj self rw_fifo_file_perms)
+
 	(call cmd.exec (subj))
+
+	(call file.read_config_files (subj))
+
+	(call nss.client_subj_type (subj))
 
 	(call file_context.default_context_obj_type_transition_config
 		(subj))
@@ -51,4 +57,7 @@
 	(call setfiles.run (subj role_attribute))
 
 	(call usersubj.manage_home_user_files (subj))
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
+
+	(optional semodule_optional_rpm
+		(call rpm.rw_inherited_fifo_files (subj))))

@@ -139,7 +139,8 @@
 	(call usersubj.var_spool_obj_type_transition_var_spool_user (subj "*"))
 
 	(optional useradd_optional_mozilla
-		(call mozilla.create_home_user_dirs (subj)))
+		(call mozilla.create_home_user_dirs (subj))
+		(call mozilla.setattr_home_user_dirs (subj)))
 
 	(optional useradd_optional_sd
 		(call sd.forked_subj_type (subj)))

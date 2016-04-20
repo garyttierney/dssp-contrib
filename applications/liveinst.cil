@@ -92,10 +92,6 @@
 
 	(call selinux_config.read_config_files (subj_type_attribute))
 
-	(optional liveinst_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj
-			(subj_type_attribute)))
-
 	(optional liveinst_subj_type_optional_rpm
 		(call rpm.exec (subj_type_attribute))
 		(call rpm.read_config (subj_type_attribute))

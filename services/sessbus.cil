@@ -64,6 +64,18 @@
 		(call client_subj_type (ARG1))
 		(call spec_stream_connect (ARG1 ARG2)))
 
+	(macro client_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (process (signal)))
+
+		(allow ARG1 subj_type_attribute (fd (use)))
+		(allow ARG1 subj_type_attribute
+			rw_inherited_unix_stream_socket_perms)
+
+		(allow ARG1 subj_type_attribute (dbus (send_msg)))
+
+		(call client_subj_type (ARG1))
+		(call spec_stream_connect (ARG1 subj_type_attribute)))
+
 	(macro spec_stream_connect ((type ARG1)(type ARG2))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))

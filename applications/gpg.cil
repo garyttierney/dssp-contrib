@@ -150,10 +150,6 @@
 	(optional gpg_subj_type_optional_git
 		(call git.read_tmpfs_user_files (subj_type_attribute)))
 
-	(optional gpg_subj_type_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj
-			(subj_type_attribute)))
-
 	(optional gpg_subj_type_optional_mutt
 		(call mutt.read_home_user_files (subj_type_attribute))
 		(call mutt.rw_inherited_fifo_files_all_subj

@@ -4,6 +4,7 @@
 ;
 
 (in fstools
+	(filecon "/\.ismount-test-file" file boot_flag_file_context)
 	(filecon "/usr/bin/ntfsck" file cmd_file_context)
 	(filecon "/usr/bin/partition_uuid" file cmd_file_context)
 	(filecon "/usr/bin/raw" file cmd_file_context)
@@ -73,6 +74,14 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(blockinherit file.read_boot_flag_files_blk)
+	(blockinherit file.manage_boot_flag_files_blk)
+	(blockinherit file.relabel_boot_flag_files_blk)
+
+	(macro rootfs_obj_type_transition_boot_flag ((type ARG1))
+		(call fs.rootfs_obj_type_transition (ARG1 boot_flag_file file
+			".ismount-test-file")))
+
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
 	(blockinherit file.read_runtime_files_blk)
@@ -111,6 +120,11 @@
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(blockinherit file.boot_flag_obj_blk)
+
+	(call manage_boot_flag_files (subj))
+	(call rootfs_obj_type_transition_boot_flag (subj))
+
 	(call exec (subj))
 
 	(allow subj self (capability (sys_admin sys_rawio dac_override)))
@@ -146,6 +160,8 @@
 	(call locale.read (subj))
 
 	(call mount.read_runtime_files (subj))
+
+	(call nss.client_subj_type (subj))
 
 	(call default_context.read_config_files (subj))
 	(call file_context.read_config_files (subj))

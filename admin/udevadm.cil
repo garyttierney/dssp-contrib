@@ -79,6 +79,9 @@
 	(call udev.manage_config (subj))
 	(call udev.manage_runtime (subj))
 
+	(optional udevadm_optional_anaconda
+		(call anaconda.rw_inherited_tmpfs_user_files (subj)))
+
 	(optional udevdadm_optional_rpm
 		(call rpm_script_client_subj_type (subj)))
 

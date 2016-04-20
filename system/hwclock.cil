@@ -43,5 +43,15 @@
 
 	(call read_config_files (subj))
 
+	(allow subj self (capability (sys_time)))
+
+	(call sys.audit_client_subj_type (subj))
+
+	(call dev.read_clock (subj))
+
+	(call fs.read_devtmpfs_lnk_files (subj))
+
+	(call locale.read (subj))
+
 	(optional hwclock_optional_sd
 		(call sd.daemon (subj cmd_file))))

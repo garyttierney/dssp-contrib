@@ -73,7 +73,7 @@
 
 	(blockinherit file.config_obj_blk)
 
-	(call read_config (subj_type_attribute))
+	(call manage_config (subj_type_attribute))
 
 	(call exec (subj_type_attribute))
 
@@ -81,6 +81,7 @@
 		setgid chown)))
 
 	(call standard.id_change_exemption_subj_type (subj_type_attribute))
+	(call standard.obj_id_change_exemption_subj_type (subj_type_attribute))
 	(call standard.role_change_exemption_subj_type (subj_type_attribute))
 
 	(call sys.audit_client_subj_type (subj_type_attribute))

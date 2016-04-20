@@ -278,9 +278,6 @@
 	(optional polkit_agent_optional_gs
 		(call gs.rw_inherited_unix_stream_sockets_all_subj (subj)))
 
-	(optional polkit_agent_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj)))
-
 	(optional polkit_agent_optional_sd_journald
 		(call sd_journald.client_subj_type (subj))))
 
@@ -314,10 +311,6 @@
 
 	(optional polkit_exec_optional_gs
 		(call gs.rw_inherited_unix_stream_sockets_all_subj
-			(subj_type_attribute)))
-
-	(optional polkit_exec_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj
 			(subj_type_attribute)))
 
 	(optional polkit_exec_client_subj_type_optional_sd_journald

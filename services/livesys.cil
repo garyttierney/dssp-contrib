@@ -79,6 +79,7 @@
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
 
+	(call file.manage_config_files (subj))
 	(call file.manage_data (subj))
 
 	(call fs.getattr_tmpfs_fs (subj))
@@ -133,12 +134,11 @@
 		(call glib_helper.exec (subj))
 		(call gsettings.exec (subj)))
 
-	(optional livesys_optional_mozilla
-		(call mozilla.create_home_user_dirs (subj)))
-
 	(optional livesys_optional_sd
 		(call sd.daemon (subj cmd_file))
 
+		(call sd.search_config (subj))
+		(call sd.search_unit (subj))
 		(call sd.stream_connect (subj))
 		(call sd.control_all_unit (subj))
 		(call sd.status (subj))

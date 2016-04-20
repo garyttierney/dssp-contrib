@@ -36,13 +36,18 @@
 	(blockinherit run_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_blk)
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
 
+	(blockinherit file.search_runtime_blk)
+	(blockinherit file.list_runtime_blk)
 	(blockinherit file.read_runtime_files_blk)
-	(blockinherit file.manage_runtime_files_blk)
-	(blockinherit file.relabel_runtime_files_blk)
+	(blockinherit file.read_runtime_lnk_files_blk)
+	(blockinherit file.read_runtime_blk)
+	(blockinherit file.manage_runtime_blk)
+	(blockinherit file.relabel_runtime_blk)
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file.runtime_obj_type_transition (ARG1 runtime_file file
@@ -53,6 +58,10 @@
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro mmap_tmpfs_user_files ((type ARG1))
 		(call fs.search_tmpfs (ARG1))
@@ -107,12 +116,15 @@
 
 	(blockinherit file.runtime_obj_blk)
 
+	(call sys.mountpoint_obj_type (runtime_file))
+
 	(typeattributeset obj_type_attribute runtime_file)
 
-	(call manage_runtime_files (subj))
+	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (dac_override setuid)))
+	(dontaudit subj self (capability (net_admin)))
+	(allow subj self (capability (dac_override setuid sys_resource)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_cpu_online_sysfs_files (subj))
@@ -122,6 +134,7 @@
 	(call cmd.mmap_shell (subj))
 
 	(call dev.read_urandom (subj))
+	(call dev.rw_lvm_control (subj))
 
 	(call file.list_boot (subj))
 	(call file.manage_mnt_dirs (subj))
@@ -131,6 +144,7 @@
 	(call fs.list_devtmpfs (subj))
 	(call fs.list_pstore (subj))
 	(call fs.read_dosfs (subj))
+	(call fs.read_sysfs (subj))
 	(call fs.unmount_fs (subj))
 
 	(call lib.manage_lib (subj))
@@ -160,7 +174,7 @@
 
 	(call http.tcp_connect_port (subj))
 
-	(call udev.read_config_files (subj))
+	(call udev.client_subj_type (subj))
 
 	(call udevadm.run (subj role_attribute))
 
@@ -176,6 +190,9 @@
 	(optional anaconda_optional_nm
 		(call nm.client_subj_type (subj)))
 
+	(optional anaconda_optional_rpm
+		(call rpm.manage_var_lib_files (subj)))
+
 	(optional anaconda_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -190,6 +207,9 @@
 
 	(optional anaconda_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
+
+	(optional anaconda_optional_sessbus
+		(call sessbus.client_all_subj (subj)))
 
 	(optional anaconda_optional_sysbus
 		(call sysbus.client_subj_type (subj)))
@@ -256,12 +276,12 @@
 
 	(call locale.read (subj))
 
-	(call udev.read_config_files (subj))
+	(call udev.client_subj_type (subj))
 
 	(call udevadm.run (subj role_attribute))
 
-	(optional anacondacleanup_optional_gsh
-		(call gsh.rw_inherited_unix_stream_sockets_all_subj (subj)))
+	(optional anacondacleanup_optional_dm
+		(call dmsetup.run (subj role_attribute)))
 
 	(optional anacondacleanup_optional_lvm
 		(call lvm.run (subj role_attribute)))

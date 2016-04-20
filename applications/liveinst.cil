@@ -62,4 +62,10 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self (capability (dac_override)))
+
+	(call cmd.exec (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute)))

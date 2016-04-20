@@ -1,0 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; FIXME
+;
+
+(typepermissive sysadm_liveinst.subj)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_liveinst
+	(blockinherit liveinst.subj_blk)
+
+	(optional sysadm_liveinst_optional_sysadm_zenity
+		(call sysadm_zenity.auto_subj_type_transition (subj))))

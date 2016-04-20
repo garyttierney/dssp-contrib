@@ -1,0 +1,17 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; FIXME
+;
+
+(typepermissive wheel_liveinst.subj)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_liveinst
+	(blockinherit liveinst.subj_blk)
+
+	(optional wheel_liveinst_optional_wheel_zenity
+		(call wheel_zenity.auto_subj_type_transition (subj))))

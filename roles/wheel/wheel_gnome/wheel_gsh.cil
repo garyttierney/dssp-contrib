@@ -36,11 +36,8 @@
 		(call wheel_gs.sessbus_chat_client_subj_type (subj))
 		(call wheel_gs.stream_connect (subj)))
 
-	(optional wheel_trackerm_optional_wheel_gstreamer
+	(optional wheel_gsh_optional_wheel_gstreamer
 		(call wheel_gstreamer.client_subj_type (subj)))
-
-	(optional wheel_trackerm_optional_wheel_gsw
-		(call wheel_gsw.auto_subj_type_transition (subj)))
 
 	(optional wheel_gsh_optional_wheel_gvfsdmd
 		(call wheel_gvfsdmd.client_subj_type (subj)))
@@ -51,14 +48,8 @@
 	(optional wheel_gsh_optional_wheel_gvfsdud2
 		(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj)))
 
-	(optional wheel_gsh_optional_wheel_pa
-		(call wheel_pa.auto_subj_type_transition (subj)))
-
 	(optional wheel_gsh_optional_rpm
 		(call rpm.sysbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gsh_optional_wheel_polkit_agent
-		(call polkit_agent.auto_subj_type_transition (subj)))
 
 	(optional wheel_gsh_optional_wheel_steam
 		(call wheel_steam.send_sigkill (subj)))

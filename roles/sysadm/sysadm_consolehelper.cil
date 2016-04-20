@@ -1,0 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; FIXME
+;
+
+(typepermissive sysadm_consolehelper.subj)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_consolehelper
+	(blockinherit consolehelper.subj_blk)
+
+	(call sysadm.subj_type (subj))
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj)))

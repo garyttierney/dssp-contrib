@@ -147,6 +147,10 @@
 	(blockinherit file.manage_config_blk)
 	(blockinherit file.relabel_config_blk)
 
+	(macro write_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(call write_files_pattern (ARG1 config_file config_file)))
+
 	(blockinherit file.search_var_cache_blk)
 	(blockinherit file.list_var_cache_blk)
 	(blockinherit file.read_var_cache_files_blk)

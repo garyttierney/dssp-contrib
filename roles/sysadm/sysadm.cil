@@ -2243,6 +2243,12 @@
 	(optional sysadm_optional_lircd
 		(call lircd.adm (subj role)))
 
+	(optional sysadm_optional_livesys
+		(call livesys.manage_boot_flag_files (subj))
+		(call livesys.relabel_boot_flag_files (subj))
+		(call livesys.manage_tmpfs_files (subj))
+		(call livesys.relabel_tmpfs_files (subj)))
+
 	(optional sysadm_optional_loadkeys
 		(call loadkeys.run (subj_type_attribute role)))
 

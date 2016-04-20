@@ -2859,6 +2859,15 @@
 		(allow ARG1 home_user_obj_type_attribute (sock_file
 			(getattr))))
 
+	(macro setattr_all_home_user ((type ARG1))
+		(call search_home_dir (ARG1))
+		(allow ARG1 home_user_obj_type_attribute (file (setattr)))
+		(allow ARG1 home_user_obj_type_attribute (dir (setattr)))
+		(allow ARG1 home_user_obj_type_attribute (fifo_file (setattr)))
+		(allow ARG1 home_user_obj_type_attribute (lnk_file (setattr)))
+		(allow ARG1 home_user_obj_type_attribute (sock_file
+			(setattr))))
+
 	(macro dontaudit_read_all_home_user ((type ARG1))
 		(dontaudit ARG1 home_user_obj_type_attribute read_file_perms)
 		(dontaudit ARG1 home_user_obj_type_attribute list_dir_perms)

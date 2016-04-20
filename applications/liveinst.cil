@@ -43,6 +43,9 @@
 
 		(allow ARG3 ARG2 (process (signal)))
 
+		(call anaconda.run (ARG3 ARG1))
+		(call anacondacleanup.run (ARG3 ARG1))
+
 		(call curl.run (ARG3 ARG1)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))

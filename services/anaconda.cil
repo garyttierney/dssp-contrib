@@ -1,0 +1,92 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; FIXME
+;
+
+(typepermissive anaconda.subj)
+(typepermissive anacondacleanup.subj)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in anaconda
+	(filecon "/usr/sbin/anaconda" file cmd_file_context)
+
+	(optional anaconda_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*anaconda.*" file
+			unit_file_context)))
+
+(in anacondacleanup
+	(filecon "/usr/bin/anaconda-cleanup" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in anaconda
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional anaconda_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional anaconda_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in anacondacleanup
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block anaconda
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(optional anaconda_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))
+
+(block anacondacleanup
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj))

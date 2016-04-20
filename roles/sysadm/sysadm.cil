@@ -1840,6 +1840,11 @@
 	(optional sysadm_optional_alsactl
 		(call alsactl.adm (subj role)))
 
+	(optional sysadm_optional_anaconda
+		(call anaconda.adm (subj role))
+		(call anaconda.run (subj_type_attribute role))
+		(call anacondacleanup.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_appstream
 		(call appstreamutil.run (subj_type_attribute role)))
 

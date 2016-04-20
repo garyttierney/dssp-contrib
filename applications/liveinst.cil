@@ -46,7 +46,9 @@
 		(call anaconda.run (ARG3 ARG1))
 		(call anacondacleanup.run (ARG3 ARG1))
 
-		(call curl.run (ARG3 ARG1)))
+		(call curl.run (ARG3 ARG1))
+
+		(call kmod.run (ARG3 ARG1)))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -65,7 +67,36 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(allow subj_type_attribute self (capability (dac_override)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call cmd.audit_read_access_shell_files (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute)))
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.list_var_tmp (subj_type_attribute))
+	(call file.read_config_files (subj_type_attribute))
+
+	(call fs.list_tmpfs (subj_type_attribute))
+	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
+
+	(call sec.get_enforce_mode (subj_type_attribute))
+
+	(call storage.getattr_fixed_disk (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(optional liveinst_subj_type_optional_gsh
+		(call gsh.rw_inherited_unix_stream_sockets_all_subj
+			(subj_type_attribute)))
+
+	(optional liveinst_subj_type_optional_rpm
+		(call rpm.exec (subj_type_attribute))
+		(call rpm.read_config (subj_type_attribute))
+		(call rpm.manage_var_lib_files (subj_type_attribute))))

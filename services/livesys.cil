@@ -69,6 +69,7 @@
 	(call manage_boot_flag_files (subj))
 	(call rootfs_obj_type_transition_boot_flag (subj))
 
+	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (capability (dac_override chown)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_netlink_selinux_socket_perms)
@@ -79,10 +80,12 @@
 	(call cmd.exec_shell (subj))
 
 	(call file.manage_data (subj))
-	(call file.relabel_data (subj))
 
+	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.list_devtmpfs (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
+	(call fs.search_iso9660 (subj))
 
 	(call sec.compute_access_vector (subj))
 	(call sec.get_enforce_mode (subj))
@@ -109,6 +112,8 @@
 
 	(call plymouth.exec (subj))
 
+	(call setfiles.auto_subj_type_transition (subj))
+
 	(call useradd.auto_subj_type_transition (subj))
 
 	(call usersubj.home_config_creator_subj_type (subj))
@@ -116,6 +121,7 @@
 
 	(call usersubj.list_all_home_user (subj))
 	(call usersubj.setattr_all_home_user (subj))
+	(call usersubj.setattr_home_dir (subj))
 
 	(optional livesys_optional_chronyd
 		(call chronyd.manage_config_files (subj)))
@@ -127,9 +133,13 @@
 		(call glib_helper.exec (subj))
 		(call gsettings.exec (subj)))
 
+	(optional livesys_optional_mozilla
+		(call mozilla.create_home_user_dirs (subj)))
+
 	(optional livesys_optional_sd
 		(call sd.daemon (subj cmd_file))
 
+		(call sd.stream_connect (subj))
 		(call sd.control_all_unit (subj))
 		(call sd.status (subj))
 		(call sd.stop (subj)))

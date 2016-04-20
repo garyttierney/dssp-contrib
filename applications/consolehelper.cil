@@ -77,20 +77,43 @@
 
 	(call exec (subj_type_attribute))
 
-	(allow subj_type_attribute self (capability (dac_override)))
+	(allow subj_type_attribute self (capability (dac_override setuid
+		setgid chown)))
 
 	(call standard.id_change_exemption_subj_type (subj_type_attribute))
 	(call standard.role_change_exemption_subj_type (subj_type_attribute))
 
 	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config_files (subj_type_attribute))
 
 	(call sec.compute_relabel_context (subj_type_attribute))
+	(call sec.setfscreate_subj_type (subj_type_attribute))
 	(call sec.validate_context (subj_type_attribute))
 
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
-	(call pam.read_config (subj_type_attribute))
+	(call locale.read (subj_type_attribute))
 
-	(call usersubj.relabel_term (subj_type_attribute)))
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call pam.read_config (subj_type_attribute))
+	(call pam.manage_runtime (subj_type_attribute))
+	(call pam.runtime_obj_type_transition_runtime (subj_type_attribute))
+
+	(call file_context.read_config_files (subj_type_attribute))
+	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call usersubj.relabel_term (subj_type_attribute))
+
+	(optional consolehelper_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional consolehelper_subj_type_optional_xauth
+		(call xauth.manage_home_user_files (subj_type_attribute)))
+
+	(optional consolehelper_subj_type_optional_xserver
+		(call xserver.client_subj_type (subj_type_attribute))))

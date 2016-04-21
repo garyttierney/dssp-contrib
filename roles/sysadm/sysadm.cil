@@ -1974,6 +1974,10 @@
 	(optional sysadm_optional_dmidecode
 		(call dmidecode.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_dmraid
+		(call dmraid.run (subj_type_attribute role))
+		(call dmraid.adm (subj role)))
+
 	(optional sysadm_optional_dns
 		(call resolv.manage_config_files (subj)))
 

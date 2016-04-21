@@ -166,6 +166,9 @@
 
 	(call udevadm.run (subj role_attribute))
 
+	(optional bootloader_optional_dmraid
+		(call dmraid.run (subj role_attribute)))
+
 	(optional bootloader_optional_logger
 		(call logger.exec (subj)))
 

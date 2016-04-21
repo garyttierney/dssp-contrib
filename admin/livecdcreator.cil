@@ -79,10 +79,12 @@
 
 	(call standard.obj_change_exemption_subj_type (subj))
 
+	(call sys.setsched (subj))
+	(call sys.unconfined_subj_type (subj))
+
 	(call dev.unconfined_subj_type (subj))
 	(call file.unconfined_subj_type (subj))
 	(call fs.unconfined_subj_type (subj))
-	(call sys.unconfined_subj_type (subj))
 
 	(call sec.mounton_fs_files (subj))
 	(call sec.validate_context (subj))

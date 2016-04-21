@@ -121,7 +121,7 @@
 
 	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (capability (dac_override setuid sys_resource
-		sys_rawio chown fowner fsetid setfcap sys_chroot)))
+		sys_rawio chown fowner fsetid setfcap sys_chroot sys_admin)))
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_socket_perms)
@@ -155,7 +155,7 @@
 	(call fs.create_rootfs_dirs (subj))
 	(call fs.create_rootfs_lnk_files (subj))
 	(call fs.getattr_all_fs (subj))
-	(call fs.getattr_iso9660_files (subj))
+	(call fs.read_iso9660 (subj))
 	(call fs.read_debugfs (subj))
 	(call fs.manage_dosfs (subj))
 	(call fs.read_sysfs (subj))
@@ -338,7 +338,7 @@
 
 	(roletype role_attribute subj)
 
-	(allow subj self (capability (dac_override)))
+	(allow subj self (capability (dac_override sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_cpu_online_sysfs_files (subj))
@@ -352,9 +352,10 @@
 
 	(call file.read_config (subj))
 	(call file.read_data (subj))
+	(call file.search_var_cache (subj))
 	(call file.search_var_tmp (subj))
 
-	(call fs.getattr_iso9660_files (subj))
+	(call fs.read_iso9660 (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
 	(call fs.write_inherited_tmpfs_files (subj))
@@ -368,6 +369,8 @@
 	(call anaconda.mmap_tmpfs_user_files (subj))
 	(call anaconda.tmpfs_obj_type_transition_tmpfs (subj))
 
+	(call anaconda.search_runtime (subj))
+
 	(call fstools.run (subj role_attribute))
 
 	(call ldconfig.exec (subj))
@@ -380,6 +383,9 @@
 
 	(optional anacondacleanup_optional_dm
 		(call dmsetup.run (subj role_attribute)))
+
+	(optional anacondacleanup_optional_dracut_initramfs
+		(call dracut_initramfs.search_runtime (subj)))
 
 	(optional anacondacleanup_optional_lvm
 		(call lvm.run (subj role_attribute)))

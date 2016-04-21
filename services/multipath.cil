@@ -4,7 +4,7 @@
 ;
 
 (in multipath
-	(filecon "/etc/multipath\.conf" file config_file_context)
+	(filecon "/etc/multipath\.conf.*" file config_file_context)
 	(filecon "/etc/multipath(/.*)?" any config_file_context)
 	(filecon "/usr/sbin/mpathconf" file cmd_file_context)
 	(filecon "/usr/sbin/mpathpersist" file cmd_file_context)
@@ -49,7 +49,9 @@
 
 	(macro config_obj_type_transition_config ((type ARG1))
 		(call file.config_obj_type_transition (ARG1 config_file file
-			"multipath.conf"))))
+			"multipath.conf"))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"multipath.conf.old"))))
 
 (in multipathd
 	(blockinherit exec_blk)
@@ -93,7 +95,7 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(dontaudit subj self (capability (net_admin)))
-	(allow subj self (capability (dac_override sys_resource)))
+	(allow subj self (capability (dac_override sys_resource sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.read_fs_sysctl_files (subj))

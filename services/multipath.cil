@@ -104,9 +104,14 @@
 	(allow subj self (capability (dac_override sys_resource)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.read_fs_sysctl_files (subj))
+
 	(call cmd.audit_read_access_shell_files (subj))
 	(call cmd.exec (subj))
 
+	(call dev.rw_lvm_control (subj))
+
+	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.read_sysfs (subj))
 
 	(call kmod.exec (subj))
@@ -115,7 +120,10 @@
 
 	(call multipathd.control_sd_unit_subj_type (subj))
 
+	(call udev.client_subj_type (subj))
+
 	(optional multipath_optional_sd
+		(call sd.read_state (subj))
 		(call sd.stream_connect (subj)))
 
 	(optional multipath_optional_systemctl
@@ -124,8 +132,6 @@
 (block multipathd
 	(typeattribute adm_subj_type_attribute)
 	(typeattribute control_sd_unit_subj_type_attribute)
-
-	(typeattribute obj_type_attribute)
 
 	(blockinherit subj.common_subj_blk)
 
@@ -140,10 +146,11 @@
 
 		(blockinherit sd.unit_obj_blk)
 
-		(typeattributeset obj_type_attribute unit_file)
-
 		(allow adm_subj_type_attribute unit_file (service (stop status
-			disable enable reload start))))
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
 
 	(optional
 		multipathd_enable_status_start_sd_unit_subj_type_attribute_optional_sd
@@ -155,8 +162,4 @@
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call multipath.manage_config (adm_subj_type_attribute))
-	(call multipath.relabel_config (adm_subj_type_attribute))
-
-	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
-
-	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))
+	(call multipath.relabel_config (adm_subj_type_attribute)))

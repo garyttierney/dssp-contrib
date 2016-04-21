@@ -95,7 +95,8 @@
 	(call udev.client_subj_type (subj))
 
 	(optional dmsetup_optional_anaconda
-		(call anaconda.rw_sem (subj)))
+		(call anaconda.rw_sem (subj))
+		(call anacondacleanup.rw_sem (subj)))
 
 	(optional dmsetup_optional_lvm
 		(call lvm.rw_sem (subj)))

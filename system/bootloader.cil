@@ -137,15 +137,17 @@
 	(call file.manage_boot_files (subj))
 	(call file.read_config (subj))
 	(call file.read_data (subj))
+	(call file.create_boot_dirs (subj))
 	(call file.read_boot_lnk_files (subj))
 
 	(call fs.getattr_devpts_chr_files (subj))
+	(call fs.getattr_fs (subj))
 	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.manage_dosfs_files (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
 
-	(call storage.read_all (subj))
+	(call storage.rw_all (subj))
 
 	(call fstools.manage_runtime (subj))
 	(call fstools.run (subj role_attribute))
@@ -163,6 +165,9 @@
 	(call nss.client_subj_type (subj))
 
 	(call udevadm.run (subj role_attribute))
+
+	(optional bootloader_optional_logger
+		(call logger.exec (subj)))
 
 	(optional bootloader_optional_rpm
 		(call rpm_script_client_subj_type (subj)))

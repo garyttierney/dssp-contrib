@@ -114,6 +114,8 @@
 	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.read_sysfs (subj))
 
+	(call storage.getattr_fixed_disk (subj))
+
 	(call kmod.exec (subj))
 
 	(call modules_dep.read_files (subj))

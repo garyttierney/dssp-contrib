@@ -128,22 +128,28 @@
 
 	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (capability (dac_override setuid sys_resource
-		sys_rawio chown fowner fsetid setfcap)))
+		sys_rawio chown fowner fsetid setfcap sys_chroot)))
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_socket_perms)
 	(allow subj self (socket (listen accept)))
 	(allow subj self create_sem_perms)
 
+	(call rbacsep.exempt_subj_type (subj))
+
+	(call standard.obj_change_exemption_subj_type (subj))
+
 	(call sys.get_sysvipc_info (subj))
+	(call sys.list_mountpoints (subj))
 	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_unlabeled (subj))
+	(call sys.relabel_mountpoint_dirs (subj))
 	(call sys.relabelfrom_unlabeled_dirs (subj))
 	(call sys.request_load_module (subj))
 
 	(call cmd.exec (subj))
-	(call cmd.mmap_shell (subj))
+	(call cmd.exec_shell (subj))
 
 	(call dev.read_random (subj))
 	(call dev.read_urandom (subj))
@@ -152,16 +158,23 @@
 	(call file.manage_all_except (subj))
 	(call file.relabel_all_except (subj))
 
+	(call fs.create_rootfs_dirs (subj))
+	(call fs.create_rootfs_lnk_files (subj))
 	(call fs.getattr_all_fs (subj))
 	(call fs.list_devtmpfs (subj))
 	(call fs.list_pstore (subj))
-	(call fs.read_dosfs (subj))
+	(call fs.read_debugfs (subj))
+	(call fs.manage_dosfs_files (subj))
 	(call fs.read_sysfs (subj))
+	(call fs.relabelfrom_rootfs_lnk_files (subj))
+	(call fs.setattr_rootfs_dirs (subj))
+	(call fs.setattr_rootfs_lnk_files (subj))
 	(call fs.unmount_fs (subj))
 	(call fs.write_cgroup_files (subj))
 
 	(call lib.manage_lib (subj))
 
+	(call sec.setfscreate_subj_type (subj))
 	(call sec.validate_context (subj))
 
 	(call storage.rw_fixed_disk (subj))
@@ -224,7 +237,8 @@
 		(call bootloader.run (subj role_attribute)))
 
 	(optional anaconda_optional_chronyd
-		(call chronyd.control_sd_unit_subj_type (subj)))
+		(call chronyd.control_sd_unit_subj_type (subj))
+		(call chronyd.read_state (subj)))
 
 	(optional anaconda_optional_dm
 		(call dmsetup.run (subj role_attribute)))
@@ -269,8 +283,14 @@
 	(optional anaconda_optional_sd_hostnamed
 		(call sd_hostnamed.sysbus_chat_client_subj_type (subj)))
 
+	(optional anaconda_optional_journalctl
+		(call journalctl.system_client_subj_type (subj)))
+
 	(optional anaconda_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
+
+	(optional anaconda_optional_sd_localed
+		(call sd_localed.sysbus_chat_client_subj_type (subj)))
 
 	(optional anaconda_optional_sessbus
 		(call sessbus.client_all_subj (subj)))

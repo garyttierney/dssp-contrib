@@ -92,7 +92,8 @@
 
 	(roletype role_attribute subj)
 
-	(allow subj self (capability (chown fsetid fowner dac_override)))
+	(allow subj self (capability (chown fsetid fowner dac_override
+		sys_chroot)))
 
 	(call sys.audit_client_subj_type (subj))
 	(call sys.read_kernel_sysctl_files (subj))

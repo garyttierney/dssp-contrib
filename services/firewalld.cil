@@ -12,6 +12,8 @@
 
 	(optional firewalld_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*firewalld.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*FirewallD.*" file
 			unit_file_context)))
 
 (in firewallcmd
@@ -224,12 +226,35 @@
 
 	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
 
 	(call dev.read_urandom (subj))
 
+	(call file.read_config_files (subj))
+
+	(call firewalld.manage_config (subj))
+	(call firewalld.relabel_config (subj))
 	(call firewalld.sysbus_chat_client_subj_type (subj))
 
 	(call locale.read (subj))
 
+	(call nss.read_config_files (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj))))
+
+	(optional firewallcmd_optional_sd
+		(allow subj firewalld.unit_file read_file_perms)
+		(call sd.read_state (subj))
+		(call sd.search_config (subj))
+		(call sd.search_runtime (subj))
+		(call sd.search_unit (subj))
+		(call sd.search_unit_runtime (subj)))
+
 	(optional firewallcmd_optional_sysbus
-		(call sysbus.client_subj_type (subj))))
+		(call sysbus.client_subj_type (subj)))
+
+	(optional firewallcmd_optional_systemctl
+		(call systemctl.system_client_subj_type (subj))))

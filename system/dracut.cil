@@ -167,6 +167,7 @@
 
 	(call nss.read_config_files (subj))
 
+	(call default_context.read_config_files (subj))
 	(call selinux_config.read_config_files (subj))
 	(call setfiles.exec (subj))
 	(call file_context.read_config (subj))
@@ -186,6 +187,9 @@
 
 	(optional dracut_optional_lvmetad
 		(call lvmetad.stream_connect (subj)))
+
+	(optional dracut_optional_multipath
+		(call multipath.read_config (subj)))
 
 	(optional dracut_optional_plymouth
 		(call plymouth.read_config_files (subj))

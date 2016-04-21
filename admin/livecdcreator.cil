@@ -66,14 +66,15 @@
 
 	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (capability (dac_override mknod sys_chroot chown
-		fsetid fowner setfcap sys_resource)))
+		fsetid fowner setfcap sys_resource sys_admin audit_write)))
 	(allow subj self (process (getsched setsched setrlimit setfscreate)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_tcp_socket_perms)
-	(allow subj self create_netlink_audit_socket_perms)
+	(allow subj self r_netlink_audit_socket_perms)
+	(allow subj self (netlink_audit_socket (nlmsg_relay)))
 	(allow subj self create_sem_perms)
 
 	(call standard.obj_change_exemption_subj_type (subj))
@@ -95,10 +96,10 @@
 	(call shadow.manage (subj))
 	(call shadow.relabel (subj))
 
+	(call mount.runtime_obj_type_transition_runtime (subj))
+
 	(call policy_config.manage (subj))
 	(call policy_config.relabel (subj))
-
-	(call usersubj.home_dir_obj_type_transition_home_user (subj))
 
 	(optional livecdcreator_optional_audispd
 		(call audispd.manage_config (subj))

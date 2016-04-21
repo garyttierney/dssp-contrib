@@ -2246,6 +2246,9 @@
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_cache.home_cache_file rw_dir_perms))
 
+	(macro setattr_home_cache_dirs ((type ARG1))
+		(allow ARG1 home_cache.home_cache_file (dir (setattr))))
+
 	(macro read_home_cache ((type ARG1))
 		(call search_home_dir (ARG1))
 		(allow ARG1 home_cache.home_cache_file read_file_perms)

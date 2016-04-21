@@ -2290,6 +2290,10 @@
 	(optional sysadm_optional_mpd
 		(call mpd.adm (subj role)))
 
+	(optional sysadm_optional_multipath
+		(call multipath.run (subj_type_attribute role))
+		(call multipathd.adm (subj role)))
+
 	(optional sysadm_optional_newrole
 		(call newrole.run (subj_type_attribute role)))
 

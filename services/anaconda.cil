@@ -199,6 +199,10 @@
 	(optional anaconda_optional_md
 		(call mdadm.run (subj role_attribute)))
 
+	(optional anaconda_optional_multipath
+		(call multipathd.control_sd_unit_subj_type (subj))
+		(call multipath.run (subj role_attribute)))
+
 	(optional anaconda_optional_nm
 		(call nm.client_subj_type (subj)))
 
@@ -319,6 +323,9 @@
 
 	(optional anacondacleanup_optional_md
 		(call mdadm.run (subj role_attribute)))
+
+	(optional anacondacleanup_optional_multipath
+		(call multipath.run (subj role_attribute)))
 
 	(optional anacondacleanup_optional_rpm
 		(call rpm.manage_var_lib_files (subj)))

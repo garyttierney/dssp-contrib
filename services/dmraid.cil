@@ -69,6 +69,14 @@
 	(call manage_runtime_lock (subj))
 	(call runtime_lock_obj_type_transition_runtime_lock (subj))
 
+	(call fs.read_sysfs (subj))
+
+	(call storage.read_removable (subj))
+	(call storage.read_fixed_disk (subj))
+
+	(optional dmraid_optional_anaconda
+		(call anaconda.write_inherited_fifo_files (subj)))
+
 	(optional dmraid_optional_sd
 		(call sd.daemon (subj cmd_file))
 

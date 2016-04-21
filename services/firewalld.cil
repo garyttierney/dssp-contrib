@@ -224,6 +224,8 @@
 
 	(allow subj self (capability (dac_override)))
 
+	(call standard.obj_change_exemption_subj_type (subj))
+
 	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
@@ -251,7 +253,7 @@
 		(call sd.search_config (subj))
 		(call sd.search_runtime (subj))
 		(call sd.search_unit (subj))
-		(call sd.search_unit_runtime (subj)))
+		(call sd.read_unit_lnk_files (subj)))
 
 	(optional firewallcmd_optional_sysbus
 		(call sysbus.client_subj_type (subj)))

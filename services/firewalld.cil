@@ -12,10 +12,7 @@
 
 	(optional firewalld_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*firewalld.*" file
-			unit_file_context)
-		(filecon "/usr/lib/systemd/system/[^/]*FirewallD.*" file
 			unit_file_context)))
-
 (in firewallcmd
 	(filecon "/usr/bin/firewall-cmd" file cmd_file_context)
 	(filecon "/usr/bin/firewall-offline-cmd" file cmd_file_context))

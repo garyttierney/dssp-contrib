@@ -128,20 +128,18 @@
 	(allow subj self (process (getsched)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.get_sysvipc_info (subj))
 	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_crypto_sysctl_files (subj))
 
 	(call cmd.exec (subj))
-	(call cmd.list_cmd (subj))
 	(call cmd.mmap_shell (subj))
 
 	(call dev.read_urandom (subj))
 	(call dev.rw_lvm_control (subj))
 
-	(call file.list_boot (subj))
+	(call file.read_all_except (subj))
 	(call file.manage_mnt_dirs (subj))
-	(call file.read_config (subj))
-	(call file.read_data (subj))
 
 	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.list_devtmpfs (subj))
@@ -168,14 +166,8 @@
 
 	(call ipp.tcp_connect_port (subj))
 
-	(call cert.read (subj))
-
+	(call shadow.read (subj))
 	(call fonts.manage_var_cache (subj))
-	(call fonts.read_config (subj))
-	(call fonts.read_data (subj))
-	(call locale.read (subj))
-	(call mime_types.read_data (subj))
-	(call network.read_config_files (subj))
 
 	(call mount.run (subj role_attribute))
 
@@ -183,12 +175,21 @@
 
 	(call http.tcp_connect_port (subj))
 
+	(call policy_config.read (subj))
+
 	(call udev.client_subj_type (subj))
 
 	(call udevadm.run (subj role_attribute))
 
-	(optional anaconda_optional_chronyd
-		(call chronyd.read_config_files (subj)))
+	(optional anaconda_optional_audispd
+		(call audispd.read_config (subj))
+		(call audispd.read_runtime_sock_files (subj)))
+
+	(optional anaconda_optional_auditd
+		(call auditd.read_config (subj))
+		(call auditd.read_runtime_files (subj))
+		(call auditd.read_runtime_sock_files (subj))
+		(call auditd.read_var_log (subj)))
 
 	(optional anaconda_optional_dm
 		(call dmsetup.run (subj role_attribute)))

@@ -2291,6 +2291,7 @@
 		(call mpd.adm (subj role)))
 
 	(optional sysadm_optional_multipath
+		(call multipath.manage_tmpfs_files (subj))
 		(call multipath.run (subj_type_attribute role))
 		(call multipathd.adm (subj role)))
 

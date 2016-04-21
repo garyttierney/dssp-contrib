@@ -137,6 +137,7 @@
 		(call lvm.auto_subj_type_transition (subj)))
 
 	(optional sd_udevd_optional_multipath
+		(call multipath.read_config_files (subj))
 		(call multipath.auto_subj_type_transition (subj)))
 
 	(optional sd_udevd_optional_sd_networkd

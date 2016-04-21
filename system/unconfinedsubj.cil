@@ -46,11 +46,18 @@
 
 	(optional unconfinedsubj_type_optional_audispd
 		(call audispd.manage_config (subj_type_attribute))
-		(call audispd.relabel_config (subj_type_attribute)))
+		(call audispd.relabel_config (subj_type_attribute))
+		(call audispd.manage_runtime_sock_files (subj_type_attribute))
+		(call audispd.relabel_runtime_sock_files
+			(subj_type_attribute)))
 
 	(optional unconfinedsubj_type_optional_auditd
 		(call auditd.manage_config (subj_type_attribute))
 		(call auditd.relabel_config (subj_type_attribute))
+		(call auditd.manage_runtime_files (subj_type_attribute))
+		(call auditd.relabel_runtime_files (subj_type_attribute))
+		(call auditd.manage_runtime_sock_files (subj_type_attribute))
+		(call auditd.relabel_runtime_sock_files (subj_type_attribute))
 		(call auditd.manage_var_log (subj_type_attribute))
 		(call auditd.relabel_var_log (subj_type_attribute)))
 

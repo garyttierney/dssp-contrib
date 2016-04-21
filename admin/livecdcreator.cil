@@ -20,6 +20,17 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro rw_sem ((type ARG1))
+		(allow ARG1 subj rw_sem_perms))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
+			file "*")))
+
 	(blockinherit usersubj.search_var_tmp_user_blk)
 	(blockinherit usersubj.list_var_tmp_user_blk)
 	(blockinherit usersubj.read_var_tmp_user_files_blk)
@@ -47,81 +58,72 @@
 
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
-	(allow subj var_tmp_user_file (dir (mounton)))
-
-	(call manage_var_tmp_user (subj))
 	(call var_tmp_obj_type_transition_var_tmp_user (subj))
 
-	(allow subj self (capability (dac_override)))
-	(allow subj self (process (setsched)))
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call tmpfs_obj_type_transition_tmpfs_user (subj))
+
+	(dontaudit subj self (capability (net_admin)))
+	(allow subj self (capability (dac_override mknod sys_chroot chown
+		fsetid fowner setfcap sys_resource)))
+	(allow subj self (process (getsched setsched setrlimit setfscreate)))
 	(allow subj self rw_fifo_file_perms)
+	(allow subj self r_netlink_route_socket_perms)
+	(allow subj self create_unix_dgram_socket_perms)
+	(allow subj self create_udp_socket_perms)
+	(allow subj self create_tcp_socket_perms)
+	(allow subj self create_netlink_audit_socket_perms)
+	(allow subj self create_sem_perms)
 
-	(call sys.dontaudit_audit_access_mountpoint_dirs (subj))
-	(call sys.dontaudit_audit_access_unlabeled_dirs (subj))
-	(call sys.setattr_mountpoint_dirs (subj))
-	(call sys.list_mountpoints (subj))
-	(call sys.mounton_mountpoint_dirs (subj))
-	(call sys.read_cpuinfo_proc_files (subj))
-	(call sys.manage_unlabeled (subj))
-	(call sys.setattr_mountpoint_dirs (subj))
-	(call sys.relabel_mountpoint_dirs (subj))
-	(call sys.relabelfrom_unlabeled_dirs (subj))
+	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call cmd.exec (subj))
-	(call cmd.exec_shell (subj))
+	(call dev.unconfined_subj_type (subj))
+	(call file.unconfined_subj_type (subj))
+	(call fs.unconfined_subj_type (subj))
+	(call sys.unconfined_subj_type (subj))
 
-	(call dev.getattr_random (subj))
-	(call dev.read_urandom (subj))
-	(call dev.rw_loop_control (subj))
-
-	(call file.manage_all_except (subj))
-	(call file.relabel_all_except (subj))
-
-	(call fs.list_tmpfs (subj))
-	(call fs.mount_fs (subj))
-	(call fs.read_sysfs (subj))
-
+	(call sec.mounton_fs_files (subj))
 	(call sec.validate_context (subj))
 
 	(call storage.rw_fixed_disk (subj))
 
-	(call fstools.exec (subj))
+	(call ftp.tcp_connect_port (subj))
 
-	(call ldconfig.exec (subj))
+	(call http.tcp_connect_port (subj))
 
-	(call locale.read (subj))
 	(call shadow.manage (subj))
 	(call shadow.relabel (subj))
 
-	(call mount.exec (subj))
-	(call mount.manage_runtime (subj))
-	(call mount.runtime_obj_type_transition_runtime (subj))
-
-	(call nss.client_subj_type (subj))
-
-	(call rpm.read_config (subj))
-
-	(call setfiles.exec (subj))
-	(call policy_config.relabel (subj))
 	(call policy_config.manage (subj))
+	(call policy_config.relabel (subj))
 
 	(call usersubj.home_dir_obj_type_transition_home_user (subj))
 
 	(optional livecdcreator_optional_audispd
-		(call audispd.relabel_config (subj))
 		(call audispd.manage_config (subj))
-		(call audispd.relabel_runtime_sock_files (subj))
-		(call audispd.manage_runtime_sock_files (subj)))
+		(call audispd.relabel_config (subj))
+		(call audispd.manage_runtime_sock_files (subj))
+		(call audispd.relabel_runtime_sock_files (subj)))
 
-	(optional livecdcreate_optional_auditd
-		(call auditd.relabel_config (subj))
+	(optional livecdcreator_optional_auditd
 		(call auditd.manage_config (subj))
-		(call auditd.relabel_runtime_files (subj))
+		(call auditd.relabel_config (subj))
 		(call auditd.manage_runtime_files (subj))
-		(call auditd.relabel_runtime_sock_files (subj))
+		(call auditd.relabel_runtime_files (subj))
 		(call auditd.manage_runtime_sock_files (subj))
-		(call auditd.relabel_var_log (subj))
-		(call auditd.manage_var_log (subj)))
+		(call auditd.relabel_runtime_sock_files (subj))
+		(call auditd.manage_var_log (subj))
+		(call auditd.relabel_var_log (subj)))
 
 	(optional livecdcreator_optional_sd
-		(call sd.read_config_files (subj))))
+		(call sd.read_state (subj)))
+
+	(optional livecdcreator_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional livecdcreator_optional_sd_logind
+		(call sd_logind.client_subj_type (subj)))
+
+	(optional livecdcreator_optional_sysbus
+		(call sysbus.client_subj_type (subj))))

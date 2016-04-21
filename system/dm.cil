@@ -98,6 +98,9 @@
 		(call anaconda.rw_sem (subj))
 		(call anacondacleanup.rw_sem (subj)))
 
+	(optional dmsetup_optional_livecdcreator
+		(call livecdcreator.rw_sem (subj)))
+
 	(optional dmsetup_optional_lvm
 		(call lvm.rw_sem (subj)))
 

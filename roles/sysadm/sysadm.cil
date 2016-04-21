@@ -2206,6 +2206,10 @@
 			(subj)))
 
 	(optional sysadm_optional_livecdcreator
+		(call livecdcreator.manage_tmpfs_user_files (subj))
+		(call livecdcreator.relabel_tmpfs_user_files (subj))
+		(call livecdcreator.manage_var_tmp_user (subj))
+		(call livecdcreator.relabel_var_tmp_user (subj))
 		(call livecdcreator.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_logger

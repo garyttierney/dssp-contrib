@@ -18,7 +18,20 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.search_var_tmp_user_blk)
+	(blockinherit usersubj.list_var_tmp_user_blk)
+	(blockinherit usersubj.read_var_tmp_user_files_blk)
+	(blockinherit usersubj.manage_var_tmp_user_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_lnk_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_blk)
+	(blockinherit usersubj.manage_var_tmp_user_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_blk)
+
+	(macro var_tmp_obj_type_transition_var_tmp_user ((type ARG1))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			dir "*"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -32,5 +45,83 @@
 
 	(roletype role_attribute subj)
 
-	(call usersubj.manage_home_user (subj))
-	(call usersubj.home_dir_obj_type_transition_home_user (subj)))
+	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(allow subj var_tmp_user_file (dir (mounton)))
+
+	(call manage_var_tmp_user (subj))
+	(call var_tmp_obj_type_transition_var_tmp_user (subj))
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self (process (setsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.dontaudit_audit_access_mountpoint_dirs (subj))
+	(call sys.dontaudit_audit_access_unlabeled_dirs (subj))
+	(call sys.setattr_mountpoint_dirs (subj))
+	(call sys.list_mountpoints (subj))
+	(call sys.mounton_mountpoint_dirs (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+	(call sys.manage_unlabeled (subj))
+	(call sys.setattr_mountpoint_dirs (subj))
+	(call sys.relabel_mountpoint_dirs (subj))
+	(call sys.relabelfrom_unlabeled_dirs (subj))
+
+	(call cmd.exec (subj))
+	(call cmd.exec_shell (subj))
+
+	(call dev.getattr_random (subj))
+	(call dev.read_urandom (subj))
+	(call dev.rw_loop_control (subj))
+
+	(call file.manage_all_except (subj))
+	(call file.relabel_all_except (subj))
+
+	(call fs.list_tmpfs (subj))
+	(call fs.mount_fs (subj))
+	(call fs.read_sysfs (subj))
+
+	(call sec.validate_context (subj))
+
+	(call storage.rw_fixed_disk (subj))
+
+	(call fstools.exec (subj))
+
+	(call ldconfig.exec (subj))
+
+	(call locale.read (subj))
+	(call shadow.manage (subj))
+	(call shadow.relabel (subj))
+
+	(call mount.exec (subj))
+	(call mount.manage_runtime (subj))
+	(call mount.runtime_obj_type_transition_runtime (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call rpm.read_config (subj))
+
+	(call setfiles.exec (subj))
+	(call policy_config.relabel (subj))
+	(call policy_config.manage (subj))
+
+	(call usersubj.home_dir_obj_type_transition_home_user (subj))
+
+	(optional livecdcreator_optional_audispd
+		(call audispd.relabel_config (subj))
+		(call audispd.manage_config (subj))
+		(call audispd.relabel_runtime_sock_files (subj))
+		(call audispd.manage_runtime_sock_files (subj)))
+
+	(optional livecdcreate_optional_auditd
+		(call auditd.relabel_config (subj))
+		(call auditd.manage_config (subj))
+		(call auditd.relabel_runtime_files (subj))
+		(call auditd.manage_runtime_files (subj))
+		(call auditd.relabel_runtime_sock_files (subj))
+		(call auditd.manage_runtime_sock_files (subj))
+		(call auditd.relabel_var_log (subj))
+		(call auditd.manage_var_log (subj)))
+
+	(optional livecdcreator_optional_sd
+		(call sd.read_config_files (subj))))

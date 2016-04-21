@@ -44,9 +44,9 @@
 		(call file.rw_runtime_dirs (ARG1))
 		(call manage_dirs_pattern (ARG1 runtime_file runtime_file)))
 
-	(macro runtime_obj_type_transition_runtime ((type ARG1)(name ARG2))
+	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
-			ARG2)))
+			"*")))
 
 	(blockinherit subj.use_fd_blk)
 
@@ -74,7 +74,7 @@
 	(blockinherit file.runtime_obj_blk)
 
 	(call manage_runtime (subj))
-	(call runtime_obj_type_transition_runtime (subj "*"))
+	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (dac_override sys_admin fowner)))
 

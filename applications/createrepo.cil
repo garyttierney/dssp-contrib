@@ -8,7 +8,7 @@
 	(filecon "/usr/bin/mergerepo" file cmd_file_context)
 	(filecon "/usr/bin/modifyrepo" file cmd_file_context))
 
-(filecon "/usr/share/createrepo/genpkgmetadata.py" file cmd)
+(filecon "/usr/share/createrepo/,*" file cmd)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -24,13 +24,19 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(blockinherit usersubj.search_var_tmp_user_blk)
+	(blockinherit usersubj.list_var_tmp_user_blk)
 	(blockinherit usersubj.read_var_tmp_user_files_blk)
-	(blockinherit usersubj.manage_var_tmp_user_files_blk)
-	(blockinherit usersubj.relabel_var_tmp_user_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_lnk_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_blk)
+	(blockinherit usersubj.manage_var_tmp_user_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_blk)
 
 	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
 		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
-			file "*")))
+			file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			dir "*")))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -42,6 +48,8 @@
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir
 			"*"))))
 
@@ -59,7 +67,7 @@
 
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
-	(call manage_var_tmp_user_files (subj))
+	(call manage_var_tmp_user (subj))
 	(call var_tmp_obj_type_transition_var_tmp (subj))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)

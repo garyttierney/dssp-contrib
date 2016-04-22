@@ -15,6 +15,7 @@
 		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))
 
 	(optional sysadm_gpinentry_optional_sysadm_gpg_agent
+		(call sysadm_gpg_agent.stream_connect (subj))
 		(call sysadm_gpg_agent.rw_inherited_fifo_files (subj))
 		(call sysadm_gpg_agent.rw_inherited_unix_stream_sockets (subj))
 		(call sysadm_gpg_agent.send_sigchld (subj)))

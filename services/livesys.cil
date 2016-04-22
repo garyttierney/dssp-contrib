@@ -82,6 +82,8 @@
 	(call fs.read_sysfs (subj))
 	(call fs.search_iso9660 (subj))
 
+	(call lib.setattr_lib_dirs (subj))
+
 	(call sec.compute_access_vector (subj))
 	(call sec.get_enforce_mode (subj))
 	(call sec.list_fs (subj))
@@ -91,6 +93,8 @@
 	(call storage.read_removable (subj))
 
 	(call chkpwd.auto_subj_type_transition (subj))
+
+	(call dracut_initramfs.search_runtime (subj))
 
 	(call fstools.exec (subj))
 	(call fstools.manage_runtime_files (subj))

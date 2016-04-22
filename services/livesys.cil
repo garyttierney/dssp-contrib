@@ -82,7 +82,7 @@
 	(call fs.read_sysfs (subj))
 	(call fs.search_iso9660 (subj))
 
-	(call lib.setattr_lib_dirs (subj))
+	(call lib.manage_lib (subj))
 
 	(call sec.compute_access_vector (subj))
 	(call sec.get_enforce_mode (subj))

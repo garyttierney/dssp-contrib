@@ -1924,6 +1924,11 @@
 	(optional sysadm_optional_coredumpctl
 		(call coredumpctl.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_createrepo
+		(call createrepo.manage_tmpfs_user (subj))
+		(call createrepo.relabel_tmpfs_user (subj))
+		(call createrepo.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_cpupower
 		(call cpupower.adm (subj role))
 		(call cpupower.run (subj_type_attribute role)))

@@ -1,0 +1,81 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in createrepo
+	(filecon "/usr/bin/createrepo" file cmd_file_context)
+	(filecon "/usr/bin/mergerepo" file cmd_file_context)
+	(filecon "/usr/bin/modifyrepo" file cmd_file_context))
+
+(filecon "/usr/share/createrepo/genpkgmetadata.py" file cmd)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in createrepo
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.search_tmpfs_user_blk)
+	(blockinherit usersubj.list_tmpfs_user_blk)
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
+	(blockinherit usersubj.read_tmpfs_user_blk)
+	(blockinherit usersubj.manage_tmpfs_user_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block createrepo
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self (process (setsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_cpu_online_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+
+	(call cmd.mmap (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.search_var_tmp (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call rpm.read_config (subj))
+
+	(call usersubj.manage_home_user (subj))
+
+	(optional createrepo_optional_rpmdev
+		(call rpmdev.read_home_user_files (subj)))
+
+	(optional createrepo_optional_sd
+		(call sd.read_config_files (subj))))

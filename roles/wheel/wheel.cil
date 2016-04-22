@@ -62,6 +62,11 @@
 		(call champlain.home_cache_obj_type_transition_home_cache
 			(subj)))
 
+	(optional wheel_optional_createrepo
+		(call createrepo.manage_tmpfs_user (subj))
+		(call createrepo.relabel_tmpfs_user (subj))
+		(call createrepo.run (subj_type_attribute role)))
+
 	(optional wheel_optional_curl
 		(call curl.run (subj_type_attribute role))
 		(call curl.manage_home_user_files (subj))

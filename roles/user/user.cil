@@ -72,6 +72,11 @@
 		(call colormgr.relabel_home_data (subj))
 		(call colormgr.home_data_obj_type_transition_home_data (subj)))
 
+	(optional user_optional_createrepo
+		(call createrepo.manage_tmpfs_user (subj))
+		(call createrepo.relabel_tmpfs_user (subj))
+		(call createrepo.run (subj_type_attribute role)))
+
 	(optional user_optional_curl
 		(call curl.run (subj_type_attribute role))
 		(call curl.manage_home_user_files (subj))

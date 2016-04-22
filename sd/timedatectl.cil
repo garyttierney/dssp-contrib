@@ -78,6 +78,8 @@
 	(allow subj_type_attribute self (capability (dac_override sys_chroot
 		net_admin sys_resource setgid setuid sys_admin)))
 
+	(call fs.read_nsfs_files (subj_type_attribute))
+
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call client_subj_type (subj_type_attribute))

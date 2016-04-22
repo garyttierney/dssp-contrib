@@ -73,7 +73,10 @@
 
 	(call sd.daemon (subj cmd_file))
 
-	(allow subj_type_attribute self (capability (net_admin)))
+	(allow subj_type_attribute self (capability (sys_chroot setuid setgid
+		net_admin)))
+
+	(call fs.read_nsfs_files (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

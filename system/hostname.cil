@@ -23,7 +23,11 @@
 
 	(blockinherit file.read_config_files_blk)
 	(blockinherit file.manage_config_files_blk)
-	(blockinherit file.relabel_config_files_blk))
+	(blockinherit file.relabel_config_files_blk)
+
+	(macro config_obj_type_transition_config ((type ARG1))
+		(call file.config_obj_type_transition (ARG1 config_file file
+			"hostname"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

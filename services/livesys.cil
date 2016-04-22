@@ -83,6 +83,7 @@
 	(call fs.search_iso9660 (subj))
 
 	(call lib.manage_lib (subj))
+	(call lib.relabel_lib (subj))
 
 	(call sec.compute_access_vector (subj))
 	(call sec.get_enforce_mode (subj))
@@ -98,6 +99,9 @@
 
 	(call fstools.exec (subj))
 	(call fstools.manage_runtime_files (subj))
+
+	(call hostname.manage_config_files (subj))
+	(call hostname.config_obj_type_transition_config (subj))
 
 	(call passwords.manage (subj))
 	(call shadow.manage (subj))
@@ -146,4 +150,7 @@
 		(call sd_localed.read_config_files (subj)))
 
 	(optional livesys_optional_systemctl
-		(call systemctl.system_client_subj_type (subj))))
+		(call systemctl.system_client_subj_type (subj)))
+
+	(optional livesys_optional_xserver
+		(call xserver.manage_config_files (subj))))

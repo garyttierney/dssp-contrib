@@ -31,7 +31,21 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit usersubj.search_var_tmp_user_blk)
+	(blockinherit usersubj.list_var_tmp_user_blk)
+	(blockinherit usersubj.read_var_tmp_user_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_lnk_files_blk)
+	(blockinherit usersubj.read_var_tmp_user_blk)
+	(blockinherit usersubj.manage_var_tmp_user_blk)
+	(blockinherit usersubj.relabel_var_tmp_user_blk)
+
+	(macro var_tmp_obj_type_transition_var_tmp ((type ARG1))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			file "*"))
+		(call file.var_tmp_obj_type_transition (ARG1 var_tmp_user_file
+			sock_file "*"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -45,7 +59,15 @@
 
 	(roleattributeset role_attribute sys.role)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call usersubj.manage_home_user_files (subj))
+	(call usersubj.home_dir_obj_type_transition_home_user_files (subj)))
 
 (block qemunbd
 	(roleattribute role_attribute)
@@ -56,4 +78,25 @@
 
 	(roletype role_attribute subj)
 
-	(call nbd.tcp_bind_port (subj)))
+	(blockinherit usersubj.var_tmp_user_obj_blk)
+
+	(call manage_var_tmp_user (subj))
+	(call var_tmp_obj_type_transition_var_tmp (subj))
+
+	(allow subj self (tcp_socket (listen accept)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self (unix_stream_socket (listen accept connectto)))
+
+	(call sys.read_cpu_sysfs_files (subj))
+	(call sys.read_cpuinfo_proc_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call fs.getattr_fs (subj))
+
+	(call nbd.tcp_bind_port (subj))
+	(call nbd.tcp_connect_port (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call usersubj.read_home_user_files (subj)))

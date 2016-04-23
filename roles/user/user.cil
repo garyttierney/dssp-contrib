@@ -283,6 +283,8 @@
 		(call qiv.run (subj_type_attribute role)))
 
 	(optional user_optional_qemuimg
+		(call qemunbd.manage_var_tmp_user (subj))
+		(call qemunbd.relabel_var_tmp_user (subj))
 		(call qemunbd.run (subj_type_attribute role))
 		(call qemuimg.run (subj_type_attribute role)))
 

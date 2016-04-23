@@ -807,11 +807,6 @@
 	(call sd_nspawn.setattr_tmpfs_dirs (subj_type_attribute))
 	(call sd_nspawn.use_ptys (subj_type_attribute))
 
-	(tunableif enable_rbacsep
-		(true
-			(call rbacsep.read_state_target_subj_type
-				(subj_type_attribute))))
-
 	(optional subj_type_optional_sduser
 		(call sduser.dontaudit_link_keyring_all_subj
 			(subj_type_attribute)))

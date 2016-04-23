@@ -119,17 +119,19 @@
 
 	(call fs.read_sysfs (subj))
 
-	(call iscsi.tcp_connect_port (subj))
+	(call iscsi_target.tcp_connect_port (subj))
 
 	(call iscsid.stream_connectto (subj))
 	(call iscsid.read_config (subj))
 	(call iscsid.manage_var_lib (subj))
 	(call iscsid.manage_runtime_lock_files (subj))
 
-	(call kmod.read_config_files (subj))
+	(call kmod.read_config (subj))
 
 	(call modules.read (subj))
 	(call modules_dep.read_files (subj))
+
+	(call nss.client_subj_type (subj))
 
 	(optional iscsiadm_optional_sd
 		(call sd.daemon (subj cmd_file))))

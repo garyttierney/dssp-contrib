@@ -30,7 +30,7 @@
 
 	(macro runtime_obj_type_transition_runtime ((type ARG1))
 		(call file.runtime_obj_type_transition (ARG1 runtime_file file
-			"wpa_supplicant.pid")))
+			"iscsiuio.pid")))
 
 	(blockinherit file.read_var_log_files_blk)
 	(blockinherit file.manage_var_log_files_blk)
@@ -39,6 +39,9 @@
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
 		(call file.var_log_obj_type_transition (ARG1 var_log_file file
 			"iscsiuio.log")))
+
+	(macro stream_connectto ((type ARG1))
+		(allow ARG1 subj (unix_stream_socket (connectto))))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
@@ -82,6 +85,14 @@
 	(allow subj var_log_file read_file_perms)
 
 	(call var_log_obj_type_transition_var_log (subj))
+
+	(allow subj self (capability (sys_nice sys_resource ipc_lock
+		net_admin)))
+	(allow subj self (process (setsched)))
+	(allow subj self (unix_stream_socket (listen accept)))
+	(allow subj self create_netlink_iscsi_socket_perms)
+
+	(call fs.read_sysfs (subj))
 
 	(optional iscsiuio_optional_logrotate
 		(call logrotate.client_subj_type (subj))

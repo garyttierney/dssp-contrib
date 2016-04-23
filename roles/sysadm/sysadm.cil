@@ -2179,6 +2179,10 @@
 	(optional sysadm_optional_irssi
 		(call irssi.manage_config_files (subj)))
 
+	(optional sysadm_optional_iscsi
+		(call iscsiadm.run (subj_type_attribute role))
+		(call iscsid.adm (subj role)))
+
 	(optional sysadm_optional_icecast
 		(call icecast.adm (subj role)))
 

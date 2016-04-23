@@ -41,6 +41,9 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro control_sd_unit_subj_type ((type ARG1))
+		(typeattributeset control_sd_unit_subj_type_attribute ARG1))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)
@@ -111,6 +114,7 @@
 (block iscsid
 	(typeattribute subj_type_attribute)
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute control_sd_unit_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
@@ -162,6 +166,10 @@
 
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
+
+	(optional iscsid_control_sd_unit_subj_type_optional_sd
+		(allow control_sd_unit_subj_type_attribute unit_file (service
+			(start status stop reload enable disable))))
 
 	(allow adm_subj_type_attribute subj_type_attribute
 		(process (ptrace signal signull sigkill sigstop)))

@@ -10,9 +10,6 @@
 	(filecon "/usr/bin/qemu-nbd" file cmd_file_context)
 	(filecon "/usr/bin/qemu-system-x86_64" file cmd_file_context))
 
-(in qemu_img
-	(filecon "/usr/bin/qemu-img" file cmd_file_context))
-
 (in qemu_guest
 	(filecon "/var/run/.*\.qga\.sock" socket runtime_file_context))
 
@@ -221,9 +218,6 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
 			sock_file "*"))))
 
-(in qemu_img
-	(blockinherit exec_blk))
-
 (in qemu
 	(blockinherit exec_blk)
 
@@ -379,9 +373,6 @@
 
 	(optional qemu_guest_subj_type_optional_tunctl
 		(call tunctl.relabelfrom_tun_socket (subj_type_attribute))))
-
-(block qemu_img
-	(blockinherit cmd.obj_blk))
 
 (block qemu_guest_tcp_connect_all_ports
 	(blockinherit sec.bool_obj_blk)

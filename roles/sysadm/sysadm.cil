@@ -2460,13 +2460,16 @@
 		(call python.home_data_obj_type_transition_home_data (subj)))
 
 	(optional sysadm_optional_qemu
-		(call qemu_img.exec (subj))
 		(call qemu_guest.manage_all_files (subj))
 		(call qemu_guest.manage_all_runtime_sock_files (subj))
 		(call qemu.manage_config (subj)))
 
 	(optional sysadm_optional_qemu_guest_agent
 		(call qemu_guest_agent.adm (subj role)))
+
+	(optional sysadm_optional_qemuimg
+		(call qemunbd.run (subj_type_attribute role))
+		(call qemuimg.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_qiv
 		(call qiv.manage_tmpfs_user_files (subj))

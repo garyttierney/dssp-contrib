@@ -282,8 +282,9 @@
 		(call qiv.relabel_tmpfs_user_files (subj))
 		(call qiv.run (subj_type_attribute role)))
 
-	(optional user_optional_qemu
-		(call qemu_img.exec (subj)))
+	(optional user_optional_qemuimg
+		(call qemunbd.run (subj_type_attribute role))
+		(call qemuimg.run (subj_type_attribute role)))
 
 	(optional user_optional_quota
 		(call quota.exec (subj_type_attribute)))

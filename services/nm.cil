@@ -230,7 +230,7 @@
 	(optional nm_optional_httpd
 		(call httpd.tcp_connect_all_ports (subj)))
 
-	(optional nm_optional_iscsi
+	(optional nm_optional_iscsid
 		(call iscsiadm.auto_subj_type_transition (subj)))
 
 	(optional nm_optional_sd
@@ -349,7 +349,7 @@
 	(optional nm_disp_optional_dhclient
 		(call dhclient.auto_subj_type_transition (subj)))
 
-	(optional nm_disp_optional_iscsi
+	(optional nm_disp_optional_iscsid
 		(call iscsid.control_sd_unit_subj_type (subj)))
 
 	(optional nmdisp_optional_sd

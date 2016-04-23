@@ -90,6 +90,7 @@
 	(optional iscsiuio_optional_sd
 		(call sd.daemon (subj cmd_file))
 
+		(call sd.unix_stream_socket_activated_subj_type (subj))
 		(call sd.daemon_pid_obj_type (runtime_file))
 
 		(blockinherit sd.unit_obj_blk)

@@ -32,8 +32,16 @@
 
 	(roletype role_attribute subj)
 
+	(allow subj self (capability (dac_override)))
+
+	(call standard.obj_change_exemption_subj_type (subj))
+
 	(call cmd.manage_all_cmd_files (subj))
 	(call cmd.relabel_all_cmd_files (subj))
 
 	(call lib.manage_all_lib_files (subj))
-	(call lib.relabel_all_lib_files (subj)))
+	(call lib.relabel_all_lib_files (subj))
+
+	(call sec.get_enforce_mode (subj))
+
+	(call locale.read (subj)))

@@ -1499,6 +1499,17 @@
 		(call user_thunderbird.role_pattern (role
 			subj_type_attribute)))
 
+	(optional user_optional_user_tmux
+		(call tmux.manage_tmpfs_user (subj))
+		(call tmux.relabel_tmpfs_user (subj))
+
+		(call tmux.manage_home_user_files (subj))
+		(call tmux.relabel_home_user_files (subj))
+
+		(call tmux.home_dir_obj_type_transition_home_files (subj))
+
+		(call user_tmux.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_tp
 		(call user_tpmct.role_pattern (role subj_type_attribute))
 

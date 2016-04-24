@@ -1223,6 +1223,9 @@
 	(optional sd_optional_sshd
 		(call sshduser.link_keyring_all_subj (subj)))
 
+	(optional sd_optional_tmux
+		(call tmux.exec (subj)))
+
 	(optional sd_optional_usersubj
 		(call sec.compute_relabel_context (subj))
 		(call usersubj.relabelto_ptys (subj))

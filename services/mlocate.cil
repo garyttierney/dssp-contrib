@@ -9,7 +9,7 @@
 	(filecon "/usr/bin/updatedb" file cmd_file_context)
 	(filecon "/var/lib/mlocate(/.*)?" any var_lib_file_context)
 
-	(optional fstrim_unit_optional_sd
+	(optional updatedb_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*mlocate-updatedb.*" file
 			unit_file_context)))
 

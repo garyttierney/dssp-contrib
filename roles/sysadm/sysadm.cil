@@ -2343,6 +2343,11 @@
 		(call memcachedtool.run (subj_type_attribute role))
 		(call memcached.adm (subj role)))
 
+	(optional sysadm_optional_mlocate
+		(call locate.run (subj_type_attribute role))
+		(call updatedb.run (subj_type_attribute role))
+		(call updatedb.adm (subj role)))
+
 	(optional sysadm_optional_mount
 		(call mount.manage_runtime (subj))
 		(call mount.run (subj_type_attribute role)))

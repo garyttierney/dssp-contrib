@@ -251,6 +251,11 @@
 		(call selinux_config.search_config (ARG1))
 		(call read_lnk_files_pattern (ARG1 sec_file sec_file)))
 
+	(macro dontaudit_read ((type ARG1))
+		(dontaudit ARG1 sec_file read_file_perms)
+		(dontaudit ARG1 sec_file list_dir_perms)
+		(dontaudit ARG1 sec_file read_lnk_file_perms))
+
 	(macro read ((type ARG1))
 		(call selinux_config.search_config (ARG1))
 		(allow ARG1 sec_file read_file_perms)

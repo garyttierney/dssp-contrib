@@ -113,6 +113,11 @@
 		(allow ARG1 auditd_config.sec_file list_dir_perms)
 		(allow ARG1 auditd_config.sec_file read_lnk_file_perms))
 
+	(macro dontaudit_read_config ((type ARG1))
+		(dontaudit ARG1 auditd_config.sec_file read_file_perms)
+		(dontaudit ARG1 auditd_config.sec_file list_dir_perms)
+		(dontaudit ARG1 auditd_config.sec_file read_lnk_file_perms))
+
 	(macro manage_config ((type ARG1))
 		(call file.rw_config_dirs (ARG1))
 		(allow ARG1 auditd_config.sec_file manage_file_perms)
@@ -147,6 +152,11 @@
 		(call file.search_var_log (ARG1))
 		(allow ARG1 auditd_var_log.sec_file rw_dir_perms))
 
+	(macro dontaudit_read_var_log ((type ARG1))
+		(dontaudit ARG1 auditd_var_log.sec_file read_file_perms)
+		(dontaudit ARG1 auditd_var_log.sec_file list_dir_perms)
+		(dontaudit ARG1 auditd_var_log.sec_file read_lnk_file_perms))
+
 	(macro read_var_log ((type ARG1))
 		(call file.search_var_log (ARG1))
 		(allow ARG1 auditd_var_log.sec_file read_file_perms)
@@ -173,6 +183,9 @@
 		(call file.var_log_obj_type_transition (ARG1
 			auditd_var_log.sec_file dir "audit")))
 
+	(macro dontaudit_read_runtime_files ((type ARG1))
+		(dontaudit ARG1 auditd_runtime.sec_file read_file_perms))
+
 	(macro read_runtime_files ((type ARG1))
 		(call file.search_runtime (ARG1))
 		(allow ARG1 auditd_runtime.sec_file read_file_perms))
@@ -184,6 +197,9 @@
 	(macro relabel_runtime_files ((type ARG1))
 		(call file.search_runtime (ARG1))
 		(allow ARG1 auditd_runtime.sec_file relabel_file_perms))
+
+	(macro dontaudit_read_runtime_sock_files ((type ARG1))
+		(dontaudit ARG1 auditd_runtime.sec_file read_sock_file_perms))
 
 	(macro read_runtime_sock_files ((type ARG1))
 		(call file.search_runtime (ARG1))

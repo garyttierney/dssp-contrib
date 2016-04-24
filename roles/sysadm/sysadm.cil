@@ -2179,6 +2179,10 @@
 		(call iptools.manage_config (subj))
 		(call iptools.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_irqbalance
+		(call irqbalance.run (subj_type_attribute role))
+		(call irqbalance.adm (subj role)))
+
 	(optional sysadm_optional_irssi
 		(call irssi.manage_config_files (subj)))
 

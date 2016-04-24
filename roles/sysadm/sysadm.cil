@@ -2015,6 +2015,9 @@
 	(optional sysadm_optional_evo
 		(call evo_helper.exec (subj)))
 
+	(optional sysadm_optional_execstack
+		(call execstack.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_fedpkg
 		(call fedpkg.manage_config (subj))
 		(call fedpkg.relabel_config (subj)))

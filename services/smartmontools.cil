@@ -1,0 +1,141 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in smartd
+	(filecon "/etc/smartmontools(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/smartmontools" file config_file_context)
+	(filecon "/usr/sbin/smartd" file cmd_file_context)
+
+	(optional smartd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*smartd.*" file
+			unit_file_context)))
+
+(filecon "/etc/smartmontools/smartd_warning\.d(/.*)?" file cmd)
+(filecon "/etc/smartmontools/smartd_warning\.sh" file cmd)
+
+(in smartctl
+	(filecon "/usr/sbin/smartctl" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in smartd
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional smartd_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional smartd_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+(in smartctl
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block smartd
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
+
+	(allow subj self (capability (sys_rawio)))
+
+	(call cmd.exec (subj))
+
+	(call file.read_data_files (subj))
+
+	(call fs.list_devtmpfs (subj))
+
+	(call storage.read_fixed_disk (subj))
+
+	(call locale.read (subj))
+
+	(call usersubj.use_term (subj))
+
+	(optional smartd_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(optional smartd_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.search_config (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_sock_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_sock_file_perms))
+
+(block smartctl
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(call file.read_data_files (subj))
+
+	(call storage.read_fixed_disk (subj))
+
+	(call locale.read (subj))
+
+	(call smartd.read_config (subj)))

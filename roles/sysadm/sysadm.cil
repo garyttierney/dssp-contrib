@@ -2707,6 +2707,10 @@
 	(optional sysadm_optional_setools
 		(call setools.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_smartmontools
+		(call smartctl.run (subj_type_attribute role))
+		(call smartd.adm (subj role)))
+
 	(optional sysadm_optional_speechdispd
 		(call speechdispd.manage_tmpfs_user (subj))
 		(call speechdispd.relabel_tmpfs_user (subj))

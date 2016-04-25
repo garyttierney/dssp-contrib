@@ -146,6 +146,9 @@
 	(optional sd_udevd_optional_sd_sysctl
 		(call sd_sysctl.auto_subj_type_transition (subj)))
 
+	(optional sd_udevd_optional_usersubj
+		(call usersubj.dontaudit_relabelfrom_ttys (subj)))
+
 	(optional sd_udevd_optional_sd_vconsole
 		(call sd_vconsole.auto_subj_type_transition (subj)))
 

@@ -7,6 +7,10 @@
 	(filecon "HOME_DIR/\.cache/webkit(/.*)?" any
 		home_cache_file_context))
 
+(in webkitnp
+	(filecon "/usr/libexec/webkit2gtk-.*/WebKitNetworkProcess" file
+		cmd_file_context))
+
 (in webkitwp
 	(filecon "/usr/libexec/webkit2gtk-.*/WebKitWebProcess" file
 		cmd_file_context)
@@ -105,6 +109,21 @@
 	(macro rw_inherited_tmpfs_user_files ((type ARG1))
 		(call use_fd_all_subj (ARG1))
 		(allow ARG1 tmpfs_user_file rw_inherited_file_perms)))
+
+(in webkitnp
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit gnomeapp.gnomeapplication_common_subj_blk)
+
+		(typeattributeset webkitnp.subj_type_attribute subj)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call webkitnp.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call webkitnp.role_pattern (ARG1 ARG2 subj)))))
 
 (in webkitpp
 	(block subj_blk
@@ -217,6 +236,13 @@
 
 	(optional webkitwp_subj_type_optional_rpm
 		(call rpm.exec (subj_type_attribute))))
+
+(block webkitnp
+	(typeattribute subj_type_attribute)
+
+	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file)))
 
 (block webkitpp
 	(typeattribute subj_type_attribute)

@@ -14,4 +14,8 @@
 		(call user_gstreamer.client_subj_type (subj)))
 
 	(optional user_yelp_optional_user_sessbus
-		(call user_sessbus.service_subj_type (subj))))
+		(call user_sessbus.service_subj_type (subj)))
+
+	(optional user_yelp_optional_user_webkit
+		(call user_webkitnp.auto_subj_type_transition (subj))
+		(call user_webkitwp.auto_subj_type_transition (subj))))

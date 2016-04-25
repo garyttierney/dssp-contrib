@@ -4,7 +4,7 @@
 ;
 
 (in sysadm_webkitnp
-	(blockinherit subj.rw_inherited_unix_stream_sockets_blk))
+	(blockinherit subj.rw_unix_stream_sockets_blk))
 
 (in sysadm_webkitpp
 	(macro sessbus_chat_client_subj_type ((type ARG1))
@@ -24,7 +24,7 @@
 
 	(call sysadm_gvfsdmd.client_subj_type (subj))
 
-	(call sysadm_webkitnp.rw_inherited_unix_stream_sockets (subj))
+	(call sysadm_webkitnp.rw_unix_stream_sockets (subj))
 
 	(optional sysadm_webkitwp_optional_sysadm_gcs
 		(call sysadm_gcs.rw_unix_stream_sockets (subj))

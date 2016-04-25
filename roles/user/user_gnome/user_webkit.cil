@@ -41,7 +41,10 @@
 		(call user_gdocs.rw_unix_stream_sockets (subj))))
 
 (block user_webkitnp
-	(blockinherit webkitnp.subj_blk))
+	(blockinherit webkitnp.subj_blk)
+
+	(optional user_webkitnp_subj_type_optional_user_sessbus
+		(call user_sessbus.client_subj_type (subj))))
 
 (block user_webkitpp
 	(typeattribute sessbus_chat_client_subj_type_attribute)

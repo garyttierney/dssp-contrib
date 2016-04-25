@@ -21,6 +21,8 @@
 
 (in webkitpp
 	(filecon "/usr/libexec/webkit2gtk-.*/WebKitPluginProcess" file
+		cmd_file_context)
+	(filecon "/usr/libexec/webkit2gtk-.*/WebKitPluginProcess2" file
 		cmd_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -240,7 +242,7 @@
 (block webkitnp
 	(typeattribute subj_type_attribute)
 
-	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file)))
 

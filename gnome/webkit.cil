@@ -52,6 +52,9 @@
 			home_cache_file dir "webkit"))))
 
 (in webkitwp
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
 	(block subj_blk
 		(blockabstract subj_blk)
 
@@ -195,6 +198,7 @@
 
 (block webkitwp
 	(typeattribute subj_type_attribute)
+	(typeattribute client_subj_type_attribute)
 
 	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
 
@@ -256,7 +260,20 @@
 
 	(optional webkitwp_subj_type_optional_yelp
 		(call yelp.rw_inherited_tmpfs_user_files
-			(subj_type_attribute))))
+			(subj_type_attribute)))
+
+	(call usersubj.home_data_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call webkit.client_subj_type (client_subj_type_attribute))
+	(call webkitwp.rw_inherited_tmpfs_user_files
+		(client_subj_type_attribute))
+	(call webkitwp.manage_home_cache (client_subj_type_attribute))
+	(call webkitwp.home_cache_obj_type_transition_home_cache
+		(client_subj_type_attribute))
+	(call webkitwp.manage_home_data (client_subj_type_attribute))
+	(call webkitwp.home_data_obj_type_transition_home_data
+		(client_subj_type_attribute)))
 
 (block webkitnp
 	(typeattribute subj_type_attribute)

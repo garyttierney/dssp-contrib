@@ -150,8 +150,6 @@
 
 	(blockinherit usersubj.home_data_obj_blk)
 
-	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
-
 	(call manage_home_data (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
@@ -198,14 +196,7 @@
 
 	(call usersubj.manage_home_config_files (subj_type_attribute))
 
-	(call webkit.client_subj_type (subj_type_attribute))
-	(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
-	(call webkitwp.manage_home_cache (subj_type_attribute))
-	(call webkitwp.home_cache_obj_type_transition_home_cache
-		(subj_type_attribute))
-	(call webkitwp.manage_home_data (subj_type_attribute))
-	(call webkitwp.home_data_obj_type_transition_home_data
-		(subj_type_attribute))
+	(call webkitwp.client_subj_type (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true

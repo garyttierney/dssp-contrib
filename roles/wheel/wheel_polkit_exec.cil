@@ -9,6 +9,8 @@
 
 		(blockinherit app.application_blk)
 
+		(roleattribute role_attribute)
+
 		(call auto_subj_type_transition_pattern (wheel_polkit_exec.subj
 			cmd_file subj))
 
@@ -16,6 +18,8 @@
 			subj)
 
 		(call standard.user_exemption_target_subj_type (subj))
+
+		(blockinherit run_blk)
 
 		(macro roletype_role ((role ARG1))
 			(roletype ARG1 subj))

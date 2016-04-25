@@ -33,14 +33,16 @@
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
-	(allow subj client_subj_type_attribute list_dir_perms)
-	(allow subj client_subj_type_attribute read_file_perms)
-	(allow subj client_subj_type_attribute read_lnk_file_perms)
-
 	(optional sysadm_polkit_exec_optional_sysadm_gcs
 		(call sysadm_gcs.auto_subj_type_transition_gcs_helper (subj))
 		(call sysadm_gcs.read_state (subj)))
 
 	(optional sysadm_polkit_exec_optional_sysadm_gsd
 		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj))
-		(call sysadm_gsd.read_state (subj))))
+		(call sysadm_gsd.read_state (subj)))
+
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
+
+	(call sysadm.send_sigchld (client_subj_type_attribute)))

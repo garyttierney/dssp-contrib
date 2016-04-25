@@ -311,7 +311,7 @@
 
 	(call polkit.sysbus_chat_client_subj_type (client_subj_type_attribute))
 
-	(call usersubj.use_term (subj_type_attribute))
+	(call usersubj.getattr_term (subj_type_attribute))
 
 	(optional polkit_exec_optional_gdm
 		(call gdmuser.link_keyring_all_subj (subj_type_attribute)))

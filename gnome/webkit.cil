@@ -129,6 +129,12 @@
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
 
+	(blockinherit subj.use_fd_all_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
+
 	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
@@ -231,6 +237,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
+
+	(call webkitnp.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
 	(optional webkitwp_subj_type_optional_gdocs
 		(call gdocs.manage_home_cache (subj_type_attribute))

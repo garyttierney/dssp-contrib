@@ -94,8 +94,13 @@
 	(call read_config_files (subj))
 
 	(allow subj self (capability (chown fsetid fowner dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call exec (subj))
 
 	(call sys.list_mountpoints (subj))
+
+	(call cmd.exec (subj))
 
 	(call file.read_all_except (subj))
 

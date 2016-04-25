@@ -218,6 +218,12 @@
 		(call libgweather.home_cache_obj_type_transition_home_cache
 			(subj)))
 
+	(optional user_optional_libreoffice
+		(call libreoffice.manage_home_config (subj))
+		(call libreoffice.relabel_home_config (subj))
+		(call libreoffice.home_config_obj_type_transition_home_config
+			(subj)))
+
 	(optional user_optional_logger
 		(call logger.run (subj_type_attribute role)))
 

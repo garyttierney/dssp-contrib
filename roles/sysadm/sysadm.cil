@@ -886,6 +886,20 @@
 	(filecon "/root/\.cache/libgweather(/.*)?" any
 		root_libgweather_home_cache))
 
+(optional sysadm_libreoffice_home_optional_libreoffice
+	(tunableif enable_rbacsep
+		(true
+			(context root_libreoffice_home_config (sysadm.id
+				sysadm.role libreoffice.home_config_file
+					(systemlow systemlow))))
+		(false
+			(context root_libreoffice_home_config (sysadm.id
+				object_r libreoffice.home_config_file
+					(systemlow systemlow)))))
+
+	(filecon "/root/\.config/libreoffice(/.*)?" any
+		root_libreoffice_home_config))
+
 (optional sysadm_livestreamer_home_optional_livestreamer
 	(tunableif enable_rbacsep
 		(true
@@ -2240,6 +2254,12 @@
 		(call libgweather.manage_home_cache (subj))
 		(call libgweather.relabel_home_cache (subj))
 		(call libgweather.home_cache_obj_type_transition_home_cache
+			(subj)))
+
+	(optional sysadm_optional_libreoffice
+		(call libreoffice.manage_home_config (subj))
+		(call libreoffice.relabel_home_config (subj))
+		(call libreoffice.home_config_obj_type_transition_home_config
 			(subj)))
 
 	(optional sysadm_optional_livecdcreator

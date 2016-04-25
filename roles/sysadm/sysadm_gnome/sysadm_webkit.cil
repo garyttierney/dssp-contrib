@@ -53,6 +53,8 @@
 (block sysadm_webkitnp
 	(blockinherit webkitnp.subj_blk)
 
+	(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj))
+
 	(optional sysadm_webkitnp_subj_type_optional_sysadm_sessbus
 		(call sysadm_sessbus.client_subj_type (subj)))
 

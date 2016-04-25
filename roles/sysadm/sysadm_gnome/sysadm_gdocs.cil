@@ -50,5 +50,7 @@
 		(call sysadm_sessbus.daemon (subj gdocs.cmd_file)))
 
 	(optional sysadm_gdocs_optional_sysadm_webkitwp
+		(call sysadm_webkitnp.rw_inherited_unix_stream_sockets (subj))
+		(call sysadm_webkitnp.auto_subj_type_transition (subj))
 		(call sysadm_webkitwp.auto_subj_type_transition (subj))
 		(call sysadm_webkitwp.sessbus_chat_client_subj_type (subj))))

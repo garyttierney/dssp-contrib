@@ -13,7 +13,9 @@
 	(optional sysadm_gitg_optional_sysadm_gkrd
 		(call sysadm_gkrd.stream_connect (subj)))
 
-	(optional sysadm_gitg_optional_sysadm_webkitwp
+	(optional sysadm_gitg_optional_sysadm_webkit
+		(call sysadm_webkitnp.rw_inherited_unix_stream_sockets (subj))
+		(call sysadm_webkitnp.auto_subj_type_transition (subj))
 		(call sysadm_webkitwp.sessbus_chat_client_subj_type (subj))
 		(call sysadm_webkitwp.auto_subj_type_transition (subj)))
 

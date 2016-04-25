@@ -1,15 +1,40 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in sysadm_polkit_exec
+	(block application_blk
+		(blockabstract application_blk)
+
+		(blockinherit app.application_blk)
+
+		(call auto_subj_type_transition_pattern
+			(sysadm_polkit_exec.subj cmd_file subj))
+
+		(typeattributeset sysadm_polkit_exec.client_subj_type subj))
+
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 
 (block sysadm_polkit_exec
+	(typeattribute client_subj_type_attribute)
+
 	(blockinherit polkit_exec.subj_blk)
 
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(allow subj client_subj_type_attribute list_dir_perms)
+	(allow subj client_subj_type_attribute read_file_perms)
+	(allow subj client_subj_type_attribute read_lnk_file_perms)
 
 	(optional sysadm_polkit_exec_optional_sysadm_gcs
 		(call sysadm_gcs.auto_subj_type_transition_gcs_helper (subj))

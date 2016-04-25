@@ -20,6 +20,8 @@
 
 		(typeattributeset yelp.subj_type_attribute subj)
 
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call yelp.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -39,7 +41,13 @@
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
 		(call usersubj.home_config_obj_type_transition (ARG1
-			home_config_file dir "yelp"))))
+			home_config_file dir "yelp")))
+
+	(blockinherit subj.use_fd_all_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -73,4 +81,5 @@
 		(subj_type_attribute))
 	(call gnomeapp.getattr_all_cmd_files (subj_type_attribute))
 
-	(call webkit.client_subj_type (subj_type_attribute)))
+	(call webkit.client_subj_type (subj_type_attribute))
+	(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute)))

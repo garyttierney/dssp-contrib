@@ -3,6 +3,9 @@
 ; Macros
 ;
 
+(in wheel_webkitnp
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk))
+
 (in wheel_webkitpp
 	(macro sessbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sessbus_chat_client_subj_type_attribute
@@ -21,6 +24,8 @@
 
 	(call wheel_gvfsdmd.client_subj_type (subj))
 
+	(call wheel_webkitnp.rw_inherited_unix_stream_sockets (subj))
+
 	(optional wheel_webkitwp_optional_wheel_gcs
 		(call wheel_gcs.rw_unix_stream_sockets (subj))
 		(call wheel_gcs.sessbus_chat_client_subj_type (subj)))
@@ -38,13 +43,19 @@
 		(call wheel_gcal.use_fd (subj)))
 
 	(optional wheel_webkitwp_optional_wheel_gdocs
-		(call wheel_gdocs.rw_unix_stream_sockets (subj))))
+		(call wheel_gdocs.rw_unix_stream_sockets (subj)))
+
+	(optional wheel_webkitwp_optional_wheel_yelp
+		(call wheel_yelp.rw_inherited_unix_stream_sockets (subj))))
 
 (block wheel_webkitnp
 	(blockinherit webkitnp.subj_blk)
 
 	(optional wheel_webkitnp_subj_type_optional_wheel_sessbus
-		(call wheel_sessbus.client_subj_type (subj))))
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_webkitnp_optional_wheel_yelp
+		(call wheel_yelp.rw_inherited_unix_stream_sockets (subj))))
 
 (block wheel_webkitpp
 	(typeattribute sessbus_chat_client_subj_type_attribute)

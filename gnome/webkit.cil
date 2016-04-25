@@ -123,7 +123,16 @@
 				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
-			(call webkitnp.role_pattern (ARG1 ARG2 subj)))))
+			(call webkitnp.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*"))))
 
 (in webkitpp
 	(block subj_blk
@@ -235,14 +244,28 @@
 			(subj_type_attribute)))
 
 	(optional webkitwp_subj_type_optional_rpm
-		(call rpm.exec (subj_type_attribute))))
+		(call rpm.exec (subj_type_attribute)))
+
+	(optional webkitwp_subj_type_optional_yelp
+		(call yelp.rw_inherited_tmpfs_user_files
+			(subj_type_attribute))))
 
 (block webkitnp
 	(typeattribute subj_type_attribute)
 
 	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj_type_attribute))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.search_cgroup (subj_type_attribute))
+
+	(call cert.read (subj_type_attribute)))
 
 (block webkitpp
 	(typeattribute subj_type_attribute)

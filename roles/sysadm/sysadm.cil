@@ -1624,12 +1624,17 @@
 (optional sysadm_yelp_home_optional_yelp
 	(tunableif enable_rbacsep
 		(true
+			(context root_yelp_home_cache (sysadm.id sysadm.role
+				yelp.home_cache_file (systemlow systemlow)))
 			(context root_yelp_home_config (sysadm.id sysadm.role
 				yelp.home_config_file (systemlow systemlow))))
 		(false
+			(context root_yelp_home_cache (sysadm.id object_r
+				yelp.home_cache_file (systemlow systemlow)))
 			(context root_yelp_home_config (sysadm.id object_r
 				yelp.home_config_file (systemlow systemlow)))))
 
+	(filecon "/root/\.cache/yelp(/.*)?" any root_yelp_home_cache)
 	(filecon "/root/\.config/yelp(/.*)?" any root_yelp_home_config))
 
 (optional sysadm_znc_home_optional_znc
@@ -4344,6 +4349,11 @@
 	(optional sysadm_optional_sysadm_yelp
 		(call yelp.manage_tmpfs_user (subj))
 		(call yelp.relabel_tmpfs_user (subj))
+
+		(call yelp.manage_home_cache (subj))
+		(call yelp.relabel_home_cache (subj))
+
+		(call yelp.home_cache_obj_type_transition_home_cache (subj))
 
 		(call yelp.manage_home_config (subj))
 		(call yelp.relabel_home_config (subj))

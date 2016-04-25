@@ -13,7 +13,16 @@
 			cmd_file subj))
 
 		(typeattributeset wheel_polkit_exec.client_subj_type_attribute
-			subj))
+			subj)
+
+		(call standard.user_exemption_target_subj_type (subj))
+
+		(macro roletype_role ((role ARG1))
+			(roletype ARG1 subj))
+
+		(macro auto_subj_role_transition_pattern ((role ARG1)(role
+			ARG2))
+			(roletransition ARG1 cmd_file process ARG2)))
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1)))
@@ -27,6 +36,8 @@
 	(typeattribute client_subj_type_attribute)
 
 	(blockinherit polkit_exec.subj_blk)
+
+	(call standard.role_change_exemption_subj_type (subj))
 
 	(call wheel.cmd_auto_subj_type_transition (subj))
 	(call wheel.shell_auto_subj_type_transition (subj))

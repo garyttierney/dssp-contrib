@@ -1,47 +1,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-; Macros
-;
-
-(in sysadm_polkit_exec
-	(block application_blk
-		(blockabstract application_blk)
-
-		(blockinherit app.application_blk)
-
-		(roleattribute role_attribute)
-
-		(call auto_subj_type_transition_pattern
-			(sysadm_polkit_exec.subj cmd_file subj))
-
-		(typeattributeset sysadm_polkit_exec.client_subj_type_attribute
-			subj)
-
-		(call standard.user_exemption_target_subj_type (subj))
-
-		(blockinherit run_blk)
-
-		(macro roletype_role ((role ARG1))
-			(roletype ARG1 subj))
-
-		(macro auto_subj_role_transition_pattern ((role ARG1)(role
-			ARG2))
-			(roletransition ARG1 cmd_file process ARG2)))
-
-	(macro client_subj_type ((type ARG1))
-		(typeattributeset client_subj_type_attribute ARG1)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
 ; Policy
 ;
 
 (block sysadm_polkit_exec
-	(typeattribute client_subj_type_attribute)
-
 	(blockinherit polkit_exec.subj_blk)
-
-	(call standard.role_change_exemption_subj_type (subj))
 
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
@@ -54,10 +17,4 @@
 
 	(optional sysadm_polkit_exec_optional_sysadm_gsd
 		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj))
-		(call sysadm_gsd.read_state (subj)))
-
-	(allow subj client_subj_type_attribute list_dir_perms)
-	(allow subj client_subj_type_attribute read_file_perms)
-	(allow subj client_subj_type_attribute read_lnk_file_perms)
-
-	(call sysadm.send_sigchld (client_subj_type_attribute)))
+		(call sysadm_gsd.read_state (subj))))

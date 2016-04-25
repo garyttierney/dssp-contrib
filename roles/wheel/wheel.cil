@@ -35,6 +35,8 @@
 
 	(blockinherit usersubj.common_login_blk)
 
+	(call standard.role_change_exemption_subj_type (subj_type_attribute))
+
 	(optional wheel_optional_authconfig
 		(call authconfig.run (subj_type_attribute role)))
 

@@ -158,6 +158,7 @@
 	(allow subj_type_attribute self (process (getsched setsched)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_cpu_sysfs (subj_type_attribute))
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))

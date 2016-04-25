@@ -12,7 +12,8 @@
 		(call auto_subj_type_transition_pattern
 			(sysadm_polkit_exec.subj cmd_file subj))
 
-		(typeattributeset sysadm_polkit_exec.client_subj_type subj))
+		(typeattributeset sysadm_polkit_exec.client_subj_type_attribute
+			subj))
 
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1)))

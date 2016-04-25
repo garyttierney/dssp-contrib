@@ -4,7 +4,9 @@
 ;
 
 (in wheel_webkitnp
-	(blockinherit subj.rw_unix_stream_sockets_blk))
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk))
 
 (in wheel_webkitpp
 	(macro sessbus_chat_client_subj_type ((type ARG1))

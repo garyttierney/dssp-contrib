@@ -178,6 +178,9 @@
 	(optional dracut_optional_dm
 		(call dmsetup.exec (subj)))
 
+	(optional dracut_optional_iscsid
+		(call iscsid.read_var_lib (subj)))
+
 	(optional dracut_optional_lvm
 		(call lvm.manage_runtime_lock_files (subj))
 		(call lvm.read_config (subj))

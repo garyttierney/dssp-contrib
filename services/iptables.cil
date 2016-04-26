@@ -59,6 +59,9 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro audit_execute_access_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file (file (execute))))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)

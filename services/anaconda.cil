@@ -250,6 +250,9 @@
 	(optional anaconda_optional_hostnamectl
 		(call hostnamectl.exec (subj)))
 
+	(optional anaconda_optional_iscsid
+		(call iscsid.mmap_cmd_files (subj)))
+
 	(optional anaconda_optional_lvm
 		(call lvm.run (subj role_attribute)))
 
@@ -344,7 +347,9 @@
 
 	(roletype role_attribute subj)
 
-	(allow subj self (capability (dac_override sys_admin sys_rawio)))
+	(allow subj self (capability (dac_override sys_admin sys_rawio
+		sys_resource)))
+	(allow subj self (process (setrlimit)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_sem_perms)
 
@@ -389,6 +394,8 @@
 
 	(call mount.run (subj role_attribute))
 
+	(call nss.client_subj_type (subj))
+
 	(call udev.client_subj_type (subj))
 
 	(call udevadm.run (subj role_attribute))
@@ -398,6 +405,11 @@
 
 	(optional anacondacleanup_optional_dracut_initramfs
 		(call dracut_initramfs.search_runtime (subj)))
+
+	(optional anacondacleanup_optional_iscsid
+		(call iscsid.manage_runtime_lock_files (subj))
+		(call iscsid.runtime_lock_obj_type_transition_runtime_lock
+			(subj)))
 
 	(optional anacondacleanup_optional_lvm
 		(call lvm.run (subj role_attribute)))

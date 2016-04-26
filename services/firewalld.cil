@@ -232,6 +232,7 @@
 	(call file.read_config_files (subj))
 
 	(call firewalld.manage_config (subj))
+	(call firewalld.read_runtime (subj))
 	(call firewalld.relabel_config (subj))
 	(call firewalld.sysbus_chat_client_subj_type (subj))
 
@@ -243,6 +244,9 @@
 		(true
 			(call rbacsep.read_state_source_subj_type
 				(subj))))
+
+	(optional firewallcmd_optional_iptables
+		(call iptables.audit_execute_access_cmd_files (subj)))
 
 	(optional firewallcmd_optional_sd
 		(allow subj firewalld.unit_file read_file_perms)

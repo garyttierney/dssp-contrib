@@ -44,6 +44,9 @@
 	(macro control_sd_unit_subj_type ((type ARG1))
 		(typeattributeset control_sd_unit_subj_type_attribute ARG1))
 
+	(macro mmap_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file mmap_file_perms))
+
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)

@@ -115,7 +115,9 @@
 		(call sd_journald.client_subj_type (subj_type_attribute)))
 
 	(optional consolehelper_subj_type_optional_xauth
-		(call xauth.manage_home_user_files (subj_type_attribute)))
+		(call xauth.manage_home_user_files (subj_type_attribute))
+		(call xauth.home_dir_obj_type_transition_home
+			(subj_type_attribute)))
 
 	(optional consolehelper_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute))))

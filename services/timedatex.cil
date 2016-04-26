@@ -49,13 +49,24 @@
 
 	(roletype sys.role subj)
 
+	(allow subj self (capability (sys_time)))
+
 	(call dev.read_clock (subj))
+	(call dev.read_urandom (subj))
+
+	(call file.manage_config_lnk_files (subj))
+	(call file.relabel_config_lnk_files (subj))
 
 	(call fs.read_devtmpfs_lnk_files (subj))
+
+	(call sec.validate_context (subj))
 
 	(call hwclock.read_config_files (subj))
 
 	(call locale.read (subj))
+
+	(call file_context.read_config_files (subj))
+	(call selinux_config.read_config_files (subj))
 
 	(optional timedatex_optional_chronyd
 		(call chronyd.control_sd_unit_subj_type (subj)))

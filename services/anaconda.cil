@@ -131,8 +131,6 @@
 	(allow subj self (socket (listen accept)))
 	(allow subj self create_sem_perms)
 
-	(call rbacsep.exempt_subj_type (subj))
-
 	(call standard.obj_change_exemption_subj_type (subj))
 
 	(call sys.get_sysvipc_info (subj))

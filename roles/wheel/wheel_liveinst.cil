@@ -6,6 +6,14 @@
 (block wheel_liveinst
 	(blockinherit liveinst.subj_blk)
 
+	(optional wheel_liveinst_optional_sysadm
+		(roletype sysadm.role subj)
+		(roletransition wheel.role liveinst.cmd_file process
+			sysadm.role))
+
+	(optional wheel_liveinst_optional_consolehelper
+		(call wheel_consolehelper.client_subj_type (subj)))
+
 	(optional wheel_liveinst_optional_wheel_gs
 		(call wheel_gs.daemon (subj liveinst.cmd_file)))
 

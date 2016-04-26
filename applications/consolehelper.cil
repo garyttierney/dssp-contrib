@@ -79,10 +79,10 @@
 
 	(allow subj_type_attribute self (capability (dac_override setuid
 		setgid chown fowner)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
-	(call standard.id_change_exemption_subj_type (subj_type_attribute))
 	(call standard.obj_change_exemption_subj_type (subj_type_attribute))
-	(call standard.role_change_exemption_subj_type (subj_type_attribute))
+	(call standard.change_exemption_subj_type (subj_type_attribute))
 
 	(call sys.audit_client_subj_type (subj_type_attribute))
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
@@ -91,7 +91,6 @@
 
 	(call file.read_config_files (subj_type_attribute))
 
-	(call sec.compute_user_contexts (subj_type_attribute))
 	(call sec.compute_relabel_context (subj_type_attribute))
 	(call sec.setfscreate_subj_type (subj_type_attribute))
 	(call sec.validate_context (subj_type_attribute))
@@ -107,15 +106,9 @@
 	(call pam.manage_runtime (subj_type_attribute))
 	(call pam.runtime_obj_type_transition_runtime (subj_type_attribute))
 
-	(call default_context.read_config_files (subj_type_attribute))
 	(call file_context.read_config_files (subj_type_attribute))
 	(call selinux_config.read_config_files (subj_type_attribute))
 
-	(call usersubj.cmd_manual_subj_type_transition_priv_subj
-		(subj_type_attribute))
-	(call usersubj.shell_manual_subj_type_transition_priv_subj
-		(subj_type_attribute))
-	(call usersubj.create_keyring_priv_subj (subj_type_attribute))
 	(call usersubj.relabel_term (subj_type_attribute))
 
 	(optional consolehelper_subj_type_optional_sd_journald

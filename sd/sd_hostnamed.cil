@@ -85,6 +85,8 @@
 		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
+	(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 	(allow adm_subj_type_attribute unit_file manage_file_perms)
 
 	(allow adm_subj_type_attribute unit_file relabel_file_perms))

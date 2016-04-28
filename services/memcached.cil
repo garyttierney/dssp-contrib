@@ -91,6 +91,8 @@
 
 			(blockinherit sd.unit_obj_blk)
 
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
@@ -102,8 +104,8 @@
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
 
-		(call file.search_config (adm_subj_type_attribute))
-		(call file.search_var_lib (adm_subj_type_attribute))
+		(call file.rw_config_dirs (adm_subj_type_attribute))
+		(call file.rw_var_lib_dirs (adm_subj_type_attribute))
 
 		(allow adm_subj_type_attribute obj_type_attribute
 			manage_file_perms)
@@ -254,8 +256,8 @@
 (call ps_subj_pattern (memcached.adm_subj_type_attribute
 	memcached.subj_type_attribute))
 
-(call file.search_config (memcached.adm_subj_type_attribute))
-(call file.search_var_lib (memcached.adm_subj_type_attribute))
+(call file.rw_config_dirs (memcached.adm_subj_type_attribute))
+(call file.rw_var_lib_dirs (memcached.adm_subj_type_attribute))
 
 (allow memcached.adm_subj_type_attribute memcached.obj_type_attribute
 	manage_file_perms)

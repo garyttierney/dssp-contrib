@@ -106,6 +106,8 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
+		(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
 
@@ -128,7 +130,7 @@
 	(call avahi.manage_config (adm_subj_type_attribute))
 	(call avahi.relabel_config (adm_subj_type_attribute))
 
-	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.rw_runtime_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

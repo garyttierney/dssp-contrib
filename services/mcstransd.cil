@@ -38,9 +38,8 @@
 	(filecon "/usr/sbin/mcstransd" file cmd_file_context)
 
 	(optional mcstransd_unit_optional_sd
-
-	(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file
-		unit_file_context)))
+		(filecon "/usr/lib/systemd/system/[^/]*mcstransd.*" file
+			unit_file_context)))
 
 (filecon "/etc/selinux/([^/]*/)?secolor\.conf" file mcstransd_config)
 (filecon "/etc/selinux/([^/]*/)?setrans\.conf" file mcstransd_config)
@@ -238,6 +237,8 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
+		(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
 
@@ -253,7 +254,8 @@
 		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file.search_runtime (adm_subj_type_attribute))
+	(call file.rw_runtime_dirs (adm_subj_type_attribute))
+	(call selinux_config.rw_config_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

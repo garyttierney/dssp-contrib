@@ -138,6 +138,8 @@
 
 		(blockinherit sd.unit_obj_blk)
 
+		(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 		(typeattributeset obj_type_attribute unit_file)
 
 		(allow control_sd_unit_subj_type_attribute unit_file (service
@@ -150,9 +152,9 @@
 		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
-	(call file.search_config (adm_subj_type_attribute))
-	(call file.search_runtime (adm_subj_type_attribute))
-	(call file.search_var_cache (adm_subj_type_attribute))
+	(call file.rw_config_dirs (adm_subj_type_attribute))
+	(call file.rw_runtime_dirs (adm_subj_type_attribute))
+	(call file.rw_var_cache_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
 	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)

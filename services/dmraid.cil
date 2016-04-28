@@ -6,6 +6,7 @@
 (in dmraid
 	(filecon "/usr/sbin/dmraid.*" file cmd_file_context)
 	(filecon "/usr/sbin/dmraid\.static" file cmd_file_context)
+	(filecon "/var/run/lock/dmraid(/.*)?" any runtime_lock_file_context)
 
 	(optional dmraid_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*dmraid-activation.*" file
@@ -84,12 +85,16 @@
 
 		(typeattributeset obj_type_attribute unit_file)
 
+		(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 		(allow adm_subj_type_attribute unit_file (service (stop status
 			disable enable reload start))))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call file.rw_runtime_lock_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)

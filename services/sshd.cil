@@ -311,6 +311,8 @@
 
 			(blockinherit sd.unit_obj_blk)
 
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
@@ -322,8 +324,8 @@
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
 
-		(call ssh_client.search_config (adm_subj_type_attribute))
-		(call file.search_runtime (adm_subj_type_attribute))
+		(call ssh_client.rw_config_dirs (adm_subj_type_attribute))
+		(call file.rw_runtime_dirs (adm_subj_type_attribute))
 
 		(allow adm_subj_type_attribute obj_type_attribute
 			manage_dir_perms)
@@ -466,6 +468,8 @@
 			(call sd.daemon (subj cmd_file))
 
 			(blockinherit sd.unit_obj_blk)
+
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
 
 			(typeattributeset sshd.obj_type_attribute unit_file)
 			(typeattributeset sshd.unit_obj_type_attribute
@@ -711,8 +715,8 @@
 	signal signull sigkill sigstop)))
 (call ps_subj_pattern (sshd.adm_subj_type_attribute sshd.subj_type_attribute))
 
-(call ssh_client.search_config (sshd.adm_subj_type_attribute))
-(call file.search_runtime (sshd.adm_subj_type_attribute))
+(call ssh_client.rw_config_dirs (sshd.adm_subj_type_attribute))
+(call file.rw_runtime_dirs (sshd.adm_subj_type_attribute))
 
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute manage_dir_perms)
 (allow sshd.adm_subj_type_attribute sshd.obj_type_attribute manage_file_perms)

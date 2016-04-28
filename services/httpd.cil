@@ -201,6 +201,8 @@
 
 			(blockinherit sd.unit_obj_blk)
 
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
@@ -212,11 +214,11 @@
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
 
-		(call file.search_config (adm_subj_type_attribute))
-		(call file.search_runtime (adm_subj_type_attribute))
-		(call file.search_var_cache (adm_subj_type_attribute))
-		(call file.search_var_lib (adm_subj_type_attribute))
-		(call file.search_var_log (adm_subj_type_attribute))
+		(call file.rw_config_dirs (adm_subj_type_attribute))
+		(call file.rw_runtime_dirs (adm_subj_type_attribute))
+		(call file.rw_var_cache_dirs (adm_subj_type_attribute))
+		(call file.rw_var_lib_dirs (adm_subj_type_attribute))
+		(call file.rw_var_log_dirs (adm_subj_type_attribute))
 
 		(allow adm_subj_type_attribute obj_type_attribute
 			manage_dir_perms)
@@ -346,6 +348,8 @@
 			(call sd.daemon_pid_obj_type (runtime_file))
 
 			(blockinherit sd.unit_obj_blk)
+
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
 
 			(typeattributeset httpd.obj_type_attribute unit_file)
 			(typeattributeset httpd.unit_obj_type_attribute
@@ -687,11 +691,11 @@
 (call ps_subj_pattern (httpd.adm_subj_type_attribute
 	httpd.subj_type_attribute))
 
-(call file.search_config (httpd.adm_subj_type_attribute))
-(call file.search_runtime (httpd.adm_subj_type_attribute))
-(call file.search_var_cache (httpd.adm_subj_type_attribute))
-(call file.search_var_lib (httpd.adm_subj_type_attribute))
-(call file.search_var_log (httpd.adm_subj_type_attribute))
+(call file.rw_config_dirs (httpd.adm_subj_type_attribute))
+(call file.rw_runtime_dirs (httpd.adm_subj_type_attribute))
+(call file.rw_var_cache_dirs (httpd.adm_subj_type_attribute))
+(call file.rw_var_lib_dirs (httpd.adm_subj_type_attribute))
+(call file.rw_var_log_dirs (httpd.adm_subj_type_attribute))
 
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute manage_dir_perms)
 (allow httpd.adm_subj_type_attribute httpd.obj_type_attribute

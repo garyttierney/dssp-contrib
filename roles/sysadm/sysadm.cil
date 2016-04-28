@@ -1864,7 +1864,11 @@
 			(optional sysadm_enable_mls_optional_sudo
 				(call sudo.manage_config (subj))
 				(call sudo.manage_var_db (subj))
-				(call sudo.manage_runtime (subj)))))
+				(call sudo.manage_runtime (subj)))
+
+			(optional sysadm_optional_updatedssp
+				(call updatedssp.adm (subj role))
+				(call updatedssp.run (subj_type_attribute role)))))
 
 	(optional sysadm_optional_accountsd
 		(call accountsd.adm (subj role)))
@@ -2830,10 +2834,6 @@
 	(optional sysadm_optional_unboundctl
 		(call unboundctl.run (subj_type_attribute role))
 		(call unboundcc.run (subj_type_attribute role)))
-
-	(optional sysadm_optional_updatedssp
-		(call updatedssp.adm (subj role))
-		(call updatedssp.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_updpwd
 		(call updpwd.run (subj_type_attribute role)))

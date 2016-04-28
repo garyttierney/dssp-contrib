@@ -132,6 +132,8 @@
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
+			(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 			(allow adm_subj_type_attribute unit_file (service
 				(stop status disable enable reload start))))
 
@@ -140,10 +142,10 @@
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
 
-		(call file.search_config (adm_subj_type_attribute))
-		(call file.search_runtime (adm_subj_type_attribute))
-		(call file.search_var_lib (adm_subj_type_attribute))
-		(call file.search_var_log (adm_subj_type_attribute))
+		(call file.rw_config_dirs (adm_subj_type_attribute))
+		(call file.rw_runtime_dirs (adm_subj_type_attribute))
+		(call file.rw_var_lib_dirs (adm_subj_type_attribute))
+		(call file.rw_var_log_dirs (adm_subj_type_attribute))
 
 		(allow adm_subj_type_attribute obj_type_attribute
 			manage_dir_perms)
@@ -342,6 +344,8 @@
 		(call sd.daemon_pid_obj_type (runtime_obj_type_attribute))
 		(call sd.tcp_socket_activated_subj_type (subj_type_attribute))
 
+		(call sd.rw_unit_dirs (adm_subj_type_attribute))
+
 		(call sd.reload (control_all_sd_unit_subj_type_attribute))
 		(allow control_all_sd_unit_subj_type_attribute
 			unit_obj_type_attribute (service (start status stop
@@ -355,10 +359,10 @@
 (call ps_subj_pattern (nginx.adm_subj_type_attribute
 	nginx.subj_type_attribute))
 
-(call file.search_config (nginx.adm_subj_type_attribute))
-(call file.search_runtime (nginx.adm_subj_type_attribute))
-(call file.search_var_lib (nginx.adm_subj_type_attribute))
-(call file.search_var_log (nginx.adm_subj_type_attribute))
+(call file.rw_config_dirs (nginx.adm_subj_type_attribute))
+(call file.rw_runtime_dirs (nginx.adm_subj_type_attribute))
+(call file.rw_var_lib_dirs (nginx.adm_subj_type_attribute))
+(call file.rw_var_log_dirs (nginx.adm_subj_type_attribute))
 
 (allow nginx.adm_subj_type_attribute nginx.obj_type_attribute manage_dir_perms)
 (allow nginx.adm_subj_type_attribute nginx.obj_type_attribute

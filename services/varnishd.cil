@@ -188,8 +188,6 @@
 			(typeattributeset obj_type_attribute unit_file)
 			(typeattributeset unit_obj_type_attribute unit_file)
 
-			(call sd.rw_unit_dirs (adm_subj_type_attribute))
-
 			(allow adm_subj_type_attribute unit_file (service
 				(stop status disable enable reload start))))
 
@@ -364,8 +362,6 @@
 			(typeattributeset varnishd.unit_obj_type_attribute
 				unit_file)
 
-			(call sd.rw_unit_dirs (adm_subj_type_attribute))
-
 			(allow varnishd.adm_subj_type_attribute unit_file
 				(service (stop status disable enable reload
 					start))))
@@ -459,8 +455,6 @@
 				unit_file)
 			(typeattributeset varnishd.unit_obj_type_attribute
 				unit_file)
-
-			(call sd.rw_unit_dirs (adm_subj_type_attribute))
 
 			(allow varnishd.adm_subj_type_attribute unit_file
 				(service (stop status disable enable reload

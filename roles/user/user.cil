@@ -182,6 +182,10 @@
 		(call gtk.relabel_home_config (subj))
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
+	(optional user_optional_hwloc
+		(call hwloc_dhwd.exec (subj))
+		(call hwloc_dhwd.read_runtime_files (subj)))
+
 	(optional user_optional_i3status
 		(call i3status.manage_home_config (subj))
 		(call i3status.relabel_home_config (subj))

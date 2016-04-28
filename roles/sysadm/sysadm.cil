@@ -2191,6 +2191,10 @@
 		(call hwclock.manage_config_files (subj))
 		(call hwclock.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_hwloc
+		(call hwloc_dhwd.adm (subj role))
+		(call hwloc_dhwd.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_i3status
 		(call i3status.manage_config_files (subj))
 

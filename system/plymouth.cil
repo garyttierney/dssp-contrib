@@ -151,9 +151,10 @@
 		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
-	(call file.search_runtime (adm_subj_type_attribute))
-	(call file.search_var_lib (adm_subj_type_attribute))
-	(call file.search_var_spool (adm_subj_type_attribute))
+	(call file.rw_config_dirs (adm_subj_type_attribute))
+	(call file.rw_runtime_dirs (adm_subj_type_attribute))
+	(call file.rw_var_lib_dirs (adm_subj_type_attribute))
+	(call file.rw_var_spool_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
 	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)

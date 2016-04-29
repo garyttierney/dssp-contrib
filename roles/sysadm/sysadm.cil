@@ -1766,6 +1766,8 @@
 
 	(call term.use_inherited_unallocated_ttys (subj))
 
+	(call app.send_sigchld (subj))
+
 	(call factory.read_data (subj))
 	(call fstab.manage (subj))
 	(call cert.manage (subj))

@@ -59,6 +59,9 @@
 		(allow ARG1 subj_type_attribute
 			rw_inherited_unix_stream_socket_perms))
 
+	(macro send_sigchld ((type ARG1))
+		(allow ARG1 subj_type_attribute (process (signal))))
+
 	(macro send_signal ((type ARG1))
 		(allow ARG1 subj_type_attribute (process (signal))))
 

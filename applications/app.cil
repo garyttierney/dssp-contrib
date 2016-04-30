@@ -143,6 +143,9 @@
 		(call usersubj.write_inherited_fifo_files_unpriv_subj
 			(subj_type_attribute)))
 
+	(optional app_optional_sysadm
+		(call sysadm.send_sigchld (subj_type_attribute)))
+
 	(optional app_optional_usersubj
 		(call usersubj.list_home_cmd (subj_type_attribute))
 		(call usersubj.dontaudit_search_all_home_user

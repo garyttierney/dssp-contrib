@@ -611,6 +611,7 @@
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
+	(allow subj adm_subj_type_attribute (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call sd.rw_config_dirs (adm_subj_type_attribute))
@@ -628,6 +629,8 @@
 
 	(allow adm_subj_type_attribute sd_nspawn_container.subj_type_attribute
 		(process (ptrace signal signull sigkill sigstop)))
+	(allow sd_nspawn_container.subj_type_attribute adm_subj_type_attribute
+		(process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute
 		sd_nspawn_container.subj_type_attribute))
 

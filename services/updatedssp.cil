@@ -135,6 +135,7 @@
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
+	(allow subj adm_subj_type_attribute (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
 	(call policy_src.manage_var_lib (adm_subj_type_attribute))

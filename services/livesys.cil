@@ -132,6 +132,9 @@
 	(optional livesys_optional_gdm
 		(call gdm.write_config_files (subj)))
 
+	(optional livesys_optional_dconf
+		(call dconf.read_config (subj)))
+
 	(optional livesys_optional_glib
 		(call glib_helper.exec (subj))
 		(call gsettings.exec (subj)))

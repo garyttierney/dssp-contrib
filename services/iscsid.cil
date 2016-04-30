@@ -217,8 +217,8 @@
 	(optional iscsid_optional_sd_journald
 		(call sd_journald.client_subj_type (subj)))
 
-	(allow adm_subj_type_attribute subj_type_attribute
-		(process (ptrace signal signull sigkill sigstop)))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call file.rw_config_dirs (adm_subj_type_attribute))

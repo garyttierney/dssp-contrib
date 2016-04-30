@@ -141,8 +141,12 @@
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
 			(ptrace signal signull sigkill sigstop)))
+		(allow subj_type_attribute adm_subj_type_attribute (process
+			(sigchld)))
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
+
+		(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 		(call file.search_config (adm_subj_type_attribute))
 		(call file.search_runtime (adm_subj_type_attribute))
@@ -449,8 +453,12 @@
 
 (allow php_fpm.adm_subj_type_attribute php_fpm.subj_type_attribute (process
 	(ptrace signal signull sigkill sigstop)))
+(allow php_fpm.subj_type_attribute php_fpm.adm_subj_type_attribute (process
+	(sigchld)))
 (call ps_subj_pattern (php_fpm.adm_subj_type_attribute
 	php_fpm.subj_type_attribute))
+
+(call subj.ptrace_subj_type (php_fpm.adm_subj_type_attribute))
 
 (call file.rw_config_dirs (php_fpm.adm_subj_type_attribute))
 (call file.rw_runtime_dirs (php_fpm.adm_subj_type_attribute))

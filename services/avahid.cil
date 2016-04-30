@@ -126,6 +126,8 @@
 	(allow subj adm_subj_type_attribute (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
+	(call subj.ptrace_subj_type (adm_subj_type_attribute))
+
 	(call avahi.manage_config (adm_subj_type_attribute))
 	(call avahi.relabel_config (adm_subj_type_attribute))
 

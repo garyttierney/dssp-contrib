@@ -98,6 +98,8 @@
 	(allow subj adm_subj_type_attribute (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
+	(call subj.ptrace_subj_type (adm_subj_type_attribute))
+
 	(call file.rw_config_dirs (adm_subj_type_attribute))
 
 	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)

@@ -99,8 +99,12 @@
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
 			(ptrace signal signull sigkill sigstop)))
+		(allow subj_type_attribute adm_subj_type_attribute (process
+			(sigchld)))
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
+
+		(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 		(call file.rw_config_dirs (adm_subj_type_attribute))
 		(call file.rw_var_lib_dirs (adm_subj_type_attribute))
@@ -251,8 +255,12 @@
 
 (allow memcached.adm_subj_type_attribute memcached.subj_type_attribute
 	(process (ptrace signal signull sigkill sigstop)))
+(allow memcached.subj_type_attribute memcached.adm_subj_type_attribute
+	(process (sigchld)))
 (call ps_subj_pattern (memcached.adm_subj_type_attribute
 	memcached.subj_type_attribute))
+
+(call subj.ptrace_subj_type (memcached.adm_subj_type_attribute))
 
 (call file.rw_config_dirs (memcached.adm_subj_type_attribute))
 (call file.rw_var_lib_dirs (memcached.adm_subj_type_attribute))

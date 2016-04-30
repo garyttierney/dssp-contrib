@@ -209,8 +209,12 @@
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
 			(ptrace signal signull sigkill sigstop)))
+		(allow subj_type_attribute adm_subj_type_attribute (process
+			(sigchld)))
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
+
+		(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 		(call file.rw_config_dirs (adm_subj_type_attribute))
 		(call file.rw_runtime_dirs (adm_subj_type_attribute))
@@ -684,8 +688,12 @@
 
 (allow httpd.adm_subj_type_attribute httpd.subj_type_attribute (process
 	(ptrace signal signull sigkill sigstop)))
+(allow httpd.subj_type_attribute httpd.adm_subj_type_attribute (process
+	(sigchld)))
 (call ps_subj_pattern (httpd.adm_subj_type_attribute
 	httpd.subj_type_attribute))
+
+(call subj.ptrace_subj_type (httpd.adm_subj_type_attribute))
 
 (call file.rw_config_dirs (httpd.adm_subj_type_attribute))
 (call file.rw_runtime_dirs (httpd.adm_subj_type_attribute))

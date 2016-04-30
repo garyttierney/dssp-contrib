@@ -137,8 +137,12 @@
 
 		(allow adm_subj_type_attribute subj_type_attribute (process
 			(ptrace signal signull sigkill sigstop)))
+		(allow subj_type_attribute adm_subj_type_attribute (process
+			(sigchld)))
 		(call ps_subj_pattern (adm_subj_type_attribute
 			subj_type_attribute))
+
+		(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 		(call file.rw_config_dirs (adm_subj_type_attribute))
 		(call file.rw_runtime_dirs (adm_subj_type_attribute))
@@ -352,8 +356,12 @@
 
 (allow nginx.adm_subj_type_attribute nginx.subj_type_attribute (process
 	(ptrace signal signull sigkill sigstop)))
+(allow nginx.subj_type_attribute nginx.adm_subj_type_attribute (process
+	(sigchld)))
 (call ps_subj_pattern (nginx.adm_subj_type_attribute
 	nginx.subj_type_attribute))
+
+(call subj.ptrace_subj_type (nginx.adm_subj_type_attribute))
 
 (call file.rw_config_dirs (nginx.adm_subj_type_attribute))
 (call file.rw_runtime_dirs (nginx.adm_subj_type_attribute))

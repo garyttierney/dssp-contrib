@@ -340,7 +340,10 @@
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 	(call file.rw_config_dirs (adm_subj_type_attribute))
 	(call file.rw_runtime_dirs (adm_subj_type_attribute))

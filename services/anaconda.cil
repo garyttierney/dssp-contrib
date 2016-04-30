@@ -212,6 +212,9 @@
 
 	(call useradd.run (subj role_attribute))
 
+	(optional anaconda_optional_atspi
+		(call atspird.sessbus_chat_all_client_subj_type (subj)))
+
 	(optional anaconda_optional_audispd
 		(call audispd.manage_config (subj))
 		(call audispd.relabel_config (subj))
@@ -246,6 +249,9 @@
 
 	(optional anaconda_optional_firewalld
 		(call firewallcmd.run (subj role_attribute)))
+
+	(optional anaconda_optional_gsd
+		(call gsd.sessbus_chat_all_client_subj_type (subj)))
 
 	(optional anaconda_optional_hostnamectl
 		(call hostnamectl.exec (subj)))

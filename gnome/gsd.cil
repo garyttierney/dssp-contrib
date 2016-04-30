@@ -42,6 +42,10 @@
 
 	(blockinherit subj.use_fd_all_blk)
 
+	(macro sessbus_chat_all_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_all_client_subj_type_attribute
+			ARG1))
+
 	(blockinherit usersubj.search_home_data_blk)
 	(blockinherit usersubj.list_home_data_blk)
 	(blockinherit usersubj.read_home_data_files_blk)
@@ -87,6 +91,7 @@
 
 (block gsd
 	(typeattribute subj_type_attribute)
+	(typeattribute sessbus_chat_all_client_subj_type_attribute)
 
 	(blockinherit gnomeapp.gnomeapplication_common_obj_blk)
 
@@ -181,6 +186,13 @@
 	(optional gsd_subj_type_optional_sd_timedated
 		(call sd_timedated.sysbus_chat_client_subj_type
 			(subj_type_attribute)))
+
+	(optional gsd_sessbus_chat_all_client_subj_optional_sessbus
+		(allow sessbus_chat_all_client_subj_type_attribute
+			subj_type_attribute (dbus (send_msg)))
+		(allow subj_type_attribute
+			sessbus_chat_all_client_subj_type_attribute (dbus
+				(send_msg))))
 
 	(optional gsd_subj_type_optional_syndaemon
 		(call syndaemon.auto_subj_type_transition

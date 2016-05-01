@@ -86,6 +86,10 @@
 	(blockinherit file.manage_config_blk)
 	(blockinherit file.relabel_config_blk)
 
+	(macro rw_config_files ((type ARG1))
+		(call file.search_config (ARG1))
+		(call rw_files_pattern (ARG1 config_file config_file)))
+
 	(blockinherit file.search_var_lib_blk)
 	(blockinherit file.list_var_lib_blk)
 	(blockinherit file.read_var_lib_files_blk)

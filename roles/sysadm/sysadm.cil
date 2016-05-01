@@ -205,13 +205,19 @@
 (optional sysadm_dconf_home_optional_dconf
 	(tunableif enable_rbacsep
 		(true
+			(context root_dconf_home_cache (sysadm.id sysadm.role
+				dconf.home_cache_file (systemlow systemlow)))
 			(context root_dconf_home_config (sysadm.id sysadm.role
 				dconf.home_config_file (systemlow systemlow))))
 		(false
+			(context root_dconf_home_cache (sysadm.id object_r
+				dconf.home_cache_file (systemlow
+					systemlow)))
 			(context root_dconf_home_config (sysadm.id object_r
 				dconf.home_config_file (systemlow
 					systemlow)))))
 
+	(filecon "/root/\.cache/dconf(/.*)?" any root_dconf_home_cache)
 	(filecon "/root/\.config/dconf(/.*)?" any root_dconf_home_config))
 
 (optional sysadm_dirmngr_home_optional_dirmgr
@@ -2323,6 +2329,7 @@
 		(call lircd.adm (subj role)))
 
 	(optional sysadm_optional_livesys
+		(call livesys.mmap_exec_files (subj))
 		(call livesys.manage_boot_flag_files (subj))
 		(call livesys.manage_tmpfs_files (subj)))
 

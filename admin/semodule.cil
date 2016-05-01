@@ -65,6 +65,8 @@
 	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional semodule_optional_rpm
+		(call rpm.append_inherited_tmpfs_files (subj))
+		(call rpm.read_inherited_tmpfs_files (subj))
 		(call rpm.rw_inherited_fifo_files (subj)))
 
 	(optional semodule_optional_sd

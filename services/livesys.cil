@@ -21,6 +21,9 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(macro mmap_exec_files ((type ARG1))
+		(allow ARG1 cmd_file mmap_file_perms))
+
 	(blockinherit file.read_tmpfs_files_blk)
 	(blockinherit file.manage_tmpfs_files_blk)
 	(blockinherit file.relabel_tmpfs_files_blk)
@@ -107,13 +110,13 @@
 	(call shadow.manage (subj))
 	(call locale.read (subj))
 
+	(call mount.auto_subj_type_transition (subj))
+
 	(call nss.client_subj_type (subj))
 
 	(call pam.change_passwd (subj))
 
 	(call passwd.exec (subj))
-
-	(call plymouth.exec (subj))
 
 	(call setfiles.auto_subj_type_transition (subj))
 
@@ -129,15 +132,24 @@
 	(optional livesys_optional_chronyd
 		(call chronyd.manage_config_files (subj)))
 
+	(optional livesys_optional_dm
+		(call dmcrypt.auto_subj_type_transition (subj)))
+
 	(optional livesys_optional_gdm
 		(call gdm.write_config_files (subj)))
 
 	(optional livesys_optional_dconf
-		(call dconf.read_config (subj)))
+		(call dconf.client_subj_type (subj)))
 
 	(optional livesys_optional_glib
 		(call glib_helper.exec (subj))
 		(call gsettings.exec (subj)))
+
+	(optional livesys_optional_plymouth
+		(call plymouth.exec (subj)))
+
+	(optional livesys_optional_rpm
+		(call rpm.rw_config_files (subj)))
 
 	(optional livesys_optional_sd
 		(call sd.daemon (subj cmd_file))

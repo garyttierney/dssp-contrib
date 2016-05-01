@@ -90,6 +90,9 @@
 
 	(call xserver.client_subj_type (subj_type_attribute))
 
+	(optional atspird_subj_type_optional_gdm
+		(call gdm.stream_connect (subj_type_attribute)))
+
 	(optional atspird_sessbus_chat_all_client_subj_optional_sessbus
 		(allow sessbus_chat_all_client_subj_type_attribute
 			subj_type_attribute (dbus (send_msg)))

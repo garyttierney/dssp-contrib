@@ -15,17 +15,32 @@
 	(filecon "/usr/libexec/evolution-addressbook-factory" file
 		cmd_file_context)
 	(filecon "/usr/libexec/evolution-addressbook-factory-subprocess" file
-		cmd_file_context))
+		cmd_file_context)
+
+	(optional evoaf_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*evolution-addressbook-factory.*"
+				file unit_file_context)))
 
 (in evocf
 	(filecon "/usr/libexec/evolution-calendar-factory" file
 		cmd_file_context)
 	(filecon "/usr/libexec/evolution-calendar-factory-subprocess" file
-		cmd_file_context))
+		cmd_file_context)
+
+	(optional evocf_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*evolution-calendar-factory.*"
+				file unit_file_context)))
 
 (in evosr
 	(filecon "/usr/libexec/evolution-source-registry" file
-		cmd_file_context))
+		cmd_file_context)
+
+	(optional evosr_optional_sduser
+		(filecon
+			"/usr/lib/systemd/user/[^/]*evolution-source-registry.*"
+				file unit_file_context)))
 
 (in evo_helper
 	(filecon "/usr/libexec/camel-index-control-.*" file cmd_file_context)
@@ -193,6 +208,9 @@
 		(call sd_localed.sysbus_chat_client_subj_type
 			(subj_type_attribute)))
 
+	(optional evoaf_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
+
 	(optional evoaf_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))
 
@@ -240,8 +258,11 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(optional evofc_subj_type_optional_nm
+	(optional evocf_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional evocf_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
 
 	(optional evocf_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))
@@ -288,6 +309,9 @@
 
 	(optional evosr_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional evosr_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
 
 	(optional evosr_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

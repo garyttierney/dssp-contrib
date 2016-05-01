@@ -4,7 +4,11 @@
 ;
 
 (in atspi_sessbus_launch
-	(filecon "/usr/libexec/at-spi-bus-launcher" file cmd_file_context))
+	(filecon "/usr/libexec/at-spi-bus-launcher" file cmd_file_context)
+
+	(optional atspi_sessbus_launch_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*at-spi-dbus-bus.*" file
+			unit_file_context)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -74,6 +78,9 @@
 
 	(optional atspi_sessbus_launch_subj_type_optional_dconf
 		(call dconf.client_subj_type (subj_type_attribute)))
+
+	(optional atspi_sessbus_launch_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
 
 	(optional atspi_sessbus_launch_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute))))

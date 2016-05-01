@@ -164,6 +164,9 @@
 	(optional livesys_optional_sd_localed
 		(call sd_localed.read_config_files (subj)))
 
+	(optional livesys_optional_sessbus_launch
+		(call sessbus_launch.dontaudit_exec_cmd_files (subj)))
+
 	(optional livesys_optional_systemctl
 		(call systemctl.system_client_subj_type (subj)))
 

@@ -4,6 +4,8 @@
 ;
 
 (in anaconda
+	(filecon "/mnt/sysimage/\.hs_err_pid.*\.log\..*" file
+		boot_flag_file_context)
 	(filecon "/usr/sbin/anaconda" file cmd_file_context)
 	(filecon "/var/run/anaconda\.pid" file runtime_file_context)
 	(filecon "/var/run/install(/.*)?" any runtime_file_context)
@@ -36,6 +38,14 @@
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
+
+	(blockinherit file.read_boot_flag_files_blk)
+	(blockinherit file.manage_boot_flag_files_blk)
+	(blockinherit file.relabel_boot_flag_files_blk)
+
+	(macro rootfs_obj_type_transition_boot_flag ((type ARG1))
+		(call fs.rootfs_obj_type_transition (ARG1 boot_flag_file file
+			"*")))
 
 	(blockinherit file.search_runtime_blk)
 	(blockinherit file.list_runtime_blk)
@@ -121,6 +131,14 @@
 
 	(call manage_runtime (subj))
 	(call runtime_obj_type_transition_runtime (subj))
+
+	(blockinherit file.boot_flag_obj_blk)
+
+	(typeattributeset obj_type_attribute boot_flag_file)
+
+	(call manage_boot_flag_files (subj))
+	(call relabel_boot_flag_files (subj))
+	(call rootfs_obj_type_transition_boot_flag (subj))
 
 	(dontaudit subj self (capability (net_admin)))
 	(allow subj self (capability (dac_override setuid sys_resource
@@ -381,9 +399,12 @@
 	(call file.search_var_cache (subj))
 	(call file.search_var_tmp (subj))
 
+	(call fs.audit_write_access_devtmpfs_dirs (subj))
 	(call fs.read_iso9660 (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
-	(call fs.read_sysfs (subj))
+	(call fs.list_sysfs (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+	(call fs.rw_sysfs_files (subj))
 	(call fs.write_inherited_tmpfs_files (subj))
 
 	(call lib.manage_lib (subj))

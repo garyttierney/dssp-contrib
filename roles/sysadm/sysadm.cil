@@ -2333,6 +2333,10 @@
 		(call livesys.manage_boot_flag_files (subj))
 		(call livesys.manage_tmpfs_files (subj)))
 
+	(optional sysadm_optional_lldpad
+		(call lldpad.adm (subj role))
+		(call lldpad.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_loadkeys
 		(call loadkeys.run (subj_type_attribute role)))
 

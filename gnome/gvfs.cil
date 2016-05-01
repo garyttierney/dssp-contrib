@@ -732,5 +732,8 @@
 	(call usersubj.rw_home_user (subj_type_attribute))
 	(call usersubj.setattr_home_user_dirs (subj_type_attribute))
 
+	(optional gvfsdtrash_subj_type_optional_dracut_initramfs
+		(call dracut_initramfs.search_runtime (subj_type_attribute)))
+
 	(optional gvfsdtrash_subj_type_optional_qemu
 		(call qemu_guest.dontaudit_list_files (subj_type_attribute))))

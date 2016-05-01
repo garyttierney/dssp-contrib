@@ -2152,6 +2152,11 @@
 		(call gtk.relabel_home_config (subj))
 		(call gtk.home_config_obj_type_transition_home_config (subj)))
 
+	(optional sysadm_optional_fcoe
+		(call fcoeadm.run (subj_type_attribute role))
+		(call fcoemon.run (subj_type_attribute role))
+		(call fcoemon.adm (subj role)))
+
 	(optional sysadm_optional_fwupd
 		(call fwupd.adm (subj role)))
 

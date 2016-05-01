@@ -1,0 +1,109 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in fcoe
+	(filecon "/etc/fcoe(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/fcoe" file config_file_context))
+
+(in fcoeadm
+	(filecon "/usr/sbin/fcnsq" file cmd_file_context)
+	(filecon "/usr/sbin/fcoeadm" file cmd_file_context)
+	(filecon "/usr/sbin/fcping" file cmd_file_context)
+	(filecon "/usr/sbin/fcrls" file cmd_file_context)
+	(filecon "/usr/sbin/fipvlan" file cmd_file_context))
+
+(in fcoemon
+	(filecon "/usr/sbin/fcoemon" file cmd_file_context)
+
+	(optional fcoemon_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*fcoe.*" file
+			unit_file_context)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in fcoe
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+(in fcoeadm
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fcoemon
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional fcoemon_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional fcoemon_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block fcoe
+	(blockinherit file.config_obj_blk))
+
+(block fcoeadm
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj))
+
+(block fcoemon
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(optional fcoemon_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call fcoe.manage_config (adm_subj_type_attribute))
+	(call fcoe.relabel_config (adm_subj_type_attribute)))

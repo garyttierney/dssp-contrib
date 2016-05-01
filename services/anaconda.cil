@@ -418,6 +418,7 @@
 		(call dracut_initramfs.search_runtime (subj)))
 
 	(optional anacondacleanup_optional_iscsid
+		(call iscsid.read_var_lib (subj))
 		(call iscsid.manage_runtime_lock_files (subj))
 		(call iscsid.runtime_lock_obj_type_transition_runtime_lock
 			(subj)))

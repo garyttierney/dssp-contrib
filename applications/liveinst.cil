@@ -94,8 +94,10 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call selinux_config.read_config_files (subj_type_attribute))
+	(call setenforce.dontaudit_exec_cmd_files (subj_type_attribute))
 
 	(optional liveinst_subj_type_optional_rpm
+		(call rpm.send_signull (subj_type_attribute))
 		(call rpm.exec (subj_type_attribute))
 		(call rpm.read_config (subj_type_attribute))
 		(call rpm.manage_var_lib_files (subj_type_attribute))))

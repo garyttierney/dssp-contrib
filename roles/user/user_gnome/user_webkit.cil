@@ -55,6 +55,9 @@
 
 	(call user_gvfsd.sessbus_chat_client_subj_type (subj))
 
+	(optional user_webkitnp_optional_user_gcs
+		(call user_gcs.rw_unix_stream_sockets (subj)))
+
 	(optional user_webkitnp_subj_type_optional_user_sessbus
 		(call user_sessbus.client_subj_type (subj)))
 

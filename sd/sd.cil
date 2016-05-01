@@ -1165,6 +1165,9 @@
 	(optional sd_optional_iscsid
 		(call iscsid.read_var_lib (subj)))
 
+	(optional sd_optional_lldpad
+		(call lldpad.relabelto_tmpfs_user_files (subj)))
+
 	(optional sd_optional_machinectl
 		(call machinectl.use_fd_all_subj (subj)))
 

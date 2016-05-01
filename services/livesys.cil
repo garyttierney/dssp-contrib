@@ -21,8 +21,8 @@
 
 	(blockinherit subj.send_signal_blk)
 
-	(macro mmap_exec_files ((type ARG1))
-		(allow ARG1 cmd_file mmap_file_perms))
+	(macro dontaudit_mmap_inherited_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file (file (getattr read execute))))
 
 	(blockinherit file.read_tmpfs_files_blk)
 	(blockinherit file.manage_tmpfs_files_blk)

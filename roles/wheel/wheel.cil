@@ -106,6 +106,10 @@
 	(optional wheel_optional_execstack
 		(call execstack.exec (subj)))
 
+	(optional wheel_optional_fcoe
+		(call fcoeadm.dontaudit_mmap_inherited_cmd_files (subj))
+		(call fcoemon.dontaudit_mmap_inherited_cmd_files (subj)))
+
 	(optional wheel_optional_feh
 		(call feh.manage_tmpfs_user_files (subj))
 		(call feh.relabel_tmpfs_user_files (subj))
@@ -232,7 +236,10 @@
 		(call lirc_lsplugins.run (subj_type_attribute role)))
 
 	(optional wheel_optional_livesys
-		(call livesys.mmap_exec_files (subj)))
+		(call livesys.dontaudit_mmap_inherited_cmd_files (subj)))
+
+	(optional wheel_optional_lldpad
+		(call lldpad.dontaudit_mmap_inherited_cmd_files (subj)))
 
 	(optional wheel_optional_mariadb
 		(call mariadb.manage_home_user_files (subj))

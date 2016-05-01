@@ -2334,7 +2334,7 @@
 		(call lircd.adm (subj role)))
 
 	(optional sysadm_optional_livesys
-		(call livesys.mmap_exec_files (subj))
+		(call livesys.dontaudit_mmap_inherited_cmd_files (subj))
 		(call livesys.manage_boot_flag_files (subj))
 		(call livesys.manage_tmpfs_files (subj)))
 

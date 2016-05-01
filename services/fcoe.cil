@@ -42,7 +42,10 @@
 
 	(blockinherit run_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(macro dontaudit_mmap_inherited_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file (file (getattr read execute)))))
 
 (in fcoemon
 	(blockinherit exec_blk)
@@ -52,6 +55,9 @@
 	(blockinherit run_blk)
 
 	(blockinherit subj.send_signal_blk)
+
+	(macro dontaudit_mmap_inherited_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file (file (getattr read execute))))
 
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)

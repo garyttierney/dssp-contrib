@@ -118,6 +118,26 @@
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
+	(allow subj self (process (getsched)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+
+	(call storage.getattr_fixed_disk (subj))
+	(call storage.getattr_removable (subj))
+
+	(call locale.read (subj))
+	(call passwords.read (subj))
+
+	(call mount.exec (subj))
+	(call mount.read_runtime_files (subj))
+
+	(call nss.read_config_files (subj))
+
 	(optional blkdeactivate_optional_sd
 		(call sd.daemon (subj cmd_file))
 

@@ -12,10 +12,21 @@
 
 	(optional anaconda_unit_optional_sd
 		(filecon "/usr/lib/systemd/system/[^/]*anaconda.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*instperf.*" file
+			unit_file_context)
+		(filecon "/usr/lib/systemd/system/[^/]*zram.*" file
 			unit_file_context)))
 
 (in anacondacleanup
 	(filecon "/usr/bin/anaconda-cleanup" file cmd_file_context))
+
+(in instperf
+	(filecon "/usr/bin/instperf" file cmd_file_context))
+
+(in zramswap
+	(filecon "/usr/libexec/anaconda/zramswapoff" file cmd_file_context)
+	(filecon "/usr/libexec/anaconda/zramswapon" file cmd_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -96,6 +107,20 @@
 	(macro rw_sem ((type ARG1))
 		(allow ARG1 subj rw_sem_perms)))
 
+(in instperf
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in zramswap
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Policy
@@ -105,11 +130,14 @@
 	(roleattribute role_attribute)
 
 	(typeattribute adm_subj_type_attribute)
+	(typeattribute subj_type_attribute)
 	(typeattribute sysbus_chat_client_subj_type_attribute)
 
 	(typeattribute obj_type_attribute)
 
 	(blockinherit app.application_blk)
+
+	(typeattributeset subj_type_attribute subj)
 
 	(roleattributeset role_attribute sys.role)
 
@@ -351,10 +379,10 @@
 		(allow sysbus_chat_client_subj_type_attribute subj (dbus
 			(send_msg))))
 
-	(allow adm_subj_type_attribute subj (process (ptrace signal signull
-		sigkill sigstop)))
-	(allow subj adm_subj_type_attribute (process (sigchld)))
-	(call ps_subj_pattern (adm_subj_type_attribute subj))
+	(allow adm_subj_type_attribute subj_type_attribute (process (ptrace
+		signal signull sigkill sigstop)))
+	(allow subj_type_attribute adm_subj_type_attribute (process (sigchld)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj_type_attribute))
 
 	(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
@@ -374,6 +402,8 @@
 	(roleattribute role_attribute)
 
 	(blockinherit app.application_blk)
+
+	(typeattributeset anaconda.subj_type_attribute subj)
 
 	(roleattributeset role_attribute sys.role)
 
@@ -458,3 +488,31 @@
 
 	(optional anacondacleanup_optional_sysbus
 		(call sysbus.client_subj_type (subj))))
+
+(block instperf
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(typeattributeset anaconda.subj_type_attribute subj)
+
+	(roletype sys.role subj)
+
+	(optional instperf_optional_sd
+		(call sd.daemon (subj cmd_file))))
+
+(block zramswap
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(typeattributeset anaconda.subj_type_attribute subj)
+
+	(roletype sys.role subj)
+
+	(optional zramswap_optional_sd
+		(call sd.daemon (subj cmd_file))))

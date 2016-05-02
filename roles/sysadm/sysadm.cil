@@ -2010,8 +2010,12 @@
 		(call dirmngr.gpg_home_user_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_dm
-		(call dmcrypt.run (subj_type_attribute role))
+		(call blkdeactivate.run (subj_type_attribute role))
+		(call blkdeactivate.adm (subj role))
 		(call dmsetup.run (subj_type_attribute role)))
+
+	(optional sysadm_optional_dmcrypt
+		(call dmcrypt.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_dmesg
 		(call dmesg.run (subj_type_attribute role)))

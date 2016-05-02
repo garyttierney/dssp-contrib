@@ -6,6 +6,13 @@
 (in dmsetup
 	(filecon "/usr/sbin/dmsetup" file cmd_file_context))
 
+(in blkdeactivate
+	(filecon "/usr/sbin/blkdeactivate" file cmd_file_context)
+
+	(optional blkdeactivate_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*blk-availability.*" file
+			unit_file_context)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -19,6 +26,31 @@
 	(blockinherit run_blk)
 
 	(blockinherit subj.send_signal_blk))
+
+(in blkdeactivate
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.search_devtmpfs (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file
+			"*")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional blkdeactivate_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional blkdeactivate_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -65,3 +97,43 @@
 
 	(optional dmsetup_optional_unconfinedsubj
 		(call unconfinedsubj.rw_sem_all_subj (subj))))
+
+(block blkdeactivate
+	(roleattribute role_attribute)
+
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(optional blkdeactivate_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(typeattributeset obj_type_attribute unit_file)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start))))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call fs.rw_tmpfs_dirs (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms))

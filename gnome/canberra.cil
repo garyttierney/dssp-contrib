@@ -106,13 +106,17 @@
 
 	(call dev.rw_sound (subj))
 
-	(call file.read_data_files (subj))
+	(call file.read_data (subj))
 
-	(call fs.read_sysfs_files (subj))
+	(call fs.read_sysfs (subj))
 
 	(call alsactl.read_config_files (subj))
 
+	(call nss.client_subj_type (subj))
+
 	(call udev.client_subj_type (subj))
+
+	(call usersubj.dontaudit_search_home_dir (subj))
 
 	(optional canberraboot_optional_sd
 		(call sd.daemon (subj cmd_file))

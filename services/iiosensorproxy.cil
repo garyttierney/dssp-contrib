@@ -45,6 +45,10 @@
 
 	(roletype sys.role subj)
 
+	(call fs.read_sysfs (subj))
+
+	(call udev.client_subj_type (subj))
+
 	(optional iiosensorproxy_optional_sd
 		(call sd.daemon (subj cmd_file))
 
@@ -55,6 +59,9 @@
 
 		(allow adm_subj_type_attribute unit_file manage_file_perms)
 		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(optional iiosensorproxy_optional_sysbus
+		(call sysbus.client_subj_type (subj)))
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))

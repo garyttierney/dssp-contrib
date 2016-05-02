@@ -314,6 +314,9 @@
 	(call policy_config.manage (subj))
 	(call policy_config.relabel (subj))
 
+	; packagekitd
+	(call usersubj.home_dir_add_obj_type_transition_home_cache (subj))
+
 	(optional rpm_optional_auditd
 		(call auditd.manage_config (subj))
 		(call auditd.relabel_config (subj))

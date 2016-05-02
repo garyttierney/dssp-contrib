@@ -4,6 +4,8 @@
 ;
 
 (in lldpad
+	(filecon "/dev/shm/lldpad\.state" file tmpfs_user_file_context)
+
 	(filecon "/usr/sbin/dcbtool" file cmd_file_context)	
 	(filecon "/usr/sbin/lldpad" file cmd_file_context)
 	(filecon "/usr/sbin/lldptool" file cmd_file_context)

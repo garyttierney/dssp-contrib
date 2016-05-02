@@ -474,6 +474,12 @@
 		(call user_awesome.role_pattern (role subj_type_attribute))
 		(call user_awesomec.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_baobab
+		(call baobab.manage_tmpfs_user (subj))
+		(call baobab.relabel_tmpfs_user (subj))
+
+		(call user_baobab.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_bijiben
 		(call bijiben.manage_tmpfs_user (subj))
 		(call bijiben.relabel_tmpfs_user (subj))

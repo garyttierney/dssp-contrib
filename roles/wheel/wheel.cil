@@ -536,6 +536,12 @@
 		(call wheel_awesome.role_pattern (role subj_type_attribute))
 		(call wheel_awesomec.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_baobab
+		(call baobab.manage_tmpfs_user (subj))
+		(call baobab.relabel_tmpfs_user (subj))
+
+		(call wheel_baobab.role_pattern (role subj_type_attribute)))
+
 	(optional wheel_optional_wheel_bijiben
 		(call bijiben.manage_tmpfs_user (subj))
 		(call bijiben.relabel_tmpfs_user (subj))

@@ -3021,6 +3021,12 @@
 		(call sysadm_awesome.role_pattern (role subj_type_attribute))
 		(call sysadm_awesomec.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_wheel_baobab
+		(call baobab.manage_tmpfs_user (subj))
+		(call baobab.relabel_tmpfs_user (subj))
+
+		(call sysadm_baobab.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_bijiben
 		(call bijiben.manage_tmpfs_user (subj))
 		(call bijiben.relabel_tmpfs_user (subj))

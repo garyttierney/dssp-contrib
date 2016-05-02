@@ -1,0 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_baobab
+	(blockinherit baobab.subj_blk)
+
+	(call user_gnomeapp.spec_common_gnomeapplication (subj
+		baobab.tmpfs_user_file))
+
+	(optional user_baobab_optional_user_sessbus
+		(call user_sessbus.daemon (subj baobab.cmd_file))))

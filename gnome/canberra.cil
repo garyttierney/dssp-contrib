@@ -6,6 +6,13 @@
 (in canberra
 	(filecon "/usr/bin/canberra-gtk-play" file cmd_file_context))
 
+(in canberraboot
+	(filecon "/usr/bin/canberra-boot" file cmd_file_context)
+
+	(optional canberraboot_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*canberra-system.*" file
+			unit_file_context)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -41,6 +48,20 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
 			"*"))))
 
+(in canberraboot
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(optional canberraboot_adm_optional_sd
+			(call sd.daemon_adm_subj_type (ARG1)))
+		(optional canberraboot_adm_optional_sd_askpwd
+			(call sd_askpwd_agent.run (ARG1 ARG2)))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Policy
@@ -71,3 +92,29 @@
 
 	(optional canberra_subj_type_optional_xserver
 		(call xserver.client_subj_type (subj_type_attribute))))
+
+(block canberraboot
+	(typeattribute adm_subj_type_attribute)
+
+	(blockinherit subj.common_subj_blk)
+
+	(blockinherit cmd.obj_blk)
+
+	(call subj.entry (subj cmd_file))
+
+	(roletype sys.role subj)
+
+	(optional canberraboot_optional_sd
+		(call sd.daemon (subj cmd_file))
+
+		(blockinherit sd.unit_obj_blk)
+
+		(allow adm_subj_type_attribute unit_file (service (stop status
+			disable enable reload start)))
+
+		(allow adm_subj_type_attribute unit_file manage_file_perms)
+		(allow adm_subj_type_attribute unit_file relabel_file_perms))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj)))

@@ -3055,6 +3055,8 @@
 		(call sysadm_btst.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_canberra
+		(call canberraboot.adm (subj role))
+
 		(call canberra.manage_tmpfs_user_files (subj))
 		(call canberra.relabel_tmpfs_user_files (subj))
 

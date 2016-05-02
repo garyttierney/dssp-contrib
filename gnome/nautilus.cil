@@ -155,7 +155,10 @@
 	(call usersubj.home_dir_obj_type_transition_home_cmd
 		(subj_type_attribute))
 	(call usersubj.home_data_obj_type_transition_home_cmd
-		(subj_type_attribute)))
+		(subj_type_attribute))
+
+	(optional nautilus_subj_type_optional_pa
+		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file))))
 
 (block nautilusas
 	(typeattribute subj_type_attribute)

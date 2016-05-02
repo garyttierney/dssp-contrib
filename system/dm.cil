@@ -124,6 +124,7 @@
 	(call cmd.audit_read_access_shell_files (subj))
 	(call cmd.exec (subj))
 
+	(call fs.getattr_tmpfs_fs (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))
 
@@ -132,10 +133,16 @@
 
 	(call locale.read (subj))
 
-	(call mount.exec (subj))
+	(call mount.auto_subj_type_transition (subj))
 	(call mount.read_runtime_files (subj))
 
 	(call nss.client_subj_type (subj))
+
+	(optional blkdeactivate_optional_lvm
+		(call lvm.auto_subj_type_transition (subj)))
+
+	(optional blkdeactivate_optional_mdadm
+		(call mdadm.auto_subj_type_transition (subj)))
 
 	(optional blkdeactivate_optional_sd
 		(call sd.daemon (subj cmd_file))

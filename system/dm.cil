@@ -131,12 +131,11 @@
 	(call storage.getattr_removable (subj))
 
 	(call locale.read (subj))
-	(call passwords.read (subj))
 
 	(call mount.exec (subj))
 	(call mount.read_runtime_files (subj))
 
-	(call nss.read_config_files (subj))
+	(call nss.client_subj_type (subj))
 
 	(optional blkdeactivate_optional_sd
 		(call sd.daemon (subj cmd_file))

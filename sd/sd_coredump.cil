@@ -9,7 +9,9 @@
 		config_file_context)
 	(filecon "/var/run/systemd/coredump" socket runtime_file_context)
 	(filecon "/usr/lib/systemd/systemd-coredump" file cmd_file_context)
-	(filecon "/var/lib/systemd/coredump(/.*)?" any var_lib_file_context))
+	(filecon "/var/lib/systemd/coredump(/.*)?" any var_lib_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-coredump.*" file
+		unit_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -116,7 +118,12 @@
 
 	(macro sd_runtime_obj_type_transition_runtime ((type ARG1))
 		(call sd.runtime_obj_type_transition (ARG1 runtime_file
-			sock_file "coredump"))))
+			sock_file "coredump")))
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -124,25 +131,41 @@
 ;
 
 (block sd_coredump
+	(typeattribute adm_subj_type_attribute)
+
+	(typeattribute obj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
 
 	(call sd.unix_stream_socket_activated_subj_type (subj))
 
+	(blockinherit sd.unit_obj_blk)
+
+	(typeattributeset obj_type_attribute unit_file)
+
 	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
 
 	(call read_config (subj))
 
 	(blockinherit file.var_lib_obj_blk)
+
+	(typeattributeset obj_type_attribute var_lib_file)
 
 	(call manage_var_lib (subj))
 	(call sd_var_lib_obj_type_transition_var_lib (subj))
 
 	(blockinherit file.tmpfs_obj_blk)
 
+	(typeattributeset obj_type_attribute tmpfs_file)
+
 	(call manage_tmpfs_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset obj_type_attribute runtime_file)
 
 	(call sd.socket_activated_obj_type (runtime_file))
 
@@ -174,4 +197,27 @@
 	(call sd.log_parse_env_subj_type (subj))
 
 	(optional sd_coredump_optional_steam
-		(call steam.read_home_data (subj))))
+		(call steam.read_home_data (subj)))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call fs.rw_tmpfs_dirs (adm_subj_type_attribute))
+
+	(call sd.rw_config_dirs (adm_subj_type_attribute))
+	(call sd.rw_var_lib_dirs (adm_subj_type_attribute))
+	(call sd.rw_runtime_dirs (adm_subj_type_attribute))
+
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
+
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

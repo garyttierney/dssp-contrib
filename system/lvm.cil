@@ -16,8 +16,6 @@
 	(filecon "/var/run/lvm(/.*)?" any runtime_file_context)
 
 	(optional lvm_unit_optional_sd
-		(filecon "/usr/lib/systemd/system/blk-availability.*" file
-			unit_file_context)
 		(filecon "/usr/lib/systemd/system/lvm2-.*" file
 			unit_file_context)))
 

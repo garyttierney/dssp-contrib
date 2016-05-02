@@ -14,6 +14,8 @@
 	(filecon "/var/run/chronyd\.pid" file runtime_file_context)
 
 	(optional chronyd_unit_optional_sd
+		(filecon "/usr/lib/systemd/system/[^/]*chrony-dnssrv.*" file
+			unit_file_context)
 		(filecon "/usr/lib/systemd/system/[^/]*chrony-wait.*" file
 			unit_file_context)
 		(filecon "/usr/lib/systemd/system/[^/]*chronyd.*" file

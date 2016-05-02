@@ -4,7 +4,9 @@
 ;
 
 (in sd_remountfs
-	(filecon "/usr/lib/systemd/systemd-remount-fs" file cmd_file_context))
+	(filecon "/usr/lib/systemd/systemd-remount-fs" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system/[^/]*systemd-remount-fs.*" file
+		unit_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -16,7 +18,12 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+
+	(macro adm ((type ARG1)(role ARG2))
+		(typeattributeset adm_subj_type_attribute ARG1)
+		(call sd.daemon_adm_subj_type (ARG1))
+		(call sd_askpwd_agent.run (ARG1 ARG2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -24,7 +31,11 @@
 ;
 
 (block sd_remountfs
+	(typeattribute adm_subj_type_attribute)
+
 	(blockinherit sd.daemon_blk)
+
+	(blockinherit sd.unit_obj_blk)
 
 	(call dev.read_urandom (subj))
 
@@ -34,4 +45,14 @@
 
 	(call mount.auto_subj_type_transition (subj))
 
-	(call sd.log_parse_env_subj_type (subj)))
+	(call sd.log_parse_env_subj_type (subj))
+
+	(allow adm_subj_type_attribute unit_file (service (stop status disable
+		enable reload start)))
+
+	(allow adm_subj_type_attribute subj (process (ptrace signal signull
+		sigkill sigstop)))
+	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(allow adm_subj_type_attribute unit_file manage_file_perms)
+	(allow adm_subj_type_attribute unit_file relabel_file_perms))

@@ -76,6 +76,19 @@
 (filecon "/root/\.terminfo" file root_home_terminfo_data)
 (filecon "/root/\.terminfo(/.*)?" any root_home_terminfo_data)
 
+(optional sysadm_anaconda_home_optional_anaconda
+	(tunableif enable_rbacsep
+		(true
+			(context root_anaconda_home_user (sysadm.id
+				sysadm.role anaconda.home_user_file
+					(systemlow systemlow))))
+		(false
+			(context root_anaconda_home_user (sysadm.id object_r
+				anaconda.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/anaconda-ks\.cfg" file root_anaconda_home_user))
+
 (optional sysadm_awesome_home_optional_awesome
 	(tunableif enable_rbacsep
 		(true
@@ -1885,6 +1898,7 @@
 	(optional sysadm_optional_anaconda
 		(call anaconda.adm (subj role))
 		(call anaconda.run (subj_type_attribute role))
+		(call anaconda.home_dir_obj_type_transition_home_user (subj))
 		(call anacondacleanup.run (subj_type_attribute role)))
 
 	(optional sysadm_optional_appstream

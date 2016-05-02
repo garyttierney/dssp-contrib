@@ -72,6 +72,14 @@
 		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
 			"install")))
 
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home_user ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file "anaconda-ks.cfg")))
+
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
@@ -150,6 +158,13 @@
 	(call manage_tmpfs_user_files (subj))
 	(call mmap_tmpfs_user_files (subj))
 	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(typeattributeset obj_type_attribute home_user_file)
+
+	(call manage_home_user_files (subj))
+	(call home_dir_obj_type_transition_home_user (subj))
 
 	(blockinherit file.runtime_obj_blk)
 
@@ -260,8 +275,6 @@
 	(call udevadm.run (subj role_attribute))
 
 	(call useradd.run (subj role_attribute))
-
-	(call usersubj.home_dir_obj_type_transition_home_user_files (subj))
 
 	(optional anaconda_optional_atspi
 		(call atspird.sessbus_chat_all_client_subj_type (subj)))

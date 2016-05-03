@@ -18,7 +18,13 @@
 
 		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
 
-		(typeattributeset gm.subj_type_attribute subj)))
+		(typeattributeset gm.subj_type_attribute subj))
+
+	(blockinherit subj.use_fd_all_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

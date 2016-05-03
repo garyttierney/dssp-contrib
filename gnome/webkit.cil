@@ -302,6 +302,18 @@
 
 	(call cert.read_all (subj_type_attribute))
 
+	(optional webkitnp_subj_type_optional_gitg
+		(call gitg.rw_inherited_tmpfs_user_files
+			(subj_type_attribute)))
+
+	(optional webkitnp_subj_type_optional_gdocs
+		(call gdocs.rw_inherited_tmpfs_user_files
+			(subj_type_attribute)))
+
+	(optional webkitnp_subj_type_optional_gm
+		(call gm.rw_inherited_tmpfs_user_files
+			(subj_type_attribute)))
+
 	(optional webkitnp_subj_type_optional_yelp
 		(call yelp.rw_inherited_tmpfs_user_files
 			(subj_type_attribute))))

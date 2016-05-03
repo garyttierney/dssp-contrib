@@ -4,6 +4,11 @@
 ;
 
 (in user_gm
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+
 	(macro auto_subj_type_transition ((type ARG1))
 		(call gm.spec_auto_subj_type_transition (ARG1 subj)))
 
@@ -59,4 +64,10 @@
 		(call user_tpmc.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_gm_optional_user_sessbus
-		(call user_sessbus.daemon (subj gm.cmd_file))))
+		(call user_sessbus.daemon (subj gm.cmd_file)))
+
+	(optional user_gm_optional_user_webkitwp
+		(call user_webkitnp.rw_inherited_unix_stream_sockets (subj))
+		(call user_webkitnp.auto_subj_type_transition (subj))
+		(call user_webkitwp.auto_subj_type_transition (subj))
+		(call user_webkitwp.sessbus_chat_client_subj_type (subj))))

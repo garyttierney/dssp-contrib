@@ -1,0 +1,19 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_gsysmon
+	(blockinherit gsysmon.subj_blk)
+
+	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
+		gsysmon.tmpfs_user_file))
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+
+	;(optional sysadm_gsysmon_optional_sysadm_gs
+	;	(call sysadm_gs.daemon (subj gsysmon.cmd_file))
+	;	(call sysadm_gs.sessbus_chat_client_subj_type (subj)))
+
+	(optional sysadm_gsysmon_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

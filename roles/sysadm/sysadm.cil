@@ -3671,6 +3671,12 @@
 		(call sysadm_gst.role_pattern (role subj_type_attribute))
 		(call sysadm_gstps.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_gsysmon
+		(call gsysmon.manage_tmpfs_user (subj))
+		(call gsysmon.relabel_tmpfs_user (subj))
+
+		(call sysadm_gsysmon.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_gt
 		(call gt.manage_tmpfs_user_files (subj))
 		(call gt.relabel_tmpfs_user_files (subj))

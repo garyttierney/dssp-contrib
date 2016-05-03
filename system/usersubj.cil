@@ -1940,6 +1940,18 @@
 	(macro dontaudit_manual_subj_type_transition_common_subj ((type ARG1))
 		(dontaudit ARG1 common_type_attribute (process (transition))))
 
+	(macro getattr_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (getattr))))
+
+	(macro setsched_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (setsched))))
+
+	(macro send_sigkill_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (sigkill))))
+
+	(macro send_sigstop_common_login_subj ((type ARG1))
+		(allow ARG1 common_login_type_attribute (process (sigstop))))
+
 	(macro create_keyring_subj ((type ARG1))
 		(allow ARG1 type_attribute create_key_perms))
 

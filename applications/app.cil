@@ -74,6 +74,9 @@
 	(macro send_sigstop ((type ARG1))
 		(allow ARG1 subj_type_attribute (process (sigstop))))
 
+	(macro setsched ((type ARG1))
+		(allow ARG1 subj_type_attribute (process (setsched))))
+
 	(macro use_fd ((type ARG1))
 		(allow ARG1 subj_type_attribute (fd (use))))
 

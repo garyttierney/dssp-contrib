@@ -19,6 +19,15 @@
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
 		gsysmon.tmpfs_user_file))
 
+	(call fs.getattr_all_fs (subj))
+
+	(call subj.getattr_common_subj (subj))
+	(call subj.read_state_common_subj (subj))
+	(call subj.setsched_common_subj (subj))
+	(call subj.send_sigkill_common_subj (subj))
+	(call subj.send_signal_common_subj (subj))
+	(call subj.send_sigstop_common_subj (subj))
+
 	(call sysadm_gvfsdud2.sessbus_chat_client_subj_type (subj))
 	(call sysadm_gvfsdgoavm.sessbus_chat_client_subj_type (subj))
 

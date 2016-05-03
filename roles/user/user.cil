@@ -1090,6 +1090,12 @@
 		(call user_gst.role_pattern (role subj_type_attribute))
 		(call user_gstps.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gsysmon
+		(call gt.manage_tmpfs_user_files (subj))
+		(call gt.relabel_tmpfs_user_files (subj))
+
+		(call user_gsysmon.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gt
 		(call gt.manage_tmpfs_user_files (subj))
 		(call gt.relabel_tmpfs_user_files (subj))

@@ -11,3 +11,9 @@
 
 	(optional sysadm_liveinst_optional_sysadm_zenity
 		(call sysadm_zenity.auto_subj_type_transition (subj))))
+
+(block sysadm_liveinstsetup
+	(blockinherit liveinstsetup.subj_blk)
+
+	(optional sysadm_liveinstsetup_optional_sysadm_gs
+		(call sysadm_gs.daemon (subj liveinstsetup.cmd_file))))

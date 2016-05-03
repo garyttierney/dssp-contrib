@@ -19,3 +19,9 @@
 
 	(optional wheel_liveinst_optional_wheel_zenity
 		(call wheel_zenity.auto_subj_type_transition (subj))))
+
+(block wheel_liveinstsetup
+	(blockinherit liveinstsetup.subj_blk)
+
+	(optional wheel_liveinstsetup_optional_wheel_gs
+		(call wheel_gs.daemon (subj liveinstsetup.cmd_file))))

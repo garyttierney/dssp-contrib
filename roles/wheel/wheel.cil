@@ -1341,7 +1341,9 @@
 		(call wheel_libnotify.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_liveinst
-		(call wheel_liveinst.role_pattern (role subj_type_attribute)))
+		(call wheel_liveinst.role_pattern (role subj_type_attribute))
+		(call wheel_liveinstsetup.role_pattern (role
+			subj_type_attribute)))
 
 	(optional wheel_optional_wheel_livestreamer
 		(call livestreamer.manage_home_cache (subj))

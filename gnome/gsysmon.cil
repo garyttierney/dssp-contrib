@@ -90,6 +90,8 @@
 	(call storage.getattr_fixed_disk (subj_type_attribute))
 	(call storage.getattr_removable (subj_type_attribute))
 
+	(call dracut_initramfs.search_runtime (subj_type_attribute))
+
 	(call gsysmon_helper.exec (subj_type_attribute))
 	(call gsysmon_helper.cmd_obj_entry_subj (subj_type_attribute))
 

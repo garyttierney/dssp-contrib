@@ -17,4 +17,9 @@
 
 	(optional sysadm_polkit_exec_optional_sysadm_gsd
 		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj))
-		(call sysadm_gsd.read_state (subj))))
+		(call sysadm_gsd.read_state (subj)))
+
+	(optional sysadm_polkit_exec_optional_sysadm_gsysmon
+		(call sysadm_gsysmon.auto_subj_type_transition_gsysmon_helper
+			(subj))
+		(call sysadm_gsysmon.read_state (subj))))

@@ -56,6 +56,11 @@
 		(call wheel_gsd.auto_subj_type_transition_gsd_helper (subj))
 		(call wheel_gsd.read_state (subj)))
 
+	(optional wheel_polkit_exec_optional_wheel_gsysmon
+		(call wheel_gsysmon.auto_subj_type_transition_gsysmon_helper
+			(subj))
+		(call wheel_gsysmon.read_state (subj)))
+
 	(allow subj client_subj_type_attribute list_dir_perms)
 	(allow subj client_subj_type_attribute read_file_perms)
 	(allow subj client_subj_type_attribute read_lnk_file_perms)

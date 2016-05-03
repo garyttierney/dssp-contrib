@@ -6,6 +6,12 @@
 (in gsysmon
 	(filecon "/usr/bin/gnome-system-monitor" file cmd_file_context))
 
+(in gsysmon_helper
+	(filecon "/usr/libexec/gnome-system-monitor/gsm-kill" file
+		cmd_file_context)
+	(filecon "/usr/libexec/gnome-system-monitor/gsm-renice" file
+		cmd_file_context))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -19,8 +25,7 @@
 
 		(typeattributeset gsysmon.subj_type_attribute subj)
 
-		(blockinherit subj.use_fd_blk)
-		(blockinherit subj.rw_inherited_fifo_files_blk)
+		(blockinherit subj.read_state_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
 			(call gsysmon.spec_auto_subj_type_transition (ARG1
@@ -28,6 +33,15 @@
 
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call gsysmon.role_pattern (ARG1 ARG2 subj)))))
+
+(in gsysmon_helper
+	(blockinherit exec_blk)
+
+	(blockinherit cmd.cmd_obj_entry_subj_blk)
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -41,7 +55,46 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
+	(call sys.search_fs_sysctl (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute))
+	(call cmd.audit_exec_access_all_cmd_files (subj_type_attribute))
+	(call cmd.getattr_all_cmd_files (subj_type_attribute))
+
+	(call file.search_boot (subj_type_attribute))
+
+	(call fs.getattr_all_fs (subj_type_attribute))
+	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
+	(call fs.read_sysfs_files (subj_type_attribute))
+
+	(call sec.get_enforce_mode (subj_type_attribute))
+
+	(call subj.getattr_common_subj (subj_type_attribute))
+	(call subj.read_state_common_subj (subj_type_attribute))
+	(call subj.setsched_common_subj (subj_type_attribute))
+	(call subj.send_sigkill_common_subj (subj_type_attribute))
+	(call subj.send_signal_common_subj (subj_type_attribute))
+	(call subj.send_sigstop_common_subj (subj_type_attribute))
+
+	(call storage.getattr_fixed_disk (subj_type_attribute))
+
+	(call gsysmon_helper.exec (subj_type_attribute))
+	(call gsysmon_helper.cmd_obj_entry_subj (subj_type_attribute))
+
 	(call polkit.sysbus_chat_client_subj_type (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.exempt_subj_type (subj_type_attribute))))
+
+	(optional gsysmon_subj_type_optional_sd_logind
+		(call sd_logind.read_runtime_files
+			(subj_type_attribute)))
 
 	(optional gsysmon_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))
+
+(block gsysmon_helper
+	(blockinherit cmd.obj_blk))

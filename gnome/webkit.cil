@@ -216,10 +216,13 @@
 	(call manage_home_data (subj_type_attribute))
 	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
+	(call cmd.read_cmd_files (subj_type_attribute))
+
 	(call dev.rw_dri (subj_type_attribute))
 
 	(call fs.getattr_cgroup_fs (subj_type_attribute))
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.list_devtmpfs (subj_type_attribute))
 	(call fs.search_cgroup (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
@@ -256,7 +259,8 @@
 			(subj_type_attribute)))
 
 	(optional webkitwp_subj_type_optional_rpm
-		(call rpm.exec (subj_type_attribute)))
+		(call rpm.exec (subj_type_attribute))
+		(call rpm.read_config_files (subj_type_attribute)))
 
 	(optional webkitwp_subj_type_optional_yelp
 		(call yelp.rw_inherited_tmpfs_user_files
@@ -302,6 +306,8 @@
 
 	(call cert.read_all (subj_type_attribute))
 
+	(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
+
 	(optional webkitnp_subj_type_optional_gitg
 		(call gitg.rw_inherited_tmpfs_user_files
 			(subj_type_attribute)))
@@ -336,6 +342,8 @@
 	(allow subj_type_attribute self (process (getsched)))
 
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_data (subj_type_attribute))
 

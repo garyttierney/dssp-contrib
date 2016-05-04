@@ -89,7 +89,13 @@
 ;
 
 (block sysadm_gvfs
-	(blockinherit gvfs.subj_blk))
+	(blockinherit gvfs.subj_blk)
+
+	(optional sysadm_gvfs_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_gvfs_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))
 
 (block sysadm_gvfsd
 	(typeattribute daemon_subj_type_attribute)

@@ -401,7 +401,21 @@
 
 	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_config (subj_type_attribute))
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
+
+	(call usersubj.read_home_data (subj_type_attribute))
+	(call usersubj.read_home_config (subj_type_attribute)))
 
 (block gvfsd
 	(typeattribute subj_type_attribute)

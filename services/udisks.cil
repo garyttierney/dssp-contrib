@@ -126,7 +126,7 @@
 
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (sys_rawio)))
+	(allow subj self (capability (sys_admin sys_rawio)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call cmd.exec (subj))

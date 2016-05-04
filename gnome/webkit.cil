@@ -255,6 +255,9 @@
 			(subj_type_attribute)))
 
 	(optional webkitwp_subj_type_optional_gitg
+		(call gitg.manage_home_cache (subj_type_attribute))
+		(call gitg.home_cache_obj_type_transition_home_cache
+			(subj_type_attribute))
 		(call gitg.rw_inherited_tmpfs_user_files
 			(subj_type_attribute)))
 
@@ -263,6 +266,9 @@
 		(call rpm.read_config_files (subj_type_attribute)))
 
 	(optional webkitwp_subj_type_optional_yelp
+		(call yelp.manage_home_cache (subj_type_attribute))
+		(call yelp.home_cache_obj_type_transition_home_cache
+			(subj_type_attribute))
 		(call yelp.rw_inherited_tmpfs_user_files
 			(subj_type_attribute)))
 
@@ -299,6 +305,7 @@
 	(call gcs.manage_home_cache (subj_type_attribute))
 	(call gcs.home_cache_obj_type_transition_home_cache
 		(subj_type_attribute))
+	(call gcs.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
 	(call goa.manage_home_cache (subj_type_attribute))
 	(call goa.home_cache_obj_type_transition_home_cache
@@ -309,10 +316,16 @@
 	(call webkitwp.rw_inherited_tmpfs_user_files (subj_type_attribute))
 
 	(optional webkitnp_subj_type_optional_gitg
+		(call gitg.manage_home_cache (subj_type_attribute))
+		(call gitg.home_cache_obj_type_transition_home_cache
+			(subj_type_attribute))
 		(call gitg.rw_inherited_tmpfs_user_files
 			(subj_type_attribute)))
 
 	(optional webkitnp_subj_type_optional_gdocs
+		(call gdocs.manage_home_cache (subj_type_attribute))
+		(call gdocs.home_cache_obj_type_transition_home_cache
+			(subj_type_attribute))
 		(call gdocs.rw_inherited_tmpfs_user_files
 			(subj_type_attribute)))
 

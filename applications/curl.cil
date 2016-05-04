@@ -29,6 +29,15 @@
 	(blockinherit file.manage_config_files_blk)
 	(blockinherit file.relabel_config_files_blk)
 
+	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.manage_tmpfs_user_files_blk)
+	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs_user ((type ARG1))
+		(call file.search_runtime_user (ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
+			"*")))
+
 	(blockinherit usersubj.read_home_user_files_blk)
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
@@ -57,6 +66,11 @@
 
 	(call read_config_files (subj))
 
+	(blockinherit usersubj.tmpfs_user_obj_blk)
+
+	(call manage_tmpfs_user_files (subj))
+	(call tmpfs_obj_type_transition_tmpfs_user (subj))
+
 	(blockinherit usersubj.home_user_obj_blk)
 
 	(call manage_home_user_files (subj))
@@ -71,7 +85,6 @@
 	(call file.read_config_files (subj))
 
 	(call fs.getattr_fs (subj))
-	(call fs.list_tmpfs (subj))
 
 	(call fs.manage_dosfs_subj_type (subj))
 	(call fs.manage_fuse_subj_type (subj))

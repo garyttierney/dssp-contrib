@@ -1689,6 +1689,12 @@
 
 		(call user_xbindkeys.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_xdgapplib
+		(call xdgapplib.manage_home_data (subj))
+		(call xdgapplib.relabel_home_data (subj))
+		(call xdgapplib.home_data_obj_type_transition_home_data
+			(subj)))
+
 	(optional user_optional_user_xpdf
 		(call user_xpdf.role_pattern (role subj_type_attribute)))
 

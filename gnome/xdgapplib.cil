@@ -1,0 +1,48 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xdgapplib
+	(filecon "HOME_DIR/\.local/share/xdg-app(/.*)?" any
+		home_data_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xdgapplib
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(blockinherit usersubj.home_data_obj_type_transition_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "xdg-app"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xdgapplib
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type
+		(client_subj_type_attribute))
+
+	(call manage_home_data (client_subj_type_attribute))
+	(call home_data_obj_type_transition_home_data
+		(client_subj_type_attribute)))

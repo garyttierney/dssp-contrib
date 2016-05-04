@@ -1870,6 +1870,12 @@
 
 		(call wheel_xbindkeys.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_xdgapplib
+		(call xdgapplib.manage_home_data (subj))
+		(call xdgapplib.relabel_home_data (subj))
+		(call xdgapplib.home_data_obj_type_transition_home_data
+			(subj)))
+
 	(optional wheel_optional_wheel_xinit
 		(call xinit.spec_home_user_auto_subj_type_transition
 			(xinit_home_user_auto_type_transition_subj_type_attribute

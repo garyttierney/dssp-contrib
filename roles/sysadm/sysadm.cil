@@ -679,7 +679,7 @@
 
 	(filecon "/root/\.local/share/keyrings(/.*)?" any root_gkr_home_data))
 
-(optional sysadm_gkr_home_optional_gmusic
+(optional sysadm_gmusic_home_optional_gmusic
 	(tunableif enable_rbacsep
 		(true
 			(context root_gmusic_home_data (sysadm.id sysadm.role
@@ -1578,6 +1578,20 @@
 					systemlow)))))
 
 	(filecon "/root/\.xbindkeysrc" file root_xbindkeys_home))
+
+(optional sysadm_xdgapplib_home_optional_xdgapplib
+	(tunableif enable_rbacsep
+		(true
+			(context root_xdgapplib_home_data (sysadm.id
+				sysadm.role xdgapplib.home_data_file (systemlow
+					systemlow))))
+		(false
+			(context root_xdgapplib_home_data (sysadm.id object_r
+				xdgapplib.home_data_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.local/share/xdg-app(/.*)?" any
+		root_xdgapplib_home_data))
 
 (optional sysadm_xinit_home_optional_xinit
 	(tunableif enable_rbacsep
@@ -2958,6 +2972,12 @@
 	(optional sysadm_optional_xboxdrv
 		(call xboxdrv.run (subj_type_attribute role))
 		(call xboxdrv.adm (subj role)))
+
+	(optional sysadm_optional_xdgapplib
+		(call xdgapplib.manage_home_data (subj))
+		(call xdgapplib.relabel_home_data (subj))
+		(call xdgapplib.home_data_obj_type_transition_home_data
+			(subj)))
 
 	(optional sysadm_optional_xlock
 		(call xlock.manage_home_user_files (subj))

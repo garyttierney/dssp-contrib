@@ -48,6 +48,10 @@
 
 	(call wheel.home_cmd_auto_subj_type_transition (subj))
 
+	(optional wheel_polkit_exec_optional_wheel_cockpitbridge
+		(call wheel_cockpitbridge.auto_subj_type_transition (subj))
+		(call wheel_cockpitbridge.read_state (subj)))
+
 	(optional wheel_polkit_exec_optional_wheel_gcs
 		(call wheel_gcs.auto_subj_type_transition_gcs_helper (subj))
 		(call wheel_gcs.read_state (subj)))

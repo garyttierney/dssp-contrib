@@ -126,7 +126,8 @@
 
 		(typeattributeset cockpitbridge.subj_type_attribute subj)
 
-		(blockinherit subj.send_sigkill_blk)
+		(blockinherit subj.send_signal_blk)
+		(blockinherit subj.read_state_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
 			(call cockpitbridge.spec_auto_subj_type_transition
@@ -138,6 +139,9 @@
 	(blockinherit exec_blk)
 
 	(blockinherit subj.send_signal_blk)
+
+	(macro mmap_cmd_files ((type ARG1))
+		(allow ARG1 cmd_file mmap_file_perms))
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -158,21 +162,32 @@
 
 	(macro shell_manual_subj_type_transition_all_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
-			subj_type_attribute))))
+			subj_type_attribute)))
+
+	(macro send_signal_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute (process (signal))))
+
+	(macro create_keyring_all_subj ((type ARG1))
+		(allow ARG1 self (process (setkeycreate)))
+		(allow ARG1 subj_type_attribute create_key_perms)))
 
 (in cockpitsess
 	(blockinherit exec_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk))
 
 (in cockpitws
 	(blockinherit exec_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk))
 
 (in cockpitpolkit
 	(block subj_blk
@@ -182,7 +197,7 @@
 
 		(typeattributeset cockpitpolkit.subj_type_attribute subj)
 
-		(blockinherit subj.send_sigkill_blk)
+		(blockinherit subj.send_signal_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
 			(call cockpitpolkit.spec_auto_subj_type_transition
@@ -314,12 +329,51 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 
 	(call cmd.shell_obj_entry_subj (subj_type_attribute))
 
+	(call dev.read_urandom (subj_type_attribute))
+
+	(call file.read_data (subj_type_attribute))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute))
+	(call fs.read_sysfs_files (subj_type_attribute))
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
+
+	(call cockpitws.rw_inherited_fifo_files (subj_type_attribute))
+
+	(call hostname.exec (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call pam.read_config (subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
+
 	(optional cockpitbridge_subj_type_optional_mcstransd
-		(call mcstransd.contains_subj_type (subj_type_attribute))))
+		(call mcstransd.contains_subj_type (subj_type_attribute)))
+
+	(optional cockpitbridge_subj_type_optional_sd
+		(call sd.control_all_unit (subj_type_attribute))
+		(call sd.control (subj_type_attribute))
+		(call sd.forked_subj_type (subj_type_attribute))
+		(call sd.read_state (subj_type_attribute)))
+
+	(optional cockpitbridge_subj_type_optional_sd_journald
+		(call sd_journald.client_subj_type (subj_type_attribute)))
+
+	(optional cockpitbridge_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))
+		(call sysbus.chat_unconfined_subj (subj_type_attribute))
+		(call sysbus.chat_client_subj (subj_type_attribute))))
 
 (block cockpitsess
 	(blockinherit subj.common_subj_blk)
@@ -332,22 +386,94 @@
 
 	(roletype sys.role subj)
 
-	(call sec.get_enforce_mode (subj))
-	(call sec.compute_access_vector (subj))
-	(call sec.compute_user_contexts (subj))
-	(call sec.validate_context (subj))
+	(dontaudit subj self (capability (net_admin)))
+	(allow subj self (capability (setuid setgid)))
+	(allow subj self (process (setsched)))
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self write_key_perms)
 
 	(call standard.id_change_exemption_subj_type (subj))
 	(call standard.obj_change_exemption_subj_type (subj))
 	(call standard.role_change_exemption_subj_type (subj))
 
+	(call sys.audit_client_subj_type (subj))
+	(call sys.read_kernel_sysctl_files (subj))
+
+	(call dev.read_urandom (subj))
+
+	(call file.read_config (subj))
+
+	(call sec.compute_access_vector (subj))
+	(call sec.compute_user_contexts (subj))
+	(call sec.compute_relabel_context (subj))
+	(call sec.list_fs (subj))
+	(call sec.validate_context (subj))
+
+	(call subj.interactive_fd_subj_type (subj))
+
+	(call app.send_signal (subj))
+
+	(call chkpwd.auto_subj_type_transition (subj))
+
+	(call cockpitbridge.create_keyring_all_subj (subj))
+	(call cockpitbridge.mmap_cmd_files (subj))
+	(call cockpitbridge.send_signal_all_subj (subj))
 	(call cockpitbridge.shell_manual_subj_type_transition_all_subj (subj))
+
+	(call cockpitws.rw_inherited_unix_stream_sockets (subj))
+
+	(call locale.read (subj))
+	(call utmp.rw_runtime_files (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call pam.exec (subj))
+	(call pam.read_config (subj))
+
+	(call faillog.create_var_log_files (subj))
+	(call faillog.rw_var_log_files (subj))
+	(call faillog.var_log_obj_type_transition_var_log (subj))
+
+	(call lastlog.create_var_log_files (subj))
+	(call lastlog.rw_var_log_files (subj))
+	(call lastlog.var_log_obj_type_transition_var_log (subj))
+
+	(call wtmp.append_var_log_files (subj))
+	(call wtmp.read_var_log_files (subj))
+	(call wtmp.dontaudit_write_var_log_files (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call default_context.read_config_files (subj))
 
 	(optional cockpitsess_optional_exempt
 		(call exempt.shell_manual_subj_type_transition (subj)))
 
+	(optional cockpitsess_subj_type_optional_gdm
+		(call gdmuser.link_keyring_all_subj (subj)))
+
 	(optional cockpitsess_optional_sd
-		(call sd.forked_subj_type (subj))))
+		(call sd.forked_subj_type (subj))
+		(call sd.read_state (subj)))
+
+	(optional cockpitsess_optional_sd_journald
+		(call sd_journald.client_subj_type (subj)))
+
+	(optional cockpitsess_optional_sd_logind
+		(allow subj self (capability (dac_override)))
+
+		(call file.search_runtime_user (subj))
+		(call fs.search_tmpfs (subj))
+
+		(call sd_logind.client_subj_type (subj)))
+
+	(optional cockpitsess_subj_type_optional_sduser
+		(call sduser.link_keyring_all_subj (subj)))
+
+	(optional cockpitsess_subj_type_optional_sshd
+		(call sshduser.link_keyring_all_subj (subj)))
+
+	(optional cockpitsess_optional_sysbus
+		(call sysbus.client_subj_type (subj))))
 
 (block cockpitws
 	(blockinherit subj.common_subj_blk)
@@ -391,4 +517,15 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call sys.read_crypto_sysctl_files (subj_type_attribute))
+
+	(call dev.read_urandom (subj_type_attribute))
+
+	(optional cockpitpolkit_subj_type_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional cockpitpolkit_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

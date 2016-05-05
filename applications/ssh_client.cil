@@ -250,6 +250,11 @@
 
 	(call ssh_client.read_home_user (subj_type_attribute))
 
+	(optional ssh_agent_subj_type_optional_cockpit
+		(call cockpitsess.rw_inherited_fifo_files
+			(subj_type_attribute))
+		(call cockpitsess.send_sigchld (subj_type_attribute)))
+
 	(optional ssh_agent_subj_type_optional_i3
                 (call i3.client_subj_type (subj_type_attribute))))
 

@@ -10,7 +10,10 @@
 
 	(call sysadm_cockpitpolkit.auto_subj_type_transition (subj))
 
-	(call sysadm_ssh_agent.auto_subj_type_transition (subj)))
+	(call sysadm_ssh_agent.auto_subj_type_transition (subj))
+
+	(optional sysadm_cockpitbridge_optional_sysadm_polkit_exec
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj))))
 
 (block sysadm_cockpitpolkit
 	(blockinherit cockpitpolkit.subj_blk))

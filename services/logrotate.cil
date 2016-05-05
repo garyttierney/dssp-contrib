@@ -108,7 +108,8 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (capability (chown fsetid dac_override)))
+	(allow subj self (capability (chown fsetid dac_override
+		fowner)))
 
 	(call standard.obj_sys_change_exemption_subj_type (subj))
 

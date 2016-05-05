@@ -403,6 +403,10 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call cmd.mmap_shell (subj_type_attribute))
+
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.read_config (subj_type_attribute))

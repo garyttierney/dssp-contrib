@@ -91,8 +91,25 @@
 (block wheel_gvfs
 	(blockinherit gvfs.subj_blk)
 
+	(call wheel_gvfsd.sessbus_chat_client_subj_type (subj))
+
+	(optional wheel_gvfs_optional_wheel_eog
+		(call wheel_eog.auto_subj_type_transition (subj)))
+
 	(optional wheel_gvfs_optional_wheel_firefox
 		(call wheel_firefox.auto_subj_type_transition (subj)))
+
+	(optional wheel_gvfs_optional_wheel_gcal
+		(call wheel_gcal.auto_subj_type_transition (subj)))
+
+	(optional wheel_gvfs_optional_wheel_gvid
+		(call wheel_gvid.auto_subj_type_transition (subj)))
+
+	(optional wheel_gvfs_optional_wheel_polari
+		(call wheel_polari.auto_subj_type_transition (subj)))
+
+	(optional wheel_gvfs_optional_wheel_thunderbird
+		(call wheel_thunderbird.auto_subj_type_transition (subj)))
 
 	(optional wheel_gvfs_optional_wheel_sessbus
 		(call wheel_sessbus.client_subj_type (subj))))

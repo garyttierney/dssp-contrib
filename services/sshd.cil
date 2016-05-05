@@ -245,14 +245,11 @@
 
 		(call net.tcp_bind_generic_node (subj))
 
-		(call sec.list_fs (subj))
-
 		(call subj.dynamic_type_transition_subj_type (subj))
 
 		(call cert.read (subj))
 
 		(call pam.login_prog_subj_type (subj))
-		(call pam.read_config_files (subj))
 
 		(call ssh_client.read_config_files (subj))
 		(call ssh_client.read_home_user_files (subj))

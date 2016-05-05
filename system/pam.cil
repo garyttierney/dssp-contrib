@@ -248,6 +248,10 @@
 	(call default_context.read_config_files
 		(login_prog_subj_type_attribute))
 
+	(optional pam_login_prog_subj_type_optional_cockpit
+		(call cockpitbridge.link_keyring_all_subj
+			(login_prog_subj_type_attribute)))
+
 	(optional pam_login_prog_subj_type_optional_gdm
 		(call gdmuser.link_keyring_all_subj
 			(login_prog_subj_type_attribute)))

@@ -233,6 +233,7 @@
 		(allow subj sshd_key.file read_file_perms)
 
 		(call sys.link_keyring (subj))
+		(call sys.read_crypto_sysctl_files (subj))
 		(call sys.read_kernel_sysctl_files (subj))
 		(call sys.read_net_proc_files (subj))
 

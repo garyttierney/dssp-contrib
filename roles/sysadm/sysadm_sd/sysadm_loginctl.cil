@@ -15,5 +15,9 @@
 (block sysadm_loginctl
 	(blockinherit loginctl.subj_blk)
 
+	(optional sysadm_loginctl_optional_sysadm_cockpitbridge
+		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj)))
+
 	(optional sysadm_loginctl_optional_sysadm_ssh_client
 		(call sysadm_ssh_client.auto_subj_type_transition (subj))))

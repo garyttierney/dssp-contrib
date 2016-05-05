@@ -12,6 +12,8 @@
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_polkit_exec_optional_sysadm_cockpitbridge
+		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj))
 		(call sysadm_cockpitbridge.auto_subj_type_transition (subj))
 		(call sysadm_cockpitbridge.read_state (subj)))
 

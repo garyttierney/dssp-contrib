@@ -326,6 +326,10 @@
 			(call rbacsep.read_state_source_subj_type
 				(subj_type_attribute))))
 
+	(optional polkit_exec_optional_cockpit
+		(call cockpitbridge.link_keyring_all_subj
+			(subj_type_attribute)))
+
 	(optional polkit_exec_optional_gdm
 		(call gdmuser.link_keyring_all_subj (subj_type_attribute)))
 

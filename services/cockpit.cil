@@ -128,6 +128,7 @@
 
 		(blockinherit subj.send_signal_blk)
 		(blockinherit subj.read_state_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
 			(call cockpitbridge.spec_auto_subj_type_transition
@@ -167,6 +168,9 @@
 	(macro send_signal_all_subj ((type ARG1))
 		(allow ARG1 subj_type_attribute (process (signal))))
 
+	(macro link_keyring_all_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute link_key_perms))
+
 	(macro create_keyring_all_subj ((type ARG1))
 		(allow ARG1 self (process (setkeycreate)))
 		(allow ARG1 subj_type_attribute create_key_perms)))
@@ -178,7 +182,10 @@
 
 	(blockinherit subj.send_signal_blk)
 	(blockinherit subj.send_sigchld_blk)
-	(blockinherit subj.rw_inherited_fifo_files_blk))
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+
+	(macro read_keyring ((type ARG1))
+		(allow ARG1 subj read_key_perms)))
 
 (in cockpitws
 	(blockinherit exec_blk)
@@ -329,10 +336,16 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(dontaudit subj_type_attribute self (capability (net_admin)))
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_net_proc_files (subj_type_attribute))
+
+	(call cmd.exec (subj_type_attribute))
 	(call cmd.shell_obj_entry_subj (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
@@ -345,13 +358,19 @@
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
 
+	(call cockpit.read_var_lib (subj_type_attribute))
+
 	(call cockpitws.rw_inherited_fifo_files (subj_type_attribute))
 
 	(call hostname.exec (subj_type_attribute))
 
+	(call locale.read (subj_type_attribute))
+
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call pam.read_config (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
@@ -391,12 +410,14 @@
 	(allow subj self (process (setsched)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self write_key_perms)
+	(allow subj self setattr_key_perms)
 
 	(call standard.id_change_exemption_subj_type (subj))
 	(call standard.obj_change_exemption_subj_type (subj))
 	(call standard.role_change_exemption_subj_type (subj))
 
 	(call sys.audit_client_subj_type (subj))
+	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
@@ -522,6 +543,10 @@
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
+
+	(call cockpitsess.read_keyring (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
 
 	(optional cockpitpolkit_subj_type_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type

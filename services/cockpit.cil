@@ -128,6 +128,7 @@
 
 		(blockinherit subj.send_signal_blk)
 		(blockinherit subj.read_state_blk)
+		(blockinherit subj.rw_inherited_fifo_files_blk)
 		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
@@ -339,12 +340,14 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(dontaudit subj_type_attribute self (capability (net_admin)))
+	(allow subj_type_attribute self (capability (dac_override)))
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 	(call standard.obj_change_exemption_subj_type (subj_type_attribute))
 
+	(call sys.audit_client_subj_type (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
@@ -352,11 +355,13 @@
 	(call cmd.exec (subj_type_attribute))
 	(call cmd.shell_obj_entry_subj (subj_type_attribute))
 
+	(call dev.null_sd_status_subj_type (subj_type_attribute))
 	(call dev.read_urandom (subj_type_attribute))
 
 	(call file.manage_config_files (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
+	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 	(call fs.read_sysfs_files (subj_type_attribute))
 
@@ -366,6 +371,7 @@
 	(call sec.setfscreate_subj_type (subj_type_attribute))
 	(call sec.validate_context (subj_type_attribute))
 
+	(call subj.read_state_common_subj (subj_type_attribute))
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
 
 	(call app.send_signal (subj_type_attribute))
@@ -381,6 +387,7 @@
 		(subj_type_attribute "*"))
 	(call passwords.manage (subj_type_attribute))
 	(call shadow.manage (subj_type_attribute))
+	(call utmp.read_runtime_files (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
@@ -403,8 +410,7 @@
 	(optional cockpitbridge_subj_type_optional_sd
 		(call sd.control_all_unit (subj_type_attribute))
 		(call sd.control (subj_type_attribute))
-		(call sd.forked_subj_type (subj_type_attribute))
-		(call sd.read_state (subj_type_attribute)))
+		(call sd.forked_subj_type (subj_type_attribute)))
 
 	(optional cockpitbridge_subj_type_optional_sd_journald
 		(call sd_journald.client_subj_type (subj_type_attribute)))
@@ -431,7 +437,7 @@
 	(roletype sys.role subj)
 
 	(dontaudit subj self (capability (net_admin)))
-	(allow subj self (capability (setuid setgid)))
+	(allow subj self (capability (setuid setgid sys_admin kill)))
 	(allow subj self (process (setsched)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self write_key_perms)
@@ -510,6 +516,9 @@
 
 	(optional cockpitsess_subj_type_optional_sduser
 		(call sduser.link_keyring_all_subj (subj)))
+
+	(optional cockpitsess_subj_type_optional_ssh_client
+		(call ssh_agent.send_signal_all_subj (subj)))
 
 	(optional cockpitsess_subj_type_optional_sshd
 		(call sshduser.link_keyring_all_subj (subj)))

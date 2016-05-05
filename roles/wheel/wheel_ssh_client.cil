@@ -28,5 +28,8 @@
 (block wheel_ssh_keygen
 	(blockinherit ssh_keygen.subj_blk)
 
+	(optional wheel_ssh_keygen_optional_wheel_cockpit
+		(call wheel_cockpitbridge.rw_inherited_fifo_files (subj)))
+
 	(optional wheel_ssh_keygen_optional_seahorse
 		(call wheel_seahorsesap.auto_subj_type_transition (subj)))) 

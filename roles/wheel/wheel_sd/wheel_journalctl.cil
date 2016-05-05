@@ -13,4 +13,8 @@
 ;
 
 (block wheel_journalctl
-	(blockinherit journalctl.subj_blk))
+	(blockinherit journalctl.subj_blk)
+
+	(optional wheel_journalctl_optional_wheel_cockpitbridge
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj))))

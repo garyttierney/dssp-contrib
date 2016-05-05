@@ -107,6 +107,7 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call sd.stream_connect (subj_type_attribute))
+	(call sd.read_state (subj_type_attribute))
 
 	(call sd_machined.read_runtime (subj_type_attribute))
 
@@ -138,6 +139,11 @@
 	(call locale.read (client_subj_type_attribute))
 
 	(call sd_journald.read_var_log (client_subj_type_attribute))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
 
 	(optional sd_journald_client_subj_type_optional_sd_machined
 		(call sd_machined.read_config_files

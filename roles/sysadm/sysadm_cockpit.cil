@@ -19,7 +19,10 @@
 		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional sysadm_cockpitbridge_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj))))
+		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional sysadm_cockpitbridge_optional_sysadm_timedatectl
+		(call sysadm_timedatectl.auto_subj_type_transition (subj))))
 
 (block sysadm_cockpitpolkit
 	(blockinherit cockpitpolkit.subj_blk)

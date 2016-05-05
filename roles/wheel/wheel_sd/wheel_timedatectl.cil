@@ -15,5 +15,9 @@
 (block wheel_timedatectl
 	(blockinherit timedatectl.subj_blk)
 
+	(optional wheel_timedatectl_optional_wheel_cockpit
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj)))
+
 	(optional wheel_timedatectl_optional_wheel_ssh_client
 		(call wheel_ssh_client.auto_subj_type_transition (subj))))

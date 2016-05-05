@@ -167,8 +167,8 @@
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			subj_type_attribute)))
 
-	(macro send_signal_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute (process (signal))))
+	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro link_keyring_all_subj ((type ARG1))
 		(allow ARG1 subj_type_attribute link_key_perms))
@@ -343,6 +343,7 @@
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
+	(call standard.obj_change_exemption_subj_type (subj_type_attribute))
 
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
@@ -353,7 +354,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call file.read_config (subj_type_attribute))
+	(call file.manage_config_files (subj_type_attribute))
 	(call file.read_data (subj_type_attribute))
 
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
@@ -362,6 +363,13 @@
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 	(call net.tcp_connect_ephemeral_port (subj_type_attribute))
 
+	(call sec.setfscreate_subj_type (subj_type_attribute))
+	(call sec.validate_context (subj_type_attribute))
+
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call app.send_signal (subj_type_attribute))
+
 	(call cockpit.read_var_lib (subj_type_attribute))
 
 	(call cockpitws.rw_inherited_fifo_files (subj_type_attribute))
@@ -369,12 +377,20 @@
 	(call hostname.exec (subj_type_attribute))
 
 	(call locale.read (subj_type_attribute))
+	(call passwords.config_obj_type_transition_passwords
+		(subj_type_attribute "*"))
+	(call passwords.manage (subj_type_attribute))
+	(call shadow.manage (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call pam.read_config (subj_type_attribute))
 
+	(call selinux_config.read_config_files (subj_type_attribute))
+	(call file_context.read_config_files (subj_type_attribute))
+
 	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute))
 
 	(tunableif enable_rbacsep
 		(true
@@ -438,10 +454,6 @@
 	(call sec.compute_relabel_context (subj))
 	(call sec.list_fs (subj))
 	(call sec.validate_context (subj))
-
-	(call subj.interactive_fd_subj_type (subj))
-
-	(call app.send_signal (subj))
 
 	(call chkpwd.auto_subj_type_transition (subj))
 
@@ -552,6 +564,8 @@
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))
+
+	(call cockpitbridge.link_keyring_all_subj (subj_type_attribute))
 
 	(call cockpitsess.read_keyring (subj_type_attribute))
 

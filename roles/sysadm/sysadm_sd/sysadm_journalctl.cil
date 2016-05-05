@@ -13,4 +13,8 @@
 ;
 
 (block sysadm_journalctl
-	(blockinherit journalctl.subj_blk))
+	(blockinherit journalctl.subj_blk)
+
+	(optional sysadm_journalctl_optional_sysadm_cockpitbridge
+		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj))))

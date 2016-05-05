@@ -38,7 +38,9 @@
 	(blockinherit ssh_keygen.subj_blk)
 
 	(optional sysadm_ssh_keygen_optional_sysadm_cockpit
-		(call sysadm_cockpitbridge.rw_inherited_fifo_files (subj)))
+		(call sysadm_cockpitbridge.rw_inherited_fifo_files (subj))
+		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj)))
 
 	(optional sysadm_ssh_keygen_optional_seahorse
 		(call sysadm_seahorsesap.auto_subj_type_transition (subj))))

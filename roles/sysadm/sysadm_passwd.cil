@@ -6,5 +6,9 @@
 (block sysadm_passwd
 	(blockinherit passwd.subj_blk)
 
+	(optional sysadm_passwd_optional_sysadm_cockpit
+		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj)))
+
 	(optional sysadm_passwd_optional_sysadm_gkrd
 		(call sysadm_gkrd.auto_subj_type_transition (subj))))

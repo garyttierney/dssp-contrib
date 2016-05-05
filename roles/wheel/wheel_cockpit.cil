@@ -12,6 +12,9 @@
 
 	(call wheel_ssh_agent.auto_subj_type_transition (subj))
 
+	(optional wheel_cockpitbridge_optional_wheel_gvfsd
+		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional wheel_cockpitbridge_optional_wheel_journalctl
 		(call wheel_journalctl.auto_subj_type_transition (subj)))
 
@@ -23,6 +26,9 @@
 
 	(optional wheel_cockpitbridge_optional_wheel_sessbus
 		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_cockpitbridge_optional_wheel_systemctl
+		(call wheel_systemctl.auto_subj_type_transition (subj)))
 
 	(optional wheel_cockpitbridge_optional_wheel_timedatectl
 		(call wheel_timedatectl.auto_subj_type_transition (subj))))

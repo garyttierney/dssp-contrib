@@ -285,6 +285,9 @@
 	(call usersubj.setattr_term (subj))
 	(call usersubj.use_term (subj))
 
+	(optional sd_logind_optional_cockpit
+		(call cockpitbridge.read_state_all_subj (subj)))
+
 	(optional sd_logind_optional_gdm
 		(call gdm.delete_tmpfs (subj)))
 

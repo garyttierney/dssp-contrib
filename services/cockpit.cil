@@ -140,8 +140,6 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
-
 	(macro mmap_cmd_files ((type ARG1))
 		(allow ARG1 cmd_file mmap_file_perms))
 
@@ -170,6 +168,7 @@
 
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
 	(blockinherit subj.send_signal_all_blk)
+	(blockinherit subj.read_state_all_blk)
 
 	(macro link_keyring_all_subj ((type ARG1))
 		(allow ARG1 subj_type_attribute link_key_perms))
@@ -349,6 +348,7 @@
 
 	(call sys.audit_client_subj_type (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
 
@@ -391,6 +391,8 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
+	(call lastlog.read_var_log_files (subj_type_attribute))
+	(call pam.change_passwd (subj_type_attribute))
 	(call pam.read_config (subj_type_attribute))
 
 	(call selinux_config.read_config_files (subj_type_attribute))
@@ -494,6 +496,8 @@
 	(call default_context.read_config_files (subj))
 
 	(optional cockpitsess_optional_exempt
+		(call exempt.create_keyring (subj))
+		(call exempt.send_signal (subj))
 		(call exempt.shell_manual_subj_type_transition (subj)))
 
 	(optional cockpitsess_subj_type_optional_gdm

@@ -12,6 +12,9 @@
 
 	(call sysadm_ssh_agent.auto_subj_type_transition (subj))
 
+	(optional sysadm_cockpitbridge_optional_sysadm_gvfsd
+		(call sysadm_gvfsd.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_cockpitbridge_optional_sysadm_journalctl
 		(call sysadm_journalctl.auto_subj_type_transition (subj)))
 
@@ -23,6 +26,9 @@
 
 	(optional sysadm_cockpitbridge_optional_sysadm_sessbus
 		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional sysadm_cockpitbridge_optional_sysadm_systemctl
+		(call sysadm_systemctl.auto_subj_type_transition (subj)))
 
 	(optional sysadm_cockpitbridge_optional_sysadm_timedatectl
 		(call sysadm_timedatectl.auto_subj_type_transition (subj))))

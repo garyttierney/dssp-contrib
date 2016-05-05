@@ -595,6 +595,12 @@
 	(optional wheel_optional_wheel_chfn
 		(call wheel_chfn.role_pattern (role subj_type_attribute)))
 
+	(optional wheel_optional_wheel_cockpit
+		(call wheel_cockpitbridge.role_pattern (role
+			subj_type_attribute))
+		(call wheel_cockpitpolkit.role_pattern (role
+			subj_type_attribute)))
+
 	(optional wheel_optional_wheel_colord
 		(call wheel_colordsess.role_pattern (role
 			subj_type_attribute)))

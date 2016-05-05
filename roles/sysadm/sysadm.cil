@@ -3114,6 +3114,14 @@
 	(optional sysadm_optional_sysadm_chfn
 		(call sysadm_chfn.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_cockpit
+		(call cockpit.adm (subj role))
+		(call remotectl.run (subj_type_attribute role))
+		(call sysadm_cockpitbridge.role_pattern (role
+			subj_type_attribute))
+		(call sysadm_cockpitpolkit.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_colord
 		(call sysadm_colordsess.role_pattern (role
 			subj_type_attribute)))

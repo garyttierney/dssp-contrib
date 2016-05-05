@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_cockpitbridge
+	(blockinherit cockpitbridge.subj_blk)
+
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel_cockpitpolkit.auto_subj_type_transition (subj))
+
+	(call wheel_ssh_agent.auto_subj_type_transition (subj)))
+
+(block wheel_cockpitpolkit
+	(blockinherit cockpitpolkit.subj_blk))

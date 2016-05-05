@@ -1,0 +1,16 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_cockpitbridge
+	(blockinherit cockpitbridge.subj_blk)
+
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm_cockpitpolkit.auto_subj_type_transition (subj))
+
+	(call sysadm_ssh_agent.auto_subj_type_transition (subj)))
+
+(block sysadm_cockpitpolkit
+	(blockinherit cockpitpolkit.subj_blk))

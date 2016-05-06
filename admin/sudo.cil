@@ -262,6 +262,10 @@
 			(call rbacsep.obj_role_change_exemption_subj_type
 				(subj_type_attribute))))
 
+	(optional sudo_subj_type_optional_cockpit
+		(call cockpitbridge.link_keyring_all_subj
+			(subj_type_attribute)))
+
 	(optional sudo_subj_type_optional_gdmuser
 		(call gdmuser.link_keyring_all_subj (subj_type_attribute)))
 

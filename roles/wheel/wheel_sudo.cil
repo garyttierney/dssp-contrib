@@ -4,4 +4,8 @@
 ;
 
 (block wheel_sudo
-	(blockinherit sudo.subj_blk))
+	(blockinherit sudo.subj_blk)
+
+	(optional wheel_sudo_optional_wheel_cockpit
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj))))

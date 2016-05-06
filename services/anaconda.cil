@@ -252,6 +252,9 @@
 
 	(call lib.manage_lib (subj))
 
+	(call sec.setfscreate_subj_type (subj))
+	(call sec.validate_context (subj))
+
 	(call storage.rw_fixed_disk (subj))
 	(call storage.rw_removable (subj))
 
@@ -466,6 +469,7 @@
 	(call file.search_var_cache (subj))
 	(call file.search_var_tmp (subj))
 
+	(call fs.getattr_devtmpfs_fs (subj))
 	(call fs.read_iso9660 (subj))
 	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.read_sysfs (subj))

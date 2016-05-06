@@ -321,6 +321,9 @@
 	(optional anaconda_optional_bootloader
 		(call bootloader.run (subj role_attribute)))
 
+	(optional anaconda_optional_chpasswd
+		(call chpasswd.run (subj role_attribute)))
+
 	(optional anaconda_optional_chronyd
 		(call chronyd.control_sd_unit_subj_type (subj))
 		(call chronyd.read_state (subj)))

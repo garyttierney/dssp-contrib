@@ -1972,6 +1972,9 @@
 	(optional sysadm_optional_chkpwd
 		(call chkpwd.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_chpasswd
+		(call chpasswd.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_chronyd
 		(call chronyd.adm (subj role))
 		(call chronyc.manage_runtime_sock_files (subj))

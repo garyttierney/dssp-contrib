@@ -1661,6 +1661,8 @@
 		(call wheel_ssh_agent.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_ssh_client
+		(call wheel_ssh_add.role_pattern (role subj_type_attribute))
+
 		(call ssh_client.manage_home_user (subj))
 		(call ssh_client.relabel_home_user (subj))
 

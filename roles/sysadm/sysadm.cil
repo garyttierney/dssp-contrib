@@ -4214,6 +4214,8 @@
 			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_ssh_client
+		(call sysadm_ssh_add.role_pattern (role subj_type_attribute))
+
 		(call ssh_client.manage_home_user (subj))
 		(call ssh_client.relabel_home_user (subj))
 

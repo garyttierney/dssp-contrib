@@ -4,7 +4,9 @@
 ;
 
 (block wheel_ssh_add
-	(blockinherit ssh_add.subj_blk))
+	(blockinherit ssh_add.subj_blk)
+
+	(call wheel_ssh_agent.stream_connect (subj)))
 
 (block wheel_ssh_client
 	(blockinherit ssh_client.subj_blk)

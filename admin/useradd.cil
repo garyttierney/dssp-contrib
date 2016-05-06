@@ -140,6 +140,9 @@
 	(call usersubj.write_var_spool_user_files (subj))
 	(call usersubj.var_spool_obj_type_transition_var_spool_user (subj "*"))
 
+	(optional useradd_optional_avahi
+		(call avahi.search_config (subj)))
+
 	(optional useradd_optional_cockpit
 		(call cockpitbridge.rw_inherited_unix_stream_sockets_all_subj
 			(subj)))

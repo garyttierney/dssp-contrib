@@ -30,4 +30,20 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+
+	(call sys.read_crypto_sysctl_files (subj))
+
+	(call file.manage_config_files (subj))
+
+	(call sec.setfscreate_subj_type (subj))
+	(call sec.validate_context (subj))
+
+	(call locale.read (subj))
+	(call passwords.read (subj))
+	(call shadow.manage (subj))
+
+	(call selinux_config.read_config_files (subj))
+	(call file_context.read_config_files (subj)))

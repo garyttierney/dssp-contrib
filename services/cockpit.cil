@@ -340,16 +340,17 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(dontaudit subj_type_attribute self (capability (net_admin)))
+	(dontaudit subj_type_attribute self (capability (net_admin
+		dac_override)))
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 	(call standard.obj_change_exemption_subj_type (subj_type_attribute))
 
+	(call sys.audit_client_subj_type (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
-	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
 
 	(call cmd.exec (subj_type_attribute))
@@ -385,6 +386,7 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call lastlog.read_var_log_files (subj_type_attribute))
+	(call pam.change_passwd (subj_type_attribute))
 	(call pam.read_config (subj_type_attribute))
 
 	(call usersubj.create_ptys (subj_type_attribute))

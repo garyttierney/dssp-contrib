@@ -143,10 +143,12 @@
 	(call fs.rw_tmpfs_dirs (adm_subj_type_attribute))
 	(call file.rw_var_lib_dirs (adm_subj_type_attribute))
 
-	(allow adm_subj_type_attribute unit_file manage_dir_perms)
-	(allow adm_subj_type_attribute unit_file manage_file_perms)
-	(allow adm_subj_type_attribute unit_file manage_lnk_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute manage_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		manage_lnk_file_perms)
 
-	(allow adm_subj_type_attribute unit_file relabel_dir_perms)
-	(allow adm_subj_type_attribute unit_file relabel_file_perms)
-	(allow adm_subj_type_attribute unit_file relabel_lnk_file_perms))
+	(allow adm_subj_type_attribute obj_type_attribute relabel_dir_perms)
+	(allow adm_subj_type_attribute obj_type_attribute relabel_file_perms)
+	(allow adm_subj_type_attribute obj_type_attribute
+		relabel_lnk_file_perms))

@@ -492,7 +492,7 @@
 	(call tmpfs_obj_type_transition_tmpfs (subj))
 
 	(allow subj self rw_fifo_file_perms)
-	(allow subj self create_tcp_stream_socket_perms)
+	(allow subj self (tcp_socket (listen accept)))
 
 	(call sys.read_crypto_sysctl_files (subj))
 

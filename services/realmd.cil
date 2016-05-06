@@ -101,6 +101,9 @@
 	(optional realmd_optional_gdm
 		(call gdm.sysbus_chat_client_subj_type (subj)))
 
+	(optional realmd_optional_polkit
+		(call polkit.sysbus_chat_client_subj_type (subj)))
+
 	(optional realmd_optional_sd
 		(call sd.daemon (subj cmd_file))
 

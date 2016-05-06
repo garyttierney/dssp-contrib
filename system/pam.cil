@@ -228,6 +228,8 @@
 	(call standard.obj_change_exemption_subj_type
 		(login_prog_subj_type_attribute))
 
+	(call sys.link_keyring (login_prog_subj_type_attribute))
+
 	(call sec.compute_access_vector (login_prog_subj_type_attribute))
 	(call sec.compute_user_contexts (login_prog_subj_type_attribute))
 	(call sec.compute_relabel_context (login_prog_subj_type_attribute))

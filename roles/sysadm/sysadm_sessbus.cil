@@ -37,6 +37,11 @@
 
 	(blockinherit sessbus.subj_blk)
 
+	(allow subj self (capability (sys_resource)))
+	(allow subj self (process (setrlimit)))
+
+	(call sys.audit_client_subj_type (subj))
+
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))

@@ -16,6 +16,7 @@
 				unit_file_context)))
 
 	(block sshd_keygen
+		(filecon "/usr/libexec/openssh/sshd-keygen" file cmd_file_context)
 		(filecon "/usr/sbin/sshd-keygen" file cmd_file_context)
 
 		(optional sshd_keygen_unit_optional_sd

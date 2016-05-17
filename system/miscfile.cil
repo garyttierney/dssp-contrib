@@ -7,6 +7,12 @@
 	(filecon "/etc/pki(/.*)?" any file_file_context)
 	(filecon "/etc/ssl(/.*)?" any file_file_context))
 
+(in cryptopol
+	(filecon "/etc/crypto-policies(/.*)?" any config_file_context))
+
+(in cryptopol_state
+	(filecon "/etc/crypto-policies/state(/.*)?" any config_file_context))
+
 (in factory
 	(filecon "/usr/share/factory(/.*)?" any data_file_context))
 
@@ -231,6 +237,45 @@
 		(allow ARG1 miscfile_obj_type_attribute relabel_lnk_file_perms)
 		(optional miscfile_read_all_cert_optional_usersubj
 			(call usersubj.search_home_dir (ARG1)))))
+
+(in cryptopol
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.rw_config_dirs_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk))
+
+(in cryptopol_state
+	(macro search_config ((type ARG1))
+		(call cryptopol.search_config (ARG1))
+		(allow ARG1 config_file search_dir_perms))
+
+	(macro list_config ((type ARG1))
+		(call cryptopol.search_config (ARG1))
+		(allow ARG1 config_file list_dir_perms))
+
+	(macro read_config_files ((type ARG1))
+		(call cryptopol.search_config (ARG1))
+		(call read_files_pattern (ARG1 config_file config_file)))
+
+	(macro read_config_lnk_files ((type ARG1))
+		(call cryptopol.search_config (ARG1))
+		(call read_lnk_files_pattern (ARG1 config_file config_file)))
+
+	(macro manage_config ((type ARG1))
+		(call cryptopol.rw_config_dirs (ARG1))
+		(allow ARG1 config_file manage_dir_perms)
+		(allow ARG1 config_file manage_file_perms)
+		(allow ARG1 config_file manage_lnk_file_perms))
+
+	(macro relabel_config ((type ARG1))
+		(call cryptopol.search_config (ARG1))
+		(allow ARG1 config_file relabel_dir_perms)
+		(allow ARG1 config_file relabel_file_perms)
+		(allow ARG1 config_file relabel_lnk_file_perms)))
 
 (in fonts
 	(macro miscfile_cache_obj_type ((type ARG1))
@@ -1029,6 +1074,12 @@
 	(blockinherit file.obj_blk)
 
 	(call miscfile_obj_type (file)))
+
+(block cryptopol
+	(blockinherit file.config_obj_blk))
+
+(block cryptopol_state
+	(blockinherit file.config_obj_blk))
 
 (block factory
 	(blockinherit file.data_obj_blk))

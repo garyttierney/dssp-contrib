@@ -131,6 +131,11 @@
 		(call read_files_pattern (ARG1 home_cache_file
 			home_cache_file)))
 
+	(macro manage_home_cache_files ((type ARG1))
+		(call tpmc.search_home_cache (ARG1))
+		(call manage_files_pattern (ARG1 home_cache_file
+			home_cache_file)))
+
 	(macro rw_home_cache_files ((type ARG1))
 		(call tpmc.search_home_cache (ARG1))
 		(call rw_files_pattern (ARG1 home_cache_file home_cache_file)))

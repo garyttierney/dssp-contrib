@@ -392,4 +392,7 @@
 	(call nm.client_subj_type (subj))
 
 	(optional nm_online_optional_sd
-		(call sd.daemon (subj cmd_file))))
+		(call sd.daemon (subj cmd_file)))
+
+	(optional nm_online_optional_sysbus
+		(call sysbus.client_subj_type (subj))))

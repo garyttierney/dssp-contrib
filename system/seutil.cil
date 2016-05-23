@@ -129,6 +129,7 @@
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
 	(blockinherit file.read_config_files_blk)
+	(blockinherit file.manage_config_files_blk)
 	(blockinherit file.read_config_lnk_files_blk)
 	(blockinherit file.read_config_blk)
 	(blockinherit file.manage_config_blk)
@@ -462,9 +463,20 @@
 
 	(roletype role_attribute subj)
 
+	(call cmd.exec (subj))
+
+	(call file.read_config_files (subj))
+
 	(call sec.set_all_booleans (subj))
 
 	(call client_subj_type (subj))
+
+	(call file_context.manage_config_files (subj))
+	(call policy_src.manage_var_lib (subj))
+	(call policy_config.manage (subj))
+	(call selinux_config.manage_config_files (subj))
+	(call load_policy.run (subj role_attribute))
+	(call setfiles.run (subj role_attribute))
 
 	(call sec.list_fs (client_subj_type_attribute))
 

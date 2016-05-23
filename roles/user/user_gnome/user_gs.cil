@@ -19,7 +19,10 @@
 		(call auto_subj_type_transition_pattern (subj ARG2 ARG1)))
 
 	(macro stream_connect ((type ARG1))
-		(call gs.spec_stream_connect (ARG1 subj))))
+		(call gs.spec_stream_connect (ARG1 subj)))
+
+	(macro auto_subj_type_transition_gs_helper ((type ARG1))
+		(call gs_helper.spec_auto_subj_type_transition (ARG1 subj))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

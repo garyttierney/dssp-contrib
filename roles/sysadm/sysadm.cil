@@ -4495,10 +4495,6 @@
 	(optional sysadm_optional_sysadm_xpdf
 		(call sysadm_xpdf.role_pattern (role subj_type_attribute)))
 
-	(optional sysadm_optional_sysadm_xrdp
-		(call sysadm_xrdpstartwm.role_pattern (role
-			subj_type_attribute)))
-
 	(optional sysadm_optional_sysadm_xsession
 		(call xsession.manage_tmpfs_user_files (subj))
 		(call xsession.relabel_tmpfs_user_files (subj))
@@ -4515,6 +4511,9 @@
 		(call xwayland.relabel_tmpfs_user (subj))
 
 		(call sysadm_xwayland.role (role)))
+
+	(optional sysadm_optional_sysadm_xrdpuser
+		(call sysadm_xrdpuser.role_pattern (role subj)))
 
 	(optional sysadm_optional_sysadm_xterm
 		(call sysadm_xterm.role_pattern (role subj_type_attribute)))

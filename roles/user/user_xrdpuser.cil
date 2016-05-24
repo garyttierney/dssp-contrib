@@ -1,0 +1,21 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_xrdpuser
+	(blockinherit xrdpuser.subj_blk)
+
+	(call user.shell_auto_subj_type_transition (subj))
+
+	(optional user_xrdpuser_optional_user_gkr
+		(call user_gkrd.auto_subj_type_transition (subj)))
+
+	(optional user_xrdpuser_optional_user_gs
+		(call user_gs.auto_subj_type_transition (subj)))
+
+	(optional user_xrdpuser_optional_user_sessbus
+		(call user_sessbus.auto_subj_type_transition (subj)))
+
+	(optional user_xrpduser_optional_user_xsession
+		(call user_xsession.auto_subj_type_transition (subj))))

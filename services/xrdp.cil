@@ -35,10 +35,6 @@
 (in xrdpsessvc
 	(filecon "/usr/sbin/xrdp-sessvc" file cmd_file_context))
 
-(in xrdpstartwm
-	(filecon "/etc/xrdp/startwm\.sh" file cmd_file_context)
-	(filecon "/etc/xrdp/startwm-bash\.sh" file cmd_file_context))
-
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -112,10 +108,16 @@
 	(blockinherit auto_subj_type_transition_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.use_fd_blk)
+	(blockinherit subj.rw_inherited_unix_dgram_sockets_blk)
 
 	(blockinherit file.read_var_log_files_blk)
 	(blockinherit file.manage_var_log_files_blk)
 	(blockinherit file.relabel_var_log_files_blk)
+
+	(macro append_inherited_var_log_files ((type ARG1))
+		(call use_fd (ARG1))
+		(allow ARG1 var_log_file append_inherited_file_perms))
 
 	(macro var_log_obj_type_transition_var_log ((type ARG1))
 		(call file.var_log_obj_type_transition (ARG1 var_log_file file
@@ -143,43 +145,64 @@
 
 	(blockinherit subj.send_signal_blk))
 
-(in xrdpstartwm
+(in xrdpuser
 	(block subj_blk
 		(blockabstract subj_blk)
 
-		(blockinherit app.application_subj_blk)
+		(blockinherit app.application_blk)
 
-		(typeattributeset xrdpstartwm.subj_type_attribute subj)
-
-		(blockinherit subj.send_sigkill_blk)
-
-		(macro auto_subj_type_transition ((type ARG1))
-			(call xrdpstartwm.spec_auto_subj_type_transition (ARG1
-				subj)))
+		(typeattributeset xrdpuser.subj_type_attribute subj)
 
 		(macro role_pattern ((role ARG1)(type ARG2))
-			(call xrdpstartwm.role_pattern (ARG1 ARG2 subj))))
+			(call xrdpuser.role_pattern (ARG1 ARG2 subj))))
 
-	(blockinherit exec_blk)
+	(block priv_subj_blk
+		(blockabstract priv_subj_blk)
 
-	(blockinherit subj.send_signal_blk)
+		(blockinherit xrdpuser.subj_blk)
+
+		(typeattributeset xrdpuser.priv_subj_type_attribute subj))
+
+	(macro subj_type ((type ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro priv_subj_type ((type ARG1))
+		(typeattributeset priv_subj_type_attribute ARG1))
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
-		(typeattributeset subj_type_attribute ARG1))
+		(typeattributeset xrdpuser.subj_type_attribute ARG1))
+
+	(blockinherit subj.send_signal_blk)
+
+	(blockinherit subj.rw_inherited_fifo_files_all_blk)
+	(blockinherit subj.send_sigchld_all_blk)
+	(blockinherit subj.link_keyring_all_blk)
 
 	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
-		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
-
 		(roletype ARG1 ARG3)
 
 		(allow ARG2 ARG3 (process (signal)))
+		(call ps_subj_pattern (ARG2 ARG3)))
 
-		(allow ARG3 ARG2 (process (signal))))
+	(macro dontaudit_create_keyring_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute create_key_perms))
 
-	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
-		(allow ARG1 ARG2 (process (signal)))
-		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+	(macro create_keyring_subj ((type ARG1))
+		(allow ARG1 subj_type_attribute create_key_perms))
+
+	(macro dontaudit_manual_subj_type_transition_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute (process (transition))))
+
+	(macro spec_manual_subj_type_transition_subj ((type
+		ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			subj_type_attribute)))
+
+	(macro spec_manual_subj_type_transition_unpriv_subj ((type
+		ARG1)(type ARG2))
+		(call manual_subj_type_transition_pattern (ARG1 ARG2
+			unpriv_subj_type_attribute))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -194,12 +217,24 @@
 	(booleanif xrdp_priv_login
 		(true
 			(call
-				xsession.manual_subj_type_transition_common_login_subj
-					(xrdpsesman.subj)))
+				xsession.spec_manual_subj_type_transition
+					(xrdpsesman.subj
+						xrdpuser.subj_type_attribute)))
 		(false
 			(call
-				xsession.manual_subj_type_transition_unpriv_login_subj
-					(xrdpsesman.subj)))))
+				xsession.spec_manual_subj_type_transition
+					(xrdpsesman.subj
+						xrdpuser.unpriv_subj_type_attribute))))
+
+	; this is illigal because i am referencing an external type
+	; the alternative would be just as bad
+	(optional xrdp_priv_login_optional_exempt
+		(booleanif xrdp_priv_login
+			(true
+				(call
+					xsession.spec_manual_subj_type_transition
+						(xrdpsesman.subj
+							exempt.subj))))))
 
 (block xrdp
 	(typeattribute adm_subj_type_attribute)
@@ -337,6 +372,8 @@
 	(allow subj self (tcp_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)
 
+	(allow subj xrdpsessvc.subj (process (sigchld)))
+
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))
@@ -366,10 +403,26 @@
 	(call xrdpsessvc.auto_subj_type_transition (subj))
 
 	(call xserver.auto_subj_type_transition (subj))
-	(call xserver.client_subj_type (subj))
+	(call xserver.read_state (subj))
+	(call xserver.stream_connect (subj))
+
+	(call xrdpuser.dontaudit_manual_subj_type_transition_subj (subj))
+	(call xrdpuser.dontaudit_create_keyring_subj (subj))
+	(call xrdpuser.create_keyring_subj (subj))
+
+	(call gkrd.exec (subj))
+	(call gkrd.manual_subj_type_transition_all_subj (subj))
+	(call gkrd.stream_connect_all_subj (subj))
+
+	(optional xrdpsesman_optional_exempt
+		(call exempt.dontaudit_manual_subj_type_transition (subj))
+		(call exempt.dontaudit_create_keyring (subj))
+		(call exempt.create_keyring (subj)))
 
 	(optional xrdpsesman_optional_gkr
-		(call gkrd.manual_subj_type_transition_all_subj (subj)))
+		(call gkrd.exec (subj))
+		(call gkrd.manual_subj_type_transition_all_subj (subj))
+		(call gkrd.stream_connect_all_subj (subj)))
 
 	(optional xrdpsesman_optional_sd
 		(call sd.daemon (subj cmd_file))
@@ -408,6 +461,9 @@
 	(call xrdp.manage_tmpfs (subj))
 	(call xrdp.tmpfs_obj_type_transition_tmpfs (subj))
 
+	(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj))
+	(call xrdpsesman.append_inherited_var_log_files (subj))
+
 	(optional xrdpchansrv_optional_sd
 		(call sd.forked_subj_type (subj))))
 
@@ -427,14 +483,25 @@
 	(call xrdp.manage_tmpfs (subj))
 	(call xrdp.tmpfs_obj_type_transition_tmpfs (subj))
 
+	(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj))
+	(call xrdpsesman.append_inherited_var_log_files (subj))
+
 	(call xrdpchansrv.auto_subj_type_transition (subj))
 
 	(optional xrdpsessvc_optional_sd
 		(call sd.forked_subj_type (subj))))
 
-(block xrdpstartwm
+(block xrdpuser
 	(typeattribute subj_type_attribute)
+	(typeattribute priv_subj_type_attribute)
+	(typeattribute unpriv_subj_type_attribute)
 
-	(blockinherit app.application_cmd_obj_blk)
+	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(optional xrdpuser_optional_mcstransd
+		(call mcstransd.contains_subj_type (subj_type_attribute)))
+
+	(typeattributeset unpriv_subj_type_attribute (and (subj_type_attribute)
+		(not (priv_subj_type_attribute)))))

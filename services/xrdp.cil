@@ -35,6 +35,10 @@
 (in xrdpsessvc
 	(filecon "/usr/sbin/xrdp-sessvc" file cmd_file_context))
 
+(in xrdpstartwm
+	(filecon "/etc/xrdp/startwm\.sh" file cmd_file_context)
+	(filecon "/etc/xrdp/startwm-bash\.sh" file cmd_file_context))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -136,7 +140,12 @@
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
-			home_user_file file "xrdp-chansrv.log"))))
+			home_user_file file "xrdp-chansrv.log")))
+
+	(macro stream_connect ((type ARG1))
+		(call fs.search_tmpfs (ARG1))
+		(call stream_connect_pattern (ARG1 xrdp.tmpfs_file
+			xrdp.tmpfs_file subj))))
 
 (in xrdpsessvc
 	(blockinherit exec_blk)
@@ -183,7 +192,10 @@
 		(roletype ARG1 ARG3)
 
 		(allow ARG2 ARG3 (process (signal)))
-		(call ps_subj_pattern (ARG2 ARG3)))
+		(call ps_subj_pattern (ARG2 ARG3))
+
+		(optional xrdpuser_role_pattern_optional_glxutils
+			(call glxutils.run (ARG3 ARG1))))
 
 	(macro dontaudit_create_keyring_subj ((type ARG1))
 		(dontaudit ARG1 subj_type_attribute create_key_perms))
@@ -203,6 +215,12 @@
 		ARG1)(type ARG2))
 		(call manual_subj_type_transition_pattern (ARG1 ARG2
 			unpriv_subj_type_attribute))))
+
+(in xrdpstartwm
+	(blockinherit exec_blk)
+
+	(macro cmd_obj_entry_subj ((type ARG1))
+		(call subj.entry (ARG1 cmd_file))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -287,6 +305,7 @@
 
 	(call tcp_bind_port (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self (unix_dgram_socket (sendto)))
 	(allow subj self create_tcp_stream_socket_perms)
 
@@ -297,6 +316,8 @@
 	(call locale.read (subj))
 
 	(call vnc.tcp_connect_port (subj))
+
+	(call xrdpchansrv.stream_connect (subj))
 
 	(call xrdpsesman.tcp_connect_port (subj))
 
@@ -376,6 +397,8 @@
 
 	(call sys.read_kernel_sysctl_files (subj))
 
+	(call cmd.mmap_shell (subj))
+
 	(call dev.read_urandom (subj))
 
 	(call file.read_config_files (subj))
@@ -402,17 +425,15 @@
 
 	(call xrdpsessvc.auto_subj_type_transition (subj))
 
+	(call xrdpstartwm.exec (subj))
+
 	(call xserver.auto_subj_type_transition (subj))
 	(call xserver.read_state (subj))
-	(call xserver.stream_connect (subj))
+	(call xserver.client_subj_type (subj))
 
 	(call xrdpuser.dontaudit_manual_subj_type_transition_subj (subj))
 	(call xrdpuser.dontaudit_create_keyring_subj (subj))
 	(call xrdpuser.create_keyring_subj (subj))
-
-	(call gkrd.exec (subj))
-	(call gkrd.manual_subj_type_transition_all_subj (subj))
-	(call gkrd.stream_connect_all_subj (subj))
 
 	(optional xrdpsesman_optional_exempt
 		(call exempt.dontaudit_manual_subj_type_transition (subj))
@@ -496,12 +517,53 @@
 	(typeattribute priv_subj_type_attribute)
 	(typeattribute unpriv_subj_type_attribute)
 
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
 	(call standard.user_exemption_target_subj_type (subj_type_attribute))
 
+	(call cmd.exec (subj_type_attribute))
+
+	(call fs.getattr_all_fs (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
+
 	(call subj.interactive_fd_subj_type (subj_type_attribute))
+
+	(call hostname.exec (subj_type_attribute))
+
+	(call locale.read (subj_type_attribute))
+	(call passwords.read (subj_type_attribute))
+
+	(call nss.read_config_files (subj_type_attribute))
+
+	(call file_context.read_config_files (subj_type_attribute))
+	(call selinux_config.read_config_files (subj_type_attribute))
+	(call setfiles.exec (subj_type_attribute))
+
+	(call usersubj.list_home_dir (subj_type_attribute))
+	(call usersubj.read_home_user_files (subj_type_attribute))
+
+	(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj_type_attribute))
+	(call xrdpsesman.append_inherited_var_log_files (subj_type_attribute))
+
+	(call xrdpstartwm.exec (subj_type_attribute))
+	(call xrdpstartwm.cmd_obj_entry_subj (subj_type_attribute))
+
+	(call xsession.manage_home_user_files (subj_type_attribute))
+	(call xsession.home_dir_obj_type_transition_home (subj_type_attribute))
+
+	(call xserver.read_config (subj_type_attribute))
 
 	(optional xrdpuser_optional_mcstransd
 		(call mcstransd.contains_subj_type (subj_type_attribute)))
 
+	(optional xrdpuser_optional_sd
+		(call sd.forked_subj_type (subj_type_attribute)))
+
+	(optional xrdpuser_optional_systemctl
+		(call systemctl.client_subj_type (subj_type_attribute)))
+
 	(typeattributeset unpriv_subj_type_attribute (and (subj_type_attribute)
 		(not (priv_subj_type_attribute)))))
+
+(block xrdpstartwm
+	(blockinherit cmd.obj_blk))

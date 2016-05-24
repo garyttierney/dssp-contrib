@@ -281,6 +281,8 @@
 	(call usersubj.link_keyring_common_login_subj (subj))
 	(call usersubj.use_ttys (subj))
 
+	(call vnc.read_home_user_files (subj))
+
 	(call xinit.read_state_all_subj (subj))
 	(call xinit.send_sigchld_all_subj (subj))
 	(call xinit.send_signal_all_subj (subj))

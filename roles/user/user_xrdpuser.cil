@@ -8,6 +8,9 @@
 
 	(call user.shell_auto_subj_type_transition (subj))
 
+	(optional user_xrdpuser_optional_user_sessbus_launch
+		(call user_sessbus_launch.auto_subj_type_transition (subj)))
+
 	(optional user_xrdpuser_optional_user_gkr
 		(call user_gkrd.auto_subj_type_transition (subj)))
 

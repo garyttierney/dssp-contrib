@@ -90,6 +90,12 @@
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
+	(macro write_inherited_home_user_files ((type ARG1))
+		(allow ARG1 home_user_file write_inherited_file_perms)
+
+		(optional xsession_write_inherited_home_user_files_optional_sd
+			(call sd.use_fd (ARG1))))
+
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file file ".xsession-errors"))))

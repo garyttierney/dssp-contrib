@@ -196,6 +196,9 @@
 
 	(call sd.log_parse_env_subj_type (subj))
 
+	(optional sd_coredump_optional_exempt
+		(call exempt.read_state (subj)))
+
 	(optional sd_coredump_optional_steam
 		(call steam.read_home_data (subj)))
 

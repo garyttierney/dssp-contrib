@@ -4152,6 +4152,16 @@
 		(call pcitools.dontaudit_exec_cmd_files
 			(common_login_type_attribute)))
 
+	(optional common_login_type_optional_xrdp
+		(call xrdpsesman.rw_inherited_unix_dgram_sockets
+			(common_login_type_attribute))
+		(call xrdpsesman.append_inherited_var_log_files
+			(common_login_type_attribute))
+		(call xrdpsesman.send_sigchld (common_login_type_attribute)))
+
+	(optional common_login_type_optional_xserver
+		(call xserver.search_config (common_login_type_attribute)))
+
 	(allow common_priv_type_attribute self (capability (dac_override)))
 
 	(call priv_type (common_priv_type_attribute))

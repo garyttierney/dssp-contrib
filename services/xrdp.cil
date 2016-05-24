@@ -112,6 +112,7 @@
 	(blockinherit auto_subj_type_transition_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_sigchld_blk)
 	(blockinherit subj.use_fd_blk)
 	(blockinherit subj.rw_inherited_unix_dgram_sockets_blk)
 
@@ -152,7 +153,8 @@
 
 	(blockinherit auto_subj_type_transition_blk)
 
-	(blockinherit subj.send_signal_blk))
+	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_sigchld_blk))
 
 (in xrdpuser
 	(block subj_blk
@@ -195,7 +197,10 @@
 		(call ps_subj_pattern (ARG2 ARG3))
 
 		(optional xrdpuser_role_pattern_optional_glxutils
-			(call glxutils.run (ARG3 ARG1))))
+			(call glxutils.run (ARG3 ARG1)))
+
+		(optional xrdpuser_role_pattern_optional_xutil
+			(call xutil.run (ARG3 ARG1))))
 
 	(macro dontaudit_create_keyring_subj ((type ARG1))
 		(dontaudit ARG1 subj_type_attribute create_key_perms))
@@ -472,6 +477,7 @@
 	(call home_dir_obj_type_transition_home (subj))
 
 	(allow subj self create_unix_dgram_socket_perms)
+	(allow subj self (unix_dgram_socket (sendto)))
 	(allow subj self (unix_stream_socket (listen accept)))
 
 	(call dev.read_urandom (subj))
@@ -509,6 +515,8 @@
 
 	(call xrdpchansrv.auto_subj_type_transition (subj))
 
+	(call xserver.send_signal (subj))
+
 	(optional xrdpsessvc_optional_sd
 		(call sd.forked_subj_type (subj))))
 
@@ -542,6 +550,8 @@
 	(call usersubj.list_home_dir (subj_type_attribute))
 	(call usersubj.read_home_user_files (subj_type_attribute))
 
+	(call xrdp.read_config (subj_type_attribute))
+
 	(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj_type_attribute))
 	(call xrdpsesman.append_inherited_var_log_files (subj_type_attribute))
 
@@ -553,11 +563,20 @@
 
 	(call xserver.read_config (subj_type_attribute))
 
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type
+				(subj_type_attribute))))
+
 	(optional xrdpuser_optional_mcstransd
 		(call mcstransd.contains_subj_type (subj_type_attribute)))
 
 	(optional xrdpuser_optional_sd
+		(call sd.read_state_lnk_files (subj_type_attribute))
 		(call sd.forked_subj_type (subj_type_attribute)))
+
+	(optional xrdpuser_optional_sduser
+		(call sduser.stream_connect_all_subj (subj_type_attribute)))
 
 	(optional xrdpuser_optional_systemctl
 		(call systemctl.client_subj_type (subj_type_attribute)))

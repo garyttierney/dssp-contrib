@@ -313,6 +313,7 @@
 		(call unconfinedsubj.read_state_all_subj (subj)))
 
 	(optional xserver_optional_xrdp
+		(call xrdpsessvc.send_sigchld (subj))
 		(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj))
 		(call xrdpsesman.append_inherited_var_log_files (subj)))
 

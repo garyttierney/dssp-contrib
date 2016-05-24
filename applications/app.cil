@@ -153,4 +153,15 @@
 		(call usersubj.list_home_cmd (subj_type_attribute))
 		(call usersubj.dontaudit_search_all_home_user
 			(subj_type_attribute))
-		(call usersubj.use_inherited_term (subj_type_attribute))))
+		(call usersubj.use_inherited_term (subj_type_attribute)))
+
+	(optional app_optional_xrdp
+		(call xrdpsesman.rw_inherited_unix_dgram_sockets
+			(subj_type_attribute))
+		(call xrdpsesman.append_inherited_var_log_files
+			(subj_type_attribute))
+		(call xrdpsesman.send_sigchld (subj_type_attribute)))
+
+	(optional app_optional_xsession
+		(call xsession.write_inherited_home_user_files
+			(subj_type_attribute))))

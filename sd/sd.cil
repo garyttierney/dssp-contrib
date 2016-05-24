@@ -1241,6 +1241,9 @@
 		(call exempt.create_keyring (subj))
 		(call exempt.shell_manual_subj_type_transition (subj)))
 
+	(optional sd_optional_xrdpuser
+		(call xrdpuser.link_keyring_all_subj (subj)))
+
 	(allow subj_type_attribute self (process (getsched setsched setrlimit
 		setsockcreate)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))

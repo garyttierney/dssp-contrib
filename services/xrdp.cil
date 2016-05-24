@@ -452,6 +452,10 @@
 		(call gkrd.manual_subj_type_transition_all_subj (subj))
 		(call gkrd.stream_connect_all_subj (subj)))
 
+	(optional xrdpsesman_optional_logrotate
+		(call logrotate.client_subj_type (subj))
+		(call logrotate.client_var_log_obj_type (var_log_file)))
+
 	(optional xrdpsesman_optional_sd
 		(call sd.daemon (subj cmd_file))
 

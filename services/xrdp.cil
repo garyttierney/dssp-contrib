@@ -9,6 +9,7 @@
 
 	(filecon "/usr/sbin/xrdp" file cmd_file_context)
 	(filecon "/etc/xrdp(/.*)?" any config_file_context)
+	(filecon "/etc/sysconfig/xrdp" file config_file_context)
 	(filecon "/var/log/xrdp\.log.*" any var_log_file_context)
 	(filecon "/usr/share/xrdp(/.*)?" any data_file_context)
 
@@ -263,6 +264,10 @@
 	(call vnc.tcp_connect_port (subj))
 
 	(call xrdpsesman.tcp_connect_port (subj))
+
+	(optional xrdp_optional_logrotate
+		(call logrotate.client_subj_type (subj))
+		(call logrotate.client_var_log_obj_type (var_log_file)))
 
 	(optional xrdp_optional_sd
 		(call sd.daemon (subj cmd_file))

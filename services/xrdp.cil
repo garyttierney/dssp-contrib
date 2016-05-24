@@ -318,6 +318,8 @@
 
 	(call net.tcp_bind_generic_node (subj))
 
+	(call cert.read (subj))
+	(call cryptopol.read_config_files (subj))
 	(call locale.read (subj))
 
 	(call vnc.tcp_connect_port (subj))

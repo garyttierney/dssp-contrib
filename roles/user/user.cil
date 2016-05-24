@@ -384,6 +384,11 @@
 	(optional user_optional_upowerd
 		(call upower.run (subj_type_attribute role)))
 
+	(optional user_optional_vnc
+		(call vnc.manage_home_user (subj))
+		(call vnc.relabel_home_user (subj))
+		(call vnc.home_dir_obj_type_transition_home (subj)))
+
 	(optional user_optional_vulkan
 		(call vulkan.manage_home_data (subj))
 		(call vulkan.relabel_home_data (subj))
@@ -422,6 +427,11 @@
 		(call xlock.relabel_home_user_files (subj))
 		(call xlock.home_dir_obj_type_transition_home (subj))
 		(call xlock.run (subj_type_attribute role)))
+
+	(optional user_optional_xrdp
+		(call xrdpchansrv.manage_home_user_files (subj))
+		(call xrdpchansrv.relabel_home_user_files (subj))
+		(call xrdpchansrv.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_xserver
 		(call xserver.run (subj_type_attribute role))
@@ -1702,6 +1712,10 @@
 
 	(optional user_optional_user_xpdf
 		(call user_xpdf.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_user_xrdp
+		(call user_xrdpstartwm.role_pattern (role
+			subj_type_attribute)))
 
 	(optional user_optional_user_xinit
 		(call xinit.spec_home_user_auto_subj_type_transition

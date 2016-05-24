@@ -31,7 +31,11 @@
 			(call gkrd.role_pattern (ARG1 ARG2 subj)))
 
 		(macro stream_connect ((type ARG1))
-			(call gkrd.spec_stream_connect (ARG1 subj))))
+			(call gkrd.spec_stream_connect (ARG1 subj)))
+
+		(macro manual_subj_type_transition_all_subj ((type ARG1))
+			(call manual_subj_type_transition_pattern (ARG1
+				cmd_file subj_type_attribute))))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)

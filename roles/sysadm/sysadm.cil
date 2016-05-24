@@ -1466,6 +1466,17 @@
 	(filecon "/root/\.local/share/vinagre(/.*)?" any
 		root_vinagre_home_data))
 
+(optional sysadm_vnc_home_optional_vnc
+	(tunableif enable_rbacsep
+		(true
+			(context root_vnc_home (sysadm.id sysadm.role
+				vnc.home_user_file (systemlow systemlow))))
+		(false
+			(context root_vnc_home (sysadm.id object_r
+				vnc.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.vnc(/.*)?" any root_vnc_home))
+
 (optional sysadm_vulkan_home_optional_vulkan
 	(tunableif enable_rbacsep
 		(true
@@ -1627,6 +1638,19 @@
 				xpdf.home_user_file (systemlow systemlow)))))
 
 	(filecon "/root/\.xpdfrc" file root_xpdf_home))
+
+(optional sysadm_xrpd_home_optional_xrdp
+	(tunableif enable_rbacsep
+		(true
+			(context root_xrdpchansrv_home (sysadm.id sysadm.role
+				xrdpchansrv.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_xrdpchansrv_home (sysadm.id object_r
+				xrdpchansrv.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/xrdp-chansrv\.log" file root_xrdpchansrv_home))
 
 (optional sysadm_xserver_home_optional_xserver
 	(tunableif enable_rbacsep
@@ -2925,6 +2949,11 @@
 	(optional sysadm_optional_vdagentd
 		(call vdagentd.adm (subj role)))
 
+	(optional sysadm_optional_vnc
+		(call vnc.manage_home_user (subj))
+		(call vnc.relabel_home_user (subj))
+		(call vnc.home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_vulkan
 		(call vulkan.manage_home_data (subj))
 		(call vulkan.relabel_home_data (subj))
@@ -2992,6 +3021,12 @@
 
 	(optional sysadm_optional_xpdf
 		(call xpdf.manage_config (subj)))
+
+	(optional sysadm_optional_xrdp
+		(call xrdp.adm (subj role))
+		(call xrdpchansrv.manage_home_user_files (subj))
+		(call xrdpchansrv.relabel_home_user_files (subj))
+		(call xrdpchansrv.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_xserver
 		(call xserver.run (subj_type_attribute role))
@@ -4459,6 +4494,10 @@
 
 	(optional sysadm_optional_sysadm_xpdf
 		(call sysadm_xpdf.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_xrdp
+		(call sysadm_xrdpstartwm.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xsession
 		(call xsession.manage_tmpfs_user_files (subj))

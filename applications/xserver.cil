@@ -17,6 +17,10 @@
 	(portcon "tcp" (6000 6009) port_obj_context)
 	(portcon "udp" (6000 6009) port_obj_context))
 
+(in xserver_tcp_bind_vnc
+	(genfscon "selinuxfs" "/booleans/xserver_tcp_bind_vnc"
+		bool_obj_context))	
+
 (in locale
 	(filecon "/usr/share/X11/locale(/.*)?" any file_file_context))
 
@@ -149,12 +153,26 @@
 			tmpfs_user_file subj)))
 
 	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
-	(blockinherit subj.read_state_blk))
+	(blockinherit subj.read_state_blk)
+
+	(macro set_tcp_bind_vnc_boolean ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 xserver_tcp_bind_vnc.bool))
+		(optional xserver_set_tcp_bind_vnc_boolean_optional_seutil
+			(call setsebool.exec (ARG1)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Policy
 ;
+
+(boolean xserver_tcp_bind_vnc true)
+
+(block xserver_tcp_bind_vnc
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif xserver_tcp_bind_vnc
+		(true
+			(call vnc.tcp_bind_port (xserver.subj)))))
 
 (block xserver
 	(roleattribute role_attribute)

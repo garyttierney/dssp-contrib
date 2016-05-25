@@ -241,6 +241,9 @@
 
 	(call fwupd.client_subj_type (subj_type_attribute))
 
+	(optional fwupdmgr_optional_rpm
+		(call rpm.read_var_lib_lnk_files (subj)))
+
 	(optional fwupdmgr_optional_sd
 		(call sd.daemon (subj cmd_file)))
 

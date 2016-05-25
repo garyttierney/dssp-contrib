@@ -1140,6 +1140,19 @@
 	(filecon "/root/\.local/lib/python2\.7(/.*)?" any
 		root_python_home_data))
 
+(optional sysadm_rdp_home_optional_rdp
+	(tunableif enable_rbacsep
+		(true
+			(context root_rdp_home (sysadm.id sysadm.role
+				rdp.home_config_file (systemlow
+					systemlow))))
+		(false
+			(context root_rdp_home (sysadm.id object_r
+				rdp.home_config_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.config/freerdp(/.*)?" any root_rdp_home))
+
 (optional sysadm_rp_home_optional_rp
 	(tunableif enable_rbacsep
 		(true
@@ -2631,6 +2644,12 @@
 	(optional sysadm_optional_quotacheck
 		(call quotacheck.run (subj_type_attribute role))
 		(call quotacheck.manage_db_files (subj)))
+
+	(optional sysadm_optional_rdp
+		(call rdp.manage_home_config (subj))
+		(call rdp.relabel_home_config (subj))
+		(call rdp.home_config_obj_type_transition_home_config
+			(subj)))
 
 	(optional sysadm_optional_rdisc
 		(call rdisc.adm (subj role)))

@@ -1548,6 +1548,12 @@
 		(call wheel_qemu_user_guest.role_pattern (role
 			subj_type_attribute)))
 
+	(optional wheel_optional_rdp
+		(call rdp.manage_home_config (subj))
+		(call rdp.relabel_home_config (subj))
+		(call rdp.home_config_obj_type_transition_home_config
+			(subj)))
+
 	(optional wheel_optional_wheel_rp
 		(call rp.manage_home_user_files (subj))
 		(call rp.relabel_home_user_files (subj))

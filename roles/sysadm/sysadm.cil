@@ -3792,6 +3792,12 @@
 
 		(call gvfsdmd.home_data_obj_type_transition_home_data (subj))
 
+		(call gvfsdrecent.manage_tmpfs_user (subj))
+		(call gvfsdrecent.relabel_tmpfs_user (subj))
+
+		(call sysadm_gvfsdrecent.role_pattern (role
+			subj_type_attribute))
+
 		(call sysadm_gvfsdmd.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdud2.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdburn.role_pattern (role subj_type_attribute))
@@ -3806,8 +3812,6 @@
 		(call sysadm_gvfsdlocaltest.role_pattern (role
 			subj_type_attribute))
 		(call sysadm_gvfsdnetwork.role_pattern (role
-			subj_type_attribute))
-		(call sysadm_gvfsdrecent.role_pattern (role
 			subj_type_attribute))
 		(call sysadm_gvfsdsftp.role_pattern (role subj_type_attribute))
 		(call sysadm_gvfsdtrash.role_pattern (role

@@ -1848,6 +1848,7 @@
 	(call wtmp.manage_var_log_files (subj))
 	(call mime_types.manage_config_files (subj))
 
+	(call usersubj.send_signal_common_subj (subj))
 	(call usersubj.setattr_home_dir (subj))
 
 	(tunableif enable_mls

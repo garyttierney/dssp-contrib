@@ -111,6 +111,9 @@
 	(blockinherit usersubj.manage_home_user_files_blk)
 	(blockinherit usersubj.relabel_home_user_files_blk)
 
+	(macro audit_execute_access_home_user_files ((type ARG1))
+		(allow ARG1 home_user_file (file (execute))))
+
 	(macro exec_home_user_files ((type ARG1))
 		(call usersubj.search_home_dir (ARG1))
 		(allow ARG1 home_user_file exec_file_perms))

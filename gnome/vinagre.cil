@@ -89,12 +89,18 @@
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
 
+	(call dev.rw_inherited_dri (subj_type_attribute))
+
+	(call fs.getattr_sysfs_fs (subj_type_attribute))
+
 	(call lib.dontaudit_lock_lib_files (subj_type_attribute))
 
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 
 	(call net.tcp_bind_all_unreserved_ports (subj_type_attribute))
 	(call net.tcp_connect_all_unreserved_ports (subj_type_attribute))
+
+	(call udev.client_subj_type (subj_type_attribute))
 
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.use_ptys (subj_type_attribute))

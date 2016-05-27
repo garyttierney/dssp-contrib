@@ -1687,13 +1687,21 @@
 		(true
 			(context root_xsession_home (sysadm.id sysadm.role
 				xsession.home_user_file (systemlow
+					systemlow)))
+			(context root_xclients_home (sysadm.id sysadm.role
+				xclients.home_user_file (systemlow
 					systemlow))))
 		(false
 			(context root_xsession_home (sysadm.id object_r
 				xsession.home_user_file (systemlow
+					systemlow)))
+			(context root_xclients_home (sysadm.id object_r
+				xclients.home_user_file (systemlow
 					systemlow)))))
 
-	(filecon "/root/\.xsession-errors" file root_xsession_home))
+	(filecon "/root/\.xsession-errors" file root_xsession_home)
+	(filecon "/root/\.xsession" file root_xclients_home)
+	(filecon "/root/\.Xclients" file root_xclients_home))
 
 (optional sysadm_xutil_home_optional_xutil
 	(tunableif enable_rbacsep
@@ -1784,6 +1792,11 @@
 			git_home_user_auto_type_transition_subj_type_attribute
 				ARG1))
 
+	(macro xclients_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			xclients_home_user_auto_type_transition_subj_type_attribute
+				ARG1))
+
 	(macro xinit_home_user_auto_type_transition_subj_type ((type ARG1))
 		(typeattributeset
 			xinit_home_user_auto_type_transition_subj_type_attribute
@@ -1796,6 +1809,8 @@
 
 (block sysadm
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xclients_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute
 		xinit_home_user_auto_type_transition_subj_type_attribute)
 
@@ -4520,6 +4535,16 @@
 		(call sysadm_xpdf.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_xsession
+		(call xclients.spec_home_user_auto_subj_type_transition
+			(xclients_home_user_auto_type_transition_subj_type_attribute
+				subj))
+		(call xclients.exec_home_user_files (subj))
+		(call xclients.home_user_obj_entry_subj (subj))
+		(call xclients.manage_home_user_files (subj))
+		(call xclients.relabel_home_user_files (subj))
+
+		(call xclients.home_dir_obj_type_transition_home (subj))
+
 		(call xsession.manage_tmpfs_user_files (subj))
 		(call xsession.relabel_tmpfs_user_files (subj))
 

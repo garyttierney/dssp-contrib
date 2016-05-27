@@ -7,6 +7,12 @@
 	(filecon "/etc/X11/xinit/Xsession" any cmd_file_context)
 	(filecon "HOME_DIR/\.xsession-errors" file home_user_file_context))
 
+(in xclients
+	(filecon "HOME_DIR/\.xsession" file home_user_file_context)
+	(filecon "HOME_DIR/\.Xclients" file home_user_file_context))
+
+(filecon "/etc/X11/xinit/Xclients" file cmd)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
@@ -100,6 +106,30 @@
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file file ".xsession-errors"))))
 
+(in xclients
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro exec_home_user_files ((type ARG1))
+		(call usersubj.search_home_dir (ARG1))
+		(allow ARG1 home_user_file exec_file_perms))
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".Xclients"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".xsession")))
+
+	(macro home_user_obj_entry_subj ((type ARG1))
+		(call subj.entry (ARG1 home_user_file)))
+
+	(macro spec_home_user_auto_subj_type_transition ((type ARG1)(type
+		ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 home_user_file
+			ARG2))))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Policy
@@ -169,3 +199,6 @@
 
 	(optional xsession_subj_type_optional_systemctl
 		(call systemctl.client_subj_type (subj_type_attribute))))
+
+(block xclients
+	(blockinherit usersubj.home_user_obj_blk))

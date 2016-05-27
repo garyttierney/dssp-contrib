@@ -26,6 +26,11 @@
 			systemctl_auto_type_transition_subj_type_attribute
 				ARG1))
 
+	(macro xclients_home_user_auto_type_transition_subj_type ((type ARG1))
+		(typeattributeset
+			xclients_home_user_auto_type_transition_subj_type_attribute
+				ARG1))
+
 	(macro xinit_home_user_auto_type_transition_subj_type ((type ARG1))
 		(typeattributeset
 			xinit_home_user_auto_type_transition_subj_type_attribute
@@ -39,6 +44,8 @@
 (block user
 	(typeattribute git_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute systemctl_auto_type_transition_subj_type_attribute)
+	(typeattribute
+		xclients_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute
 		xinit_home_user_auto_type_transition_subj_type_attribute)
 	(typeattribute dbus_send_auto_type_transition_subj_type_attribute)
@@ -1740,6 +1747,16 @@
 		(call user_xinit.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_xsession
+		(call xclients.spec_home_user_auto_subj_type_transition
+			(xclients_home_user_auto_type_transition_subj_type_attribute
+				subj))
+		(call xclients.exec_home_user_files (subj))
+		(call xclients.home_user_obj_entry_subj (subj))
+		(call xclients.manage_home_user_files (subj))
+		(call xclients.relabel_home_user_files (subj))
+
+		(call xclients.home_dir_obj_type_transition_home (subj))
+
 		(call xsession.manage_tmpfs_user_files (subj))
 		(call xsession.relabel_tmpfs_user_files (subj))
 

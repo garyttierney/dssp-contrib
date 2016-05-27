@@ -16,4 +16,8 @@
 
 	(optional sysadm_ssh_agent_optional_sysadm_gs
 		(call sysadm_gs.send_sigchld (subj))
-		(call sysadm_gs.auto_subj_type_transition_gs_helper (subj))))
+		(call sysadm_gs.auto_subj_type_transition_gs_helper (subj)))
+
+	(optional sysadm_ssh_agent_optional_sysadm_xsession
+		(call sysadm.xclients_home_user_auto_type_transition_subj_type
+			(subj))))

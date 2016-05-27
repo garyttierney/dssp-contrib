@@ -16,4 +16,8 @@
 
 	(optional user_ssh_agent_optional_user_gs
 		(call user_gs.send_sigchld (subj))
-		(call user_gs.auto_subj_type_transition_gs_helper (subj))))
+		(call user_gs.auto_subj_type_transition_gs_helper (subj)))
+
+	(optional user_ssh_agent_optional_user_xsession
+		(call user.xclients_home_user_auto_type_transition_subj_type
+			(subj))))

@@ -563,8 +563,7 @@
 	(call xrdpstartwm.exec (subj_type_attribute))
 	(call xrdpstartwm.cmd_obj_entry_subj (subj_type_attribute))
 
-	(call xclients.audit_execute_access_home_user_files
-		(subj_type_attribute))
+	(call xclients.mmap_home_user_files (subj_type_attribute))
 
 	(call xsession.manage_home_user_files (subj_type_attribute))
 	(call xsession.relabel_home_user_files (subj_type_attribute))

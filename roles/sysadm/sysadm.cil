@@ -1663,7 +1663,8 @@
 				xrdpchansrv.home_user_file (systemlow
 					systemlow)))))
 
-	(filecon "/root/xrdp-chansrv\.log" file root_xrdpchansrv_home))
+	(filecon "/root/xrdp-chansrv\.log" file root_xrdpchansrv_home)
+	(filecon "/root/.pcsc12(/.*)?" any root_xrdpchansrv_home))
 
 (optional sysadm_xserver_home_optional_xserver
 	(tunableif enable_rbacsep
@@ -3060,8 +3061,8 @@
 
 	(optional sysadm_optional_xrdp
 		(call xrdp.adm (subj role))
-		(call xrdpchansrv.manage_home_user_files (subj))
-		(call xrdpchansrv.relabel_home_user_files (subj))
+		(call xrdpchansrv.manage_home_user (subj))
+		(call xrdpchansrv.relabel_home_user (subj))
 		(call xrdpchansrv.home_dir_obj_type_transition_home (subj)))
 
 	(optional sysadm_optional_xserver

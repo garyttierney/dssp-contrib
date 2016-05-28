@@ -30,7 +30,8 @@
 
 (in xrdpchansrv
 	(filecon "/usr/sbin/xrdp-chansrv" file cmd_file_context)
-	(filecon "HOME_DIR/xrdp-chansrv\.log" file home_user_file_context))
+	(filecon "HOME_DIR/xrdp-chansrv\.log" file home_user_file_context)
+	(filecon "HOME_DIR/.pcsc12(/.*)?" any home_user_file_context))
 
 (in xrdpsessvc
 	(filecon "/usr/sbin/xrdp-sessvc" file cmd_file_context))
@@ -132,13 +133,18 @@
 
 	(blockinherit subj.send_signal_blk)
 
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
 	(blockinherit usersubj.read_home_user_files_blk)
-	(blockinherit usersubj.manage_home_user_files_blk)
-	(blockinherit usersubj.relabel_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
-			home_user_file file "xrdp-chansrv.log")))
+			home_user_file file "xrdp-chansrv.log"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".pcsc12")))
 
 	(macro stream_connect ((type ARG1))
 		(call fs.search_tmpfs (ARG1))
@@ -474,7 +480,7 @@
 
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(call manage_home_user_files (subj))
+	(call manage_home_user (subj))
 	(call home_dir_obj_type_transition_home (subj))
 
 	(allow subj self create_unix_dgram_socket_perms)
@@ -491,6 +497,8 @@
 
 	(call xrdpsesman.rw_inherited_unix_dgram_sockets (subj))
 	(call xrdpsesman.append_inherited_var_log_files (subj))
+
+	(call xserver.client_subj_type (subj))
 
 	(optional xrdpchansrv_optional_sd
 		(call sd.forked_subj_type (subj))))

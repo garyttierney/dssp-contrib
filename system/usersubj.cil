@@ -3356,8 +3356,7 @@
 	(macro tmpfs_user_template ((type ARG1))
 		(call manage_tmpfs_user (ARG1))
 		(call relabel_tmpfs_user (ARG1))
-		(call tmpfs_obj_type_transition_tmpfs_user (ARG1))
-		(call fs.getattr_tmpfs_fs (ARG1)))
+		(call tmpfs_obj_type_transition_tmpfs_user (ARG1)))
 
 	(macro search_home_cmd ((type ARG1))
 		(call search_home_data (ARG1))

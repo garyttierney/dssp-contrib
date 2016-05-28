@@ -58,19 +58,16 @@
 
 	(allow subj self (capability (kill)))
 
+	(call subj.dontaudit_send_signull_common_subj (subj))
+	(call subj.send_signull_common_subj (subj))
+
 	(call locale.read (subj))
 	(call utmp.read_runtime_files (subj))
 
 	(call nss.client_subj_type (subj))
 
-	(call usersubj.dontaudit_send_signull_common_subj (subj))
-	(call usersubj.send_signull_common_subj (subj))
 	(call usersubj.dontaudit_getattr_term (subj))
-	(call usersubj.getattr_term (subj))
-
-	(optional who_optional_screen
-		(call screen.dontaudit_send_signull_all_subj (subj))
-		(call screen.send_signull_all_subj (subj))))
+	(call usersubj.getattr_term (subj)))
 
 (block mesg
 	(roleattribute role_attribute)

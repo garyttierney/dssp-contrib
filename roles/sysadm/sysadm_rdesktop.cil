@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_rdesktop
+	(blockinherit rdesktop.subj_blk)
+
+	(optional sysadm_rdesktop_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))

@@ -1140,6 +1140,19 @@
 	(filecon "/root/\.local/lib/python2\.7(/.*)?" any
 		root_python_home_data))
 
+(optional sysadm_rdesktop_home_optional_rdesktop
+	(tunableif enable_rbacsep
+		(true
+			(context root_rdesktop_home (sysadm.id sysadm.role
+				rdesktop.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_rdesktop_home (sysadm.id object_r
+				rdesktop.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.rdesktop(/.*)?" any root_rdesktop_home))
+
 (optional sysadm_rdp_home_optional_rdp
 	(tunableif enable_rbacsep
 		(true
@@ -4161,6 +4174,17 @@
 
 		(call sysadm_qemu_user_guest.role_pattern (role
 			subj_type_attribute)))
+
+	(optional sysadm_optional_user_rdesktop
+		(call rdesktop.manage_tmpfs_user_files (subj))
+		(call rdesktop.relabel_tmpfs_user_files (subj))
+
+		(call rdesktop.manage_home_user (subj))
+		(call rdesktop.relabel_home_user (subj))
+
+		(call rdesktop.home_dir_obj_type_transition_home (subj))
+
+		(call sysadm_rdesktop.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_rp
 		(call rp.manage_home_user_files (subj))

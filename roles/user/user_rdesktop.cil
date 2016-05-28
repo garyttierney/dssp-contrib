@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_rdesktop
+	(blockinherit rdesktop.subj_blk)
+
+	(optional user_rdesktop_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

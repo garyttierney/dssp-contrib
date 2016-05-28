@@ -1413,6 +1413,17 @@
 		(call user_qemu_user_guest.role_pattern (role
 			subj_type_attribute)))
 
+	(optional user_optional_user_rdesktop
+		(call rdesktop.manage_tmpfs_user_files (subj))
+		(call rdesktop.relabel_tmpfs_user_files (subj))
+
+		(call rdesktop.manage_home_user (subj))
+		(call rdesktop.relabel_home_user (subj))
+
+		(call rdesktop.home_dir_obj_type_transition_home (subj))
+
+		(call user_rdesktop.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_rdp
 		(call rdp.manage_home_config (subj))
 		(call rdp.relabel_home_config (subj))

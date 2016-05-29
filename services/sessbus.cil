@@ -111,7 +111,7 @@
 	(macro getattr_tmpfs_user_sock_files ((type ARG1))
 		(call fs.search_tmpfs (ARG1))
 		(call file.search_runtime_user (ARG1))
-		(call getattr_files_pattern (ARG1 tmpfs_user_file
+		(call getattr_sock_files_pattern (ARG1 tmpfs_user_file
 			tmpfs_user_file)))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))

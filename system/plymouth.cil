@@ -231,6 +231,8 @@
 
 	(call plymouth.read_config (subj))
 
+	(call udev.client_subj_type (subj))
+
 	(optional plymouthd_optional_sd
 		(call sd.daemon (subj cmd_file))
 

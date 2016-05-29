@@ -890,9 +890,9 @@
 		(call dgram_send_pattern (ARG1 runtime_file runtime_file
 			subj)))
 
-	(macro stream_connect_cgroups_agent ((type ARG1))
+	(macro dgram_send_cgroups_agent ((type ARG1))
 		(call file.search_runtime (ARG1))
-		(call stream_connect_pattern (ARG1 runtime_file
+		(call dgram_send_pattern (ARG1 runtime_file
 			sd_cgroups_agent.runtime_file subj)))
 
 	(macro adm ((type ARG1)(role ARG2))
@@ -984,7 +984,7 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
-	(allow subj self (process (getcap setcap)))
+	(allow subj self (process (setcap)))
 	(allow subj self (capability (dac_override net_admin sys_time kill
 		sys_tty_config sys_boot chown setgid setuid setpcap
 			sys_resource sys_admin fsetid fowner)))
@@ -1280,8 +1280,8 @@
 	(optional sd_optional_xrdpuser
 		(call xrdpuser.link_keyring_all_subj (subj)))
 
-	(allow subj_type_attribute self (process (getsched setsched setrlimit
-		setsockcreate)))
+	(allow subj_type_attribute self (process (getcap getsched setsched
+		setrlimit setsockcreate)))
 	(allow subj_type_attribute self (unix_stream_socket (listen accept)))
 	(allow subj_type_attribute self create_netlink_selinux_socket_perms)
 	(allow subj_type_attribute self (unix_dgram_socket (sendto)))

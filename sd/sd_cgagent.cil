@@ -38,7 +38,7 @@
 	(call sd.stream_connect (subj))
 
 	(call sd.log_parse_env_subj_type (subj))
-	(call sd.stream_connect_cgroups_agent (subj))
+	(call sd.dgram_send_cgroups_agent (subj))
 
 	(optional sd_cgagent_optional_sysbus
 		(call sysbus.client_subj_type (subj))))

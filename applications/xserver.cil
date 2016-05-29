@@ -305,6 +305,9 @@
 	(optional xserver_optional_sd_logind
 		(call sd_logind.client_subj_type (subj)))
 
+	(optional xserver_optional_sessbus
+		(call sessbus.getattr_tmpfs_user_sock_files (subj)))
+
 	(optional xserver_optional_pkexec
 		(call polkit_exec.exec (subj)))
 

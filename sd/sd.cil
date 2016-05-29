@@ -45,6 +45,9 @@
 	(filecon "/var/run/systemd/generator\.late(/.*)?" any
 		unit_file_context))
 
+(in sd_cgroups_agent
+	(filecon "/var/run/systemd/cgroups-agent" socket runtime_file_context))
+
 (in sd_private
 	(filecon "/var/run/systemd/private" socket runtime_file_context))
 
@@ -378,6 +381,30 @@
 	(macro relabel_private_runtime_sock_files ((type ARG1))
 		(call search_runtime (ARG1))
 		(allow ARG1 sd_private.runtime_file relabel_sock_file_perms))
+
+	(macro read_cgroups_agent_runtime_sock_files ((type ARG1))
+		(call search_runtime (ARG1))
+		(allow ARG1 sd_cgroups_agent.runtime_file
+			read_sock_file_perms))
+
+	(macro write_cgroups_agent_runtime_sock_files ((type ARG1))
+		(call search_runtime (ARG1))
+		(allow ARG1 sd_cgroups_agent.runtime_file
+			write_sock_file_perms))
+
+	(macro rw_cgroups_agent_runtime_sock_files ((type ARG1))
+		(call search_runtime (ARG1))
+		(allow ARG1 sd_cgroups_agent.runtime_file rw_sock_file_perms))
+
+	(macro manage_cgroups_agent_runtime_sock_files ((type ARG1))
+		(call rw_runtime_dirs (ARG1))
+		(allow ARG1 sd_cgroups_agent.runtime_file
+			manage_sock_file_perms))
+
+	(macro relabel_cgroups_agent_runtime_sock_files ((type ARG1))
+		(call search_runtime (ARG1))
+		(allow ARG1 sd_cgroups_agent.runtime_file
+			relabel_sock_file_perms))
 
 	(macro var_lib_obj_type ((type ARG1))
 		(call file.var_lib_obj_type (ARG1))
@@ -863,6 +890,11 @@
 		(call dgram_send_pattern (ARG1 runtime_file runtime_file
 			subj)))
 
+	(macro stream_connect_cgroups_agent ((type ARG1))
+		(call file.search_runtime (ARG1))
+		(call stream_connect_pattern (ARG1 runtime_file
+			sd_cgroups_agent.runtime_file subj)))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(call sd_askpwd_agent.run (ARG1 ARG2)))
@@ -939,6 +971,10 @@
 	(call manage_private_runtime_sock_files (subj))
 	(call runtime_obj_type_transition (subj sd_private.runtime_file
 		sock_file "private"))
+
+	(call manage_cgroups_agent_runtime_sock_files (subj))
+	(call runtime_obj_type_transition (subj sd_cgroups_agent.runtime_file
+		sock_file "cgroups-agent"))
 
 	(blockinherit file.var_lib_obj_blk)
 
@@ -1419,6 +1455,12 @@
 
 (block sd_helper
 	(blockinherit cmd.obj_blk))
+
+(block sd_cgroups_agent
+	(blockinherit file.runtime_obj_blk)
+
+	(typeattributeset sd.obj_type_attribute runtime_file)
+	(typeattributeset sd.runtime_obj_type_attribute runtime_file))
 
 (block sd_private
 	(blockinherit file.runtime_obj_blk)

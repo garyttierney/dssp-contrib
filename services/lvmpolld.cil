@@ -99,7 +99,7 @@
 	(call lvm.manage_runtime_dirs (subj))
 	(call lvm.runtime_obj_type_transition_runtime (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call selinux_config.read_config_files (subj))
 	(call file_context.read_config_files (subj))

@@ -191,7 +191,7 @@
 		(call nss.client_subj_type (subj))
 
 		(call cert.read (subj))
-		(call locale.read (subj))
+		(call locale.client_subj_type (subj))
 		(call mime_types.read_config_files (subj))
 
 		(call usersubj.search_home_dir (subj))
@@ -558,7 +558,7 @@
 	(call httpd.search_all_var_log (subj))
 	(call suexec.mmap_all (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 
@@ -672,7 +672,7 @@
 	(call cmd.mmap (subj_type_attribute))
 	(call cmd.mmap_shell (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

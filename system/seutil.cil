@@ -343,7 +343,7 @@
 	(call selinux_config.read_config_files (subj))
 	(call policy_config.read_files (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(optional load_policy_optional_rpm
 		(call rpm.rw_inherited_fifo_files (subj)))
@@ -425,7 +425,7 @@
 
 	(call term.use_inherited_console (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 	(call shadow.relabel (subj))
 
 	(call default_context.read_config_files (subj))
@@ -482,7 +482,7 @@
 
 	(call selinux_config.read_config_files (client_subj_type_attribute))
 
-	(call locale.read (client_subj_type_attribute))
+	(call locale.client_subj_type (client_subj_type_attribute))
 
 	(call nss.client_subj_type (client_subj_type_attribute))
 

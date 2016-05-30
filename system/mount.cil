@@ -102,7 +102,7 @@
 	(call storage.rw_all (subj))
 
 	(call fstab.read (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(booleanif (mount_any_file) (true
 		(call file.rw_all_files_except (subj))

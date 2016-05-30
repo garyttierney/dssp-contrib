@@ -145,7 +145,7 @@
 	(call dhcp.udp_bind_reserved_port (subj))
 
 	(call cert.read (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 	(call network.read_config_files (subj))
 
 	(call nss.client_subj_type (subj))

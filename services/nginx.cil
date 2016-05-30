@@ -306,7 +306,7 @@
 	(call net.tcp_bind_generic_node (subj_type_attribute))
 
 	(call cert.read (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call http.tcp_bind_reserved_port (nginx.subj))
 	(call http_alt.tcp_bind_port (nginx.subj))

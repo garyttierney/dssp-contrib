@@ -356,7 +356,7 @@
 	(call http_alt.tcp_bind_port (php_fpm.subj))
 
 	(call cert.read (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

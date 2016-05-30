@@ -61,7 +61,7 @@
 	(call subj.dontaudit_send_signull_common_subj (subj))
 	(call subj.send_signull_common_subj (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 	(call utmp.read_runtime_files (subj))
 
 	(call nss.client_subj_type (subj))
@@ -76,7 +76,7 @@
 
 	(roletype role_attribute subj)
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call usersubj.dontaudit_setattr_term (subj))
 	(call usersubj.use_term (subj))
@@ -91,7 +91,7 @@
 
 	(allow subj self (capability (dac_override)))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 	(call utmp.read_runtime_files (subj))
 
 	(call nss.client_subj_type (subj))

@@ -164,7 +164,7 @@
 	(call sys.read_crypto_sysctl_files (subj))
 
 	(call terminfo.read_all (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 
@@ -246,7 +246,7 @@
 
 	(call chronyc.dgram_send (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 

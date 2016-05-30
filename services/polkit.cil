@@ -199,7 +199,7 @@
 
 	(call subj.read_state_subj (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 
@@ -271,7 +271,7 @@
 
 	(call chkpwd.run (subj role_attribute))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 
@@ -310,7 +310,7 @@
 
 	(call subj.ptrace_uncond_subj_type (subj_type_attribute))
 
-	(call locale.read (client_subj_type_attribute))
+	(call locale.client_subj_type (client_subj_type_attribute))
 	(call utmp.read_runtime_files (client_subj_type_attribute))
 
 	(call nss.client_subj_type (client_subj_type_attribute))

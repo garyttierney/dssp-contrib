@@ -250,7 +250,7 @@
 	(call net.tcp_bind_generic_node (subj))
 
 	(call cert.read (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call sd_journal_gateway.tcp_bind_port (subj))
 
@@ -287,7 +287,7 @@
 	(call fs.getattr_fs (subj))
 
 	(call cert.read (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call sd_journal_gateway.tcp_connect_port (subj))
 

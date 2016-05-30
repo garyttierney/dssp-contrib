@@ -140,7 +140,7 @@
 
 		(call net.tcp_bind_generic_node (subj))
 
-		(call locale.read (subj))
+		(call locale.client_subj_type (subj))
 
 		(optional redis_server_blk_optional_logrotate
 			(call logrotate.client_var_log_obj_type (var_log_file)))
@@ -386,7 +386,7 @@
 	(call cmd.audit_read_access_shell_files (subj_type_attribute))
 	(call cmd.exec (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call redis.tcp_connect_port (subj_type_attribute))
 

@@ -131,7 +131,7 @@
 	(call storage.getattr_fixed_disk (subj))
 	(call storage.getattr_removable (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(call mount.auto_subj_type_transition (subj))
 	(call mount.read_runtime_files (subj))

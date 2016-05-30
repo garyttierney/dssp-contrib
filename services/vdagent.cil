@@ -106,7 +106,7 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call usersubj.read_home_config_files (subj_type_attribute))
 
@@ -150,7 +150,7 @@
 
 	(call term.use_virtio (subj))
 
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(optional vdagentd_optional_sd
 		(call sd.daemon (subj cmd_file))

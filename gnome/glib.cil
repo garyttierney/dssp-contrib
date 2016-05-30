@@ -121,7 +121,7 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.client_subj_type (subj_type_attribute)))
 
 (block gsettings
 	(typeattribute subj_type_attribute)
@@ -134,7 +134,7 @@
 
 	(call file.read_data_files (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.client_subj_type (subj_type_attribute)))
 
 (block glib_helper
 	(blockinherit cmd.obj_blk))

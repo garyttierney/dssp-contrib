@@ -106,7 +106,7 @@
 	(allow client_subj_type_attribute self rw_fifo_file_perms)
 
 	(call terminfo.read_all (client_subj_type_attribute))
-	(call locale.read (client_subj_type_attribute))
+	(call locale.client_subj_type (client_subj_type_attribute))
 
 	(call sd_timedated.sysbus_chat_client_subj_type
 		(client_subj_type_attribute))

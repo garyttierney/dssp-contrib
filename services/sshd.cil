@@ -450,7 +450,7 @@
 		(call fs.read_devtmpfs_lnk_files (subj))
 
 		(call cert.read (subj))
-		(call locale.read (subj))
+		(call locale.client_subj_type (subj))
 
 		(call mount.exec (subj))
 
@@ -511,7 +511,7 @@
 
 		(call file.search_var (subj))
 
-		(call locale.read (subj))))
+		(call locale.client_subj_type (subj))))
 
 (in sshd
 	(blockinherit net.tcp_connect_all_ports_blk)

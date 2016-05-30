@@ -131,7 +131,7 @@
 	(call storage.getattr_fixed_disk (subj_type_attribute))
 
 	(call cert.read (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
@@ -162,7 +162,7 @@
 
 	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.read_home_config_files (subj_type_attribute)))

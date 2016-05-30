@@ -443,7 +443,7 @@
 	(call gtk.client_subj_type (common_subj_type_attribute))
 
 	(call fonts.client_subj_type (common_subj_type_attribute))
-	(call locale.read (common_subj_type_attribute))
+	(call locale.client_subj_type (common_subj_type_attribute))
 	(call mime_types.read_data (common_subj_type_attribute))
 
 	(call nss.client_subj_type (common_subj_type_attribute))
@@ -462,7 +462,7 @@
 		setsched)))
 	(allow common_sp_subj_type_attribute self rw_fifo_file_perms)
 
-	(call locale.read (common_sp_subj_type_attribute))
+	(call locale.client_subj_type (common_sp_subj_type_attribute))
 
 	(optional gnomeapp_common_sp_subj_type_optional_xserver
 		(call xserver.client_subj_type

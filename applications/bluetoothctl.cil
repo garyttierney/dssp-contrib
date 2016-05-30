@@ -56,7 +56,7 @@
 	(call bluetoothd.sysbus_chat_client_subj_type (subj))
 
 	(call terminfo.read_all (subj))
-	(call locale.read (subj))
+	(call locale.client_subj_type (subj))
 
 	(optional bluetoothctl_optional_powertop
 		(call powertop.rw_inherited_sockets (subj)))

@@ -415,7 +415,7 @@
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.getattr_tmpfs_fs (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call usersubj.read_home_data (subj_type_attribute))
@@ -440,7 +440,7 @@
 
 	(call file.read_data (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(optional gvfsd_subj_type_optional_sduser
 		(blockinherit sduser.unit_obj_blk)))
@@ -466,7 +466,7 @@
 	(call fs.getattr_fs (subj_type_attribute))
 	(call fs.read_sysfs (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
 
@@ -502,7 +502,7 @@
 	(call storage.getattr_all (subj_type_attribute))
 
 	(call fstab.read (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call mount.exec (subj_type_attribute))
@@ -583,7 +583,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 
 	(optional gvfsddnssd_subj_type_optional_avahid
 		(call avahid.sysbus_chat_client_subj_type
@@ -615,7 +615,7 @@
 	(call file.read_data (subj_type_attribute))
 
 	(call cert.read_all (subj_type_attribute))
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
@@ -648,7 +648,7 @@
 
 	(call file.read_data_files (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute)))
+	(call locale.client_subj_type (subj_type_attribute)))
 
 (block gvfsdrecent
 	(typeattribute subj_type_attribute)
@@ -688,7 +688,7 @@
 
 	(call dev.read_urandom (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
@@ -730,7 +730,7 @@
 	(call fs.manage_fuse_subj_type (subj_type_attribute))
 	(call fs.read_iso9660_subj_type (subj_type_attribute))
 
-	(call locale.read (subj_type_attribute))
+	(call locale.client_subj_type (subj_type_attribute))
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))

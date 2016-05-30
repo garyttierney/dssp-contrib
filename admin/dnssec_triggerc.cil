@@ -44,8 +44,8 @@
 
 	(call dnssec_trigger.read_config (subj))
 
-	(call cryptopol.read_config_files (subj))
-	(call locale.read (subj))
+	(call cryptopol.client_subj_type (subj))
+	(call locale.client_subj_type (subj))
 
 	(optional dnssec_triggerc_optional_sd
 		(call sd.forked_subj_type (subj))))

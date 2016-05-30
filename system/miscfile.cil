@@ -710,6 +710,9 @@
 	(blockinherit file.relabel_data_blk))
 
 (in locale
+	(macro client_subj_type ((type ARG1))
+		(typeattributeset client_subj_type_attribute ARG1))
+
 	(macro search ((type ARG1))
 		(call file.read_config_lnk_files (ARG1))
 		(call lib.search_lib (ARG1))
@@ -1148,7 +1151,11 @@
 	(blockinherit file.data_obj_blk))
 
 (block locale
-	(blockinherit file.obj_blk))
+	(typeattribute client_subj_type_attribute)
+
+	(blockinherit file.obj_blk)
+
+	(call read (client_subj_type_attribute)))
 
 (block man
 	(blockinherit file.data_obj_blk))

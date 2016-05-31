@@ -71,6 +71,7 @@
 
 	(call manage_runtime (subj))
 	(allow subj runtime_file (dir (mounton)))
+	(allow subj runtime_file (file (mounton)))
 	(call runtime_obj_type_transition_runtime (subj))
 
 	(allow subj self (capability (net_admin sys_admin)))

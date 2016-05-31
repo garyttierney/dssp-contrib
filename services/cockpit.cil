@@ -3,6 +3,9 @@
 ; Contexts
 ;
 
+(in cockpit_priv_login
+	(genfscon "selinuxfs" "/booleans/cockpit_priv_login" bool_obj_context))
+
 (in remotectl
 	(filecon "/usr/sbin/remotectl" file cmd_file_context))
 
@@ -73,6 +76,11 @@
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
 			"cockpit")))
 
+	(macro set_priv_login_boolean ((type ARG1))
+		(call sec.set_spec_boolean (ARG1 cockpit_priv_login.bool))
+		(optional cockpit_set_priv_login_boolean_optional_seutil
+			(call setsebool.exec (ARG1))))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(optional cockpit_adm_optional_sd
@@ -139,6 +147,19 @@
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call cockpitbridge.role_pattern (ARG1 ARG2 subj))))
 
+	(block priv_subj_blk
+		(blockabstract priv_subj_blk)
+
+		(blockinherit cockpitbridge.subj_blk)
+
+		(typeattributeset cockpitbridge.priv_subj_type_attribute subj))
+
+	(macro subj_type ((type ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro priv_subj_type ((type ARG1))
+		(typeattributeset priv_subj_type_attribute ARG1))
+
 	(blockinherit exec_blk)
 
 	(macro mmap_cmd_files ((type ARG1))
@@ -165,9 +186,16 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(macro dontaudit_manual_subj_type_transition_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute (process (transition))))
+
 	(macro shell_manual_subj_type_transition_all_subj ((type ARG1))
 		(call cmd.shell_manual_subj_type_transition (ARG1
 			subj_type_attribute)))
+
+	(macro shell_manual_subj_type_transition_unpriv_subj ((type ARG1))
+		(call cmd.shell_manual_subj_type_transition (ARG1
+			unpriv_subj_type_attribute)))
 
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
 	(blockinherit subj.send_signal_all_blk)
@@ -175,6 +203,9 @@
 
 	(macro link_keyring_all_subj ((type ARG1))
 		(allow ARG1 subj_type_attribute link_key_perms))
+
+	(macro dontaudit_create_keyring_all_subj ((type ARG1))
+		(dontaudit ARG1 subj_type_attribute create_key_perms))
 
 	(macro create_keyring_all_subj ((type ARG1))
 		(allow ARG1 self (process (setkeycreate)))
@@ -251,6 +282,28 @@
 ;
 ; Policy
 ;
+
+(boolean cockpit_priv_login true)
+
+(block cockpit_priv_login
+	(blockinherit sec.bool_obj_blk)
+
+	(booleanif cockpit_priv_login
+		(true
+			(call
+				cockpitbridge.shell_manual_subj_type_transition_all_subj
+					(cockpitsess.subj)))
+		(false
+			(call
+				cockpitbridge.shell_manual_subj_type_transition_unpriv_subj
+					(cockpitsess.subj))))
+
+	(optional cockpit_priv_login_optional_exempt
+		(booleanif cockpit_priv_login
+			(true
+				(call
+					exempt.shell_manual_subj_type_transition
+						(cockpitsess.subj))))))
 
 (block remotectl
 	(roleattribute role_attribute)
@@ -344,6 +397,8 @@
 
 (block cockpitbridge
 	(typeattribute subj_type_attribute)
+	(typeattribute priv_subj_type_attribute)
+	(typeattribute unpriv_subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
 
@@ -425,7 +480,10 @@
 	(optional cockpitbridge_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))
 		(call sysbus.chat_unconfined_subj (subj_type_attribute))
-		(call sysbus.chat_client_subj (subj_type_attribute))))
+		(call sysbus.chat_client_subj (subj_type_attribute)))
+
+	(typeattributeset unpriv_subj_type_attribute (and (subj_type_attribute)
+		(not (priv_subj_type_attribute)))))
 
 (block cockpitsess
 	(blockinherit subj.common_subj_blk)
@@ -452,7 +510,6 @@
 	(call cockpitbridge.create_keyring_all_subj (subj))
 	(call cockpitbridge.mmap_cmd_files (subj))
 	(call cockpitbridge.send_signal_all_subj (subj))
-	(call cockpitbridge.shell_manual_subj_type_transition_all_subj (subj))
 
 	(call cockpitws.rw_inherited_unix_stream_sockets (subj))
 
@@ -460,8 +517,7 @@
 
 	(optional cockpitsess_optional_exempt
 		(call exempt.create_keyring (subj))
-		(call exempt.send_signal (subj))
-		(call exempt.shell_manual_subj_type_transition (subj)))
+		(call exempt.send_signal (subj)))
 
 	(optional cockpitsess_optional_sd
 		(call sd.forked_subj_type (subj))

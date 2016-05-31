@@ -1541,6 +1541,10 @@
 		(call user_ssh_client.role_pattern (role subj_type_attribute))
 		(call user_ssh_keygen.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_ssh_keysign
+		(call user_ssh_keysign.role_pattern (role
+			subj_type_attribute)))
+
 	(optional user_optional_user_sshduser
 		(call user_sshduser.role_pattern (role subj)))
 

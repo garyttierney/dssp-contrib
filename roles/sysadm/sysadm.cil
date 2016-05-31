@@ -4331,6 +4331,10 @@
 		(call sysadm_ssh_keygen.role_pattern (role
 			subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_ssh_keysign
+		(call sysadm_ssh_keysign.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_startx
 		(call startx.manage_tmpfs_user_files (subj))
 		(call startx.relabel_tmpfs_user_files (subj))

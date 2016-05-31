@@ -36,6 +36,9 @@
 	(optional sysadm_ssh_client_optional_sysadm_goais
 		(call sysadm_goais.read_keyring (subj)))
 
+	(optional sysadm_ssh_client_optional_sysadm_ssh_keysign
+		(call sysadm_ssh_keysign.auto_subj_type_transition (subj)))
+
 	(optional sysadm_ssh_client_optional_tor_socks
 		(call tor_socks.client_subj_type (subj))))
 

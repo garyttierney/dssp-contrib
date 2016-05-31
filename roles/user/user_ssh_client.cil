@@ -25,7 +25,10 @@
 		(call user_gkrd.stream_connect (subj)))
 
 	(optional user_ssh_client_optional_user_goais
-		(call user_goais.read_keyring (subj))))
+		(call user_goais.read_keyring (subj)))
+
+	(optional user_ssh_client_optional_user_ssh_keysign
+		(call user_ssh_keysign.auto_subj_type_transition (subj))))
 
 (block user_ssh_keygen
 	(blockinherit ssh_keygen.subj_blk)

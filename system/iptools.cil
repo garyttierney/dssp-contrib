@@ -73,7 +73,7 @@
 	(allow subj runtime_file (dir (mounton)))
 	(call runtime_obj_type_transition_runtime (subj))
 
-	(allow subj self (capability (net_admin)))
+	(allow subj self (capability (net_admin sys_admin)))
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_netlink_route_socket_perms)
 	(allow subj self create_netlink_generic_socket_perms)

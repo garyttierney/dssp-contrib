@@ -21,6 +21,8 @@
 
 		(typeattributeset sessbus.subj_type_attribute subj)
 
+		(blockinherit subj.send_sigkill_blk)
+
 		(macro stream_connect ((type ARG1))
 			(call sessbus.spec_stream_connect (ARG1 subj)))
 

@@ -111,6 +111,9 @@
 	(optional mount_optional_anaconda
 		(call anaconda.rw_inherited_tmpfs_user_files (subj)))
 
+	(optional mount_optional_iptools
+		(call iptools.read_runtime (subj)))
+
 	(optional mount_optional_sd_machined
 		(call sd_machined.rw_var_lib_files (subj)))
 

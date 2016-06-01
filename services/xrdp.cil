@@ -396,7 +396,7 @@
 
 	(call tcp_bind_port (subj))
 
-	(dontaudit subj self (capability (net_admin)))
+	(dontaudit subj self (capability (net_admin kill)))
 	(allow subj self (unix_dgram_socket (sendto)))
 	(allow subj self (tcp_socket (listen accept)))
 	(allow subj self rw_fifo_file_perms)

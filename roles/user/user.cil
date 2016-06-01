@@ -144,11 +144,14 @@
 		(call fgrun.manage_tmpfs_user_files (subj))
 		(call fgrun.relabel_tmpfs_user_files (subj))
 
-		(call user_fgrun.role_pattern (role subj_type_attribute))
-		(call user_fgrunwrapper.role_pattern (role
-			subj_type_attribute)))
+		(call user_fgrun.role_pattern (role subj_type_attribute)))
 
 	(optional user_optional_user_flightgear
+		(call flightgear.manage_home_user (subj))
+		(call flightgear.relabel_home_user (subj))
+
+		(call flightgear.home_dir_obj_type_transition_home (subj))
+
 		(call fgfs.manage_tmpfs_user_files (subj))
 		(call fgfs.relabel_tmpfs_user_files (subj))
 
@@ -163,7 +166,6 @@
 		(call fgadmin.run (subj_type_attribute role))
 		(call fgcom.run (subj_type_attribute role))
 		(call fgelev.run (subj_type_attribute role))
-		(call fgfswrapper.run (subj_type_attribute role))
 		(call fgjs.run (subj_type_attribute role))
 		(call fgpanel.run (subj_type_attribute role))
 		(call fgviewer.run (subj_type_attribute role))
@@ -793,6 +795,11 @@
 		(call ffmpeg.relabel_tmpfs_user_files (subj))
 
 		(call user_ffmpeg.role_pattern (role subj_type_attribute)))
+
+	(optional user_optional_fltk
+		(call fltk.manage_home_user (subj))
+		(call fltk.relabel_home_user (subj))
+		(call fltk.home_dir_obj_type_transition_home (subj)))
 
 	(optional user_optional_user_fuse_sshfs
 		(call user_fuse_sshfs.role_pattern (role subj_type_attribute)))

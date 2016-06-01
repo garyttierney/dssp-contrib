@@ -4,7 +4,6 @@
 ;
 
 (block sysadm_fgrun
-	(blockinherit fgrun.subj_blk))
+	(blockinherit fgrun.subj_blk)
 
-(block sysadm_fgrunwrapper
-	(blockinherit fgrunwrapper.subj_blk))
+	(call sysadm_fgfs.auto_subj_type_transition (subj)))

@@ -4,4 +4,7 @@
 ;
 
 (block sysadm_openglgwrapper
-	(blockinherit openglgwrapper.subj_blk))
+	(blockinherit openglgwrapper.subj_blk)
+
+	(optional sysadm_openglgwrapper_optional_sysadm_fgrun
+		(call sysadm_fgrun.auto_subj_type_transition (subj))))

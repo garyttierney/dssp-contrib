@@ -426,6 +426,32 @@
 	(filecon "/root/\.mozilla(/.*)?" any root_mozilla_home)
 	(filecon "/root/\.cache/mozilla(/.*)?" any root_mozilla_home_cache))
 
+(optional sysadm_fltk_home_optional_fltk
+	(tunableif enable_rbacsep
+		(true
+			(context root_fltk_home (sysadm.id sysadm.role
+				fltk.home_user_file (systemlow systemlow))))
+		(false
+			(context root_fltk_home (sysadm.id object_r
+				fltk.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.fltk(/.*)?" any root_fltk_home))
+
+(optional sysadm_flightgear_home_optional_flightgear
+	(tunableif enable_rbacsep
+		(true
+			(context root_flightgear_home (sysadm.id sysadm.role
+				flightgear.home_user_file (systemlow
+					systemlow))))
+		(false
+			(context root_flightgear_home (sysadm.id object_r
+				flightgear.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.fgfs(/.*)?" any root_flightgear_home)
+	(filecon "/root/Export(/.*)?" any root_flightgear_home))
+
 (optional sysadm_folks_home_optional_folks
 	(tunableif enable_rbacsep
 		(true
@@ -2188,6 +2214,13 @@
 		(call firewalld.adm (subj role))
 		(call firewallcmd.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_fltk
+		(call fltk.manage_config (subj))
+
+		(call fltk.manage_home_user (subj))
+		(call fltk.relabel_home_user (subj))
+		(call fltk.home_dir_obj_type_transition_home (subj)))
+
 	(optional sysadm_optional_folks
 		(call folks.manage_home_cache (subj))
 		(call folks.relabel_home_cache (subj))
@@ -2273,11 +2306,14 @@
 		(call fgrun.manage_tmpfs_user_files (subj))
 		(call fgrun.relabel_tmpfs_user_files (subj))
 
-		(call sysadm_fgrun.role_pattern (role subj_type_attribute))
-		(call sysadm_fgrunwrapper.role_pattern (role
-			subj_type_attribute)))
+		(call sysadm_fgrun.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_flightgear
+		(call flightgear.manage_home_user (subj))
+		(call flightgear.relabel_home_user (subj))
+
+		(call flightgear.home_dir_obj_type_transition_home (subj))
+
 		(call fgfs.manage_tmpfs_user_files (subj))
 		(call fgfs.relabel_tmpfs_user_files (subj))
 
@@ -2292,7 +2328,6 @@
 		(call fgadmin.run (subj_type_attribute role))
 		(call fgcom.run (subj_type_attribute role))
 		(call fgelev.run (subj_type_attribute role))
-		(call fgfswrapper.run (subj_type_attribute role))
 		(call fgjs.run (subj_type_attribute role))
 		(call fgpanel.run (subj_type_attribute role))
 		(call fgviewer.run (subj_type_attribute role))

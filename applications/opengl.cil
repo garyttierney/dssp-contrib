@@ -43,7 +43,10 @@
 
 		(allow ARG2 ARG3 (process (signal)))
 
-		(allow ARG3 ARG2 (process (signal))))
+		(allow ARG3 ARG2 (process (signal)))
+
+		(optional openglgwrapper_role_pattern_optional_glxutils
+			(call glxutils.run (ARG3 ARG1))))
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
@@ -59,4 +62,13 @@
 
 	(blockinherit app.application_cmd_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_shell_files (subj_type_attribute))
+	(call cmd.exec (subj_type_attribute))
+
+	(call file.read_data_files (subj_type_attribute))
+
+	(call locale.client_subj_type (subj_type_attribute)))

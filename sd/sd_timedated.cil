@@ -49,6 +49,7 @@
 	(call term.use_console (subj))
 
 	(call hwclock.read_config_files (subj))
+	(allow subj self (capability (sys_time)))
 
 	(call file.manage_config_lnk_files (subj))
 

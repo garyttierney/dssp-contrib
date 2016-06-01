@@ -52,6 +52,9 @@
 
 	(blockinherit usersubj.common_login_blk)
 
+	(optional user_optional_avl
+		(call avl.run (subj_type_attribute role)))
+
 	(optional user_optional_bluetoothctl
 		(call bluetoothctl.run (subj_type_attribute role)))
 
@@ -136,6 +139,31 @@
 		(call feh.home_dir_obj_type_transition_home (subj))
 
 		(call feh.run (subj_type_attribute role)))
+
+	(optional user_optional_fgrun
+		(call fgrun.run (subj_type_attribute role))
+		(call fgrunwrapper.run (subj_type_attribute role)))
+
+	(optional user_optional_flightgear
+		(call atlas.run (subj_type_attribute role))
+		(call getmap.run (subj_type_attribute role))
+		(call gpssmooth.run (subj_type_attribute role))
+		(call map.run (subj_type_attribute role))
+		(call midgsmooth.run (subj_type_attribute role))
+		(call ugsmooth.run (subj_type_attribute role))
+		(call fgadmin.run (subj_type_attribute role))
+		(call fgcom.run (subj_type_attribute role))
+		(call fgelev.run (subj_type_attribute role))
+		(call fgfs.run (subj_type_attribute role))
+		(call fgfswrapper.run (subj_type_attribute role))
+		(call fgjs.run (subj_type_attribute role))
+		(call fgpanel.run (subj_type_attribute role))
+		(call fgviewer.run (subj_type_attribute role))
+		(call jsdemo.run (subj_type_attribute role))
+		(call metar.run (subj_type_attribute role))
+		(call terrasync.run (subj_type_attribute role))
+		(call yasim.run (subj_type_attribute role))
+		(call yasimproptest.run (subj_type_attribute role)))
 
 	(optional user_optional_folks
 		(call folks.manage_home_cache (subj))

@@ -1,0 +1,390 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in flightgear
+	(filecon "/usr/share/flightgear(/.*)?" any data_file_context))
+
+(in atlas
+	(filecon "/usr/bin/Atlas" file cmd_file_context))
+
+(in getmap
+	(filecon "/usr/bin/GetMap" file cmd_file_context))
+
+(in gpssmooth
+	(filecon "/usr/bin/GPSsmooth" file cmd_file_context))
+
+(in map
+	(filecon "/usr/bin/Map" file cmd_file_context))
+
+(in midgsmooth
+	(filecon "/usr/bin/MIDGsmooth" file cmd_file_context))
+
+(in ugsmooth
+	(filecon "/usr/bin/UGsmooth" file cmd_file_context))
+
+(in fgadmin
+	(filecon "/usr/bin/fgadmin" file cmd_file_context))
+
+(in fgcom
+	(filecon "/usr/bin/fgcom" file cmd_file_context))
+
+(in fgelev
+	(filecon "/usr/bin/fgelev" file cmd_file_context))
+
+(in fgfs
+	(filecon "/usr/bin/fgfs" file cmd_file_context))
+
+(in fgfswrapper
+	(filecon "/usr/bin/fgfs-wrapper" file cmd_file_context))
+
+(in fgjs
+	(filecon "/usr/bin/fgjs" file cmd_file_context))
+
+(in fgpanel
+	(filecon "/usr/bin/fgpanel" file cmd_file_context))
+
+(in fgviewer
+	(filecon "/usr/bin/fgviewer" file cmd_file_context))
+
+(in jsdemo
+	(filecon "/usr/bin/js_demo" file cmd_file_context))
+
+(in metar
+	(filecon "/usr/bin/metar" file cmd_file_context))
+
+(in terrasync
+	(filecon "/usr/bin/terrasync" file cmd_file_context))
+
+(in yasim
+	(filecon "/usr/bin/yasim" file cmd_file_context))
+
+(in yasimproptest
+	(filecon "/usr/bin/yasim-proptest" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in flightgear
+	(blockinherit file.search_data_blk)
+	(blockinherit file.list_data_blk)
+	(blockinherit file.read_data_files_blk)
+	(blockinherit file.read_data_lnk_files_blk)
+	(blockinherit file.read_data_blk)
+	(blockinherit file.manage_data_blk)
+	(blockinherit file.relabel_data_blk))
+
+(in atlas
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in getmap
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in gpssmooth
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in map
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in midgsmooth
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in ugsmooth
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgadmin
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgcom
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgelev
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgfs
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgfswrapper
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgjs
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgpanel
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in fgviewer
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in jsdemo
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in metar
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in terrasync
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in yasim
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+(in yasimproptest
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block flightgear
+	(blockinherit file.data_obj_blk))
+
+(block atlas
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block getmap
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block map
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block gpssmooth
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block midgsmooth
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block ugsmooth
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgadmin
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgcom
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgelev
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgfs
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgfswrapper
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgjs
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgpanel
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block fgviewer
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block jsdemo
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block metar
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block terrasync
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block yasim
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))
+
+(block yasimproptest
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj))

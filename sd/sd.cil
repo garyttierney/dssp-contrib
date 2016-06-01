@@ -1052,7 +1052,6 @@
 	(call sys.link_keyring (subj))
 	(call sys.list_mountpoints (subj))
 	(call sys.mounton_mountpoint_dirs (subj))
-	(call sys.read_cpuinfo_proc_files (subj))
 	(call sys.read_net_proc_files (subj))
 	(call sys.read_net_sysctl_files (subj))
 	(call sys.rw_net_unix_sysctl_files (subj))
@@ -1287,6 +1286,7 @@
 	(allow subj_type_attribute self (unix_dgram_socket (sendto)))
 
 	(call sys.audit_client_subj_type (subj_type_attribute))
+	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))

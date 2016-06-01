@@ -116,6 +116,7 @@
 	(call net.tcp_bind_generic_node (subj))
 
 	(call cert.read (subj))
+	(call cryptopol.client_subj_type (subj))
 	(call locale.client_subj_type (subj))
 	(call mime_types.read_config_files (subj))
 

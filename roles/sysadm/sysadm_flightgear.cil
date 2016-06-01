@@ -1,0 +1,13 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_fgfs
+	(blockinherit fgfs.subj_blk)
+
+	(optional sysadm_fgfs_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
+	(optional sysadm_fgfs_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))

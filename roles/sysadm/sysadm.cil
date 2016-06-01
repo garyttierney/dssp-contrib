@@ -2267,13 +2267,22 @@
 		(call fcoemon.run (subj_type_attribute role))
 		(call fcoemon.adm (subj role)))
 
-	(optional sysadm_optional_fgrun
+	(optional sysadm_optional_sysadm_fgrun
 		(call fgrun.manage_config (subj))
 
-		(call fgrun.run (subj_type_attribute role))
-		(call fgrunwrapper.run (subj_type_attribute role)))
+		(call fgrun.manage_tmpfs_user_files (subj))
+		(call fgrun.relabel_tmpfs_user_files (subj))
 
-	(optional sysadm_optional_flightgear
+		(call sysadm_fgrun.role_pattern (role subj_type_attribute))
+		(call sysadm_fgrunwrapper.role_pattern (role
+			subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_flightgear
+		(call fgfs.manage_tmpfs_user_files (subj))
+		(call fgfs.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_fgfs.role_pattern (role subj_type_attribute))
+
 		(call atlas.run (subj_type_attribute role))
 		(call getmap.run (subj_type_attribute role))
 		(call gpssmooth.run (subj_type_attribute role))
@@ -2283,7 +2292,6 @@
 		(call fgadmin.run (subj_type_attribute role))
 		(call fgcom.run (subj_type_attribute role))
 		(call fgelev.run (subj_type_attribute role))
-		(call fgfs.run (subj_type_attribute role))
 		(call fgfswrapper.run (subj_type_attribute role))
 		(call fgjs.run (subj_type_attribute role))
 		(call fgpanel.run (subj_type_attribute role))

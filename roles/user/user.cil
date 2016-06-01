@@ -1394,6 +1394,10 @@
 
 		(call user_obexd.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_opengl
+		(call user_openglgwrapper.role_pattern (role
+			subj_type_attribute)))
+
 	(optional user_optional_user_orca
 		(call orca.manage_tmpfs_user (subj))
 		(call orca.relabel_tmpfs_user (subj))

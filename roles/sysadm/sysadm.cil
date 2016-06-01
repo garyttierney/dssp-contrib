@@ -4153,6 +4153,10 @@
 
 		(call sysadm_obexd.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_opengl
+		(call sysadm_openglgwrapper.role_pattern (role
+			subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_orca
 		(call orca.manage_tmpfs_user (subj))
 		(call orca.relabel_tmpfs_user (subj))

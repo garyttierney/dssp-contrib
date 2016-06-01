@@ -6,6 +6,9 @@
 (block sysadm_pa
 	(blockinherit pa.subj_blk)
 
+	(optional sysadm_pa_optional_sysadm_fgrun
+		(call sysadm_fgrun.use_fd (subj)))
+
 	(optional sysadm_pa_optional_sysadm_gs
 		(call sysadm_gs.forked_subj_type (subj))
 		(call sysadm_gs.stream_connect (subj)))

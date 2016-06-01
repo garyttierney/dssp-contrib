@@ -6,6 +6,9 @@
 (block user_pa
 	(blockinherit pa.subj_blk)
 
+	(optional user_pa_optional_user_fgrun
+		(call user_fgrun.use_fd (subj)))
+
 	(optional user_pa_optional_user_gs
 		(call user_gs.forked_subj_type (subj))
 		(call user_gs.stream_connect (subj)))

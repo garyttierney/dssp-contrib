@@ -8,6 +8,9 @@
 
 	(call user.shell_auto_subj_type_transition (subj))
 
+	(optional user_gdmuser_optional_user_awesome
+		(call user_awesome.send_signal (subj)))
+
 	(optional user_gdmuser_optional_user_gkr
 		(call user_gkrd.auto_subj_type_transition (subj)))
 

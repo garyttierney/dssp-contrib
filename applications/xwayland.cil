@@ -225,6 +225,11 @@
 	(allow shared_client_subj_type_attribute client_subj_type_attribute
 		(fifo_file (write)))
 
+	(allow client_subj_type_attribute shared_client_subj_type_attribute
+		(fd (use)))
+	(allow client_subj_type_attribute shared_client_subj_type_attribute
+		(fifo_file (write)))
+
 	(call manage_tmpfs_user (compositor_subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (compositor_subj_type_attribute))
 

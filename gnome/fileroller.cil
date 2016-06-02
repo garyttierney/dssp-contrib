@@ -49,7 +49,9 @@
 
 	(call cmd.exec (subj_type_attribute))
 
-	(call fileroller_helper.exec (subj_type_attribute)))
+	(call fileroller_helper.exec (subj_type_attribute))
+
+	(call gzip.exec (subj_type_attribute)))
 
 (block fileroller_helper
 	(blockinherit cmd.obj_blk))

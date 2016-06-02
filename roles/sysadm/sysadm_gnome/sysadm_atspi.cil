@@ -37,6 +37,11 @@
 
 	(call stream_connect_all_client_subj (provider_subj_type_attribute))
 
+	(optional
+		sysadm_atspi_client_subj_type_optional_sysadm_atspi_sessbus_launch
+		(call sysadm_atspi_sessbus_launch.sessbus_chat_client_subj_type
+			(client_subj_type_attribute)))
+
 	(optional sysadm_atspi_client_subj_type_optional_sysadm_sessbus
 		(call sysadm_sessbus.client_subj_type
 			(client_subj_type_attribute))

@@ -1,0 +1,35 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gzip
+	(filecon "/usr/bin/gunzip" file cmd_file_context)
+	(filecon "/usr/bin/gzexec" file cmd_file_context)
+	(filecon "/usr/bin/gzip" file cmd_file_context)
+	(filecon "/usr/bin/zcat" file cmd_file_context)
+	(filecon "/usr/bin/zcmp" file cmd_file_context)
+	(filecon "/usr/bin/zdiff" file cmd_file_context)
+	(filecon "/usr/bin/zegrep" file cmd_file_context)
+	(filecon "/usr/bin/zfgrep" file cmd_file_context)
+	(filecon "/usr/bin/zforce" file cmd_file_context)
+	(filecon "/usr/bin/zgrep" file cmd_file_context)
+	(filecon "/usr/bin/zless" file cmd_file_context)
+	(filecon "/usr/bin/zmore" file cmd_file_context)
+	(filecon "/usr/bin/znew" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gzip
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gzip
+	(blockinherit cmd.obj_blk))

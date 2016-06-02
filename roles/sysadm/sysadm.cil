@@ -2369,6 +2369,9 @@
 	(optional sysadm_optional_gstreamer
 		(call gst_helper.exec (subj)))
 
+	(optional sysadm_optional_gzip
+		(call gzip.exec (subj)))
+
 	(optional sysadm_optional_hostname
 		(call hostname.manage_config_files (subj))
 		(call hostname.run (subj_type_attribute role)))

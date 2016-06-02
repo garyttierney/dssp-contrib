@@ -165,9 +165,11 @@
 	(call sys.read_cpu_sysfs (subj_type_attribute))
 	(call sys.read_fs_sysctl_files (subj_type_attribute))
 
+	(call dev.getattr_v4l (subj_type_attribute))
 	(call dev.rw_dri (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.list_devtmpfs (subj_type_attribute))
 	(call fs.read_sysfs_files (subj_type_attribute))
 
 	(call mediaart.client_subj_type (subj_type_attribute))

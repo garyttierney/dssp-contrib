@@ -1,9 +1,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in wheel_gvid
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 
 (block wheel_gvid
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvid.subj_blk)
 
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
@@ -37,7 +49,14 @@
 		(call wheel_sessbus.daemon (subj gvid.cmd_file)))
 
 	(optional wheel_gvid_optional_wheel_tracker
-		(call wheel_tracker.client_subj_type (subj))))
+		(call wheel_tracker.client_subj_type (subj)))
+
+	(optional
+		wheel_gvid_sessbus_chat_client_subj_type_optional_wheel_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block wheel_gvidap
 	(blockinherit gvidap.subj_blk))

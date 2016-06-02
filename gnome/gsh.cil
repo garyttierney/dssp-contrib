@@ -107,7 +107,7 @@
 	(block subj_blk
 		(blockabstract subj_blk)
 
-		(blockinherit gnomeapp.gnomeapplication_subj_blk)
+		(blockinherit gnomeapp.gnomeapplication_common_gjs_subj_blk)
 
 		(typeattributeset gshep.subj_type_attribute subj)
 
@@ -306,9 +306,27 @@
 (block gshep
 	(typeattribute subj_type_attribute)
 
-	(blockinherit gnomeapp.gnomeapplication_cmd_obj_blk)
+	(blockinherit gnomeapp.gnomeapplication_common_gjs_obj_blk)
 
-	(call subj.entry (subj_type_attribute cmd_file)))
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(call dev.rw_v4l (subj_type_attribute))
+
+	(call fs.list_devtmpfs (subj_type_attribute))
+	(call fs.read_sysfs_files (subj_type_attribute))
+
+	(call gsh.read_home_data (subj_type_attribute))
+
+	(optional gshep_subj_type_optional_sd_hostnamed
+		(call sd_hostnamed.sysbus_chat_client_subj_type
+			(subj_type_attribute)))
+
+	(optional gshep_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute)))
+
+	(optional gshep_subj_type_optional_xwayland
+		(call xwayland.shared_client (subj_type_attribute
+			tmpfs_user_file))))
 
 (block gshhs
 	(typeattribute subj_type_attribute)

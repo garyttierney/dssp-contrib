@@ -6,6 +6,9 @@
 (block user_firefox_plugins
 	(blockinherit firefox_plugins.subj_blk)
 
+	(optional user_firefox_plugins_optional_user_dconf
+		(call user_dconf.client_subj_type (subj)))
+
 	(optional user_firefox_plugins_optional_user_pa
 		(call user_pa.auto_subj_type_transition (subj)))
 

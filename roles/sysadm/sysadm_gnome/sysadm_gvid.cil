@@ -1,9 +1,21 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in sysadm_gvid
+	(macro sessbus_chat_client_subj_type ((type ARG1))
+		(typeattributeset sessbus_chat_client_subj_type_attribute
+			ARG1)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 
 (block sysadm_gvid
+	(typeattribute sessbus_chat_client_subj_type_attribute)
+
 	(blockinherit gvid.subj_blk)
 
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
@@ -37,7 +49,14 @@
 		(call sysadm_sessbus.daemon (subj gvid.cmd_file)))
 
 	(optional sysadm_gvid_optional_sysadm_tracker
-		(call sysadm_tracker.client_subj_type (subj))))
+		(call sysadm_tracker.client_subj_type (subj)))
+
+	(optional
+		sysadm_gvid_sessbus_chat_client_subj_type_optional_sysadm_sessbus
+		(allow sessbus_chat_client_subj_type_attribute subj (dbus
+			(send_msg)))
+		(allow subj sessbus_chat_client_subj_type_attribute (dbus
+			(send_msg)))))
 
 (block sysadm_gvidap
 	(blockinherit gvidap.subj_blk))

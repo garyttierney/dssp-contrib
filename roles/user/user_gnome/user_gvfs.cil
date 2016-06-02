@@ -102,7 +102,11 @@
 	(optional user_gvfs_optional_user_gcal
 		(call user_gcal.auto_subj_type_transition (subj)))
 
+	(optional user_gvfs_optional_user_gs
+		(call user_gs.forked_subj_type (subj)))
+
 	(optional user_gvfs_optional_user_gvid
+		(call user_gvid.sessbus_chat_client_subj_type (subj))
 		(call user_gvid.auto_subj_type_transition (subj)))
 
 	(optional user_gvfs_optional_user_polari

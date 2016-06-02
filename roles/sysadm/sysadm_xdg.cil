@@ -6,5 +6,8 @@
 (block sysadm_xdgopen
 	(blockinherit xdgopen.subj_blk)
 
+	(optional sysadm_xdgopen_optional_sysadm_gs
+		(call sysadm_gs.forked_subj_type (subj)))
+
 	(optional sysadm_xdgopen_optional_sysadm_gvfs
 		(call sysadm_gvfs.auto_subj_type_transition (subj))))

@@ -6,5 +6,8 @@
 (block user_xdgopen
 	(blockinherit xdgopen.subj_blk)
 
+	(optional user_xdgopen_optional_user_gs
+		(call user_gs.forked_subj_type (subj)))
+
 	(optional user_xdgopen_optional_user_gvfs
 		(call user_gvfs.auto_subj_type_transition (subj))))

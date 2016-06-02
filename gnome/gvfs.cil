@@ -746,11 +746,10 @@
 	(call usersubj.reparent_home_cmd (subj_type_attribute))
 	(call usersubj.rw_home_cmd (subj_type_attribute))
 	(call usersubj.setattr_home_cmd_dirs (subj_type_attribute))
-	(call usersubj.delete_home_user (subj_type_attribute))
-	(call usersubj.rename_home_user (subj_type_attribute))
-	(call usersubj.reparent_home_user (subj_type_attribute))
-	(call usersubj.rw_home_user (subj_type_attribute))
-	(call usersubj.setattr_home_user_dirs (subj_type_attribute))
+
+	(call usersubj.manage_home_user (subj_type_attribute))
+	(call usersubj.home_dir_obj_type_transition_home_user_dirs
+		(subj_type_attribute))	
 
 	(optional gvfsdtrash_subj_type_optional_dracut_initramfs
 		(call dracut_initramfs.search_runtime (subj_type_attribute)))

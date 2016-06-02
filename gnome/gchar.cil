@@ -76,4 +76,8 @@
 	(call mime_types.read_data (subj_type_attribute))
 
 	(call usersubj.read_home_config_files (subj_type_attribute))
-	(call usersubj.manage_home_data_files (subj_type_attribute)))
+	(call usersubj.manage_home_data_files (subj_type_attribute))
+
+	(optional gcharbs_subj_type_optional_xwayland
+		(call xwayland.shared_client (subj_type_attribute
+			tmpfs_user_file))))

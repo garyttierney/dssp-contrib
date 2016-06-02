@@ -618,12 +618,18 @@
 (optional sysadm_gph_home_optional_gph
 	(tunableif enable_rbacsep
 		(true
+			(context root_gph_home_data (sysadm.id sysadm.role
+				gph.home_data_file (systemlow systemlow)))
 			(context root_gph_home_cache (sysadm.id sysadm.role
 				gph.home_cache_file (systemlow systemlow))))
 		(false
+			(context root_gph_home_data (sysadm.id object_r
+				gph.home_data_file (systemlow systemlow)))
 			(context root_gph_home_cache (sysadm.id object_r
 				gph.home_cache_file (systemlow systemlow)))))
 
+	(filecon "/root/\.local/share/gnome-photos(/.*)?" any
+		root_gph_home_data)
 	(filecon "/root/\.cache/gnome-photos(/.*)?" any root_gph_home_cache))
 
 (optional sysadm_grilo_home_optional_grilo
@@ -3773,6 +3779,11 @@
 	(optional sysadm_optional_sysadm_gph
 		(call gph.manage_tmpfs_user (subj))
 		(call gph.relabel_tmpfs_user (subj))
+
+		(call gph.manage_home_data (subj))
+		(call gph.relabel_home_data (subj))
+
+		(call gph.home_data_obj_type_transition_home_data (subj))
 
 		(call gph.manage_home_cache (subj))
 		(call gph.relabel_home_cache (subj))

@@ -6,6 +6,8 @@
 (block user_firefox
 	(blockinherit firefox.subj_blk)
 
+	(call user_firefox_plugins.noatsecure (subj))
+
 	(optional user_firefox_optional_wheel_atspi
 		(call user_atspi.tmpfs_client (subj firefox.tmpfs_user_file)))
 

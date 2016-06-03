@@ -6,6 +6,8 @@
 (block sysadm_firefox
 	(blockinherit firefox.subj_blk)
 
+	(call sysadm_firefox_plugins.noatsecure (subj))
+
 	(optional sysadm_firefox_optional_sysadm_atspi
 		(call sysadm_atspi.tmpfs_client (subj
 			firefox.tmpfs_user_file)))

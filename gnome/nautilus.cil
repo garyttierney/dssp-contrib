@@ -132,6 +132,7 @@
 
 	(call sys.read_cpu_sysfs_files (subj_type_attribute))
 
+	(call file.audit_write_access_mnt_dirs (subj_type_attribute))
 	(call file.dontaudit_list_lost_found (subj_type_attribute))
 
 	(call fs.dontaudit_audit_access_fuse_files (subj_type_attribute))

@@ -27,7 +27,7 @@
 
 	(macro write_inherited_fifo_files ((type ARG1))
 		(call use_fd (ARG1))
-		(allow ARG1 subj rw_inherited_fifo_file_perms))
+		(allow ARG1 subj write_inherited_fifo_file_perms))
 
 	(macro stream_connect ((type ARG1))
 		(allow ARG1 subj (unix_stream_socket (connectto)))

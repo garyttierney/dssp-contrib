@@ -31,6 +31,7 @@
 (in xrdpchansrv
 	(filecon "/usr/sbin/xrdp-chansrv" file cmd_file_context)
 	(filecon "HOME_DIR/xrdp-chansrv\.log" file home_user_file_context)
+	(filecon "HOME_DIR/.pcsc10(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/.pcsc12(/.*)?" any home_user_file_context))
 
 (in xrdpsessvc
@@ -143,6 +144,8 @@
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file file "xrdp-chansrv.log"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".pcsc10"))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file dir ".pcsc12")))
 

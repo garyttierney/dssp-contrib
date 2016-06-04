@@ -196,18 +196,26 @@
 
 		(allow subj self (process (setsched)))
 		(allow subj self (tcp_socket (listen accept)))
+		(allow subj self create_unix_dgram_socket_perms)
 		(allow subj self (unix_stream_socket (listen accept)))
 
 		(call sys.read_cpu_online_sysfs_files (subj))
 
+		(call dev.read_urandom (subj))
+
+		(call file.read_config (subj))
 		(call file.read_data_files (subj))
 
 		(call fs.getattr_fs (subj))
 
 		(call net.tcp_bind_generic_node (subj))
 
+		(call cryptopol.client_subj_type (subj))
+
 		(optional mariadb_server_optional_sd
 			(call sd.daemon (subj cmd_file))
+
+			(call sd.notify_subj_type (subj))
 
 			(blockinherit sd.unit_obj_blk)
 
@@ -228,6 +236,8 @@
 		(call file.rw_runtime_dirs (adm_subj_type_attribute))
 		(call file.rw_var_lib_dirs (adm_subj_type_attribute))
 		(call file.rw_var_log_dirs (adm_subj_type_attribute))
+
+		(call fs.rw_tmpfs_dirs (adm_subj_type_attribute))
 
 		(allow adm_subj_type_attribute obj_type_attribute
 			manage_file_perms)
@@ -332,6 +342,7 @@
 
 	(block mariadb_server_helper
 		(typeattribute subj_type_attribute)
+		(typeattribute obj_type_attribute)
 
 		(blockinherit subj.common_subj_blk)
 
@@ -342,11 +353,21 @@
 		(typeattributeset .mariadb_server_helper.subj_type_attribute
 			subj_type_attribute)
 
+                (typeattributeset .mariadb_server.obj_type_attribute
+                        obj_type_attribute)
+                (typeattributeset .mariadb_server_helper.obj_type_attribute
+                        obj_type_attribute)
+
 		(blockinherit cmd.obj_blk)
 
 		(call subj.entry (subj cmd_file))
 
 		(roletype sys.role subj)
+
+		(blockinherit file.tmpfs_obj_blk)
+
+		(call manage_tmpfs_files (subj))
+		(call tmpfs_obj_type_transition_tmpfs (subj))
 
 		(call mariadb_server.read_config_files (subj))
 		(call mariadb_server.read_state (subj))
@@ -361,7 +382,15 @@
 
 		(blockinherit auto_subj_type_transition_blk)
 
-		(blockinherit subj.send_signal_blk))
+		(blockinherit subj.send_signal_blk)
+
+		(blockinherit file.read_tmpfs_files_blk)
+		(blockinherit file.manage_tmpfs_files_blk)
+		(blockinherit file.relabel_tmpfs_files_blk)
+
+		(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+			(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file
+				file "*"))))
 
 	(block mariadb_server_pdd
 		(typeattribute subj_type_attribute)
@@ -576,6 +605,7 @@
 
 (block mariadb_server_helper
 	(typeattribute subj_type_attribute)
+	(typeattribute obj_type_attribute)
 
 	(call file.read_data_files (subj_type_attribute))
 
@@ -592,6 +622,8 @@
 (call file.rw_runtime_dirs (mariadb_server.adm_subj_type_attribute))
 (call file.rw_var_lib_dirs (mariadb_server.adm_subj_type_attribute))
 (call file.rw_var_log_dirs (mariadb_server.adm_subj_type_attribute))
+
+(call fs.rw_tmpfs_dirs (mariadb_server.adm_subj_type_attribute))
 
 (allow mariadb_server.adm_subj_type_attribute
 	mariadb_server.obj_type_attribute manage_file_perms)

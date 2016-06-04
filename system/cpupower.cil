@@ -67,6 +67,7 @@
 
 	(allow subj self (capability (sys_rawio)))
 
+	(call sys.read_cpu_sysfs (subj))
 	(call sys.read_cpuinfo_proc_files (subj))
 
 	(call dev.rw_cpu (subj))

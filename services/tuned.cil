@@ -26,6 +26,7 @@
 	(blockinherit auto_subj_type_transition_blk)
 
 	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signull_blk)
 
 	(macro sysbus_chat_client_subj_type ((type ARG1))
 		(typeattributeset sysbus_chat_client_subj_type_attribute ARG1))
@@ -110,7 +111,7 @@
 
 	(typeattributeset obj_type_attribute config_file)
 
-	(call read_config (subj))
+	(call manage_config (subj))
 
 	(blockinherit file.runtime_obj_blk)
 
@@ -213,4 +214,16 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(call cmd.read_cmd_files (subj))
+
+	(call locale.client_subj_type (subj))
+
+	(call tuned.read_config (subj))
+	(call tuned.read_runtime_files (subj))
+	(call tuned.send_signull (subj))
+	(call tuned.sysbus_chat_client_subj_type (subj))
+
+	(optional tunedadm_optional_sysbus
+		(call sysbus.client_subj_type (subj))))

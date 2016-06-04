@@ -609,7 +609,9 @@
 
 	(call file.read_data_files (subj_type_attribute))
 
-	(call hostname.exec (subj_type_attribute)))
+	(call hostname.exec (subj_type_attribute))
+
+	(call fs.getattr_tmpfs_fs (subj_type_attribute)))
 
 (allow mariadb_server.adm_subj_type_attribute
 	mariadb_server.subj_type_attribute (process (ptrace signal signull

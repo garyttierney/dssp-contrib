@@ -124,6 +124,8 @@
 		(call file.var_log_obj_type_transition (subj var_log_file dir
 			"*"))
 
+		(call exec (subj))
+
 		(optional nginx_blk_optional_sd
 			(call sd.daemon (subj cmd_file))
 

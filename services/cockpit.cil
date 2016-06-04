@@ -200,9 +200,8 @@
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk)
 	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.read_state_all_blk)
-
-	(macro link_keyring_all_subj ((type ARG1))
-		(allow ARG1 subj_type_attribute link_key_perms))
+	(blockinherit subj.link_keyring_all_blk)
+	(blockinherit subj.search_keyring_all_blk)
 
 	(macro dontaudit_create_keyring_all_subj ((type ARG1))
 		(dontaudit ARG1 subj_type_attribute create_key_perms))
@@ -608,6 +607,9 @@
 	(optional cockpitpolkit_subj_type_optional_polkit
 		(call polkit.sysbus_chat_client_subj_type
 			(subj_type_attribute)))
+
+	(optional cockpitpolkit_subj_type_optional_sshd
+		(call sshduser.search_keyring_all_subj (subj_type_attribute)))
 
 	(optional cockpitpolkit_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

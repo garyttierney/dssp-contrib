@@ -38,6 +38,16 @@
 
 	(call sys.read_cpuinfo_proc_files (subj))
 
+	(call cmd.audit_read_access_shell_files (subj))
 	(call cmd.exec (subj))
 
-	(call dmidecode.auto_subj_type_transition (subj)))
+	(call dmidecode.auto_subj_type_transition (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(tunableif enable_rbacsep
+		(true
+			(call rbacsep.read_state_source_subj_type (subj))))
+
+	(optional virtwhat_optional_sd
+		(call sd.read_state (subj))))

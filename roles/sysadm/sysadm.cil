@@ -3093,6 +3093,9 @@
 	(optional sysadm_optional_vdagentd
 		(call vdagentd.adm (subj role)))
 
+	(optional sysadm_optional_virtwhat
+		(call virtwhat.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_vnc
 		(call vnc.manage_home_user (subj))
 		(call vnc.relabel_home_user (subj))

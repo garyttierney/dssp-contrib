@@ -342,6 +342,9 @@
 
 		(typeattributeset gvfsdrecent.subj_type_attribute subj)
 
+		(blockinherit subj.use_fd_blk)
+		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call gvfsdrecent.spec_auto_subj_type_transition (ARG1
 				subj)))

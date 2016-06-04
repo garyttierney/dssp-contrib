@@ -32,4 +32,12 @@
 
 	(roleattributeset role_attribute sys.role)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_cpuinfo_proc_files (subj))
+
+	(call cmd.exec (subj))
+
+	(call dmidecode.auto_subj_type_transition (subj)))

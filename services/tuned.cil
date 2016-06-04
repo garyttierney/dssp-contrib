@@ -64,6 +64,13 @@
 		(call file.runtime_obj_type_transition (ARG1 runtime_file dir
 			"tuned")))
 
+	(blockinherit file.read_tmpfs_files_blk)
+	(blockinherit file.manage_tmpfs_files_blk)
+	(blockinherit file.relabel_tmpfs_files_blk)
+
+	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
+		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_file file "*")))
+
 	(macro adm ((type ARG1)(role ARG2))
 		(typeattributeset adm_subj_type_attribute ARG1)
 		(optional tuned_adm_optional_sd
@@ -123,6 +130,44 @@
 	(allow subj var_log_file read_file_perms)
 
 	(call var_log_obj_type_transition_var_log (subj))
+
+	(blockinherit file.tmpfs_obj_blk)
+
+	(typeattributeset obj_type_attribute tmpfs_file)
+
+	(call manage_tmpfs_files (subj))
+	(allow subj tmpfs_file mmap_file_perms)
+	(call tmpfs_obj_type_transition_tmpfs (subj))
+
+	(allow subj self rw_fifo_file_perms)
+
+	(call sys.read_cpu_sysfs_files (subj))
+
+	(call cmd.exec_shell (subj))
+	(call cmd.read_cmd_files (subj))
+
+	(call dev.read_urandom (subj))
+	(call dev.write_pm_qos_misc (subj))
+
+	(call file.read_config_files (subj))
+
+	(call fs.list_sysfs (subj))
+	(call fs.rw_sysfs_files (subj))
+	(call fs.read_sysfs_lnk_files (subj))
+
+	(call cpupower.auto_subj_type_transition (subj))
+
+	(call fstools.auto_subj_type_transition (subj))
+
+	(call ldconfig.exec (subj))
+
+	(call locale.client_subj_type (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call udev.client_subj_type (subj))
+
+	(call virtwhat.auto_subj_type_transition (subj))
 
 	(optional tuned_optional_sd
 		(call sd.daemon (subj cmd_file))

@@ -3054,6 +3054,10 @@
 	(optional sysadm_optional_tunctl
 		(call tunctl.run (subj role)))
 
+	(optional sysadm_optional_tuned
+		(call tuned.adm (subj role))
+		(call tunedadm.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_udevadm
 		(call udevadm.run (subj_type_attribute role)))
 

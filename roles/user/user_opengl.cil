@@ -6,5 +6,8 @@
 (block user_openglgwrapper
 	(blockinherit openglgwrapper.subj_blk)
 
+	(optional user_openglgwrapper_optional_user_fgfs
+		(call user_fgfs.auto_subj_type_transition (subj)))
+
 	(optional user_openglgwrapper_optional_user_fgrun
 		(call user_fgrun.auto_subj_type_transition (subj))))

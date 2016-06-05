@@ -410,6 +410,7 @@
 
 	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.client_subj_type (subj_type_attribute))
+	(call mime_types.read_data (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 
@@ -420,6 +421,9 @@
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files
 		(subj_type_attribute))
+
+	(optional fgfs_subj_type_optional_gs
+		(call gs.read_home_user_files (subj_type_attribute)))
 
 	(optional fgfs_subj_type_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file)))

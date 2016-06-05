@@ -56,6 +56,9 @@
 	(filecon "/usr/bin/metar" file cmd_file_context))
 
 (in terrasync
+	(portcon "tcp" 8888 port_obj_context)
+	(portcon "udp" 8888 port_obj_context)
+
 	(filecon "/usr/bin/terrasync" file cmd_file_context))
 
 (in yasim
@@ -272,6 +275,10 @@
 	(blockinherit subj.send_signal_blk))
 
 (in terrasync
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.udp_bind_port_blk)
+
 	(blockinherit exec_blk)
 
 	(blockinherit auto_subj_type_transition_blk)
@@ -385,6 +392,7 @@
 
 	(allow subj_type_attribute self (process (getsched setsched)))
 	(allow subj_type_attribute self create_sem_perms)
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
 
 	(call cmd.exec_shell (subj_type_attribute))
 
@@ -395,6 +403,7 @@
 
 	(call fs.getattr_fs (subj_type_attribute))
 
+	(call net.tcp_bind_generic_node (subj_type_attribute))
 	(call net.udp_bind_generic_node (subj_type_attribute))
 
 	(call sec.get_enforce_mode (subj_type_attribute))
@@ -407,6 +416,7 @@
 	(call flightgear.read_data (subj_type_attribute))
 
 	(call http.tcp_connect_port (subj_type_attribute))
+	(call http_alt.tcp_bind_port (subj_type_attribute))
 
 	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.client_subj_type (subj_type_attribute))
@@ -415,6 +425,8 @@
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call selinux_config.read_config_files (subj_type_attribute))
+
+	(call terrasync.tcp_connect_port (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
 
@@ -472,7 +484,11 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(blockinherit net.unreserved_port_obj_blk)
+
+	(call tcp_bind_port (subj)))
 
 (block yasim
 	(roleattribute role_attribute)

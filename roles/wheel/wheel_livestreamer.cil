@@ -7,6 +7,7 @@
 	(blockinherit livestreamer.subj_blk)
 
 	(optional wheel_livestreamer_optional_wheel_mplayer
+		(call wheel_mplayer.send_sigkill (subj))
 		(call wheel_mplayer.auto_subj_type_transition (subj)))
 
 	(optional wheel_livestreamer_optional_tor_socks

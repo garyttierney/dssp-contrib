@@ -21,6 +21,9 @@
 
 		(typeattributeset mplayer.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+		(blockinherit subj.send_sigkill_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call mplayer.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -29,8 +32,6 @@
 			(call mplayer.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
-
-	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

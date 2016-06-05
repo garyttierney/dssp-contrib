@@ -38,6 +38,9 @@
 	(filecon "/usr/bin/fgelev" file cmd_file_context))
 
 (in fgfs
+	(portcon "tcp" 5000 port_obj_context)
+	(portcon "udp" 5000 port_obj_context)
+
 	(filecon "/usr/bin/fgfs" file cmd_file_context))
 
 (in fgjs
@@ -183,6 +186,10 @@
 	(blockinherit subj.send_signal_blk))
 
 (in fgfs
+	(blockinherit net.tcp_connect_port_blk)
+	(blockinherit net.tcp_bind_port_blk)
+	(blockinherit net.udp_bind_port_blk)
+
 	(block subj_blk
 		(blockabstract subj_blk)
 
@@ -389,6 +396,10 @@
 
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
+
+	(blockinherit net.unreserved_port_obj_blk)
+
+	(call udp_bind_port (subj_type_attribute))
 
 	(allow subj_type_attribute self (process (getsched setsched)))
 	(allow subj_type_attribute self create_sem_perms)

@@ -410,8 +410,9 @@
 	(call dev.rw_dri (subj_type_attribute))
 	(call dev.rw_sound (subj_type_attribute))
 
-	(call file.read_config_files (subj_type_attribute))
+	(call file.read_config (subj_type_attribute))
 
+	(call fs.read_devtmpfs_lnk_files (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
 
 	(call net.tcp_bind_generic_node (subj_type_attribute))
@@ -440,6 +441,8 @@
 	(call terrasync.tcp_connect_port (subj_type_attribute))
 
 	(call udev.client_subj_type (subj_type_attribute))
+
+	(call usersubj.read_home_config_files (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files

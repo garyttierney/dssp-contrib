@@ -3,6 +3,12 @@
 ; Policy
 ;
 
+(block wheel_fgcom
+	(blockinherit fgcom.subj_blk)
+
+	(optional wheel_fgfs_optional_sysadm_pa
+		(call wheel_pa.auto_subj_type_transition (subj))))
+
 (block wheel_fgfs
 	(blockinherit fgfs.subj_blk)
 

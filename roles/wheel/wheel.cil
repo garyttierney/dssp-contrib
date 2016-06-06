@@ -153,6 +153,11 @@
 
 		(call wheel_fgfs.role_pattern (role subj_type_attribute))
 
+		(call fgcom.manage_tmpfs_user_files (subj))
+		(call fgcom.relabel_tmpfs_user_files (subj))
+
+		(call wheel_fgcom.role_pattern (role subj_type_attribute))
+
 		(call atlas.run (subj_type_attribute role))
 		(call getmap.run (subj_type_attribute role))
 		(call gpssmooth.run (subj_type_attribute role))
@@ -160,7 +165,6 @@
 		(call midgsmooth.run (subj_type_attribute role))
 		(call ugsmooth.run (subj_type_attribute role))
 		(call fgadmin.run (subj_type_attribute role))
-		(call fgcom.run (subj_type_attribute role))
 		(call fgelev.run (subj_type_attribute role))
 		(call fgjs.run (subj_type_attribute role))
 		(call fgpanel.run (subj_type_attribute role))

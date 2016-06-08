@@ -115,6 +115,7 @@
 	(call goa.home_config_obj_type_transition_home_config
 		(subj_type_attribute))
 
+	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
 	(call sys.read_crypto_sysctl_files (subj_type_attribute))
 
 	(call dev.read_urandom (subj_type_attribute))

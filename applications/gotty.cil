@@ -1,0 +1,95 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in gotty
+	(filecon "/usr/bin/gotty" file cmd_file_context)
+	(filecon "HOME_DIR/\.gotty" file home_user_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in gotty
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset gotty.subj_type_attribute subj)
+
+		(blockinherit subj.send_signal_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call gotty.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call gotty.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_all_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
+
+	(blockinherit usersubj.read_home_user_files_blk)
+	(blockinherit usersubj.manage_home_user_files_blk)
+	(blockinherit usersubj.relabel_home_user_files_blk)
+
+	(macro home_dir_obj_type_transition_home ((type ARG1))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file file ".gotty"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block gotty
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_user_obj_blk)
+
+	(call home_dir_obj_type_transition_home (subj_type_attribute))
+	(call manage_home_user_files (subj_type_attribute))
+
+	(allow subj_type_attribute self (process (getsched)))
+	(allow subj_type_attribute self (tcp_socket (listen accept)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call net.tcp_bind_generic_node (subj_type_attribute))
+
+	(call sys.read_net_sysctl_files (subj_type_attribute))
+
+	(call cert.read_all (subj_type_attribute))
+
+	(call http_alt.tcp_bind_port (subj_type_attribute))
+
+	(call mime_types.read_config_files (subj_type_attribute))
+
+	(call nss.client_subj_type (subj_type_attribute))
+
+	(call usersubj.create_ptys (subj_type_attribute))
+	(call usersubj.use_ptys (subj_type_attribute)))

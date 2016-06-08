@@ -1,0 +1,15 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block wheel_gotty
+	(blockinherit gotty.subj_blk)
+
+	(call wheel.cmd_auto_subj_type_transition (subj))
+	(call wheel.shell_auto_subj_type_transition (subj))
+
+	(call wheel.home_cmd_auto_subj_type_transition (subj))
+
+	(optional wheel_gotty_optional_wheel_tmux
+	    (call wheel_tmux.auto_subj_type_transition (subj))))

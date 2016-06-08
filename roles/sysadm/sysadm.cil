@@ -615,6 +615,17 @@
 	(filecon "/root/\.cache/goa-1\.0(/.*)?" any root_goa_home_cache)
 	(filecon "/root/\.config/goa-1\.0(/.*)?" any root_goa_home_config))
 
+(optional sysadm_gotty_home_optional_gotty
+	(tunableif enable_rbacsep
+		(true
+			(context root_gotty_home_user (sysadm.id sysadm.role
+				gotty.home_user_file (systemlow systemlow))))
+		(false
+			(context root_gotty_home_user (sysadm.id object_r
+				gotty.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.gotty" any root_gotty_home_user))
+
 (optional sysadm_gph_home_optional_gph
 	(tunableif enable_rbacsep
 		(true
@@ -3770,6 +3781,12 @@
 
 	(optional sysadm_optional_sysadm_gom
 		(call sysadm_gom.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_gotty
+		(call gotty.manage_home_user_files (subj))
+		(call gotty.relabel_home_user_files (subj))
+		(call gotty.home_dir_obj_type_transition_home (subj))
+		(call sysadm_gotty.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_gpg
 		(call gpg.manage_home_user (subj))

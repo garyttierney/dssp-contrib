@@ -1053,6 +1053,12 @@
 	(optional user_optional_user_gom
 		(call user_gom.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_gotty
+		(call gotty.manage_home_user_files (subj))
+		(call gotty.relabel_home_user_files (subj))
+		(call gotty.home_dir_obj_type_transition_home (subj))
+		(call user_gotty.role_pattern (role subj_type_attribute)))
+
 	(optional user_optional_user_gpg
 		(call gpg.manage_home_user (subj))
 		(call gpg.relabel_home_user (subj))

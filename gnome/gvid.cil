@@ -248,11 +248,7 @@
 	(call usersubj.read_home_user_files (subj_type_attribute))
 
 	(optional gvidvt_subj_type_optional_nautilus
-		(call nautilus.write_tmpfs_user_files (subj_type_attribute)))
-
-	(optional gvidvt_subj_type_optional_thumbnails
-		(call thumbnails.getattr_home_cache_files
-			(subj_type_attribute))))
+		(call nautilus.write_tmpfs_user_files (subj_type_attribute))))
 
 (block gvid_helper
 	(blockinherit cmd.obj_blk))

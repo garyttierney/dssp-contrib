@@ -227,6 +227,7 @@
 
 	(allow subj_type_attribute self (process (getsched setsched
 		setrlimit)))
+	(allow subj_type_attribute self rw_fifo_file_perms)
 
 	(call sys.read_cpu_sysfs (subj_type_attribute))
 	(call sys.read_cpu_online_sysfs_files (subj_type_attribute))
@@ -247,7 +248,11 @@
 	(call usersubj.read_home_user_files (subj_type_attribute))
 
 	(optional gvidvt_subj_type_optional_nautilus
-		(call nautilus.write_tmpfs_user_files (subj_type_attribute))))
+		(call nautilus.write_tmpfs_user_files (subj_type_attribute)))
+
+	(optional gvidvt_subj_type_optional_thumbnails
+		(call thumbnails.getattr_home_cache_files
+			(subj_type_attribute))))
 
 (block gvid_helper
 	(blockinherit cmd.obj_blk))

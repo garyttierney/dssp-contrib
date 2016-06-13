@@ -375,7 +375,7 @@
 		(typeattributeset cmd_obj_type_attribute ARG1))
 
 	(macro audit_exec_access_all_cmd_files ((type ARG1))
-		(allow ARG1 cmd_obj_type_attribute (file (execute))))
+		(allow ARG1 cmd_obj_type_attribute (file (getattr execute))))
 
 	(macro getattr_all_cmd_files ((type ARG1))
 		(allow ARG1 cmd_obj_type_attribute (file (getattr))))

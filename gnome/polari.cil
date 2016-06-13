@@ -35,6 +35,8 @@
 
 	(call cert.read_all (subj_type_attribute))
 
+	(call gnomeapp.audit_exec_access_all_cmd_files (subj_type_attribute))
+
 	(call nss.client_subj_type (subj_type_attribute))
 
 	(call tpl.read_home_data (subj_type_attribute))

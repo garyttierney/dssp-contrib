@@ -31,11 +31,11 @@
 
 	(call subj.entry (subj_type_attribute cmd_file))
 
+	(call app.audit_exec_access_all_cmd_files (subj_type_attribute))
+
 	(call http.tcp_connect_port (subj_type_attribute))
 
 	(call cert.read_all (subj_type_attribute))
-
-	(call gnomeapp.audit_exec_access_all_cmd_files (subj_type_attribute))
 
 	(call nss.client_subj_type (subj_type_attribute))
 

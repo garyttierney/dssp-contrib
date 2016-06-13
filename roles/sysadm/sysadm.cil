@@ -2682,6 +2682,9 @@
 		(call openssl.relabel_home_user_files (subj))
 		(call openssl.home_dir_obj_type_transition_home (subj)))
 
+	(optional sysadm_optional_nv_pstate
+		(call nv_pstate.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_pa
 		(call pa.manage_config (subj))
 		(call pa.manage_var_lib (subj)))

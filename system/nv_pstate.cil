@@ -1,0 +1,44 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in nv_pstate
+	(filecon "/usr/sbin/nv_pstate" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in nv_pstate
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block nv_pstate
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roleattributeset role_attribute sys.role)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override)))
+	(allow subj self rw_fifo_file_perms)
+
+	(call cmd.audit_read_access_cmd_files (subj))
+
+	(call fs.write_debugfs_files (subj))
+
+	(call locale.client_subj_type (subj)))

@@ -57,6 +57,10 @@
 
 	(blockinherit usersubj.tmpfs_user_obj_type_transition_blk)
 
+	(macro write_inherited_tmpfs_user_sock_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file write_inherited_sock_file_perms))
+
 	(macro tmpfs_obj_type_transition_tmpfs_user_dirs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file dir

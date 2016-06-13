@@ -37,7 +37,8 @@
 		home_data_file_context))
 
 (in home_history
-	(filecon "HOME_DIR/\.bash_history" file home_user_file_context))
+	(filecon "HOME_DIR/\.bash_history" file home_user_file_context)
+	(filecon "HOME_DIR/\.python_history" file home_user_file_context))
 
 (in home_terminfo
 	(filecon "HOME_DIR/\.terminfo" file home_data_file_context)
@@ -3523,7 +3524,9 @@
 
 	(macro home_dir_obj_type_transition_home_history ((type ARG1))
 		(call home_dir_obj_type_transition (ARG1
-			home_history.home_user_file file ".bash_history")))
+			home_history.home_user_file file ".bash_history"))
+		(call home_dir_obj_type_transition (ARG1
+			home_history.home_user_file file ".python_history")))
 
 	(macro home_history_template ((type ARG1))
 		(call manage_home_history_files (ARG1))

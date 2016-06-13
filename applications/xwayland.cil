@@ -79,8 +79,11 @@
 	(macro stream_connect_compositor ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.search_tmpfs (ARG1))
-		(call stream_connect_pattern (ARG1 tmpfs_user_file
-			tmpfs_user_file compositor_subj_type_attribute)))
+		(call stream_connect_pattern (ARG1
+			compositor_tmpfs_obj_type_attribute
+			compositor_tmpfs_obj_type_attribute
+				compositor_subj_type_attribute))
+		(call write_inherited_tmpfs_user_sock_files (ARG1)))
 
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
@@ -92,10 +95,14 @@
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
 
+	(macro write_inherited_tmpfs_user_sock_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file write_inherited_sock_file_perms))
+
 	(macro tmpfs_obj_type_transition_tmpfs_files ((type ARG1))
 		(call file.search_runtime_user (ARG1))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
-			"*"))))
+			"*")))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))
@@ -138,7 +145,7 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file
 			sock_file "wayland-9"))
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
-			"wayland-9.lock")))
+			"wayland-9.lock"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

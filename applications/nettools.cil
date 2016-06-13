@@ -145,6 +145,7 @@
 	(call nss.client_subj_type (subj))
 
 	(optional ping_optional_steam
+		(call dev.rw_inherited_dri (subj))
 		(call steam.dontaudit_read_state_all_subj (subj))
 		(call steam.dontaudit_rw_inherited_udp_sockets_all_subj (subj))
 		(call steam.dontaudit_rw_inherited_tcp_sockets_all_subj (subj))
@@ -152,7 +153,10 @@
 		(call steam.dontaudit_rw_inherited_home_data_files (subj))
 		(call steam.dontaudit_rw_inherited_home_config_files (subj))
 		(call steam.dontaudit_rw_inherited_home_user_fifo_files (subj))
-		(call steam.dontaudit_rw_inherited_tmpfs_user_files (subj))))
+		(call steam.dontaudit_rw_inherited_tmpfs_user_files (subj)))
+
+	(optional ping_optional_xwayland
+		(call xwayland.use_fd_all_subj (subj))))
 
 (block traceroute
 	(roleattribute role_attribute)

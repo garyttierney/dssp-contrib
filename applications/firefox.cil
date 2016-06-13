@@ -159,6 +159,8 @@
 	(call subj.dontaudit_read_state_common_subj (subj_type_attribute))
 	(call subj.read_state_common_subj (subj_type_attribute))
 
+	(call firefox_plugins.write_inherited_tmpfs_user_files
+		(subj_type_attribute))
 	(call firefox_plugins.rw_inherited_unix_stream_sockets_all_subj
 		(subj_type_attribute))
 

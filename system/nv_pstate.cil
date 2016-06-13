@@ -37,7 +37,7 @@
 	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
-	(call cmd.audit_read_access_cmd_files (subj))
+	(call cmd.audit_read_access_shell_files (subj))
 
 	(call fs.write_debugfs_files (subj))
 

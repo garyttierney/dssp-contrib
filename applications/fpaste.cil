@@ -106,6 +106,8 @@
 
 	(call ldconfig.exec (subj))
 
+	(call cert.read (subj))
+	(call cryptopol.client_subj_type (subj))
 	(call hwdata.read_data (subj))
 	(call locale.client_subj_type (subj))
 	(call utmp.read_runtime_files (subj))

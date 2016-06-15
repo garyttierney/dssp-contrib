@@ -170,6 +170,8 @@
 
 		(typeattributeset xrdpuser.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro role_pattern ((role ARG1)(type ARG2))
 			(call xrdpuser.role_pattern (ARG1 ARG2 subj))))
 
@@ -190,8 +192,7 @@
 		(call app.application_subj_type (ARG1))
 		(typeattributeset xrdpuser.subj_type_attribute ARG1))
 
-	(blockinherit subj.send_signal_blk)
-
+	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.rw_inherited_fifo_files_all_blk)
 	(blockinherit subj.send_sigchld_all_blk)
 	(blockinherit subj.link_keyring_all_blk)

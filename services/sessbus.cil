@@ -21,6 +21,7 @@
 
 		(typeattributeset sessbus.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
 		(blockinherit subj.send_sigkill_blk)
 
 		(macro stream_connect ((type ARG1))
@@ -35,7 +36,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

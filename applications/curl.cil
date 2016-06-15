@@ -104,5 +104,8 @@
 	(optional curl_optional_httpd
 		(call httpd.tcp_connect_all_ports (subj)))
 
+	(optional curl_optional_mpd
+		(call mpd.tcp_connect_port (subj)))
+
 	(optional curl_optional_tor
 		(call tor_socks.client_subj_type (subj))))

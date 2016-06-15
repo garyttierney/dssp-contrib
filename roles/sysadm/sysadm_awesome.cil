@@ -36,4 +36,14 @@
 			(send_msg)))))
 
 (block sysadm_awesomec
-	(blockinherit awesomec.subj_blk))
+	(blockinherit awesomec.subj_blk)
+
+	(call sysadm.cmd_auto_subj_type_transition (subj))
+	(call sysadm.shell_auto_subj_type_transition (subj))
+
+	(call sysadm.home_cmd_auto_subj_type_transition (subj))
+
+	(call sysadm_awesome.sessbus_chat_client_subj_type (subj))
+
+	(optional sysadm_awesomec_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

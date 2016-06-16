@@ -19,12 +19,12 @@
 
 		(typeattributeset systemctl.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(allow ARG1 subj (process (noatsecure signal)))
 			(call systemctl.spec_auto_subj_type_transition (ARG1
 				subj))))
-
-	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -75,6 +75,7 @@
 
 		(roleattributeset role_attribute ARG2))
 
+	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.getattr_all_blk)
 	(blockinherit subj.read_state_all_blk)
 	(blockinherit subj.use_fd_all_blk)

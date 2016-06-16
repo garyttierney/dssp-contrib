@@ -19,11 +19,11 @@
 
 		(typeattributeset localectl.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call localectl.spec_auto_subj_type_transition (ARG1
 				subj))))
-
-	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -53,6 +53,7 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.use_fd_all_blk)
 	(blockinherit subj.rw_inherited_unix_stream_sockets_all_blk))
 

@@ -19,11 +19,11 @@
 
 		(typeattributeset journalctl.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call journalctl.spec_auto_subj_type_transition (ARG1
 				subj))))
-
-	(blockinherit subj.send_signal_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -52,6 +52,8 @@
 	(blockinherit auto_subj_type_transition_blk)
 
 	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))

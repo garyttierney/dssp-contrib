@@ -8,7 +8,11 @@
 
 (in gts
 	(filecon "/usr/libexec/gnome-terminal-migration" file cmd_file_context)
-	(filecon "/usr/libexec/gnome-terminal-server" file cmd_file_context))
+	(filecon "/usr/libexec/gnome-terminal-server" file cmd_file_context)
+
+	(optional gts_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*gnome-terminal-server.*"
+			file unit_file_context)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -109,6 +113,9 @@
 
 	(optional gts_subj_type_optional_i3
 		(call i3.sensible_client_subj_type (subj_type_attribute)))
+
+	(optional gts_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
 
 	(optional gts_subj_type_optional_xwayland
 		(call xwayland.shared_client_subj_type (subj_type_attribute))))

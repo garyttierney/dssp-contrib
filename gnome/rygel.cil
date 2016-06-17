@@ -8,7 +8,11 @@
 	(filecon "/usr/bin/rygel" file cmd_file_context)
 	(filecon "HOME_DIR/\.config/Rygel(/.*)?" any home_config_file_context)
 	(filecon "HOME_DIR/\.config/rygel\.conf" file home_config_file_context)
-	(filecon "HOME_DIR/\.cache/rygel(/.*)?" any home_cache_file_context))
+	(filecon "HOME_DIR/\.cache/rygel(/.*)?" any home_cache_file_context)
+
+	(optional rygel_unit_optional_sduser
+		(filecon "/usr/lib/systemd/user/[^/]*rygel.*" file
+			unit_file_context)))
 
 (in rygelp
 	(filecon "/usr/bin/rygel-preferences" file cmd_file_context))
@@ -174,6 +178,9 @@
 
 	(optional rygel_subj_type_optional_nm
 		(call nm.sysbus_chat_client_subj_type (subj_type_attribute)))
+
+	(optional rygel_subj_type_optional_sduser
+		(blockinherit sduser.unit_obj_blk))
 
 	(optional rygel_subj_type_optional_sysbus
 		(call sysbus.client_subj_type (subj_type_attribute))))

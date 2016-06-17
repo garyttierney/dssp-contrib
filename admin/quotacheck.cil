@@ -4,6 +4,7 @@
 ;
 
 (in quotacheck
+	(filecon "/forcequotacheck" file boot_flag_file_context)
 	(filecon "/usr/sbin/quotacheck" file cmd_file_context)
 	(filecon "/a?quota\.(user|group)" file file_file_context)
 	(filecon "/boot/a?quota\.(user|group)" file file_file_context)
@@ -35,6 +36,14 @@
 	(blockinherit run_blk)
 
 	(blockinherit subj.send_signal_blk)
+
+	(blockinherit file.read_boot_flag_files_blk)
+	(blockinherit file.manage_boot_flag_files_blk)
+	(blockinherit file.relabel_boot_flag_files_blk)
+
+	(macro rootfs_obj_type_transition_boot_flag ((type ARG1))
+		(call fs.rootfs_obj_type_transition (ARG1 boot_flag_file file
+			"forcequotacheck")))
 
 	(macro getattr_db_files ((type ARG1))
 		(call sys.search_mountpoints (ARG1))
@@ -74,6 +83,11 @@
 
 	(roletype role_attribute subj)
 
+	(blockinherit file.boot_flag_obj_blk)
+
+	(call manage_boot_flag_files (subj))
+	(call rootfs_obj_type_transition_boot_flag (subj))
+
 	(blockinherit file.obj_blk)
 
 	(call manage_db_files (subj))
@@ -83,8 +97,10 @@
 
 	(call file.read_all_except (subj))
 
+	(call fs.read_devtmpfs_lnk_files (subj))
 	(call fs.get_fs_quotas (subj))
 	(call fs.getattr_fs (subj))
+	(call fs.remount_fs (subj))
 
 	(call storage.getattr_all (subj))
 

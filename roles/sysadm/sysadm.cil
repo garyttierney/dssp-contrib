@@ -2787,6 +2787,10 @@
 
 	(optional sysadm_optional_quotacheck
 		(call quotacheck.run (subj_type_attribute role))
+
+		(call quotacheck.manage_boot_flag_files (subj))
+		(call quotacheck.rootfs_obj_type_transition_boot_flag (subj))
+
 		(call quotacheck.manage_db_files (subj)))
 
 	(optional sysadm_optional_rdp

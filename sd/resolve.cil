@@ -1,0 +1,41 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in resolve
+	(filecon "/usr/bin/systemd-resolve" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in resolve
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block resolve
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(dontaudit subj self (capability (net_admin)))
+
+	(optional resolve_optional_sd_resolved
+		(call sd_resolved.sysbus_chat_client_subj_type (subj)))
+
+	(optional resolve_optional_sysbus
+		(call sysbus.client_subj_type (subj))))

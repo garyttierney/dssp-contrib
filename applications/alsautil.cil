@@ -33,6 +33,8 @@
 
 		(typeattributeset alsautil.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call alsautil.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -42,7 +44,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

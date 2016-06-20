@@ -26,6 +26,8 @@
 
 		(typeattributeset rxvt.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call rxvt.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -35,7 +37,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -76,6 +78,8 @@
 
 		(typeattributeset rxvtc.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call rxvtc.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -85,7 +89,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -112,6 +116,8 @@
 
 		(typeattributeset rxvtd.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call rxvtd.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -121,7 +127,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

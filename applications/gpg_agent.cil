@@ -28,6 +28,7 @@
 
 		(typeattributeset gpg_agent.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
 		(blockinherit subj.use_fd_blk)
 		(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
 		(blockinherit subj.rw_inherited_fifo_files_blk)
@@ -45,7 +46,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

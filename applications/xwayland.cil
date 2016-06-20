@@ -20,6 +20,7 @@
 		(typeattributeset xwayland.subj_type_attribute subj)
 
 		(blockinherit subj.send_sigkill_blk)
+		(blockinherit subj.send_signal_blk)
 
 		(macro role ((role ARG1))
 			(call xwayland.roletype_pattern (ARG1 subj)))
@@ -53,7 +54,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.use_fd_all_blk)
 	(blockinherit subj.send_sigchld_all_blk)
 

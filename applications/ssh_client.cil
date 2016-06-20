@@ -40,6 +40,8 @@
 
 		(typeattributeset ssh_add.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call ssh_add.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -49,7 +51,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -76,6 +78,8 @@
 
 		(typeattributeset ssh_agent.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro stream_connect ((type ARG1))
 			(call ssh_agent.spec_stream_connect (ARG1 subj)))
 
@@ -88,7 +92,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -143,6 +147,7 @@
 		(typeattributeset ssh_client.subj_type_attribute subj)
 
 		(blockinherit subj.read_state_blk)
+		(blockinherit subj.send_signal_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
 			(call ssh_client.spec_auto_subj_type_transition (ARG1
@@ -153,7 +158,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(blockinherit file.search_config_blk)
 	(blockinherit file.list_config_blk)
@@ -232,6 +237,8 @@
 
 		(typeattributeset ssh_keygen.subj_type_attribute subj)
 
+		(blockinherit subj.send_signal_blk)
+
 		(macro auto_subj_type_transition ((type ARG1))
 			(call ssh_keygen.spec_auto_subj_type_transition (ARG1
 				subj)))
@@ -241,7 +248,7 @@
 
 	(blockinherit exec_blk)
 
-	(blockinherit subj.send_signal_blk)
+	(blockinherit subj.send_signal_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))

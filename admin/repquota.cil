@@ -30,4 +30,19 @@
 
 	(blockinherit app.application_blk)
 
-	(roletype role_attribute subj))
+	(roletype role_attribute subj)
+
+	(call sys.read_fs_sysctl_files (subj))
+
+	(call fs.get_fs_quotas (subj))
+	(call fs.getattr_fs (subj))
+	(call fs.mod_fs_quotas (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+
+	(call storage.getattr_fixed_disk (subj))
+
+	(call locale.read (subj))
+
+	(call nss.client_subj_type (subj))
+
+	(call quotacheck.read_db_files (subj)))

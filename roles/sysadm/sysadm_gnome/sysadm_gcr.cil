@@ -22,5 +22,8 @@
 	(call sysadm_gnomeapp.spec_common_gnomeapplication (subj
 		gcrp.tmpfs_user_file))
 
+	(optional sysadm_gcrp_optional_sysadm_gkrd
+		(call sysadm_gkrd.sessbus_chat_client_subj_type (subj)))
+
 	(optional sysadm_gcrp_optional_sysadm_sessbus
 		(call sysadm_sessbus.daemon (subj gcrp.cmd_file))))

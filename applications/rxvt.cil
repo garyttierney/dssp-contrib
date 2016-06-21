@@ -225,7 +225,8 @@
 
 	(call nss.client_subj_type (subj_type_attribute))
 
-	(call rxvt.manage_tmpfs_user_sock_files (subj_type_attribute))
+	(call rxvt.manage_tmpfs_user (subj_type_attribute))
+	(call rxvt.tmpfs_obj_type_transition_tmpfs_user (subj_type_attribute))
 
 	(call usersubj.create_ptys (subj_type_attribute))
 	(call usersubj.setattr_ptys (subj_type_attribute))

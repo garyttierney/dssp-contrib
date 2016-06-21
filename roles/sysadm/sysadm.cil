@@ -4742,6 +4742,9 @@
 
 		(call sysadm_xsession.role_pattern (role subj_type_attribute)))
 
+	(optional sysadm_optional_sysadm_xsslock
+		(call sysadm_xsslock.role_pattern (role subj_type_attribute)))
+
 	(optional sysadm_optional_sysadm_xwayland
 		(call xwayland.manage_tmpfs_user (subj))
 		(call xwayland.relabel_tmpfs_user (subj))

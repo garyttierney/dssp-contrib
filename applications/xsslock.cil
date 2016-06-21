@@ -1,0 +1,77 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in xsslock
+	(filecon "/usr/bin/xss-lock" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in xsslock
+	(block subj_blk
+		(blockabstract subj_blk)
+
+		(blockinherit app.application_subj_blk)
+
+		(typeattributeset xsslock.subj_type_attribute subj)
+
+		(blockinherit subj.send_signal_blk)
+
+		(macro auto_subj_type_transition ((type ARG1))
+			(call xsslock.spec_auto_subj_type_transition (ARG1
+				subj)))
+
+		(macro role_pattern ((role ARG1)(type ARG2))
+			(call xsslock.role_pattern (ARG1 ARG2 subj))))
+
+	(blockinherit exec_blk)
+
+	(blockinherit subj.send_signal_all_blk)
+
+	(macro application_subj_type ((type ARG1))
+		(call app.application_subj_type (ARG1))
+		(typeattributeset subj_type_attribute ARG1))
+
+	(macro role_pattern ((role ARG1)(type ARG2)(type ARG3))
+		(call auto_subj_type_transition_pattern (ARG2 cmd_file ARG3))
+
+		(roletype ARG1 ARG3)
+
+		(allow ARG2 ARG3 (process (signal)))
+
+		(allow ARG3 ARG2 (process (signal)))
+
+		(optional xsslock_role_pattern_optional_slock
+			(call slock.run (ARG3 ARG1))))
+
+	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
+		(allow ARG1 ARG2 (process (signal)))
+		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block xsslock
+	(typeattribute subj_type_attribute)
+
+	(blockinherit app.application_cmd_obj_blk)
+
+	(call subj.entry (subj_type_attribute cmd_file))
+
+	(allow subj_type_attribute self rw_fifo_file_perms)
+
+	(call locale.client_subj_type (subj_type_attribute))
+
+	(call xserver.client_subj_type (subj_type_attribute))
+
+	(optional xsslock_subj_type_optional_sd_logind
+		(call sd_logind.client_subj_type (subj_type_attribute)))
+
+	(optional xsslock_subj_type_optional_sysbus
+		(call sysbus.client_subj_type (subj_type_attribute))))

@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_xsslock
+	(blockinherit xsslock.subj_blk)
+
+	(optional user_xsslock_optional_user_i3lock
+		(call user_i3lock.auto_subj_type_transition (subj))))

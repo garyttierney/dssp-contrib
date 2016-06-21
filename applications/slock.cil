@@ -1,0 +1,45 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in slock
+	(filecon "/usr/bin/slock" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in slock
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block slock
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self (capability (dac_override setuid sys_resource)))
+
+	(call sys.read_crypto_sysctl_files (subj))
+
+	(call locale.client_subj_type (subj))
+	(call passwords.read (subj))
+	(call shadow.read (subj))
+
+	(call nss.read_config_files (subj))
+
+	(call xserver.client_subj_type (subj)))

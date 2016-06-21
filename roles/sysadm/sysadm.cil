@@ -3014,6 +3014,9 @@
 	(optional sysadm_optional_setools
 		(call setools.run (subj_type_attribute role)))
 
+	(optional sysadm_optional_slock
+		(call slock.run (subj_type_attribute role)))
+
 	(optional sysadm_optional_smartmontools
 		(call smartctl.run (subj_type_attribute role))
 		(call smartd.adm (subj role)))

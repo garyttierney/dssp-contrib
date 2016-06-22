@@ -338,6 +338,8 @@
 
 	(call xinit.use_fd_all_subj (client_subj_type_attribute))
 
+	(call xutil.read_home_user_files (client_subj_type_attribute))
+
 	(optional xserver_client_subj_type_optional_sshd
 		(booleanif sshd_enable_x11_forward
 			(true

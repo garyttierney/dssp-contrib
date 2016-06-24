@@ -12,13 +12,21 @@
 		home_config_file_context)
 	(filecon "HOME_DIR/\.config/unity3d(/.*)?" any
 		home_config_file_context)
-	(filecon "HOME_DIR/\.local/share/American\p{Zs}Truck\p{Zs}Simulator(/.*)?" any
-		home_data_file_context)
+	(filecon
+		"HOME_DIR/\.local/share/American\p{Zs}Truck\p{Zs}Simulator(/.*)?"
+		any home_data_file_context)
+	(filecon
+		"HOME_DIR/\.local/share/\'American\p{Zs}Truck\p{Zs}Simulator\'(/.*)?"
+		any home_data_file_context)
 	(filecon "HOME_DIR/\.local/share/Paradox\p{Zs}Interactive(/.*)?" any
 		home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/\'Paradox\p{Zs}Interactive\'(/.*)?"
+		any home_data_file_context)
 	(filecon "HOME_DIR/\.local/share/Aspyr(/.*)?" any
 		home_data_file_context)
 	(filecon "HOME_DIR/\.local/share/Starbreeze(/.*)?" any
+		home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/SuperHexagon(/.*)?" any
 		home_data_file_context)
 	(filecon "HOME_DIR/\.local/share/Steam(/.*)?" any
 		home_data_file_context))
@@ -164,11 +172,17 @@
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "American Truck Simulator"))
 		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "American Truck Simulator'"))
+		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Aspyr"))
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Paradox Interactive"))
 		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "'Paradox Interactive'"))
+		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Starbreeze"))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "SuperHexagon"))
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Steam")))
 

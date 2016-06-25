@@ -5,10 +5,21 @@
 
 (in steam
 	(filecon "/usr/bin/steam" file cmd_file_context)
+	(filecon "HOME_DIR/My\p{Zs}Games(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\'My\p{Zs}Games\'(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.frictionalgames(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/\.steam(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/\.steampath" symlink home_user_file_context)
 	(filecon "HOME_DIR/\.steampid" symlink home_user_file_context)
+	(filecon "HOME_DIR/\.cache/kopanito(/.*)?" any
+		home_cache_file_context)
+	(filecon "HOME_DIR/\.config/SingletonLock" symlink
+		home_config_file_context)
 	(filecon "HOME_DIR/\.config/cef_user_data(/.*)?" any
+		home_config_file_context)
+	(filecon "HOME_DIR/\.config/kopanito(/.*)?" any
+		home_config_file_context)
+	(filecon "HOME_DIR/\.config/MonoGame(/.*)?" any
 		home_config_file_context)
 	(filecon "HOME_DIR/\.config/unity3d(/.*)?" any
 		home_config_file_context)
@@ -29,6 +40,8 @@
 	(filecon "HOME_DIR/\.local/share/SuperHexagon(/.*)?" any
 		home_data_file_context)
 	(filecon "HOME_DIR/\.local/share/Steam(/.*)?" any
+		home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/TornBanner(/.*)?" any
 		home_data_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -141,6 +154,12 @@
 
 	(macro home_dir_obj_type_transition_home_user ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir "My Games"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir "'My Games'"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".frictionalgames"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file dir ".steam"))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file lnk_file ".steampath"))
@@ -172,7 +191,7 @@
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "American Truck Simulator"))
 		(call usersubj.home_data_obj_type_transition (ARG1
-			home_data_file dir "American Truck Simulator'"))
+			home_data_file dir "'American Truck Simulator'"))
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "Aspyr"))
 		(call usersubj.home_data_obj_type_transition (ARG1
@@ -184,7 +203,27 @@
 		(call usersubj.home_data_obj_type_transition (ARG1
 			home_data_file dir "SuperHexagon"))
 		(call usersubj.home_data_obj_type_transition (ARG1
-			home_data_file dir "Steam")))
+			home_data_file dir "Steam"))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "TornBanner")))
+
+	(blockinherit usersubj.search_home_cache_blk)
+	(blockinherit usersubj.list_home_cache_blk)
+	(blockinherit usersubj.read_home_cache_files_blk)
+	(blockinherit usersubj.rw_home_cache_files_blk)
+	(blockinherit usersubj.read_home_cache_lnk_files_blk)
+	(blockinherit usersubj.read_home_cache_blk)
+	(blockinherit usersubj.manage_home_cache_blk)
+	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(blockinherit usersubj.home_cache_obj_type_transition_blk)
+
+	(macro dontaudit_rw_inherited_home_cache_files ((type ARG1))
+		(dontaudit ARG1 home_cache_file rw_inherited_file_perms))
+
+	(macro home_cache_obj_type_transition_home_cache ((type ARG1))
+		(call usersubj.home_cache_obj_type_transition (ARG1
+			home_cache_file dir "kopanito")))
 
 	(blockinherit usersubj.search_home_config_blk)
 	(blockinherit usersubj.list_home_config_blk)
@@ -202,7 +241,13 @@
 
 	(macro home_config_obj_type_transition_home_config ((type ARG1))
 		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file lnk_file "SingletonLock"))
+		(call usersubj.home_config_obj_type_transition (ARG1
 			home_config_file dir "unity3d"))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "kopanito"))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "MonoGame"))
 		(call usersubj.home_config_obj_type_transition (ARG1
 			home_config_file dir "cef_user_data")))
 
@@ -253,6 +298,14 @@
 	(call home_config_obj_type_transition_home_config
 		(subj_type_attribute))
 
+	(blockinherit usersubj.home_cache_obj_blk)
+
+	(call usersubj.home_cache_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_cache (subj_type_attribute))
+	(call home_cache_obj_type_transition_home_cache
+		(subj_type_attribute))
+
 	(blockinherit usersubj.var_tmp_user_obj_blk)
 
 	(call manage_var_tmp_user_files (subj_type_attribute))
@@ -268,6 +321,7 @@
 	(call sys.dontaudit_list_mountpoints (subj_type_attribute))
 	(call sys.read_cpuinfo_proc_files (subj_type_attribute))
 	(call sys.read_kernel_sysctl_files (subj_type_attribute))
+	(call sys.read_net_sysctl_files (subj_type_attribute))
 	(call sys.read_net_proc_files (subj_type_attribute))
 
 	(call cmd.dontaudit_getattr_all_cmd_files (subj_type_attribute))
@@ -344,6 +398,9 @@
 
 	(optional steam_subj_type_optional_gvfs
 		(call gvfs.exec (subj_type_attribute)))
+
+	(optional steam_subj_type_optional_mozilla
+		(call mozilla.rw_home_user_files (subj_type_attribute)))
 
 	(optional steam_subj_type_optional_nm
 		(call nm.list_runtime (subj_type_attribute))

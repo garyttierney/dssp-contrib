@@ -1350,6 +1350,8 @@
 (optional sysadm_steam_home_optional_steam
 	(tunableif enable_rbacsep
 		(true
+			(context root_steam_home_cache (sysadm.id sysadm.role
+				steam.home_cache_file (systemlow systemlow)))
 			(context root_steam_home_config (sysadm.id sysadm.role
 				steam.home_config_file (systemlow systemlow)))
 			(context root_steam_home_data (sysadm.id sysadm.role
@@ -1357,6 +1359,8 @@
 			(context root_steam_home (sysadm.id sysadm.role
 				steam.home_user_file (systemlow systemlow))))
 		(false
+			(context root_steam_home_cache (sysadm.id object_r
+				steam.home_cache_file (systemlow systemlow)))
 			(context root_steam_home_config (sysadm.id object_r
 				steam.home_config_file (systemlow systemlow)))
 			(context root_steam_home_data (sysadm.id object_r
@@ -1364,10 +1368,21 @@
 			(context root_steam_home (sysadm.id object_r
 				steam.home_user_file (systemlow systemlow)))))
 
+	(filecon "/root/My\p{Zs}Games(/.*)?" any root_steam_home)
+	(filecon "/root/\'My\p{Zs}Games\'(/.*)?" any root_steam_home)
+	(filecon "/root/\.frictionalgames(/.*)?" any root_steam_home)
 	(filecon "/root/\.steam(/.*)?" any root_steam_home)
 	(filecon "/root/\.steampath" symlink root_steam_home)
 	(filecon "/root/\.steampid" symlink root_steam_home)
+	(filecon "/root/\.cache/kopanito(/.*)?" any
+		root_steam_home_cache)
+	(filecon "/root/\.config/SingletonLock" symlink
+		root_steam_home_config)
 	(filecon "/root/\.config/cef_user_data(/.*)?" any
+		root_steam_home_config)
+	(filecon "/root/\.config/kopanito(/.*)?" any
+		root_steam_home_config)
+	(filecon "/root/\.config/MonoGame(/.*)?" any
 		root_steam_home_config)
 	(filecon "/root/\.config/unity3d(/.*)?" any root_steam_home_config)
 	(filecon "/root/\.local/share/American\p{Zs}Truck\p{Zs}Simulator(/.*)?"
@@ -1384,7 +1399,9 @@
 		root_steam_home_data)
 	(filecon "/root/\.local/share/SuperHexagon(/.*)?" any
 		root_steam_home_data)
-	(filecon "/root/\.local/share/Steam(/.*)?" any root_steam_home_data))
+	(filecon "/root/\.local/share/Steam(/.*)?" any root_steam_home_data)
+	(filecon "/root/\.local/share/TornBanner(/.*)?" any
+		root_steam_home_data))
 
 (optional sysadm_tmux_home_optional_tmux
 	(tunableif enable_rbacsep
@@ -4442,6 +4459,11 @@
 		(call steam.relabel_home_user (subj))
 
 		(call steam.home_dir_obj_type_transition_home_user (subj))
+
+		(call steam.manage_home_cache (subj))
+		(call steam.relabel_home_cache (subj))
+
+		(call steam.home_cache_obj_type_transition_home_cache (subj))
 
 		(call steam.manage_home_config (subj))
 		(call steam.relabel_home_config (subj))

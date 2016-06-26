@@ -7,6 +7,10 @@
 	(filecon "/usr/bin/steam" file cmd_file_context)
 	(filecon "HOME_DIR/My\p{Zs}Games(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/\'My\p{Zs}Games\'(/.*)?" any home_user_file_context)
+	(filecon "HOME_DIR/\.Prison\p{Zs}Architect(/.*)?" any
+		home_user_file_context)
+	(filecon "HOME_DIR/\'\.Prison\p{Zs}Architect\'(/.*)?" any
+		home_user_file_context)
 	(filecon "HOME_DIR/\.frictionalgames(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/\.steam(/.*)?" any home_user_file_context)
 	(filecon "HOME_DIR/\.steampath" symlink home_user_file_context)
@@ -157,6 +161,10 @@
 			home_user_file dir "My Games"))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file dir "'My Games'"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir ".Prison Architect"))
+		(call usersubj.home_dir_obj_type_transition (ARG1
+			home_user_file dir "'.Prison Architect'"))
 		(call usersubj.home_dir_obj_type_transition (ARG1
 			home_user_file dir ".frictionalgames"))
 		(call usersubj.home_dir_obj_type_transition (ARG1

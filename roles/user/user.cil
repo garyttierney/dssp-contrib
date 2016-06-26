@@ -228,6 +228,9 @@
 		(call gegl.relabel_home_data (subj))
 		(call gegl.home_data_obj_type_transition_home_data (subj)))
 
+	(optional user_optional_getnetif
+		(call getnetif.run (subj_type_attribute role)))
+
 	(optional user_optional_gtk
 		(call gtk.manage_home_config (subj))
 		(call gtk.relabel_home_config (subj))
@@ -534,6 +537,7 @@
 		(call awesome.home_cache_obj_type_transition_home_cache
 			(subj))
 
+		(call awesome.exec_home_config_files (subj))
 		(call awesome.manage_home_config (subj))
 		(call awesome.relabel_home_config (subj))
 

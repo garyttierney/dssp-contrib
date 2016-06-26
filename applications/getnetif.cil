@@ -1,0 +1,49 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in getnetif
+	(filecon "/usr/bin/getnetif" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in getnetif
+	(blockinherit exec_blk)
+
+	(blockinherit auto_subj_type_transition_blk)
+
+	(blockinherit run_blk)
+
+	(blockinherit subj.send_signal_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block getnetif
+	(roleattribute role_attribute)
+
+	(blockinherit app.application_blk)
+
+	(roletype role_attribute subj)
+
+	(allow subj self rw_fifo_file_perms)
+	(allow subj self create_netlink_route_socket_perms)
+
+	(call cmd.audit_read_access_shell_files (subj))
+	(call cmd.exec (subj))
+
+	(call file.read_data_files (subj))
+
+	(call locale.client_subj_type (subj))
+
+	(call iptools.exec (subj))
+	(call iptools.read_config_files (subj))
+
+	(optional getnetif_optional_awsome
+		(call awesome.rw_inherited_tmpfs_user_files (subj))))

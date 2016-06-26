@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block user_ncmpc
+	(blockinherit ncmpc.subj_blk)
+
+	(optional user_ncmpc_optional_user_pa
+		(call user_pa.auto_subj_type_transition (subj))))

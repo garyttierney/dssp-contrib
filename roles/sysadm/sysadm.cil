@@ -1085,6 +1085,17 @@
 	(filecon "/root/\.config/nautilus(/.*)?" any
 		root_nautilus_home_config))
 
+(optional sysadm_ncmpc_home_optional_ncmpc
+	(tunableif enable_rbacsep
+		(true
+			(context root_ncmpc_home (sysadm.id sysadm.role
+				ncmpc.home_user_file (systemlow systemlow))))
+		(false
+			(context root_ncmpc_home (sysadm.id object_r
+				ncmpc.home_user_file (systemlow systemlow)))))
+
+	(filecon "/root/\.ncmpc(/.*)?" any root_ncmpc_home))
+
 (optional sysadm_obexd_home_optional_obexd
 	(tunableif enable_rbacsep
 		(true
@@ -4274,6 +4285,19 @@
 		(call nb.home_dir_obj_type_transition_home (subj))
 
 		(call sysadm_nb.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_ncmpc
+		(call ncmpc.manage_config (subj))
+
+		(call ncmpc.manage_home_user (subj))
+		(call ncmpc.relabel_home_user (subj))
+
+		(call ncmpc.home_dir_obj_type_transition_home (subj))
+
+		(call ncmpc.manage_tmpfs_user_files (subj))
+		(call ncmpc.relabel_tmpfs_user_files (subj))
+
+		(call sysadm_ncmpc.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_nmce
 		(call nmce.manage_tmpfs_user (subj))

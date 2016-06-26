@@ -3,39 +3,32 @@
 ; Contexts
 ;
 
-(in festival
-	(filecon "/etc/festival(/.*)?" any config_file_context)
-	(filecon "/usr/bin/festival" file cmd_file_context)
-	(filecon "/usr/bin/festival_client" file cmd_file_context)
-	(filecon "/usr/bin/festival_server" file cmd_file_context)
-	(filecon "/usr/bin/festival_server_control" file cmd_file_context)
-	(filecon "/usr/bin/saytime" file cmd_file_context)
-	(filecon "/usr/bin/text2wave" file cmd_file_context)
-	(filecon "/usr/lib/festival/etc/audsp" file cmd_file_context)
-	(filecon "HOME_DIR/\.festival_history" file home_user_file_context)
-	(filecon "HOME_DIR/\.festivalrc" file home_user_file_context))
+(in ncmpc
+	(filecon "/etc/ncmpc(/.*)?" any config_file_context)
+	(filecon "/usr/bin/ncmpc" file cmd_file_context)
+	(filecon "HOME_DIR/\.ncmpc(/.*)?" any home_user_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Macros
 ;
 
-(in festival
+(in ncmpc
 	(block subj_blk
 		(blockabstract subj_blk)
 
 		(blockinherit app.application_subj_blk)
 
-		(typeattributeset festival.subj_type_attribute subj)
+		(typeattributeset ncmpc.subj_type_attribute subj)
 
 		(blockinherit subj.send_signal_blk)
 
 		(macro auto_subj_type_transition ((type ARG1))
-			(call festival.spec_auto_subj_type_transition (ARG1
+			(call ncmpc.spec_auto_subj_type_transition (ARG1
 				subj)))
 
 		(macro role_pattern ((role ARG1)(type ARG2))
-			(call festival.role_pattern (ARG1 ARG2 subj))))
+			(call ncmpc.role_pattern (ARG1 ARG2 subj))))
 
 	(blockinherit exec_blk)
 
@@ -74,22 +67,24 @@
 		(call fs.tmpfs_obj_type_transition (ARG1 tmpfs_user_file file
 			"*")))
 
+	(blockinherit usersubj.search_home_user_blk)
+	(blockinherit usersubj.list_home_user_blk)
 	(blockinherit usersubj.read_home_user_files_blk)
-	(blockinherit usersubj.manage_home_user_files_blk)
-	(blockinherit usersubj.relabel_home_user_files_blk)
+	(blockinherit usersubj.read_home_user_lnk_files_blk)
+	(blockinherit usersubj.read_home_user_blk)
+	(blockinherit usersubj.manage_home_user_blk)
+	(blockinherit usersubj.relabel_home_user_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
 		(call usersubj.home_dir_obj_type_transition (ARG1
-			home_user_file file ".festivalrc"))
-		(call usersubj.home_dir_obj_type_transition (ARG1
-			home_user_file file ".festival_history"))))
+			home_user_file dir ".ncmpc"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
 ; Policy
 ;
 
-(block festival
+(block ncmpc
 	(typeattribute subj_type_attribute)
 
 	(blockinherit app.application_cmd_obj_blk)
@@ -102,26 +97,22 @@
 
 	(blockinherit usersubj.home_user_obj_blk)
 
-	(call manage_home_user_files (subj_type_attribute))
-	(call home_dir_obj_type_transition_home (subj_type_attribute))
+	(call read_home_user (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 
 	(call manage_tmpfs_user_files (subj_type_attribute))
 	(call tmpfs_obj_type_transition_tmpfs (subj_type_attribute))
 
-	(call exec (subj_type_attribute))
-
-	(call cmd.exec (subj_type_attribute))
-	(call cmd.exec_shell (subj_type_attribute))
-
 	(call file.read_data (subj_type_attribute))
 
-	(call terminfo.read_all (subj_type_attribute))
 	(call locale.client_subj_type (subj_type_attribute))
+	(call terminfo.read_all (subj_type_attribute))
 
-	(optional festival_subj_type_optional_xserver
-		(call xserver.client_subj_type (subj_type_attribute)))
+	(call nss.client_subj_type (subj_type_attribute))
 
-	(optional festival_subj_type_optional_pa
+	(call mpd.stream_connect (subj_type_attribute))
+	(call mpd.tcp_connect_port (subj_type_attribute))
+
+	(optional ncmpc_subj_type_optional_pa
 		(call pa.tmpfs_client (subj_type_attribute tmpfs_user_file))))

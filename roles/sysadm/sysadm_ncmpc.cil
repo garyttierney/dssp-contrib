@@ -1,0 +1,10 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block sysadm_ncmpc
+	(blockinherit ncmpc.subj_blk)
+
+	(optional sysadm_ncmpc_optional_sysadm_pa
+		(call sysadm_pa.auto_subj_type_transition (subj))))

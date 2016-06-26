@@ -152,6 +152,7 @@
 	(blockinherit usersubj.home_config_obj_blk)
 
 	(call manage_home_config (subj_type_attribute))
+	(allow subj_type_attribute home_config_file exec_file_perms)
 	(call home_config_obj_type_transition_home_config
 		(subj_type_attribute))
 
@@ -166,6 +167,7 @@
 	(call file.read_config (subj_type_attribute))
 
 	(call fs.getattr_fs (subj_type_attribute))
+	(call fs.read_sysfs (subj_type_attribute))
 
 	(call fonts.client_subj_type (subj_type_attribute))
 	(call locale.client_subj_type (subj_type_attribute))

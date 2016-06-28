@@ -145,6 +145,7 @@
 	(allow subj self (process (getcap setcap)))
 	(allow subj self (tcp_socket (listen accept)))
 
+	(call sys.read_crypto_sysctl_files (subj))
 	(call sys.read_kernel_sysctl_files (subj))
 
 	(call dev.read_urandom (subj))

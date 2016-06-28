@@ -853,6 +853,12 @@
 		(call lib.search_lib (ARG1))
 		(allow ARG1 file rw_dir_perms))
 
+	(macro load ((type ARG1))
+		(call sys.load_kernel_module_subj_type (ARG1))
+
+		(call lib.search_lib (ARG1))
+		(allow ARG1 file (system (module_load))))
+
 	(macro read ((type ARG1))
 		(call lib.search_lib (ARG1))
 		(allow ARG1 file read_file_perms)
@@ -1168,7 +1174,9 @@
 	(blockinherit file.data_obj_blk))
 
 (block modules
-	(blockinherit file.obj_blk))
+	(blockinherit file.obj_blk)
+
+	(call sys.kernel_module_obj_type (file)))
 
 (block modules_dep
 	(blockinherit file.obj_blk))

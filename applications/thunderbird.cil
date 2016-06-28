@@ -40,6 +40,7 @@
 	(blockinherit exec_blk)
 
 	(blockinherit subj.send_signal_all_blk)
+	(blockinherit subj.use_fd_all_blk)
 
 	(macro application_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
@@ -63,10 +64,15 @@
 	(blockinherit usersubj.search_tmpfs_user_blk)
 	(blockinherit usersubj.list_tmpfs_user_blk)
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
+	(blockinherit usersubj.rw_tmpfs_user_files_blk)
 	(blockinherit usersubj.read_tmpfs_user_lnk_files_blk)
 	(blockinherit usersubj.read_tmpfs_user_blk)
 	(blockinherit usersubj.manage_tmpfs_user_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_blk)
+
+	(macro rw_inherited_tmpfs_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 tmpfs_user_file rw_inherited_file_perms))
 
 	(macro tmpfs_obj_type_transition_tmpfs ((type ARG1))
 		(call file.search_runtime_user (ARG1))

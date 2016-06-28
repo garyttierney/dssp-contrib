@@ -163,6 +163,10 @@
 	(optional gpg_subj_type_optional_pass
 		(call pass.manage_home_user_files (subj_type_attribute)))
 
+	(optional gpg_subj_type_optional_thunderbird
+		(call thunderbird.rw_inherited_tmpfs_user_files
+			(subj_type_attribute)))
+
 	(optional gpg_subj_type_optional_tor
 		(call tor.read_config_files (subj_type_attribute))))
 

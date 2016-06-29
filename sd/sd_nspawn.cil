@@ -674,6 +674,8 @@
 
 	(blockinherit sd_nspawn_container.container_blk)
 
+	(call llmnr.tcp_bind_port (subj))
+
 	(optional sd_nspawn_container_optional_dhcp
 		(call dhcp.udp_bind_reserved_port (subj))
 		(call dhcpv6_client.udp_bind_reserved_port (subj)))

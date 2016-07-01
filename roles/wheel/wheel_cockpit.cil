@@ -1,5 +1,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in wheel_cockpitbridge
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+
+	(macro roletype_role ((role ARG1))
+		(roletype ARG1 subj))
+
+	(macro auto_subj_role_transition ((role ARG1))
+		(call cockpitbridge.auto_subj_role_transition_pattern (ARG1
+			wheel.role))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 

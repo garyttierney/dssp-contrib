@@ -1,5 +1,22 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in sysadm_cockpitbridge
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+
+	(macro roletype_role ((role ARG1))
+		(roletype ARG1 subj))
+
+	(macro auto_subj_role_transition ((role ARG1))
+		(call cockpitbridge.auto_subj_role_transition_pattern (ARG1
+			sysadm.role))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 
@@ -37,7 +54,13 @@
 		(call sysadm_systemctl.auto_subj_type_transition (subj)))
 
 	(optional sysadm_cockpitbridge_optional_sysadm_timedatectl
-		(call sysadm_timedatectl.auto_subj_type_transition (subj))))
+		(call sysadm_timedatectl.auto_subj_type_transition (subj)))
+
+	(optional sysadm_cockpitbridge_optional_wheel_cockpitbridge
+		(call wheel_cockpitbridge.send_sigchld (subj))
+		(call wheel_cockpitbridge.rw_inherited_fifo_files (subj))
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
+			(subj))))
 
 (block sysadm_cockpitpolkit
 	(blockinherit cockpitpolkit.subj_blk)

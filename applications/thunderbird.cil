@@ -39,6 +39,7 @@
 
 	(blockinherit exec_blk)
 
+	(blockinherit subj.rw_inherited_tcp_sockets_all_blk)
 	(blockinherit subj.send_signal_all_blk)
 	(blockinherit subj.use_fd_all_blk)
 
@@ -91,6 +92,10 @@
 	(blockinherit usersubj.manage_home_user_blk)
 	(blockinherit usersubj.relabel_home_user_blk)
 
+	(macro rw_inherited_home_user_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 home_user_file rw_inherited_file_perms))
+
 	(blockinherit usersubj.home_user_obj_type_transition_blk)
 
 	(macro home_dir_obj_type_transition_home ((type ARG1))
@@ -108,6 +113,10 @@
 	(blockinherit usersubj.read_home_cache_blk)
 	(blockinherit usersubj.manage_home_cache_blk)
 	(blockinherit usersubj.relabel_home_cache_blk)
+
+	(macro rw_inherited_home_cache_files ((type ARG1))
+		(call use_fd_all_subj (ARG1))
+		(allow ARG1 home_cache_file rw_inherited_file_perms))
 
 	(blockinherit usersubj.home_cache_obj_type_transition_blk)
 

@@ -404,7 +404,7 @@
 	(call subj.entry (subj_type_attribute cmd_file))
 
 	(dontaudit subj_type_attribute self (capability (net_admin
-		dac_override)))
+		dac_override dac_read_search)))
 	(allow subj_type_attribute self (tcp_socket (listen accept)))
 	(allow subj_type_attribute self rw_fifo_file_perms)
 

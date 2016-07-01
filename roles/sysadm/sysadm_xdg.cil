@@ -6,8 +6,14 @@
 (block sysadm_xdgopen
 	(blockinherit xdgopen.subj_blk)
 
+	(optional sysadm_xdgopen_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
 	(optional sysadm_xdgopen_optional_sysadm_gs
 		(call sysadm_gs.forked_subj_type (subj)))
 
 	(optional sysadm_xdgopen_optional_sysadm_gvfs
-		(call sysadm_gvfs.auto_subj_type_transition (subj))))
+		(call sysadm_gvfs.auto_subj_type_transition (subj)))
+
+	(optional sysadm_xdgopen_optional_sysadm_sessbus
+		(call sysadm_sessbus.client_subj_type (subj))))

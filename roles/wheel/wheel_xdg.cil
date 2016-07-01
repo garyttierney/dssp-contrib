@@ -6,8 +6,14 @@
 (block wheel_xdgopen
 	(blockinherit xdgopen.subj_blk)
 
+	(optional wheel_xdgopen_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
 	(optional wheel_xdgopen_optional_wheel_gs
 		(call wheel_gs.forked_subj_type (subj)))
 
 	(optional wheel_xdgopen_optional_wheel_gvfs
-		(call wheel_gvfs.auto_subj_type_transition (subj))))
+		(call wheel_gvfs.auto_subj_type_transition (subj)))
+
+	(optional wheel_xdgopen_optional_wheel_sessbus
+		(call wheel_sessbus.client_subj_type (subj))))

@@ -186,10 +186,6 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
-
-	(macro auto_subj_role_transition_pattern ((role ARG1)(role ARG2))
-		(roletransition ARG1 cmd_file process ARG2))
-
 	(macro dontaudit_manual_subj_type_transition_all_subj ((type ARG1))
 		(dontaudit ARG1 subj_type_attribute (process (transition))))
 

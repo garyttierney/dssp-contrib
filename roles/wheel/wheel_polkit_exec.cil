@@ -51,15 +51,8 @@
 	(optional wheel_polkit_exec_optional_wheel_cockpitbridge
 		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
 			(subj))
+		(call wheel_cockpitbridge.auto_subj_type_transition (subj))
 		(call wheel_cockpitbridge.read_state (subj)))
-
-	(optional wheel_polkit_exec_optional_sysadm_cockpitbridge
-		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
-			(subj))
-		(call sysadm_cockpitbridge.auto_subj_type_transition (subj))
-		(call sysadm_cockpitbridge.auto_subj_role_transition
-			(wheel.role))
-		(call sysadm_cockpitbridge.read_state (subj)))
 
 	(optional wheel_polkit_exec_optional_wheel_gcs
 		(call wheel_gcs.auto_subj_type_transition_gcs_helper (subj))

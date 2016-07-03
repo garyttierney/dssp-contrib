@@ -6,6 +6,8 @@
 (block sysadm_cockpitbridge
 	(blockinherit cockpitbridge.priv_subj_blk)
 
+	(allow subj self (capability (dac_override)))
+
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
 	(call sysadm_cockpitpolkit.auto_subj_type_transition (subj))

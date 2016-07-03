@@ -16,6 +16,8 @@
 	(call sysadm_ssh_keygen.auto_subj_type_transition (subj))
 
 	(optional sysadm_cockpitbridge_optional_wheel_cockpitbridge
+		(call wheel_cockpitbridge.rw_inherited_fifo_files (subj))
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets (subj))
 		(call wheel_cockpitbridge.send_sigchld (subj)))
 
 	(optional sysadm_cockpitbridge_optional_sysadm_gvfsd

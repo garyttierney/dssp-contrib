@@ -4,7 +4,9 @@
 ;
 
 (in wheel_cockpitbridge
-	(blockinherit subj.send_sigchld_blk))
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.rw_inherited_fifo_files_blk)
+	(blockinherit subj.rw_inherited_unix_stream_sockets_blk))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;

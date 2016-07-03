@@ -19,6 +19,9 @@
 		gcs.tmpfs_user_file))
 	(call sysadm_gnomeapp.print_subj_type (subj))
 
+	(optional sysadm_gcs_optional_wheel_gcs
+		(call wheel_gcs.send_sigchld (subj)))
+
 	(optional sysadm_gcs_optional_sysadm_btst
 		(call sysadm_btst.auto_subj_type_transition (subj)))
 

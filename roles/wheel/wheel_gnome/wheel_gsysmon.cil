@@ -4,6 +4,8 @@
 ;
 
 (in wheel_gsysmon
+	(blockinherit subj.send_sigchld_blk)
+
 	(macro auto_subj_type_transition_gsysmon_helper ((type ARG1))
 		(call gsysmon_helper.spec_auto_subj_type_transition (ARG1
 			subj))))
@@ -21,13 +23,6 @@
 
 	(call fs.getattr_all_fs (subj))
 
-	(call subj.getattr_common_subj (subj))
-	(call subj.read_state_common_subj (subj))
-	(call subj.setsched_common_subj (subj))
-	(call subj.send_sigkill_common_subj (subj))
-	(call subj.send_signal_common_subj (subj))
-	(call subj.send_sigstop_common_subj (subj))
-
 	(call wheel_gvfsdud2.sessbus_chat_client_subj_type (subj))
 	(call wheel_gvfsdgoavm.sessbus_chat_client_subj_type (subj))
 
@@ -35,8 +30,9 @@
 		(true
 			(call rbacsep.exempt_subj_type (subj))))
 
-	(optional wheel_gsysmon_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.auto_subj_type_transition (subj)))
+	(optional wheel_gsysmon_optional_sysadm_polkit_exec
+		(call standard.role_change_exemption_subj_type (subj))
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional wheel_gsysmon_optional_wheel_sessbus
 		(call wheel_sessbus.service_subj_type (subj))))

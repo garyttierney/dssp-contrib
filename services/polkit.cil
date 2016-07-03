@@ -78,6 +78,9 @@
 
 		(call polkit_agent.run (ARG3 ARG1)))
 
+	(macro auto_subj_role_transition ((role ARG1)(role ARG2))
+		(roletransition ARG1 cmd_file process ARG2))
+
 	(macro spec_auto_subj_type_transition ((type ARG1)(type ARG2))
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2))))

@@ -6,26 +6,36 @@
 (block sysadm_polkit_exec
 	(blockinherit polkit_exec.subj_blk)
 
+	(call standard.user_exemption_target_subj_type (subj))
+
 	(call sysadm.cmd_auto_subj_type_transition (subj))
 	(call sysadm.shell_auto_subj_type_transition (subj))
 
 	(call sysadm.home_cmd_auto_subj_type_transition (subj))
 
 	(optional sysadm_polkit_exec_optional_sysadm_cockpitbridge
-		(call sysadm_cockpitbridge.rw_inherited_unix_stream_sockets
-			(subj))
-		(call sysadm_cockpitbridge.auto_subj_type_transition (subj))
-		(call sysadm_cockpitbridge.read_state (subj)))
+		(call sysadm_cockpitbridge.auto_subj_type_transition (subj)))
 
 	(optional sysadm_polkit_exec_optional_sysadm_gcs
-		(call sysadm_gcs.auto_subj_type_transition_gcs_helper (subj))
-		(call sysadm_gcs.read_state (subj)))
+		(call sysadm_gcs.auto_subj_type_transition_gcs_helper (subj)))
 
 	(optional sysadm_polkit_exec_optional_sysadm_gsd
-		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj))
-		(call sysadm_gsd.read_state (subj)))
+		(call sysadm_gsd.auto_subj_type_transition_gsd_helper (subj)))
 
 	(optional sysadm_polkit_exec_optional_sysadm_gsysmon
 		(call sysadm_gsysmon.auto_subj_type_transition_gsysmon_helper
+			(subj)))
+
+	(optional sysadm_polkit_exec_optional_wheel_cockpitbridge
+		(call wheel_cockpitbridge.rw_inherited_unix_stream_sockets
 			(subj))
-		(call sysadm_gsysmon.read_state (subj))))
+		(call wheel_cockpitbridge.read_state (subj)))
+
+	(optional sysadm_polkit_exec_optional_wheel_gcs
+		(call wheel_gcs.read_state (subj)))
+
+	(optional sysadm_polkit_exec_optional_wheel_gsd
+		(call wheel_gsd.read_state (subj)))
+
+	(optional sysadm_polkit_exec_optional_wheel_gsysmon
+		(call wheel_gsysmon.read_state (subj))))

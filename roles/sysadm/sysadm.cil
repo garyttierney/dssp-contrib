@@ -3206,6 +3206,9 @@
 		(call web_home.home_dir_obj_type_transition_web_home_ro
 			(subj)))
 
+	(optional sysadm_optional_wheel
+		(call wheel.send_sigchld (subj_type_attribute)))
+
 	(optional sysadm_optional_who
 		(call mesg.run (subj_type_attribute role))
 		(call who.run (subj_type_attribute role))

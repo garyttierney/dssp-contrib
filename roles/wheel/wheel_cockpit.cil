@@ -1,5 +1,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
+; Macros
+;
+
+(in wheel_cockpitbridge
+	(blockinherit subj.send_sigchld_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
 ; Policy
 ;
 
@@ -15,6 +23,10 @@
 	(call wheel_ssh_agent.auto_subj_type_transition (subj))
 	(call wheel_ssh_keygen.auto_subj_type_transition (subj))
 
+	(optional wheel_cockpitbridge_optional_sysadm_polkit_exec
+		(call standard.role_change_exemption_subj_type (subj))
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
+
 	(optional wheel_cockpitbridge_optional_wheel_gvfsd
 		(call wheel_gvfsd.sessbus_chat_client_subj_type (subj)))
 
@@ -26,9 +38,6 @@
 
 	(optional wheel_cockpitbridge_optional_wheel_passwd
 		(call wheel_passwd.auto_subj_type_transition (subj)))
-
-	(optional wheel_cockpitbridge_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional wheel_cockpitbridge_optional_wheel_sessbus
 		(call wheel_sessbus.client_subj_type (subj)))

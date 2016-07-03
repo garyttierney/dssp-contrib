@@ -4,6 +4,8 @@
 ;
 
 (in wheel_gcs
+	(blockinherit subj.send_sigchld_blk)
+
 	(macro auto_subj_type_transition_gcs_helper ((type ARG1))
 		(call gcs_helper.spec_auto_subj_type_transition (ARG1 subj))))
 
@@ -18,6 +20,10 @@
 	(call wheel_gnomeapp.spec_common_gnomeapplication (subj
 		gcs.tmpfs_user_file))
 	(call wheel_gnomeapp.print_subj_type (subj))
+
+	(optional wheel_gsd_optional_sysadm_polkit_exec
+		(call standard.role_change_exemption_subj_type (subj))
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional wheel_gcs_optional_wheel_btst
 		(call wheel_btst.auto_subj_type_transition (subj)))
@@ -52,9 +58,6 @@
 
 	(optional wheel_gcs_optional_wheel_obexd
 		(call wheel_obexd.sessbus_chat_client_subj_type (subj)))
-
-	(optional wheel_gsd_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional wheel_gcs_optional_wheel_pa
 		(call wheel_pa.auto_subj_type_transition (subj)))

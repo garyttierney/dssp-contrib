@@ -20,6 +20,13 @@
 
 	(call sysadm_gsdprinter.auto_subj_type_transition (subj))
 
+	(optional sysadm_gsd_optional_wheel_gs
+		(call wheel_gs.forked_subj_type (subj)))
+
+	(optional sysadm_gsd_optional_wheel_gsd
+		(call wheel_gsd.use_fd (subj))
+		(call wheel_gsd.send_sigchld (subj)))
+
 	(optional sysadm_gsd_optional_sysadm_gs
 		(call sysadm_gs.daemon (subj gsd.cmd_file))
 		(call sysadm_gs.sessbus_chat_client_subj_type (subj)))

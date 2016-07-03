@@ -4,6 +4,9 @@
 ;
 
 (in wheel_gsd
+	(blockinherit subj.send_sigchld_blk)
+	(blockinherit subj.use_fd_blk)
+
 	(macro auto_subj_type_transition_gsd_helper ((type ARG1))
 		(call gsd_helper.spec_auto_subj_type_transition (ARG1 subj))))
 
@@ -20,6 +23,10 @@
 
 	(call wheel_gsdprinter.auto_subj_type_transition (subj))
 
+	(optional wheel_gsd_optional_sysadm_polkit_exec
+		(call standard.role_change_exemption_subj_type (subj))
+		(call sysadm_polkit_exec.auto_subj_type_transition (subj)))
+
 	(optional wheel_gsd_optional_wheel_gs
 		(call wheel_gs.daemon (subj gsd.cmd_file))
 		(call wheel_gs.sessbus_chat_client_subj_type (subj)))
@@ -32,9 +39,6 @@
 
 	(optional wheel_gsd_optional_wheel_pa
 		(call wheel_pa.auto_subj_type_transition (subj)))
-
-	(optional wheel_gsd_optional_wheel_polkit_exec
-		(call wheel_polkit_exec.auto_subj_type_transition (subj)))
 
 	(optional wheel_gsd_optional_wheel_rygel
 		(call wheel_rygel.auto_subj_type_transition (subj)))

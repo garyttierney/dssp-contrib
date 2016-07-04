@@ -1224,6 +1224,9 @@
 		(call rpm.read_var_lib_files (subj))
 		(call rpm.read_var_lib_lnk_files (subj)))
 
+	(optional sd_optional_runcon
+		(call runcon.exec (subj)))
+
 	(optional sd_optional_sd_askwpd
 		(call sd_askpwd.read_runtime (subj)))
 

@@ -2042,6 +2042,9 @@
 			(optional sysadm_enable_mls_optional_pam
 				(call pam.adm_subj_type (subj)))
 
+			(optional sysadm_enable_mls_optional_runcon
+				(call runcon.exec (subj)))
+
 			(optional sysadm_enable_mls_optional_sd_randomseed
 				(call sd_randomseed.auto_subj_range_transition
 					(subj systemhigh systemhigh)))

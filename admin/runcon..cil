@@ -1,0 +1,23 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Contexts
+;
+
+(in runcon
+	(filecon "/usr/bin/runcon" file cmd_file_context))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Macros
+;
+
+(in runcon
+	(blockinherit exec_blk))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+; Policy
+;
+
+(block runcon
+	(blockinherit cmd.obj_blk))

@@ -118,7 +118,6 @@
 
 	(call standard.obj_change_exemption_subj_type (subj))
 
-	(call cmd.exec (subj))
 	(call cmd.audit_read_access_shell_files (subj))
 
 	(call sec.validate_context (subj))
@@ -129,6 +128,8 @@
 
 	(call qemu_guest.relabel_all_files (subj))
 	(call qemu_guest.run_all (subj role_attribute))
+
+	(call runcon.exec (subj))
 
 	(call setfiles.exec (subj))
 

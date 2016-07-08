@@ -83,10 +83,12 @@
 	(call var_lib_obj_type_transition_var_lib (subj))
 
 	(allow subj self rw_fifo_file_perms)
+	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self create_udp_socket_perms)
 	(allow subj self create_unix_dgram_socket_perms)
 
+	(call sys.read_cpu_online_sysfs_files (subj))
 	(call sys.read_net_proc_files (subj))
 
 	(call dev.read_urandom (subj))
@@ -94,6 +96,7 @@
 	(call file.read_config_files (subj))
 
 	(call fs.getattr_fs (subj))
+	(call fs.search_tmpfs (subj))
 
 	(call net.tcp_bind_generic_node (subj))
 	(call net.udp_bind_generic_node (subj))

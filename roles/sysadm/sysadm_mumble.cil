@@ -6,6 +6,9 @@
 (block sysadm_mumble
 	(blockinherit mumble.subj_blk)
 
+	(optional sysadm_mumble_optional_sysadm_firefox
+		(call sysadm_firefox.auto_subj_type_transition (subj)))
+
 	(optional sysadm_mumble_optional_sysadm_gs
 		(call sysadm_gs.stream_connect (subj)))
 

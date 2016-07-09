@@ -6,6 +6,9 @@
 (block wheel_mumble
 	(blockinherit mumble.subj_blk)
 
+	(optional wheel_mumble_optional_wheel_firefox
+		(call wheel_firefox.auto_subj_type_transition (subj)))
+
 	(optional wheel_mumble_optional_wheel_gs
 		(call wheel_gs.stream_connect (subj)))
 

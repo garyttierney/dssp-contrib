@@ -6,9 +6,6 @@
 (block wheel_mumble
 	(blockinherit mumble.subj_blk)
 
-	(optional wheel_mumble_optional_wheel_firefox
-		(call wheel_firefox.auto_subj_type_transition (subj)))
-
 	(optional wheel_mumble_optional_wheel_gs
 		(call wheel_gs.stream_connect (subj)))
 
@@ -16,4 +13,10 @@
 		(call wheel_pa.auto_subj_type_transition (subj)))
 
 	(optional wheel_mumble_optional_wheel_sessbus
-		(call wheel_sessbus.client_subj_type (subj))))
+		(call wheel_sessbus.client_subj_type (subj)))
+
+	(optional wheel_mumble_optional_wheel_sessbus_launch
+		(call wheel_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional wheel_mumble_optional_wheel_xdgopen
+		(call wheel_xdgopen.auto_subj_type_transition (subj))))

@@ -6,9 +6,6 @@
 (block sysadm_mumble
 	(blockinherit mumble.subj_blk)
 
-	(optional sysadm_mumble_optional_sysadm_firefox
-		(call sysadm_firefox.auto_subj_type_transition (subj)))
-
 	(optional sysadm_mumble_optional_sysadm_gs
 		(call sysadm_gs.stream_connect (subj)))
 
@@ -16,4 +13,10 @@
 		(call sysadm_pa.auto_subj_type_transition (subj)))
 
 	(optional sysadm_mumble_optional_sysadm_sessbus
-		(call sysadm_sessbus.client_subj_type (subj))))
+		(call sysadm_sessbus.client_subj_type (subj)))
+
+	(optional sysadm_mumble_optional_sysadm_sessbus_launch
+		(call sysadm_sessbus_launch.auto_subj_type_transition (subj)))
+
+	(optional sysadm_mumble_optional_sysadm_xdgopen
+		(call sysadm_xdgopen.auto_subj_type_transition (subj))))

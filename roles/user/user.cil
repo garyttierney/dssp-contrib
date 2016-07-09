@@ -1373,6 +1373,21 @@
 
 		(call user_mplayer.role_pattern (role subj_type_attribute)))
 
+	(optional user_optional_user_mumble
+		(call mumble.manage_home_user_sock_files (subj))
+		(call mumble.relabel_home_user_sock_files (subj))
+
+		(call mumble.home_dir_obj_type_transition_home (subj))
+
+		(call mumble.manage_tmpfs_user_files (subj))
+		(call mumble.relabel_tmpfs_user_files (subj))
+
+		(call mumble.manage_var_tmp_user_files (subj))
+		(call mumble.relabel_var_tmp_user_files (subj))
+
+		(call user_mumble.role_pattern (role
+			subj_type_attribute)))
+
 	(optional user_optional_user_mutt
 		(call mutt.manage_home_user_files (subj))
 		(call mutt.relabel_home_user_files (subj))

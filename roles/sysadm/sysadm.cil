@@ -1036,6 +1036,19 @@
 
 	(filecon "/root/\.mplayer(/.*)?" any root_mplayer_home))
 
+(optional sysadm_mumble_home_optional_mumble
+	(tunableif enable_rbacsep
+		(true
+			(context root_mumble_home (sysadm.id sysadm.role
+				mumble.home_user_file (systemlow systemlow))))
+		(false
+			(context root_mumble_home (sysadm.id object_r
+				mumble.home_user_file (systemlow
+					systemlow)))))
+
+	(filecon "/root/\.MumbleOverlayPipe" socket root_mumble_home)
+	(filecon "/root/\.MumbleSocket" socket root_mumble_home))
+
 (optional sysadm_mutt_home_optional_mutt
 	(tunableif enable_rbacsep
 		(true
@@ -4247,6 +4260,21 @@
 		(call mplayer.relabel_tmpfs_user_files (subj))
 
 		(call sysadm_mplayer.role_pattern (role subj_type_attribute)))
+
+	(optional sysadm_optional_sysadm_mumble
+		(call mumble.manage_home_user_sock_files (subj))
+		(call mumble.relabel_home_user_sock_files (subj))
+
+		(call mumble.home_dir_obj_type_transition_home (subj))
+
+		(call mumble.manage_tmpfs_user_files (subj))
+		(call mumble.relabel_tmpfs_user_files (subj))
+
+		(call mumble.manage_var_tmp_user_files (subj))
+		(call mumble.relabel_var_tmp_user_files (subj))
+
+		(call sysadm_mumble.role_pattern (role
+			subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mutt
 		(call mutt.manage_home_user_files (subj))

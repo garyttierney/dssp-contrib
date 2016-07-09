@@ -82,6 +82,7 @@
 	(call manage_var_lib (subj))
 	(call var_lib_obj_type_transition_var_lib (subj))
 
+	(allow subj self (process (getsched setsched)))
 	(allow subj self rw_fifo_file_perms)
 	(allow subj self r_netlink_route_socket_perms)
 	(allow subj self create_tcp_stream_socket_perms)
@@ -126,7 +127,10 @@
 
 	(allow adm_subj_type_attribute subj (process (ptrace signal signull
 		sigkill sigstop)))
+	(allow adm_subj_type_attribute subj (process (sigchld)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
+
+	(call subj.ptrace_subj_type (adm_subj_type_attribute))
 
 	(call file.rw_config_dirs (adm_subj_type_attribute))
 	(call file.rw_var_lib_dirs (adm_subj_type_attribute))

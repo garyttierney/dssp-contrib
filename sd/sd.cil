@@ -55,6 +55,8 @@
 	(filecon "/usr/lib/systemd/[^/]*" file cmd_file_context)
 	(filecon "/usr/lib/systemd/system-generators/[^/]*" file
 		cmd_file_context)
+	(filecon "/usr/lib/systemd/system-sleep(/.*)?" file cmd_file_context)
+	(filecon "/usr/lib/systemd/system-shutdown(/.*)?" file cmd_file_context)
 	(filecon "/usr/lib/systemd/scripts(/.*)?" file cmd_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;

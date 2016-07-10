@@ -126,10 +126,10 @@
 	(call file.list_mnt (subj_type_attribute))
 	(call file.read_config (subj_type_attribute))
 
-        (call fs.dontaudit_list_rootfs (subj_type_attribute))
+	(call fs.dontaudit_list_rootfs (subj_type_attribute))
 	(call fs.getattr_fs (subj_type_attribute))
-        (call fs.manage_dosfs_subj_type (subj_type_attribute))
-        (call fs.manage_fuse_subj_type (subj_type_attribute))
+	(call fs.manage_dosfs_subj_type (subj_type_attribute))
+	(call fs.manage_fuse_subj_type (subj_type_attribute))
 
 	(call net.udp_bind_generic_node (subj_type_attribute))
 
@@ -148,7 +148,7 @@
 	(call usersubj.dontaudit_rw_all_home_user (subj_type_attribute))
 
 	(call usersubj.manage_home_user_files (subj_type_attribute))
-        (call usersubj.read_home_user_lnk_files (subj_type_attribute))
+	(call usersubj.read_home_user_lnk_files (subj_type_attribute))
 	(call usersubj.home_dir_obj_type_transition_home_user_files
 		(subj_type_attribute))
 

@@ -9,14 +9,23 @@
 	(optional user_mumble_optional_user_firefox
 		(call user_firefox.auto_subj_type_transition (subj)))
 
+	(optional user_mumble_optional_user_gconfd
+		(call user_gconfd.sessbus_chat_client_subj_type (subj)))
+
+	(optional user_mumble_optional_user_gsh
+		(call user_gsh.sessbus_chat_client_subj_type (subj)))
+
 	(optional user_mumble_optional_user_gs
 		(call user_gs.stream_connect (subj)))
+
+	(optional user_mumble_optional_user_gvfsd
+		(call user_gvfsd.sessbus_chat_client_subj_type (subj)))
 
 	(optional user_mumble_optional_user_pa
 		(call user_pa.auto_subj_type_transition (subj)))
 
 	(optional user_mumble_optional_user_sessbus
-		(call user_sessbus.client_subj_type (subj)))
+		(call user_sessbus.service_subj_type (subj)))
 
 	(optional user_mumble_optional_user_sessbus_launch
 		(call user_sessbus_launch.auto_subj_type_transition (subj)))

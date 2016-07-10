@@ -8,7 +8,9 @@
 	(filecon "HOME_DIR/\.MumbleOverlayPipe" socket
                 home_user_file_context)
 	(filecon "HOME_DIR/\.MumbleSocket" socket
-                home_user_file_context))
+                home_user_file_context)
+	(filecon "HOME_DIR/\.config/Mumble(/.*)?" any
+		home_config_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -58,6 +60,18 @@
 		(allow ARG1 ARG2 (process (signal)))
 		(call auto_subj_type_transition_pattern (ARG1 cmd_file ARG2)))
 
+	(blockinherit usersubj.search_home_config_blk)
+	(blockinherit usersubj.list_home_config_blk)
+	(blockinherit usersubj.read_home_config_files_blk)
+	(blockinherit usersubj.read_home_config_lnk_files_blk)
+	(blockinherit usersubj.read_home_config_blk)
+	(blockinherit usersubj.manage_home_config_blk)
+	(blockinherit usersubj.relabel_home_config_blk)
+
+	(macro home_config_obj_type_transition_home_config ((type ARG1))
+		(call usersubj.home_config_obj_type_transition (ARG1
+			home_config_file dir "Mumble")))
+
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
@@ -95,6 +109,13 @@
 	(blockinherit app.application_cmd_obj_blk)
 
 	(call subj.entry (subj_type_attribute cmd_file))
+
+	(blockinherit usersubj.home_config_obj_blk)
+
+	(call usersubj.home_config_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_config (subj_type_attribute))
+	(call home_config_obj_type_transition_home_config (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 

@@ -1039,13 +1039,19 @@
 (optional sysadm_mumble_home_optional_mumble
 	(tunableif enable_rbacsep
 		(true
+			(context root_mumble_home_config (sysadm.id sysadm.role
+				mumble.home_config_file (systemlow systemlow)))
 			(context root_mumble_home (sysadm.id sysadm.role
 				mumble.home_user_file (systemlow systemlow))))
 		(false
+			(context root_mumble_home_config (sysadm.id object_r
+				mumble.home_config_file (systemlow
+					systemlow)))
 			(context root_mumble_home (sysadm.id object_r
 				mumble.home_user_file (systemlow
 					systemlow)))))
 
+	(filecon "/root/\.config/Mumble(/.*)?" any root_mumble_home_config)
 	(filecon "/root/\.MumbleOverlayPipe" socket root_mumble_home)
 	(filecon "/root/\.MumbleSocket" socket root_mumble_home))
 
@@ -4262,6 +4268,12 @@
 		(call sysadm_mplayer.role_pattern (role subj_type_attribute)))
 
 	(optional sysadm_optional_sysadm_mumble
+		(call mumble.manage_home_config (subj))
+		(call mumble.relabel_home_config (subj))
+
+		(call mumble.home_config_obj_type_transition_home_config
+			(subj))
+
 		(call mumble.manage_home_user_sock_files (subj))
 		(call mumble.relabel_home_user_sock_files (subj))
 

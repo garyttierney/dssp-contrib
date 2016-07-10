@@ -1486,6 +1486,12 @@
 		(call wheel_lynx.role_pattern (role subj_type_attribute)))
 
 	(optional wheel_optional_wheel_mumble
+		(call mumble.manage_home_config (subj))
+		(call mumble.relabel_home_config (subj))
+
+		(call mumble.home_config_obj_type_transition_home_config
+			(subj))
+
 		(call mumble.manage_home_user_sock_files (subj))
 		(call mumble.relabel_home_user_sock_files (subj))
 

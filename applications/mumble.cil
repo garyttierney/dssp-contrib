@@ -10,7 +10,11 @@
 	(filecon "HOME_DIR/\.MumbleSocket" socket
                 home_user_file_context)
 	(filecon "HOME_DIR/\.config/Mumble(/.*)?" any
-		home_config_file_context))
+		home_config_file_context)
+	(filecon "HOME_DIR/\.local/share/Mumble(/.*)?" any
+		home_data_file_context)
+	(filecon "HOME_DIR/\.local/share/data/Mumble(/.*)?" any
+		home_data_file_context))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
@@ -72,6 +76,18 @@
 		(call usersubj.home_config_obj_type_transition (ARG1
 			home_config_file dir "Mumble")))
 
+	(blockinherit usersubj.search_home_data_blk)
+	(blockinherit usersubj.list_home_data_blk)
+	(blockinherit usersubj.read_home_data_files_blk)
+	(blockinherit usersubj.read_home_data_lnk_files_blk)
+	(blockinherit usersubj.read_home_data_blk)
+	(blockinherit usersubj.manage_home_data_blk)
+	(blockinherit usersubj.relabel_home_data_blk)
+
+	(macro home_data_obj_type_transition_home_data ((type ARG1))
+		(call usersubj.home_data_obj_type_transition (ARG1
+			home_data_file dir "Mumble")))
+
 	(blockinherit usersubj.read_tmpfs_user_files_blk)
 	(blockinherit usersubj.manage_tmpfs_user_files_blk)
 	(blockinherit usersubj.relabel_tmpfs_user_files_blk)
@@ -116,6 +132,13 @@
 
 	(call manage_home_config (subj_type_attribute))
 	(call home_config_obj_type_transition_home_config (subj_type_attribute))
+
+	(blockinherit usersubj.home_data_obj_blk)
+
+	(call usersubj.home_data_creator_subj_type (subj_type_attribute))
+
+	(call manage_home_data (subj_type_attribute))
+	(call home_data_obj_type_transition_home_data (subj_type_attribute))
 
 	(blockinherit usersubj.tmpfs_user_obj_blk)
 

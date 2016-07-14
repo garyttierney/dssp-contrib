@@ -60,7 +60,6 @@
 		(typeattributeset client_subj_type_attribute ARG1))
 
 	(macro exec ((type ARG1))
-		(dontaudit ARG1 ARG1 (process (transition)))
 		(call client_subj_type (ARG1))
 		(call can_exec (ARG1 cmd_file)))
 

@@ -59,6 +59,9 @@
 	(macro client_subj_type ((type ARG1))
 		(typeattributeset client_subj_type_attribute ARG1))
 
+	(macro dontaudit_exec_cmd_files ((type ARG1))
+		(dontaudit ARG1 cmd_file exec_file_perms))
+
 	(macro exec ((type ARG1))
 		(call client_subj_type (ARG1))
 		(call can_exec (ARG1 cmd_file)))

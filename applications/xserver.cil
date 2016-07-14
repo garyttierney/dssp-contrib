@@ -225,6 +225,7 @@
 	(allow subj self (capability (dac_override setgid setuid sys_admin
 		sys_rawio ipc_owner)))
 	(allow subj self (process (getpgid setpgid)))
+	(allow subj self rw_fifo_file_perms)
 	(allow subj self create_tcp_stream_socket_perms)
 	(allow subj self (unix_stream_socket (accept listen)))
 
@@ -266,6 +267,7 @@
 	(call subj.ptrace_subj_type (subj))
 
 	(call fonts.read_data_files (subj))
+	(call locale.client_subj_type (subj))
 
 	(call nss.client_subj_type (subj))
 
@@ -299,6 +301,9 @@
 		(call gdmuser.read_tmpfs_user_files (subj))
 		(call gdmuser.link_keyring_all_subj (subj)))
 
+	(optional xserver_optional_polkit
+		(call polkit_exec.dontaudit_exec_cmd_files (subj)))
+
 	(optional xserver_optional_sd
 		(call sd.forked_subj_type (subj)))
 
@@ -307,9 +312,6 @@
 
 	(optional xserver_optional_sessbus
 		(call sessbus.getattr_tmpfs_user_sock_files (subj)))
-
-	(optional xserver_optional_pkexec
-		(call polkit_exec.exec (subj)))
 
 	(optional xserver_optional_unconfinedsubj
 		(call unconfinedsubj.rw_shm_all_subj (subj))
@@ -360,6 +362,7 @@
 
 	(optional xserver_client_subj_type_optional_i3
 		(call i3.client_subj_type (client_subj_type_attribute)))
+
 
 	(optional xserver_client_subj_type_optional_rp
 		(call rp.client_subj_type (client_subj_type_attribute)))

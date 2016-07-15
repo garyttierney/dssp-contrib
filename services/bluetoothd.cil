@@ -4,6 +4,7 @@
 ;
 
 (in bluetoothd
+	(filecon "/etc/bluetooth(/.*)?" any config_file_context)
 	(filecon "/usr/libexec/bluetooth/bluetoothd" file cmd_file_context)
 	(filecon "/var/lib/bluetooth(/.*)?" any var_lib_file_context)
 
@@ -33,6 +34,14 @@
 
 	(macro rw_socket ((type ARG1))
 		(allow ARG1 subj rw_socket_perms))
+
+	(blockinherit file.search_config_blk)
+	(blockinherit file.list_config_blk)
+	(blockinherit file.read_config_files_blk)
+	(blockinherit file.read_config_lnk_files_blk)
+	(blockinherit file.read_config_blk)
+	(blockinherit file.manage_config_blk)
+	(blockinherit file.relabel_config_blk)
 
 	(blockinherit file.search_var_lib_blk)
 	(blockinherit file.list_var_lib_blk)
@@ -80,6 +89,12 @@
 	(call subj.entry (subj cmd_file))
 
 	(roletype sys.role subj)
+
+	(blockinherit file.config_obj_blk)
+
+	(typeattributeset obj_type_attribute config_file)
+
+	(call read_config (subj))
 
 	(blockinherit file.var_lib_obj_blk)
 
@@ -155,6 +170,7 @@
 		sigkill sigstop)))
 	(call ps_subj_pattern (adm_subj_type_attribute subj))
 
+	(call file.rw_config_dirs (adm_subj_type_attribute))
 	(call file.rw_var_lib_dirs (adm_subj_type_attribute))
 	(call fs.rw_tmpfs_dirs (adm_subj_type_attribute))
 

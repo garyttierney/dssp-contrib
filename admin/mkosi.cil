@@ -103,11 +103,16 @@
 		(call qemu_guest.manage_dirs (subj))
 		(call qemu_guest.manage_files (subj)))
 
-	(optional mkosi_optional_sd_machined
-		(call sd_machined.manage_var_lib (subj)))
-
 	(optional mkosi_optional_sd_nspawn
-		(call sd_nspawn.run (subj role_attribute)))
+		(call sd_nspawn.run (subj role_attribute))
+
+		(call sd_nspawn_container.manage (subj))
+		(call
+			sd_nspawn_container.sd_machined_var_lib_obj_type_transition_file_dirs
+				(subj))
+		(call
+			sd_nspawn_container.sd_machined_var_lib_obj_type_transition_file_files
+				(subj)))
 
 	(optional mkosi_optional_rpm
 		(call rpm.run (subj role_attribute))

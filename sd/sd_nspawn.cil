@@ -303,6 +303,12 @@
 			(allow ARG1 file manage_blk_file_perms)
 			(allow ARG1 file manage_chr_file_perms)))
 
+	(macro sd_machined_var_lib_obj_type_transition_file_dirs ((type ARG1))
+		(call sd_machined.var_lib_obj_type_transition (ARG1 file dir "*")))
+
+	(macro sd_machined_var_lib_obj_type_transition_file_files ((type ARG1))
+		(call sd_machined.var_lib_obj_type_transition (ARG1 file file "*")))
+
 	(macro container_subj_type ((type ARG1))
 		(call app.application_subj_type (ARG1))
 		(typeattributeset subj_type_attribute ARG1))

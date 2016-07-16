@@ -138,6 +138,12 @@
 		(call file.var_lib_obj_type_transition (ARG1 var_lib_file dir
 			"machines")))
 
+	(macro var_lib_obj_type_transition ((type ARG1)(type ARG2)(class ARG3)
+		(name ARG4))
+		(call file.search_var_lib (ARG1))
+		(call obj_type_transition_pattern (ARG1 var_lib_file ARG2 ARG3
+			ARG4)))
+
 	(blockinherit subj.use_fd_blk)
 
 	(blockinherit term.setattr_login_ptys_blk)

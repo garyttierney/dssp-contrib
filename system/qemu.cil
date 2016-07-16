@@ -107,6 +107,11 @@
 	(macro dontaudit_list_files ((type ARG1))
 		(dontaudit ARG1 file list_dir_perms))
 
+	(macro manage_dirs ((type ARG1))
+		(allow ARG1 file manage_dir_perms)
+		(optional qemu_guest_manage_dirs_optional_sd_machined
+			(call sd_machined.rw_var_lib_dirs (ARG1))))
+
 	(macro manage_files ((type ARG1))
 		(call manage_files_pattern (ARG1 file file))
 		(optional qemu_guest_manage_files_optional_sd_machined

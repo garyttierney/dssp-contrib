@@ -56,7 +56,7 @@
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.audit_write_access_mountpoint_dirs (subj))
-	(call sys.getattr_mountpoints (subj))
+	(call sys.list_mountpoints (subj))
 	(call sys.manage_unlabeled (subj))
 	(call sys.mounton_unlabeled_dirs (subj))
 	(call sys.request_load_module (subj))
@@ -70,6 +70,8 @@
 	(call dev.read_urandom (subj))
 	(call dev.rw_loop_control (subj))
 	(call dev.rw_lvm_control (subj))
+
+	(call file.read_config_files (subj))
 
 	(call fs.getattr_all_fs (subj))
 	(call fs.manage_dosfs_subj_type (subj))

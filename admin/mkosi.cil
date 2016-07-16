@@ -52,7 +52,7 @@
 	(allow subj var_tmp_file (dir (mounton)))
         (call var_tmp_obj_type_transition_var_tmp (subj))
 
-	(allow subj self (capability (dac_override)))
+	(allow subj self (capability (dac_override sys_admin)))
 	(allow subj self rw_fifo_file_perms)
 
 	(call sys.audit_write_access_mountpoint_dirs (subj))
@@ -60,6 +60,7 @@
 	(call sys.manage_unlabeled (subj))
 	(call sys.mounton_unlabeled_dirs (subj))
 	(call sys.request_load_module (subj))
+	(call sys.setsched (subj))
 
 	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
@@ -99,6 +100,9 @@
 	(optional mkosi_optional_qemu
 		(call qemu_guest.manage_dirs (subj))
 		(call qemu_guest.manage_files (subj)))
+
+	(optional mkosi_optional_sd_machined
+		(call sd_machined.manage_var_lib (subj)))
 
 	(optional mkosi_optional_sd_nspawn
 		(call sd_nspawn.run (subj role_attribute)))

@@ -294,6 +294,8 @@
 	(call manage_runtime_sock_files (subj))
 	(call runtime_obj_type_transition_runtime (subj))
 
+	(call sys.read_kernel_sysctl_files (subj))
+
 	(call fs.getattr_fs (subj))
 
 	(call locale.client_subj_type (subj))

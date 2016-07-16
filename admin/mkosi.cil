@@ -58,6 +58,7 @@
 	(call sys.audit_write_access_mountpoint_dirs (subj))
 	(call sys.getattr_mountpoints (subj))
 	(call sys.manage_unlabeled (subj))
+	(call sys.mounton_unlabeled_dirs (subj))
 	(call sys.request_load_module (subj))
 
 	(call cmd.list_cmd (subj))
@@ -70,7 +71,7 @@
 	(call dev.rw_lvm_control (subj))
 
 	(call fs.getattr_all_fs (subj))
-	(call fs.manage_dosfs_files (subj))
+	(call fs.manage_dosfs_subj_type (subj))
 	(call fs.mount_fs (subj))
 	(call fs.mount_dosfs_fs (subj))
 	(call fs.mounton_rootfs_dirs (subj))
@@ -80,6 +81,7 @@
 	(call fs.unmount_devtmpfs_fs (subj))
 	(call fs.unmount_dosfs_fs (subj))
 	(call fs.unmount_fs (subj))
+	(call fs.unmount_sysfs_fs (subj))
 	(call fs.unmount_proc_fs (subj))
 
 	(call storage.rw_fixed_disk (subj))

@@ -49,18 +49,40 @@
 	(blockinherit file.var_tmp_obj_blk)
               
         (call manage_var_tmp (subj))
+	(allow subj var_tmp_file (dir (mounton)))
         (call var_tmp_obj_type_transition_var_tmp (subj))
 
+	(allow subj self (capability (dac_override)))
 	(allow subj self rw_fifo_file_perms)
 
+	(call sys.audit_write_access_mountpoint_dirs (subj))
+	(call sys.getattr_mountpoints (subj))
+	(call sys.manage_unlabeled (subj))
 	(call sys.request_load_module (subj))
 
+	(call cmd.list_cmd (subj))
 	(call cmd.exec (subj))
 	(call cmd.exec_shell (subj))
 
+	(call dev.getattr_random (subj))
 	(call dev.read_urandom (subj))
+	(call dev.rw_loop_control (subj))
+	(call dev.rw_lvm_control (subj))
 
+	(call fs.getattr_all_fs (subj))
+	(call fs.manage_dosfs_files (subj))
+	(call fs.mount_fs (subj))
+	(call fs.mount_dosfs_fs (subj))
 	(call fs.mounton_rootfs_dirs (subj))
+	(call fs.read_debugfs_files (subj))
+	(call fs.read_devtmpfs_lnk_files (subj))
+	(call fs.read_sysfs (subj))
+	(call fs.unmount_devtmpfs_fs (subj))
+	(call fs.unmount_dosfs_fs (subj))
+	(call fs.unmount_fs (subj))
+	(call fs.unmount_proc_fs (subj))
+
+	(call storage.rw_fixed_disk (subj))
 
 	(call fstools.exec (subj))
 
@@ -69,6 +91,8 @@
 	(call locale.client_subj_type (subj))
 
 	(call mount.exec (subj))
+	(call mount.manage_runtime (subj))
+	(call mount.runtime_obj_type_transition_runtime (subj))
 
 	(optional mkosi_optional_qemu
 		(call qemu_guest.manage_dirs (subj))
@@ -78,4 +102,5 @@
 		(call sd_nspawn.run (subj role_attribute)))
 
 	(optional mkosi_optional_rpm
-		(call rpm.run (subj role_attribute))))
+		(call rpm.run (subj role_attribute))
+		(call rpm.manage_tmpfs (subj))))
